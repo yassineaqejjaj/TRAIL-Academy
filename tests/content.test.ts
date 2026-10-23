@@ -1,4 +1,5 @@
 import { readdirSync, readFileSync } from "node:fs";
+import mermaid from "mermaid";
 import { describe, expect, it } from "vitest";
 
 interface Question { kind: string; prompt: string; feedback?: string; options: [string, boolean][] }
@@ -37,6 +38,18 @@ describe.each(files)("content/modules/%s", (file) => {
   it("has an assignment with an evaluation grid", () => {
     expect(m.assignment.instructions_md.length).toBeGreaterThan(500);
     expect(m.assignment.instructions_md).toMatch(/évaluation|grille/i);
+  });
+  it("has at least three valid, accessible, captioned diagrams", async () => {
+    mermaid.initialize({ startOnLoad: false });
+    const blocks = lessons.flatMap((l) => [...l.body_md.matchAll(/```mermaid\n([\s\S]*?)\n```([^\n]*\n?[^\n]*)/g)].map((b) => ({ lesson: l.title, code: b[1], after: b[2] })));
+    expect(blocks.length, "number of diagrams").toBeGreaterThanOrEqual(3);
+    for (const b of blocks) {
+      await expect(mermaid.parse(b.code), `${b.lesson}\n${b.code}`).resolves.toBeTruthy();
+      expect(b.code, b.lesson).toMatch(/^\s*accTitle:/m);
+      expect(b.code, b.lesson).toMatch(/^\s*accDescr:/m);
+      expect(b.code.split("\n").length, b.lesson).toBeLessThanOrEqual(40);
+      expect(b.after, `caption after diagram in ${b.lesson}`).toMatch(/\*Figure/);
+    }
   });
   it("contains no employer, client or colleague references and no unsupported markup", () => {
     const text = JSON.stringify(m);

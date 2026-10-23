@@ -31,7 +31,8 @@ export default async function PricingPage() {
       <div className="mt-4 border-b border-border">
         {faq.map(([q, a]) => <details key={q} className="border-t border-border py-4"><summary className="flex min-h-11 items-center font-semibold">{q}</summary><p className="mt-2 text-muted">{a}</p></details>)}
       </div>
-      <p className="mt-8 text-muted">Équipes et entreprises : <Link className="font-semibold text-accent hover:underline" href="/entreprise">demander un devis</Link>.</p>
+      <p className="mt-8 text-muted">Pas sûr du bon choix ? <Link className="font-semibold text-accent hover:underline" href="/conseiller">Le conseiller vous recommande un parcours en deux minutes</Link>, et chaque module propose une <Link className="font-semibold text-accent hover:underline" href="/formations">leçon d'aperçu gratuite</Link>.</p>
+      <p className="mt-3 text-muted">Équipes et entreprises : <Link className="font-semibold text-accent hover:underline" href="/entreprise">demander un devis</Link>.</p>
     </Container>
   );
 }

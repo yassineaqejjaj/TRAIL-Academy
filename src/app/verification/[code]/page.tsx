@@ -3,6 +3,8 @@ import { Container, Notice } from "@/components/ui";
 import { asAnon } from "@/lib/db";
 import { dbConfigured } from "@/lib/db/pool";
 import { PrintButton } from "./print-button";
+import { ButtonLink } from "@/components/ui";
+import { site } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Vérification d'attestation", robots: { index: false } };
@@ -27,7 +29,7 @@ export default async function VerifyPage({ params }: { params: Promise<{ code: s
           <p className="mt-4 text-sm text-muted">pour avoir validé le module</p>
           <p className="text-xl font-medium">{row.course_title}</p>
           <p className="mt-4 text-sm text-muted">Délivrée le {new Date(row.issued_at).toLocaleDateString("fr-FR")} · Code de vérification : <span className="font-mono">{code}</span></p>
-          <div className="mt-6 print:hidden"><PrintButton /></div>
+          <div className="mt-6 flex flex-wrap gap-3 print:hidden"><PrintButton /><ButtonLink variant="secondary" href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${site.url}/verification/${code}`)}`} target="_blank" rel="noopener noreferrer">Partager sur LinkedIn</ButtonLink><ButtonLink variant="secondary" href="/formations">Découvrir les formations</ButtonLink></div>
         </div>
       ) : (
         <div className="mt-6"><Notice title="Attestation introuvable">Ce code ne correspond à aucune attestation.</Notice></div>

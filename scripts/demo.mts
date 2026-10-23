@@ -43,12 +43,8 @@ try {
     await db.query("select set_config('app.uid', $1, true)", [learner]);
     const lessons = (await db.query("select l.id from lessons l join chapters c on c.id = l.chapter_id where l.course_id = (select id from courses where code = 'M4') order by c.position, l.position limit 2")).rows;
     for (const l of lessons) await db.query("select record_lesson_progress($1, 0, true)", [l.id]);
-    const quiz = (await db.query("select id from quizzes where title = 'Quiz du module'")).rows[0];
-    if (quiz) {
-      const opt = (await db.query("select option_id, question_id from get_quiz_options($1) where label = 'Bonne réponse (test)'", [quiz.id])).rows[0];
-      await db.query("select submit_quiz($1, $2::jsonb)", [quiz.id, JSON.stringify({ [opt.question_id]: [opt.option_id] })]);
-    }
-    await db.query("insert into assignment_submissions (assignment_id, user_id, body) select a.id, auth.uid(), 'Mon prompt : « Tu es analyste produit… » avec un format de sortie JSON.' from assignments a where a.title = 'Livrable pratique'");
+    // The learner has done two lessons and handed in the deliverable; the quiz is left to try.
+    await db.query("insert into assignment_submissions (assignment_id, user_id, body) select a.id, auth.uid(), 'Mon prompt de référence : rôle, contexte, tâche, format de sortie JSON, deux exemples.' from assignments a where a.course_id = (select id from courses where code = 'M4')");
     await db.query("commit");
   }
   console.log("\nDemo accounts (local only), password for both:", DEMO_PASSWORD);

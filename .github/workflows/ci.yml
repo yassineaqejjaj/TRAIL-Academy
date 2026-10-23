@@ -54,6 +54,7 @@ jobs:
           npm run db:dev > db.log 2>&1 &
           for i in $(seq 1 60); do (echo > /dev/tcp/127.0.0.1/54329) 2>/dev/null && break; sleep 1; done
           npm run db:migrate -- --seed --fixture
+          npm run content:load -- --module M1 --blog
       - run: npm run build
       - name: Start the app
         run: |

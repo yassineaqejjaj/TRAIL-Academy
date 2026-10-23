@@ -21,6 +21,15 @@ C'est la **part de décision laissée au modèle sur le déroulement** qui disti
 
 ## Assistant, workflow, agent : trois niveaux
 
+```mermaid
+flowchart LR
+  accTitle: Assistant, workflow, agent
+  accDescr: L'autonomie augmente de l'assistant, qui répond, au workflow, qui suit des étapes fixes, jusqu'à l'agent, qui choisit ses actions.
+  A["Assistant : répond à une demande"] --> B["Workflow : suit des étapes définies à l'avance"] --> C["Agent : choisit ses actions pour atteindre un objectif"]
+```
+*Figure 1 : plus l'autonomie augmente, plus il faut de contrôles.*
+
+
 ### L'appel simple
 
 Vous envoyez un texte, le modèle répond. Idéal pour reformuler, résumer, classer, extraire.

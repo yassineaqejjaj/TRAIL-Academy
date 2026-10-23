@@ -24,3 +24,15 @@ Modèle de référence : `content/modules/m1-machine-learning.json`.
 - Un **livrable** (`assignment`) concret, avec grille d'évaluation, réalisable sans accès à des données confidentielles.
 - Les modules pratiques incluent des exercices guidés ; tout code fourni doit être correct et testable.
 - Les lessons `kind`: `reading` (lecture), `exercise` (pratique guidée), `demo`.
+
+## Schémas et visualisations (Mermaid)
+
+Chaque module contient **au moins 4 schémas** (idéalement 5 à 8), écrits en texte Mermaid dans le `body_md` des leçons, dans un bloc de code ```` ```mermaid ````. Ils sont rendus en SVG dans le navigateur (clair et sombre) et vérifiés par `tests/content.test.ts`.
+
+Règles :
+- Variété : au moins un schéma hors `flowchart` par module. Types utiles : `flowchart` (processus, architecture), `sequenceDiagram` (échanges entre acteurs), `stateDiagram-v2` (états), `quadrantChart` (matrices 2×2), `pie` (répartitions, **données illustratives signalées comme telles**), `timeline` (histoire, feuille de route), `mindmap` (cartes de notions), `journey` (parcours utilisateur), `gantt` (planification). Éviter les types bêta.
+- Première ligne après le type : `accTitle: …` puis `accDescr: …` (courte description pour lecteurs d'écran), obligatoires.
+- Libellés en français, courts ; mettre entre guillemets tout libellé contenant `( ) : , / # ;` ou des accents problématiques : `A["Libellé (précis)"]`. Pas de HTML. 25 nœuds maximum, 40 lignes maximum.
+- **Légende obligatoire** sur la ligne qui suit immédiatement la clôture du bloc (sans ligne vide) : `*Figure N : légende.*` (numérotation par leçon).
+- Un schéma doit **expliquer** (relations, flux, comparaison), pas décorer. Les chiffres sont fictifs et le disent.
+- Les schémas s'insèrent dans les leçons existantes, à l'endroit où ils éclairent le texte ; ne changer ni les titres de leçons, ni le reste du texte.

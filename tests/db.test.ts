@@ -269,3 +269,35 @@ describe("video pipeline queue", () => {
     await expect(as(U1, () => db.query(`select finish_video_job(gen_random_uuid(), true, 1, null)`))).rejects.toThrow();
   });
 });
+
+describe("public syllabus and free preview", () => {
+  let courseSlug: string;
+  beforeAll(async () => {
+    const row = (await db.query<{ id: string; slug: string }>(`select id, slug from courses where code = 'M2'`)).rows[0];
+    courseSlug = row.slug;
+    const ch = (await db.query<{ id: string }>(`insert into chapters (course_id, title, position) values ('${row.id}', 'Introduction', 1) returning id`)).rows[0].id;
+    await db.exec(`insert into lessons (chapter_id, course_id, title, position, content_status, body_md, is_free_preview) values
+      ('${ch}', '${row.id}', 'Leçon d''aperçu', 1, 'published', 'Texte public de la leçon d''aperçu.', true),
+      ('${ch}', '${row.id}', 'Leçon payante', 2, 'published', 'Texte réservé aux apprenants.', false),
+      ('${ch}', '${row.id}', 'Brouillon', 3, 'draft', 'Pas encore publié.', false);`);
+  });
+  it("exposes nothing while the module is not published", async () => {
+    expect((await as(null, () => db.query(`select public_syllabus('${courseSlug}') as s`))).rows[0]).toEqual({ s: null });
+    expect((await as(null, () => db.query(`select public_preview_lesson('${courseSlug}') as p`))).rows[0]).toEqual({ p: null });
+  });
+  it("shows titles only, never the paid lesson text, once published", async () => {
+    await db.exec(`update courses set status = 'published' where slug = '${courseSlug}'`);
+    const s = (await as(null, () => db.query<{ s: { lessons: number; chapters: { lessons: { title: string; free_preview: boolean }[] }[] } }>(`select public_syllabus('${courseSlug}') as s`))).rows[0].s;
+    expect(s.lessons).toBe(2);
+    expect(s.chapters[0].lessons.map((l) => l.title)).toEqual(["Leçon d'aperçu", "Leçon payante"]);
+    expect(JSON.stringify(s)).not.toContain("réservé aux apprenants");
+    expect(JSON.stringify(s)).not.toContain("Brouillon");
+  });
+  it("serves only the free preview lesson to anyone", async () => {
+    const p = (await as(null, () => db.query<{ p: { title: string; body_md: string } }>(`select public_preview_lesson('${courseSlug}') as p`))).rows[0].p;
+    expect(p.title).toBe("Leçon d'aperçu");
+    expect(p.body_md).toContain("Texte public");
+    await db.exec(`update lessons set is_free_preview = false where title = 'Leçon d''aperçu'`);
+    expect((await as(null, () => db.query(`select public_preview_lesson('${courseSlug}') as p`))).rows[0]).toEqual({ p: null });
+  });
+});

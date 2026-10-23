@@ -5,6 +5,7 @@ import { InterestForm } from "@/components/interest-form";
 import { Badge, ButtonLink, Container, kickerCls } from "@/components/ui";
 import { difficultyLabel, formatEuro, getCourse, getCourseByCode, isPurchasable, pathsOfCourse } from "@/lib/catalog";
 import { getCatalog } from "@/lib/catalog/load";
+import { getPreview, getSyllabus } from "@/lib/catalog/syllabus";
 import { site } from "@/lib/site";
 
 export const revalidate = 60;
@@ -19,6 +20,10 @@ const included = ["Formation vidéo à la demande", "Exercices pratiques", "Ress
 const faq = [
   { q: "Combien de temps ai-je accès au module ?", a: "12 mois à partir de la date d'achat." },
   { q: "Le livrable est-il noté par une IA ?", a: "Non. Les quiz sont corrigés automatiquement ; le livrable pratique est relu par le formateur." },
+  { q: "Pour qui est ce module ?", a: "Pour les professionnels du produit et du numérique qui veulent comprendre et appliquer le sujet dans leur métier. Les prérequis recommandés sont indiqués plus haut ; aucun n'est une condition d'achat." },
+  { q: "Combien de temps faut-il y consacrer ?", a: "La durée estimée figure en haut de page. Le contenu se suit à votre rythme pendant la durée d'accès, sur ordinateur, tablette ou téléphone, et chaque texte peut être écouté." },
+  { q: "Que se passe-t-il à la fin du module ?", a: "Si vous réussissez le quiz et que votre livrable est accepté, vous recevez une attestation de réussite privée, avec un lien de vérification que vous pouvez partager. Elle ne constitue pas une certification d'État." },
+  { q: "Faut-il prendre un parcours plutôt qu'un module ?", a: "Si vous visez tout un parcours, il revient moins cher que l'achat module par module (AI Mastery aussi pour l'ensemble) : comparez sur la page Tarifs ou laissez le conseiller vous orienter." },
   { q: "Puis-je télécharger les vidéos ?", a: "Les vidéos sont diffusées en streaming sécurisé. Les ressources de chaque leçon sont téléchargeables." },
 ];
 
@@ -31,9 +36,10 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
   const paths = pathsOfCourse(course, catalog);
   const purchasable = isPurchasable(course, catalog);
   const published = course.status === "published";
+  const [syllabus, preview] = await Promise.all([getSyllabus(course.slug), getPreview(course.slug)]);
   const prereqs = course.prerequisites.map((c) => getCourseByCode(c, catalog)).filter(Boolean);
 
-  const jsonLd = { "@context": "https://schema.org", "@type": "Course", name: course.title, description: course.summary, provider: { "@type": "Organization", name: site.name, url: site.url } };
+  const jsonLd = { "@context": "https://schema.org", "@type": "Course", name: course.title, description: course.summary, inLanguage: "fr", educationalLevel: difficultyLabel[course.difficulty], timeRequired: `PT${Math.round(course.durationHours)}H`, provider: { "@type": "Organization", name: site.name, url: site.url }, ...(purchasable && priceCents != null ? { offers: { "@type": "Offer", price: (priceCents / 100).toFixed(2), priceCurrency: "EUR", availability: "https://schema.org/InStock", url: `${site.url}/formations/${course.slug}` } } : {}) };
   const box = "rounded-xl border border-border bg-surface p-6";
 
   return (
@@ -52,7 +58,14 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
             <div className="flex flex-wrap gap-6 text-sm text-muted"><span><strong className="font-semibold text-fg">Accès :</strong> 12 mois</span><span><strong className="font-semibold text-fg">Durée estimée :</strong> ~{course.durationHours} h</span><span><strong className="font-semibold text-fg">Niveau :</strong> {difficultyLabel[course.difficulty]}</span></div>
           </section>
 
-          <section aria-label="Aperçu"><div className="flex aspect-video items-center justify-center rounded-2xl border border-dashed border-muted p-6 text-center text-[15px] text-muted">Aperçu gratuit : une leçon d'essai sera proposée avec le contenu publié.</div></section>
+          {preview ? (
+            <section aria-label="Aperçu gratuit" className="rounded-2xl border border-border bg-surface-2 p-6 sm:p-8">
+              <Badge tone="accent">Aperçu gratuit, sans compte</Badge>
+              <h2 className="mt-3 text-2xl font-bold">Lisez une vraie leçon avant de décider</h2>
+              <p className="mt-2 text-muted">« {preview.title} » : le même format que dans le module, avec ses schémas et la lecture audio.</p>
+              <div className="mt-5"><ButtonLink href={`/formations/${course.slug}/apercu`} variant="secondary">Lire la leçon d'aperçu</ButtonLink></div>
+            </section>
+          ) : null}
 
           <section>
             <h2 className="mb-2 text-2xl font-bold">À la fin de cette formation</h2>
@@ -62,10 +75,20 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
           </section>
 
           <section>
-            <h2 className="mb-6 text-2xl font-bold">Programme</h2>
-            <div>{course.topics.map((t, i) => (
-              <details key={t} className="border-t border-border py-2"><summary className="flex min-h-11 items-center gap-4 font-semibold"><span className="min-w-6 text-accent">{String(i + 1).padStart(2, "0")}</span>{t}</summary><p className="mb-3 ml-10 text-[15px] text-muted">{purchasable ? "Leçons, exercices et ressources de ce thème." : "Détail des leçons publié avec le contenu validé par le formateur."}</p></details>
-            ))}<div className="border-t border-border" /></div>
+            <h2 className="mb-2 text-2xl font-bold">Programme détaillé</h2>
+            {syllabus && syllabus.lessons > 0 && (
+              <p className="mb-6 text-muted">{syllabus.lessons} leçons · environ {Math.max(1, Math.round(syllabus.reading_minutes / 5) * 5)} min de lecture · {syllabus.quiz_questions} questions de quiz{syllabus.assignment ? " · 1 livrable relu par le formateur" : ""}. Les vidéos du formateur s'ajoutent à ces textes.</p>
+            )}
+            {syllabus && syllabus.chapters.length > 0 ? (
+              <div>{syllabus.chapters.map((ch, i) => (
+                <details key={ch.title} className="border-t border-border py-2" open={i === 0}><summary className="flex min-h-11 items-center gap-4 font-semibold"><span className="min-w-6 text-accent">{String(i + 1).padStart(2, "0")}</span>{ch.title}<span className="ml-auto text-sm font-normal text-muted">{ch.lessons.length} leçons</span></summary>
+                  <ul className="mb-3 ml-10 flex flex-col gap-1.5 text-[15px] text-muted">{ch.lessons.map((l) => <li key={l.id}>{l.title}{l.kind === "exercise" ? " · exercice" : ""}{l.free_preview ? <span className="ml-2"><Badge tone="accent">Aperçu gratuit</Badge></span> : null}</li>)}</ul></details>
+              ))}<div className="border-t border-border" /></div>
+            ) : (
+              <div>{course.topics.map((t, i) => (
+                <details key={t} className="border-t border-border py-2"><summary className="flex min-h-11 items-center gap-4 font-semibold"><span className="min-w-6 text-accent">{String(i + 1).padStart(2, "0")}</span>{t}</summary></details>
+              ))}<div className="border-t border-border" /></div>
+            )}
           </section>
 
           <section>
@@ -84,7 +107,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
           </section>
         </div>
 
-        <aside aria-label="Achat" className="flex min-w-0 max-w-[420px] flex-[1_1_340px] flex-col gap-6">
+        <aside aria-label="Achat" className="flex min-w-0 max-w-[420px] flex-[1_1_340px] flex-col gap-6 lg:sticky lg:top-6">
           <div className="flex flex-col gap-4 rounded-2xl border border-border bg-surface p-8">
             {purchasable ? (
               <>

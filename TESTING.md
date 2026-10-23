@@ -2,16 +2,16 @@
 
 ## Ce qui tourne
 
-La CI GitHub Actions (`.github/workflows/ci.yml`) exécute types, lint, les 221 tests, l'audit des dépendances, le build, puis les 15 parcours Playwright sur Chromium (base embarquée, build de production) : **succès constaté sur GitHub** pour le commit `6ac17d7`.
+La CI GitHub Actions (`.github/workflows/ci.yml`) exécute types, lint, les 330 tests, l'audit des dépendances, le build, puis les 17 parcours Playwright sur Chromium (base embarquée, build de production) : **succès constaté sur GitHub** pour le commit `6ac17d7`.
 
 | Niveau | Commande | Contenu |
 |---|---|---|
 | Types, lint | `npm run typecheck` / `npm run lint` | propres |
-| Unitaires, base, intégration | `npm test` | **221 tests, 17 fichiers** |
+| Unitaires, base, intégration | `npm test` | **330 tests, 17 fichiers** |
 | Bout en bout | `npx playwright test` | **9 parcours** dans Chrome, sur un build de production |
 | Audit | `npm audit --omit=dev` | 0 vulnérabilité |
 
-### Détail des 221 tests
+### Détail des 330 tests
 
 - **Base de données (PGlite, vraies migrations)** : `db`, `learning`, `commerce`, `admin`, `dev-fixture` — accès par entitlement, expiration, correction des quiz (ensemble exact, réponse libre exclue, limite de tentatives), complétion configurable, attestation unique, achat (offre fermée, déjà détenu, session falsifiée, devise, rejeu, retry après échec), remboursements et litiges, publication conditionnée, historique de prix, ordre, cycles de prérequis, accès manuels motivés, métriques, audit en écriture seule, inscriptions d'intérêt.
 - **Couche d'accès sur TCP réel** (`db-layer`) : lecture publique, isolation par utilisateur, aucune fuite de rôle ni d'identité sur connexion réutilisée, rôle de confiance, tables d'auth inaccessibles, annulation sur erreur, paramètres liés, dates en ISO, mode connexion unique.
@@ -22,7 +22,7 @@ La CI GitHub Actions (`.github/workflows/ci.yml`) exécute types, lint, les 221 
 
 **Tests par mutation (manuels)** : pour les règles critiques (correction des quiz, garde administrateur, vérification de session Stripe, révocation au remboursement, historique des prix, complétion, préparation à la publication), la règle a été volontairement cassée et la suite a bien échoué, puis a été restaurée.
 
-### Les 15 parcours Playwright
+### Les 17 parcours Playwright
 
 visiteur (catalogue, module non achetable) · conseiller · inscription d'intérêt avec consentement · inscription, refus avant vérification, connexion · lecteur fermé sans accès · parcours apprenant complet (leçons, notes, progression persistante après reconnexion, quiz, livrable) · administrateur (10 écrans, relecture, attestation vérifiable publiquement, journal) · création et publication d'un module avec contrôle de complétude · contrôles d'accès (apprenant refusé en admin, leçon d'autrui, API sans session).
 

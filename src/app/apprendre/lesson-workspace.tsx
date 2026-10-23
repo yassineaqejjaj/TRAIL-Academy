@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { Trash2 } from "lucide-react";
+import { ReadAloud } from "@/components/read-aloud";
 import { Markdown } from "@/components/markdown";
 import { Button, Notice } from "@/components/ui";
 import { addBookmark, addNote, deleteBookmark, deleteNote } from "./actions";
@@ -25,7 +26,7 @@ export interface WorkspaceProps {
 
 const fmt = (s: number) => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
 const SPEEDS = [0.75, 1, 1.25, 1.5, 2];
-type Tab = "Notes" | "Ressources" | "Transcription";
+type Tab = "Texte" | "Notes" | "Ressources" | "Transcription";
 
 export function LessonWorkspace(p: WorkspaceProps) {
   const router = useRouter();
@@ -34,7 +35,7 @@ export function LessonWorkspace(p: WorkspaceProps) {
   const [saveError, setSaveError] = useState(false);
   const [noteText, setNoteText] = useState("");
   const [speed, setSpeed] = useState(1);
-  const [tab, setTab] = useState<Tab>("Notes");
+  const [tab, setTab] = useState<Tab>(p.playback && "url" in p.playback && p.bodyText ? "Texte" : "Notes");
   const [pending, startTransition] = useTransition();
   const url = "url" in p.playback ? p.playback.url : null;
 
@@ -80,7 +81,8 @@ export function LessonWorkspace(p: WorkspaceProps) {
   const run = (fn: () => Promise<unknown>) => startTransition(async () => { await fn(); router.refresh(); });
   const finishAndContinue = async () => { const ok = await save(true); if (ok && p.nextHref) router.push(p.nextHref); };
 
-  const tabs: Tab[] = ["Notes", "Ressources", "Transcription"];
+  const hasVideo = Boolean(url);
+  const tabs: Tab[] = [...(hasVideo && p.bodyText ? (["Texte"] as Tab[]) : []), "Notes", "Ressources", "Transcription"];
   return (
     <div className="flex flex-col gap-6">
       {url ? (
@@ -97,7 +99,7 @@ export function LessonWorkspace(p: WorkspaceProps) {
           </div>
         </div>
       ) : p.bodyText ? (
-        <article className="rounded-xl border border-border bg-surface p-6 sm:p-8"><Markdown>{p.bodyText}</Markdown></article>
+        <div className="space-y-4"><ReadAloud targetId="lesson-text" /><article id="lesson-text" className="rounded-xl border border-border bg-surface p-6 sm:p-8"><Markdown>{p.bodyText}</Markdown></article></div>
       ) : (
         <Notice title="Contenu vidéo indisponible">{"unavailable" in p.playback && p.playback.unavailable === "provider_not_configured" ? "Le fournisseur vidéo n'est pas configuré dans cet environnement." : "Aucune vidéo n'a encore été ajoutée à cette leçon."}</Notice>
       )}
@@ -122,6 +124,9 @@ export function LessonWorkspace(p: WorkspaceProps) {
           {tabs.map((t) => <button key={t} type="button" role="tab" id={`tab-${t}`} aria-selected={tab === t} aria-controls={`panel-${t}`} onClick={() => setTab(t)} className={`min-h-12 border-b-[3px] px-4 text-[15px] font-semibold ${tab === t ? "border-accent text-fg" : "border-transparent text-muted"}`}>{t}</button>)}
         </div>
         <div role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`} className="py-6">
+          {tab === "Texte" && p.bodyText && (
+            <div className="space-y-4"><ReadAloud targetId="lesson-text" /><article id="lesson-text" className="rounded-xl border border-border bg-surface p-6 sm:p-8"><Markdown>{p.bodyText}</Markdown></article></div>
+          )}
           {tab === "Notes" && (
             <div>
               <form onSubmit={(e) => { e.preventDefault(); const body = noteText.trim(); if (!body) return; run(async () => { const r = await addNote({ lessonId: p.lessonId, body, position: videoRef.current ? Math.floor(videoRef.current.currentTime) : undefined }); if (r.ok) setNoteText(""); }); }}>

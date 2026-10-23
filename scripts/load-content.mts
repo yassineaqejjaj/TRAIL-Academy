@@ -5,6 +5,9 @@
  *   DATABASE_URL=… [DATABASE_SSL=require] npm run content:load -- --module M1 [--replace]
  *   DATABASE_URL=… npm run content:load -- --blog
  *
+ *   DATABASE_URL=… npm run content:load -- --module M1 --sync     update lesson texts in place (matched by title), keeping ids, status and learner progress
+ *   DATABASE_URL=… npm run content:load -- --blog --sync          same for articles (matched by slug)
+ *
  * A module that already has chapters is left untouched unless --replace is given; --replace refuses to run when learners
  * have progress, quiz attempts or submissions for that module.
  */
@@ -29,6 +32,25 @@ const client = new pg.Client({ connectionString: url, ssl });
 await client.connect();
 await client.query("set search_path = public");
 
+/** Updates the text of existing lessons (same course, same title) and the assignment instructions without touching ids, status or progress. */
+async function syncModule(m: Module) {
+  const course = (await client.query<{ id: string }>("select id from courses where code = $1", [m.course])).rows[0];
+  if (!course) throw new Error(`unknown course ${m.course}`);
+  let updated = 0; const missing: string[] = [];
+  await client.query("begin");
+  try {
+    for (const l of m.chapters.flatMap((c) => c.lessons)) {
+      const r = await client.query("update lessons set body_md = $3 where course_id = $1 and title = $2 and body_md is distinct from $3", [course.id, l.title, l.body_md]);
+      const exists = r.rowCount ? true : (await client.query("select 1 from lessons where course_id = $1 and title = $2", [course.id, l.title])).rowCount;
+      if (!exists) missing.push(l.title);
+      updated += r.rowCount ?? 0;
+    }
+    await client.query("update assignments set instructions_md = $2 where course_id = $1 and title = $3", [course.id, m.assignment.instructions_md, m.assignment.title]);
+    await client.query("commit");
+    console.info(`${m.course}: ${updated} lesson text(s) updated${missing.length ? `, ${missing.length} not found: ${missing.join(" | ")}` : ""}`);
+  } catch (e) { await client.query("rollback"); throw e; }
+}
+
 async function loadModule(m: Module) {
   const course = (await client.query<{ id: string }>("select id from courses where code = $1", [m.course])).rows[0];
   if (!course) throw new Error(`unknown course ${m.course}`);
@@ -51,7 +73,7 @@ async function loadModule(m: Module) {
     for (const [ci, c] of m.chapters.entries()) {
       const ch = (await client.query<{ id: string }>("insert into chapters (course_id, title, position) values ($1, $2, $3) returning id", [course.id, c.title, ci + 1])).rows[0];
       for (const [li, l] of c.lessons.entries()) {
-        await client.query("insert into lessons (chapter_id, course_id, title, kind, position, content_status, body_md, required) values ($1, $2, $3, $4, $5, 'draft', $6, true)", [ch.id, course.id, l.title, l.kind, li + 1, l.body_md]);
+        await client.query("insert into lessons (chapter_id, course_id, title, kind, position, content_status, body_md, required, is_free_preview) values ($1, $2, $3, $4, $5, 'draft', $6, true, $7)", [ch.id, course.id, l.title, l.kind, li + 1, l.body_md, ci === 0 && li === 0]);
         lessons++;
       }
     }
@@ -79,9 +101,9 @@ async function loadBlog() {
     const related = meta.courses ? (await client.query<{ id: string }>("select id from courses where code = any($1)", [meta.courses.split(",").map((s) => s.trim())])).rows.map((r) => r.id) : [];
     const res = await client.query(
       `insert into blog_posts (slug, title, excerpt, body_md, category, related_course_ids, seo_title, seo_description, status)
-       values ($1, $2, $3, $4, $5, $6, $7, $8, 'draft') on conflict (slug) do nothing`,
+       values ($1, $2, $3, $4, $5, $6, $7, $8, 'draft') on conflict (slug) do ${flag("--sync") ? "update set body_md = excluded.body_md, title = excluded.title, excerpt = excluded.excerpt, category = excluded.category, related_course_ids = excluded.related_course_ids" : "nothing"}`,
       [meta.slug, meta.title, meta.excerpt, body, meta.category ?? null, related, meta.seo_title ?? meta.title, meta.excerpt]);
-    console.info(`${meta.slug}: ${res.rowCount ? "created (draft)" : "already exists, left unchanged"}`);
+    console.info(`${meta.slug}: ${flag("--sync") ? "synced" : res.rowCount ? "created (draft)" : "already exists, left unchanged"}`);
   }
 }
 
@@ -91,7 +113,7 @@ try {
   if (code || flag("--all")) {
     for (const f of readdirSync("content/modules").filter((x) => x.endsWith(".json")).sort()) {
       const m = JSON.parse(readFileSync(`content/modules/${f}`, "utf8")) as Module;
-      if (flag("--all") || m.course === code) await loadModule(m);
+      if (flag("--all") || m.course === code) await (flag("--sync") ? syncModule(m) : loadModule(m));
     }
   }
 } finally { await client.end(); }

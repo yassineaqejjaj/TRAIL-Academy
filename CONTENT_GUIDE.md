@@ -46,3 +46,12 @@ DATABASE_URL=… DATABASE_SSL=require npm run content:load -- --all --blog
 ```
 
 Un module qui a déjà des chapitres est ignoré (`--replace` le recrée, sauf si des apprenants ont de l'activité). Chaque texte est un **complément** à vos vidéos, réécrit à partir de vos slides : relisez-le, ajoutez vos vidéos, puis publiez leçon par leçon (Administration → Cours) et les articles (Contenu du site). Le module M18 (AI-Powered Discovery) n'a pas encore de contenu : les slides sont attendus. M3 et M9 ont été conçus à partir du programme du catalogue, sans slides : relisez-les avec une attention particulière.
+
+## Schémas, lecture audio, aperçu gratuit
+
+- **Schémas** : 114 schémas Mermaid sont intégrés aux leçons (et 3 aux articles) : écrits en texte dans un bloc ```` ```mermaid ````, rendus en SVG (clair/sombre), décrits pour les lecteurs d'écran (`accTitle`, `accDescr`) et légendés. Règles dans `content/FORMAT.md`, vérifiées par les tests.
+- **Lecture audio** : un bouton « Écouter » lit les leçons texte et les articles avec la synthèse vocale du navigateur (gratuite, sans compte). Le code est ignoré, les schémas sont annoncés par leur titre, le bloc lu est surligné. Selon le navigateur, la voix peut être traitée par le fournisseur du navigateur.
+- **Aperçu gratuit** : la première leçon de chaque module est lisible sans compte sur `/formations/<module>/apercu`. Pour changer de leçon d'aperçu : case « Aperçu gratuit » dans la leçon (Administration → Cours).
+- **Programme public** : la page d'un module liste ses chapitres et leçons (titres uniquement, jamais le texte).
+- **Avec vos vidéos** : quand une leçon a une vidéo, son texte reste disponible dans l'onglet « Texte » sous le lecteur.
+- Mise à jour des textes en ligne sans toucher aux ids, statuts ni progressions : `npm run content:load -- --all --blog --sync`.

@@ -20,6 +20,18 @@ Formulez le problème sous cette forme : *à quel moment, pour qui, quelle préd
 
 ## Question 2 : le machine learning est-il nécessaire ?
 
+```mermaid
+flowchart TD
+  accTitle: Faut-il du machine learning ?
+  accDescr: Une règle simple suffit-elle ? Si oui, on l'utilise. Sinon, il faut des exemples étiquetés en nombre suffisant pour entraîner un modèle.
+  A["Une règle simple suffit-elle ?"] -->|oui| B["Utiliser la règle"]
+  A -->|non| C["Dispose-t-on d'exemples étiquetés ?"]
+  C -->|non| D["Collecter des données d'abord"]
+  C -->|oui| E["Tester un modèle simple et le comparer à la règle"]
+```
+*Figure 1 : arbre de décision avant de choisir le machine learning.*
+
+
 Le ML est adapté quand la règle est **difficile à écrire** mais que des **exemples** abondent. Si le raisonnement tient en quelques règles stables, un moteur de règles est plus simple, moins cher, plus facile à expliquer et à maintenir. Si une simple statistique ou un tri suffit, commencez par là.
 
 Une bonne pratique consiste à définir une **base de référence** (baseline) très simple, par exemple « toujours prédire la catégorie la plus fréquente » ou une règle manuelle. Un modèle de ML n'a d'intérêt que s'il fait nettement mieux que cette référence.
