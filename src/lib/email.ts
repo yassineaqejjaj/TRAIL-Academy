@@ -1,21 +1,32 @@
+import "server-only";
+import nodemailer from "nodemailer";
+import type { Transporter } from "nodemailer";
 import type { ContactInput } from "./contact";
 
+export interface Message { to: string; subject: string; text: string; replyTo?: string }
+
+let transporter: Transporter | undefined;
+
 /**
- * Email adapter (Resend). Reports failure instead of pretending to deliver when credentials are absent.
- * UNVERIFIED against the real Resend API until credentials are supplied.
+ * Email over plain SMTP (nodemailer): works with any provider or a self-hosted relay such as Postal or Mailpit (dev).
+ *   SMTP_URL=smtp://user:pass@host:587      EMAIL_FROM="TRAIL Academy <no-reply@example.com>"
+ * `EMAIL_TRANSPORT=console` prints messages instead of sending them (local development and e2e tests only).
+ * Without configuration it reports failure; it never pretends to deliver.
  */
-export async function sendEmail(msg: { to: string; subject: string; text: string; replyTo?: string }): Promise<{ ok: boolean; id?: string }> {
-  const key = process.env.RESEND_API_KEY;
+export async function sendEmail(msg: Message): Promise<{ ok: boolean; id?: string }> {
   const from = process.env.EMAIL_FROM;
-  if (!key || !from) return { ok: false };
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${key}`, "content-type": "application/json" },
-    body: JSON.stringify({ from, to: msg.to, subject: msg.subject, text: msg.text, reply_to: msg.replyTo }),
-  }).catch(() => null);
-  if (!res?.ok) return { ok: false };
-  const json = (await res.json().catch(() => ({}))) as { id?: string };
-  return { ok: true, id: json.id };
+  if (process.env.EMAIL_TRANSPORT === "console" && process.env.NODE_ENV !== "production") {
+    console.info(`[email] to=${msg.to} subject=${msg.subject}\n${msg.text}\n[/email]`);
+    return { ok: true, id: "console" };
+  }
+  if (!process.env.SMTP_URL || !from) return { ok: false };
+  try {
+    transporter ??= nodemailer.createTransport(process.env.SMTP_URL);
+    const info = await transporter.sendMail({ from, to: msg.to, subject: msg.subject, text: msg.text, replyTo: msg.replyTo });
+    return { ok: true, id: info.messageId };
+  } catch {
+    return { ok: false };
+  }
 }
 
 export async function deliverLead(lead: ContactInput): Promise<{ ok: boolean }> {

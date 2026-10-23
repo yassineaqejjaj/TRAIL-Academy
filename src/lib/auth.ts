@@ -1,26 +1,29 @@
 import "server-only";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { supabaseConfigured } from "./env";
-import { createClient } from "./supabase/server";
+import { getAuth } from "./auth/config";
+import { asUser } from "./db";
+import { dbConfigured } from "./db/pool";
 
-export async function getUser() {
-  if (!supabaseConfigured()) return null;
-  const supabase = await createClient();
-  const { data } = await supabase.auth.getUser(); // validates the JWT with Supabase Auth
-  return data.user;
+export interface SessionUser { id: string; email: string; name: string; emailVerified: boolean }
+
+/** The signed-in user, validated against the database session (not just the cookie), or null. */
+export async function getUser(): Promise<SessionUser | null> {
+  if (!dbConfigured()) return null;
+  const session = await getAuth().api.getSession({ headers: await headers() });
+  return session?.user ? { id: session.user.id, email: session.user.email, name: session.user.name, emailVerified: session.user.emailVerified } : null;
 }
 
-export async function requireUser() {
+export async function requireUser(): Promise<SessionUser> {
   const user = await getUser();
   if (!user) redirect("/connexion");
   return user;
 }
 
-/** Server-side role check. RLS enforces the same rule in the database (is_admin()). */
-export async function requireAdmin() {
+/** Server-side role check. The database enforces the same rule independently (is_admin() in RLS and functions). */
+export async function requireAdmin(): Promise<SessionUser> {
   const user = await requireUser();
-  const supabase = await createClient();
-  const { data } = await supabase.from("user_roles").select("role").eq("user_id", user.id).eq("role", "admin").maybeSingle();
-  if (!data) redirect("/");
+  const row = await asUser(user.id, (q) => q.one("select 1 as ok from user_roles where user_id = $1 and role = 'admin'", [user.id]));
+  if (!row) redirect("/");
   return user;
 }

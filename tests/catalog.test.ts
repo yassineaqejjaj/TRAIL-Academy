@@ -51,7 +51,7 @@ describe("catalog integrity", () => {
     expect(o("private-workshop")).toMatchObject({ priceFrom: true, taxMode: "ht" });
   });
   it("does not allow purchase of unpublished courses", () => {
-    expect(courses.filter(isPurchasable)).toHaveLength(0);
+    expect(courses.filter((c) => isPurchasable(c))).toHaveLength(0);
     expect(courses.filter((c) => c.mvpSlot).map((c) => c.code).sort()).toEqual(["M4", "M5", "M6"]);
   });
   it("filters", () => {

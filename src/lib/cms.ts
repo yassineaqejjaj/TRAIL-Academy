@@ -1,50 +1,36 @@
 import "server-only";
-import { createClient } from "@supabase/supabase-js";
-import { supabaseConfigured } from "./env";
+import { asAnon } from "@/lib/db";
+import { dbConfigured } from "@/lib/db/pool";
 
 export interface SectionContent { title?: string; subtitle?: string; body_md?: string }
 export interface Faq { id: string; question: string; answer: string }
 export interface Testimonial { id: string; author_name: string; author_role: string | null; quote: string }
 export interface Post { id: string; slug: string; title: string; excerpt: string | null; body_md: string; category: string | null; related_course_ids: string[]; seo_title: string | null; seo_description: string | null; published_at: string | null }
 
-/** Public, anonymous reads (RLS only exposes published content). Each helper degrades to "nothing" so pages use their fallbacks. */
-function publicDb() {
-  if (!supabaseConfigured()) return null;
-  return createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, { auth: { persistSession: false } });
+/** Public reads (RLS only exposes published content). Each helper degrades to "nothing" so pages use their built-in copy. */
+async function safe<T>(fallback: T, fn: Parameters<typeof asAnon<T>>[0]): Promise<T> {
+  if (!dbConfigured()) return fallback;
+  try { return await asAnon(fn); } catch { return fallback; }
 }
 
 export async function getSection(page: string, key: string): Promise<SectionContent | null> {
-  const db = publicDb();
-  if (!db) return null;
-  try {
-    const { data: p } = await db.from("pages").select("id").eq("slug", page).eq("status", "published").maybeSingle();
-    if (!p) return null;
-    const { data } = await db.from("page_sections").select("content").eq("page_id", p.id).eq("key", key).maybeSingle();
-    const c = (data?.content ?? null) as SectionContent | null;
+  return safe(null, async (q) => {
+    const row = await q.one<{ content: SectionContent }>(
+      "select s.content from page_sections s join pages p on p.id = s.page_id where p.slug = $1 and p.status = 'published' and s.key = $2", [page, key]);
+    const c = row?.content;
     return c && (c.title || c.subtitle || c.body_md) ? c : null;
-  } catch { return null; }
+  });
 }
 
-export async function getFaq(scope = "global"): Promise<Faq[]> {
-  const db = publicDb();
-  if (!db) return [];
-  try { return ((await db.from("faq_items").select("id, question, answer").eq("scope", scope).eq("status", "published").order("position")).data ?? []) as Faq[]; } catch { return []; }
-}
+export const getFaq = (scope = "global") =>
+  safe<Faq[]>([], (q) => q("select id, question, answer from faq_items where scope = $1 and status = 'published' order by position", [scope]));
 
-export async function getTestimonials(): Promise<Testimonial[]> {
-  const db = publicDb();
-  if (!db) return [];
-  try { return ((await db.from("testimonials").select("id, author_name, author_role, quote").eq("status", "published")).data ?? []) as Testimonial[]; } catch { return []; }
-}
+export const getTestimonials = () =>
+  safe<Testimonial[]>([], (q) => q("select id, author_name, author_role, quote from testimonials where status = 'published'"));
 
 const postCols = "id, slug, title, excerpt, body_md, category, related_course_ids, seo_title, seo_description, published_at";
-export async function getPosts(): Promise<Post[]> {
-  const db = publicDb();
-  if (!db) return [];
-  try { return ((await db.from("blog_posts").select(postCols).eq("status", "published").order("published_at", { ascending: false })).data ?? []) as Post[]; } catch { return []; }
-}
-export async function getPost(slug: string): Promise<Post | null> {
-  const db = publicDb();
-  if (!db) return null;
-  try { return ((await db.from("blog_posts").select(postCols).eq("slug", slug).eq("status", "published").maybeSingle()).data ?? null) as Post | null; } catch { return null; }
-}
+export const getPosts = () =>
+  safe<Post[]>([], (q) => q(`select ${postCols} from blog_posts where status = 'published' order by published_at desc nulls last`));
+
+export const getPost = (slug: string) =>
+  safe<Post | null>(null, (q) => q.one<Post>(`select ${postCols} from blog_posts where slug = $1 and status = 'published'`, [slug]));

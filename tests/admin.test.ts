@@ -1,7 +1,6 @@
 // @vitest-environment node
-import { PGlite } from "@electric-sql/pglite";
-import { pgcrypto } from "@electric-sql/pglite/contrib/pgcrypto";
-import { readFileSync } from "node:fs";
+import type { PGlite } from "@electric-sql/pglite";
+import { addUsers, createTestDb } from "./helpers/db";
 import { beforeAll, describe, expect, it } from "vitest";
 
 const ADMIN = "00000000-0000-0000-0000-0000000000aa";
@@ -16,20 +15,9 @@ const admin = <T = unknown>(sql: string, params: unknown[] = []) => as(ADMIN, as
 const id = async (sql: string) => (await one<{ id: string }>(sql)).id;
 
 beforeAll(async () => {
-  db = new PGlite({ extensions: { pgcrypto } });
-  await db.exec(`create role anon nologin; create role authenticated nologin; create role service_role nologin bypassrls;
-    create schema auth; create schema storage;
-    create table auth.users (id uuid primary key, email text, raw_user_meta_data jsonb default '{}');
-    create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('app.uid', true), '')::uuid $$;
-    create table storage.buckets (id text primary key, name text, public boolean);
-    create table storage.objects (id uuid, bucket_id text, name text); alter table storage.objects enable row level security;
-    create function storage.foldername(name text) returns text[] language sql as $$ select string_to_array(name, '/') $$;`);
-  for (const f of ["0001_schema", "0002_rls", "0003_learning", "0004_commerce", "0005_admin"]) await db.exec(readFileSync(`supabase/migrations/${f}.sql`, "utf8"));
-  await db.exec(`grant usage on schema public, auth to anon, authenticated, service_role;
-    grant select, insert, update, delete on all tables in schema public to authenticated, service_role;
-    grant select on all tables in schema public to anon;`);
-  await db.exec(readFileSync("supabase/seed.sql", "utf8"));
-  await db.exec(`insert into auth.users (id, email) values ('${ADMIN}', 'a@t.local'), ('${U1}', 'u1@t.local'), ('${U2}', 'u2@t.local'); insert into user_roles values ('${ADMIN}', 'admin');`);
+  db = await createTestDb();
+  await addUsers(db, [[ADMIN, "a@t.local"], [U1, "u1@t.local"], [U2, "u2@t.local"]]);
+  await db.exec(`insert into user_roles values ('${ADMIN}', 'admin');`);
 });
 
 describe("authorization", () => {

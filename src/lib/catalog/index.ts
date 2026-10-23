@@ -10,6 +10,7 @@ export const staticCatalog: Catalog = {
   courses,
   learningPaths,
   offers,
+  openCourses: [],
   coursePrices: Object.fromEntries(courses.map((c) => [c.slug, offers.find((o) => o.slug === (advancedModuleCodes.includes(c.code) ? "module-avance" : "module-standard"))!.amountCents!])),
 };
 
@@ -23,12 +24,12 @@ export const coursesOfPath = (path: LearningPath, c: Catalog = staticCatalog): C
 export const pathsOfCourse = (course: Course, c: Catalog = staticCatalog): LearningPath[] =>
   c.learningPaths.filter((p) => p.courseCodes.includes(course.code));
 
-/** A module can be purchased only when published (validated content). */
-export const isPurchasable = (course: Course): boolean => course.status === "published";
+/** A module is on sale only when its content is published AND its offer was explicitly opened (the database enforces both). */
+export const isPurchasable = (course: Course, c: Catalog = staticCatalog): boolean => course.status === "published" && c.openCourses.includes(course.slug);
 
 export const isPathPurchasable = (path: LearningPath, c: Catalog = staticCatalog): boolean => {
   const list = coursesOfPath(path, c);
-  return list.length > 0 && list.every(isPurchasable);
+  return list.length > 0 && list.every((x) => x.status === "published") && c.offers.find((o) => o.slug === path.slug)?.active === true;
 };
 
 export const totalHours = (list: Course[]): number => list.reduce((sum, x) => sum + x.durationHours, 0);

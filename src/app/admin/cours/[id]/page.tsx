@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge, Button, Notice } from "@/components/ui";
-import { adminDb } from "@/lib/admin/ctx";
+import { adminPage } from "@/lib/admin/ctx";
 import { statusLabel } from "@/lib/catalog";
 import { Check, Field, Flash, Input, Panel, Select, Textarea } from "../../ui";
 import { addPrerequisite, publishCourse, removePrerequisite, unpublishCourse, updateCourse } from "../actions";
@@ -15,17 +15,20 @@ const label: Record<string, string> = { no_published_lessons: "Aucune leçon pub
 export default async function AdminCourse({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ ok?: string; error?: string }> }) {
   const { id } = await params;
   const sp = await searchParams;
-  const { db } = await adminDb();
-  const { data: c } = await db.from("courses").select("*").eq("id", id).maybeSingle();
-  if (!c) notFound();
-  const [{ data: phases }, { data: others }, { data: prereqs }, { data: readiness }] = await Promise.all([
-    db.from("learning_phases").select("id, title").order("id"),
-    db.from("courses").select("id, code, title").neq("id", id).order("position"),
-    db.from("course_prerequisites").select("prerequisite_id").eq("course_id", id),
-    db.rpc("course_readiness", { p_course: id }),
-  ]);
-  const preIds = new Set((prereqs ?? []).map((p) => p.prerequisite_id));
-  const issues = (readiness ?? []) as { code: string; detail?: string }[];
+  const data = await adminPage(async (q) => {
+    const c = await q.one<Record<string, unknown> & { id: string; code: string; slug: string; title: string; summary: string; status: string; phase_id: number; difficulty: string; duration_hours: string; deliverable: string | null; seo_title: string | null; seo_description: string | null; topics: string[]; tools: string[]; outcomes: string[]; completion_rules: Record<string, boolean> }>("select * from courses where id = $1", [id]);
+    if (!c) return null;
+    return {
+      c,
+      phases: await q<{ id: number; title: string }>("select id, title from learning_phases order by id"),
+      others: await q<{ id: string; code: string; title: string }>("select id, code, title from courses where id <> $1 order by position", [id]),
+      prereqs: await q<{ prerequisite_id: string }>("select prerequisite_id from course_prerequisites where course_id = $1", [id]),
+      issues: (await q.one<{ r: { code: string; detail?: string }[] }>("select course_readiness($1) as r", [id]))!.r,
+    };
+  });
+  if (!data) notFound();
+  const { c, phases, others, prereqs, issues } = data;
+  const preIds = new Set(prereqs.map((p) => p.prerequisite_id));
   const rules = (c.completion_rules ?? {}) as Record<string, boolean>;
   const published = c.status === "published";
 
@@ -58,7 +61,7 @@ export default async function AdminCourse({ params, searchParams }: { params: Pr
           <Field label="Titre"><Input name="title" defaultValue={c.title} required /></Field>
           <Field label="Slug (URL)"><Input name="slug" defaultValue={c.slug} required /></Field>
           <div className="sm:col-span-2"><Field label="Résumé"><Textarea name="summary" defaultValue={c.summary} rows={3} required /></Field></div>
-          <Field label="Phase"><Select name="phaseId" defaultValue={c.phase_id}>{(phases ?? []).map((p) => <option key={p.id} value={p.id}>{p.title}</option>)}</Select></Field>
+          <Field label="Phase"><Select name="phaseId" defaultValue={c.phase_id}>{phases.map((p) => <option key={p.id} value={p.id}>{p.title}</option>)}</Select></Field>
           <Field label="Niveau"><Select name="difficulty" defaultValue={c.difficulty}><option value="beginner">Débutant</option><option value="intermediate">Intermédiaire</option><option value="advanced">Avancé</option></Select></Field>
           <Field label="Durée estimée (heures)"><Input name="durationHours" defaultValue={String(c.duration_hours)} inputMode="decimal" required /></Field>
           <Field label="Livrable pratique"><Input name="deliverable" defaultValue={c.deliverable ?? ""} /></Field>
@@ -76,11 +79,11 @@ export default async function AdminCourse({ params, searchParams }: { params: Pr
       </Panel>
 
       <Panel title="Prérequis">
-        <ul className="space-y-2 text-sm">{(others ?? []).filter((o) => preIds.has(o.id)).map((o) => (
+        <ul className="space-y-2 text-sm">{others.filter((o) => preIds.has(o.id)).map((o) => (
           <li key={o.id} className="flex items-center gap-3"><span><span className="font-mono text-muted">{o.code}</span> {o.title}</span>
             <form action={removePrerequisite.bind(null, id)}><input type="hidden" name="prerequisiteId" value={o.id} /><Button type="submit" variant="ghost" className="px-2 py-1">Retirer</Button></form></li>))}
           {preIds.size === 0 && <li className="text-muted">Aucun prérequis.</li>}</ul>
-        <form action={addPrerequisite.bind(null, id)} className="mt-4 flex gap-2"><Select name="prerequisiteId" aria-label="Module prérequis">{(others ?? []).filter((o) => !preIds.has(o.id)).map((o) => <option key={o.id} value={o.id}>{o.code} — {o.title}</option>)}</Select><Button type="submit" variant="secondary">Ajouter</Button></form>
+        <form action={addPrerequisite.bind(null, id)} className="mt-4 flex gap-2"><Select name="prerequisiteId" aria-label="Module prérequis">{others.filter((o) => !preIds.has(o.id)).map((o) => <option key={o.id} value={o.id}>{o.code} — {o.title}</option>)}</Select><Button type="submit" variant="secondary">Ajouter</Button></form>
       </Panel>
     </>
   );

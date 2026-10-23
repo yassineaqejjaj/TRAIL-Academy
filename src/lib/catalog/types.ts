@@ -54,6 +54,8 @@ export interface Offer {
   note?: string;
   /** Show "à partir de" before the amount. */
   priceFrom?: boolean;
+  /** Open for sale (database `products.active`). Absent in the static seed catalogue, where nothing is open. */
+  active?: boolean;
 }
 
 /** Everything the public site needs, from the database or from the static seed data. */
@@ -65,4 +67,6 @@ export interface Catalog {
   offers: Offer[];
   /** Price in euro cents per course slug; absent when the course has no sellable product. */
   coursePrices: Record<string, number>;
+  /** Slugs of courses whose offer is open for sale (published course + active product + price). */
+  openCourses: string[];
 }

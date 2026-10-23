@@ -1,4 +1,4 @@
-// Generates supabase/seed.sql from the structured catalog so TS data and SQL never drift.
+// Generates db/seed.sql from the structured catalog so TS data and SQL never drift.
 import { writeFileSync } from "node:fs";
 import { advancedModuleCodes, courses, learningPaths, offers, phases } from "../src/lib/catalog/data";
 
@@ -52,5 +52,5 @@ for (const o of offers.filter((x) => x.kind === "enterprise")) {
 insert into prices (product_id, amount_cents, tax_inclusive) select id, ${o.amountCents ?? "null"}, false from p;`);
 }
 out.push("", "insert into system_settings (key, value) values ('legal_review_completed', 'false'::jsonb), ('live_checkout_enabled', 'false'::jsonb);");
-writeFileSync("supabase/seed.sql", out.join("\n") + "\n");
+writeFileSync("db/seed.sql", out.join("\n") + "\n");
 console.log("seed.sql written");

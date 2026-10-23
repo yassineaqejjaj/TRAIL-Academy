@@ -3,8 +3,8 @@ import Link from "next/link";
 import { ButtonLink, Card, Container, EmptyState, ProgressBar, kickerCls } from "@/components/ui";
 import { requireUser } from "@/lib/auth";
 import { getCatalog } from "@/lib/catalog/load";
+import { asUser } from "@/lib/db";
 import { getDashboard } from "@/lib/learning/queries";
-import { createClient } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Mon espace", robots: { index: false } };
@@ -13,19 +13,18 @@ const pendingLabel = { to_submit: "À rendre", in_review: "En relecture", revisi
 
 export default async function AccountPage() {
   const user = await requireUser();
-  const supabase = await createClient();
-  const [{ summaries, pending }, catalog, { data: profile }] = await Promise.all([getDashboard(user.id), getCatalog(), supabase.from("profiles").select("full_name").eq("id", user.id).maybeSingle()]);
+  const [{ summaries, pending }, catalog] = await Promise.all([getDashboard(user.id), getCatalog()]);
   const date = (d: string) => new Date(d).toLocaleDateString("fr-FR");
   const usable = summaries.filter((s) => !s.expired);
   const active = usable.filter((s) => !s.completedAt);
   const expired = summaries.filter((s) => s.expired);
   const attestations = summaries.filter((s) => s.attestationCode);
-  const name = profile?.full_name?.split(" ")[0] ?? user.email?.split("@")[0] ?? "";
+  const name = user.name?.split(" ")[0] || user.email.split("@")[0];
 
   // "Resume" targets the unfinished course with the most progress.
   const resume = [...active].filter((s) => s.resumeLessonId).sort((a, b) => b.percent - a.percent)[0];
   let resumeTitle: string | null = null;
-  if (resume?.resumeLessonId) resumeTitle = (await supabase.from("lessons").select("title").eq("id", resume.resumeLessonId).maybeSingle()).data?.title ?? null;
+  if (resume?.resumeLessonId) resumeTitle = (await asUser(user.id, (q) => q.one<{ title: string }>("select title from lessons where id = $1", [resume.resumeLessonId])))?.title ?? null;
 
   // Active path: the learning path (not the bundle) whose modules the learner holds most of.
   const owned = new Set(usable.map((s) => s.course.code));

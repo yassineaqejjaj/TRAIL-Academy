@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Container, Notice } from "@/components/ui";
-import { supabaseConfigured } from "@/lib/env";
-import { createClient } from "@/lib/supabase/server";
+import { asAnon } from "@/lib/db";
+import { dbConfigured } from "@/lib/db/pool";
 import { PrintButton } from "./print-button";
 
 export const dynamic = "force-dynamic";
@@ -10,10 +10,8 @@ export const metadata: Metadata = { title: "Vérification d'attestation", robots
 interface Attestation { course_title: string; issued_at: string; holder_name: string | null }
 
 async function lookup(code: string): Promise<Attestation | null> {
-  if (!supabaseConfigured() || !/^[0-9a-f]{24}$/.test(code)) return null;
-  const supabase = await createClient();
-  const { data } = await supabase.rpc("verify_attestation", { p_code: code });
-  return (data as Attestation[] | null)?.[0] ?? null;
+  if (!dbConfigured() || !/^[0-9a-f]{24}$/.test(code)) return null;
+  return asAnon((q) => q.one<Attestation>("select course_title, issued_at, holder_name from verify_attestation($1)", [code]));
 }
 
 export default async function VerifyPage({ params }: { params: Promise<{ code: string }> }) {

@@ -1,24 +1,12 @@
 // @vitest-environment node
-import { PGlite } from "@electric-sql/pglite";
-import { pgcrypto } from "@electric-sql/pglite/contrib/pgcrypto";
-import { readFileSync } from "node:fs";
+import type { PGlite } from "@electric-sql/pglite";
+import { addUsers, createTestDb } from "./helpers/db";
 import { beforeAll, describe, expect, it } from "vitest";
 
-const read = (p: string) => readFileSync(p, "utf8");
 const U1 = "00000000-0000-0000-0000-000000000001";
 const U2 = "00000000-0000-0000-0000-000000000002";
 const ADMIN = "00000000-0000-0000-0000-0000000000aa";
 
-const stubs = `
-create role anon nologin; create role authenticated nologin; create role service_role nologin bypassrls;
-create schema auth; create schema storage;
-create table auth.users (id uuid primary key, email text, raw_user_meta_data jsonb default '{}');
-create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('app.uid', true), '')::uuid $$;
-create table storage.buckets (id text primary key, name text, public boolean);
-create table storage.objects (id uuid default gen_random_uuid(), bucket_id text, name text);
-alter table storage.objects enable row level security;
-create function storage.foldername(name text) returns text[] language sql as $$ select string_to_array(name, '/') $$;
-`;
 
 let db: PGlite;
 const as = async <T>(uid: string | null, fn: () => Promise<T>): Promise<T> => {
@@ -34,16 +22,8 @@ let course: string, lesson1: string, lesson2: string, quiz: string, qSingle: str
 let oSingleOk: string, oSingleBad: string, oMultiA: string, oMultiB: string, oMultiBad: string, assignment: string;
 
 beforeAll(async () => {
-  db = new PGlite({ extensions: { pgcrypto } });
-  await db.exec(stubs);
-  for (const f of ["0001_schema", "0002_rls", "0003_learning"]) await db.exec(read(`supabase/migrations/${f}.sql`));
-  await db.exec(`grant usage on schema public, auth to anon, authenticated, service_role;
-    grant select, insert, update, delete on all tables in schema public to authenticated, service_role;
-    grant select on all tables in schema public to anon;
-    grant select, insert on storage.objects to authenticated;`);
-  await db.exec(read("supabase/seed.sql"));
-  for (const [id, email, name] of [[U1, "u1@test.local", "Alice Test"], [U2, "u2@test.local", "Bob Test"], [ADMIN, "a@test.local", "Admin"]])
-    await db.exec(`insert into auth.users (id, email, raw_user_meta_data) values ('${id}', '${email}', '{"full_name":"${name}"}');`);
+  db = await createTestDb();
+  await addUsers(db, [[U1, "u1@test.local", "Alice Test"], [U2, "u2@test.local", "Bob Test"], [ADMIN, "a@test.local", "Admin"]]);
   await db.exec(`insert into user_roles values ('${ADMIN}', 'admin');`);
 
   // Test fixtures only — clearly synthetic; never part of seed.sql.
@@ -135,11 +115,11 @@ describe("assignments, completion and attestation", () => {
   });
   it("blocks submissions without entitlement or with a foreign storage path", async () => {
     await expect(as(U2, () => db.exec(`insert into assignment_submissions (assignment_id, user_id, body) values ('${assignment}', '${U2}', 'x')`))).rejects.toThrow();
-    await expect(as(U1, () => db.exec(`insert into assignment_submissions (assignment_id, user_id, storage_path) values ('${assignment}', '${U1}', '${U2}/f.pdf')`))).rejects.toThrow();
+    await expect(as(U1, () => db.exec(`insert into assignment_submissions (assignment_id, user_id, storage_path) values ('${assignment}', '${U1}', 'submissions/${U2}/f.pdf')`))).rejects.toThrow();
     await expect(as(U1, () => db.exec(`insert into assignment_submissions (assignment_id, user_id) values ('${assignment}', '${U1}')`))).rejects.toThrow();
   });
   it("lets the learner submit but not self-accept", async () => {
-    await as(U1, () => db.exec(`insert into assignment_submissions (assignment_id, user_id, body, storage_path) values ('${assignment}', '${U1}', 'Mon livrable', '${U1}/livrable.pdf')`));
+    await as(U1, () => db.exec(`insert into assignment_submissions (assignment_id, user_id, body, storage_path) values ('${assignment}', '${U1}', 'Mon livrable', 'submissions/${U1}/livrable.pdf')`));
     await as(U1, () => db.exec(`update assignment_submissions set status = 'accepted'`));
     expect(await count(`select 1 from assignment_submissions where status = 'accepted'`)).toBe(0);
     await expect(as(U1, () => db.exec(`insert into assignment_submissions (assignment_id, user_id, body, status) values ('${assignment}', '${U1}', 'x', 'accepted')`))).rejects.toThrow();

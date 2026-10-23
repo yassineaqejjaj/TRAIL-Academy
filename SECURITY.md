@@ -1,15 +1,25 @@
-# Security and compliance notes
+# Sécurité et conformité
 
-Implemented: server-side auth checks + RLS on all tables; Zod validation on forms/API; in-memory rate limiting (contact, auth) — **replace with a shared store before multi-instance deploys**; security headers (nosniff, frame deny, referrer, permissions policy); honeypot; open-redirect-safe auth callback; no user enumeration on password reset; service-role client isolated behind `server-only`; JSON-LD output escapes `<`.
+## En place
 
-Phase B additions: progress/quiz/completion only via database functions (no client forging; answer key never leaves the database before grading); entitlement checks at RLS and in functions; upload allow-list by extension **and** MIME, 10 MB cap, sanitised names, per-user storage folder enforced by storage RLS and table policy; short-lived (2 h) signed Mux playback tokens and 60 s signed resource downloads issued only after an RLS-filtered lookup; `/api/progress` rate-limited and authenticated; attestation verification returns only course title, date and holder name for an unguessable 96-bit code. Signed video URLs deter casual sharing; downloads cannot be prevented absolutely. Uploaded files are not malware-scanned.
+- **Autorisation en trois couches** (proxy optimiste → code serveur → RLS et fonctions revérifiant `is_admin()`), RLS sur toutes les tables, rôle PostgreSQL par transaction.
+- **Authentification** (Better Auth) : Argon2id, e-mail vérifié obligatoire, cookies `HttpOnly` (et `Secure` en HTTPS), sessions en base, réinitialisation qui révoque les sessions, mêmes messages pour compte inconnu et mauvais mot de passe, limitation de débit en base (5 connexions/min, 5 inscriptions/10 min) plus une seconde limite par IP en mémoire.
+- **Fichiers** : extensions **et** types MIME en liste blanche, taille plafonnée par la politique du bucket, noms assainis, clés préfixées par propriétaire vérifiées côté serveur et par la base, objet confirmé avant enregistrement, liens de téléchargement de 60 s, bucket jamais public.
+- **Vidéo** : aucun lien permanent ; jeton HS256 de 2 h lié à un média ; la passerelle refuse toute traversée de chemin et toute extension inconnue.
+- **Paiement** : signature Stripe vérifiée sur le corps brut, recoupement session/devise, traitement atomique et idempotent, accès accordé uniquement par webhook, remboursement demandé depuis l'admin mais appliqué à la réception du webhook ; clés *live* refusées sans `ALLOW_LIVE_PAYMENTS=true` **et** `LEGAL_REVIEW_COMPLETED=true`.
+- **Entrées** : Zod partout, requêtes SQL toujours paramétrées, Markdown sans HTML brut, JSON-LD échappé, redirections limitées au même site.
+- **Traçabilité** : journal d'audit en écriture seule ; toute action manuelle sensible (accès, remboursement) exige un motif.
+- **Données** : consentements enregistrés (`consent_records`), vérification d'attestation à données minimales, e-mails d'inscription normalisés et dédoublonnés sans énumération.
+- **Secrets** : uniquement variables d'environnement ; `.env*` ignorés ; clé de service jamais exposée au navigateur.
+- **Dépendances** : `npm audit --omit=dev` = 0 vulnérabilité ; vérifié en CI.
 
-Phase C additions: webhook signature verified on the raw body with the Stripe library before anything is read; events applied by one atomic SQL function with an idempotency key; paid access is granted **only** from verified webhooks (the success page is display-only); session-id and currency cross-checks; live Stripe keys refused unless `ALLOW_LIVE_PAYMENTS=true` **and** `LEGAL_REVIEW_COMPLETED=true`; checkout rate-limited per user; purchasability enforced in SQL, not UI; invoices fetched server-side only for the order's owner; cron endpoint requires a bearer secret. Tax is delegated to Stripe Tax (`STRIPE_AUTOMATIC_TAX`), never hard-coded.
+## Limites connues
 
-**Legal blockers before live checkout (not addressed in code, by design):** French rules for professional-training contracts, information and withdrawal-right handling for digital content (no generic waiver is implemented), CGV content, tax registration/configuration, invoice legal mentions.
+- Limiteur en mémoire pour les formulaires (devis, signatures d'intérêt, progression) : à remplacer par un magasin partagé avant de passer à plusieurs instances.
+- Pas de CSP, pas d'analyse antivirus des fichiers envoyés, pas de suppression/export de compte en libre-service, pas de consentement cookies ni de mesure d'audience, pas de supervision d'erreurs branchée.
+- Le streaming signé dissuade le partage ; il n'empêche pas absolument de copier une vidéo.
+- Pool de connexions serverless : prévoir PgBouncer ou un pool réduit.
 
-Phase D additions: admin routes check the role on the server and again in the database (every admin function and every admin RLS policy calls `is_admin()`); audit trail (actor, before/after) on content, pricing, orders, payments and entitlements, append-only; manual access changes require a reason; refunds are only *requested* from the admin and applied on the verified webhook; Markdown from the CMS never renders raw HTML; uploads (50 MB resources, 1 MB `.vtt`) are allow-listed by extension and MIME; newsletter/launch sign-ups require explicit consent, are rate-limited and honeypot-protected, and answer duplicates identically.
+## Blocages juridiques avant tout paiement réel (non traités par le code, volontairement)
 
-Not yet implemented: CSP, CSRF review for future route handlers (server actions have Next's origin checks),  audit-log writers, account deletion/export workflows, consent banner/analytics.
-
-**Legal (requires professional validation, nothing here is legal advice):** legal pages are skeletons marked as such; French professional-training contractual rules, withdrawal-right handling for digital content, tax configuration (Stripe Tax) and GDPR notices must be reviewed before live checkout. `system_settings.legal_review_completed` and `live_checkout_enabled` default to false. The platform is not certified, not claimed compliant, and not claimed eligible for public funding.
+Obligations de la formation professionnelle en France, droit de rétractation et consentement pour contenus numériques (aucune renonciation générique n'est codée), conditions générales de vente, fiscalité et facturation, informations RGPD et durées de conservation, déclaration d'accessibilité. Les textes légaux fournis sont des **modèles à faire valider par un professionnel du droit**.

@@ -40,3 +40,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 !.env.example
+
+# local development database
+/.data/
+
+# test artefacts
+/test-results/
+/playwright-report/
+*.tsbuildinfo

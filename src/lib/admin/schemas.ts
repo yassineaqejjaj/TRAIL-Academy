@@ -44,7 +44,7 @@ export const lessonSchema = z.object({
   kind: z.enum(["video", "reading", "exercise", "demo"]),
   required: bool, isFreePreview: bool,
   contentStatus: z.enum(["draft", "published"]),
-  videoProvider: z.preprocess(emptyToUndef, z.enum(["mux", "cloudflare_stream"]).optional()),
+  videoProvider: z.preprocess(emptyToUndef, z.literal("hls").optional()),
   videoAssetId: z.preprocess(emptyToUndef, z.string().trim().regex(/^[A-Za-z0-9_-]{4,200}$/, "Identifiant vidéo invalide").optional()),
   durationSeconds: z.preprocess(emptyToUndef, z.coerce.number().int().min(0).max(60 * 60 * 10).optional()),
   bodyMd: optionalText(50_000),

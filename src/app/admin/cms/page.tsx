@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Badge, Button, Notice } from "@/components/ui";
-import { adminDb } from "@/lib/admin/ctx";
+import { adminPage } from "@/lib/admin/ctx";
 import { editableSections } from "@/lib/cms-registry";
 import { ActionButton, Check, Field, Flash, Input, Panel, Textarea } from "../ui";
 import { addFaq, addTestimonial, createPost, deleteFaq, deleteTestimonial, saveSection, toggleFaq, unpublishTestimonial } from "./actions";
@@ -11,17 +11,16 @@ export const metadata: Metadata = { title: "Contenu du site — administration",
 
 export default async function AdminCms({ searchParams }: { searchParams: Promise<{ ok?: string; error?: string }> }) {
   const sp = await searchParams;
-  const { db } = await adminDb();
-  const [{ data: pages }, { data: sections }, { data: faq }, { data: testimonials }, { data: posts }] = await Promise.all([
-    db.from("pages").select("id, slug"),
-    db.from("page_sections").select("page_id, key, content"),
-    db.from("faq_items").select("id, question, status, position").eq("scope", "global").order("position"),
-    db.from("testimonials").select("id, author_name, quote, status, consent_reference").order("author_name"),
-    db.from("blog_posts").select("id, title, status, slug, published_at").order("created_at", { ascending: false }),
-  ]);
+  const { pages, sections, faq, testimonials, posts } = await adminPage(async (q) => ({
+    pages: await q<{ id: string; slug: string }>("select id, slug from pages"),
+    sections: await q<{ page_id: string; key: string; content: Record<string, string | null> }>("select page_id, key, content from page_sections"),
+    faq: await q<{ id: string; question: string; status: string; position: number }>("select id, question, status, position from faq_items where scope = 'global' order by position"),
+    testimonials: await q<{ id: string; author_name: string; quote: string; status: string; consent_reference: string | null }>("select id, author_name, quote, status, consent_reference from testimonials order by author_name"),
+    posts: await q<{ id: string; title: string; status: string; slug: string; published_at: string | null }>("select id, title, status, slug, published_at from blog_posts order by created_at desc"),
+  }));
   const current = (page: string, key: string) => {
-    const id = pages?.find((p) => p.slug === page)?.id;
-    return ((sections ?? []).find((s) => s.page_id === id && s.key === key)?.content ?? {}) as { title?: string; subtitle?: string; body_md?: string };
+    const id = pages.find((p) => p.slug === page)?.id;
+    return (sections.find((s) => s.page_id === id && s.key === key)?.content ?? {}) as { title?: string; subtitle?: string; body_md?: string };
   };
   const site = editableSections.filter((s) => !s.legal);
   const legal = editableSections.filter((s) => s.legal);
@@ -43,20 +42,20 @@ export default async function AdminCms({ searchParams }: { searchParams: Promise
         </Panel>); })}
 
       <Panel title="Questions fréquentes">
-        <ul className="divide-y divide-border rounded-lg border border-border text-sm">{(faq ?? []).map((f) => (
+        <ul className="divide-y divide-border rounded-lg border border-border text-sm">{faq.map((f) => (
           <li key={f.id} className="flex flex-wrap items-center gap-3 p-3"><span className="font-medium">{f.question}</span><Badge tone={f.status === "published" ? "accent" : "warn"}>{f.status === "published" ? "Publiée" : "Brouillon"}</Badge>
             <span className="ml-auto flex gap-1"><ActionButton action={toggleFaq.bind(null, f.id, f.status !== "published")} label={f.status === "published" ? "Dépublier" : "Publier"} variant="ghost" /><ActionButton action={deleteFaq.bind(null, f.id)} label="Supprimer" variant="ghost" /></span></li>))}
-          {!faq?.length && <li className="p-3 text-muted">Aucune question personnalisée : la FAQ par défaut est affichée.</li>}</ul>
+          {!faq.length && <li className="p-3 text-muted">Aucune question personnalisée : la FAQ par défaut est affichée.</li>}</ul>
         <form action={addFaq} className="mt-4 grid gap-3"><Field label="Question"><Input name="question" required /></Field><Field label="Réponse"><Textarea name="answer" rows={3} required /></Field>
           <div className="flex items-center gap-4"><Field label="Position"><Input name="position" type="number" defaultValue={0} className="w-24" /></Field><Check name="published" label="Publier" defaultChecked /></div><div><Button type="submit" variant="secondary">Ajouter</Button></div></form>
       </Panel>
 
       <Panel title="Témoignages">
         <div className="mb-4"><Notice title="Jamais inventés">Un témoignage ne peut être publié qu'avec une référence de consentement vérifiable (ex. « e-mail du 12/10, accord écrit »). Sans témoignage publié, la section n'apparaît pas sur le site.</Notice></div>
-        <ul className="divide-y divide-border rounded-lg border border-border text-sm">{(testimonials ?? []).map((t) => (
+        <ul className="divide-y divide-border rounded-lg border border-border text-sm">{testimonials.map((t) => (
           <li key={t.id} className="flex flex-wrap items-center gap-3 p-3"><span className="font-medium">{t.author_name}</span><span className="text-muted">« {t.quote.slice(0, 80)}{t.quote.length > 80 ? "…" : ""} »</span><Badge tone={t.status === "published" ? "accent" : "warn"}>{t.status === "published" ? "Publié" : "Brouillon"}</Badge>
             <span className="ml-auto flex gap-1">{t.status === "published" && <ActionButton action={unpublishTestimonial.bind(null, t.id)} label="Dépublier" variant="ghost" />}<ActionButton action={deleteTestimonial.bind(null, t.id)} label="Supprimer" variant="ghost" /></span></li>))}
-          {!testimonials?.length && <li className="p-3 text-muted">Aucun témoignage.</li>}</ul>
+          {!testimonials.length && <li className="p-3 text-muted">Aucun témoignage.</li>}</ul>
         <form action={addTestimonial} className="mt-4 grid gap-3 sm:grid-cols-2"><Field label="Nom"><Input name="authorName" required /></Field><Field label="Fonction"><Input name="authorRole" /></Field>
           <div className="sm:col-span-2"><Field label="Citation exacte"><Textarea name="quote" rows={3} required /></Field></div>
           <div className="sm:col-span-2"><Field label="Référence du consentement (obligatoire pour publier)"><Input name="consentReference" /></Field></div>
@@ -64,9 +63,9 @@ export default async function AdminCms({ searchParams }: { searchParams: Promise
       </Panel>
 
       <Panel title="Articles">
-        <ul className="divide-y divide-border rounded-lg border border-border text-sm">{(posts ?? []).map((p) => (
+        <ul className="divide-y divide-border rounded-lg border border-border text-sm">{posts.map((p) => (
           <li key={p.id} className="flex flex-wrap items-center gap-3 p-3"><Link className="font-medium hover:underline" href={`/admin/cms/articles/${p.id}`}>{p.title}</Link><Badge tone={p.status === "published" ? "accent" : "warn"}>{p.status === "published" ? "Publié" : "Brouillon"}</Badge><span className="text-muted">/{p.slug}</span></li>))}
-          {!posts?.length && <li className="p-3 text-muted">Aucun article.</li>}</ul>
+          {!posts.length && <li className="p-3 text-muted">Aucun article.</li>}</ul>
         <form action={createPost} className="mt-4 grid gap-3 sm:grid-cols-3"><Field label="Titre"><Input name="title" required /></Field><Field label="Slug (URL)"><Input name="slug" required pattern="[a-z0-9]+(-[a-z0-9]+)*" /></Field><div className="self-end"><Button type="submit" variant="accent">Créer un brouillon</Button></div></form>
       </Panel>
 

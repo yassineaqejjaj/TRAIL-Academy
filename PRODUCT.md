@@ -1,30 +1,49 @@
-# Product
+# Produit
 
-**Price grid (seeded; editable in admin, history kept):** Module Standard 199 € TTC and Module Avancé 299 € TTC (Vibe Coding, RAG, Agentic AI, AI Evaluation & Observability), 12 months · Product Manager Augmenté 990 € (9 modules), AI Product Manager 1 490 € (13), AI Mastery 1 990 € (18), AI Mastery Mentored 2 990 € (18 + coaching, kept closed until the coaching is defined), 18 months · Team 5 7 500 € HT and Team 20 24 000 € HT (5 / 20 AI Mastery licences, 12 months) · Private Workshop 2 500–3 500 € HT per day · Enterprise Custom on quotation.
+## Grille tarifaire (seed ; modifiable en admin, historique conservé)
 
-**Founder (launch) prices — proposals to test, not applied automatically:** Standard 149 €, Avancé 229 €, PM Augmenté 790 €, AI PM 1 190 €, AI Mastery 1 590 €, Mentored 2 490 € (TTC). Rules: only for offers that are actually available, only during a defined launch period. To run one today, change the price in Admin → Produits et prix (history is kept; past orders keep their price) and change it back at the end of the period. There is no automatic start/end date yet (candidate improvement: `valid_from/valid_until` on prices).
+| Offre | Prix | Accès |
+|---|---|---|
+| Module Standard (14 modules) | 199 € TTC | 12 mois |
+| Module Avancé (Vibe Coding, RAG, Agentic AI, AI Evaluation & Observability) | 299 € TTC | 12 mois |
+| Product Manager Augmenté (9 modules) | 990 € TTC | 18 mois |
+| AI Product Manager (13 modules) | 1 490 € TTC | 18 mois |
+| AI Mastery (18 modules) | 1 990 € TTC | 18 mois |
+| AI Mastery Mentored (18 modules + accompagnement) | 2 990 € TTC — **offre fermée** tant que l'accompagnement n'est pas défini | 18 mois |
+| Team 5 / Team 20 (5 / 20 licences AI Mastery) | 7 500 € / 24 000 € HT | 12 mois |
+| Private Workshop | de 2 500 à 3 500 € HT par journée | — |
+| Enterprise Custom | sur devis | — |
 
-**Rules implemented:** all 18 modules and 4 phases visible; none purchasable until published; paths/bundle cover the exact module sets specified (tested); bundles never charge again for included content (entitlement upsert extends rather than duplicates).
+Chaque offre démarre **fermée** : elle s'ouvre explicitement, et seulement si tous ses modules sont publiés et si un prix existe. Les offres entreprise et sur devis ne sont pas achetables en ligne.
 
-**Not implemented yet:** purchase, learning player, quizzes, assignments, attestations, admin tools, enterprise management, CMS-driven content, blog.
+**Prix de lancement (« fondateur ») — propositions à tester, non appliquées automatiquement :** Standard 149 €, Avancé 229 €, PM Augmenté 790 €, AI PM 1 190 €, AI Mastery 1 590 €, Mentored 2 490 € (TTC), uniquement sur des offres réellement disponibles et pour une période définie. Pour en lancer un aujourd'hui : changer le prix dans *Produits et prix* (historique conservé, commandes passées inchangées) puis le remettre à la fin de la période. Il n'y a pas encore de dates automatiques de début/fin.
 
-**Advisor:** deterministic, rules in `src/lib/advisor/rules.ts`, explains every recommendation. Runs client-side; no data leaves the browser.
+## Règles produit appliquées (et testées)
 
-**Claims policy:** no testimonials, social proof, reviews or completion counts are shown (none are verified). Attestations are private and are never described as State certification or RNCP. Duration figures are planning estimates to be confirmed by the instructor.
+- Les 18 modules et 4 phases sont visibles ; **seul un module publié dont l'offre est ouverte s'achète**. La base refuse sinon (pas seulement l'interface).
+- Un contenu déjà détenu n'est jamais refacturé ; un parcours prolonge un accès existant sans doublon.
+- Un module ne peut pas être publié s'il manque du contenu (leçon vide, quiz sans question, question sans bonne réponse, objectifs absents). Publier n'ouvre pas la vente. Dépublier ferme les offres concernées sans retirer l'accès des apprenants existants.
+- Complétion d'un module : leçons obligatoires + quiz réussis + devoirs acceptés (configurable par module). L'attestation est émise **une seule fois**, privée, vérifiable par code, jamais présentée comme une certification d'État ni une qualification RNCP.
+- Correction automatique pour les questions objectives uniquement ; réponses libres et livrables relus par le formateur. **Aucune IA n'est l'autorité finale.**
+- Jamais de témoignage, avis, chiffre ou logo inventé ; un témoignage ne se publie qu'avec une référence de consentement. Les durées et niveaux sont des estimations à confirmer.
+- La répartition pédagogique 70 % pratique / 20 % interaction / 10 % théorie est une **cible de conception**, pas une mesure.
 
-**BMAD:** M7 uses the official expansion "Breakthrough Method for Agile AI-Driven Development" (BMad Method), checked against the project's GitHub repository (bmad-code-org/BMAD-METHOD). The module syllabus must still be written against the current official docs.
+## Conseiller de parcours
 
-## Commerce rules (Phase C)
-- One-time Stripe Checkout; promotion codes enabled; invoices created by Stripe; billing portal link; order history in `/compte/commandes`.
-- An offer is purchasable only when **every** included module is published and the offer is active. Content already held under an active entitlement can never be bought again; a bundle extends, never duplicates.
-- Revocation: see DATABASE.md (pending legal confirmation). Preorders are not implemented.
-- Enterprise packs and quotations are not purchasable online (Phase E).
-- Emails: purchase confirmation and refund notice (French plain text) via Resend when configured; failures are logged to `email_events`, never block payment processing.
+Déterministe (6 questions : rôle, expérience, familiarité avec l'IA, objectif, aisance technique, temps disponible), règles lisibles dans `src/lib/advisor/rules.ts`, explication de chaque recommandation, séquence et durée indicative. S'exécute dans le navigateur ; aucune donnée n'est envoyée.
 
-## Administration and CMS (Phase D)
-Admin can create/edit modules, chapters, lessons (video id, Markdown, transcript, chapters, subtitles, resources), quizzes and assignments, set prerequisites and completion rules, preview, and publish/unpublish (publishing is gated by a readiness check). Paths, products, prices (with history), coupons, orders (refund request), learners (manual grant/revoke with reason), assignment review, CMS blocks (home hero, instructor profile, FAQ, verified testimonials, articles with SEO, legal page texts) and the audit log. The public catalogue reads from the database (falling back to the seed data if no database is configured) and revalidates every 60 s or immediately after an admin edit.
+## Commerce
 
-Not in Phase D: enterprise accounts/licences (Phase E), advisor-rules editor (rules are still in `src/lib/advisor/rules.ts`), system settings/compliance screen, video upload to the provider (videos are uploaded at Mux; the admin pastes the signed-playback id), manual review queue for free-text quiz answers.
+Stripe Checkout en paiement unique, codes promotionnels, factures Stripe, portail de facturation, historique des commandes. Politique de révocation et traitement des litiges : voir `DATABASE.md`. E-mails transactionnels (confirmation, remboursement) par SMTP ; les échecs sont journalisés sans bloquer le paiement. Les paiements réels sont bloqués par deux drapeaux explicites tant que la revue juridique n'est pas faite.
+
+## Administration et CMS
+
+Tableau de bord (revenu net, achats, remboursements, litiges, inscriptions, apprenants actifs, complétions, produits les plus achetés, entonnoir de commande, livrables à relire), modules, chapitres, leçons, ressources, sous-titres, quiz, devoirs, parcours, produits et prix, coupons, commandes (demande de remboursement), apprenants (accès manuel motivé), relecture, contenu du site, journal d'audit. Le catalogue public lit la base (ISR 60 s, invalidé après chaque modification).
 
 ## Design
-The UI follows the supplied design canvas (warm off-white #FAF8F4, navy #0B1F3A, teal #0B7A83, Sora headings, Inter text, 16 px cards, pill filters, admin sidebar). Light and dark themes are both supported (the design shows light only). **Prices follow the grid above, which matches the design.** The hero title is still the brief's ("Maîtrisez l'IA. Appliquez-la à votre métier."; the design says "Devenez le professionnel qui maîtrise vraiment l'IA." — change it in the CMS if preferred). Screens in the design that belong to later phases (team space, enterprise admin, advisor-rules editor, settings) are not built.
+
+Le design fourni (fond crème #FAF8F4, marine #0B1F3A, teal #0B7A83, titres Sora, texte Inter, cartes à 16 px, filtres en pilules, barre latérale d'administration) est appliqué à l'en-tête, l'accueil, le catalogue, la fiche module, le lecteur, le tableau de bord et l'administration, avec un mode sombre en plus. Le titre d'accueil reste celui du cahier des charges (« Maîtrisez l'IA. Appliquez-la à votre métier. ») ; la variante du design est modifiable dans le CMS. Les écrans du design qui relèvent de phases ultérieures (espace équipe, administration des entreprises, éditeur des règles du conseiller, paramètres) ne sont pas construits.
+
+## Hors périmètre actuel
+
+Entreprises (organisations, sièges, rapports : phase E), cohortes en direct, tutorat par IA, anglais (architecture prête, textes en français), transcodage vidéo depuis le navigateur.

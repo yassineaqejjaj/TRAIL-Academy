@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Badge, Button, Notice } from "@/components/ui";
-import { adminDb } from "@/lib/admin/ctx";
+import { adminPage } from "@/lib/admin/ctx";
 import { formatEuro } from "@/lib/catalog";
 import { Flash, Input, Select, Table } from "../ui";
 import { setPrice, setProductActive } from "../actions";
@@ -12,8 +12,10 @@ const kindLabel = { course: "Module", path: "Parcours", bundle: "Accès complet"
 
 export default async function AdminProducts({ searchParams }: { searchParams: Promise<{ ok?: string; error?: string }> }) {
   const sp = await searchParams;
-  const { db } = await adminDb();
-  const { data: products } = await db.from("products").select("id, slug, kind, title, active, note, price_from, prices(amount_cents, tax_inclusive, active, created_at)").order("kind").order("title");
+  const { products, prices } = await adminPage(async (q) => ({
+    products: await q<{ id: string; slug: string; kind: string; title: string; active: boolean; note: string | null; price_from: boolean }>("select id, slug, kind, title, active, note, price_from from products order by kind, title"),
+    prices: await q<{ product_id: string; amount_cents: number | null; tax_inclusive: boolean }>("select product_id, amount_cents, tax_inclusive from prices where active"),
+  }));
 
   return (
     <>
@@ -22,8 +24,8 @@ export default async function AdminProducts({ searchParams }: { searchParams: Pr
       <div className="mt-4"><Notice title="Règle de vente">Une offre ne peut être ouverte que si tous ses modules sont publiés et qu'un prix est défini. Changer un prix conserve l'historique ; les commandes passées gardent leur prix.</Notice></div>
       <div className="mt-6"><Flash ok={sp.ok} error={sp.error} /></div>
       <Table head={["Offre", "Type", "Prix actuel", "Modifier le prix", "État"]}>
-        {(products ?? []).map((p) => {
-          const price = (p.prices as { amount_cents: number | null; tax_inclusive: boolean; active: boolean; created_at: string }[]).find((x) => x.active);
+        {products.map((p) => {
+          const price = prices.find((x) => x.product_id === p.id);
           const online = p.kind !== "enterprise_pack";
           return (
             <tr key={p.id} className="align-top">

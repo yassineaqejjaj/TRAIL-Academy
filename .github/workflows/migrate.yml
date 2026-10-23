@@ -1,0 +1,20 @@
+name: Apply database migrations
+# Manual: applies db/migrations to the PostgreSQL behind the DATABASE_URL secret (e.g. Railway). Safe to re-run.
+on:
+  workflow_dispatch:
+    inputs:
+      seed: { description: "Load the catalogue seed if the database is empty", type: boolean, default: false }
+permissions: { contents: read }
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    environment: production        # add required reviewers to this environment in GitHub settings
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: npm }
+      - run: npm ci
+      - run: npm run db:migrate ${{ inputs.seed && '-- --seed' || '' }}
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_SSL: ${{ secrets.DATABASE_SSL }}

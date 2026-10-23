@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { filterCourses, isPathPurchasable, staticCatalog } from "@/lib/catalog";
+import { filterCourses, isPathPurchasable, isPurchasable, staticCatalog } from "@/lib/catalog";
 import { mapCatalog, type CatalogRows } from "@/lib/catalog/map";
 
 const rows: CatalogRows = {
@@ -43,8 +43,20 @@ describe("mapCatalog", () => {
     expect(c.offers.find((o) => o.slug === "sur-mesure")!.amountCents).toBeNull();
     expect(c.offers.some((o) => o.slug === "module-un")).toBe(false);
   });
+  it("marks a course as open only when published, its offer is active and priced", () => {
+    expect(c.openCourses.sort()).toEqual(["deux", "un"]);
+    const closed = mapCatalog({ ...rows, products: rows.products.map((p) => (p.slug === "module-un" ? { ...p, active: false } : p)) });
+    expect(closed.openCourses).toEqual(["deux"]);
+    const unpublished = mapCatalog({ ...rows, courses: rows.courses.map((x) => (x.id === "c2" ? { ...x, status: "coming_soon" as const } : x)) });
+    expect(unpublished.openCourses).toEqual(["un"]);
+    expect(isPathPurchasable(closed.learningPaths[0], closed)).toBe(true); // the path offer itself is active
+    const pathClosed = mapCatalog({ ...rows, products: rows.products.map((p) => (p.slug === "parcours" ? { ...p, active: false } : p)) });
+    expect(isPathPurchasable(pathClosed.learningPaths[0], pathClosed)).toBe(false);
+  });
   it("drives purchasability and filters from the data it is given", () => {
     expect(isPathPurchasable(c.learningPaths[0], c)).toBe(true);
+    expect(isPurchasable(c.courses[0], c)).toBe(true);
+    expect(isPurchasable(c.courses[2], c)).toBe(false); // coming soon
     expect(isPathPurchasable(c.learningPaths[1], c)).toBe(false);
     expect(filterCourses({ status: "published" }, c).map((x) => x.code)).toEqual(["M1", "M2"]);
     expect(filterCourses({ path: "parcours" }, c)).toHaveLength(2);

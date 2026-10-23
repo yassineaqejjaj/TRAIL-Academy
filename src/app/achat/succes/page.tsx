@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ButtonLink, Container, Notice } from "@/components/ui";
 import { requireUser } from "@/lib/auth";
-import { createClient } from "@/lib/supabase/server";
+import { asUser } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Confirmation", robots: { index: false } };
@@ -10,10 +10,9 @@ export const metadata: Metadata = { title: "Confirmation", robots: { index: fals
 export default async function SuccessPage({ searchParams }: { searchParams: Promise<{ session_id?: string }> }) {
   const user = await requireUser();
   const { session_id } = await searchParams;
-  const supabase = await createClient();
-  const { data: order } = session_id && /^cs_[A-Za-z0-9_]+$/.test(session_id)
-    ? await supabase.from("orders").select("status").eq("stripe_checkout_session_id", session_id).eq("user_id", user.id).maybeSingle()
-    : { data: null };
+  const order = session_id && /^cs_[A-Za-z0-9_]+$/.test(session_id)
+    ? await asUser(user.id, (q) => q.one<{ status: string }>("select status from orders where stripe_checkout_session_id = $1 and user_id = $2", [session_id, user.id]))
+    : null;
 
   return (
     <Container className="max-w-xl py-16">

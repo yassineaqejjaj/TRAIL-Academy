@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Card, ProgressBar } from "@/components/ui";
-import { adminDb } from "@/lib/admin/ctx";
+import { adminPage } from "@/lib/admin/ctx";
 import { formatEuro } from "@/lib/catalog";
 
 export const dynamic = "force-dynamic";
@@ -16,9 +16,7 @@ interface Metrics {
 export default async function AdminDashboard({ searchParams }: { searchParams: Promise<{ days?: string }> }) {
   const { days: d } = await searchParams;
   const days = [7, 30, 90, 365].includes(Number(d)) ? Number(d) : 30;
-  const { db } = await adminDb();
-  const { data, error } = await db.rpc("admin_metrics", { p_days: days });
-  const m = data as Metrics | null;
+  const m = await adminPage(async (q) => (await q.one<{ r: Metrics }>("select admin_metrics($1) as r", [days]))?.r ?? null).catch(() => null);
   const conversion = m && m.orders_created > 0 ? Math.round((100 * m.orders_paid) / m.orders_created) : 0;
 
   return (
@@ -27,7 +25,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
         <h1 className="text-3xl font-semibold tracking-tight">Tableau de bord</h1>
         <nav aria-label="Période" className="flex gap-1 text-sm">{[7, 30, 90, 365].map((x) => <Link key={x} href={`/admin?days=${x}`} aria-current={x === days ? "page" : undefined} className={`rounded-md px-3 py-1.5 ${x === days ? "bg-primary text-primary-fg" : "text-muted hover:bg-surface-2"}`}>{x === 365 ? "1 an" : `${x} j`}</Link>)}</nav>
       </div>
-      {error || !m ? <p className="mt-6 text-danger" role="alert">Indicateurs indisponibles.</p> : (
+      {!m ? <p className="mt-6 text-danger" role="alert">Indicateurs indisponibles.</p> : (
         <>
           <dl className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {([

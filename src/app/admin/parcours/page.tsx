@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Badge, Button } from "@/components/ui";
-import { adminDb } from "@/lib/admin/ctx";
+import { adminPage } from "@/lib/admin/ctx";
 import { ActionButton, Field, Flash, Input, Panel, Select } from "../ui";
 import { addPathCourse, createPath, movePathCourse, removePathCourse, updatePath } from "../actions";
 
@@ -9,20 +9,19 @@ export const metadata: Metadata = { title: "Parcours — administration", robots
 
 export default async function AdminPaths({ searchParams }: { searchParams: Promise<{ ok?: string; error?: string }> }) {
   const sp = await searchParams;
-  const { db } = await adminDb();
-  const [{ data: paths }, { data: pc }, { data: courses }] = await Promise.all([
-    db.from("learning_paths").select("id, slug, title, tagline, audience, access_months, is_bundle").order("title"),
-    db.from("learning_path_courses").select("path_id, course_id, position").order("position"),
-    db.from("courses").select("id, code, title, status").order("position"),
-  ]);
-  const byId = new Map((courses ?? []).map((c) => [c.id, c]));
+  const { paths, pc, courses } = await adminPage(async (q) => ({
+    paths: await q<{ id: string; slug: string; title: string; tagline: string | null; audience: string | null; access_months: number; is_bundle: boolean }>("select id, slug, title, tagline, audience, access_months, is_bundle from learning_paths order by title"),
+    pc: await q<{ path_id: string; course_id: string; position: number }>("select path_id, course_id, position from learning_path_courses order by position"),
+    courses: await q<{ id: string; code: string; title: string; status: string }>("select id, code, title, status from courses order by position"),
+  }));
+  const byId = new Map(courses.map((c) => [c.id, c]));
 
   return (
     <>
       <h1 className="text-3xl font-semibold tracking-tight">Parcours</h1>
       <div className="mt-6"><Flash ok={sp.ok} error={sp.error} /></div>
-      {(paths ?? []).map((p) => {
-        const list = (pc ?? []).filter((x) => x.path_id === p.id);
+      {paths.map((p) => {
+        const list = pc.filter((x) => x.path_id === p.id);
         return (
           <Panel key={p.id} title={p.title} actions={<Badge tone={p.is_bundle ? "accent" : "neutral"}>{p.is_bundle ? "Accès complet" : "Parcours"}</Badge>}>
             <form action={updatePath.bind(null, p.id)} className="grid gap-3 sm:grid-cols-2">
@@ -39,7 +38,7 @@ export default async function AdminPaths({ searchParams }: { searchParams: Promi
                   {c?.status !== "published" && <Badge tone="warn">Non publié</Badge>}
                   <span className="ml-auto flex gap-1"><ActionButton action={movePathCourse.bind(null, p.id, x.course_id, "up")} label="Monter" variant="ghost" /><ActionButton action={movePathCourse.bind(null, p.id, x.course_id, "down")} label="Descendre" variant="ghost" /><ActionButton action={removePathCourse.bind(null, p.id, x.course_id)} label="Retirer" variant="ghost" /></span></li>); })}
             </ol>
-            <form action={addPathCourse.bind(null, p.id)} className="mt-3 flex gap-2"><Select name="courseId" aria-label="Module à ajouter">{(courses ?? []).filter((c) => !list.some((x) => x.course_id === c.id)).map((c) => <option key={c.id} value={c.id}>{c.code} — {c.title}</option>)}</Select><Button type="submit" variant="secondary">Ajouter</Button></form>
+            <form action={addPathCourse.bind(null, p.id)} className="mt-3 flex gap-2"><Select name="courseId" aria-label="Module à ajouter">{courses.filter((c) => !list.some((x) => x.course_id === c.id)).map((c) => <option key={c.id} value={c.id}>{c.code} — {c.title}</option>)}</Select><Button type="submit" variant="secondary">Ajouter</Button></form>
           </Panel>);
       })}
       <Panel title="Créer un parcours">

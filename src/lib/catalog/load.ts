@@ -1,32 +1,31 @@
 import "server-only";
-import { createClient } from "@supabase/supabase-js";
-import { supabaseConfigured } from "@/lib/env";
+import { asAnon } from "@/lib/db";
+import { dbConfigured } from "@/lib/db/pool";
 import { staticCatalog } from "./index";
 import { mapCatalog, type CatalogRows } from "./map";
 import type { Catalog } from "./types";
 
 /**
- * Loads the public catalog from the database with the anon key (RLS exposes only public data).
- * Falls back to the static seed data when Supabase is not configured, empty, or unreachable.
+ * Loads the public catalogue from PostgreSQL as the `anon` role (Row Level Security exposes only public data).
+ * Falls back to the static seed data when no database is configured, it is empty, or it is unreachable.
  */
 export async function getCatalog(): Promise<Catalog> {
-  if (!supabaseConfigured()) return staticCatalog;
+  if (!dbConfigured()) return staticCatalog;
   try {
-    const db = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, { auth: { persistSession: false } });
-    const [phases, courses, prerequisites, paths, pathCourses, products] = await Promise.all([
-      db.from("learning_phases").select("id, slug, title, summary"),
-      db.from("courses").select("id, code, slug, title, summary, phase_id, position, status, difficulty, duration_hours, topics, tools, outcomes, deliverable, is_mvp_slot"),
-      db.from("course_prerequisites").select("course_id, prerequisite_id"),
-      db.from("learning_paths").select("id, slug, title, tagline, audience, is_bundle, access_months"),
-      db.from("learning_path_courses").select("path_id, course_id, position"),
-      db.from("products").select("slug, kind, title, note, price_from, active, access_months, seats, course_id, prices(amount_cents, tax_inclusive, active)"),
-    ]);
-    const failed = [phases, courses, prerequisites, paths, pathCourses, products].find((r) => r.error);
-    if (failed?.error) throw failed.error;
-    if (!courses.data?.length) return staticCatalog;
-    return mapCatalog({ phases: phases.data!, courses: courses.data as CatalogRows["courses"], prerequisites: prerequisites.data!, paths: paths.data!, pathCourses: pathCourses.data!, products: products.data as unknown as CatalogRows["products"] });
+    const rows = await asAnon(async (q) => ({
+      phases: await q<CatalogRows["phases"][number]>("select id, slug, title, summary from learning_phases"),
+      courses: await q<CatalogRows["courses"][number]>("select id, code, slug, title, summary, phase_id, position, status, difficulty, duration_hours, topics, tools, outcomes, deliverable, is_mvp_slot from courses"),
+      prerequisites: await q<CatalogRows["prerequisites"][number]>("select course_id, prerequisite_id from course_prerequisites"),
+      paths: await q<CatalogRows["paths"][number]>("select id, slug, title, tagline, audience, is_bundle, access_months from learning_paths"),
+      pathCourses: await q<CatalogRows["pathCourses"][number]>("select path_id, course_id, position from learning_path_courses"),
+      products: await q<CatalogRows["products"][number]>(`
+        select p.slug, p.kind, p.title, p.note, p.price_from, p.active, p.access_months, p.seats, p.course_id,
+               coalesce(json_agg(json_build_object('amount_cents', pr.amount_cents, 'tax_inclusive', pr.tax_inclusive, 'active', pr.active)) filter (where pr.id is not null), '[]') as prices
+        from products p left join prices pr on pr.product_id = p.id group by p.id`),
+    }));
+    return rows.courses.length ? mapCatalog(rows) : staticCatalog;
   } catch (e) {
-    console.error("catalog: falling back to static data", e);
+    console.error("catalog: falling back to static data", (e as Error).message);
     return staticCatalog;
   }
 }

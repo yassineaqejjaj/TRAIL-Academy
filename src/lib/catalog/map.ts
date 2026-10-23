@@ -31,11 +31,14 @@ export function mapCatalog(rows: CatalogRows): Catalog {
 
   const activePrice = (p: CatalogRows["products"][number]) => p.prices.find((x) => x.active);
   const coursePrices: Record<string, number> = {};
+  const openCourses: string[] = [];
   for (const p of rows.products) {
     if (p.kind !== "course" || !p.course_id) continue;
     const price = activePrice(p);
     const slug = slugById.get(p.course_id);
     if (slug && price?.amount_cents != null) coursePrices[slug] = price.amount_cents;
+    const course = rows.courses.find((c) => c.id === p.course_id);
+    if (slug && p.active && price?.amount_cents != null && course?.status === "published") openCourses.push(slug);
   }
 
   const offers: Offer[] = [];
@@ -51,8 +54,8 @@ export function mapCatalog(rows: CatalogRows): Catalog {
     const price = activePrice(p);
     offers.push({
       slug: p.slug, kind: kindMap[p.kind], title: p.title, amountCents: price?.amount_cents ?? null, taxMode: price?.tax_inclusive === false ? "ht" : "ttc",
-      accessMonths: p.access_months, note: p.note ?? (p.seats ? `${p.seats} licences` : undefined), priceFrom: p.price_from || undefined,
+      accessMonths: p.access_months, note: p.note ?? (p.seats ? `${p.seats} licences` : undefined), priceFrom: p.price_from || undefined, active: p.active,
     });
   }
-  return { phases, courses, learningPaths, offers, coursePrices };
+  return { phases, courses, learningPaths, offers, coursePrices, openCourses };
 }

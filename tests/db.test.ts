@@ -1,26 +1,13 @@
 // @vitest-environment node
-import { PGlite } from "@electric-sql/pglite";
-import { pgcrypto } from "@electric-sql/pglite/contrib/pgcrypto";
-import { readFileSync } from "node:fs";
+import type { PGlite } from "@electric-sql/pglite";
+import { addUsers, createTestDb } from "./helpers/db";
 import { beforeAll, describe, expect, it } from "vitest";
 
-const read = (p: string) => readFileSync(p, "utf8");
 const U1 = "00000000-0000-0000-0000-000000000001";
 const U2 = "00000000-0000-0000-0000-000000000002";
 const ADMIN = "00000000-0000-0000-0000-0000000000aa";
 const MGR = "00000000-0000-0000-0000-0000000000bb";
 
-// Minimal stand-ins for the Supabase-managed schemas/roles (auth, storage).
-const supabaseStubs = `
-create role anon nologin; create role authenticated nologin; create role service_role nologin bypassrls;
-create schema auth; create schema storage;
-create table auth.users (id uuid primary key, email text, raw_user_meta_data jsonb default '{}');
-create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('app.uid', true), '')::uuid $$;
-create table storage.buckets (id text primary key, name text, public boolean);
-create table storage.objects (id uuid default gen_random_uuid(), bucket_id text, name text);
-alter table storage.objects enable row level security;
-create function storage.foldername(name text) returns text[] language sql as $$ select string_to_array(name, '/') $$;
-`;
 
 let db: PGlite;
 const as = async <T>(uid: string | null, fn: () => Promise<T>): Promise<T> => {
@@ -30,18 +17,8 @@ const as = async <T>(uid: string | null, fn: () => Promise<T>): Promise<T> => {
 const count = async (sql: string) => Number(((await db.query<{ n: number }>(`select count(*)::int n from (${sql}) x`)).rows[0]).n);
 
 beforeAll(async () => {
-  db = new PGlite({ extensions: { pgcrypto } });
-  await db.exec(supabaseStubs);
-  await db.exec(read("supabase/migrations/0001_schema.sql"));
-  await db.exec(read("supabase/migrations/0002_rls.sql"));
-  await db.exec(read("supabase/migrations/0003_learning.sql"));
-  await db.exec(`grant usage on schema public, auth to anon, authenticated, service_role;
-    grant select, insert, update, delete on all tables in schema public to authenticated, service_role;
-    grant select on all tables in schema public to anon;
-    grant select, insert on storage.objects to authenticated;`);
-  await db.exec(read("supabase/seed.sql"));
-  for (const [id, email] of [[U1, "u1@test.local"], [U2, "u2@test.local"], [ADMIN, "admin@test.local"], [MGR, "mgr@test.local"]])
-    await db.exec(`insert into auth.users (id, email) values ('${id}', '${email}');`);
+  db = await createTestDb();
+  await addUsers(db, [[U1, "u1@test.local"], [U2, "u2@test.local"], [ADMIN, "admin@test.local"], [MGR, "mgr@test.local"]]);
   await db.exec(`insert into user_roles values ('${ADMIN}', 'admin');`);
 });
 

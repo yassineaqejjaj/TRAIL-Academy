@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { notifyAfterEvent } from "@/lib/commerce/notify";
 import { getStripe } from "@/lib/stripe/client";
 import { handleStripeWebhook, type ProcessResult } from "@/lib/stripe/webhook";
-import { createServiceClient } from "@/lib/supabase/admin";
+import { asService } from "@/lib/db";
 
 export async function POST(request: Request) {
   // The signature covers the exact raw bytes: read text, never parsed JSON.
@@ -15,9 +15,9 @@ export async function POST(request: Request) {
     {
       constructEvent: (raw, sig, secret) => stripe.webhooks.constructEvent(raw, sig, secret),
       processEvent: async (id, e) => {
-        const { data, error } = await createServiceClient().rpc("process_stripe_event", { p_event_id: id, p_type: e.type, p_data: e.data });
-        if (error) throw error;
-        return data as ProcessResult;
+        // One transaction: the idempotency record and every effect commit together or not at all.
+        const row = await asService((q) => q.one<{ r: ProcessResult }>("select process_stripe_event($1, $2, $3::jsonb) as r", [id, e.type, JSON.stringify(e.data)]));
+        return row!.r;
       },
       afterProcessed: (result, type) => notifyAfterEvent(result, type),
     },

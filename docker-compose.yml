@@ -1,0 +1,46 @@
+# Production-like local stack, 100 % open source:  docker compose up -d
+#   PostgreSQL 17 · MinIO (S3 API) · Mailpit (SMTP + web inbox) · stream gateway (profile "video")
+# NOTE: written for Docker but not run in the environment where this repository was built (no Docker daemon there).
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment: { POSTGRES_USER: postgres, POSTGRES_PASSWORD: postgres, POSTGRES_DB: trail }
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck: { test: ["CMD-SHELL", "pg_isready -U postgres -d trail"], interval: 5s, timeout: 3s, retries: 10 }
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_API_CORS_ALLOW_ORIGIN: http://localhost:3000   # browsers upload straight to the bucket
+    ports: ["9000:9000", "9001:9001"]
+    volumes: [miniodata:/data]
+    healthcheck: { test: ["CMD", "mc", "ready", "local"], interval: 5s, timeout: 3s, retries: 10 }
+
+  minio-init:
+    image: minio/mc:latest
+    depends_on: { minio: { condition: service_healthy } }
+    entrypoint: ["/bin/sh", "-c", "mc alias set local http://minio:9000 minioadmin minioadmin && mc mb --ignore-existing local/trail && echo bucket ready"]
+
+  mailpit:
+    image: axllent/mailpit:latest
+    ports: ["1025:1025", "8025:8025"]   # SMTP / inbox at http://localhost:8025
+
+  stream-gateway:
+    profiles: ["video"]
+    build: ./services/stream-gateway
+    depends_on: { minio-init: { condition: service_completed_successfully } }
+    environment:
+      PORT: 8080
+      S3_ENDPOINT: http://minio:9000
+      S3_BUCKET: trail
+      S3_ACCESS_KEY_ID: minioadmin
+      S3_SECRET_ACCESS_KEY: minioadmin
+      STREAM_SIGNING_SECRET: ${STREAM_SIGNING_SECRET:?set the same secret as the web app}
+      SITE_ORIGIN: http://localhost:3000
+    ports: ["8080:8080"]
+
+volumes: { pgdata: {}, miniodata: {} }

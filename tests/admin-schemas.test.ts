@@ -37,13 +37,13 @@ describe("course schemas", () => {
 describe("lessonSchema", () => {
   const base = fd({ title: "Intro", kind: "video", contentStatus: "draft", chapters: "" });
   it("requires provider and asset id together", () => {
-    expect(lessonSchema.safeParse({ ...base, videoProvider: "mux" }).success).toBe(false);
+    expect(lessonSchema.safeParse({ ...base, videoProvider: "hls" }).success).toBe(false);
     expect(lessonSchema.safeParse({ ...base, videoAssetId: "abcd1234" }).success).toBe(false);
-    expect(lessonSchema.safeParse({ ...base, videoProvider: "mux", videoAssetId: "abcd1234" }).success).toBe(true);
+    expect(lessonSchema.safeParse({ ...base, videoProvider: "hls", videoAssetId: "abcd1234" }).success).toBe(true);
     expect(lessonSchema.safeParse(base).success).toBe(true);
   });
   it("rejects suspicious asset ids", () => {
-    expect(lessonSchema.safeParse({ ...base, videoProvider: "mux", videoAssetId: "x/../y" }).success).toBe(false);
+    expect(lessonSchema.safeParse({ ...base, videoProvider: "hls", videoAssetId: "x/../y" }).success).toBe(false);
   });
 });
 

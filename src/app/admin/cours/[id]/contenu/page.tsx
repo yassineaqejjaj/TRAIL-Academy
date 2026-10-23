@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Badge, Button } from "@/components/ui";
-import { adminDb } from "@/lib/admin/ctx";
+import { adminPage } from "@/lib/admin/ctx";
 import { ActionButton, Check, Field, Flash, Input, Panel, Select } from "../../../ui";
 import { addChapter, addLesson, deleteChapter, deleteLesson, moveChapter, moveLesson, renameChapter } from "../../actions";
 
@@ -12,13 +12,18 @@ export const metadata: Metadata = { title: "Contenu — administration", robots:
 export default async function AdminContent({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ ok?: string; error?: string }> }) {
   const { id } = await params;
   const sp = await searchParams;
-  const { db } = await adminDb();
-  const { data: course } = await db.from("courses").select("id, title").eq("id", id).maybeSingle();
-  if (!course) notFound();
-  const [{ data: chapters }, { data: lessons }] = await Promise.all([
-    db.from("chapters").select("id, title, position").eq("course_id", id).order("position"),
-    db.from("lessons").select("id, chapter_id, title, kind, position, content_status, is_free_preview, required, video_asset_id").eq("course_id", id).order("position"),
-  ]);
+  const data = await adminPage(async (q) => {
+    const course = await q.one<{ id: string; title: string }>("select id, title from courses where id = $1", [id]);
+    if (!course) return null;
+    return {
+      course,
+      chapters: await q<{ id: string; title: string; position: number }>("select id, title, position from chapters where course_id = $1 order by position", [id]),
+      lessons: await q<{ id: string; chapter_id: string; title: string; kind: string; position: number; content_status: string; is_free_preview: boolean; required: boolean }>(
+        "select id, chapter_id, title, kind, position, content_status, is_free_preview, required from lessons where course_id = $1 order by position", [id]),
+    };
+  });
+  if (!data) notFound();
+  const { course, chapters, lessons } = data;
 
   return (
     <>
@@ -26,8 +31,8 @@ export default async function AdminContent({ params, searchParams }: { params: P
       <h1 className="mt-1 text-3xl font-semibold tracking-tight">Chapitres et leçons</h1>
       <div className="mt-6"><Flash ok={sp.ok} error={sp.error} /></div>
 
-      {(chapters ?? []).map((ch) => {
-        const ls = (lessons ?? []).filter((l) => l.chapter_id === ch.id);
+      {chapters.map((ch) => {
+        const ls = lessons.filter((l) => l.chapter_id === ch.id);
         return (
           <Panel key={ch.id} title={`${ch.position}. ${ch.title}`} actions={
             <div className="flex flex-wrap gap-2">

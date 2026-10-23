@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Badge, Button } from "@/components/ui";
-import { adminDb } from "@/lib/admin/ctx";
+import { adminPage } from "@/lib/admin/ctx";
 import { formatEuro } from "@/lib/catalog";
 import { Flash, Table } from "../ui";
 import { refundOrder } from "../actions";
@@ -13,13 +13,18 @@ const statuses = Object.keys(label);
 
 export default async function AdminOrders({ searchParams }: { searchParams: Promise<{ ok?: string; error?: string; status?: string }> }) {
   const sp = await searchParams;
-  const { db } = await adminDb();
-  let query = db.from("orders").select("id, user_id, status, total_cents, tax_cents, discount_cents, created_at, paid_at, stripe_payment_intent_id, order_items(products(title)), payments(refunded_cents)").order("created_at", { ascending: false }).limit(100);
-  if (sp.status && statuses.includes(sp.status)) query = query.eq("status", sp.status);
-  const { data: orders } = await query;
-  const ids = Array.from(new Set((orders ?? []).map((o) => o.user_id)));
-  const { data: profiles } = ids.length ? await db.from("profiles").select("id, email").in("id", ids) : { data: [] };
-  const email = (id: string) => profiles?.find((p) => p.id === id)?.email ?? "—";
+  const filter = sp.status && statuses.includes(sp.status) ? sp.status : null;
+  const { orders, profiles } = await adminPage(async (q) => {
+    const orders = await q<{ id: string; user_id: string; status: string; total_cents: number; tax_cents: number; discount_cents: number; created_at: string; paid_at: string | null; stripe_payment_intent_id: string | null; titles: string | null; refunded: number }>(
+      `select o.id, o.user_id, o.status, o.total_cents, o.tax_cents, o.discount_cents, o.created_at, o.paid_at, o.stripe_payment_intent_id,
+              (select string_agg(p.title, ', ') from order_items oi join products p on p.id = oi.product_id where oi.order_id = o.id) as titles,
+              coalesce((select sum(refunded_cents) from payments where order_id = o.id), 0)::int as refunded
+       from orders o where ($1::text is null or o.status::text = $1) order by o.created_at desc limit 100`, [filter]);
+    const ids = Array.from(new Set(orders.map((o) => o.user_id)));
+    const profiles = ids.length ? await q<{ id: string; email: string }>("select id, email from profiles where id = any($1::uuid[])", [ids]) : [];
+    return { orders, profiles };
+  });
+  const email = (id: string) => profiles.find((p) => p.id === id)?.email ?? "—";
 
   return (
     <>
@@ -31,18 +36,18 @@ export default async function AdminOrders({ searchParams }: { searchParams: Prom
       </nav>
       <div className="mt-6"><Flash ok={sp.ok} error={sp.error} /></div>
       <Table head={["Date", "Client", "Offre", "Total", "État", ""]}>
-        {(orders ?? []).map((o) => {
-          const refunded = (o.payments as { refunded_cents: number }[]).reduce((s, p) => s + p.refunded_cents, 0);
+        {orders.map((o) => {
+          const refunded = o.refunded;
           return (
             <tr key={o.id}>
               <td className="p-3 whitespace-nowrap">{new Date(o.created_at).toLocaleDateString("fr-FR")}</td><td className="p-3">{email(o.user_id)}</td>
-              <td className="p-3">{(o.order_items as unknown as { products: { title: string } | null }[]).map((i) => i.products?.title).filter(Boolean).join(", ")}</td>
+              <td className="p-3">{o.titles}</td>
               <td className="p-3 whitespace-nowrap">{formatEuro(o.total_cents)}{o.discount_cents ? <span className="block text-xs text-muted">remise {formatEuro(o.discount_cents)}</span> : null}{refunded ? <span className="block text-xs text-muted">remboursé {formatEuro(refunded)}</span> : null}</td>
               <td className="p-3"><Badge tone={o.status === "paid" ? "accent" : o.status === "pending" ? "neutral" : "warn"}>{label[o.status]}</Badge></td>
               <td className="p-3 text-right">{["paid", "partially_refunded"].includes(o.status) && o.stripe_payment_intent_id && <form action={refundOrder.bind(null, o.id)}><Button type="submit" variant="secondary" className="px-3 py-1.5">Rembourser</Button></form>}</td>
             </tr>);
         })}
-        {!orders?.length && <tr><td colSpan={6} className="p-6 text-center text-muted">Aucune commande.</td></tr>}
+        {!orders.length && <tr><td colSpan={6} className="p-6 text-center text-muted">Aucune commande.</td></tr>}
       </Table>
       <p className="mt-3 text-xs text-muted">« Rembourser » demande un remboursement total à Stripe ; l'état et l'accès changent à la réception de l'événement vérifié.</p>
     </>

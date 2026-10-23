@@ -30,10 +30,14 @@ export function safeFileName(name: string): string {
   return `${base}.${ext}`;
 }
 
-/** Private-bucket path. The first folder is the user id: storage RLS depends on it. */
-export function submissionPath(userId: string, assignmentId: string, fileName: string, unique: string): string {
-  return `${userId}/${assignmentId}/${unique}-${safeFileName(fileName)}`;
-}
+/** Object keys in the private S3 bucket. The leading folder encodes ownership/scope; the database policy and the server both check it. */
+export const submissionKey = (userId: string, assignmentId: string, fileName: string, unique: string): string =>
+  `submissions/${userId}/${assignmentId}/${unique}-${safeFileName(fileName)}`;
+export const resourceKey = (lessonId: string, fileName: string, unique: string): string => `resources/${lessonId}/${unique}-${safeFileName(fileName)}`;
+export const subtitleKey = (lessonId: string, lang: string, unique: string): string => `resources/${lessonId}/subtitles/${lang}-${unique}.vtt`;
+
+export const isOwnSubmissionKey = (key: string, userId: string, assignmentId: string): boolean => key.startsWith(`submissions/${userId}/${assignmentId}/`) && !key.includes("..");
+export const isResourceKeyFor = (key: string, lessonId: string): boolean => key.startsWith(`resources/${lessonId}/`) && !key.includes("..");
 
 /** Instructor-side resource uploads: broader than learner submissions, still allow-listed. */
 const RESOURCE_TYPES: Record<string, string[]> = { ...ALLOWED, pptx: ["application/vnd.openxmlformats-officedocument.presentationml.presentation"], xlsx: ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"], csv: ["text/csv"], json: ["application/json"] };

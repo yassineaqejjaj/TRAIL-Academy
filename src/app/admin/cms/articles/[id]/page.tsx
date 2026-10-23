@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { z } from "zod";
 import { Button } from "@/components/ui";
-import { adminDb } from "@/lib/admin/ctx";
+import { adminPage } from "@/lib/admin/ctx";
 import { ActionButton, Check, Field, Flash, Input, Panel, Select, Textarea } from "../../../ui";
 import { deletePost, savePost } from "../../actions";
 
@@ -14,10 +14,13 @@ export default async function AdminPost({ params, searchParams }: { params: Prom
   const { id } = await params;
   if (!z.string().uuid().safeParse(id).success) notFound();
   const sp = await searchParams;
-  const { db } = await adminDb();
-  const { data: p } = await db.from("blog_posts").select("*").eq("id", id).maybeSingle();
-  if (!p) notFound();
-  const { data: courses } = await db.from("courses").select("id, code, title").order("position");
+  const data = await adminPage(async (q) => {
+    const p = await q.one<{ id: string; slug: string; title: string; excerpt: string | null; body_md: string; category: string | null; seo_title: string | null; seo_description: string | null; related_course_ids: string[]; status: string }>("select * from blog_posts where id = $1", [id]);
+    if (!p) return null;
+    return { p, courses: await q<{ id: string; code: string; title: string }>("select id, code, title from courses order by position") };
+  });
+  if (!data) notFound();
+  const { p, courses } = data;
 
   return (
     <>
@@ -33,7 +36,7 @@ export default async function AdminPost({ params, searchParams }: { params: Prom
           <div className="sm:col-span-2"><Field label="Texte (Markdown)"><Textarea name="bodyMd" rows={18} defaultValue={p.body_md} /></Field></div>
           <Field label="Titre SEO (70 max.)"><Input name="seoTitle" defaultValue={p.seo_title ?? ""} /></Field>
           <Field label="Description SEO (170 max.)"><Input name="seoDescription" defaultValue={p.seo_description ?? ""} /></Field>
-          <div className="sm:col-span-2"><Field label="Formations liées" hint="Maintenez Ctrl/Cmd pour en choisir plusieurs"><Select name="related" multiple defaultValue={p.related_course_ids} className="h-40">{(courses ?? []).map((c) => <option key={c.id} value={c.id}>{c.code} — {c.title}</option>)}</Select></Field></div>
+          <div className="sm:col-span-2"><Field label="Formations liées" hint="Maintenez Ctrl/Cmd pour en choisir plusieurs"><Select name="related" multiple defaultValue={p.related_course_ids} className="h-40">{courses.map((c) => <option key={c.id} value={c.id}>{c.code} — {c.title}</option>)}</Select></Field></div>
           <div className="sm:col-span-2 flex items-center gap-4"><Check name="publish" label="Publié" defaultChecked={p.status === "published"} /><Button type="submit" variant="accent">Enregistrer</Button></div>
         </form>
       </Panel>

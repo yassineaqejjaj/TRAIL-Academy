@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
+import { getUser } from "@/lib/auth";
+import { asUser } from "@/lib/db";
+import { dbConfigured } from "@/lib/db/pool";
 import { progressSchema } from "@/lib/learning/schemas";
-import { createClient } from "@/lib/supabase/server";
 import { rateLimit } from "@/lib/rate-limit";
-import { supabaseConfigured } from "@/lib/env";
 
 export async function POST(request: Request) {
-  if (!supabaseConfigured()) return NextResponse.json({ error: "not_configured" }, { status: 503 });
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  if (!dbConfigured()) return NextResponse.json({ error: "not_configured" }, { status: 503 });
+  const user = await getUser();
   if (!user) return NextResponse.json({ error: "unauthenticated" }, { status: 401 });
   if (!rateLimit(`progress:${user.id}`, 60, 60_000)) return NextResponse.json({ error: "rate_limited" }, { status: 429 });
 
@@ -15,7 +15,10 @@ export async function POST(request: Request) {
   if (!parsed.success) return NextResponse.json({ error: "invalid" }, { status: 400 });
 
   // Authorization and all state changes happen inside the database function.
-  const { data, error } = await supabase.rpc("record_lesson_progress", { p_lesson: parsed.data.lessonId, p_position: parsed.data.position, p_completed: parsed.data.completed });
-  if (error) return NextResponse.json({ error: "denied" }, { status: error.message.includes("access denied") ? 403 : 400 });
-  return NextResponse.json(data);
+  try {
+    const row = await asUser(user.id, (q) => q.one<{ r: unknown }>("select record_lesson_progress($1, $2, $3) as r", [parsed.data.lessonId, parsed.data.position, parsed.data.completed]));
+    return NextResponse.json(row?.r);
+  } catch (e) {
+    return NextResponse.json({ error: "denied" }, { status: (e as Error).message.includes("access denied") ? 403 : 400 });
+  }
 }

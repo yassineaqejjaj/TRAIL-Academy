@@ -1,26 +1,47 @@
-# Testing
+# Tests
 
-`npm test` — 154 Vitest tests, all passing at last run:
-- `catalog.test.ts` — 18 modules/4 phases, order, prerequisites, exact path membership and prices, nothing purchasable, filters.
-- `advisor.test.ts` — determinism, path choice, duration, bundle suggestion.
-- `contact.test.ts` — schema, honeypot, rate limiter.
-- `learning.test.ts` (PGlite) — Phase B rules: progress needs an active entitlement (visitor/other user denied); resume position and last lesson saved; percent counts required *published* lessons only; completion never undone; direct writes to `lesson_progress` blocked; quiz options served without the answer key; objective grading incl. exact-set multiple choice, free text excluded from score; attempt history and limit; forged attempts blocked; submissions need entitlement, own storage folder and content; learners cannot self-accept; completion requires lessons + quiz + accepted assignment (configurable rules); attestation issued once, verifiable publicly with minimal data; expiry blocks progress/quizzes but keeps earned data; notes/bookmarks private. Mutation-checked: deliberately breaking grading and assignment rules makes these tests fail.
-- `commerce.test.ts` (PGlite) — Phase C: purchasability rules (unpublished/inactive/quotation/enterprise refused, already-owned refused, learners cannot create orders); creating an order grants nothing; access only from the applied paid event; duplicate event ids ignored; replay under a new event id creates no second payment/entitlement; spoofed session and currency mismatch rejected; unknown orders recorded; failed processing rolls back the idempotency record so Stripe's retry works; delayed payments stay closed until success; failed payments can be retried; expired sessions cancel but never touch paid orders; path purchase grants all courses with 18 months and never duplicates; coupon discount/tax recorded; partial refund keeps access, full refund revokes it and lessons close; dispute suspends, won restores, lost keeps revoked. Mutation-checked (removing session check, refund revocation, ownership check or paid-state guard makes tests fail).
-- `admin.test.ts` (PGlite) — Phase D: every admin function rejects learners/visitors; publishing is blocked until lessons have content, quizzes have questions and every choice question has a correct answer; offers open only when all courses are published and priced; unpublishing closes offers but keeps learners' access; price history kept with one active price and past orders untouched; reorder functions reject mismatched id sets; path edits keep the sellable product in sync; prerequisite cycles refused; manual access grant/revoke require a reason and are audited; assignment review requires feedback for revisions and triggers completion/attestation; dashboard metrics (net revenue after refunds, funnel, pending reviews); audit trail records actor and before/after, is append-only, readable only by admins; interest sign-ups hidden from learners, normalised, de-duplicated. Mutation-checked (removing the admin guard, readiness gate, or price-history deactivation fails tests).
-- `admin-schemas.test.ts`, `catalog-map.test.ts`, `markdown.test.tsx` — form validation (euro→cents, coupons, lessons, testimonials need consent reference), DB→public catalog mapping, Markdown never renders raw HTML/scripts or `javascript:` links.
-- `stripe.test.ts` — live-key guard, event normaliser, webhook handler with **real Stripe signature verification** (valid, missing, wrong secret, tampered body), 500-on-failure retry behaviour, email failure isolation, French email templates.
-- `learning-nav.test.ts`, `uploads-video.test.ts` — resume/neighbour logic, upload validation and path sanitising, Mux JWT structure (RS256 signature verified locally).
-- `dev-fixture.test.ts` — `supabase/dev-fixture.sql` applies cleanly; seed contains zero lessons.
-- `db.test.ts` — migrations + seed + RLS on PGlite: unpaid orders not provisioned, double provisioning yields one entitlement, learners cannot call `provision_order` or read others' orders/entitlements/webhook events, lesson access by entitlement/preview/expiry, quiz answers hidden, org-manager scoping, append-only audit log, unverified testimonial rejected.
+## Ce qui tourne
 
-`npm run typecheck`, `npm run lint` — clean. `npm audit --omit=dev` — 0 vulnerabilities; 5 high in dev-only ESLint tooling.
+| Niveau | Commande | Contenu |
+|---|---|---|
+| Types, lint | `npm run typecheck` / `npm run lint` | propres |
+| Unitaires, base, intégration | `npm test` | **185 tests, 17 fichiers** |
+| Bout en bout | `npx playwright test` | **9 parcours** dans Chrome, sur un build de production |
+| Audit | `npm audit --omit=dev` | 0 vulnérabilité |
 
-**Playwright (`e2e/`) is written but has not been run** — it requires downloading browsers (`npx playwright install chromium`). Manual browser checks done: home, advisor (light/dark), route smoke test (all public routes 200; `/compte`, `/admin` redirect anonymous users).
+### Détail des 185 tests
 
-Over HTTP against the dev server (no DB/Stripe): webhook returns 400 for missing/bad/tampered signatures, 500 for a valid signature when the DB is absent; cron returns 401 without its secret; `/achat/succes` redirects anonymous users.
+- **Base de données (PGlite, vraies migrations)** : `db`, `learning`, `commerce`, `admin`, `dev-fixture` — accès par entitlement, expiration, correction des quiz (ensemble exact, réponse libre exclue, limite de tentatives), complétion configurable, attestation unique, achat (offre fermée, déjà détenu, session falsifiée, devise, rejeu, retry après échec), remboursements et litiges, publication conditionnée, historique de prix, ordre, cycles de prérequis, accès manuels motivés, métriques, audit en écriture seule, inscriptions d'intérêt.
+- **Couche d'accès sur TCP réel** (`db-layer`) : lecture publique, isolation par utilisateur, aucune fuite de rôle ni d'identité sur connexion réutilisée, rôle de confiance, tables d'auth inaccessibles, annulation sur erreur, paramètres liés, dates en ISO, mode connexion unique.
+- **Authentification** (`auth`) : inscription + trigger de profil, Argon2id, e-mail obligatoire, cookie `HttpOnly`, mêmes réponses pour compte inconnu, longueur minimale, réinitialisation qui révoque les sessions.
+- **Stripe** (`stripe`) : signatures réelles (valide, absente, mauvais secret, corps altéré), normalisation, nouvel essai sur échec, e-mails isolés.
+- **Stockage et vidéo** (`storage`, `stream-gateway`) : clés, politique POST (taille/type/clé), liens de 60 s, jetons (signature, expiration, média), réécriture de playlists, traversée de chemin, plages d'octets.
+- **Reste** : catalogue et mapping base→public, conseiller déterministe, schémas de formulaires, Markdown sûr, navigation de leçons, contact et inscriptions d'intérêt.
 
-Target workflows (brief §17) covered at database level: 5–10 (start lesson, quiz, progress, completion, attestation), 14 (expiry), 15 (unauthorised resources: RLS/policies). Workflows 3–4 (purchase + webhook) are covered at database/handler level but **not end-to-end through Stripe Checkout**; 11–13 (admin, enterprise) do not exist yet.
+**Tests par mutation (manuels)** : pour les règles critiques (correction des quiz, garde administrateur, vérification de session Stripe, révocation au remboursement, historique des prix, complétion, préparation à la publication), la règle a été volontairement cassée et la suite a bien échoué, puis a été restaurée.
 
-**Not verified (Phase D):** the admin screens and their supabase-js/Storage calls (resource/subtitle upload, signed submission downloads), the Stripe coupon/refund calls, and the CMS pages were type-checked, linted, built and route-smoke-tested (anonymous → login redirect) but **never exercised against a live Supabase**. Visual check done in a browser for home and catalogue only; the other screens were not individually compared to the design.
+### Les 9 parcours Playwright
 
-**Not verified:** Stripe Checkout session creation, billing portal, invoice retrieval, Stripe Tax and promotion codes (none ran against Stripe); Resend delivery; the purchase/success/orders pages with real data. the React player/quiz/assignment UI and the supabase-js queries behind them have been type-checked, linted and built, and routes were smoke-tested without credentials (redirect to login / 503), but they have **not been exercised against a live Supabase** nor in a browser with real data. HLS playback, subtitle tracks, signed resource downloads and Storage uploads are untested. No accessibility scan has been run.
+visiteur (catalogue, module non achetable) · conseiller · inscription d'intérêt avec consentement · inscription, refus avant vérification, connexion · lecteur fermé sans accès · parcours apprenant complet (leçons, notes, progression persistante après reconnexion, quiz, livrable) · administrateur (10 écrans, relecture, attestation vérifiable publiquement, journal) · création et publication d'un module avec contrôle de complétude · contrôles d'accès (apprenant refusé en admin, leçon d'autrui, API sans session).
+
+Ils tournent contre une pile démarrée séparément. Localement :
+
+```bash
+npm run db:dev &                                   # PostgreSQL embarqué
+npm run db:migrate -- --seed --fixture
+# variables : voir .github/workflows/ci.yml (DATABASE_SINGLE_CONNECTION, EMAIL_TRANSPORT=console, AUTH_RATE_LIMIT=off…)
+npm run build && npx next start -p 3105 &
+E2E_CHANNEL=chrome npx playwright test             # réutilise Google Chrome ; sans E2E_CHANNEL : Chromium de Playwright
+```
+
+L'e-mail de confirmation est marqué vérifié par SQL dans ces tests (le lien lui-même est couvert par le test d'authentification). L'accès payant est arrangé par SQL : la fonction qui le provisionne est testée sur la base, **le paiement Stripe ne l'est pas**.
+
+## Ce qui n'est pas testé
+
+Stripe réel ; PostgreSQL de production ; MinIO/S3 réel (envoi, CORS, téléchargement) et lecture HLS par `hls.js` via la passerelle ; SMTP réel ; Google OAuth ; déploiement Vercel/Railway ; exécution de la CI sur GitHub ; `docker-compose.yml` (pas de démon Docker à la création) ; accessibilité (audit automatisé) ; performance (Lighthouse, Core Web Vitals) ; charge.
+
+## Pièges rencontrés (utiles à savoir)
+
+- La base embarquée n'a qu'un backend : sans `DATABASE_SINGLE_CONNECTION=true`, deux connexions peuvent exécuter des requêtes dans la transaction d'un utilisateur et faire échouer une lecture de session. Un vrai PostgreSQL n'a pas ce problème.
+- Les limiteurs en mémoire gardent leur état entre deux exécutions sur le même serveur : relancer le serveur avant chaque exécution des e2e.
+- Le cache de pages (ISR) de Next.js est écrit sur disque : reconstruire (`next build`) après avoir réinitialisé la base avant de prendre des captures.

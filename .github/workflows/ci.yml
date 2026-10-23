@@ -1,0 +1,66 @@
+name: CI
+on:
+  push: { branches: [main] }
+  pull_request:
+permissions: { contents: read }
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Types, lint, unit + database tests, build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: npm }
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - name: Unit, integration and migration/RLS tests (embedded PostgreSQL)
+        run: npm test
+      - name: Dependency audit (production dependencies)
+        run: npm audit --omit=dev --audit-level=high
+      - name: Build
+        run: npm run build
+        env: { NEXT_PUBLIC_SITE_URL: "http://localhost:3000" }
+
+  e2e:
+    name: End-to-end (Playwright + production build)
+    runs-on: ubuntu-latest
+    needs: quality
+    env:
+      DATABASE_URL: postgres://postgres:postgres@127.0.0.1:54329/postgres
+      DATABASE_SINGLE_CONNECTION: "true"   # embedded PostgreSQL has a single backend
+      BETTER_AUTH_SECRET: ci-only-secret-ci-only-secret-ci-only-secret
+      NEXT_PUBLIC_SITE_URL: http://localhost:3105
+      EMAIL_TRANSPORT: console
+      AUTH_RATE_LIMIT: "off"
+      AUTH_ACTION_LIMIT: "1000"
+      E2E_BASE_URL: http://localhost:3105
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: npm }
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Start the database and apply migrations, seed and demo fixture
+        run: |
+          npm run db:dev > db.log 2>&1 &
+          for i in $(seq 1 60); do (echo > /dev/tcp/127.0.0.1/54329) 2>/dev/null && break; sleep 1; done
+          npm run db:migrate -- --seed --fixture
+      - run: npm run build
+      - name: Start the app
+        run: |
+          npx next start -p 3105 > app.log 2>&1 &
+          for i in $(seq 1 60); do curl -sf http://localhost:3105/ >/dev/null && break; sleep 1; done
+      - run: npx playwright test
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-report
+          path: |
+            test-results/
+            app.log
+            db.log

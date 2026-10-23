@@ -2,302 +2,441 @@
 
 **T**raining **R**oadmap for **A**pplied **I**ntelligence & **L**eadership — *Learn AI. Apply AI. Lead with AI.*
 
-Plateforme de formation professionnelle à l'intelligence artificielle, pensée pour **un formateur unique** qui l'exploite sans développeur : catalogue de 18 modules, parcours, lecteur de cours, quiz, livrables relus, attestations vérifiables, paiement Stripe, espace d'administration et CMS. Interface en français, architecture prête pour l'anglais.
+Une plateforme de formation professionnelle à l'intelligence artificielle, conçue pour qu'**un formateur unique** la fasse vivre sans développeur : catalogue de 18 modules, parcours, lecteur de cours, quiz, livrables relus par un humain, attestations vérifiables, paiement, administration et gestion de contenu.
 
-> **État du projet : phases A à D construites** (fondations, apprentissage, commerce, administration). Les phases E (entreprises) et F (durcissement) ne sont pas commencées.
-> **Aucune intégration externe n'a été testée en conditions réelles** (Supabase hébergé, Stripe, Resend, Mux) : voir [Ce qui est vérifié, ce qui ne l'est pas](#ce-qui-est-vérifié-ce-qui-ne-lest-pas).
-> **Les paiements en production sont bloqués par conception** tant qu'une revue juridique n'est pas faite.
+![Accueil de TRAIL Academy](docs/screenshots/01-accueil.png)
 
----
+> **État honnête du projet.** Les phases A à D (fondations, apprentissage, commerce, administration) sont construites et testées : 185 tests automatisés et 9 parcours de bout en bout dans un vrai navigateur, contre PostgreSQL, sur un build de production. Les phases E (entreprises) et F (durcissement) ne sont pas commencées. **Rien n'a encore tourné contre Stripe, un stockage S3, un serveur SMTP ou un déploiement Vercel/Railway réels** : voir [ce qui est vérifié et ce qui ne l'est pas](#9-ce-qui-est-vérifié-et-ce-qui-ne-lest-pas). Les paiements réels sont bloqués par conception tant qu'une revue juridique n'a pas eu lieu.
 
 ## Sommaire
 
-1. [Présentation fonctionnelle](#1-présentation-fonctionnelle)
-2. [Présentation technique](#2-présentation-technique)
-3. [Démarrage rapide](#3-démarrage-rapide)
-4. [Ce qui est vérifié, ce qui ne l'est pas](#ce-qui-est-vérifié-ce-qui-ne-lest-pas)
-5. [Feuille de route](#5-feuille-de-route)
-6. [Documentation détaillée](#6-documentation-détaillée)
-7. [Avertissement légal](#7-avertissement-légal)
+1. [Le produit](#1-le-produit)
+2. [Comment ça marche](#2-comment-ça-marche)
+3. [Fonctionnalités en images](#3-fonctionnalités-en-images)
+4. [Architecture technique](#4-architecture-technique)
+5. [Bonnes pratiques d'ingénierie](#5-bonnes-pratiques-dingénierie)
+6. [Bonnes pratiques produit](#6-bonnes-pratiques-produit)
+7. [Démarrer](#7-démarrer)
+8. [Déployer sur Vercel et Railway](#8-déployer-sur-vercel-et-railway)
+9. [Ce qui est vérifié et ce qui ne l'est pas](#9-ce-qui-est-vérifié-et-ce-qui-ne-lest-pas)
+10. [Feuille de route](#10-feuille-de-route)
+11. [Structure du dépôt et documentation](#11-structure-du-dépôt-et-documentation)
+12. [Avertissement légal](#12-avertissement-légal)
 
 ---
 
-## 1. Présentation fonctionnelle
+## 1. Le produit
 
-### 1.1 Offre
+### Le problème
+
+Les professionnels qui doivent intégrer l'IA à leur métier trouvent surtout des contenus génériques ou trop techniques, sans progression claire ni livrable concret, et des promesses difficiles à vérifier. Côté formateur, vendre et suivre une formation en ligne demande souvent un assemblage fragile d'outils.
+
+### La réponse
+
+TRAIL Academy propose une formation **pratique, progressive et mesurable**, conçue et enseignée par un praticien qui construit réellement des produits IA :
+
+- **18 modules** en 4 phases (Fondations IA · Productivité & Construction · Produit & Leadership · Systèmes & Ingénierie), avec prérequis, ordre recommandé, objectifs mesurables et **livrable concret** pour chaque module ;
+- **Une pédagogie par la pratique** : cible de conception de 70 % de pratique, 20 % d'interaction, 10 % de théorie (un objectif de conception, pas une mesure) ;
+- **Une validation honnête** : quiz corrigés automatiquement, livrables relus par le formateur, attestation privée et vérifiable. Jamais présentée comme une certification d'État ou une qualification RNCP ;
+- **Une exploitation par une seule personne** : tout se pilote depuis l'administration, sans toucher au code.
+
+### Pour qui
+
+| Public | Ce qu'il y trouve |
+|---|---|
+| **Product Managers, Product Owners, AI Product Managers** | Intégrer l'IA à la pratique produit : discovery, stratégie, delivery, évaluation |
+| **Consultants, chefs de projet, business analysts** | Cadrer, chiffrer et piloter des projets IA avec des méthodes réutilisables |
+| **Transformation digitale, managers** | Gouvernance, AI Act, économie de l'IA, conduite du changement |
+| **Profils tech et data** | RAG, agents, sécurité des LLM, évaluation et observabilité |
+| **Professionnels en montée en compétence** | Un parcours des fondations aux usages avancés, à leur rythme |
+| **Entreprises (secondaire)** | Licences d'équipe, formations sur mesure, ateliers privés *(interface de gestion : phase E)* |
+
+### L'offre
 
 | Offre | Contenu | Prix | Accès |
 |---|---|---|---|
-| Module Standard | 1 module (14 modules concernés) | 199 € TTC | 12 mois |
-| Module Avancé | Vibe Coding (M6), RAG (M11), Agentic AI (M12), AI Evaluation & Observability (M17) | 299 € TTC | 12 mois |
-| Product Manager Augmenté | 9 modules : M3, M4, M5, M6, M7, M9, M14, M16, M18 | 990 € TTC | 18 mois |
-| AI Product Manager | 13 modules : M1, M2, M3, M8, M10–M18 | 1 490 € TTC | 18 mois |
+| Module Standard | 1 module (14 concernés) | 199 € TTC | 12 mois |
+| Module Avancé | Vibe Coding, RAG, Agentic AI, AI Evaluation & Observability | 299 € TTC | 12 mois |
+| Product Manager Augmenté | 9 modules | 990 € TTC | 18 mois |
+| AI Product Manager | 13 modules | 1 490 € TTC | 18 mois |
 | AI Mastery | les 18 modules et les deux parcours | 1 990 € TTC | 18 mois |
-| AI Mastery Mentored | 18 modules + accompagnement (offre fermée tant que l'accompagnement n'est pas défini) | 2 990 € TTC | 18 mois |
-| Team 5 | 5 licences AI Mastery | 7 500 € HT | 12 mois |
-| Team 20 | 20 licences AI Mastery | 24 000 € HT | 12 mois |
+| AI Mastery Mentored | 18 modules + accompagnement *(offre fermée tant que l'accompagnement n'est pas défini)* | 2 990 € TTC | 18 mois |
+| Team 5 / Team 20 | 5 / 20 licences AI Mastery | 7 500 € / 24 000 € HT | 12 mois |
 | Private Workshop | journée de formation privée | de 2 500 à 3 500 € HT | — |
 | Enterprise Custom | programme personnalisé | sur devis | — |
 
-Les prix sont des **données** modifiables dans l'administration (historique conservé). Les **prix fondateurs** de lancement (149 / 229 / 790 / 1 190 / 1 590 / 2 490 €) sont des propositions à tester, uniquement sur des offres réellement disponibles et pour une période définie : ils ne sont pas appliqués automatiquement (voir [`PRODUCT.md`](PRODUCT.md)).
+Les prix sont des **données** modifiables dans l'administration (historique conservé, commandes passées inchangées). Les prix « fondateur » de lancement (149 / 229 / 790 / 1 190 / 1 590 / 2 490 €) sont des propositions à tester, uniquement sur des offres réellement disponibles et pour une période définie : ils ne sont pas appliqués automatiquement ([`PRODUCT.md`](PRODUCT.md)).
 
-**Règles métier clés**
-- Les 18 modules sont visibles publiquement, mais **seuls les modules publiés et validés peuvent être achetés**. Les autres affichent « Bientôt disponible ».
-- Un contenu déjà acquis **n'est jamais refacturé** : acheter un parcours qui contient un module déjà détenu prolonge l'accès, sans doublon.
-- Stripe reste la source de vérité du paiement, des taxes et des factures.
-- Les attestations sont **privées et vérifiables** ; elles ne sont **ni une certification d'État ni une qualification RNCP**.
-- Aucun témoignage, avis, chiffre ou logo n'est inventé : un témoignage ne se publie qu'avec une référence de consentement.
+### Les règles qui font la confiance
 
-### 1.2 Catalogue
-
-18 modules en 4 phases (Fondations IA · Productivité & Construction · Produit & Leadership · Systèmes & Ingénierie), avec prérequis, ordre recommandé, niveau, durée estimée, outils, objectifs mesurables et livrable. Trois modules sont les premiers emplacements de contenu réel : **Prompt Engineering (M4)**, **Context Engineering (M5)**, **Vibe Coding (M6)**. Les autres restent « bientôt disponibles ». Le module M7 utilise l'intitulé officiel de BMAD (*Breakthrough Method for Agile AI-Driven Development*, vérifié sur le dépôt officiel).
-
-### 1.3 Parcours par profil
-
-**Visiteur**
-- Accueil, catalogue (recherche, phase, niveau, parcours, disponibilité, durée), fiche formation, parcours avec tableau comparatif, tarifs, page entreprises avec demande de devis, formateur, ressources/blog, pages légales (modèles).
-- **Conseiller de parcours** : questionnaire de 6 questions, recommandation **déterministe et expliquée** (règles éditables dans `src/lib/advisor/rules.ts`, aucune IA requise).
-- Inscription « me prévenir » à la sortie d'un module, newsletter (consentement explicite).
-
-**Apprenant**
-- Inscription / connexion (e-mail + mot de passe, vérification d'e-mail, réinitialisation).
-- Tableau de bord : « reprendre où vous en étiez », formations avec progression et date d'expiration, parcours actif, livrables et attestations.
-- **Lecteur de cours** : vidéo en streaming signé, vitesse de lecture, sous-titres, chapitres, transcription, ressources, notes horodatées, signets, reprise de lecture, plan du cours, navigation entre leçons, accessible sur mobile.
-- **Quiz** : choix unique, choix multiples, réponse libre ; correction automatique des questions objectives, seuil de réussite configurable, historique des tentatives, limite de tentatives.
-- **Livrables** : réponse écrite et/ou fichier (types et taille contrôlés), stockage privé, relecture humaine avec retour.
-- **Complétion** : leçons obligatoires + quiz + livrables acceptés (règles configurables par module) → **attestation** avec code de vérification public (`/verification/<code>`), imprimable.
-- Achat Stripe, historique des commandes, factures, portail de facturation.
-
-**Formateur / administrateur (compte unique)**
-- Tableau de bord : revenu net, achats, remboursements, litiges, inscriptions, apprenants actifs, complétions, produits les plus achetés, entonnoir de commande, livrables à relire.
-- Modules : création/édition, prérequis, règles de complétion, SEO, chapitres et leçons (réordonnables), ressources, sous-titres, quiz, devoirs, aperçu, **publication conditionnée par un contrôle de complétude**.
-- Parcours, produits et prix (avec historique), coupons, commandes (demande de remboursement), apprenants (octroi/retrait d'accès avec motif obligatoire), relecture des livrables, **journal d'audit** non modifiable.
-- CMS : bandeau d'accueil, profil du formateur, FAQ, témoignages vérifiés, articles (SEO, formations liées), textes légaux.
-
-**Responsable d'équipe (entreprises)** : modèle de données et règles d'accès prêts (organisations, licences, allocations, RLS) ; **interface non construite** (phase E).
-
-### 1.4 Parcours d'achat
-
-```
-Fiche module publié → connexion → /achat/<offre> → Stripe Checkout (mode test)
-      │                                                    │
-      │            (redirection = affichage seulement)     ▼
-      ▼                                         Webhook Stripe SIGNÉ
- /achat/succes ◄── "confirmation en cours" ◄─── vérifié + idempotent
-                                                           │
-                                                           ▼
-                                    commande « payée » + accès activé + e-mail
-```
-
-L'accès payant n'est **jamais** accordé depuis la redirection du navigateur : uniquement par le webhook vérifié.
+- **Seul un module publié et validé s'achète.** Les 18 modules sont visibles, mais « Bientôt disponible » tant que le contenu authentique n'est pas là ; le paiement est refusé côté base de données, pas seulement masqué.
+- **On ne paie jamais deux fois le même contenu** : un parcours qui contient un module déjà détenu prolonge l'accès, sans doublon.
+- **Aucune invention** : pas de témoignage sans consentement vérifiable, pas de vidéo ni de contenu fictif, pas de chiffre non vérifié.
+- **L'accès payant ne s'ouvre que sur un événement de paiement signé et vérifié**, jamais sur une simple redirection du navigateur.
 
 ---
 
-## 2. Présentation technique
+## 2. Comment ça marche
 
-### 2.1 Stack
+### Le parcours d'un apprenant
 
-| Couche | Choix |
-|---|---|
-| Front + serveur | Next.js 16 (App Router, Turbopack, `proxy.ts`), React 19, TypeScript, Tailwind CSS 4, lucide-react, polices Inter + Sora |
-| Données | PostgreSQL (Supabase), migrations SQL versionnées, Row Level Security |
-| Auth | Supabase Auth (`@supabase/ssr`) |
-| Stockage | Supabase Storage (buckets privés) |
-| Paiement | Stripe Checkout + webhooks (SDK `stripe` 23) |
-| Vidéo | Mux (URL signées, JWT RS256) via un adaptateur ; hls.js côté client |
-| E-mail | Resend (adaptateur) |
-| Validation | Zod 4 |
-| Contenu | `react-markdown` (HTML brut jamais rendu) |
-| Tests | Vitest 5, React Testing Library, PGlite (Postgres embarqué), Playwright (écrit, non exécuté) |
-
-### 2.2 Architecture
-
-Application Next.js unique, sans microservice. **Les règles métier sensibles vivent dans PostgreSQL**, sous forme de fonctions `SECURITY DEFINER`, afin d'être transactionnelles, impossibles à contourner depuis le client et testables sans réseau.
-
-```
-src/
-  app/                 routes (pages serveur par défaut)
-    pages publiques    /, /formations, /parcours, /tarifs, /entreprise, /formateur,
-                       /ressources, /conseiller, /legal/[slug], /verification/[code]
-    achat/             récapitulatif, succès (affichage seul)
-    compte/            tableau de bord, commandes
-    apprendre/         lecteur, quiz, livrables
-    admin/             administration (cours, parcours, produits, coupons, commandes,
-                       apprenants, devoirs, cms, journal)
-    api/               contact, interest, progress, resources/[id], cron/expire, stripe/webhook
-  components/          design system (ui/), layout, cartes, markdown
-  lib/
-    catalog/           modèle public + chargeur DB (repli sur données statiques)
-    advisor/           règles + moteur déterministe
-    learning/          requêtes, navigation, schémas
-    stripe/            garde mode live, normalisation d'événements, gestionnaire webhook
-    admin/             schémas de formulaires, contexte et messages d'erreur
-    video/             signature Mux
-    cms.ts, email.ts, uploads.ts, rate-limit.ts, env.ts
-  proxy.ts             rafraîchit la session, redirection « optimiste » des zones privées
-supabase/
-  migrations/0001…0005 schéma, RLS, apprentissage, commerce, administration
-  seed.sql             généré depuis src/lib/catalog/data.ts (npm run seed:generate)
-  dev-fixture.sql      contenus factices de TEST uniquement (jamais en production)
-tests/  e2e/  scripts/
+```mermaid
+flowchart LR
+  A[Découvre le catalogue<br/>ou le conseiller] --> B[Fiche module<br/>objectifs, programme, prix]
+  B --> C{Module publié<br/>et offre ouverte ?}
+  C -- non --> D[Inscription « me prévenir »<br/>avec consentement]
+  C -- oui --> E[Paiement sécurisé Stripe]
+  E --> F[Webhook signé et vérifié]
+  F --> G[Accès activé<br/>12 ou 18 mois]
+  G --> H[Leçons, notes, signets,<br/>reprise de lecture]
+  H --> I[Quiz auto-corrigé]
+  H --> J[Livrable relu<br/>par le formateur]
+  I & J --> K[Module validé]
+  K --> L[Attestation privée<br/>vérifiable par code]
 ```
 
-### 2.3 Autorisation en trois couches
+1. **Découvrir** : catalogue filtrable, parcours comparés, et un **conseiller déterministe** (6 questions, règles visibles, aucune IA) qui explique pourquoi il recommande un parcours.
+2. **Acheter** : Stripe Checkout (mode test tant que le juridique n'est pas validé). Une commande « en attente » est créée ; l'accès n'est accordé que par le webhook vérifié, de façon idempotente.
+3. **Apprendre** : tableau de bord « reprendre où vous en étiez », lecteur avec plan du cours, notes, signets, ressources, transcription, vitesse et sous-titres pour la vidéo.
+4. **Être évalué** : quiz (choix unique, multiple, réponse libre), seuil et nombre de tentatives configurables ; livrables texte ou fichier, relus par un humain avec retour.
+5. **Valider** : quand toutes les règles du module sont remplies (leçons, quiz, livrables), une **attestation** est émise une seule fois, avec un code de vérification public.
 
-1. **`proxy.ts`** : redirection optimiste (jamais la frontière de sécurité).
-2. **Code serveur** : `requireUser()` / `requireAdmin()` avant toute lecture ou action.
-3. **PostgreSQL** : RLS activée sur **toutes** les tables (refus par défaut) et chaque fonction d'administration revérifie `is_admin()` elle-même.
+### Le travail du formateur
 
-Les écritures sensibles (commandes, paiements, droits d'accès, événements webhook, rôles, audit) n'ont **aucune politique pour les apprenants** : seul le rôle service y accède, côté serveur.
+```mermaid
+flowchart LR
+  A[Crée le module<br/>prérequis, objectifs] --> B[Ajoute chapitres,<br/>leçons, ressources, quiz, devoirs]
+  B --> C[Contrôle de complétude<br/>automatique]
+  C -- incomplet --> B
+  C -- prêt --> D[Publie le module]
+  D --> E[Fixe le prix et ouvre l'offre]
+  E --> F[Suit ventes, progression,<br/>relit les livrables]
+```
 
-### 2.4 Modèle de données (extrait)
+Un module ne peut pas être publié s'il manque du contenu (leçon vide, quiz sans question, question sans bonne réponse, objectifs absents). Publier **n'ouvre pas** la vente : l'offre s'ouvre explicitement, et seulement si tous ses modules sont publiés et ont un prix.
 
-- **Identité** : `profiles`, `user_roles` (`learner` | `enterprise_manager` | `admin`)
-- **Catalogue** : `learning_phases`, `courses`, `course_prerequisites`, `learning_paths`, `learning_path_courses`, `chapters`, `lessons`, `lesson_resources`
-- **Évaluation** : `quizzes`, `quiz_questions`, `quiz_options` (bonnes réponses lisibles par l'admin seulement), `quiz_attempts`, `assignments`, `assignment_submissions`, `attestations`
-- **Commerce** : `products`, `product_course_access`, `prices` (historique), `coupons`, `orders`, `order_items` (instantané prix/durée), `payments`, `entitlements`, `processed_webhook_events`
-- **Entreprise** : `organizations`, `organization_members`, `license_packs`, `license_allocations`
-- **CMS & exploitation** : `pages`, `page_sections`, `blog_posts`, `testimonials`, `faq_items`, `audit_logs` (append-only), `email_events`, `consent_records`, `interest_signups`, `system_settings`
+### Pourquoi les règles sont dans la base de données
 
-Détail et politiques RLS : [`DATABASE.md`](DATABASE.md).
-
-### 2.5 Fonctions SQL principales
-
-| Fonction | Rôle |
-|---|---|
-| `record_lesson_progress` | progression, reprise, dernière leçon ; évalue la complétion |
-| `submit_quiz` / `get_quiz_options` | correction côté base ; la clé de correction n'est jamais exposée avant correction |
-| `try_complete_course` | applique les règles de complétion, émet **une seule** attestation |
-| `create_checkout_order` | applique les règles d'achat (publié, actif, prix, déjà détenu) |
-| `process_stripe_event` | applique un événement Stripe vérifié, **de façon atomique et idempotente** (paiement, échec, expiration, remboursement total/partiel, litige) |
-| `provision_order` | accorde/prolonge les accès sans doublon |
-| `publish_course` / `course_readiness` | publication conditionnée à un contrôle de complétude |
-| `set_product_price` / `set_product_active` | historique des prix ; une offre ne s'ouvre que si tous ses modules sont publiés |
-| `admin_grant_access` / `admin_revoke_access` / `review_submission` | actions d'administration journalisées |
-| `admin_metrics` | indicateurs du tableau de bord |
-
-**Politique de révocation d'accès (à valider juridiquement)** : remboursement total → accès de la commande retiré ; remboursement partiel → accès conservé ; litige ouvert → accès suspendu ; litige gagné → accès rétabli ; litige perdu → accès retiré.
-
-### 2.6 Sécurité
-
-- Validation Zod, limitation de débit (en mémoire — **à remplacer par un store partagé en multi-instance**), champ pot-de-miel, en-têtes de sécurité, redirections de callback limitées au même site, pas d'énumération de comptes à la réinitialisation.
-- Webhook Stripe : signature vérifiée sur le **corps brut**, recoupement session/devise, annulation de l'enregistrement d'idempotence si le traitement échoue (le retry Stripe peut réussir).
-- Garde « paiement réel » : une clé `sk_live_…` est refusée sauf si `ALLOW_LIVE_PAYMENTS=true` **et** `LEGAL_REVIEW_COMPLETED=true`.
-- Fichiers : liste d'extensions **et** de types MIME, taille limitée, noms assainis, dossier par utilisateur imposé par RLS Storage ; téléchargements par liens signés de courte durée.
-- Vidéo : jamais d'URL permanente ; jeton signé de 2 h. Le streaming signé dissuade le partage, il **n'empêche pas absolument** le téléchargement.
-- Journal d'audit en écriture seule sur le contenu, les prix, les commandes, les paiements et les droits d'accès.
-
-Détails : [`SECURITY.md`](SECURITY.md).
-
-### 2.7 Qualité
-
-- **154 tests Vitest** passent (14 fichiers) : catalogue, conseiller, formulaires, Stripe (signatures réelles), Markdown, et surtout **migrations + RLS + règles métier sur PostgreSQL embarqué (PGlite)**.
-- Les règles critiques ont été **testées par mutation** : casser volontairement la correction des quiz, la vérification admin, la garde de session Stripe, la révocation au remboursement ou l'historique des prix fait échouer les tests.
-- `tsc`, ESLint et `next build` sont propres ; `npm audit --omit=dev` : 0 vulnérabilité (5 alertes « high » dans l'outillage ESLint de développement, aucune critique).
+Les règles qui comptent (accès, correction, complétion, paiement, remboursement) sont des **fonctions PostgreSQL transactionnelles**, testées sans réseau. Elles ne peuvent pas être contournées depuis le navigateur, et chaque requête d'un utilisateur s'exécute avec son propre rôle pour que la sécurité par ligne (RLS) s'applique réellement.
 
 ---
 
-## 3. Démarrage rapide
+## 3. Fonctionnalités en images
 
-**Prérequis** : Node.js ≥ 20 (testé avec Node 26), npm.
+*Captures réelles de l'application (build de production, base PostgreSQL locale). Les comptes sont fictifs ; les contenus de leçon sont des textes de remplacement sans vidéo, fournis par `db/dev-fixture.sql`.*
+
+### Site public
+
+| Catalogue | Fiche module |
+|---|---|
+| ![Catalogue](docs/screenshots/02-catalogue.png) | ![Fiche module](docs/screenshots/03-fiche-module.png) |
+| **Parcours** | **Conseiller de parcours** |
+| ![Parcours](docs/screenshots/04-parcours.png) | ![Conseiller](docs/screenshots/06-conseiller.png) |
+
+<details><summary><strong>Page d'accueil complète et tarifs</strong></summary>
+
+![Accueil complet](docs/screenshots/01-accueil-complet.jpg)
+![Tarifs](docs/screenshots/05-tarifs.jpg)
+
+</details>
+
+### Espace apprenant
+
+| Tableau de bord | Lecteur de cours |
+|---|---|
+| ![Tableau de bord](docs/screenshots/08-tableau-de-bord.png) | ![Lecteur](docs/screenshots/09-lecteur.png) |
+| **Quiz** | **Livrable** |
+| ![Quiz](docs/screenshots/10-quiz.png) | ![Livrable](docs/screenshots/11-livrable.png) |
+
+**Attestation vérifiable publiquement** (code unique, données minimales) :
+
+![Attestation](docs/screenshots/12-attestation.png)
+
+### Administration du formateur
+
+| Tableau de bord | Fiche module et publication |
+|---|---|
+| ![Admin tableau de bord](docs/screenshots/13-admin-tableau-de-bord.png) | ![Admin module](docs/screenshots/14-admin-module.png) |
+| **Chapitres et leçons** | **Relecture des livrables** |
+| ![Admin contenu](docs/screenshots/15-admin-contenu.png) | ![Admin relecture](docs/screenshots/16-admin-relecture.png) |
+| **Produits et prix** | **Contenu du site (CMS)** |
+| ![Admin produits](docs/screenshots/20-admin-produits.png) | ![Admin CMS](docs/screenshots/21-admin-cms.png) |
+
+Le **journal d'audit** (écriture seule) enregistre qui a changé quoi sur le contenu, les prix, les commandes, les paiements et les accès : [`22-admin-journal.png`](docs/screenshots/22-admin-journal.png).
+
+### Mode sombre et mobile
+
+| Mode sombre | Lecteur sur mobile | Catalogue sur mobile |
+|---|---|---|
+| ![Mode sombre](docs/screenshots/17-mode-sombre.png) | <img src="docs/screenshots/18-mobile-lecteur.png" width="260" alt="Lecteur mobile"> | <img src="docs/screenshots/19-mobile-catalogue.png" width="260" alt="Catalogue mobile"> |
+
+---
+
+## 4. Architecture technique
+
+### Une pile entièrement open source
+
+| Besoin | Brique | Licence |
+|---|---|---|
+| Application web | **Next.js 16** (App Router, Turbopack), React 19, TypeScript, Tailwind CSS 4 | MIT |
+| Base de données | **PostgreSQL** (migrations SQL, Row Level Security) via `pg` | PostgreSQL / MIT |
+| Authentification | **Better Auth** : e-mail + mot de passe (Argon2id), vérification d'e-mail, réinitialisation, Google en option | MIT |
+| Stockage de fichiers | **MinIO** (API S3) via AWS SDK v3, envoi direct navigateur → bucket | AGPL-3.0 / Apache-2.0 |
+| Vidéo | **HLS auto-hébergé** : `ffmpeg` pour l'encodage, **passerelle de streaming** maison (jetons signés `jose`), `hls.js` côté client | LGPL / MIT |
+| E-mail | **SMTP** via `nodemailer` (n'importe quel relais ; **Mailpit** en local) | MIT-0 / MIT |
+| Validation, contenu | Zod, `react-markdown` (HTML brut jamais rendu) | MIT |
+| Tests | Vitest, React Testing Library, PGlite (PostgreSQL embarqué), Playwright | MIT / Apache-2.0 |
+| CI | GitHub Actions | — |
+
+**Hébergement** : l'application sur **Vercel** ; PostgreSQL, MinIO et la passerelle de streaming sur **Railway**.
+
+**Seule exception assumée : Stripe.** Il n'existe pas d'équivalent open source d'un processeur de paiement (agrément bancaire, conformité PCI). Stripe est isolé derrière un adaptateur (`src/lib/stripe/`), et sa logique métier côté base est indépendante du fournisseur. Vercel est lui-même un service propriétaire, retenu à la demande du propriétaire du projet.
+
+### Vue d'ensemble
+
+```mermaid
+flowchart TB
+  subgraph Vercel
+    W[Next.js<br/>pages serveur, actions, API<br/>+ proxy.ts]
+  end
+  subgraph Railway
+    P[(PostgreSQL<br/>RLS + fonctions métier)]
+    M[(MinIO<br/>bucket privé)]
+    G[Passerelle de streaming HLS<br/>jetons signés]
+  end
+  U[Navigateur] -->|HTTPS| W
+  W -->|SET LOCAL ROLE + auth.uid| P
+  W -->|URL pré-signées| M
+  U -->|upload direct, taille et type limités| M
+  U -->|segments HLS + jeton| G
+  G -->|lecture| M
+  W -->|jeton de lecture| U
+  ST[Stripe] -->|webhook signé| W
+  W -->|SMTP| MAIL[Relais SMTP]
+```
+
+### Autorisation en trois couches
+
+1. **`proxy.ts`** : redirection « optimiste » vers la connexion (jamais la frontière de sécurité).
+2. **Code serveur** : `requireUser()` / `requireAdmin()` avant toute lecture ou action ; entrées validées par Zod.
+3. **PostgreSQL** : RLS activée sur **toutes** les tables (refus par défaut). Chaque requête utilisateur s'exécute dans une transaction `SET LOCAL ROLE authenticated` avec l'identité passée par `app.uid` ; les fonctions d'administration revérifient `is_admin()` elles-mêmes. Les tables d'authentification n'appartiennent à aucun rôle applicatif.
+
+```ts
+// src/lib/db/context.ts — le rôle et l'identité s'arrêtent avec la transaction : une connexion
+// réutilisée par le pool ne garde jamais les privilèges d'un autre utilisateur.
+await asUser(user.id, (q) => q("select * from orders"));   // ne voit que ses commandes
+await asAnon((q) => q("select * from courses"));          // données publiques
+await asService((q) => q("select process_stripe_event($1,$2,$3)", [...])); // code serveur de confiance
+```
+
+### Modèle de données (extrait)
+
+`users` *(auth)* → `profiles`, `user_roles` · `courses`, `learning_phases`, `learning_paths`, `chapters`, `lessons`, `lesson_resources` · `quizzes`, `quiz_questions`, `quiz_options`, `quiz_attempts`, `assignments`, `assignment_submissions`, `attestations` · `products`, `prices` *(historique)*, `coupons`, `orders`, `order_items` *(instantané prix/durée)*, `payments`, `entitlements`, `processed_webhook_events` · `organizations`, `license_packs`, `license_allocations` *(phase E)* · `pages`, `page_sections`, `blog_posts`, `testimonials`, `faq_items`, `audit_logs` *(écriture seule)*, `email_events`, `consent_records`, `interest_signups`.
+
+Fonctions clés : `record_lesson_progress`, `submit_quiz`, `try_complete_course`, `create_checkout_order`, `process_stripe_event` (atomique et idempotente), `provision_order`, `publish_course`, `set_product_price`, `admin_grant_access`, `review_submission`, `admin_metrics`. Détail : [`DATABASE.md`](DATABASE.md).
+
+### Le paiement, sans jamais faire confiance au navigateur
+
+```mermaid
+sequenceDiagram
+  participant N as Navigateur
+  participant A as Application
+  participant D as PostgreSQL
+  participant S as Stripe
+  N->>A: Acheter ce module
+  A->>D: create_checkout_order (règles : publié, ouvert, pas déjà détenu)
+  A->>S: Session Checkout (client_reference_id = commande)
+  N->>S: Paiement
+  N->>A: Redirection /achat/succes (affichage seulement)
+  S->>A: Webhook signé
+  A->>A: Vérifie la signature sur le corps brut
+  A->>D: process_stripe_event (transaction unique)
+  D-->>D: enregistre l'événement + commande payée + accès + audit
+  A-->>N: e-mail de confirmation
+```
+
+Doublons, rejeux, sessions falsifiées, mauvaise devise, paiements différés ou échoués, remboursements totaux ou partiels, litiges : tout est géré dans `process_stripe_event` et couvert par des tests ([`DATABASE.md`](DATABASE.md)).
+
+---
+
+## 5. Bonnes pratiques d'ingénierie
+
+| Pratique | Mise en œuvre dans ce dépôt |
+|---|---|
+| **Sécurité en profondeur** | Trois couches d'autorisation ; RLS partout ; rôle PostgreSQL par transaction ; secrets uniquement par variables d'environnement ; en-têtes de sécurité ; liens de fichiers pré-signés de courte durée |
+| **Règles métier près des données** | Fonctions SQL transactionnelles, idempotentes, testées sans réseau (`db/migrations/`) |
+| **Idempotence** | Clé d'événement unique pour les webhooks ; l'enregistrement est annulé si le traitement échoue, pour que le nouvel essai de Stripe réussisse |
+| **Défaut sûr** | Offre fermée tant que non explicitement ouverte ; clés Stripe *live* refusées sans deux drapeaux explicites ; absence de configuration = message clair, jamais une fausse réussite |
+| **Validation aux frontières** | Zod sur chaque formulaire et route ; types MIME **et** extensions vérifiés ; taille plafonnée par le bucket lui-même (POST pré-signé) |
+| **Traçabilité** | Journal d'audit en écriture seule (acteur, avant/après) sur contenu, prix, commandes, paiements, accès ; toute action manuelle sensible exige un motif |
+| **Tests proportionnés au risque** | 185 tests dont migrations + RLS sur PostgreSQL ; **tests par mutation manuelle** des règles critiques (casser la règle doit faire échouer un test) ; 9 parcours de bout en bout |
+| **Environnements reproductibles** | Migrations versionnées et rejouables (`npm run db:migrate`), seed généré depuis le code, base locale sans Docker (`npm run db:dev`), `docker-compose.yml` production-like |
+| **CI** | `.github/workflows/ci.yml` : types, lint, tests, audit des dépendances, build, puis e2e Playwright sur le build de production |
+| **Dépendances** | 0 vulnérabilité sur les dépendances de production (`npm audit --omit=dev`) ; bibliothèques établies pour l'authentification et le chiffrement, rien de fait maison côté cryptographie |
+| **Accessibilité** | Cible WCAG 2.2 AA : sémantique native, focus visibles, cibles ≥ 44 px, contrastes, lien d'évitement, thèmes clair/sombre, `prefers-reduced-motion` *(audit automatisé à faire)* |
+| **Observabilité honnête** | Erreurs applicatives sans fuite d'informations ; journal d'audit ; supervision externe à brancher (voir feuille de route) |
+| **Documentation vivante** | Un document par sujet, chiffres issus du code, limites écrites noir sur blanc |
+
+Conventions : aucune concaténation SQL (requêtes paramétrées uniquement, `Q` en témoigne), requêtes d'une page regroupées dans une seule transaction, composants serveur par défaut, composants client seulement pour l'interactivité.
+
+---
+
+## 6. Bonnes pratiques produit
+
+| Pratique | Application |
+|---|---|
+| **Promesses vérifiables** | Aucun témoignage, avis, chiffre ou logo inventé ; la répartition 70/20/10 est présentée comme un objectif de conception ; durées et niveaux signalés comme indicatifs |
+| **Honnêteté sur la disponibilité** | « Bientôt disponible » et « Achat bientôt ouvert » distingués ; l'utilisateur laisse son e-mail avec consentement explicite plutôt que d'acheter du vide |
+| **Prix comme donnée, pas comme code** | Prix et offres modifiables en admin, historique conservé ; expérimentation de prix de lancement possible sans déploiement |
+| **Jamais deux fois le même contenu** | Règle commerciale imposée par la base, pas par l'interface |
+| **Évaluation humaine pour ce qui engage** | Le quiz est automatique, mais le livrable et l'attestation relèvent du formateur ; aucune IA n'est l'autorité finale |
+| **Un produit pour une seule personne** | Contrôle de complétude avant publication, relecture centralisée, tableau de bord, CMS : le formateur n'a besoin ni de développeur ni d'administrateur |
+| **Mesurer ce qui est mesurable** | Entonnoir de commande côté serveur ; les vues de pages ne sont pas suivies tant qu'une mesure respectueuse de la vie privée et le consentement ne sont pas en place |
+| **Vie privée par défaut** | Données minimales (la vérification d'attestation n'expose que titre, date et nom), consentements enregistrés, désinscription possible, durées de conservation à définir |
+| **Conformité en amont** | Pages légales fournies en modèles *signalés comme à valider* ; blocage technique des paiements réels avant revue juridique |
+| **Extensibilité sans complexité prématurée** | Données prêtes pour entreprises, cohortes et nouvelles langues, sans interface spéculative |
+
+---
+
+## 7. Démarrer
+
+**Prérequis** : Node.js ≥ 20.9 (24 recommandé ; 24 requis pour la passerelle de streaming ; testé avec 26), npm. Aucun compte externe n'est nécessaire pour voir le site.
+
+### A. Le site public, sans rien configurer
 
 ```bash
 npm install
-cp .env.example .env.local    # facultatif : le site public fonctionne sans identifiants
-npm run dev                   # http://localhost:3000
+npm run dev          # http://localhost:3000, catalogue de démonstration intégré
 ```
 
-Sans Supabase, le site public affiche le catalogue statique ; les pages d'authentification indiquent « non configuré » ; le formulaire de devis renvoie 503 plutôt que de simuler un envoi.
+### B. Toute la plateforme en local, sans Docker
 
-### Scripts
+```bash
+npm install
+cp .env.example .env.local     # puis renseigner BETTER_AUTH_SECRET (openssl rand -base64 32)
+# les scripts npm run db:* / admin:create lisent automatiquement .env.local
+
+npm run db:dev                 # PostgreSQL embarqué (PGlite) persistant sur 127.0.0.1:54329
+npm run db:migrate -- --seed --fixture   # schéma, catalogue, contenu de démonstration
+npm run dev
+```
+
+Dans `.env.local`, pour ce mode : `DATABASE_URL=postgres://postgres:postgres@127.0.0.1:54329/postgres`, `DATABASE_SINGLE_CONNECTION=true`, `EMAIL_TRANSPORT=console` (les e-mails de confirmation s'affichent dans le terminal). Puis inscrivez-vous, ouvrez le lien de confirmation, et passez-vous administrateur :
+
+```bash
+npm run admin:create -- vous@exemple.fr
+```
+
+### C. Pile production-like (Docker)
+
+```bash
+docker compose up -d     # PostgreSQL 17, MinIO (S3), Mailpit (boîte mail sur :8025)
+```
+
+`DATABASE_URL=postgres://postgres:postgres@127.0.0.1:5432/trail`, `SMTP_URL=smtp://127.0.0.1:1025`, `S3_ENDPOINT=http://127.0.0.1:9000` (voir `.env.example`). La passerelle vidéo se lance avec `docker compose --profile video up`. *Ce fichier n'a pas pu être exécuté dans l'environnement de création (pas de démon Docker).*
+
+### Commandes
 
 | Commande | Rôle |
 |---|---|
 | `npm run dev` / `build` / `start` | Next.js |
-| `npm test` | Vitest (inclut migrations + RLS sur PGlite) |
-| `npm run typecheck` / `npm run lint` | TypeScript / ESLint |
-| `npm run seed:generate` | régénère `supabase/seed.sql` depuis `src/lib/catalog/data.ts` |
-| `npm run e2e` | Playwright (nécessite `npx playwright install chromium` — **non exécuté à ce jour**) |
+| `npm test` | 185 tests (unitaires, base de données, intégration) |
+| `npm run typecheck` / `lint` | TypeScript / ESLint |
+| `npm run db:dev` | PostgreSQL local embarqué |
+| `npm run db:migrate [-- --seed] [-- --fixture]` | Applique les migrations (rejouable) |
+| `npm run admin:create -- <email>` | Donne le rôle administrateur |
+| `npm run seed:generate` | Régénère `db/seed.sql` depuis `src/lib/catalog/data.ts` |
+| `npx playwright test` | Parcours de bout en bout (`E2E_CHANNEL=chrome` réutilise Chrome installé) |
+| `npm run screenshots` | Régénère `docs/screenshots` depuis l'application qui tourne |
+| `scripts/encode-hls.sh` | Encode une vidéo en HLS adaptatif et l'envoie dans le bucket |
 
-### Variables d'environnement (`.env.example`)
+### Configuration
 
-| Variable | Usage |
-|---|---|
-| `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_CONTACT_EMAIL` | URL canonique, contact |
-| `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` | client Supabase (public) |
-| `SUPABASE_SERVICE_ROLE_KEY` | **serveur uniquement**, contourne la RLS |
-| `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` | Stripe **en mode test** |
-| `ALLOW_LIVE_PAYMENTS`, `LEGAL_REVIEW_COMPLETED` | doivent être `true` tous deux pour accepter une clé live (ne pas activer avant revue juridique) |
-| `STRIPE_AUTOMATIC_TAX` | `true` une fois Stripe Tax configuré (aucun taux codé en dur) |
-| `RESEND_API_KEY`, `EMAIL_FROM`, `LEADS_TO_EMAIL` | e-mails transactionnels et demandes de devis |
-| `MUX_SIGNING_KEY_ID`, `MUX_SIGNING_PRIVATE_KEY` | lecture vidéo signée |
-| `CRON_SECRET` | autorise `/api/cron/expire` |
-
-### Mettre en route une base (Supabase)
-
-1. Créer un projet Supabase ; appliquer `supabase/migrations/0001…0005` dans l'ordre, puis `supabase/seed.sql`.
-2. S'inscrire sur le site, puis donner le rôle administrateur (avec le rôle service) :
-   `insert into user_roles values ('<uuid-utilisateur>', 'admin');`
-3. Auth : URL du site et redirection `<site>/auth/callback`, confirmation d'e-mail activée.
-4. Facultatif en développement local : `supabase/dev-fixture.sql` ajoute des leçons/quiz **factices** pour essayer le lecteur (jamais en production).
-
-### Stripe (mode test)
-
-Webhook vers `<site>/api/stripe/webhook` avec les événements `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `checkout.session.async_payment_failed`, `checkout.session.expired`, `payment_intent.payment_failed`, `charge.refunded`, `charge.dispute.created`, `charge.dispute.closed`. En local : `stripe listen --forward-to localhost:3000/api/stripe/webhook`. Procédure complète : [`DEPLOYMENT.md`](DEPLOYMENT.md).
+Toutes les variables sont dans [`.env.example`](.env.example), regroupées par service (site, base, authentification, SMTP, stockage S3, vidéo, Stripe, tâches). Sans une variable, la fonctionnalité correspondante se désactive **explicitement** (message à l'écran ou code 503), jamais silencieusement.
 
 ---
 
-## Ce qui est vérifié, ce qui ne l'est pas
+## 8. Déployer sur Vercel et Railway
+
+| Service | Où | Rôle |
+|---|---|---|
+| Application Next.js | **Vercel** | pages, actions serveur, API, tâche planifiée d'expiration des accès (`vercel.json`) |
+| PostgreSQL | **Railway** (plugin) | base unique, RLS |
+| MinIO | **Railway** (image `minio/minio`, volume) | fichiers privés + vidéos HLS |
+| Passerelle de streaming | **Railway** (`services/stream-gateway`, Dockerfile) | sert les segments sur jeton signé |
+| SMTP | au choix (relais transactionnel ou Postal auto-hébergé) | e-mails de confirmation et de réinitialisation |
+
+Étapes principales : créer le projet Railway (PostgreSQL, MinIO, passerelle) ; appliquer les migrations avec le workflow **Apply database migrations** ou `npm run db:migrate` ; importer le dépôt dans Vercel et renseigner les variables ; configurer le webhook Stripe en mode test ; créer l'administrateur. Pas à pas, réglages réseau (SSL, pool de connexions, régions) et vérifications : [`DEPLOYMENT.md`](DEPLOYMENT.md). **Aucun déploiement n'a été effectué.**
+
+---
+
+## 9. Ce qui est vérifié et ce qui ne l'est pas
 
 | Élément | État |
 |---|---|
-| Schéma, RLS, règles d'apprentissage, de commerce et d'administration | ✅ testés sur PostgreSQL embarqué (PGlite, schémas `auth`/`storage` simulés) |
-| Vérification de signature des webhooks, normalisation, gestionnaire | ✅ testés avec de vraies signatures Stripe générées localement |
-| Validation des formulaires, Markdown sûr, liste blanche de fichiers, JWT Mux (format) | ✅ testés |
-| Pages publiques : rendu, filtres, redirections des zones privées, API sans identifiants (400/401/429/503) | ✅ vérifiés en HTTP et en navigateur (accueil, catalogue) |
-| **Supabase hébergé** (Auth, Storage, triggers `auth.users`, politiques de stockage) | ⚠️ **jamais exécuté** |
-| **Stripe** : création de session, portail, factures, Stripe Tax, codes promo, remboursements, litiges de bout en bout | ⚠️ **jamais exécuté** |
-| **Resend**, **Mux** (lecture HLS, jetons acceptés par Mux), envoi/téléversement de fichiers | ⚠️ **jamais exécuté** |
-| Écrans d'administration, lecteur, quiz, livrables avec de vraies données | ⚠️ compilés et testés au niveau base, **non exercés en live** |
-| Tests Playwright (`e2e/`) | ⚠️ écrits, **non exécutés** |
+| Schéma, migrations, RLS, règles d'apprentissage, de commerce et d'administration | ✅ 185 tests sur PostgreSQL embarqué ; migrations rejouées de bout en bout sur une base en TCP |
+| Couche d'accès (rôle par transaction, aucune fuite de privilèges entre requêtes, tables d'auth fermées) | ✅ testée sur une vraie connexion TCP |
+| Authentification : inscription, vérification obligatoire, session HttpOnly, réinitialisation qui révoque les sessions, Argon2id | ✅ testée de bout en bout (bibliothèque + base) |
+| Application complète en navigateur : visiteur, inscription, progression persistante, quiz, livrable, relecture, attestation, publication d'un module, contrôles d'accès | ✅ 9 parcours Playwright dans Chrome, sur build de production |
+| Les 27 routes publiques, apprenant et admin | ✅ HTTP 200 sans erreur ni avertissement de console (relevé en mode développement) |
+| Vérification de signature Stripe, normalisation, traitement des événements | ✅ testés avec de vraies signatures générées localement |
+| Passerelle de streaming (jetons, traversée de chemins, plages d'octets, réécriture des playlists) | ✅ testée avec un faux stockage |
+| Signature des URL S3 (taille, type, durée) | ✅ testée hors ligne |
+| **PostgreSQL serveur réel** (Railway, Docker) | ⚠️ non exécuté (PGlite est un vrai PostgreSQL compilé en WASM, mais ce n'est pas un serveur de production) |
+| **Stripe** (Checkout, portail, factures, taxes, codes promo, remboursements, litiges de bout en bout) | ⚠️ jamais exécuté |
+| **MinIO/S3 réel** (envoi, téléchargement, CORS) et **lecture vidéo HLS** par `hls.js` via la passerelle | ⚠️ jamais exécuté |
+| **SMTP réel**, **Google OAuth**, **déploiement Vercel/Railway**, **exécution de la CI sur GitHub**, **`docker-compose.yml`** | ⚠️ jamais exécutés |
 | Accessibilité (audit automatisé), Lighthouse, Core Web Vitals | ❌ non mesurés |
 
-Liste exhaustive et à jour : [`TESTING.md`](TESTING.md) et [`TASKS.md`](TASKS.md).
+Détails et protocole : [`TESTING.md`](TESTING.md).
 
 ---
 
-## 5. Feuille de route
+## 10. Feuille de route
 
 | Phase | Contenu | État |
 |---|---|---|
-| A | Fondations, design system, schéma, auth, catalogue, site public | ✅ construite |
-| B | Lecteur, progression, quiz, livrables, complétion, attestations | ✅ construite |
-| C | Stripe (mode test), commandes, webhooks, accès, expiration, e-mails | ✅ construite |
-| D | Administration, CMS, journal d'audit, catalogue piloté par la base | ✅ construite |
-| E | Entreprises : organisations, licences, sièges, rapports | ⬜ non commencée |
-| F | Durcissement : tests e2e, accessibilité, performance, monitoring, sauvegardes | ⬜ non commencée |
+| A | Fondations, design system, schéma, catalogue, site public | ✅ |
+| B | Lecteur, progression, quiz, livrables, complétion, attestations | ✅ |
+| C | Stripe (mode test), commandes, webhooks, accès, expiration, e-mails | ✅ *(non exécuté contre Stripe)* |
+| D | Administration, CMS, journal d'audit, catalogue piloté par la base | ✅ |
+| — | Migration vers une pile 100 % open source (PostgreSQL, Better Auth, S3, HLS, SMTP) | ✅ |
+| E | Entreprises : organisations, licences, sièges, rapports | ⬜ |
+| F | Durcissement : accessibilité, performance, supervision, sauvegardes, CSP | ⬜ |
 
-**À faire en priorité** : exécuter tout le parcours contre un projet Supabase et un compte Stripe de test ; appliquer le design aux écrans restants ; interface entreprise ; éditeur des règles du conseiller ; file de relecture des réponses libres ; téléversement vidéo direct ; consentement cookies et analytics ; suppression/export de compte.
-
-**Interface** : le design fourni (palette crème/marine/teal, Sora + Inter) est appliqué à l'en-tête, l'accueil, le catalogue, la fiche formation, le lecteur, le tableau de bord et l'administration. Les prix suivent la grille tarifaire fournie ensuite par le formateur (voir [`PRODUCT.md`](PRODUCT.md)).
+Prochaines étapes prioritaires : exécuter la chaîne complète contre Railway et Stripe en mode test ; interface entreprise ; éditeur des règles du conseiller ; file de relecture des réponses libres ; consentement cookies et mesure d'audience respectueuse (Plausible/Umami) ; export et suppression de compte ; supervision (GlitchTip/OpenTelemetry) ; dates de début et de fin pour les prix de lancement. Liste complète : [`TASKS.md`](TASKS.md).
 
 ---
 
-## 6. Documentation détaillée
+## 11. Structure du dépôt et documentation
+
+```
+src/app/            routes : site public, compte, apprendre, admin, achat, API (auth, progress, stripe…)
+src/components/     système de design et composants
+src/lib/            db (pool, rôles), auth, catalogue, conseiller, apprentissage, stripe, stockage, vidéo, e-mail, CMS
+db/                 migrations/ (0000 plateforme … 0005 admin), seed.sql (généré), dev-fixture.sql (démo)
+services/           stream-gateway/ (service Railway)
+scripts/            migrate, dev-db, create-admin, encode-hls.sh, generate-seed, capture-screenshots
+tests/ e2e/         Vitest (unitaires, base, intégration) et Playwright
+docs/screenshots/   captures réelles utilisées ci-dessus
+.github/workflows/  CI, migrations manuelles
+```
 
 | Document | Contenu |
 |---|---|
-| [`ARCHITECTURE.md`](ARCHITECTURE.md) | décisions d'architecture |
-| [`PRODUCT.md`](PRODUCT.md) | règles produit, commerce, révocation, design |
-| [`DATABASE.md`](DATABASE.md) | migrations, contraintes, RLS |
-| [`TESTING.md`](TESTING.md) | tests, mutations, limites |
-| [`DEPLOYMENT.md`](DEPLOYMENT.md) | déploiement, Stripe, sauvegardes |
-| [`SECURITY.md`](SECURITY.md) | mesures et blocages juridiques |
-| [`CONTENT_GUIDE.md`](CONTENT_GUIDE.md) | publier du contenu authentique |
-| [`TASKS.md`](TASKS.md) | liste de tâches et dépendances externes |
+| [`ARCHITECTURE.md`](ARCHITECTURE.md) | décisions d'architecture et leurs raisons |
+| [`PRODUCT.md`](PRODUCT.md) | règles produit, commerce, révocation d'accès, design |
+| [`DATABASE.md`](DATABASE.md) | rôles, migrations, RLS, fonctions |
+| [`DEPLOYMENT.md`](DEPLOYMENT.md) | Vercel, Railway, Stripe, sauvegardes |
+| [`SECURITY.md`](SECURITY.md) | mesures, limites, blocages juridiques |
+| [`TESTING.md`](TESTING.md) | stratégie, couverture, ce qui n'est pas testé |
+| [`CONTENT_GUIDE.md`](CONTENT_GUIDE.md) | publier du contenu authentique, encoder la vidéo |
+| [`TASKS.md`](TASKS.md) | tâches et dépendances externes |
+
+**Licence** : aucune n'est encore définie dans ce dépôt public ; en l'absence de licence, tous droits sont réservés. À choisir par le propriétaire.
 
 ---
 
-## 7. Avertissement légal
+## 12. Avertissement légal
 
-Ce dépôt est un socle technique. **Il n'est ni certifié ni déclaré conforme** au droit français de la formation professionnelle, à la protection des consommateurs, au RGPD ou à l'accessibilité, et n'est pas éligible à un financement public sans vérification indépendante. Les pages légales sont des **modèles à faire valider par un professionnel du droit**. La gestion du droit de rétractation pour contenus numériques, les CGV, la fiscalité et les obligations liées à la formation professionnelle restent à traiter avant toute ouverture des paiements réels. Aucune vidéo, aucun témoignage ni aucune biographie n'a été inventé : les contenus doivent être fournis et validés par le formateur.
+Ce dépôt est un socle technique. **Il n'est ni certifié ni déclaré conforme** au droit français de la formation professionnelle, à la protection des consommateurs, au RGPD ou à l'accessibilité, et n'est pas éligible à un financement public sans vérification indépendante. Les pages légales sont des **modèles à faire valider par un professionnel du droit**. Le droit de rétractation pour contenus numériques, les conditions générales de vente, la fiscalité et les obligations de la formation professionnelle restent à traiter avant toute ouverture des paiements réels. Aucune vidéo, aucun témoignage et aucune biographie n'ont été inventés : les contenus doivent être fournis et validés par le formateur.
