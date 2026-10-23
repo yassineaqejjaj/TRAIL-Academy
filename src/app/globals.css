@@ -12,6 +12,7 @@
   --primary-fg: #ffffff;
   --accent: #0b7a83;
   --accent-soft: #e8f1f2;
+  --accent-ink: #075f67; /* accent text on --accent-soft (≥ 4.5:1) */
   --warn: #7a4e00;
   --warn-soft: #fff1d6;
   --danger: #b42318;
@@ -32,6 +33,7 @@
   --primary-fg: #0b1f3a;
   --accent: #3ccfc0;
   --accent-soft: #123a3d;
+  --accent-ink: #3ccfc0;
   --warn: #f5c26b;
   --warn-soft: #3a2d10;
   --danger: #ff8a80;
@@ -53,6 +55,8 @@
     --primary-fg: #0b1f3a;
     --accent: #3ccfc0;
     --accent-soft: #123a3d;
+    --accent-ink: #3ccfc0;
+  --accent-ink: #3ccfc0;
     --warn: #f5c26b;
     --warn-soft: #3a2d10;
     --danger: #ff8a80;
@@ -75,6 +79,7 @@
   --color-primary-fg: var(--primary-fg);
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
+  --color-accent-ink: var(--accent-ink);
   --color-warn: var(--warn);
   --color-warn-soft: var(--warn-soft);
   --color-danger: var(--danger);

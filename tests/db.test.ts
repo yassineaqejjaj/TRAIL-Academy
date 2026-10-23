@@ -140,3 +140,132 @@ describe("cms", () => {
     await expect(db.exec(`insert into testimonials (author_name, quote, status) values ('x', 'y', 'published')`)).rejects.toThrow();
   });
 });
+
+describe("rate limiting", () => {
+  const hit = async (key: string, limit = 2, secs = 60) => (await db.query<{ ok: boolean }>(`select hit_rate_limit('${key}', ${limit}, ${secs}) as ok`)).rows[0].ok;
+  it("allows up to the limit, then blocks", async () => {
+    expect([await hit("a"), await hit("a"), await hit("a")]).toEqual([true, true, false]);
+    expect(await hit("b")).toBe(true); // keys are independent
+  });
+  it("starts a new window once the previous one has expired", async () => {
+    await db.exec(`update app_rate_limits set reset_at = now() - interval '1 second' where key = 'a'`);
+    expect(await hit("a")).toBe(true);
+    expect(await hit("a")).toBe(true);
+    expect(await hit("a")).toBe(false);
+  });
+  it("rejects nonsensical parameters", async () => {
+    await expect(db.query(`select hit_rate_limit('x', 0, 60)`)).rejects.toThrow(/invalid_rate_limit/);
+    await expect(db.query(`select hit_rate_limit('x', 1, 0)`)).rejects.toThrow(/invalid_rate_limit/);
+  });
+  it("is unreachable for visitors and learners, usable by the service role, and purges old rows", async () => {
+    await expect(as(null, () => db.query(`select hit_rate_limit('c', 1, 60)`))).rejects.toThrow();
+    await expect(as(U1, () => db.query(`select hit_rate_limit('c', 1, 60)`))).rejects.toThrow();
+    await expect(as(U1, () => db.query(`select * from app_rate_limits`))).rejects.toThrow();
+    await db.exec(`set role service_role;`);
+    try { expect((await db.query<{ ok: boolean }>(`select hit_rate_limit('svc', 1, 60) as ok`)).rows[0].ok).toBe(true); } finally { await db.exec("reset role;"); }
+    await db.exec(`update app_rate_limits set reset_at = now() - interval '2 hours'`);
+    expect((await db.query<{ n: number }>(`select purge_rate_limits() as n`)).rows[0].n).toBeGreaterThan(0);
+  });
+});
+
+describe("personal data rights", () => {
+  const U3 = "00000000-0000-0000-0000-000000000003";
+  let lessonId: string, courseId: string;
+  beforeAll(async () => {
+    await addUsers(db, [[U3, "erase.me@test.local"]]);
+    courseId = (await db.query<{ id: string }>(`select id from courses where code = 'M4'`)).rows[0].id;
+    lessonId = (await db.query<{ id: string }>(`select id from lessons where course_id = '${courseId}' limit 1`)).rows[0].id;
+    await db.exec(`update profiles set full_name = 'Camille Test' where id = '${U3}';
+      insert into entitlements (user_id, course_id, expires_at) values ('${U3}', '${courseId}', now() + interval '1 month');
+      insert into orders (user_id, status, total_cents) values ('${U3}', 'paid', 19900);
+      insert into lesson_notes (user_id, lesson_id, body) values ('${U3}', '${lessonId}', 'ma note');
+      insert into lesson_progress (user_id, lesson_id) values ('${U3}', '${lessonId}');
+      insert into consent_records (user_id, purpose, granted, policy_version) values ('${U3}', 'terms', true, 'v1');
+      insert into interest_signups (email, kind, consent_policy_version) values ('erase.me@test.local', 'newsletter', 'v1');
+      insert into auth.sessions (expires_at, token, user_id) values (now() + interval '1 day', 'tok', '${U3}');
+      insert into auth.accounts (account_id, provider_id, user_id, password) values ('a', 'credential', '${U3}', 'hash');`);
+  });
+  it("exports only the caller's own data", async () => {
+    const mine = (await as(U3, () => db.query<{ d: Record<string, unknown[] & { email?: string }> }>(`select export_my_data() as d`))).rows[0].d;
+    expect((mine.account as unknown as { email: string }).email).toBe("erase.me@test.local");
+    expect(mine.orders).toHaveLength(1);
+    expect(mine.notes).toHaveLength(1);
+    expect(JSON.stringify(mine)).not.toContain("u1@test.local");
+    const other = (await as(U2, () => db.query<{ d: { orders: unknown[]; notes: unknown[] } }>(`select export_my_data() as d`))).rows[0].d;
+    expect(other.orders).toHaveLength(0);
+    expect(other.notes).toHaveLength(0);
+  });
+  it("refuses export without a session and erasure from any client role", async () => {
+    await expect(as(null, () => db.query(`select export_my_data()`))).rejects.toThrow();
+    await expect(as(U3, () => db.query(`select anonymize_user('${U3}')`))).rejects.toThrow();
+  });
+  it("anonymises the account but keeps orders, payments and access for the accounts", async () => {
+    await db.exec(`set role service_role;`);
+    try { await db.query(`select anonymize_user('${U3}')`); } finally { await db.exec("reset role;"); }
+    expect(await count(`select 1 from lesson_notes where user_id = '${U3}'`)).toBe(0);
+    expect(await count(`select 1 from lesson_progress where user_id = '${U3}'`)).toBe(0);
+    expect(await count(`select 1 from auth.sessions where user_id = '${U3}'`)).toBe(0);
+    expect(await count(`select 1 from auth.accounts where user_id = '${U3}'`)).toBe(0);
+    expect(await count(`select 1 from interest_signups where email = 'erase.me@test.local'`)).toBe(0);
+    expect(await count(`select 1 from orders where user_id = '${U3}'`)).toBe(1);
+    expect(await count(`select 1 from entitlements where user_id = '${U3}'`)).toBe(1);
+    expect(await count(`select 1 from consent_records where anonymous_id = 'erased' and user_id is null`)).toBe(1);
+    const p = (await db.query<{ email: string; full_name: string | null }>(`select email, full_name from profiles where id = '${U3}'`)).rows[0];
+    expect(p.full_name).toBeNull();
+    expect(p.email).toMatch(/^deleted\+.*@deleted\.invalid$/);
+    expect(await count(`select 1 from auth.users where id = '${U3}' and email like 'deleted+%' and name = 'Compte supprimé'`)).toBe(1);
+    expect(await count(`select 1 from audit_logs where action = 'user.anonymized' and entity_id = '${U3}'`)).toBe(1);
+  });
+  it("refuses to erase an administrator or an unknown user", async () => {
+    await db.exec(`set role service_role;`);
+    try {
+      await expect(db.query(`select anonymize_user('${ADMIN}')`)).rejects.toThrow(/admin_cannot_self_delete/);
+      await expect(db.query(`select anonymize_user('00000000-0000-0000-0000-0000000000ff')`)).rejects.toThrow(/unknown_user/);
+    } finally { await db.exec("reset role;"); }
+  });
+});
+
+describe("video pipeline queue", () => {
+  let lessonId: string;
+  const svc = async <T>(fn: () => Promise<T>) => { await db.exec("set role service_role;"); try { return await fn(); } finally { await db.exec("reset role;"); } };
+  const asset = async (id: string) => (await db.query<{ status: string; attempts: number; error: string | null }>(`select status, attempts, error from video_assets where id = '${id}'`)).rows[0];
+  beforeAll(async () => {
+    const m5 = (await db.query<{ id: string }>(`select id from courses where code = 'M5'`)).rows[0].id;
+    lessonId = (await db.query<{ id: string }>(`select id from lessons where course_id = '${m5}' limit 1`)).rows[0].id;
+  });
+  it("lets only an administrator queue a source under the lesson's own folder", async () => {
+    await expect(as(U1, () => db.query(`select admin_register_video('${lessonId}', 'video-src/${lessonId}/a.mp4')`))).rejects.toThrow();
+    await expect(as(ADMIN, () => db.query(`select admin_register_video('${lessonId}', 'video-src/other/a.mp4')`))).rejects.toThrow(/invalid_source_key/);
+    await expect(as(ADMIN, () => db.query(`select admin_register_video('${lessonId}', 'video-src/${lessonId}/../x.mp4')`))).rejects.toThrow(/invalid_source_key/);
+    const id = (await as(ADMIN, () => db.query<{ id: string }>(`select admin_register_video('${lessonId}', 'video-src/${lessonId}/a.mp4') as id`))).rows[0].id;
+    expect((await asset(id)).status).toBe("uploaded");
+    expect(await as(U1, () => count("select 1 from video_assets"))).toBe(0);
+    expect(await as(ADMIN, () => count("select 1 from video_assets"))).toBeGreaterThan(0);
+  });
+  it("claims a job once, then attaches the finished video to the lesson", async () => {
+    const claimed = await svc(() => db.query<{ id: string; source_key: string }>(`select * from claim_video_job()`));
+    expect(claimed.rows).toHaveLength(1);
+    const id = claimed.rows[0].id;
+    expect(await svc(async () => (await db.query(`select * from claim_video_job()`)).rows)).toHaveLength(0); // already taken
+    expect(await asset(id)).toMatchObject({ status: "processing", attempts: 1 });
+    await svc(() => db.query(`select finish_video_job('${id}', true, 95, null)`));
+    expect((await asset(id)).status).toBe("ready");
+    expect((await db.query(`select video_provider, video_asset_id, duration_seconds from lessons where id = '${lessonId}'`)).rows[0]).toEqual({ video_provider: "hls", video_asset_id: id, duration_seconds: 95 });
+  });
+  it("records failures, allows an administrator retry, and gives up after 3 attempts", async () => {
+    const id = (await as(ADMIN, () => db.query<{ id: string }>(`select admin_register_video('${lessonId}', 'video-src/${lessonId}/b.mp4') as id`))).rows[0].id;
+    await svc(() => db.query(`select * from claim_video_job()`));
+    await svc(() => db.query(`select finish_video_job('${id}', false, null, 'ffmpeg exploded')`));
+    expect(await asset(id)).toMatchObject({ status: "failed", error: "ffmpeg exploded" });
+    await expect(as(U1, () => db.query(`select admin_retry_video('${id}')`))).rejects.toThrow();
+    await as(ADMIN, () => db.query(`select admin_retry_video('${id}')`));
+    expect(await asset(id)).toMatchObject({ status: "uploaded", attempts: 0, error: null });
+    await db.exec(`update video_assets set status = 'processing', attempts = 3, locked_at = now() - interval '1 hour' where id = '${id}'`);
+    expect(await svc(async () => (await db.query(`select * from claim_video_job()`)).rows)).toHaveLength(0);
+    expect(await asset(id)).toMatchObject({ status: "failed" });
+  });
+  it("keeps the queue functions away from learners", async () => {
+    await expect(as(U1, () => db.query(`select * from claim_video_job()`))).rejects.toThrow();
+    await expect(as(U1, () => db.query(`select finish_video_job(gen_random_uuid(), true, 1, null)`))).rejects.toThrow();
+  });
+});

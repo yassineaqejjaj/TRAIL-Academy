@@ -57,3 +57,17 @@ export function validateSubtitle(file: { name: string; size: number; type: strin
   if (file.type && !["text/vtt", "text/plain", "application/octet-stream"].includes(file.type)) return { ok: false, reason: "Type de fichier invalide." };
   return { ok: true, extension: "vtt" };
 }
+
+/** Source videos (instructor only). The worker re-encodes them, so only the container matters; the canonical type is what gets signed. */
+export const MAX_VIDEO_BYTES = 4 * 1024 * 1024 * 1024;
+const VIDEO_TYPES: Record<string, string> = { mp4: "video/mp4", m4v: "video/x-m4v", mov: "video/quicktime", webm: "video/webm", mkv: "video/x-matroska" };
+export function validateVideoSource(file: { name: string; size: number }): { ok: true; extension: string; contentType: string } | { ok: false; reason: string } {
+  const extension = file.name.split(".").pop()?.toLowerCase() ?? "";
+  const contentType = VIDEO_TYPES[extension];
+  if (!contentType) return { ok: false, reason: "Format non pris en charge (mp4, mov, m4v, webm ou mkv)." };
+  if (file.size <= 0) return { ok: false, reason: "Le fichier est vide." };
+  if (file.size > MAX_VIDEO_BYTES) return { ok: false, reason: "La vidéo dépasse 4 Go." };
+  return { ok: true, extension, contentType };
+}
+export const videoSourceKey = (lessonId: string, unique: string, extension: string): string => `video-src/${lessonId}/${unique}.${extension}`;
+export const isVideoSourceKeyFor = (key: string, lessonId: string): boolean => key.startsWith(`video-src/${lessonId}/`) && !key.includes("..");

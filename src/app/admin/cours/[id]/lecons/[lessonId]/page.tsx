@@ -5,7 +5,9 @@ import { Button } from "@/components/ui";
 import { adminPage } from "@/lib/admin/ctx";
 import { Check, Field, Flash, Input, Panel, Select, Textarea } from "../../../../ui";
 import { deleteResource, updateLesson } from "../../../actions";
+import { retryVideo } from "../../../video-actions";
 import { LessonUploader } from "./lesson-uploader";
+import { VideoUploader } from "./video-uploader";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Leçon — administration", robots: { index: false } };
@@ -19,10 +21,15 @@ export default async function AdminLesson({ params, searchParams }: { params: Pr
     const l = await q.one<Record<string, unknown> & { id: string; title: string; kind: string; content_status: string; required: boolean; is_free_preview: boolean; video_provider: string | null; video_asset_id: string | null; duration_seconds: number | null; body_md: string | null; transcript: string | null; video_chapters: { title: string; start_seconds: number }[]; subtitle_tracks: { lang: string; label: string }[] }>(
       "select * from lessons where id = $1 and course_id = $2", [lessonId, id]);
     if (!l) return null;
-    return { l, resources: await q<{ id: string; title: string; size_bytes: number }>("select id, title, size_bytes from lesson_resources where lesson_id = $1", [lessonId]) };
+    return {
+      l,
+      resources: await q<{ id: string; title: string; size_bytes: number }>("select id, title, size_bytes from lesson_resources where lesson_id = $1", [lessonId]),
+      videos: await q<{ id: string; status: string; error: string | null; created_at: string; duration_seconds: number | null }>("select id, status, error, created_at, duration_seconds from video_assets where lesson_id = $1 order by created_at desc limit 5", [lessonId]),
+    };
   });
   if (!data) notFound();
-  const { l, resources } = data;
+  const { l, resources, videos } = data;
+  const videoLabel: Record<string, string> = { uploaded: "En attente d'encodage", processing: "Encodage en cours", ready: "Prête", failed: "Échec" };
   const chapters = ((l.video_chapters ?? []) as { title: string; start_seconds: number }[]).map((c) => `${fmt(c.start_seconds)} ${c.title}`).join("\n");
   const tracks = (l.subtitle_tracks ?? []) as { lang: string; label: string }[];
 
@@ -46,6 +53,18 @@ export default async function AdminLesson({ params, searchParams }: { params: Pr
           <div className="sm:col-span-2"><Field label="Transcription"><Textarea name="transcript" defaultValue={l.transcript ?? ""} rows={6} /></Field></div>
           <div className="sm:col-span-2"><Button type="submit" variant="accent">Enregistrer</Button></div>
         </form>
+      </Panel>
+
+      <Panel title="Vidéo">
+        <p className="text-sm text-muted">{l.video_provider === "hls" && l.video_asset_id ? `Vidéo attachée à la leçon (média ${l.video_asset_id}).` : "Aucune vidéo attachée à cette leçon."}</p>
+        <ul className="mt-3 space-y-2 text-sm">{videos.map((v) => (
+          <li key={v.id} className="flex flex-wrap items-center gap-3">
+            <span>{new Date(v.created_at).toLocaleString("fr-FR")} — <strong>{videoLabel[v.status] ?? v.status}</strong>{v.status === "ready" && v.duration_seconds ? ` (${fmt(v.duration_seconds)})` : ""}{v.error ? <span className="text-danger"> : {v.error}</span> : null}</span>
+            {v.status === "failed" && <form action={retryVideo.bind(null, id, lessonId)}><input type="hidden" name="assetId" value={v.id} /><Button type="submit" variant="ghost" className="px-2 py-1">Relancer</Button></form>}
+          </li>))}
+          {!videos.length && <li className="text-muted">Aucune vidéo envoyée.</li>}</ul>
+        <VideoUploader courseId={id} lessonId={lessonId} />
+        <p className="mt-2 text-xs text-muted">La vidéo est encodée en HLS adaptatif par le service video-worker, puis rattachée à la leçon automatiquement. Un nouvel envoi remplace la vidéo actuelle une fois l'encodage terminé.</p>
       </Panel>
 
       <Panel title="Ressources téléchargeables">

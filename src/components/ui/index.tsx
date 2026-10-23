@@ -43,7 +43,7 @@ export function Button({ variant = "primary", className, ...p }: { variant?: key
 }
 
 export function Badge({ tone = "neutral", children }: { tone?: "neutral" | "accent" | "warn"; children: ReactNode }) {
-  const tones = { neutral: "bg-surface-2 text-muted", accent: "bg-accent-soft text-accent", warn: "bg-warn-soft text-warn" };
+  const tones = { neutral: "bg-surface-2 text-muted", accent: "bg-accent-soft text-accent-ink", warn: "bg-warn-soft text-warn" };
   return <span className={clsx("inline-flex items-center rounded-full px-3 py-1 text-[13px] font-semibold", tones[tone])}>{children}</span>;
 }
 

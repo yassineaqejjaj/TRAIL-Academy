@@ -3,6 +3,7 @@
  * Each file runs in its own transaction and is recorded in auth.schema_migrations, so the command is safe to re-run.
  *
  *   npm run db:migrate             apply pending migrations
+ *   npm run db:migrate -- --up-to=0005_admin.sql   stop after that file (tests)
  *   npm run db:migrate -- --seed   also load db/seed.sql when the catalogue is empty
  *   npm run db:migrate -- --fixture  also load db/dev-fixture.sql (DEVELOPMENT ONLY: synthetic lessons)
  */
@@ -14,12 +15,16 @@ if (!url) { console.error("DATABASE_URL is not set"); process.exit(1); }
 const ssl = process.env.DATABASE_SSL === "require" ? { rejectUnauthorized: false } : process.env.DATABASE_SSL === "verify" ? true : undefined;
 const client = new pg.Client({ connectionString: url, ssl });
 await client.connect();
+// New sessions inherit the database's "auth, public" search path (see 0000_platform.sql): without this, objects created by a
+// migration applied in a LATER run would silently land in the auth schema.
+await client.query("set search_path = public");
 
 try {
   await client.query("create schema if not exists auth");
   await client.query("create table if not exists auth.schema_migrations (name text primary key, applied_at timestamptz not null default now())");
   const applied = new Set((await client.query<{ name: string }>("select name from auth.schema_migrations")).rows.map((r) => r.name));
-  const files = readdirSync("db/migrations").filter((f) => f.endsWith(".sql")).sort();
+  const upTo = process.argv.find((a) => a.startsWith("--up-to="))?.slice(8); // used by tests to replay an upgrade in two runs
+  const files = readdirSync("db/migrations").filter((f) => f.endsWith(".sql") && (!upTo || f <= upTo)).sort();
 
   for (const file of files) {
     if (applied.has(file)) continue;

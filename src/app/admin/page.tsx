@@ -37,7 +37,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
               ["Apprenants actifs", String(m.active_learners), "ayant progressé"],
               ["Inscriptions aux cours", String(m.enrollments), ""],
               ["Modules terminés", String(m.completions), ""],
-            ] as const).map(([label, value, sub]) => <Card key={label}><dt className="text-sm text-muted">{label}</dt><dd className="mt-1 text-3xl font-semibold">{value}</dd>{sub && <p className="mt-1 text-xs text-muted">{sub}</p>}</Card>)}
+            ] as const).map(([label, value, sub]) => <Card key={label}><dt className="text-sm text-muted">{label}</dt><dd className="mt-1 text-3xl font-semibold">{value}</dd>{sub && <dd className="mt-1 text-xs text-muted">{sub}</dd>}</Card>)}
           </dl>
           <div className="mt-6 grid gap-4 lg:grid-cols-2">
             <Card><h2 className="font-semibold">Entonnoir de commande</h2><p className="mt-1 text-sm text-muted">{m.orders_created} commandes créées → {m.orders_paid} payées ({conversion} %)</p><div className="mt-3"><ProgressBar value={conversion} label="Taux de paiement des commandes" /></div>

@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { CourseCard, PathCard } from "@/components/cards";
+import { OfferCards } from "@/components/offers";
+import { ExpertiseTags, InstructorPhoto, instructor } from "@/components/instructor";
 import { ButtonLink, Card, Container, Faq, Section, kickerCls } from "@/components/ui";
-import { formatEuro } from "@/lib/catalog";
 import { getCatalog } from "@/lib/catalog/load";
 import { getFaq, getSection, getTestimonials } from "@/lib/cms";
 
@@ -37,15 +38,14 @@ const defaultFaq = [
   { q: "Puis-je acheter une formation qui n'est pas encore publiée ?", a: "Non. Seules les formations publiées et validées sont achetables. Les autres restent visibles avec la mention « Bientôt disponible »." },
   { q: "Que contient un module ?", a: "Des leçons vidéo, des exercices pratiques, des ressources à télécharger, un quiz, un livrable relu par le formateur et une attestation de réussite privée." },
   { q: "L'attestation est-elle une certification officielle ?", a: "Non. C'est une attestation privée et vérifiable de TRAIL Academy. Ce n'est ni un titre d'État ni une certification RNCP." },
-  { q: "Si j'achète un module puis un parcours, est-ce que je paie deux fois ?", a: "Non. Le contenu déjà inclus dans un achat ne vous est jamais facturé de nouveau pendant la durée de votre accès." },
+  { q: "Si j'achète un module puis un parcours, est-ce que je paie deux fois ?", a: "Le prix d'un parcours n'est pas réduit des modules que vous détenez déjà : il les contient et prolonge simplement leur accès. Si vous prévoyez plusieurs modules, comparez avec le parcours ou AI Mastery avant d'acheter. Vous ne pouvez pas racheter ce que vous détenez déjà en totalité." },
 ];
 
 export default async function Home() {
   const [catalog, hero, customFaq, testimonials] = await Promise.all([getCatalog(), getSection("accueil", "hero"), getFaq(), getTestimonials()]);
-  const { courses, learningPaths, offers, phases } = catalog;
+  const { courses, learningPaths, phases } = catalog;
   const featured = courses.filter((c) => c.mvpSlot);
   const faqItems = customFaq.length ? customFaq.map((f) => ({ q: f.question, a: f.answer })) : defaultFaq;
-  const priced = offers.filter((o) => o.kind !== "enterprise" && o.amountCents != null);
 
   return (
     <>
@@ -87,7 +87,7 @@ export default async function Home() {
         </div>
       </Section>
 
-      <Section title="Les parcours" intro="Un parcours regroupe les modules dans l'ordre recommandé. Ce que vous avez déjà acheté n'est jamais facturé deux fois.">
+      <Section title="Les parcours" intro="Un parcours regroupe les modules dans l'ordre recommandé, au prix d'une seule offre.">
         <div className="grid gap-6 lg:grid-cols-3">{learningPaths.map((p) => <PathCard key={p.slug} path={p} catalog={catalog} />)}</div>
         <p className="mt-6"><Link href="/tarifs" className="font-semibold text-accent hover:underline">Comparer toutes les offres</Link></p>
       </Section>
@@ -120,23 +120,21 @@ export default async function Home() {
       </Section>
 
       <Section tone="surface">
-        <div className="max-w-2xl">
-          <p className={`${kickerCls} mb-4 text-accent`}>Votre formateur</p>
-          <h2 className="mb-4 text-3xl font-bold sm:text-4xl">Un formateur unique, praticien de l'IA produit</h2>
-          <p className="mb-6 text-muted [text-wrap:pretty]">Les formations sont conçues et animées par un seul formateur, spécialiste du management de produits IA, de l'ingénierie IA et de la transformation en entreprise.</p>
-          <ul className="mb-6 flex flex-wrap gap-2">{["AI Product Management", "Agentic AI", "Stratégie IA", "Construction de produits"].map((t) => <li key={t} className="rounded-full border border-border px-3.5 py-1.5 text-sm">{t}</li>)}</ul>
-          <Link href="/formateur" className="font-semibold text-accent hover:underline">Découvrir le formateur</Link>
+        <div className="flex flex-col items-start gap-8 md:flex-row md:items-center">
+          <InstructorPhoto size={200} />
+          <div className="max-w-2xl">
+            <p className={`${kickerCls} mb-4 text-accent`}>Votre formateur</p>
+            <h2 className="mb-4 text-3xl font-bold sm:text-4xl">{instructor.name}</h2>
+            <p className="mb-6 text-muted [text-wrap:pretty]">Les formations sont conçues et animées par un seul formateur, spécialiste du management de produits IA, de l'ingénierie IA et de la transformation en entreprise.</p>
+            <div className="mb-6"><ExpertiseTags /></div>
+            <Link href="/formateur" className="font-semibold text-accent hover:underline">Découvrir le formateur</Link>
+          </div>
         </div>
       </Section>
 
-      <Section title="Tarifs">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {priced.map((o) => (
-            <div key={o.slug} className="flex flex-col gap-2 rounded-2xl border border-border bg-surface p-7"><span className="font-semibold">{o.title}</span><span className="font-display text-3xl font-bold">{formatEuro(o.amountCents!)}</span><span className="text-sm text-muted">TTC{o.accessMonths ? ` · accès ${o.accessMonths} mois` : ""}{o.note && !o.note.includes("ouverture") ? ` · ${o.note}` : ""}</span>{o.note?.includes("ouverture") && <span className="text-sm text-warn">Ouverture prochaine</span>}</div>
-          ))}
-        </div>
-        <p className="mt-6 text-sm text-muted">Le paiement en ligne n'est ouvert que pour les formations publiées. Offres entreprise sur la page <Link href="/entreprise" className="font-semibold text-accent hover:underline">Entreprises</Link>.</p>
-        <p className="mt-3"><Link href="/tarifs" className="font-semibold text-accent hover:underline">Voir le détail des offres et les comparer</Link></p>
+      <Section title="Trois offres" intro="Un module, un parcours, ou l'accès complet. Les prix sont TTC, sans abonnement.">
+        <OfferCards catalog={catalog} />
+        <p className="mt-6 text-sm text-muted">Le paiement en ligne n'est ouvert que pour les formations publiées. Pour une équipe : <Link href="/entreprise" className="font-semibold text-accent hover:underline">demander un devis</Link>. <Link href="/tarifs" className="font-semibold text-accent hover:underline">Détail des tarifs</Link></p>
       </Section>
 
       <Section tone="surface" className="max-w-[800px]" title="Questions fréquentes"><Faq items={faqItems} /></Section>

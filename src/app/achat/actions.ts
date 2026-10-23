@@ -20,7 +20,7 @@ export async function startCheckout(formData: FormData) {
   if (!slug.success) redirect("/formations");
   const back = (code: string) => redirect(`/achat/${slug.data}?error=${code}`);
 
-  if (!rateLimit(`checkout:${user.id}`, 10, 10 * 60_000)) back("rate_limited");
+  if (!(await rateLimit(`checkout:${user.id}`, 10, 10 * 60_000))) back("rate_limited");
   if (!stripeMode(process.env).ok) back("payments_unavailable");
 
   type Order = { order_id: string; amount_cents: number; currency: string; tax_inclusive: boolean; title: string };

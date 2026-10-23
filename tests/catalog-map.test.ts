@@ -34,12 +34,10 @@ describe("mapCatalog", () => {
   });
   it("uses only the active price, and derives the module price from the cheapest course product", () => {
     expect(c.coursePrices).toEqual({ un: 12900, deux: 15900 });
-    expect(c.offers.find((o) => o.slug === "module-standard")!.amountCents).toBe(12900);
-    expect(c.offers.find((o) => o.slug === "module-avance")!.amountCents).toBe(15900);
+    expect(c.offers.find((o) => o.slug === "module")).toMatchObject({ amountCents: 12900, priceFrom: true });
   });
-  it("maps enterprise offers with HT pricing, seats and quotations", () => {
+  it("maps enterprise packs with HT pricing, seats and quotations", () => {
     expect(c.offers.find((o) => o.slug === "team-5")).toMatchObject({ kind: "enterprise", amountCents: 349000, taxMode: "ht", note: "5 licences" });
-    expect(c.offers.find((o) => o.slug === "sur-mesure")!.priceFrom).toBeUndefined();
     expect(c.offers.find((o) => o.slug === "sur-mesure")!.amountCents).toBeNull();
     expect(c.offers.some((o) => o.slug === "module-un")).toBe(false);
   });

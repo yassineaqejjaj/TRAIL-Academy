@@ -27,7 +27,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
   const course = getCourse((await params).slug, catalog);
   if (!course) notFound();
   const phase = catalog.phases.find((p) => p.id === course.phaseId);
-  const priceCents = catalog.coursePrices[course.slug] ?? catalog.offers.find((o) => o.slug === "module-standard")?.amountCents ?? null;
+  const priceCents = catalog.coursePrices[course.slug] ?? catalog.offers.find((o) => o.slug === "module")?.amountCents ?? null;
   const paths = pathsOfCourse(course, catalog);
   const purchasable = isPurchasable(course, catalog);
   const published = course.status === "published";

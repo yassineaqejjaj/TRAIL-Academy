@@ -42,12 +42,11 @@ export function mapCatalog(rows: CatalogRows): Catalog {
   }
 
   const offers: Offer[] = [];
-  // Module offers are derived from what the course products actually cost: cheapest = Standard, dearest = Avancé.
+  // The "Module" offer is derived from what the course products actually cost (cheapest, "from" when they differ).
   const modulePrices = Object.values(coursePrices);
   if (modulePrices.length) {
     const min = Math.min(...modulePrices), max = Math.max(...modulePrices);
-    offers.push({ slug: "module-standard", kind: "course", title: "Module Standard", amountCents: min, taxMode: "ttc", accessMonths: 12 });
-    if (max > min) offers.push({ slug: "module-avance", kind: "course", title: "Module Avancé", amountCents: max, taxMode: "ttc", accessMonths: 12 });
+    offers.push({ slug: "module", kind: "course", title: "Module", amountCents: min, taxMode: "ttc", accessMonths: 12, priceFrom: max > min || undefined });
   }
   for (const p of rows.products) {
     if (p.kind === "course") continue;

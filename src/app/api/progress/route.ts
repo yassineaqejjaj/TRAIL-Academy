@@ -9,7 +9,7 @@ export async function POST(request: Request) {
   if (!dbConfigured()) return NextResponse.json({ error: "not_configured" }, { status: 503 });
   const user = await getUser();
   if (!user) return NextResponse.json({ error: "unauthenticated" }, { status: 401 });
-  if (!rateLimit(`progress:${user.id}`, 60, 60_000)) return NextResponse.json({ error: "rate_limited" }, { status: 429 });
+  if (!(await rateLimit(`progress:${user.id}`, 60, 60_000))) return NextResponse.json({ error: "rate_limited" }, { status: 429 });
 
   const parsed = progressSchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: "invalid" }, { status: 400 });

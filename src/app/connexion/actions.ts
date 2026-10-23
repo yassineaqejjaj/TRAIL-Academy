@@ -17,7 +17,7 @@ async function guard(): Promise<string | null> {
   if (!dbConfigured()) return "L'authentification n'est pas encore configurée.";
   const ip = (await headers()).get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
   // Second line of defence next to the database-backed limits inside the auth library.
-  if (!rateLimit(`auth:${ip}`, Number(process.env.AUTH_ACTION_LIMIT ?? 20), 10 * 60 * 1000)) return "Trop de tentatives. Réessayez dans quelques minutes.";
+  if (!(await rateLimit(`auth:${ip}`, Number(process.env.AUTH_ACTION_LIMIT ?? 20), 10 * 60 * 1000))) return "Trop de tentatives. Réessayez dans quelques minutes.";
   return null;
 }
 

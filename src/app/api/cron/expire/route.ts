@@ -11,7 +11,8 @@ export async function GET(request: Request) {
   if (!ok) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   try {
     const row = await asService((q) => q.one<{ n: number }>("select expire_entitlements() as n"));
-    return NextResponse.json({ expired: row?.n ?? 0 });
+    const purged = await asService((q) => q.one<{ n: number }>("select purge_rate_limits() as n"));
+    return NextResponse.json({ expired: row?.n ?? 0, rateLimitsPurged: purged?.n ?? 0 });
   } catch {
     return NextResponse.json({ error: "failed" }, { status: 500 });
   }

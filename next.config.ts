@@ -1,20 +1,11 @@
 import type { NextConfig } from "next";
+import { securityHeaders } from "./config/security-headers";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   devIndicators: false,
   async headers() {
-    return [
-      {
-        source: "/:path*",
-        headers: [
-          { key: "X-Content-Type-Options", value: "nosniff" },
-          { key: "X-Frame-Options", value: "DENY" },
-          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
-        ],
-      },
-    ];
+    return [{ source: "/:path*", headers: securityHeaders(process.env, process.env.NODE_ENV !== "production") }];
   },
 };
 

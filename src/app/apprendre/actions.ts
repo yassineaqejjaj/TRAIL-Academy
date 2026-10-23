@@ -77,7 +77,7 @@ export async function requestSubmissionUpload(input: { assignmentId: string; fil
   const assignmentId = uuid.safeParse(input.assignmentId);
   if (!assignmentId.success) return { error: "Formulaire invalide." };
   if (!storageConfigured()) return { error: "Le stockage de fichiers n'est pas configuré." };
-  if (!rateLimit(`upload:${user.id}`, 20, 10 * 60_000)) return { error: "Trop de tentatives. Réessayez plus tard." };
+  if (!(await rateLimit(`upload:${user.id}`, 20, 10 * 60_000))) return { error: "Trop de tentatives. Réessayez plus tard." };
   const check = validateUpload({ name: String(input.fileName), size: Number(input.size), type: String(input.type) });
   if (!check.ok) return { error: check.reason };
   // RLS only returns the assignment when the user holds an active entitlement for its course.

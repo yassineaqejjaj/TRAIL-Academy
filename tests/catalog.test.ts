@@ -26,29 +26,18 @@ describe("catalog integrity", () => {
     expect(coursesOfPath(getPath("ai-mastery")!)).toHaveLength(18);
     for (const p of learningPaths) for (const code of p.courseCodes) expect(courses.some((c) => c.code === code)).toBe(true);
   });
-  it("lists prices per the TRAIL price grid", () => {
+  it("offers exactly three public prices: module, parcours, AI Mastery", () => {
     const price = (slug: string) => offers.find((o) => o.slug === slug)!.amountCents;
-    expect(price("module-standard")).toBe(19900);
-    expect(price("module-avance")).toBe(29900);
+    expect(price("module")).toBe(19900);
     expect(price("product-manager-augmente")).toBe(99000);
-    expect(price("ai-product-manager")).toBe(149000);
+    expect(price("ai-product-manager")).toBe(99000);
     expect(price("ai-mastery")).toBe(199000);
-    expect(price("ai-mastery-mentored")).toBe(299000);
-    expect(price("team-5")).toBe(750000);
-    expect(price("team-20")).toBe(2400000);
-    expect(price("private-workshop")).toBe(250000);
-    expect(price("enterprise-custom")).toBeNull();
+    expect(offers.every((o) => o.taxMode === "ttc")).toBe(true);
+    expect(offers.map((o) => o.kind).sort()).toEqual(["bundle", "course", "path", "path"]);
   });
-  it("prices only Vibe Coding, RAG, Agentic AI and AI Evaluation at the Avancé rate", () => {
-    const advanced = Object.entries(staticCatalog.coursePrices).filter(([, cents]) => cents === 29900).map(([slug]) => courses.find((c) => c.slug === slug)!.code).sort();
-    expect(advanced).toEqual(["M11", "M12", "M17", "M6"]);
-    expect(Object.values(staticCatalog.coursePrices).filter((c) => c === 19900)).toHaveLength(14);
-  });
-  it("describes enterprise offers as specified", () => {
-    const o = (slug: string) => offers.find((x) => x.slug === slug)!;
-    expect(o("team-5")).toMatchObject({ taxMode: "ht", accessMonths: 12 });
-    expect(o("team-20")).toMatchObject({ taxMode: "ht", accessMonths: 12 });
-    expect(o("private-workshop")).toMatchObject({ priceFrom: true, taxMode: "ht" });
+  it("prices every module at the same 199 € rate", () => {
+    expect(Object.values(staticCatalog.coursePrices)).toHaveLength(18);
+    expect(new Set(Object.values(staticCatalog.coursePrices))).toEqual(new Set([19900]));
   });
   it("does not allow purchase of unpublished courses", () => {
     expect(courses.filter((c) => isPurchasable(c))).toHaveLength(0);

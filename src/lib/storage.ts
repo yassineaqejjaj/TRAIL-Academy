@@ -1,5 +1,5 @@
 import "server-only";
-import { DeleteObjectCommand, GetObjectCommand, HeadObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { DeleteObjectCommand, GetObjectCommand, HeadBucketCommand, HeadObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
@@ -52,4 +52,10 @@ export async function objectInfo(key: string): Promise<{ size: number; contentTy
 
 export async function deleteObject(key: string): Promise<void> {
   await client().send(new DeleteObjectCommand({ Bucket: bucket(), Key: key })).catch(() => undefined);
+}
+
+/** Read-only reachability check used by the admin production-readiness screen. */
+export async function storageHealth(): Promise<"ok" | "not_configured" | "unreachable"> {
+  if (!storageConfigured()) return "not_configured";
+  try { await client().send(new HeadBucketCommand({ Bucket: bucket() })); return "ok"; } catch { return "unreachable"; }
 }

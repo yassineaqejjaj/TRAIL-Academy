@@ -48,3 +48,7 @@ next-env.d.ts
 /test-results/
 /playwright-report/
 *.tsbuildinfo
+
+# local database dumps (contain personal data)
+/backups/
+*.dump

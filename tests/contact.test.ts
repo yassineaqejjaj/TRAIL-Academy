@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 import { contactSchema } from "@/lib/contact";
-import { rateLimit } from "@/lib/rate-limit";
 
 const valid = { name: "Jean Dupont", email: "j@acme.fr", company: "Acme", seats: "10", message: "Besoin de former 10 personnes" };
 
@@ -21,14 +20,6 @@ describe("contact schema", () => {
   it("keeps the honeypot value so the route can drop bots", () => {
     const r = contactSchema.safeParse({ ...valid, website: "spam" });
     expect(r.success && r.data.website).toBe("spam");
-  });
-});
-
-describe("rateLimit", () => {
-  it("blocks after the limit and resets after the window", () => {
-    const key = "t:" + Math.random();
-    expect([1, 2, 3].map(() => rateLimit(key, 2, 1000, 0))).toEqual([true, true, false]);
-    expect(rateLimit(key, 2, 1000, 1001)).toBe(true);
   });
 });
 

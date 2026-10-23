@@ -1,46 +1,37 @@
 import type { Metadata } from "next";
-import { Card, Container, Notice } from "@/components/ui";
-import { formatEuro } from "@/lib/catalog";
+import Link from "next/link";
+import { Container, Notice } from "@/components/ui";
+import { OfferCards } from "@/components/offers";
 import { getCatalog } from "@/lib/catalog/load";
 
-export const metadata: Metadata = { title: "Tarifs", description: "Modules individuels, parcours, AI Mastery et offres entreprises.", alternates: { canonical: "/tarifs" } };
-
+export const metadata: Metadata = { title: "Tarifs", description: "Trois offres : un module, un parcours, ou l'accès complet AI Mastery.", alternates: { canonical: "/tarifs" } };
 export const revalidate = 60;
 
+const faq = [
+  ["Que veut dire « accès 12 ou 18 mois » ?", "Vous suivez les contenus quand vous voulez pendant cette durée. Votre progression et vos attestations sont conservées ensuite."],
+  ["Puis-je passer d'un module à un parcours ?", "Oui, mais le prix d'un parcours n'est pas réduit des modules déjà achetés : il les contient et prolonge leur accès. Si vous visez plusieurs modules, comparez avec le parcours ou AI Mastery avant d'acheter."],
+  ["Les taxes sont-elles incluses ?", "Les prix affichés sont TTC. Le calcul des taxes applicables est effectué au paiement."],
+  ["Et pour mon équipe ?", "Pour plusieurs personnes, une formation sur mesure ou un atelier, demandez un devis : la page Entreprises vous répond sous quelques jours."],
+] as const;
+
 export default async function PricingPage() {
-  const { offers, courses } = await getCatalog();
-  const anyPurchasable = courses.some((c) => c.status === "published");
-  const b2c = offers.filter((o) => o.kind !== "enterprise" && o.amountCents != null);
-  const b2b = offers.filter((o) => o.kind === "enterprise");
+  const catalog = await getCatalog();
+  const anyOpen = catalog.openCourses.length > 0;
   return (
     <Container className="py-12">
-      <h1 className="text-4xl font-semibold tracking-tight">Tarifs</h1>
-      <p className="mt-3 max-w-2xl text-muted">Les prix sont indiqués pour information. Les taxes applicables sont calculées au paiement.</p>
-
-      <h2 className="mt-10 text-2xl font-semibold">Particuliers</h2>
-      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {b2c.map((o) => (
-          <Card key={o.slug} className={o.slug === "ai-mastery" ? "border-accent" : ""}>
-            <p className="text-sm text-muted">{o.title}</p>
-            <p className="mt-2 text-3xl font-semibold">{formatEuro(o.amountCents!)}<span className="ml-1 text-xs font-normal text-muted">TTC</span></p>
-            <p className="mt-1 text-sm text-muted">Accès {o.accessMonths} mois</p>
-            {o.note && <p className="mt-1 text-xs text-muted">{o.note}</p>}
-          </Card>
-        ))}
+      <h1 className="text-4xl font-bold sm:text-5xl">Tarifs</h1>
+      <p className="mt-3 max-w-2xl text-muted">Trois offres, sans option cachée. Les prix sont TTC ; les taxes applicables sont calculées au paiement.</p>
+      <div className="mt-10"><OfferCards catalog={catalog} /></div>
+      <div className="mt-8">
+        <Notice title={anyOpen ? "Disponibilité" : "Achat bientôt ouvert"}>
+          Un module ou un parcours n'est proposé à l'achat qu'une fois son contenu publié et validé.{anyOpen ? " Consultez la fiche de chaque module pour sa disponibilité." : " Aucun module n'est ouvert à la vente à ce jour."}
+        </Notice>
       </div>
-      <div className="mt-4"><Notice title={anyPurchasable ? "Disponibilité" : "Achat indisponible pour le moment"}>Un module ou un parcours n'est proposé à l'achat qu'une fois son contenu publié et validé.{anyPurchasable ? " Consultez la fiche de chaque module pour sa disponibilité." : " Aucun module n'est ouvert à la vente à ce jour."}</Notice></div>
-
-      <h2 className="mt-12 text-2xl font-semibold">Entreprises</h2>
-      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {b2b.map((o) => (
-          <Card key={o.slug}>
-            <p className="text-sm text-muted">{o.title}</p>
-            <p className="mt-2 text-2xl font-semibold">{o.amountCents == null ? "Sur devis" : <>{o.priceFrom && <span className="mr-1 text-sm font-normal text-muted">dès</span>}{formatEuro(o.amountCents)}<span className="ml-1 text-xs font-normal text-muted">HT</span></>}</p>
-            {o.note && <p className="mt-1 text-sm text-muted">{o.note}</p>}
-          </Card>
-        ))}
+      <h2 className="mt-16 text-2xl font-bold">Questions sur les tarifs</h2>
+      <div className="mt-4 border-b border-border">
+        {faq.map(([q, a]) => <details key={q} className="border-t border-border py-4"><summary className="flex min-h-11 items-center font-semibold">{q}</summary><p className="mt-2 text-muted">{a}</p></details>)}
       </div>
-      <p className="mt-6 text-sm text-muted"><a className="font-semibold text-accent hover:underline" href="/entreprise">Demander un devis</a></p>
+      <p className="mt-8 text-muted">Équipes et entreprises : <Link className="font-semibold text-accent hover:underline" href="/entreprise">demander un devis</Link>.</p>
     </Container>
   );
 }

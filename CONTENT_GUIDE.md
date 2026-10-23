@@ -9,11 +9,9 @@ Titre, résumé, phase, niveau, durée **estimée** (à confirmer), thèmes, out
 ## Leçons
 
 - **Texte** : Markdown (titres, listes, liens, code). Le HTML brut n'est jamais rendu.
-- **Vidéo** : source « HLS auto-hébergé » + identifiant du média. Ordre de travail :
-  1. `scripts/encode-hls.sh lecon.mp4 m4-intro-01` (ffmpeg → rendus 360/720/1080 p, segments de 6 s) ;
-  2. le script envoie `video/m4-intro-01/` dans le bucket privé (client MinIO `mc` configuré avec l'alias `trail`) ;
-  3. coller `m4-intro-01` dans la leçon ; ajouter durée, chapitres (`2:30 Titre`, un par ligne) et transcription.
-  La lecture passe par la passerelle de streaming avec un jeton de 2 h ; il n'existe aucun lien permanent.
+- **Vidéo** : dans la leçon, panneau **Vidéo → Envoyer la vidéo** (mp4, mov, m4v, webm ou mkv, 4 Go max.). Le fichier part directement dans le bucket privé ; le service `video-worker` l'encode en HLS adaptatif (360/720/1080 p selon la source, segments de 6 s) puis rattache la vidéo à la leçon. Le statut s'affiche dans le panneau (en attente → encodage → prête, ou échec avec bouton *Relancer*). Ensuite : ajouter chapitres (`2:30 Titre`, un par ligne) et transcription.
+  La lecture passe par la passerelle de streaming avec un jeton de 2 h ; il n'existe aucun lien permanent. Un nouvel envoi remplace la vidéo une fois son encodage terminé.
+  Repli manuel : `scripts/encode-hls.sh lecon.mp4 m4-intro-01` puis coller l'identifiant dans les champs avancés de la leçon (source « HLS auto-hébergé »).
 - **Sous-titres** : fichier WebVTT (`.vtt`, 1 Mo max), envoyé directement au bucket.
 - **Ressources** : PDF, Office, CSV, JSON, images, archives (50 Mo max, types contrôlés). Les apprenants reçoivent un lien de 60 s après vérification de leur accès.
 - Une leçon en **brouillon** est invisible des apprenants et ne compte pas dans la progression. Si des apprenants ont déjà progressé, la supprimer est refusé : repasser en brouillon.

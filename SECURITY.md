@@ -15,7 +15,9 @@
 
 ## Limites connues
 
-- Limiteur en mémoire pour les formulaires (devis, signatures d'intérêt, progression) : à remplacer par un magasin partagé avant de passer à plusieurs instances.
+- Limiteur de débit **partagé en base** (`hit_rate_limit`, migration 0006) pour devis, intérêt, progression, achat, envois et actions de connexion ; en cas de panne de la base il laisse passer et journalise (les endpoints protégés dépendent de la même base).
+- **CSP** (`config/security-headers.ts`) dérivée de l'environnement : `object-src 'none'`, `frame-ancestors 'none'`, sources média/connexion limitées au stockage et à la passerelle configurés, `form-action` limité à soi-même, Stripe Checkout et Google ; HSTS en HTTPS. `script-src` conserve `'unsafe-inline'` (scripts d'amorçage de Next.js) : une CSP à nonce rendrait toutes les pages dynamiques.
+- **RGPD** : export JSON (`export_my_data`) et suppression de compte (`anonymize_user`) depuis *Mon espace → Mes données* ; commandes et paiements conservés sans lien avec la personne. Le compte client Stripe n'est pas supprimé automatiquement.
 - Pas de CSP, pas d'analyse antivirus des fichiers envoyés, pas de suppression/export de compte en libre-service, pas de consentement cookies ni de mesure d'audience, pas de supervision d'erreurs branchée.
 - Le streaming signé dissuade le partage ; il n'empêche pas absolument de copier une vidéo.
 - Pool de connexions serverless : prévoir PgBouncer ou un pool réduit.

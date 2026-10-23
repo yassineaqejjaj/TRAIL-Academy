@@ -49,6 +49,7 @@ const grant = (role: keyof typeof emails) => db.query("insert into entitlements 
   await page.goto("/formations/rag"); await shot(page, "03-fiche-module");
   await page.goto("/parcours"); await shot(page, "04-parcours");
   await page.goto("/tarifs"); await shot(page, "05-tarifs", { full: true });
+  await page.goto("/formateur"); await shot(page, "23-formateur");
   await page.goto("/conseiller");
   await page.getByLabel("Votre rôle actuel").selectOption("product");
   await page.getByRole("button", { name: "Obtenir ma recommandation" }).click();
@@ -85,6 +86,7 @@ await learner.getByRole("button", { name: "Envoyer mon livrable" }).click();
 await learner.getByText("Livrable envoyé").waitFor();
 await shot(learner, "11-livrable");
 await learner.goto("/compte"); await learner.getByText("Reprendre où vous en étiez").waitFor(); await shot(learner, "08-tableau-de-bord");
+await learner.goto("/compte/donnees"); await shot(learner, "25-compte-donnees");
 // dark theme and a phone-sized view of the same screens
 {
   const dark = await ctx({ colorScheme: "dark" }); const p = await dark.newPage();
@@ -131,6 +133,9 @@ await admin.goto(`/admin/cours/${courseId}`); await shot(admin, "14-admin-module
 await admin.goto(`/admin/cours/${courseId}/contenu`); await shot(admin, "15-admin-contenu");
 await admin.goto("/admin/produits"); await shot(admin, "20-admin-produits");
 await admin.goto("/admin/cms"); await shot(admin, "21-admin-cms");
+await admin.goto("/admin/production"); await admin.getByRole("heading", { name: "Vérifications en direct" }).waitFor(); await shot(admin, "24-admin-production", { full: true });
+const lessonId = (await db.query("select id from lessons where course_id = $1 order by position limit 1", [courseId])).rows[0].id;
+await admin.goto(`/admin/cours/${courseId}/lecons/${lessonId}`); await admin.getByRole("heading", { name: "Vidéo" }).scrollIntoViewIfNeeded(); await shot(admin, "26-admin-video");
 await admin.goto("/admin/journal"); await shot(admin, "22-admin-journal");
 await adminCtx.close();
 

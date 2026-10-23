@@ -1,0 +1,8 @@
+{
+  "name": "trail-video-worker",
+  "private": true,
+  "type": "module",
+  "scripts": { "start": "node src/worker.ts" },
+  "engines": { "node": ">=24" },
+  "dependencies": { "@aws-sdk/client-s3": "^3.1156.0", "pg": "^8.23.1" }
+}

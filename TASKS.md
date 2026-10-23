@@ -23,18 +23,19 @@ Tableau de bord, modules (création, contenu, publication conditionnée), parcou
 - ⬜ Éditeur des règles du conseiller · ⬜ écran de paramètres et conformité · ⬜ transcodage vidéo depuis le navigateur · ⬜ dates de début/fin automatiques pour les prix de lancement
 
 ## Migration pile open source ✅
-PostgreSQL + RLS (rôle par transaction), Better Auth, S3 (MinIO), HLS auto-hébergé, SMTP, 9 parcours e2e, 185 tests.
+PostgreSQL + RLS (rôle par transaction), Better Auth, S3 (MinIO), HLS auto-hébergé, SMTP, e2e Playwright, tests SQL/unitaires.
 - ✅ CI GitHub (types, lint, tests, audit, build, e2e) exécutée avec succès
 - 🟡 PostgreSQL serveur réel · 🟡 `docker-compose.yml` · 🟡 workflow de migration manuel · 🟡 Google OAuth
 
 ## Entreprises (phase E) ⬜
-Organisations, licences (Team 5/20), attribution de sièges, invitations, rapports. Modèle de données et politiques déjà en place ; interface à construire.
+Organisations, licences d'équipe sur devis, attribution de sièges, invitations, rapports. Modèle de données et politiques déjà en place ; interface à construire.
 
 ## Durcissement (phase F) ⬜
 Audit d'accessibilité automatisé, Lighthouse/Core Web Vitals, CSP, limiteurs partagés pour les formulaires, antivirus des fichiers, suppression/export de compte, consentement cookies + mesure d'audience, supervision (GlitchTip/OpenTelemetry), sauvegardes et restauration testées, tests de charge.
 
 ## Décisions en attente
-- Contenu exact de **AI Mastery Mentored** (et passage depuis AI Mastery) avant ouverture.
+- Crédit des modules déjà achetés lors de l'achat d'un parcours ou d'AI Mastery (aujourd'hui : aucun).
+- Droit de rétractation pour l'accès numérique immédiat (renonciation) : à trancher avec un juriste.
 - Titre de l'accueil : brief (« Maîtrisez l'IA. Appliquez-la à votre métier. ») ou design (« Devenez le professionnel qui maîtrise vraiment l'IA. ») — modifiable dans le CMS.
 - Licence du dépôt public.
 

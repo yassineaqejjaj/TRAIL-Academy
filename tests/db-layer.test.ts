@@ -82,4 +82,10 @@ describe("single-connection mode (embedded development database)", () => {
     expect(same).toBe(true);
     expect(getPool("app")).not.toBe(getPool("auth"));
   });
+
+  it("rate-limits through the shared database store", async () => {
+    const { rateLimit } = await import("@/lib/rate-limit");
+    const key = `t:${Math.random()}`;
+    expect([await rateLimit(key, 2, 60_000), await rateLimit(key, 2, 60_000), await rateLimit(key, 2, 60_000)]).toEqual([true, true, false]);
+  });
 });

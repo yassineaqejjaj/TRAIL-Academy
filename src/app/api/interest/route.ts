@@ -7,7 +7,7 @@ import { rateLimit } from "@/lib/rate-limit";
 export async function POST(request: Request) {
   if (!dbConfigured()) return NextResponse.json({ error: "Service non configuré." }, { status: 503 });
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-  if (!rateLimit(`interest:${ip}`, 5, 10 * 60_000)) return NextResponse.json({ error: "Trop de demandes. Réessayez plus tard." }, { status: 429 });
+  if (!(await rateLimit(`interest:${ip}`, 5, 10 * 60_000))) return NextResponse.json({ error: "Trop de demandes. Réessayez plus tard." }, { status: 429 });
 
   const parsed = interestSchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: parsed.error.issues[0]?.message ?? "Formulaire invalide." }, { status: 400 });

@@ -142,18 +142,13 @@ export const learningPaths: LearningPath[] = [
     courseCodes: seeds.map((s) => s.code) },
 ];
 
-/** Modules sold at the "Avancé" price. Everything else is "Standard". */
-export const advancedModuleCodes = ["M6", "M11", "M12", "M17"];
-
+/**
+ * The public price grid: THREE offers. Enterprise needs are handled by quotation (contact form), not by a price list.
+ * Prices are data: the admin edits them (history kept); this is the seed.
+ */
 export const offers: Offer[] = [
-  { slug: "module-standard", kind: "course", title: "Module Standard", amountCents: 19900, taxMode: "ttc", accessMonths: 12 },
-  { slug: "module-avance", kind: "course", title: "Module Avancé", amountCents: 29900, taxMode: "ttc", accessMonths: 12, note: "Vibe Coding, RAG, Agentic AI, AI Evaluation & Observability" },
+  { slug: "module", kind: "course", title: "Module", amountCents: 19900, taxMode: "ttc", accessMonths: 12 },
   { slug: "product-manager-augmente", kind: "path", title: "Product Manager Augmenté", amountCents: 99000, taxMode: "ttc", accessMonths: 18, note: "9 modules" },
-  { slug: "ai-product-manager", kind: "path", title: "AI Product Manager", amountCents: 149000, taxMode: "ttc", accessMonths: 18, note: "13 modules" },
+  { slug: "ai-product-manager", kind: "path", title: "AI Product Manager", amountCents: 99000, taxMode: "ttc", accessMonths: 18, note: "13 modules" },
   { slug: "ai-mastery", kind: "bundle", title: "AI Mastery", amountCents: 199000, taxMode: "ttc", accessMonths: 18, note: "18 modules" },
-  { slug: "ai-mastery-mentored", kind: "bundle", title: "AI Mastery Mentored", amountCents: 299000, taxMode: "ttc", accessMonths: 18, note: "18 modules + accompagnement · ouverture prochaine" },
-  { slug: "team-5", kind: "enterprise", title: "Team 5", amountCents: 750000, taxMode: "ht", accessMonths: 12, note: "5 licences AI Mastery · accès 12 mois" },
-  { slug: "team-20", kind: "enterprise", title: "Team 20", amountCents: 2400000, taxMode: "ht", accessMonths: 12, note: "20 licences AI Mastery · accès 12 mois" },
-  { slug: "private-workshop", kind: "enterprise", title: "Private Workshop", amountCents: 250000, taxMode: "ht", accessMonths: null, priceFrom: true, note: "De 2 500 à 3 500 € HT par journée de formation privée" },
-  { slug: "enterprise-custom", kind: "enterprise", title: "Enterprise Custom", amountCents: null, taxMode: "ht", accessMonths: null, note: "Programme personnalisé, sur devis" },
 ];

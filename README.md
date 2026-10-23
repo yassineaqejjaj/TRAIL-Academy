@@ -17,7 +17,7 @@ Une plateforme de formation professionnelle à l'intelligence artificielle, con�
 
 ![Accueil de TRAIL Academy](docs/screenshots/01-accueil.png)
 
-> **État honnête du projet.** Les phases A à D (fondations, apprentissage, commerce, administration) sont construites et testées : 185 tests automatisés et 9 parcours de bout en bout dans un vrai navigateur, contre PostgreSQL, sur un build de production, le tout vérifié aussi par la CI GitHub. Les phases E (entreprises) et F (durcissement) ne sont pas commencées. **Rien n'a encore tourné contre Stripe, un stockage S3, un serveur SMTP ou un déploiement Vercel/Railway réels** : voir [ce qui est vérifié et ce qui ne l'est pas](#9-ce-qui-est-vérifié-et-ce-qui-ne-lest-pas). Les paiements réels sont bloqués par conception tant qu'une revue juridique n'a pas eu lieu.
+> **État honnête du projet.** Les phases A à D (fondations, apprentissage, commerce, administration) sont construites et testées : 221 tests automatisés et 15 parcours de bout en bout dans un vrai navigateur, contre PostgreSQL, sur un build de production, le tout vérifié aussi par la CI GitHub. Les phases E (entreprises) et F (durcissement) ne sont pas commencées. **Rien n'a encore tourné contre Stripe, un stockage S3, un serveur SMTP ou un déploiement Vercel/Railway réels** : voir [ce qui est vérifié et ce qui ne l'est pas](#9-ce-qui-est-vérifié-et-ce-qui-ne-lest-pas). Les paiements réels sont bloqués par conception tant qu'une revue juridique n'a pas eu lieu.
 
 ## Sommaire
 
@@ -66,17 +66,14 @@ TRAIL Academy propose une formation **pratique, progressive et mesurable**, con�
 
 | Offre | Contenu | Prix | Accès |
 |---|---|---|---|
-| Module Standard | 1 module (14 concernés) | 199 € TTC | 12 mois |
-| Module Avancé | Vibe Coding, RAG, Agentic AI, AI Evaluation & Observability | 299 € TTC | 12 mois |
-| Product Manager Augmenté | 9 modules | 990 € TTC | 18 mois |
-| AI Product Manager | 13 modules | 1 490 € TTC | 18 mois |
-| AI Mastery | les 18 modules et les deux parcours | 1 990 € TTC | 18 mois |
-| AI Mastery Mentored | 18 modules + accompagnement *(offre fermée tant que l'accompagnement n'est pas défini)* | 2 990 € TTC | 18 mois |
-| Team 5 / Team 20 | 5 / 20 licences AI Mastery | 7 500 € / 24 000 € HT | 12 mois |
-| Private Workshop | journée de formation privée | de 2 500 à 3 500 € HT | — |
-| Enterprise Custom | programme personnalisé | sur devis | — |
+| **Module** | 1 module au choix (18 disponibles) | 199 € TTC | 12 mois |
+| **Parcours** | Product Manager Augmenté (9 modules) **ou** AI Product Manager (13 modules), au choix | 990 € TTC | 18 mois |
+| **AI Mastery** | les 18 modules et les deux parcours | 1 990 € TTC | 18 mois |
+| Entreprises | licences d'équipe, programme sur mesure, ateliers privés : **sur devis** (formulaire), hors grille | — | — |
 
-Les prix sont des **données** modifiables dans l'administration (historique conservé, commandes passées inchangées). Les prix « fondateur » de lancement (149 / 229 / 790 / 1 190 / 1 590 / 2 490 €) sont des propositions à tester, uniquement sur des offres réellement disponibles et pour une période définie : ils ne sont pas appliqués automatiquement ([`PRODUCT.md`](PRODUCT.md)).
+Trois offres seulement, sans option cachée. Un parcours ou AI Mastery **contient** les modules déjà détenus sans réduction de prix (décision commerciale à confirmer, voir `docs/GO_LIVE.md`) ; une offre dont tous les modules sont déjà détenus ne peut pas être rachetée.
+
+Les prix sont des **données** modifiables dans l'administration (historique conservé, commandes passées inchangées).
 
 ### Les règles qui font la confiance
 
@@ -172,6 +169,15 @@ Les règles qui comptent (accès, correction, complétion, paiement, rembourseme
 | ![Admin contenu](docs/screenshots/15-admin-contenu.png) | ![Admin relecture](docs/screenshots/16-admin-relecture.png) |
 | **Produits et prix** | **Contenu du site (CMS)** |
 | ![Admin produits](docs/screenshots/20-admin-produits.png) | ![Admin CMS](docs/screenshots/21-admin-cms.png) |
+
+### Formateur, données personnelles et mise en production
+
+| | |
+|---|---|
+| ![Page formateur](docs/screenshots/23-formateur.png) | ![Mes données (RGPD)](docs/screenshots/25-compte-donnees.png) |
+| Page du formateur (photo et domaines d'expertise ; la biographie se complète depuis l'administration) | Export JSON et suppression du compte |
+| ![Vidéo d'une leçon](docs/screenshots/26-admin-video.png) | ![Mise en production](docs/screenshots/24-admin-production.jpg) |
+| Envoi de la vidéo, encodage HLS, statut | Contrôles de configuration et vérifications en direct |
 
 Le **journal d'audit** (écriture seule) enregistre qui a changé quoi sur le contenu, les prix, les commandes, les paiements et les accès : [`22-admin-journal.png`](docs/screenshots/22-admin-journal.png).
 
@@ -280,7 +286,7 @@ Doublons, rejeux, sessions falsifiées, mauvaise devise, paiements différés ou
 | **Défaut sûr** | Offre fermée tant que non explicitement ouverte ; clés Stripe *live* refusées sans deux drapeaux explicites ; absence de configuration = message clair, jamais une fausse réussite |
 | **Validation aux frontières** | Zod sur chaque formulaire et route ; types MIME **et** extensions vérifiés ; taille plafonnée par le bucket lui-même (POST pré-signé) |
 | **Traçabilité** | Journal d'audit en écriture seule (acteur, avant/après) sur contenu, prix, commandes, paiements, accès ; toute action manuelle sensible exige un motif |
-| **Tests proportionnés au risque** | 185 tests dont migrations + RLS sur PostgreSQL ; **tests par mutation manuelle** des règles critiques (casser la règle doit faire échouer un test) ; 9 parcours de bout en bout |
+| **Tests proportionnés au risque** | 221 tests dont migrations + RLS sur PostgreSQL ; **tests par mutation manuelle** des règles critiques (casser la règle doit faire échouer un test) ; 15 parcours de bout en bout |
 | **Environnements reproductibles** | Migrations versionnées et rejouables (`npm run db:migrate`), seed généré depuis le code, base locale sans Docker (`npm run db:dev`), `docker-compose.yml` production-like |
 | **CI** | `.github/workflows/ci.yml` : types, lint, tests, audit des dépendances, build, puis e2e Playwright sur le build de production |
 | **Dépendances** | 0 vulnérabilité sur les dépendances de production (`npm audit --omit=dev`) ; bibliothèques établies pour l'authentification et le chiffrement, rien de fait maison côté cryptographie |
@@ -351,7 +357,7 @@ docker compose up -d     # PostgreSQL 17, MinIO (S3), Mailpit (boîte mail sur :
 | Commande | Rôle |
 |---|---|
 | `npm run dev` / `build` / `start` | Next.js |
-| `npm test` | 185 tests (unitaires, base de données, intégration) |
+| `npm test` | 221 tests (unitaires, base de données, intégration) |
 | `npm run typecheck` / `lint` | TypeScript / ESLint |
 | `npm run db:dev` | PostgreSQL local embarqué |
 | `npm run db:migrate [-- --seed] [-- --fixture]` | Applique les migrations (rejouable) |
@@ -359,7 +365,9 @@ docker compose up -d     # PostgreSQL 17, MinIO (S3), Mailpit (boîte mail sur :
 | `npm run seed:generate` | Régénère `db/seed.sql` depuis `src/lib/catalog/data.ts` |
 | `npx playwright test` | Parcours de bout en bout (`E2E_CHANNEL=chrome` réutilise Chrome installé) |
 | `npm run screenshots` | Régénère `docs/screenshots` depuis l'application qui tourne |
-| `scripts/encode-hls.sh` | Encode une vidéo en HLS adaptatif et l'envoie dans le bucket |
+| `scripts/encode-hls.sh` | Encode une vidéo en HLS adaptatif et l'envoie dans le bucket (manuel ; l'admin passe par `services/video-worker`) |
+| `npm run check:env -- --env-file=<fichier>` | Vérifie la configuration de production (0 = aucun point bloquant) |
+| `scripts/backup.sh` | Sauvegarde logique `pg_dump` (+ copie S3 facultative) |
 
 ### Configuration
 
@@ -385,10 +393,10 @@ Toutes les variables sont dans [`.env.example`](.env.example), regroupées par s
 
 | Élément | État |
 |---|---|
-| Schéma, migrations, RLS, règles d'apprentissage, de commerce et d'administration | ✅ 185 tests sur PostgreSQL embarqué ; migrations rejouées de bout en bout sur une base en TCP |
+| Schéma, migrations, RLS, règles d'apprentissage, de commerce et d'administration | ✅ 221 tests sur PostgreSQL embarqué ; migrations rejouées de bout en bout sur une base en TCP |
 | Couche d'accès (rôle par transaction, aucune fuite de privilèges entre requêtes, tables d'auth fermées) | ✅ testée sur une vraie connexion TCP |
 | Authentification : inscription, vérification obligatoire, session HttpOnly, réinitialisation qui révoque les sessions, Argon2id | ✅ testée de bout en bout (bibliothèque + base) |
-| Application complète en navigateur : visiteur, inscription, progression persistante, quiz, livrable, relecture, attestation, publication d'un module, contrôles d'accès | ✅ 9 parcours Playwright dans Chrome, sur build de production |
+| Application complète en navigateur : visiteur, inscription, progression persistante, quiz, livrable, relecture, attestation, publication d'un module, contrôles d'accès | ✅ 15 parcours Playwright dans Chrome, sur build de production |
 | Les 27 routes publiques, apprenant et admin | ✅ HTTP 200 sans erreur ni avertissement de console (relevé en mode développement) |
 | Vérification de signature Stripe, normalisation, traitement des événements | ✅ testés avec de vraies signatures générées localement |
 | Passerelle de streaming (jetons, traversée de chemins, plages d'octets, réécriture des playlists) | ✅ testée avec un faux stockage |
@@ -397,7 +405,7 @@ Toutes les variables sont dans [`.env.example`](.env.example), regroupées par s
 | **Stripe** (Checkout, portail, factures, taxes, codes promo, remboursements, litiges de bout en bout) | ⚠️ jamais exécuté |
 | **MinIO/S3 réel** (envoi, téléchargement, CORS) et **lecture vidéo HLS** par `hls.js` via la passerelle | ⚠️ jamais exécuté |
 | **SMTP réel**, **Google OAuth**, **déploiement Vercel/Railway**, **`docker-compose.yml`** | ⚠️ jamais exécutés |
-| **CI GitHub Actions** (types, lint, 185 tests, audit, build, puis 9 parcours Playwright sur Chromium/Ubuntu) | ✅ exécutée avec succès sur GitHub (commit `6ac17d7`) |
+| **CI GitHub Actions** (types, lint, 221 tests, audit, build, puis 15 parcours Playwright sur Chromium/Ubuntu) | ✅ exécutée avec succès sur GitHub (commit `6ac17d7`) |
 | Accessibilité (audit automatisé), Lighthouse, Core Web Vitals | ❌ non mesurés |
 
 Détails et protocole : [`TESTING.md`](TESTING.md).
@@ -428,7 +436,7 @@ src/components/     système de design et composants
 src/lib/            db (pool, rôles), auth, catalogue, conseiller, apprentissage, stripe, stockage, vidéo, e-mail, CMS
 db/                 migrations/ (0000 plateforme … 0005 admin), seed.sql (généré), dev-fixture.sql (démo)
 services/           stream-gateway/ (service Railway)
-scripts/            migrate, dev-db, create-admin, encode-hls.sh, generate-seed, capture-screenshots
+scripts/            migrate, dev-db, create-admin, check-env, backup.sh, encode-hls.sh, generate-seed, capture-screenshots
 tests/ e2e/         Vitest (unitaires, base, intégration) et Playwright
 docs/screenshots/   captures réelles utilisées ci-dessus
 .github/workflows/  CI, migrations manuelles

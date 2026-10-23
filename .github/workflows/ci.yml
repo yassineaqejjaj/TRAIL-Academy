@@ -17,6 +17,8 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 24, cache: npm }
       - run: npm ci
+      - name: ffmpeg (real video transcoding test)
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg
       - run: npm run typecheck
       - run: npm run lint
       - name: Unit, integration and migration/RLS tests (embedded PostgreSQL)

@@ -14,6 +14,8 @@ export const metadata: Metadata = {
   title: { default: `${site.name} — ${site.tagline}`, template: `%s | ${site.name}` },
   description: "Formations concrètes pour comprendre, utiliser et piloter l'intelligence artificielle dans votre environnement professionnel.",
   openGraph: { type: "website", siteName: site.name, locale: site.locale },
+  twitter: { card: "summary_large_image" },
+  robots: { index: true, follow: true },
 };
 
 // Applies the saved theme before first paint to avoid a flash. Static string, no user input.

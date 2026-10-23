@@ -57,11 +57,16 @@ Webhook vers `https://votre-domaine/api/stripe/webhook` avec : `checkout.session
 
 ## 6. Vidéo
 
-Encoder avec `scripts/encode-hls.sh <source> <id-du-média>` (ffmpeg + client MinIO `mc`), puis coller l'identifiant dans la leçon (source « HLS auto-hébergé »). Détails : `CONTENT_GUIDE.md`.
+Deux services Railway, tous deux avec le même bucket privé :
+
+- `stream-gateway` (`services/stream-gateway`) : sert les playlists et segments aux porteurs d'un jeton signé.
+- `video-worker` (`services/video-worker`, Dockerfile avec **ffmpeg**, aucun port public) : variables `DATABASE_URL` (+ `DATABASE_SSL`), `S3_ENDPOINT`, `S3_BUCKET`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`. Il lit la file `video_assets`, encode en HLS adaptatif (360/720/1080 p selon la source, sans agrandissement), dépose le résultat dans `video/<id>/` et rattache la vidéo à la leçon.
+
+Flux : **Administration → leçon → Vidéo → Envoyer** (envoi direct navigateur → bucket, 4 Go max.) ; le statut passe de « en attente » à « prête » (ou « échec », avec bouton *Relancer*). Prérequis : règle CORS du bucket autorisant `POST` depuis le site. `scripts/encode-hls.sh` reste disponible pour un encodage manuel. Détails : `CONTENT_GUIDE.md`.
 
 ## 7. Sauvegardes et reprise
 
-- PostgreSQL : sauvegardes de volume Railway **et** export logique planifié (`pg_dump`, par exemple depuis un workflow GitHub chiffré vers un stockage distinct). **Tester une restauration** dans une base vierge avant le lancement.
+- PostgreSQL : sauvegardes de volume Railway **et** export logique planifié avec `scripts/backup.sh` (`pg_dump` au format custom, copie facultative vers un stockage distinct ; jamais d'artefact public : un dump contient des données personnelles). Le script n'a pas encore été exécuté. **Tester une restauration** dans une base vierge avant le lancement.
 - MinIO : `mc mirror` périodique vers un second stockage ; les objets sont reproductibles si les sources vidéo sont conservées.
 - Conserver hors ligne : secrets (`BETTER_AUTH_SECRET`, `STREAM_SIGNING_SECRET`), sources vidéo.
 

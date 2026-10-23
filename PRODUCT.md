@@ -4,24 +4,18 @@
 
 | Offre | Prix | Accès |
 |---|---|---|
-| Module Standard (14 modules) | 199 € TTC | 12 mois |
-| Module Avancé (Vibe Coding, RAG, Agentic AI, AI Evaluation & Observability) | 299 € TTC | 12 mois |
-| Product Manager Augmenté (9 modules) | 990 € TTC | 18 mois |
-| AI Product Manager (13 modules) | 1 490 € TTC | 18 mois |
-| AI Mastery (18 modules) | 1 990 € TTC | 18 mois |
-| AI Mastery Mentored (18 modules + accompagnement) | 2 990 € TTC — **offre fermée** tant que l'accompagnement n'est pas défini | 18 mois |
-| Team 5 / Team 20 (5 / 20 licences AI Mastery) | 7 500 € / 24 000 € HT | 12 mois |
-| Private Workshop | de 2 500 à 3 500 € HT par journée | — |
-| Enterprise Custom | sur devis | — |
+| Module (1 module au choix) | 199 € TTC | 12 mois |
+| Parcours : Product Manager Augmenté (9 modules) ou AI Product Manager (13 modules), au choix | 990 € TTC | 18 mois |
+| AI Mastery (18 modules et deux parcours) | 1 990 € TTC | 18 mois |
 
-Chaque offre démarre **fermée** : elle s'ouvre explicitement, et seulement si tous ses modules sont publiés et si un prix existe. Les offres entreprise et sur devis ne sont pas achetables en ligne.
+Les entreprises (licences d'équipe, programme sur mesure, ateliers privés) passent par un **devis**, hors grille et non achetables en ligne.
 
-**Prix de lancement (« fondateur ») — propositions à tester, non appliquées automatiquement :** Standard 149 €, Avancé 229 €, PM Augmenté 790 €, AI PM 1 190 €, AI Mastery 1 590 €, Mentored 2 490 € (TTC), uniquement sur des offres réellement disponibles et pour une période définie. Pour en lancer un aujourd'hui : changer le prix dans *Produits et prix* (historique conservé, commandes passées inchangées) puis le remettre à la fin de la période. Il n'y a pas encore de dates automatiques de début/fin.
+Chaque offre démarre **fermée** : elle s'ouvre explicitement, et seulement si tous ses modules sont publiés et si un prix existe.
 
 ## Règles produit appliquées (et testées)
 
 - Les 18 modules et 4 phases sont visibles ; **seul un module publié dont l'offre est ouverte s'achète**. La base refuse sinon (pas seulement l'interface).
-- Un contenu déjà détenu n'est jamais refacturé ; un parcours prolonge un accès existant sans doublon.
+- Une offre dont tous les modules sont déjà détenus et actifs ne peut pas être rachetée ; sinon le prix est celui de l'offre (aucun crédit pour les modules déjà détenus) et les accès existants sont prolongés sans doublon.
 - Un module ne peut pas être publié s'il manque du contenu (leçon vide, quiz sans question, question sans bonne réponse, objectifs absents). Publier n'ouvre pas la vente. Dépublier ferme les offres concernées sans retirer l'accès des apprenants existants.
 - Complétion d'un module : leçons obligatoires + quiz réussis + devoirs acceptés (configurable par module). L'attestation est émise **une seule fois**, privée, vérifiable par code, jamais présentée comme une certification d'État ni une qualification RNCP.
 - Correction automatique pour les questions objectives uniquement ; réponses libres et livrables relus par le formateur. **Aucune IA n'est l'autorité finale.**

@@ -5,7 +5,7 @@ import { deliverLead } from "@/lib/email";
 
 export async function POST(request: Request) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-  if (!rateLimit(`contact:${ip}`, 5, 10 * 60 * 1000)) return NextResponse.json({ error: "Trop de demandes. Réessayez plus tard." }, { status: 429 });
+  if (!(await rateLimit(`contact:${ip}`, 5, 10 * 60 * 1000))) return NextResponse.json({ error: "Trop de demandes. Réessayez plus tard." }, { status: 429 });
 
   const body = await request.json().catch(() => null);
   const parsed = contactSchema.safeParse(body);
