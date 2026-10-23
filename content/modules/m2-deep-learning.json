@@ -1,0 +1,861 @@
+{
+ "course": "M2",
+ "slug": "deep-learning",
+ "source": "Slides du formateur (module 2 : Introduction au Deep Learning), réécrits et complétés. Pas de vidéo : à ajouter depuis l'administration.",
+ "chapters": [
+  {
+   "title": "Rappel et positionnement : du Machine Learning au Deep Learning",
+   "lessons": [
+    {
+     "title": "Rappel : l'essentiel du Machine Learning",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Remettre en tête les notions du module précédent dont le Deep Learning dépend.\n- Savoir expliquer en quelques phrases ce qu'est un modèle qui apprend.\n\n## Ce qu'il faut avoir en tête\n\nLe **Machine Learning (ML)** est un sous-ensemble de l'IA : au lieu d'écrire des règles à la main, on fournit des **données** à un algorithme qui en déduit un **modèle**, capable de produire une prédiction sur des cas nouveaux.\n\nTrois grandes façons d'apprendre :\n\n- **Supervisé** : on dispose d'exemples avec la bonne réponse (l'étiquette). Exemple : prédire si un client va résilier.\n- **Non supervisé** : pas d'étiquette, on cherche des structures, par exemple des groupes de clients (clustering).\n- **Par renforcement** : un agent essaie des actions et reçoit des récompenses ou des pénalités.\n\nLes notions qui reviendront sans cesse dans ce module :\n\n- les **caractéristiques** (features) en entrée et l'**étiquette** (label) à prédire ;\n- la séparation **entraînement / test** : on évalue toujours sur des données que le modèle n'a pas vues ;\n- les **paramètres** (appris pendant l'entraînement) et les **hyperparamètres** (fixés avant) ;\n- les **métriques** comme la précision et le rappel, qui disent si le modèle est utile.\n\n## Le cycle d'un projet\n\nCollecter et préparer les données, choisir un modèle, l'entraîner, l'évaluer, puis l'améliorer ou le déployer. Si les résultats sont insuffisants, on revient en arrière : on **ré-entraîne**, ou on **enrichit les données** (augmentation de données). Le Deep Learning suit exactement la même boucle ; c'est le type de modèle qui change.\n\n## Pour vérifier votre compréhension\n\nSans relire vos notes : expliquez à un collègue pourquoi on ne mesure jamais la qualité d'un modèle sur les données qui ont servi à l'entraîner."
+    },
+    {
+     "title": "Où se situe le Deep Learning ?",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Situer le Deep Learning par rapport à l'IA, au ML et à l'IA générative.\n- Comprendre ce que « profond » veut dire.\n\n## Des ensembles emboîtés\n\nPensez à des cercles concentriques :\n\n- l'**intelligence artificielle** est le champ le plus large ;\n- le **Machine Learning** en est un sous-ensemble : des systèmes qui apprennent à partir de données ;\n- le **Deep Learning** (apprentissage profond) est un sous-ensemble du ML : il utilise des **réseaux de neurones artificiels comportant de nombreuses couches** ;\n- l'**IA générative** s'appuie en grande partie sur des modèles de Deep Learning pour produire du texte, des images, du son.\n\n## Que veut dire « profond » ?\n\nUn réseau de neurones est organisé en **couches** successives. Il est dit profond quand il en empile beaucoup entre l'entrée et la sortie. Chaque couche transforme la représentation fournie par la précédente : les premières couches captent des éléments simples, les suivantes les combinent en notions plus abstraites. C'est ce qu'on appelle apprendre des **représentations hiérarchiques**.\n\nIl n'existe pas de seuil officiel et universel de « profondeur » : ce qui compte, c'est l'idée d'empilement de transformations apprises.\n\n## Point d'attention\n\nTout l'IA moderne n'est pas du Deep Learning. Beaucoup de problèmes métier (scoring, prévision sur données de tableur, segmentation) sont très bien traités par des modèles de ML classiques, plus simples et plus faciles à expliquer.\n\n## Pour réfléchir\n\nDans votre produit, citez un problème qui relève plutôt du ML classique et un autre qui justifierait du Deep Learning. Qu'est-ce qui les distingue ?"
+    },
+    {
+     "title": "Quand les données deviennent complexes : texte, image, vidéo, audio",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Identifier les types de données qui posent problème aux algorithmes classiques.\n- Comprendre pourquoi le Deep Learning y est à l'aise.\n\n## Données structurées et non structurées\n\nUn algorithme de ML classique (arbre de décision, régression) aime les **tableaux** : une ligne par exemple, une colonne par caractéristique (âge, montant, ancienneté). Mais une grande partie de la donnée utile n'a pas cette forme :\n\n- le **texte** et le langage naturel (avis, e-mails, conversations) ;\n- les **images** (photos de produits, scans, radiographies) ;\n- la **vidéo** (une suite d'images dans le temps) ;\n- l'**audio** (voix, sons, musique).\n\n## Pourquoi c'est difficile\n\nUne image de quelques mégapixels, c'est des millions de nombres. Aucun de ces nombres, pris seul, ne signifie « roue » ou « visage » : le sens émerge de leurs **relations** (voisinage, formes, ordre). De même, dans une phrase, le sens dépend de l'ordre et du contexte des mots. Décrire à la main ces relations pour un algorithme classique est long, fragile, et rarement exhaustif.\n\n## Ce qu'apporte le Deep Learning\n\nLes réseaux de neurones profonds savent ingérer ces données **brutes** (pixels, échantillons sonores, mots) et découvrir eux-mêmes les motifs pertinents. C'est ce qui explique leur domination sur la vision, la parole et le langage.\n\n## Mise en pratique\n\nPrenez trois fonctionnalités de votre produit. Pour chacune, notez le type de donnée en entrée (tableau, texte, image, audio...). Lesquelles seraient difficiles à traiter par un simple tableau de caractéristiques ?"
+    },
+    {
+     "title": "Apprendre sans extraction manuelle des caractéristiques",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Comprendre la différence de démarche entre ML classique et Deep Learning.\n- Mesurer ce que cela change pour une équipe produit.\n\n## L'exemple « voiture ou pas voiture »\n\n**Avec du ML classique**, la chaîne est la suivante :\n\n1. l'image entre dans le système ;\n2. un humain décide quelles caractéristiques extraire (forme des roues, couleurs, reflets...) : c'est la **feature extraction** ;\n3. ces caractéristiques alimentent un modèle qui classe : voiture / pas voiture.\n\nSi les caractéristiques sont mal choisies, le modèle apprend mal, quelle que soit la qualité de l'algorithme.\n\n**Avec du Deep Learning**, on fournit l'image brute. Le réseau réalise à la fois l'**extraction des caractéristiques** et la **classification** : il apprend lui-même ce qui est important.\n\n## Ce que cela change\n\n- **Moins d'expertise de conception** des caractéristiques, ce qui est précieux pour la vision, le son et le langage.\n- **Plus de données et de calcul** nécessaires, puisque le modèle doit tout découvrir seul.\n- **Moins de contrôle** : on ne sait plus quelles caractéristiques le modèle utilise, ce qui complique l'explication.\n\n## Piège classique\n\n« Aucune intervention humaine » ne veut pas dire « aucun travail humain ». Il faut toujours : définir le problème, collecter et étiqueter des données représentatives, choisir l'architecture, évaluer, surveiller. L'effort se déplace de l'ingénierie des caractéristiques vers la **qualité des données** et l'évaluation.\n\n## Pour réfléchir\n\nSi votre équipe n'a que quelques centaines d'exemples étiquetés, laquelle des deux démarches vous semble la plus réaliste, et pourquoi ?"
+    },
+    {
+     "title": "Machine Learning ou Deep Learning : comment choisir ?",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Comparer les deux approches sur sept critères.\n- Savoir argumenter un choix devant une équipe ou un décideur.\n\n## Les critères de comparaison\n\n- **Profondeur des modèles** : le ML utilise souvent des modèles plus simples (régressions, arbres) ; le Deep Learning empile de nombreuses couches.\n- **Volume de données** : le ML peut fonctionner avec des jeux plus modestes ; le Deep Learning demande en général beaucoup de données pour apprendre depuis zéro.\n- **Ingénierie des caractéristiques** : manuelle en ML classique ; apprise automatiquement en Deep Learning.\n- **Performance et complexité** : le Deep Learning est plus complexe et, sur les tâches de perception et de langage, souvent nettement plus performant.\n- **Interprétabilité** : un modèle linéaire ou un arbre se lit ; un réseau profond est souvent perçu comme une **boîte noire**.\n- **Ressources** : un ML classique tourne sur un ordinateur ordinaire ; le Deep Learning s'appuie souvent sur des **GPU** ou du cloud.\n- **Applications** : analyse prédictive, scoring, segmentation, détection de fraude côté ML ; images, parole, traduction, génération côté Deep Learning.\n\n## Une règle de pouce\n\nPartez de la nature de la donnée et de la contrainte d'explication :\n\n- données **tabulaires**, besoin d'expliquer chaque décision, peu de données : commencez par du ML classique ;\n- données **non structurées** (image, audio, texte) et volume ou modèle pré-entraîné disponible : le Deep Learning devient le choix naturel.\n\n## Piège classique\n\nChoisir le Deep Learning « parce que c'est moderne ». Un modèle plus complexe coûte plus cher à entraîner, à héberger, à auditer et à expliquer. Comparez toujours à une **baseline** simple : si elle suffit, c'est elle qu'il faut livrer.\n\n## Pour réfléchir\n\nUne équipe veut prédire le désabonnement à partir d'un tableau de 20 colonnes. Que lui conseillez-vous, et que ferait changer votre avis ?"
+    }
+   ]
+  },
+  {
+   "title": "Comprendre les réseaux de neurones",
+   "lessons": [
+    {
+     "title": "Le perceptron : le neurone artificiel de base",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Décrire les composants d'un perceptron.\n- Comprendre comment il apprend, et pourquoi il est limité.\n\n## Un petit calculateur de décision\n\nLe perceptron est le modèle élémentaire de neurone artificiel, inspiré, de façon très simplifiée, des neurones biologiques. Il a été proposé à la fin des années 1950. Il sert à la **classification binaire** (oui/non).\n\nSes composants :\n\n- les **entrées** : les données fournies au modèle ;\n- les **poids** : un coefficient par entrée, qui exprime son importance ;\n- la **somme pondérée** : on multiplie chaque entrée par son poids et on additionne (souvent avec un terme constant appelé biais) ;\n- la **fonction d'activation** : elle décide de la sortie à partir de cette somme ; dans le perceptron d'origine, c'est un simple seuil ;\n- la **sortie** : 1 ou 0, vrai ou faux.\n\n## Comment il apprend\n\nIl ajuste ses poids de façon itérative. Quand sa prédiction est fausse, il corrige légèrement les poids dans le bon sens ; quand elle est juste, il ne bouge pas. Comme dans un jeu « chaud / froid », l'erreur diminue au fil des passages sur les données.\n\n## Ses limites\n\nLe perceptron ne sait séparer que des cas **linéairement séparables** : ceux où l'on peut tracer une droite (ou un plan) qui sépare les deux classes. Le cas du **OU exclusif (XOR)** est l'exemple classique d'un problème qu'un seul perceptron ne peut pas résoudre. Cette limite a été mise en évidence à la fin des années 1960.\n\n## Pourquoi il reste essentiel\n\nLes réseaux modernes empilent un très grand nombre de neurones de ce type, avec des fonctions d'activation plus souples et plusieurs couches. Comprendre le perceptron, c'est comprendre la brique de base.\n\n## Pour vérifier votre compréhension\n\nDans « est-ce une voiture ? », quelles entrées pourraient recevoir un poids élevé ? Lesquelles un poids proche de zéro ?"
+    },
+    {
+     "title": "Couches, neurones et connexions : anatomie d'un réseau",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Nommer les trois types de couches d'un réseau.\n- Lire un schéma de réseau de neurones.\n\n## Les trois étages\n\n- La **couche d'entrée** reçoit les données. Chaque neurone d'entrée correspond à une caractéristique : un pixel, un attribut de client, une valeur de capteur. Si le réseau a six entrées, on les note x1 à x6.\n- Les **couches cachées** se trouvent entre l'entrée et la sortie. Elles sont « cachées » parce que l'on n'observe pas directement leurs valeurs : c'est là que se fait le gros du traitement. Chaque neurone reçoit les sorties de la couche précédente, les combine, et transmet son résultat à la suivante. Le nombre de neurones peut différer d'une couche à l'autre.\n- La **couche de sortie** donne le résultat. Deux neurones de sortie peuvent représenter deux classes (spam ou non, chat ou chien).\n\nLes lignes entre les neurones représentent les **connexions**, chacune portant un **poids**. Ce sont ces poids que l'apprentissage ajuste.\n\n## Réseau « à propagation avant »\n\nDans un réseau **feedforward**, l'information circule dans un seul sens, de l'entrée vers la sortie, sans boucle. C'est la structure de base que reprennent les architectures plus spécialisées vues plus loin.\n\n## Ce qui est choisi par l'équipe\n\nLe nombre de couches, le nombre de neurones par couche, les fonctions d'activation : ce sont des choix d'**architecture** et d'**hyperparamètres**, adaptés au problème. Plus de couches ne veut pas dire meilleur : cela augmente aussi le risque de surapprentissage et le coût de calcul.\n\n## Pour vérifier votre compréhension\n\nUn réseau doit classer des images en trois catégories (burger, pizza, frites). Que contiendrait sa couche de sortie ? Et sa couche d'entrée si l'image fait 100 x 100 pixels en niveaux de gris ?"
+    },
+    {
+     "title": "Comment un réseau apprend : erreur, rétropropagation, taux d'apprentissage",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Comprendre la boucle d'entraînement d'un réseau.\n- Savoir ce que sont la fonction de coût, la rétropropagation et le taux d'apprentissage.\n\n## La boucle d'entraînement\n\n1. Le réseau reçoit un exemple et produit une **prédiction** (propagation avant).\n2. Une **fonction de coût** (ou de perte) mesure l'écart entre la prédiction et la vraie valeur.\n3. La **rétropropagation** (backpropagation) calcule, couche par couche en remontant de la sortie vers l'entrée, la part de responsabilité de chaque poids dans l'erreur.\n4. Les poids sont **mis à jour** dans le sens qui réduit l'erreur.\n\nOn répète ces étapes sur de nombreux exemples et plusieurs passages complets sur les données (les **époques**), jusqu'à ce que l'erreur cesse de diminuer sur les données de validation.\n\n## Le taux d'apprentissage\n\nLe **taux d'apprentissage** (learning rate) règle l'amplitude des corrections. Trop grand, l'entraînement devient instable et peut diverger ; trop petit, il est très lent. C'est un **hyperparamètre** : on le fixe avant l'entraînement, il n'est pas appris.\n\n## Surapprentissage et sous-apprentissage\n\n- **Surapprentissage** : le modèle apprend « par cœur » les données d'entraînement et généralise mal. Signe typique : très bon score à l'entraînement, bien plus faible sur le test.\n- **Sous-apprentissage** : le modèle est trop simple pour capter la structure des données ; il est mauvais partout.\n\nLes réseaux profonds ont beaucoup de paramètres, donc un fort risque de surapprentissage. On le combat avec plus de données, de l'augmentation de données, de la régularisation, ou en arrêtant l'entraînement au bon moment.\n\n## Pour réfléchir\n\nVotre modèle atteint un score parfait à l'entraînement et un score médiocre au test. Quelles trois actions essayez-vous en premier ?"
+    },
+    {
+     "title": "Atelier : un perceptron et un petit réseau en Python",
+     "kind": "exercise",
+     "body_md": "## Objectifs\n\n- Voir un perceptron apprendre, puis échouer sur XOR.\n- Constater qu'ajouter des couches cachées améliore les résultats.\n\nCet atelier est **facultatif** : il illustre les leçons précédentes. Il suppose Python 3 avec `numpy` et `scikit-learn` (installables gratuitement avec `pip install numpy scikit-learn`).\n\n## Étape 1 : un perceptron écrit à la main\n\nEnregistrez ce code dans un fichier `perceptron.py` et exécutez-le.\n\n```python\nimport numpy as np\n\ndef entrainer_perceptron(X, y, taux=0.1, epoques=20):\n    w = np.zeros(X.shape[1])\n    b = 0.0\n    for _ in range(epoques):\n        for xi, yi in zip(X, y):\n            sortie = 1 if xi @ w + b > 0 else 0\n            erreur = yi - sortie\n            w += taux * erreur * xi\n            b += taux * erreur\n    return w, b\n\ndef predire(X, w, b):\n    return (X @ w + b > 0).astype(int)\n\nX = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])\nfor nom, y in [(\"ET\", np.array([0, 0, 0, 1])),\n               (\"OU\", np.array([0, 1, 1, 1])),\n               (\"XOR\", np.array([0, 1, 1, 0]))]:\n    w, b = entrainer_perceptron(X, y)\n    print(nom, predire(X, w, b), \"attendu\", y)\n```\n\n**Résultat attendu** : les prédictions pour ET et OU sont identiques aux valeurs attendues ; pour XOR, au moins une prédiction est fausse, quel que soit le nombre d'époques. Les données XOR ne sont pas linéairement séparables.\n\n## Étape 2 : ajouter des couches cachées\n\nCe second script compare une régression logistique (sans couche cachée) et deux petits réseaux sur le jeu de chiffres manuscrits fourni avec scikit-learn.\n\n```python\nfrom sklearn.datasets import load_digits\nfrom sklearn.dummy import DummyClassifier\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.neural_network import MLPClassifier\n\nX, y = load_digits(return_X_y=True)\nX = X / 16.0\nX_tr, X_te, y_tr, y_te = train_test_split(\n    X, y, test_size=0.25, random_state=42, stratify=y)\n\nbase = DummyClassifier(strategy=\"most_frequent\").fit(X_tr, y_tr)\nprint(\"baseline :\", round(base.score(X_te, y_te), 3))\n\nmodeles = {\n    \"sans couche cachee\": LogisticRegression(max_iter=2000),\n    \"1 couche (32)\": MLPClassifier(hidden_layer_sizes=(32,), max_iter=500, random_state=42),\n    \"2 couches (64, 32)\": MLPClassifier(hidden_layer_sizes=(64, 32), max_iter=500, random_state=42),\n}\nfor nom, m in modeles.items():\n    m.fit(X_tr, y_tr)\n    print(nom, \"train\", round(m.score(X_tr, y_tr), 3), \"test\", round(m.score(X_te, y_te), 3))\n```\n\nÀ titre indicatif, lors de nos essais : la baseline tourne autour de 10 %, et les trois modèles dépassent 95 % sur le test, les réseaux avec couches cachées étant légèrement meilleurs. Vos valeurs exactes peuvent varier selon les versions des bibliothèques. Un avertissement de calcul numérique peut s'afficher selon votre machine ; il n'empêche pas l'exécution.\n\n## À analyser\n\n- Quel écart observez-vous entre score d'entraînement et score de test ? Est-ce du surapprentissage ?\n- Sur ces chiffres, le gain apporté par les couches cachées justifie-t-il la complexité ? Que diriez-vous à un décideur ?"
+    }
+   ]
+  },
+  {
+   "title": "Les architectures courantes",
+   "lessons": [
+    {
+     "title": "Panorama des architectures courantes",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Connaître les cinq grandes familles d'architectures et leur domaine de prédilection.\n- Associer un type de donnée à une architecture.\n\n## Les cinq familles\n\n- **CNN** (réseaux convolutifs) : données **spatiales**, surtout les images.\n- **RNN** (réseaux récurrents) : données **séquentielles** (texte, séries temporelles) grâce à une forme de mémoire.\n- **LSTM** (Long Short-Term Memory) : variante de RNN pour retenir l'information sur de **longues séquences**.\n- **Réseaux à attention** : le modèle pondère l'importance des différentes parties de l'entrée ; c'est le principe à la base des **Transformers**, eux-mêmes au cœur des grands modèles de langage.\n- **GAN** (réseaux génératifs adverses) : deux réseaux en compétition pour **générer** des données réalistes.\n\n## Une structure commune\n\nToutes ces architectures reposent sur la même base : une entrée, des couches cachées, une sortie, des poids appris par rétropropagation. Ce qui change, c'est la manière dont les neurones sont **connectés et réutilisés** pour exploiter la structure de la donnée.\n\n## Comment s'y retrouver\n\nPosez trois questions :\n\n1. Quelle est la **forme** de ma donnée (grille, séquence, tableau) ?\n2. Veut-on **reconnaître/prédire** ou **générer** ?\n3. Existe-t-il un **modèle pré-entraîné** que je peux adapter plutôt que de partir de zéro ?\n\n## Point d'attention\n\nLes architectures évoluent vite et les frontières se brouillent : on combine parfois plusieurs familles. Retenez les principes ; les noms de modèles précis changeront.\n\n## Pour vérifier votre compréhension\n\nAssociez : photo d'un produit, phrase à traduire, courbe de ventes quotidiennes, visage de synthèse. Quelle famille pour chaque cas ?"
+    },
+    {
+     "title": "Les réseaux convolutifs (CNN) : comment une machine « voit »",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Comprendre qu'une image est une matrice de nombres.\n- Expliquer le principe de la convolution et les usages des CNN.\n\n## Une image, c'est des nombres\n\nPour une machine, une image en niveaux de gris est un **tableau de nombres** : chaque pixel est une valeur d'intensité, de 0 (noir) à 255 (blanc) pour le codage courant sur 8 bits. Une image en couleur superpose généralement trois tableaux (rouge, vert, bleu). La machine ne « voit » pas un chat : elle doit apprendre à interpréter ces nombres.\n\n## Le principe de la convolution\n\nUn CNN fait glisser de petits **filtres** sur l'image. À chaque position, le filtre multiplie les valeurs de pixels voisins par ses propres poids et additionne le résultat. Selon ses poids, un filtre réagit à un **bord vertical**, à une texture, à un coin... Les poids des filtres sont **appris**, pas dessinés à la main.\n\nAvantages :\n\n- le même filtre est réutilisé partout dans l'image : peu de paramètres comparé à un réseau où chaque pixel serait relié à chaque neurone ;\n- on détecte un motif **où qu'il soit** dans l'image.\n\n## Des motifs simples aux objets\n\nLes premières couches détectent des bords et des textures ; les suivantes combinent ces éléments en formes, puis en parties d'objets, puis en objets. C'est la hiérarchie de représentations vue plus haut. Des couches de **sous-échantillonnage** (pooling) réduisent progressivement la taille des cartes de caractéristiques.\n\n## Usages courants\n\n- **Reconnaissance d'images** : quel objet est présent ?\n- **Détection d'objets** : où sont les objets, et de quelle classe ?\n- **Segmentation** : isoler précisément une zone (une voiture du décor).\n- Applications concrètes : lecture de scanners médicaux, contrôle qualité visuel, reconnaissance de panneaux, recherche de photos par contenu.\n\n## Pour réfléchir\n\nUn contrôle qualité sur chaîne de production doit repérer des rayures. Quelles données d'entraînement faut-il réunir pour que le modèle ne confonde pas rayure et reflet ?"
+    },
+    {
+     "title": "Atelier : une convolution à la main en Python",
+     "kind": "exercise",
+     "body_md": "## Objectifs\n\n- Appliquer un filtre de détection de bords vertical sur une mini-image.\n- Voir concrètement ce que calcule une couche de convolution.\n\nPrérequis : Python 3 et `numpy`. L'atelier est **facultatif**.\n\n## Le code\n\nEnregistrez ce script dans `convolution.py`. L'image est une matrice 6 x 6 : trois colonnes noires à gauche, trois colonnes blanches à droite. Le filtre est une matrice 3 x 3 qui réagit aux transitions sombre vers clair.\n\n```python\nimport numpy as np\n\nimage = np.array([\n    [0, 0, 0, 255, 255, 255],\n    [0, 0, 0, 255, 255, 255],\n    [0, 0, 0, 255, 255, 255],\n    [0, 0, 0, 255, 255, 255],\n    [0, 0, 0, 255, 255, 255],\n    [0, 0, 0, 255, 255, 255],\n], dtype=float)\n\nfiltre = np.array([[-1, 0, 1],\n                   [-1, 0, 1],\n                   [-1, 0, 1]], dtype=float)\n\ndef convoluer(img, f):\n    h, l = img.shape\n    k = f.shape[0]\n    sortie = np.zeros((h - k + 1, l - k + 1))\n    for i in range(sortie.shape[0]):\n        for j in range(sortie.shape[1]):\n            sortie[i, j] = np.sum(img[i:i + k, j:j + k] * f)\n    return sortie\n\nprint(convoluer(image, filtre))\n```\n\n## Résultat attendu\n\nUne matrice 4 x 4 dont les colonnes du milieu contiennent la valeur 765 et les colonnes extérieures la valeur 0. Les valeurs élevées indiquent la **position du bord vertical**. Dans les zones uniformes (tout noir ou tout blanc), la réponse est nulle.\n\n## Pour aller plus loin\n\n1. Remplacez le filtre par sa version transposée (lignes et colonnes inversées) : que détecte-t-il, et que donne-t-il sur cette image ?\n2. Construisez une image avec un bord horizontal et vérifiez que le filtre vertical ne réagit pas, alors que le filtre transposé réagit.\n3. Dans un vrai CNN, qui choisit les valeurs du filtre ? (Réponse : l'entraînement, par rétropropagation.)\n\nNote : ce code est une version pédagogique, sans bords ajoutés (padding) ni pas variable (stride) ; les bibliothèques de Deep Learning offrent ces options et sont bien plus rapides."
+    },
+    {
+     "title": "Les réseaux récurrents (RNN) : donner de la mémoire au réseau",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Comprendre ce qu'est une donnée séquentielle.\n- Expliquer le principe de la boucle d'un RNN et ses usages.\n\n## Des données qui ont un ordre\n\nDans une phrase, une série de ventes ou un signal audio, **l'ordre compte**. « Le chien mord l'homme » et « l'homme mord le chien » contiennent les mêmes mots mais ne disent pas la même chose. Un réseau classique, qui traite chaque entrée indépendamment, ne capte pas cette dimension.\n\n## Le principe\n\nUn **réseau de neurones récurrent** possède des connexions en **boucle** : à chaque étape, il combine l'élément courant avec un **état interne** résumant ce qu'il a déjà lu. On peut l'imaginer comme une lecture mot par mot, en gardant en tête ce qui précède pour comprendre ce qui suit.\n\n## Usages classiques\n\n- **Traduction automatique** et **génération de texte** ;\n- **reconnaissance de la parole** (audio vers texte) ;\n- **prédiction sur séries temporelles** (ventes, trafic, consommation) ;\n- suggestions de mots ou de contenus à partir d'un historique de comportement.\n\n## Limites\n\nLes RNN simples ont du mal avec les **dépendances à long terme** : l'information du début d'une longue séquence s'estompe avant d'arriver à la fin. Ils sont aussi **lents à entraîner**, car il faut traiter la séquence pas à pas. Ces limites ont motivé les LSTM, puis les mécanismes d'attention.\n\n## Pour réfléchir\n\nPour prévoir la fréquentation d'un site la semaine prochaine, quelles informations de séquence (jour de la semaine, tendance, événements) un modèle devrait-il pouvoir « se rappeler » ?"
+    },
+    {
+     "title": "Les LSTM : une mémoire sélective",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Comprendre le problème que résolvent les LSTM.\n- Savoir dans quels cas ils sont encore pertinents.\n\n## Le problème de l'oubli\n\nDans un RNN simple, plus une information est ancienne, plus elle s'efface. Dans la phrase « Je suis né en France, j'ai grandi là-bas puis ... je parle couramment le », le mot clé est loin de la fin. Les **LSTM** (Long Short-Term Memory) ont été conçus pour mieux gérer ces **dépendances à long terme**.\n\n## L'idée : des portes\n\nUn LSTM ajoute à la cellule récurrente une **mémoire** et des **portes** apprises qui décident, à chaque étape :\n\n- ce qu'il faut **oublier** ;\n- ce qu'il faut **mémoriser** ;\n- ce qu'il faut **exposer** en sortie.\n\nC'est une mémoire sélective : elle garde ce qui est important et laisse tomber le reste. Les portes sont elles-mêmes des petits réseaux dont les poids sont appris.\n\n## Usages\n\n- prévisions sur **séries temporelles** (ventes, météo, consommation) ;\n- **modélisation de séquences** : musique, mouvements, signaux ;\n- tâches de langage sur des séquences de longueur modérée.\n\n## Où en est-on ?\n\nÀ la date de rédaction, pour le langage, les architectures à attention (Transformers) ont largement pris le dessus car elles se parallélisent mieux et gèrent mieux les longs contextes. Les LSTM restent des outils utilisables, notamment sur des séries temporelles de taille raisonnable ou avec des ressources limitées. Mais il faut toujours les comparer à des méthodes plus simples : sur une série temporelle, un modèle statistique classique est parfois aussi bon.\n\n## Pour réfléchir\n\nVous devez prévoir les ventes d'un produit saisonnier en fonction de la météo. Quelle baseline simple comparez-vous au LSTM avant de le retenir ?"
+    },
+    {
+     "title": "L'attention et les Transformers",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Comprendre l'idée d'attention en langage simple.\n- Faire le lien avec les Transformers et les grands modèles de langage.\n\n## L'idée\n\nQuand un modèle traite une phrase, il ne donne pas la même importance à tous les mots. Un **mécanisme d'attention** lui permet de **pondérer** les éléments de l'entrée selon leur utilité pour la tâche en cours.\n\nExemple : « Le chat mange parce qu'il a faim. » Pour interpréter le mot **il**, le modèle porte surtout son attention sur **chat**, bien moins sur « mange » ou « parce que ». (Cet exemple est volontairement simplifié : dans un vrai modèle, les poids d'attention sont répartis sur de nombreux mots.)\n\n## Comment ça marche, en gros\n\n1. Le modèle considère tous les mots **en même temps**, et non un par un.\n2. Pour chaque mot, il évalue quels autres mots l'aident à le comprendre.\n3. Il attribue des **poids** aux mots importants.\n4. Il **combine** ces informations pour produire une représentation plus riche.\n\n## Pourquoi c'est important\n\n- meilleure compréhension du **contexte**, y compris sur de longues phrases ;\n- traitement **parallélisable**, donc entraînement efficace sur de très grandes quantités de données ;\n- c'est la base de l'architecture **Transformer**, introduite en 2017, sur laquelle reposent la plupart des grands modèles de langage (LLM) actuels, ainsi que de nombreux modèles de vision et de traduction.\n\n## Lien avec la suite du parcours\n\nQuand vous utiliserez des assistants conversationnels ou construirez des fonctionnalités à base d'IA générative, vous manipulerez des Transformers. Ce module en pose seulement l'intuition ; les modules suivants développeront l'usage.\n\n## Pour vérifier votre compréhension\n\nDans « La banque a refusé le prêt car elle était trop prudente », à quel mot se rapporte « elle » ? Comment l'attention aide-t-elle à le décider ?"
+    },
+    {
+     "title": "Les GAN : un faussaire contre un détective",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Comprendre le jeu à deux réseaux d'un GAN.\n- Connaître ses usages et ses risques.\n\n## Deux réseaux en compétition\n\nUn **réseau génératif adverse** (GAN, proposé en 2014) est formé de deux réseaux entraînés simultanément :\n\n- le **générateur** fabrique des données (par exemple des images) à partir de bruit aléatoire ;\n- le **discriminateur** reçoit un mélange de vraies données et de données générées, et tente de distinguer le vrai du faux.\n\nImage à retenir : un **faussaire** qui s'améliore pour tromper un **détective**, lequel progresse pour ne pas se faire duper. En s'entraînant l'un contre l'autre, le générateur produit des résultats de plus en plus réalistes.\n\n## Usages\n\n- **génération d'images** réalistes (visages, paysages) ;\n- **augmentation de données** : créer des exemples supplémentaires pour entraîner d'autres modèles, par exemple pour des cas rares ;\n- **transfert de style** : appliquer le style d'une image à une autre ;\n- retouche intelligente d'images.\n\n## Points d'attention\n\n- L'entraînement d'un GAN est réputé **délicat** : les deux réseaux doivent progresser de façon équilibrée.\n- Les mêmes techniques permettent de fabriquer des **hypertrucages** (deepfakes). Un produit qui génère ou modifie des visages doit prévoir consentement, transparence sur le contenu synthétique et lutte contre l'abus.\n- Les données générées peuvent **reproduire les biais** des données d'origine.\n- À la date de rédaction, d'autres familles de modèles génératifs sont très utilisées pour l'image ; le principe du GAN reste une référence pédagogique.\n\n## Pour réfléchir\n\nPour entraîner un détecteur de défauts rares, vous manquez d'exemples. Qu'apporterait la génération de données, et comment vérifieriez-vous qu'elle ne fausse pas l'évaluation ?"
+    },
+    {
+     "title": "Choisir une architecture : synthèse",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Disposer d'une grille de décision simple.\n- Éviter les erreurs de cadrage les plus fréquentes.\n\n## Du besoin à la famille de modèles\n\nCommencez par la tâche et la donnée :\n\n- **classer ou détecter dans des images** : CNN, ou modèles de vision pré-entraînés ;\n- **prévoir une série temporelle** : essayer d'abord des méthodes simples, puis RNN/LSTM ou modèles à attention ;\n- **comprendre ou produire du langage** : modèles à attention (Transformers) ;\n- **générer des images ou des données synthétiques** : GAN ou autres modèles génératifs ;\n- **recommander** : modèles de filtrage collaboratif, éventuellement combinés à des réseaux de neurones.\n\n## Trois questions avant de lancer le projet\n\n1. **Ai-je assez de données étiquetées ?** Sinon, un modèle pré-entraîné adapté par transfer learning est souvent plus réaliste que partir de zéro.\n2. **Quel est le coût d'une erreur ?** Il décide de la métrique et du seuil, et de la place de la supervision humaine.\n3. **Doit-on pouvoir expliquer la décision ?** Si oui, les modèles profonds demandent des outils d'explicabilité, et parfois un modèle plus simple est préférable.\n\n## Les erreurs de cadrage fréquentes\n\n- viser l'architecture « à la mode » avant d'avoir une baseline ;\n- sous-estimer le coût d'étiquetage et de maintenance des données ;\n- oublier le coût d'inférence en production (latence, calcul) ;\n- évaluer sur des données non représentatives de l'usage réel.\n\n## Mise en pratique\n\nChoisissez une fonctionnalité IA de votre produit (réelle ou envisagée). Remplissez en cinq lignes : la tâche, la donnée, la famille de modèles, la baseline simple, le risque principal."
+    }
+   ]
+  },
+  {
+   "title": "Applications clés et enjeux produit",
+   "lessons": [
+    {
+     "title": "Applications clés : traitement du langage naturel",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Connaître les grands usages du NLP basés sur le Deep Learning.\n- Identifier les points d'attention produit.\n\n## Le NLP, c'est quoi ?\n\nLe **traitement du langage naturel** (NLP) regroupe les techniques permettant à une machine de traiter le langage humain, écrit ou parlé.\n\n## Les usages principaux\n\n- **Traduction automatique** : passer d'une langue à une autre ; la qualité est devenue très bonne sur les langues bien dotées en données, mais reste inégale sur les langues rares.\n- **Chatbots et assistants virtuels** : répondre en langage naturel, guider un utilisateur, résumer ou rechercher de l'information.\n- **Analyse de sentiments** : évaluer le ton d'avis, de messages ou d'enquêtes pour suivre la satisfaction.\n- **Reconnaissance de la parole** : convertir la voix en texte (transcription) et inversement (synthèse vocale).\n\n## Pourquoi le Deep Learning a tout changé\n\nLes réseaux profonds, puis les modèles à attention, savent représenter le **sens** des mots selon leur contexte, ce qui était très difficile avec des règles ou des caractéristiques manuelles.\n\n## Points d'attention pour un chef de produit\n\n- **Évaluation** : comment mesurer qu'une réponse est « bonne » ? Prévoyez un jeu de cas de test réels.\n- **Fiabilité** : un modèle de langage peut produire des réponses fausses mais plausibles ; prévoyez des garde-fous et une possibilité de vérifier.\n- **Données personnelles** : les messages des utilisateurs peuvent en contenir ; traitez-les conformément au cadre légal applicable.\n- **Langues et registres** : testez sur les langues, accents et vocabulaires de vos vrais utilisateurs.\n\n## Pour réfléchir\n\nPour une analyse de sentiments sur des avis clients, quelles erreurs seraient les plus coûteuses : classer un avis négatif en positif, ou l'inverse ? Pourquoi ?"
+    },
+    {
+     "title": "Applications clés : vision par ordinateur",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Distinguer les grandes tâches de vision.\n- Repérer les enjeux éthiques et opérationnels.\n\n## Les tâches de vision\n\n- **Reconnaissance d'images** : dire ce que contient une image (classification).\n- **Détection d'objets** : localiser et nommer plusieurs objets.\n- **Segmentation** : séparer une image en zones, au niveau du pixel, pour isoler un objet du décor.\n- **Surveillance vidéo** : repérer des activités ou des objets, en temps réel ou sur enregistrements.\n- **Reconnaissance faciale** : vérifier ou identifier une personne à partir de son visage.\n\n## Cas d'usage typiques\n\nLecture de documents, contrôle qualité en production, aide au diagnostic sur imagerie médicale, tri de photos, recherche d'images par contenu, assistance à la conduite, reconnaissance de produits en rayon.\n\n## Points d'attention\n\n- **Qualité et représentativité des images** : éclairage, angle, arrière-plan ; un modèle entraîné sur des photos de studio peut échouer sur des photos prises par des utilisateurs.\n- **Biais** : des performances inégales selon les populations ou les conditions peuvent produire des discriminations, notamment en reconnaissance faciale.\n- **Vie privée et réglementation** : les images de personnes et les données biométriques sont soumises à un cadre juridique strict ; la reconnaissance faciale est particulièrement encadrée. Consultez votre équipe juridique avant tout projet.\n- **Droit à l'erreur** : en contexte critique (santé, sécurité), le modèle assiste une décision humaine, il ne la remplace pas sans validation.\n\n## Pour réfléchir\n\nPour un contrôle qualité visuel, comment mesurez-vous le coût d'un défaut non détecté par rapport à celui d'une fausse alerte ? Quelle métrique en déduisez-vous ?"
+    },
+    {
+     "title": "Applications clés : systèmes de recommandation",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Comprendre le rôle des systèmes de recommandation.\n- Connaître le filtrage collaboratif et ses limites.\n\n## À quoi servent-ils ?\n\nUn système de recommandation propose à chaque utilisateur des éléments pertinents : produits, articles, vidéos, musiques. Il vise à réduire l'effort de recherche et à augmenter l'engagement ou la conversion.\n\n## Les approches\n\n- **Recommandation de produits** : à partir du comportement d'achat et des préférences.\n- **Recommandation de contenu** : à partir de l'historique de consultation.\n- **Filtrage collaboratif** : on s'appuie sur des utilisateurs aux goûts similaires. Si des personnes qui ont aimé les mêmes éléments que vous ont aimé un nouvel élément, il vous sera proposé.\n- **Recommandation personnalisée** : on adapte les suggestions au comportement individuel, souvent en combinant plusieurs signaux.\n\nLe Deep Learning intervient pour construire des **représentations** (embeddings) d'utilisateurs et d'éléments, et pour exploiter des signaux riches : texte, image, séquence de sessions.\n\n## Points d'attention\n\n- **Démarrage à froid** : comment recommander à un nouvel utilisateur ou un nouvel élément sans historique ?\n- **Bulle de filtre** : à force de proposer du similaire, on enferme l'utilisateur ; prévoyez de la diversité.\n- **Métrique** : cliquer n'est pas toujours satisfaire. Choisissez des indicateurs alignés avec la valeur réelle (satisfaction, rétention) et pas seulement avec le clic.\n- **Transparence** : informez l'utilisateur et donnez-lui du contrôle.\n\n## Pour réfléchir\n\nQuel indicateur suivriez-vous pour juger qu'un système de recommandation d'articles est bon : clics, temps de lecture, retours, diversité ? Justifiez."
+    },
+    {
+     "title": "Le Deep Learning côté produit : données, ressources, explicabilité",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Anticiper les contraintes propres au Deep Learning dans un projet produit.\n- Connaître quelques notions du glossaire utiles au dialogue avec les équipes techniques.\n\n## Les données\n\nUn réseau profond apprenant de zéro demande en général beaucoup d'exemples. Quand on n'en a pas assez, deux leviers : l'**augmentation de données** (variantes d'images, génération) et le **transfer learning** (adapter un modèle pré-entraîné). Dans tous les cas, des données **représentatives, propres et bien étiquetées** priment sur la quantité brute.\n\n## Le calcul\n\nL'entraînement s'appuie souvent sur des **GPU** (processeurs graphiques adaptés au calcul massivement parallèle) ou des **TPU** (processeurs conçus pour accélérer le Deep Learning), en local ou dans le cloud. Le coût existe aussi en **inférence** (utilisation en production) : latence, facture, énergie. Intégrez-le au modèle économique.\n\n## L'explicabilité (XAI)\n\nLes modèles profonds sont perçus comme des boîtes noires. L'**IA explicable** regroupe des méthodes permettant à un humain de comprendre ou d'interpréter les décisions. C'est crucial quand la décision touche une personne (crédit, santé, recrutement) ou quand une réglementation l'exige.\n\n## Les biais\n\nUn modèle reproduit les **biais** présents dans les données d'entraînement : il peut être moins performant pour certains groupes. Il faut mesurer les performances par sous-population et pas seulement en moyenne.\n\n## Confidentialité\n\nL'**apprentissage fédéré** entraîne un modèle sur plusieurs appareils ou serveurs en gardant les données là où elles sont produites ; il répond à certains besoins de confidentialité.\n\n## Pour réfléchir\n\nPour votre produit, listez : une donnée critique manquante, une contrainte de calcul, un risque de biais, une décision nécessitant une explication."
+    },
+    {
+     "title": "Le transfer learning : spécialiser un modèle existant",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Comprendre pourquoi on ne repart presque jamais de zéro.\n- Savoir expliquer le principe à une équipe non technique.\n\n## Le problème\n\nEntraîner un réseau profond complet sur des images demande de très grandes quantités de données et de calcul, hors de portée de la plupart des projets.\n\n## L'idée\n\nLe **transfer learning** consiste à prendre un modèle **déjà entraîné** sur une tâche générale (par exemple reconnaître de très nombreux types d'objets) et à l'**adapter** à une nouvelle tâche (reconnaître vos propres catégories).\n\nPourquoi ça marche : les premières couches d'un réseau de vision apprennent des éléments universels (bords, textures, formes simples) utiles pour presque toute tâche d'image. Seule la **fin du réseau**, qui relie ces éléments à vos catégories, doit être réentraînée sur vos exemples.\n\n## Deux grandes variantes\n\n- **Extraction de caractéristiques** : on garde le modèle de base figé et on n'entraîne qu'une petite couche finale.\n- **Ajustement fin** (fine-tuning) : on réentraîne aussi une partie des couches du modèle de base, avec un petit taux d'apprentissage.\n\n## Avantages et précautions\n\n- beaucoup moins de données nécessaires (souvent quelques dizaines à quelques centaines d'exemples par classe, selon la difficulté) ;\n- entraînement rapide ;\n- mais le modèle **hérite des limites et des biais** du modèle d'origine, et sa licence d'utilisation doit être vérifiée ;\n- il peut mal fonctionner si votre domaine est très éloigné de celui d'origine.\n\n## Pour réfléchir\n\nVous voulez reconnaître 10 pièces mécaniques sur photos d'atelier. Quel serait votre plan de collecte d'images, et comment testeriez-vous le modèle sur des conditions de lumière différentes ?"
+    }
+   ]
+  },
+  {
+   "title": "Mise en pratique : classifier des images avec le transfer learning",
+   "lessons": [
+    {
+     "title": "Mise en pratique : cadrer le projet de classification d'images",
+     "kind": "exercise",
+     "body_md": "## Objectifs\n\n- Cadrer un petit projet de vision par ordinateur de bout en bout.\n- Se préparer à adapter un modèle par transfer learning sans écrire de code.\n\n## La mission\n\nVous allez créer un modèle qui **classe des photos de plats de restauration rapide** (par exemple burger, pizza, frites) à partir d'exemples. Le principe est celui du transfer learning : on ne réentraîne pas un réseau complet, on **spécialise un modèle existant**.\n\n## Les trois étapes\n\n1. **Récupérer les données** : réunir un jeu d'images d'entraînement avec suffisamment d'exemples par catégorie. Prévoyez environ **100 images par classe** pour cet exercice.\n2. **Adapter un modèle** : l'entraîner sur vos classes via un outil accessible depuis un navigateur.\n3. **Utiliser le modèle** : le tester sur des images **qu'il n'a jamais vues** et mesurer s'il classe correctement.\n\n## Cadrage à rédiger avant de commencer\n\nÉcrivez en cinq lignes :\n\n- **le problème** : que doit prédire le modèle, pour qui et pour quoi ?\n- **les classes** : choisissez 3 classes visuellement distinctes pour commencer ;\n- **la métrique** : le taux de bonnes classifications par classe, et la lecture de la matrice de confusion (quelles classes sont confondues) ;\n- **le protocole** : combien d'images pour l'entraînement, combien gardées de côté pour le test (par exemple 80 / 20) ;\n- **le critère de succès** : à partir de quel score considérez-vous le prototype convaincant ?\n\n## Point d'attention\n\nCet exercice porte sur des photos de nourriture : **évitez les images où des personnes sont reconnaissables**, et vérifiez la licence d'utilisation de chaque source d'images.\n\n## Pour la suite\n\nLa leçon suivante détaille la collecte des données, puis l'entraînement avec un outil gratuit."
+    },
+    {
+     "title": "Mise en pratique : constituer le jeu de données",
+     "kind": "exercise",
+     "body_md": "## Objectifs\n\n- Réunir un jeu d'images propre, équilibré et correctement séparé.\n- Comprendre pourquoi la qualité des images prime sur leur nombre.\n\n## Où trouver des images\n\nPlusieurs options gratuites :\n\n- un **jeu de données public** d'images de restauration rapide sur une plateforme de données ouvertes comme **Kaggle** (la plateforme demande en général de créer un compte gratuit ; vérifiez la licence du jeu choisi) ;\n- des images libres de droits issues de banques d'images ouvertes (vérifiez la licence) ;\n- vos **propres photos** : c'est la meilleure option pour les droits, et elle correspond à un vrai cas d'usage.\n\nAucun jeu de données précis n'est imposé : prenez celui qui vous convient, et **notez son nom, sa source et sa licence** dans votre livrable.\n\n## Règles de constitution\n\n1. **Équilibrez** les classes : à peu près le même nombre d'images par catégorie. Sinon le modèle favorise la classe majoritaire.\n2. **Variez** les conditions : angles, éclairages, arrière-plans, cadrages. Un modèle entraîné sur une seule ambiance échouera ailleurs.\n3. **Nettoyez** : retirez les doublons, les images floues, les mauvaises étiquettes. Quelques erreurs d'étiquetage suffisent à dégrader un modèle.\n4. **Séparez avant d'entraîner** : placez environ 20 % des images dans un dossier « test » que le modèle ne verra pas pendant l'entraînement. Veillez à ce que des quasi-doublons ne se retrouvent pas des deux côtés, sinon votre évaluation sera trop optimiste (fuite de données).\n\n## Organisation conseillée\n\nCréez un dossier par classe, par exemple un dossier d'entraînement et un dossier de test, chacun avec un sous-dossier par catégorie.\n\n## Pour vérifier votre travail\n\nComptez les images de chaque classe et de chaque dossier, puis notez les chiffres : ils iront dans votre livrable. Regardez au hasard dix images par classe : les étiquettes sont-elles toutes correctes ?"
+    },
+    {
+     "title": "Mise en pratique : entraîner un modèle avec un outil sans code",
+     "kind": "exercise",
+     "body_md": "## Objectifs\n\n- Entraîner un classifieur d'images dans votre navigateur.\n- Observer le principe du transfer learning sans écrire de code.\n\n## L'outil\n\n**Teachable Machine** est une application web gratuite proposée par Google, qui permet de créer des modèles d'apprentissage automatique (images, sons, poses) directement depuis un navigateur, sans compétence technique. À la date de rédaction, l'outil est accessible en recherchant son nom ; l'interface peut évoluer, adaptez-vous aux libellés du moment. L'outil fonctionne en adaptant un modèle pré-entraîné à vos exemples, ce qui est du transfer learning, et permet d'exporter le modèle pour l'intégrer dans une application.\n\nAttention : les images que vous envoyez ou filmez peuvent être traitées dans votre navigateur ; lisez les conditions d'utilisation avant d'importer des images sensibles. Pour cet exercice, utilisez seulement des photos sans caractère confidentiel.\n\n## Pas à pas\n\n1. Ouvrez l'outil et démarrez un **projet d'images** (modèle d'images standard).\n2. Créez une **classe par catégorie** (par exemple Burger, Pizza, Frites) et renommez-les.\n3. Pour chaque classe, **importez les images d'entraînement** depuis votre dossier (ou utilisez la webcam avec vos propres objets).\n4. Lancez l'**entraînement** (bouton d'entraînement du modèle). Laissez l'onglet ouvert pendant le calcul : l'opération ne prend généralement que quelques instants à quelques minutes sur un petit jeu.\n5. Utilisez l'aperçu pour **tester** le modèle avec une image.\n6. Facultatif : **exportez** le modèle pour pouvoir l'utiliser dans une application.\n\n## Réglages à explorer\n\nDans les réglages avancés, vous trouverez en général le nombre d'époques, la taille de lot et le taux d'apprentissage. Ce sont des hyperparamètres : essayez de les modifier un par un et notez l'effet.\n\n## Premières observations\n\nNotez : la rapidité de l'entraînement, l'impression visuelle de qualité, les images pour lesquelles le modèle hésite. Ces impressions ne sont pas une évaluation : elles ne remplacent pas le test méthodique de la leçon suivante."
+    },
+    {
+     "title": "Mise en pratique : évaluer le modèle et en tirer des conclusions",
+     "kind": "exercise",
+     "body_md": "## Objectifs\n\n- Mesurer proprement la performance sur des images jamais vues.\n- Analyser les erreurs comme un chef de produit.\n\n## Protocole d'évaluation\n\n1. Prenez vos images du dossier **test** (jamais utilisées pour l'entraînement).\n2. Soumettez-les une à une au modèle (aperçu de l'outil, ou modèle exporté).\n3. Pour chacune, notez la classe réelle et la classe prédite. Vous pouvez tenir ce relevé sur papier ou dans un tableur.\n4. Comptez, pour chaque classe réelle, le nombre d'images prédites dans chaque classe : c'est votre **matrice de confusion** (notez-la sous forme de liste, par exemple « Burger réel : 18 prédits Burger, 1 prédit Pizza, 1 prédit Frites »).\n5. Calculez le **taux de bonnes classifications global et par classe**.\n\n## Ce qu'il faut analyser\n\n- Quelles classes sont **confondues** ? Pourquoi (couleurs, formes, arrière-plan) ?\n- Les erreurs viennent-elles d'images **mal étiquetées**, floues, ou **atypiques** ?\n- Le résultat sur le test est-il **bien inférieur** à l'impression de l'entraînement ? Si oui, suspectez du surapprentissage.\n- Que se passe-t-il avec une **image hors sujet** (une photo de paysage) ? Le modèle répond quand même, avec une classe forcée : c'est une limite essentielle. Un classifieur à trois classes ne sait pas dire « aucune de ces classes ».\n\n## Pistes d'amélioration\n\nAjouter des images variées pour les classes confondues, corriger les étiquettes, ajouter une classe « autre », augmenter les données (rotations, luminosité), ajuster les hyperparamètres. Après chaque changement, **réévaluez sur le même jeu de test**.\n\n## Questions de produit\n\nSi ce modèle devait classer automatiquement les photos envoyées par des clients, quel niveau d'erreur serait acceptable ? Quelle action prévoir quand le modèle est peu sûr ? Quels risques (images inappropriées, biais, usage détourné) surveiller ?"
+    }
+   ]
+  },
+  {
+   "title": "Ressources",
+   "lessons": [
+    {
+     "title": "Glossaire du Deep Learning",
+     "kind": "reading",
+     "body_md": "## Notions de base\n\n- **Intelligence artificielle (IA)** : méthodes permettant à des machines d'accomplir des tâches associées à l'intelligence humaine.\n- **Apprentissage automatique (ML)** : systèmes qui apprennent à partir de données pour améliorer leurs performances sans être programmés règle par règle.\n- **Apprentissage profond (Deep Learning)** : sous-domaine du ML fondé sur des réseaux de neurones à nombreuses couches.\n- **Apprentissage supervisé / non supervisé / par renforcement** : avec étiquettes ; sans étiquettes ; par essais et récompenses.\n\n## Réseaux de neurones\n\n- **Réseau de neurones artificiel** : modèle de calcul inspiré, de façon simplifiée, du cerveau.\n- **Perceptron** : neurone artificiel élémentaire (entrées, poids, somme pondérée, activation, sortie).\n- **Couches cachées** : couches situées entre l'entrée et la sortie.\n- **Fonction d'activation** : fonction appliquée à la somme pondérée d'un neurone.\n- **Poids** : coefficients appris par le réseau.\n- **Fonction de coût (perte)** : mesure de l'erreur entre prédictions et valeurs réelles.\n- **Rétropropagation** : méthode de calcul des corrections de poids en remontant la sortie vers l'entrée.\n- **Taux d'apprentissage** : amplitude des corrections de poids.\n- **Époque** : un passage complet sur les données d'entraînement.\n- **Hyperparamètres** : réglages fixés avant l'entraînement.\n\n## Qualité d'un modèle\n\n- **Surapprentissage** : le modèle apprend par cœur et généralise mal.\n- **Sous-apprentissage** : le modèle est trop simple.\n- **Biais** : erreur systématique, souvent héritée des données.\n- **Explicabilité (XAI)** : techniques pour comprendre les décisions d'un modèle.\n\n## Architectures\n\n- **CNN** : réseau convolutif, pour les images.\n- **RNN** : réseau récurrent, pour les séquences.\n- **LSTM** : variante de RNN à mémoire sélective.\n- **Attention / Transformer** : mécanisme de pondération et architecture qui en découle, base des LLM.\n- **GAN** : générateur et discriminateur en compétition.\n- **Modèle génératif / discriminatif** : produit de nouvelles données / distingue des catégories.\n- **LLM** : grand modèle de langage, souvent un Transformer entraîné sur de grandes quantités de texte.\n\n## Pratique et infrastructure\n\n- **Transfer learning** : adapter un modèle pré-entraîné à une nouvelle tâche.\n- **Apprentissage fédéré** : entraîner sur des données décentralisées sans les centraliser.\n- **GPU / TPU** : processeurs accélérant le calcul de Deep Learning.\n- **Scalabilité** : capacité à encaisser la charge en ajoutant des ressources.\n- **Traitement distribué** : répartir un calcul sur plusieurs machines.\n- **API** : interface permettant à des logiciels de communiquer entre eux.\n- **Ensemble learning** : combiner plusieurs modèles.\n- **Clustering** : regrouper des données similaires, sans étiquettes."
+    },
+    {
+     "title": "Récapitulatif du module",
+     "kind": "reading",
+     "body_md": "## Ce que vous devez retenir\n\n- Le **Deep Learning** est un sous-ensemble du ML qui utilise des réseaux de neurones à **nombreuses couches** pour apprendre des **représentations hiérarchiques**.\n- Il excelle sur les **données non structurées** (image, audio, texte, vidéo) car il apprend les caractéristiques **à partir des données brutes**.\n- En contrepartie : **plus de données, plus de calcul, moins d'interprétabilité** que le ML classique.\n- Le **perceptron** est la brique de base ; il ne traite que les cas linéairement séparables. Les réseaux empilent des couches de neurones et apprennent par **rétropropagation**.\n- Les architectures : **CNN** (images), **RNN** et **LSTM** (séquences), **attention** et **Transformers** (langage), **GAN** (génération).\n- Les applications clés : **NLP**, **vision par ordinateur**, **systèmes de recommandation**.\n- Le **transfer learning** permet de spécialiser un modèle pré-entraîné avec peu de données.\n\n## Les bons réflexes de chef de produit\n\n1. Commencer par la **baseline** la plus simple.\n2. Partir de la **nature de la donnée** et du **coût d'une erreur**.\n3. Évaluer sur des données **jamais vues** et **représentatives** de l'usage.\n4. Anticiper **biais, explicabilité, vie privée et coûts de calcul**.\n5. Parler un langage commun avec les équipes techniques : couches, poids, coût, époque, surapprentissage.\n\n## Pour continuer\n\nTerminez par le quiz du module, puis réalisez le livrable. Gardez vos notes de l'atelier de classification d'images : elles alimentent directement le livrable."
+    }
+   ]
+  }
+ ],
+ "quiz": {
+  "title": "Quiz du module",
+  "pass_percent": 70,
+  "max_attempts": null,
+  "questions": [
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle est la relation entre le Deep Learning et le Machine Learning ?",
+    "feedback": "Le Deep Learning est inclus dans le ML, lui-même inclus dans l'IA. Il ne remplace pas le ML classique, qui reste souvent préférable sur des données tabulaires.",
+    "options": [
+     [
+      "Le Deep Learning remplace entièrement le Machine Learning",
+      false
+     ],
+     [
+      "Le Deep Learning est un domaine indépendant du Machine Learning",
+      false
+     ],
+     [
+      "Le Deep Learning est un sous-ensemble du Machine Learning qui utilise des réseaux de neurones à nombreuses couches",
+      true
+     ],
+     [
+      "Le Machine Learning est un cas particulier du Deep Learning",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que signifie « profond » dans Deep Learning ?",
+    "feedback": "« Profond » désigne le nombre de couches cachées empilées, qui permet d'apprendre des représentations de plus en plus abstraites.",
+    "options": [
+     [
+      "Le modèle comprend le sens profond des textes",
+      false
+     ],
+     [
+      "Le modèle utilise des données très anciennes",
+      false
+     ],
+     [
+      "Le modèle est entraîné pendant plus d'une semaine",
+      false
+     ],
+     [
+      "Le réseau comporte de nombreuses couches de neurones empilées",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Parmi ces types de données, lesquels sont difficiles à traiter avec des algorithmes de ML classiques sans ingénierie lourde des caractéristiques ?",
+    "feedback": "Images, audio, vidéo et texte sont des données non structurées dont le sens émerge des relations entre éléments. Un tableau propre convient bien au ML classique.",
+    "options": [
+     [
+      "L'audio",
+      true
+     ],
+     [
+      "Les images",
+      true
+     ],
+     [
+      "Un tableau de 10 colonnes numériques bien nettoyées",
+      false
+     ],
+     [
+      "Le texte en langage naturel",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle est la grande différence de démarche entre ML classique et Deep Learning pour classer une image ?",
+    "feedback": "En ML classique on conçoit les caractéristiques (feature extraction). En Deep Learning, l'extraction et la classification sont apprises ensemble, directement depuis les données brutes.",
+    "options": [
+     [
+      "Le Deep Learning n'utilise pas de données d'entraînement",
+      false
+     ],
+     [
+      "Le ML classique n'a jamais besoin de caractéristiques",
+      false
+     ],
+     [
+      "En Deep Learning, le réseau apprend lui-même les caractéristiques à partir de l'image brute",
+      true
+     ],
+     [
+      "En Deep Learning, un humain doit choisir les caractéristiques à la main",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels sont des inconvénients usuels du Deep Learning par rapport au ML classique ?",
+    "feedback": "Le Deep Learning demande en général plus de données et de calcul (souvent des GPU) et est plus difficile à expliquer. Il est au contraire très performant sur les images.",
+    "options": [
+     [
+      "Une interprétabilité plus difficile",
+      true
+     ],
+     [
+      "Un besoin plus important de données",
+      true
+     ],
+     [
+      "Des ressources de calcul plus importantes",
+      true
+     ],
+     [
+      "Une incapacité totale à traiter des images",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pour prédire le désabonnement à partir d'un tableau de caractéristiques clients, quelle est la meilleure première étape ?",
+    "feedback": "Sur des données tabulaires, des modèles simples sont souvent suffisants, plus rapides et plus explicables. La baseline sert à vérifier que la complexité supplémentaire est justifiée.",
+    "options": [
+     [
+      "Convertir le tableau en images pour utiliser un CNN",
+      false
+     ],
+     [
+      "Attendre d'avoir des millions de lignes",
+      false
+     ],
+     [
+      "Établir une baseline simple de ML classique et la comparer avant d'envisager un réseau profond",
+      true
+     ],
+     [
+      "Entraîner directement un très grand réseau de neurones",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quels sont les composants d'un perceptron ?",
+    "feedback": "Le perceptron calcule une somme pondérée de ses entrées puis applique une fonction d'activation. Générateur/discriminateur concerne les GAN, filtres les CNN, portes les LSTM.",
+    "options": [
+     [
+      "Un générateur et un discriminateur",
+      false
+     ],
+     [
+      "Une mémoire à portes d'oubli et d'entrée",
+      false
+     ],
+     [
+      "Des filtres de convolution et du pooling",
+      false
+     ],
+     [
+      "Des entrées, des poids, une somme pondérée, une fonction d'activation et une sortie",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi un perceptron seul ne peut-il pas résoudre le problème XOR ?",
+    "feedback": "Un perceptron sépare les classes par une droite ou un plan. XOR demande une frontière non linéaire, ce qui nécessite des couches cachées.",
+    "options": [
+     [
+      "Parce que sa sortie est toujours égale à zéro",
+      false
+     ],
+     [
+      "Parce que les données XOR ne sont pas linéairement séparables",
+      true
+     ],
+     [
+      "Parce que XOR n'a pas d'étiquette",
+      false
+     ],
+     [
+      "Parce qu'il n'a pas assez de données",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans un réseau de neurones, que sont les couches cachées ?",
+    "feedback": "Elles sont « cachées » car leurs valeurs ne sont pas directement observées : c'est là que s'effectue l'essentiel du traitement.",
+    "options": [
+     [
+      "Les couches qui stockent les données confidentielles",
+      false
+     ],
+     [
+      "Les couches qui ne sont pas entraînées",
+      false
+     ],
+     [
+      "Les couches situées entre la couche d'entrée et la couche de sortie",
+      true
+     ],
+     [
+      "Les couches ajoutées uniquement à la fin",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est le rôle de la rétropropagation ?",
+    "feedback": "Après avoir mesuré l'erreur en sortie, la rétropropagation attribue à chaque poids sa part de responsabilité pour permettre sa mise à jour.",
+    "options": [
+     [
+      "Collecter de nouvelles données d'entraînement",
+      false
+     ],
+     [
+      "Choisir automatiquement le nombre de couches",
+      false
+     ],
+     [
+      "Déployer le modèle en production",
+      false
+     ],
+     [
+      "Calculer les corrections à appliquer aux poids en remontant de la sortie vers l'entrée",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que mesure la fonction de coût (ou de perte) ?",
+    "feedback": "C'est la quantité que l'entraînement cherche à minimiser. Le nom évoque un coût d'erreur, pas un coût financier.",
+    "options": [
+     [
+      "La vitesse d'inférence en production",
+      false
+     ],
+     [
+      "L'écart entre les prédictions du modèle et les valeurs réelles",
+      true
+     ],
+     [
+      "Le prix de l'entraînement en euros",
+      false
+     ],
+     [
+      "Le nombre de couches du réseau",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que se passe-t-il si le taux d'apprentissage est trop grand ?",
+    "feedback": "Des corrections trop amples font osciller ou diverger l'erreur. Trop petit, l'apprentissage est lent. C'est un hyperparamètre à régler.",
+    "options": [
+     [
+      "Le nombre de couches diminue automatiquement",
+      false
+     ],
+     [
+      "Le modèle apprend toujours plus vite et mieux",
+      false
+     ],
+     [
+      "Le modèle ne peut plus utiliser de GPU",
+      false
+     ],
+     [
+      "L'entraînement peut devenir instable et ne pas converger",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un modèle obtient 99 % de bonnes réponses à l'entraînement et 70 % sur le test. De quoi s'agit-il probablement ?",
+    "feedback": "Un grand écart entre entraînement et test indique que le modèle a mémorisé les exemples au lieu de généraliser.",
+    "options": [
+     [
+      "D'un problème de GPU",
+      false
+     ],
+     [
+      "D'un excellent modèle prêt à déployer",
+      false
+     ],
+     [
+      "De surapprentissage",
+      true
+     ],
+     [
+      "De sous-apprentissage",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles actions peuvent aider à réduire le surapprentissage d'un réseau profond ?",
+    "feedback": "Plus de données, augmentation, régularisation et arrêt précoce limitent le surapprentissage. Évaluer sur l'entraînement masque simplement le problème.",
+    "options": [
+     [
+      "Utiliser de l'augmentation de données",
+      true
+     ],
+     [
+      "Évaluer le modèle sur les données d'entraînement uniquement",
+      false
+     ],
+     [
+      "Ajouter des données d'entraînement variées",
+      true
+     ],
+     [
+      "Appliquer de la régularisation ou arrêter l'entraînement plus tôt",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans une image en niveaux de gris sur 8 bits, que représente une valeur de pixel ?",
+    "feedback": "Une image est une matrice de nombres que les CNN exploitent. La machine ne « voit » que ces valeurs.",
+    "options": [
+     [
+      "Le nom de l'objet présent dans le pixel",
+      false
+     ],
+     [
+      "La classe prédite par le modèle",
+      false
+     ],
+     [
+      "La position du pixel dans l'image",
+      false
+     ],
+     [
+      "Une intensité lumineuse, de 0 (noir) à 255 (blanc)",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est le principe d'un réseau convolutif (CNN) ?",
+    "feedback": "Les filtres, réutilisés partout dans l'image, détectent des motifs locaux ; les couches suivantes les combinent en formes et en objets.",
+    "options": [
+     [
+      "Faire glisser des filtres sur l'image pour détecter des motifs locaux comme des bords ou des textures",
+      true
+     ],
+     [
+      "Traiter l'image pixel par pixel sans jamais regarder les voisins",
+      false
+     ],
+     [
+      "Convertir l'image en texte avant de la classer",
+      false
+     ],
+     [
+      "Générer de nouvelles images à partir de bruit",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi utilise-t-on un RNN plutôt qu'un réseau classique pour du texte ou des séries temporelles ?",
+    "feedback": "Les connexions en boucle d'un RNN lui permettent de se souvenir des éléments précédents d'une séquence.",
+    "options": [
+     [
+      "Parce qu'il traite tous les éléments sans ordre",
+      false
+     ],
+     [
+      "Parce qu'il conserve un état interne qui tient compte de l'ordre et de ce qui précède",
+      true
+     ],
+     [
+      "Parce qu'il n'a pas besoin de poids",
+      false
+     ],
+     [
+      "Parce qu'il ne fonctionne que sur des images",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel problème les LSTM cherchent-ils à résoudre par rapport aux RNN simples ?",
+    "feedback": "Grâce à des portes apprises (oublier, mémoriser, exposer), les LSTM conservent mieux les informations importantes à long terme.",
+    "options": [
+     [
+      "La génération d'images réalistes",
+      false
+     ],
+     [
+      "La difficulté à retenir l'information sur de longues séquences",
+      true
+     ],
+     [
+      "La classification d'images en couleur",
+      false
+     ],
+     [
+      "Le manque de données étiquetées",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle idée est au cœur d'un mécanisme d'attention ?",
+    "feedback": "L'attention attribue des poids aux éléments de l'entrée et combine l'information utile, ce qui améliore la prise en compte du contexte.",
+    "options": [
+     [
+      "Supprimer les mots les plus fréquents",
+      false
+     ],
+     [
+      "Traiter les mots strictement un par un dans l'ordre",
+      false
+     ],
+     [
+      "Doubler le nombre de neurones de sortie",
+      false
+     ],
+     [
+      "Pondérer l'importance des différentes parties de l'entrée selon leur utilité pour la tâche",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Sur quelle architecture reposent la plupart des grands modèles de langage actuels ?",
+    "feedback": "Les Transformers, introduits en 2017, sont à la base de la plupart des LLM. Un GAN sert surtout à la génération adverse, un perceptron seul est trop limité.",
+    "options": [
+     [
+      "Le Transformer, fondé sur l'attention",
+      true
+     ],
+     [
+      "Le réseau convolutif uniquement",
+      false
+     ],
+     [
+      "Le perceptron simple",
+      false
+     ],
+     [
+      "Le GAN",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Comment fonctionne un GAN ?",
+    "feedback": "La compétition entre générateur (faussaire) et discriminateur (détective) pousse le générateur à produire des données de plus en plus réalistes.",
+    "options": [
+     [
+      "Un réseau lit un texte pendant qu'un second le traduit",
+      false
+     ],
+     [
+      "Un générateur crée des données et un discriminateur tente de distinguer le vrai du faux, les deux s'entraînant l'un contre l'autre",
+      true
+     ],
+     [
+      "Deux réseaux identiques votent à la majorité",
+      false
+     ],
+     [
+      "Un réseau classe les images et un second les supprime",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels usages sont typiques des GAN ?",
+    "feedback": "Les GAN servent à générer et à transformer des images ou des données. Ils soulèvent aussi des risques liés aux hypertrucages.",
+    "options": [
+     [
+      "La prévision de ventes à partir de séries temporelles comme usage principal",
+      false
+     ],
+     [
+      "L'augmentation de données",
+      true
+     ],
+     [
+      "Le transfert de style",
+      true
+     ],
+     [
+      "La génération d'images réalistes",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'est-ce que le transfer learning ?",
+    "feedback": "On réutilise les représentations déjà apprises (bords, textures...) et on n'entraîne que la fin du réseau, voire quelques couches, sur ses propres exemples.",
+    "options": [
+     [
+      "Entraîner un modèle sans aucune donnée",
+      false
+     ],
+     [
+      "Adapter un modèle pré-entraîné sur une tâche générale à une nouvelle tâche avec peu de données",
+      true
+     ],
+     [
+      "Traduire un modèle d'une langue de programmation à une autre",
+      false
+     ],
+     [
+      "Transférer les données d'un serveur à un autre",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans l'atelier de classification d'images, pourquoi garde-t-on des images de test à part ?",
+    "feedback": "Évaluer sur les images d'entraînement donnerait un score trompeur. Le jeu de test, jamais vu, mesure la capacité à généraliser.",
+    "options": [
+     [
+      "Pour avoir plus d'images d'entraînement en réserve",
+      false
+     ],
+     [
+      "Pour mesurer la performance sur des images que le modèle n'a jamais vues",
+      true
+     ],
+     [
+      "Pour accélérer l'entraînement",
+      false
+     ],
+     [
+      "Parce que l'outil l'exige pour fonctionner",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels éléments soignez-vous dans la constitution d'un jeu d'images d'entraînement ?",
+    "feedback": "Classes équilibrées, conditions variées et étiquettes fiables sont essentielles. Une seule ambiance produit un modèle qui échoue dans d'autres conditions.",
+    "options": [
+     [
+      "Utiliser une seule ambiance de prise de vue pour simplifier",
+      false
+     ],
+     [
+      "La variété des angles, éclairages et arrière-plans",
+      true
+     ],
+     [
+      "L'exactitude des étiquettes et l'absence de doublons",
+      true
+     ],
+     [
+      "L'équilibre entre les classes",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un classifieur entraîné sur trois classes (burger, pizza, frites) reçoit la photo d'un paysage. Que fait-il ?",
+    "feedback": "Un classifieur classique est contraint de choisir parmi ses classes. On peut ajouter une classe « autre » ou un seuil de confiance pour mieux gérer ces cas.",
+    "options": [
+     [
+      "Il renvoie quand même l'une de ses trois classes, car il ne sait pas répondre « aucune de ces classes »",
+      true
+     ],
+     [
+      "Il refuse automatiquement de répondre",
+      false
+     ],
+     [
+      "Il affiche toujours une probabilité de zéro",
+      false
+     ],
+     [
+      "Il crée spontanément une nouvelle classe",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Parmi ces applications, lesquelles relèvent typiquement du traitement du langage naturel ?",
+    "feedback": "La traduction, l'analyse de sentiments et les chatbots traitent du langage. La segmentation d'images relève de la vision par ordinateur.",
+    "options": [
+     [
+      "La traduction automatique",
+      true
+     ],
+     [
+      "L'analyse de sentiments d'avis clients",
+      true
+     ],
+     [
+      "Les chatbots et assistants virtuels",
+      true
+     ],
+     [
+      "La segmentation d'une image en zones",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'est-ce que le filtrage collaboratif dans un système de recommandation ?",
+    "feedback": "Si des utilisateurs proches de vous ont apprécié un élément, il peut vous être proposé. Cela pose notamment la question du démarrage à froid.",
+    "options": [
+     [
+      "Supprimer les éléments peu consultés du catalogue",
+      false
+     ],
+     [
+      "Recommander uniquement les éléments les plus chers",
+      false
+     ],
+     [
+      "Demander à chaque utilisateur de remplir un long questionnaire",
+      false
+     ],
+     [
+      "S'appuyer sur les préférences d'utilisateurs aux goûts similaires pour proposer des éléments",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi l'explicabilité (XAI) est-elle un enjeu particulier du Deep Learning ?",
+    "feedback": "Quand une décision touche une personne ou est encadrée par la réglementation, il faut pouvoir l'interpréter, ce qui demande des méthodes d'explicabilité.",
+    "options": [
+     [
+      "Parce qu'ils sont toujours moins performants que les modèles simples",
+      false
+     ],
+     [
+      "Parce que les réseaux profonds sont souvent des boîtes noires dont les décisions sont difficiles à justifier",
+      true
+     ],
+     [
+      "Parce qu'ils n'utilisent aucune donnée",
+      false
+     ],
+     [
+      "Parce qu'ils ne fonctionnent que dans le cloud",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Choisissez un cas d'usage de votre contexte professionnel ou d'un produit que vous connaissez et expliquez : (1) si le Deep Learning est justifié ou si un ML classique suffirait ; (2) quelle architecture ou quel modèle pré-entraîné vous envisageriez ; (3) quelles données il faudrait ; (4) le principal risque (biais, explicabilité, coût, vie privée) et comment vous le surveilleriez.",
+    "feedback": "Question relue par le formateur. Une bonne réponse relie la nature de la donnée au choix du modèle, propose une baseline simple, identifie les besoins en données et nomme un risque concret avec un moyen de le suivre.",
+    "options": []
+   }
+  ]
+ },
+ "assignment": {
+  "title": "Livrable pratique : un prototype de classification d'images et sa note de cadrage produit",
+  "instructions_md": "## Objectif\n\nDémontrer que vous savez **adapter un modèle de Deep Learning à un besoin concret** avec un outil public ou gratuit, **l'évaluer sérieusement**, et **présenter les enjeux produit** à un décideur. Aucun accès à des données confidentielles n'est nécessaire.\n\n## Consignes\n\n1. **Choisissez un problème de classification d'images** : celui de l'atelier (plats de restauration rapide) ou un autre sujet de votre choix reposant sur des images publiques ou vos propres photos sans caractère confidentiel. Précisez la **source et la licence** des images.\n2. **Constituez le jeu de données** : au moins 3 classes, environ 100 images par classe pour l'entraînement, et un jeu de **test mis de côté** (environ 20 % des images, jamais utilisé à l'entraînement). Indiquez les effectifs exacts.\n3. **Entraînez un modèle par transfer learning** avec un outil sans code ou avec une bibliothèque de votre choix (par exemple Teachable Machine, gratuit à la date de rédaction). Indiquez les réglages utilisés.\n4. **Évaluez** sur le jeu de test : taux de bonnes classifications global et par classe, et **matrice de confusion** (sous forme de liste ou de tableau dans un fichier joint). Testez aussi **au moins trois images hors sujet** et décrivez le comportement du modèle.\n5. **Améliorez** le modèle selon une piste de votre choix (images supplémentaires, nettoyage des étiquettes, classe « autre », augmentation de données, réglages) et **réévaluez sur le même jeu de test**.\n6. Rédigez une **note de cadrage produit d'une page** destinée à un responsable non technique, contenant :\n   - le problème, la valeur attendue et la **baseline** (par exemple le hasard, ou la classe majoritaire) ;\n   - les **résultats avant et après amélioration** ;\n   - l'analyse des **erreurs** : quelles classes sont confondues et pourquoi ;\n   - **trois risques** (biais ou représentativité des images, explicabilité, vie privée ou licence, coût de calcul) et la façon de les surveiller ;\n   - une **recommandation** : ce prototype est-il utilisable dans un produit ? Avec quels garde-fous (seuil de confiance, validation humaine) ?\n7. Ajoutez une **justification d'architecture** de cinq lignes : pourquoi un réseau convolutif et le transfer learning plutôt qu'un modèle entraîné de zéro ou un ML classique.\n\n## Grille d'évaluation\n\n- Protocole rigoureux : jeu de test séparé, absence de fuite de données, effectifs et sources documentés (**30 %**).\n- Exactitude et lecture critique des résultats : métriques, matrice de confusion, comparaison à la baseline, test hors sujet (**25 %**).\n- Qualité de l'analyse des erreurs et de l'amélioration proposée (**15 %**).\n- Qualité de la note produit : clarté, risques, recommandation argumentée (**20 %**).\n- Justification de l'architecture et compréhension des notions du module (**10 %**).\n\n## Rendu\n\nTexte dans le champ de réponse et/ou un fichier PDF ou archive (note, relevé de résultats, éventuellement le modèle exporté ou un lien vers le projet).\n\n*Si vous ne pouvez pas utiliser d'outil en ligne, vous pouvez à la place réaliser l'atelier Python du module (perceptron et petit réseau) et rédiger la même note de cadrage à partir de ses résultats, en précisant ce choix.*"
+ }
+}

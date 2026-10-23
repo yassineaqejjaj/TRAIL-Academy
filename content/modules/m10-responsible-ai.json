@@ -1,0 +1,766 @@
+{
+ "course": "M10",
+ "slug": "responsible-ai",
+ "source": "Slides du formateur (module IA responsable), réécrits et complétés. Pas de vidéo : à ajouter depuis l'administration.",
+ "chapters": [
+  {
+   "title": "Pourquoi l'éthique de l'IA",
+   "lessons": [
+    {
+     "title": "Une question opérationnelle, pas philosophique",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Comprendre pourquoi l'IA responsable concerne les équipes produit autant que les équipes techniques.\n- Retenir les trois questions à se poser avant de déployer un système d'IA.\n\n## Le paradoxe de l'IA\n\nLa même technologie peut rendre de grands services et créer de nouveaux risques. Un modèle de vision par ordinateur peut aider à repérer un objet dangereux dans un lieu public ; le même type de technologie peut alimenter une surveillance de masse. Un modèle de scoring peut accélérer l'octroi d'un service ; il peut aussi reproduire une discrimination à grande échelle.\n\nLes risques typiques sont :\n\n- la **surveillance de masse** ;\n- les **décisions automatisées injustes** ;\n- les **erreurs à grande échelle** (une erreur humaine touche un dossier, une erreur de modèle en touche des milliers) ;\n- la **perte de contrôle humain** sur des décisions importantes.\n\n## Une question de conception\n\nL'éthique de l'IA n'est pas un débat réservé aux chercheurs. C'est une question de **design** (que voit et que comprend l'utilisateur ?), d'**architecture** (quelles données, quels droits, quels garde-fous ?) et de **produit** (quelle décision confie-t-on à la machine ?).\n\n## Le signal d'alerte, pas le juge\n\nDans les systèmes sensibles, une bonne pratique consiste à faire de l'IA un **signal d'alerte** : elle détecte, priorise, recommande, mais un humain vérifie, interprète et décide. Derrière chaque détection, il y a une personne réelle, et un faux positif (accuser à tort) comme un faux négatif (ne rien voir) ont des coûts humains.\n\n## Les trois questions à se poser\n\n1. Quel est l'**impact réel** de ce système sur les personnes ?\n2. **Qui reste responsable** de la décision finale ?\n3. Comment éviter que l'**automatisation remplace le jugement** humain ?\n\n## Pour aller plus loin\n\nPensez à un produit de votre entreprise qui utilise (ou pourrait utiliser) de l'IA. Répondez en trois phrases aux trois questions ci-dessus. Si vous ne savez pas répondre à l'une d'elles, vous venez d'identifier votre premier chantier."
+    },
+    {
+     "title": "Définition de l'éthique de l'IA et raisons d'agir",
+     "kind": "reading",
+     "body_md": "## Définition\n\nL'**éthique de l'IA** désigne l'ensemble des principes, règles et bonnes pratiques visant à garantir que les systèmes d'intelligence artificielle sont développés et utilisés de manière **juste, transparente, responsable et respectueuse des droits humains**. Elle couvre l'équité, la confidentialité, la responsabilité, la sécurité et l'impact sociétal.\n\nL'expression **IA responsable** désigne la mise en pratique : processus, outils, rôles et contrôles qui rendent ces principes applicables dans un produit réel.\n\n## Cinq raisons d'agir\n\n- **Protéger les personnes** : éviter les discriminations, préserver la vie privée, garantir l'accessibilité.\n- **Renforcer la confiance** : un utilisateur adopte plus facilement un système qu'il perçoit comme équitable et compréhensible.\n- **Prévenir les dérives** : limiter les décisions biaisées, la manipulation et les abus.\n- **Assurer la conformité** : respecter les réglementations (par exemple le RGPD et le règlement européen sur l'IA) et anticiper leurs évolutions.\n- **Protéger la réputation** : une erreur éthique peut déclencher une crise médiatique et juridique coûteuse.\n\n## Une assurance produit, pas un frein\n\nTraiter ces sujets tôt coûte moins cher que gérer une crise en production. C'est le même raisonnement que pour la sécurité informatique ou l'accessibilité : l'intégrer à la conception est plus simple que de corriger après coup.\n\n## Piège courant\n\nCroire que l'éthique se résume à une charte affichée sur un site. Une charte sans processus (qui décide ? qui contrôle ? qui peut arrêter le système ?) ne protège personne.\n\n## Réflexion\n\nParmi les cinq raisons ci-dessus, laquelle serait la plus convaincante pour obtenir du budget dans votre organisation ? Pourquoi ?\n\n*Rappel : ce module est pédagogique et ne constitue pas un avis juridique. Pour un cas précis, rapprochez-vous de votre service juridique ou de votre délégué à la protection des données.*"
+    },
+    {
+     "title": "Trois cas d'école : des échecs de conception produit",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nAnalyser trois situations typiques, décrites ici de façon générale, où l'IA a causé des dégâts non pas à cause d'un bug de code mais à cause de choix de conception. Ces scénarios s'inspirent de cas largement commentés dans le débat public ; ils sont volontairement présentés sans détails que nous ne pourrions pas vérifier.\n\n## Cas 1 : le score présenté comme neutre\n\nUn outil d'aide à la décision judiciaire estime le risque de récidive d'une personne. L'intention est bonne : apporter un appui chiffré à une décision humaine. Mais le score est appris sur des données historiques qui contiennent des inégalités, personne ne comprend bien comment il est calculé, et il finit par peser lourdement sur des décisions importantes.\n\n**Leçon** : un score n'est pas neutre parce qu'il est chiffré. Le cadrage produit (« le score est une aide, pas un verdict », explications, possibilité de contester) compte autant que le modèle.\n\n## Cas 2 : l'assistant détourné\n\nUn assistant conversationnel grand public est détourné par des utilisateurs pour fabriquer des images dégradantes de personnes réelles, sans leur accord. Le problème n'est pas la technologie en elle-même, mais l'**absence de limites claires** sur les usages autorisés, des protections insuffisantes, et aucun moyen simple pour les personnes visées de signaler ou de bloquer ces usages.\n\n**Leçon** : quand une IA est mise entre toutes les mains, elle reflète aussi les comportements les plus toxiques. Il faut décider *en amont* de ce qui est interdit, de la façon de le faire respecter et du recours offert aux victimes.\n\n## Cas 3 : l'IA qui reproduit le passé\n\nUn outil de tri de CV est entraîné sur des recrutements passés. Ces données reflètent déjà des déséquilibres ; le modèle apprend à les reproduire sans que personne ne l'ait programmé pour cela. Le produit donne une illusion d'objectivité alors qu'il amplifie des biais historiques.\n\n**Leçon** : automatiser une décision ne la rend pas plus juste ; cela la rend plus rapide et plus difficile à contester.\n\n## Ce que les trois cas ont en commun\n\n- des décisions automatisées sans assez de **recul**, de **transparence** ou de **contrôle utilisateur** ;\n- des problèmes qui se jouent en **amont** (cadrage, données, règles d'usage) ;\n- des équipes produit et design qui auraient pu poser les bonnes questions.\n\n## Mise en pratique\n\nPour chaque cas, formulez en une phrase la question produit qui aurait dû être posée avant le lancement, par exemple : « Qui peut contester cette décision, et comment ? »"
+    },
+    {
+     "title": "De la bonne réponse à la bonne action : agents et maîtrise de l'action",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Comprendre pourquoi les systèmes **agentiques** déplacent le sujet de la responsabilité.\n- Connaître le principe de *reward hacking* et les mesures de maîtrise de l'action.\n\n## De la réponse à l'action\n\nAvec un assistant qui se contente de répondre, une mauvaise réponse reste en général une mauvaise réponse : un humain peut la lire, la juger et l'ignorer. Avec un **agent** capable d'exécuter du code, d'utiliser des comptes, d'appeler d'autres systèmes ou d'agir sur Internet, une mauvaise décision devient une **action**, parfois irréversible et parfois invisible.\n\nPendant des années, l'IA responsable a surtout parlé de biais, d'explicabilité, de confidentialité et de qualité des réponses. Ces sujets restent essentiels. Les agents ajoutent une dimension : la **maîtrise de l'action**.\n\n## Le reward hacking\n\nOn donne un objectif à un système ; il l'optimise ; mais il trouve une manière d'obtenir le résultat mesuré **sans respecter l'intention réelle**. Exemples génériques :\n\n- un agent chargé de « faire passer les tests » modifie les tests plutôt que de corriger le code ;\n- un système récompensé au nombre de tickets clôturés les clôture sans les résoudre ;\n- un agent évalué sur une épreuve cherche à accéder aux réponses plutôt que de résoudre l'épreuve.\n\nIl n'y a pas de « volonté de nuire » : il y a un objectif mal spécifié, de la capacité et trop peu de garde-fous. Des laboratoires ont rapporté publiquement des comportements de ce type lors d'évaluations d'agents ; à la date de rédaction, les détails de ces cas évoluent et nous ne les reprenons pas ici. Le principe, lui, est solide.\n\n## La responsabilité porte sur tout le système\n\nNe regardez pas seulement le modèle. Posez ces questions :\n\n- Qui donne l'objectif, et comment est-il formulé ?\n- Quels outils, quelles données, quelles actions sont accessibles, avec quels droits ?\n- Comment surveille-t-on les actions ? Quand un humain doit-il intervenir ?\n- Comment arrête-t-on le système s'il sort du cadre ?\n- Comment sait-on qu'il est assez sûr **avant d'augmenter son autonomie** ?\n\n## Les mesures de base\n\n- **Moindre privilège** : l'agent n'a que les droits strictement nécessaires.\n- **Isolation** des environnements critiques et **contrôle des accès réseau**.\n- **Traçabilité** : chaque action est journalisée.\n- **Détection rapide** des comportements anormaux et **bouton d'arrêt**.\n- **Autonomie progressive** : on l'augmente par paliers, en fonction de la confiance réellement acquise.\n\n## À retenir\n\nLa question n'est plus seulement « mon modèle répond-il bien ? » mais « mon système peut-il agir en sécurité quand personne ne regarde chaque décision ? ». Il ne s'agit ni de céder à la peur ni de traiter ces sujets comme de simples bugs."
+    }
+   ]
+  },
+  {
+   "title": "Impacts, risques et principes fondamentaux",
+   "lessons": [
+    {
+     "title": "Les quatre familles d'impacts",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nSavoir cartographier les impacts d'un produit d'IA sur quatre axes, dès la conception.\n\n## Économiques\n\nGains de productivité, automatisation de tâches, mais aussi **concentration de marché** et dépendance à quelques fournisseurs. Question produit : qui gagne, qui perd, et quelle dépendance crée-t-on ?\n\n## Sociaux\n\nÉvolution des métiers, risques d'**exclusion** (personnes peu à l'aise avec le numérique, langues peu représentées dans les données) ou opportunités d'**inclusion** (accessibilité, aide à la rédaction, traduction). Question produit : qui ne pourra pas utiliser ce service, et que se passe-t-il pour elles ?\n\n## Éthiques\n\nBiais dans les décisions, manipulation de l'information, atteintes aux droits (vie privée, non-discrimination, dignité). Question produit : qui peut être lésé sans le savoir ?\n\n## Environnementaux\n\nL'entraînement et l'usage de modèles consomment de l'énergie et des ressources de calcul ; cette empreinte est souvent invisible dans les spécifications. Les ordres de grandeur varient fortement selon la taille du modèle et l'usage ; ne citez pas de chiffre sans source. Question produit : ce niveau de modèle est-il nécessaire pour ce besoin ? Un modèle plus petit suffirait-il ?\n\n## Une démarche simple\n\nPour une fonctionnalité donnée, notez pour chacun des quatre axes :\n\n- l'impact **positif** attendu ;\n- l'impact **négatif** possible ;\n- la **personne ou le groupe** concerné ;\n- une première **mesure** pour réduire le négatif.\n\n## Piège courant\n\nSe limiter à l'utilisateur direct. Les personnes **impactées indirectement** (celles dont on analyse les données, celles qui subissent une décision) sont souvent les plus exposées et les moins consultées.\n\n## Réflexion\n\nQuel impact de votre produit est le plus difficile à observer depuis votre tableau de bord actuel ?"
+    },
+    {
+     "title": "Les cinq principes fondamentaux",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nConnaître cinq principes clés (équité, transparence, confidentialité, responsabilité, durabilité) et savoir les relier à un choix produit.\n\n## 1. Équité\n\nÉviter les discriminations dans les **données**, les **modèles** et les **interfaces**. Un système ne doit pas traiter des groupes différemment sans raison légitime. Exemple de pratique : tester les performances et les taux de décision par groupe avant la mise en production, notamment pour des usages comme le crédit ou le recrutement.\n\n## 2. Transparence\n\nDire clairement **quand** il y a de l'IA et **ce qu'elle fait**. Exemple de pratique : un assistant virtuel qui indique qu'on parle à une IA et qui donne un accès simple à une explication de l'usage des données.\n\n## 3. Confidentialité\n\n**Minimiser** et protéger les données : ne collecter que le nécessaire, limiter la durée de conservation, séparer ou anonymiser quand c'est possible. Exemple de pratique : une personnalisation qui fonctionne avec un nombre réduit de signaux plutôt qu'avec tout l'historique.\n\n## 4. Responsabilité\n\nDéfinir **qui assume** les décisions de l'IA et qui peut les rectifier. Exemple de pratique : un responsable désigné par composant d'IA, un processus d'escalade documenté en cas d'anomalie, des corrections et des retours d'expérience tracés.\n\n## 5. Durabilité\n\nTenir compte des impacts **environnementaux et sociaux**. Exemple de pratique : choisir un modèle proportionné au besoin, suivre la consommation de ressources, privilégier des usages qui réduisent une consommation ailleurs.\n\n## Un sixième pilier souvent associé : sécurité et robustesse\n\nPrévenir les erreurs et les abus : tests, résistance aux entrées malveillantes, plan de repli. C'est d'autant plus important que le système agit (voir la leçon sur les agents).\n\n## Du principe au produit\n\nCes principes se traduisent en **wording**, en **parcours utilisateur**, en **choix de données** et en **règles métier**. Une règle de produit comme « le refus d'un dossier est toujours relu par une personne » est un principe de responsabilité rendu concret.\n\n## Mise en pratique\n\nChoisissez une fonctionnalité d'IA et écrivez, pour chaque principe, **une règle produit vérifiable**. « Être transparent » n'est pas vérifiable ; « un bandeau indique l'usage de l'IA avant le premier échange » l'est."
+    },
+    {
+     "title": "Du principe à la règle produit : exemples guidés",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nS'entraîner à transformer un principe en exigence testable.\n\n## La méthode en trois temps\n\n1. **Principe** : l'intention générale (par exemple l'équité).\n2. **Risque concret** : ce qui peut mal se passer dans *votre* produit.\n3. **Règle vérifiable** : ce qu'on contrôle, avec quelle mesure et à quelle fréquence.\n\n## Exemple 1 : équité d'un tri automatique de candidatures\n\n- Risque : le modèle écarte plus souvent un groupe de candidats à profil comparable.\n- Règle : avant chaque mise à jour du modèle, comparer le taux de présélection par groupe disponible dans un jeu d'évaluation ; toute dérive au-delà d'un seuil fixé par l'équipe déclenche une revue avant déploiement.\n\n## Exemple 2 : transparence d'un assistant client\n\n- Risque : l'utilisateur croit parler à une personne.\n- Règle : mention explicite de l'IA dès le premier message et accès à un interlocuteur humain en un clic, vérifiés à chaque version.\n\n## Exemple 3 : confidentialité d'une personnalisation\n\n- Risque : usage de données « par confort » qui n'apportent pas de valeur mesurable.\n- Règle : chaque donnée utilisée est justifiée par un gain mesuré dans un test ; sinon elle est retirée.\n\n## Exemple 4 : responsabilité d'une recommandation à fort impact\n\n- Risque : personne ne sait qui peut corriger une décision erronée.\n- Règle : un responsable nommé, un délai de traitement des contestations, un journal des corrections.\n\n## Points d'attention\n\n- Évitez les seuils magiques : le seuil doit être **décidé et justifié** par l'équipe et, si besoin, par la conformité, pas copié d'ailleurs.\n- Une règle qui n'est pas mesurée sera oubliée au premier sprint chargé.\n\n## À vous\n\nReprenez deux principes et écrivez pour chacun une règle sur le modèle « Risque / Règle / Mesure / Fréquence »."
+    }
+   ]
+  },
+  {
+   "title": "Cadres, réglementations et outils",
+   "lessons": [
+    {
+     "title": "Cadres réglementaires et référentiels",
+     "kind": "reading",
+     "body_md": "## Avertissement\n\nCette leçon donne des **repères généraux** et ne constitue **pas un avis juridique**. Les textes évoluent, leur application dépend du contexte, des acteurs concernés et des calendriers d'entrée en vigueur ; consultez les textes officiels et votre service juridique pour un cas réel.\n\n## Le règlement européen sur l'IA\n\nLe règlement européen sur l'IA adopte une approche **fondée sur les risques**. On le résume souvent par quatre niveaux :\n\n- **Risque inacceptable** : pratiques interdites (par exemple la notation sociale ou l'exploitation de la vulnérabilité de personnes).\n- **Haut risque** : usages sensibles soumis à des exigences strictes (gestion des risques, qualité des données, documentation, supervision humaine, robustesse). Des domaines comme le recrutement, l'accès à certains services essentiels ou certaines utilisations biométriques sont typiquement concernés.\n- **Risque limité** : obligations de **transparence** (informer qu'on interagit avec une IA, signaler certains contenus générés).\n- **Risque minimal** : pas d'obligation spécifique.\n\nCe découpage est une **simplification pédagogique**. La classification exacte d'un système, et les obligations qui en découlent, doivent être vérifiées dans le texte et avec des juristes. Les modèles d'IA à usage général font en outre l'objet de dispositions particulières.\n\n## Le RGPD\n\nDès qu'un système traite des **données personnelles**, le règlement général sur la protection des données s'applique. Ses principes généraux parlent directement aux équipes produit : **finalité** claire, **minimisation** des données, durée de conservation limitée, **transparence** envers les personnes, **droits** des personnes (accès, rectification, opposition), et encadrement particulier des **décisions entièrement automatisées** ayant des effets importants. Si votre produit en relève, impliquez tôt le délégué à la protection des données.\n\n## Les principes de l'OCDE\n\nLes principes de l'OCDE sur l'IA sont un référentiel international non contraignant : une IA au service des personnes, **centrée sur l'humain**, **robuste et sûre**, **transparente et explicable**, avec une **responsabilité** claire des acteurs. Ils servent de boussole commune.\n\n## Le mémo PRET\n\nPour retenir l'essentiel : **P**rivacy (protection des données), **R**esponsibility (assumer les décisions), **E**xplainability (expliquer le fonctionnement), **T**rust (inspirer la confiance). C'est un moyen mnémotechnique de formation, pas un texte officiel.\n\n## Comment l'utiliser en produit\n\nPour chaque fonctionnalité d'IA : quel niveau de risque estimez-vous ? Quelles données personnelles ? Quelle transparence est exigée ? Qui contrôle ? Si vous hésitez sur la classification, **escaladez**.\n\n## Réflexion\n\nVotre produit relève-t-il plutôt de la transparence (assistant, contenu généré) ou d'exigences renforcées (décision sur des personnes) ? Qui, dans votre organisation, tranche ?"
+    },
+    {
+     "title": "Atelier : mesurer un biais avec Python",
+     "kind": "exercise",
+     "body_md": "## Objectifs\n\n- Voir par soi-même qu'un modèle peut discriminer **sans recevoir la variable sensible**.\n- Calculer des indicateurs d'équité simples par groupe.\n\n## Contexte\n\nNous simulons un tri de candidatures. Les **données historiques** sont volontairement biaisées : à expérience égale, le groupe B était moins souvent retenu. Le modèle n'a **pas** accès au groupe, mais reçoit une variable (`code_zone`) corrélée au groupe : une **variable proxy**. Les données sont **synthétiques**, créées pour l'exercice : aucune donnée réelle n'est utilisée.\n\n## Le code\n\nInstallez les bibliothèques (`pip install pandas scikit-learn numpy`) puis exécutez :\n\n```python\nimport numpy as np, pandas as pd\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.metrics import accuracy_score, recall_score\n\nrng = np.random.default_rng(0)\nn = 4000\ngroupe = rng.choice([\"A\", \"B\"], size=n, p=[0.7, 0.3])\nexperience = rng.normal(5, 2, n).clip(0)\n# Historique biaisé : à compétence égale, le groupe B était moins souvent retenu\nscore = 0.6 * experience - 3 - 1.2 * (groupe == \"B\") + rng.normal(0, 1, n)\nretenu = (score > 0).astype(int)\ndf = pd.DataFrame({\"groupe\": groupe, \"experience\": experience, \"retenu\": retenu})\n\n# Variable proxy : corrélée au groupe, sans le nommer\ndf[\"code_zone\"] = np.where(df.groupe == \"B\", rng.normal(1, 1, n), rng.normal(0, 1, n))\n\nX = df[[\"experience\", \"code_zone\"]]  # le groupe n'est PAS une entrée\ny = df[\"retenu\"]\nX_tr, X_te, y_tr, y_te, g_tr, g_te = train_test_split(X, y, df[\"groupe\"], test_size=0.3, random_state=0)\nmodel = LogisticRegression().fit(X_tr, y_tr)\npred = model.predict(X_te)\n\nres = pd.DataFrame({\"groupe\": g_te.values, \"y\": y_te.values, \"pred\": pred})\nfor g, d in res.groupby(\"groupe\"):\n    print(g, \"taux de selection:\", round(d.pred.mean(), 3),\n          \"rappel:\", round(recall_score(d.y, d.pred), 3),\n          \"exactitude:\", round(accuracy_score(d.y, d.pred), 3), \"effectif:\", len(d))\nsel = res.groupby(\"groupe\").pred.mean()\nprint(\"ratio B/A:\", round(sel[\"B\"] / sel[\"A\"], 3))\nprint(\"ecart:\", round(sel[\"A\"] - sel[\"B\"], 3))\n```\n\n## Comment lire les résultats\n\n- **Taux de sélection** : part de personnes retenues par le modèle dans chaque groupe. Le rapport B/A est une mesure simple de **disparité**.\n- **Rappel** : parmi les personnes réellement retenues dans les données, part que le modèle retrouve.\n- **Exactitude** : très proche entre groupes, elle peut **masquer** une différence de traitement.\n\nSelon votre environnement, les valeurs exactes peuvent légèrement varier ; l'ordre de grandeur de l'écart entre groupes doit rester visible. Si votre environnement affiche des avertissements numériques lors de l'entraînement, ils n'empêchent pas l'exercice.\n\n## Ce que vous devez constater\n\nLe taux de sélection du groupe B est plus bas que celui du groupe A alors que le groupe n'est pas une entrée du modèle. Retirer la colonne sensible **ne suffit donc pas** : le biais passe par les corrélations et par les étiquettes historiques.\n\n## À essayer\n\n1. Retirez `code_zone` des entrées : l'écart change-t-il ? Pourquoi reste-t-il en partie présent ?\n2. Modifiez la pénalité du groupe B dans `score` (de `1.2` à `0`) : que devient l'écart ?\n3. Quelle action produit proposeriez-vous (revue humaine, seuil par groupe, changement de données, retrait de la variable) et quels sont ses risques ?\n\n## Aller plus loin\n\nDes bibliothèques open source comme Fairlearn ou AIF360 proposent des métriques d'équité prêtes à l'emploi et des méthodes d'atténuation. Vérifiez leur documentation courante avant usage. Aucun indicateur ne définit seul ce qu'est « équitable » : plusieurs définitions existent et peuvent s'opposer ; c'est un **choix à assumer et documenter**."
+    },
+    {
+     "title": "Expliquer les décisions et documenter : SHAP, LIME, Model Cards",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre à quoi servent l'explicabilité et la documentation, sans être data scientist.\n\n## Pourquoi expliquer\n\nL'objectif n'est pas d'enseigner les mathématiques à l'utilisateur. C'est de pouvoir **justifier une décision produit** : pourquoi ce résultat, quels facteurs ont pesé, que peut faire la personne pour le changer ?\n\n## Les méthodes\n\n- **SHAP** : méthode qui attribue à chaque variable une contribution à une prédiction donnée (explication locale) et permet aussi des vues globales.\n- **LIME** : méthode qui approche localement le comportement du modèle autour d'un cas pour en dégager les facteurs influents.\n- **Importance par permutation** : mesurer de combien la performance baisse quand on mélange une variable ; simple et disponible dans scikit-learn.\n\nCes méthodes donnent une **explication de l'influence**, pas une preuve de causalité. Une variable influente n'est pas forcément la « cause » dans le monde réel, et une explication plausible peut être trompeuse si le modèle s'appuie sur une corrélation indésirable.\n\n## Les modèles simples d'abord\n\nSi un modèle plus simple et plus lisible atteint une performance suffisante pour un usage à fort impact, il est souvent préférable à un modèle opaque. L'explicabilité se choisit dès la conception, pas après.\n\n## Documenter : checklists et Model Cards\n\nUne **Model Card** est une fiche qui décrit un modèle. Un contenu type :\n\n- objectif et **usages prévus** ;\n- **usages non recommandés** ;\n- origine et limites des **données d'entraînement** ;\n- **performances**, y compris par groupe ;\n- **limites connues** et risques identifiés ;\n- responsable, version et processus de mise à jour.\n\nUne **checklist éthique** intégrée à la phase de conception complète la fiche : elle oblige à répondre aux questions avant le développement.\n\n## Mise en pratique\n\nRédigez en dix lignes la Model Card d'un modèle fictif de recommandation de produits : usage prévu, usage à éviter, données, limites, responsable."
+    }
+   ]
+  },
+  {
+   "title": "Le rôle du produit et du design",
+   "lessons": [
+    {
+     "title": "Rôles du Product Manager et du Designer",
+     "kind": "reading",
+     "body_md": "## Une idée reçue à corriger\n\nL'IA responsable n'est pas un sujet réservé aux data scientists ni au juridique. C'est un sujet de **produit** et d'**expérience utilisateur**, parce que ce sont les choix produit et design qui décident comment l'IA s'insère dans la vie réelle.\n\n## Le Product Manager cadre l'usage\n\n- Définir ce que l'IA a le droit de faire, et ce qui est **interdit**.\n- Évaluer le **niveau de risque** pour l'utilisateur et les tiers.\n- Fixer des critères de succès **au-delà de la performance** : confiance, compréhension, plaintes, erreurs, taux de recours.\n- Décider **quand un humain reprend la main**.\n\nSi le seul indicateur est la performance du modèle, c'est un risque produit : on optimise ce qu'on mesure.\n\n## Le Designer rend l'IA compréhensible et acceptable\n\n- Concevoir des parcours **lisibles** : ce qui est automatique, ce qui ne l'est pas.\n- Soigner le **wording** et les messages explicatifs.\n- Rendre le consentement **clair et réel**.\n- Offrir des moyens de **feedback et de correction**.\n\nUn message mal formulé peut suffire à rompre la confiance.\n\n## Ce que l'IA ne doit jamais décider seule\n\n- Un **refus**, une **sanction** ou une **exclusion**.\n- Une décision ayant un **fort impact** sur une personne.\n- Une **action irréversible** sans possibilité de recours.\n- Une **recommandation cachée** ou non expliquée.\n\nRègle simple : dès qu'une décision a un impact fort sur une personne, l'IA ne doit pas être seule. Selon le contexte, cela peut aussi être une obligation réglementaire (voir la leçon sur les cadres).\n\n## Supervision humaine : attention au tampon\n\nMettre un humain « dans la boucle » ne suffit pas s'il valide en dix secondes des recommandations opaques. Prévoyez l'information utile, le temps nécessaire et le **pouvoir réel de s'écarter** de la recommandation.\n\n## Réflexion\n\nDans votre produit, quelle décision est aujourd'hui la plus proche de la liste « jamais seule » ?"
+    },
+    {
+     "title": "Points de vigilance dans un cycle produit",
+     "kind": "reading",
+     "body_md": "## Principe\n\nQuand se poser les questions d'IA responsable ? **Tout le temps, mais pas les mêmes questions** à chaque étape. Cette grille permet à un PM, même sans bagage technique, de garder la main.\n\n## Discovery : quelle décision confie-t-on à l'IA ?\n\n- L'IA **recommande, classe, prédit ou tranche** ?\n- L'impact est-il faible ou fort pour l'utilisateur ?\n- Que se passe-t-il **si l'IA se trompe** ? On ne parle pas encore de modèle, on parle de décision.\n\n## Design : l'utilisateur comprend-il ?\n\n- Sait-il qu'il interagit avec une IA ?\n- Comprend-il **pourquoi** il voit ce résultat ?\n- Peut-il **refuser, corriger ou demander de l'aide** ?\nSi l'utilisateur ne comprend pas, la confiance disparaît : c'est un problème d'expérience, pas de technique.\n\n## Build : quelles données entrent ?\n\n- Données **nécessaires** ou données « par confort » ?\n- Données **à risque** : sensibles ou indirectement sensibles (proxy) ?\n- **Cas non couverts**, données absentes ou non représentatives ?\nChaque donnée ajoutée est une prise de risque potentielle : moins de données, mais mieux choisies, est souvent plus sain.\n\n## Run : comment voit-on que ça ne va pas ?\n\n- Retours et plaintes **suivis** ?\n- Erreurs **visibles ou silencieuses** ? Une IA peut se tromper longtemps sans bruit.\n- Possibilité d'**arrêter ou d'ajuster** rapidement (interrupteur, retour à une version précédente) ?\n\n## Mise en pratique\n\nImprimez ou recopiez la grille en quatre blocs et appliquez-la à une fonctionnalité d'IA de votre choix : une réponse honnête par question suffit. Notez celles où vous répondez « je ne sais pas » ; ce sont vos priorités."
+    },
+    {
+     "title": "Dark patterns et IA",
+     "kind": "reading",
+     "body_md": "## Principe\n\nL'IA ne crée pas de nouveaux dark patterns : elle rend les anciens **beaucoup plus puissants**, car elle personnalise, optimise et teste en continu ce qui fait cliquer. Un *dark pattern* est un choix de conception qui oriente l'utilisateur contre son intérêt ou à son insu.\n\n## Trois familles à surveiller\n\n### 1. L'IA qui pousse un choix sans l'expliquer\n\n- Recommandation présentée comme neutre.\n- Aucune raison affichée.\n- Alternative moins visible, voire absente.\nRésultat : l'utilisateur suit **sans comprendre**.\n\n### 2. Le consentement flou ou forcé\n\n- Option d'acceptation noyée dans le parcours.\n- Acceptation globale sans détail.\n- Refus compliqué ou pénalisé.\nRésultat : le choix existe **en théorie seulement**. Un refus plus difficile que l'acceptation n'est pas un vrai choix.\n\n### 3. La personnalisation qui enferme\n\n- Toujours les mêmes contenus, peu de diversité ou de surprise.\n- Difficulté à changer de trajectoire.\nRésultat : l'IA **réduit le champ des possibles**.\n\n## Une règle simple\n\nSi l'utilisateur ne peut pas **comprendre, refuser ou corriger**, le design pose un problème.\n\n## Que faire concrètement\n\n- Afficher la raison d'une recommandation (« Recommandé parce que… »).\n- Offrir des alternatives visibles et un bouton « Voir autre chose ».\n- Rendre le refus aussi simple que l'acceptation.\n- Introduire de la diversité volontaire dans les recommandations et permettre de réinitialiser le profil.\n- Mesurer la **satisfaction à long terme** et pas seulement le clic ou la conversion.\n\n## Piège courant\n\nOptimiser un indicateur d'engagement sans garde-fou : le modèle trouvera la stratégie qui maximise l'indicateur, y compris au détriment de l'utilisateur (voir le reward hacking).\n\n## Réflexion\n\nRepérez dans un produit que vous utilisez un exemple de chacune des trois familles. Quelle correction de design proposeriez-vous ?"
+    },
+    {
+     "title": "Gouverner un système d'IA : politiques, suivi et boucle de feedback",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nPasser de principes à un dispositif de gouvernance léger et réaliste.\n\n## Les trois piliers de mise en œuvre\n\n- **Gouvernance** : politiques internes, rôles clairs, comités ou instances de revue pour les cas sensibles.\n- **Outils et méthodes** : tests de biais, explicabilité, audits réguliers.\n- **Processus produit** : checklists éthiques intégrées dès la conception, avec des points de décision (« go / no go »).\n\n## Évaluation et suivi\n\nDéfinissez des indicateurs avant le lancement :\n\n- un indicateur de **confiance** ou de compréhension ressenti ;\n- un indicateur de **biais résiduel** (écarts entre groupes) ;\n- le suivi de la **conformité** ;\n- le volume et la nature des **plaintes** et contestations.\n\nComplétez-les par des **boucles de feedback** utilisateurs pour détecter des dérives : un bouton de signalement, une analyse régulière des retours, des revues périodiques.\n\n## Registre des risques et des incidents\n\nTenez un registre simple : risque, propriétaire, mesure, statut. Ajoutez un **processus d'incident** : qui est alerté, qui décide d'arrêter la fonctionnalité, comment on communique, comment on corrige et comment on apprend.\n\n## Pour les agents : l'autonomie par paliers\n\nPour un système qui agit, ajoutez des paliers : lecture seule, puis suggestion, puis action avec validation, puis action autonome sur un périmètre limité. On passe au palier suivant seulement si des **preuves** (tests, journaux, incidents) le justifient.\n\n## Applications où la rigueur est maximale\n\n- **Santé** : aide au diagnostic fiable et explicable.\n- **Finance** : scoring équitable et non discriminatoire.\n- **Ressources humaines** : recrutement inclusif.\n- **Services publics** : algorithmes transparents pour des décisions qui touchent les citoyens.\n\nDans ces domaines, des exigences réglementaires spécifiques peuvent s'appliquer : vérifiez-les avec les équipes compétentes.\n\n## Mise en pratique\n\nRédigez une page « gouvernance minimale » pour un projet : propriétaire, indicateurs, revue (fréquence), seuil d'arrêt, canal de contestation."
+    }
+   ]
+  },
+  {
+   "title": "Atelier pratique et plan d'action",
+   "lessons": [
+    {
+     "title": "Atelier : analyser une plateforme d'assistants IA avec le canevas à quatre zones",
+     "kind": "exercise",
+     "body_md": "## Contexte du cas (fictif)\n\nUne organisation déploie une plateforme d'**assistants IA collaboratifs** pour accélérer le travail de ses équipes produit, design et ingénierie. Objectif business : productivité, qualité des livrables et rapidité. Objectif utilisateur : être plus performant **sans perdre le contrôle** et sans subir de décisions « boîte noire ». Si vous préférez un cas plus grand public, remplacez-le par la recommandation de produits d'un site de commerce en ligne.\n\n## Règles de l'atelier\n\n- Travaillez comme une équipe produit.\n- Pas besoin de technique.\n- Pensez aux utilisateurs, mais aussi aux **personnes impactées indirectement**.\n- Il n'y a pas de bonne ou de mauvaise réponse ; l'objectif est d'identifier des **risques** et des **actions concrètes**.\n\nOutils : une feuille, un tableau blanc en ligne gratuit ou un simple document partagé suffit.\n\n## Les quatre zones du canevas\n\n1. **Parties prenantes** : qui utilise, et qui subit ?\n2. **Risques** : qu'est-ce qui peut mal se passer ?\n3. **Biais** : à qui l'IA profite-t-elle le plus, le moins ?\n4. **Mitigations** : quelles actions produit et design ?\n\nQuestion fil rouge : « Qu'est-ce qui peut mal se passer si on ne fait pas attention, et que peut-on faire côté produit ou design pour limiter ça ? »\n\n## Pistes si vous séchez\n\n- **Parties prenantes** : utilisateurs fréquents et occasionnels, équipes marketing, produit, support, personnes peu à l'aise avec le numérique, personnes dont on analyse le comportement. Pensez à ceux qui utilisent le produit **et** à ceux qui en subissent les effets.\n- **Risques** : l'utilisateur ne comprend pas pourquoi un résultat est mis en avant ; impression d'être poussé ; mauvaise recommandation sur un sujet sensible ; perte de confiance liée aux données ; plaintes vie privée. Astuce : imaginez le **titre d'un article négatif** sur cette fonctionnalité.\n- **Biais** : toujours les mêmes options proposées ; favoriser les offres les plus chères ; ne pas prendre en compte certains profils ; s'appuyer sur des données anciennes ; hypothèses fausses sur les habitudes.\n- **Mitigations côté produit** : limiter les données, afficher un indicateur de confiance, tester une version non personnalisée, permettre la désactivation. **Côté design** : message clair « Recommandé pour vous », lien « Pourquoi ce résultat ? », bouton « Voir autre chose », accès simple aux réglages. Question utile : si un utilisateur se plaint, que peut-il faire **immédiatement** ?\n\n## Déroulé conseillé (seul ou en groupe)\n\n- 5 min : lire le cas.\n- 20 min : remplir les quatre zones.\n- 20 min : présenter et comparer (ou relire seul à voix haute).\n- 15 min : synthèse, trois leçons retenues.\n\n## À retenir\n\nCe que vous venez de faire est de l'IA responsable appliquée : pas de modèle, pas de code, mais une série de **petits choix produit et design** cumulés. Faits tôt, ils rendent l'IA utile et acceptable ; ignorés, ils reviennent en production."
+    },
+    {
+     "title": "Conclusion et plan d'action personnel",
+     "kind": "reading",
+     "body_md": "## Ce qu'il faut retenir\n\n- L'IA responsable est une affaire de **conception produit**, pas seulement de technique.\n- Les cinq principes (équité, transparence, confidentialité, responsabilité, durabilité), complétés par la **sécurité et la robustesse**, se traduisent en règles produit vérifiables.\n- Le règlement européen sur l'IA et le RGPD structurent les obligations ; ce module reste général et **ne constitue pas un avis juridique**.\n- Plus un système a de **capacité d'action**, plus la gouvernance, la sécurité et le contrôle comptent.\n- À chaque étape du cycle (Discovery, Design, Build, Run), des questions précises.\n- Les dark patterns se renforcent avec l'IA : visez comprendre, refuser, corriger.\n\n## Votre plan d'action en cinq points\n\n1. Choisissez **un produit ou une fonctionnalité** concernés.\n2. Classez la **décision** confiée à l'IA (recommande, classe, prédit, tranche) et le niveau d'impact.\n3. Identifiez **trois risques** et **trois mitigations** (produit et design).\n4. Définissez **deux indicateurs** au-delà de la performance et un **seuil d'arrêt**.\n5. Planifiez une **revue** à date fixe, avec un responsable nommé.\n\n## Ressources pour continuer\n\nPour approfondir, consultez directement les textes et publications officiels : le règlement européen sur l'IA et le RGPD, les principes de l'OCDE sur l'IA, les recommandations de l'autorité française de protection des données, et la documentation des bibliothèques open source d'équité et d'explicabilité. Les contenus évoluent : vérifiez toujours la version en vigueur.\n\n## Glossaire express\n\n- **Biais** : erreur systématique, souvent liée aux données ou à leur représentativité.\n- **Explicabilité (XAI)** : techniques permettant de comprendre et d'interpréter les décisions d'un modèle.\n- **Model Card** : fiche décrivant usages, limites et performances d'un modèle.\n- **Human in the loop** : intervention humaine dans la décision.\n- **Reward hacking** : atteindre la récompense mesurée sans respecter l'intention.\n- **Variable proxy** : variable apparemment neutre mais corrélée à une caractéristique sensible.\n- **Moindre privilège** : n'accorder que les droits strictement nécessaires."
+    }
+   ]
+  }
+ ],
+ "quiz": {
+  "title": "Quiz du module",
+  "pass_percent": 70,
+  "max_attempts": null,
+  "questions": [
+   {
+    "kind": "single_choice",
+    "prompt": "Selon le module, dans quel rôle l'IA est-elle recommandée pour les décisions à fort enjeu humain ?",
+    "feedback": "L'IA assiste, analyse et recommande ; pour les décisions à fort impact, la décision finale doit rester humaine.",
+    "options": [
+     [
+      "Un décideur autonome, avec validation humaine a posteriori seulement",
+      false
+     ],
+     [
+      "Un simple outil de reporting sans influence sur la décision",
+      false
+     ],
+     [
+      "Un juge final, car elle est plus objective qu'un humain",
+      false
+     ],
+     [
+      "Un signal d'alerte ou une aide : un humain vérifie, interprète et décide",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi la responsabilité en IA est-elle présentée comme une question de conception ?",
+    "feedback": "Les cas d'école montrent des échecs de cadrage et de conception produit, pas de simples bugs de code.",
+    "options": [
+     [
+      "Parce que la loi interdit toute décision automatisée",
+      false
+     ],
+     [
+      "Parce que l'éthique ne concerne que la phase de test du modèle",
+      false
+     ],
+     [
+      "Parce que les choix de parcours, de données et de messages produisent directement les effets sur les personnes",
+      true
+     ],
+     [
+      "Parce que seuls les développeurs peuvent corriger un biais",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'illustre le cas du score de risque présenté comme neutre ?",
+    "feedback": "Le cadrage (aide, pas verdict), la transparence et la possibilité de contester comptent autant que le modèle.",
+    "options": [
+     [
+      "Il suffit d'afficher un score plus précis pour résoudre le problème",
+      false
+     ],
+     [
+      "Un score chiffré n'est pas neutre s'il est appris sur des données historiques inégalitaires et opaque",
+      true
+     ],
+     [
+      "Les scores sont toujours plus justes que les humains",
+      false
+     ],
+     [
+      "Le problème venait d'une erreur de syntaxe dans le code",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'enseigne le cas de l'outil de tri de CV entraîné sur des recrutements passés ?",
+    "feedback": "Automatiser une décision ne la rend pas plus juste ; elle devient plus rapide et plus difficile à contester.",
+    "options": [
+     [
+      "Un modèle peut reproduire et amplifier des déséquilibres historiques sans y être programmé",
+      true
+     ],
+     [
+      "Les données historiques sont toujours objectives",
+      false
+     ],
+     [
+      "Il faut remplacer les données par des règles écrites à la main dans tous les cas",
+      false
+     ],
+     [
+      "L'automatisation rend les décisions plus faciles à contester",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est le problème de fond dans le cas de l'assistant détourné pour produire des images dégradantes ?",
+    "feedback": "Le problème est le cadre d'usage défini (ou non) en amont, pas la technologie seule.",
+    "options": [
+     [
+      "La technologie de génération d'images elle-même, qu'il faut interdire",
+      false
+     ],
+     [
+      "Un manque de puissance de calcul",
+      false
+     ],
+     [
+      "Un nombre insuffisant d'utilisateurs testeurs",
+      false
+     ],
+     [
+      "L'absence de limites d'usage claires, de protections suffisantes et de recours pour les personnes visées",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'appelle-t-on reward hacking ?",
+    "feedback": "Le système optimise l'indicateur donné mais trouve une voie imprévue qui contourne l'intention de ses concepteurs.",
+    "options": [
+     [
+      "Récompenser les utilisateurs qui signalent des erreurs",
+      false
+     ],
+     [
+      "Entraîner un modèle avec davantage de données",
+      false
+     ],
+     [
+      "Atteindre la récompense mesurée sans respecter l'intention réelle de l'objectif",
+      true
+     ],
+     [
+      "Pirater un serveur pour voler un modèle",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles mesures renforcent la maîtrise de l'action d'un agent d'IA ?",
+    "feedback": "Les mesures de base sont le moindre privilège, l'isolation, la traçabilité, la détection d'anomalies, l'arrêt et l'autonomie progressive.",
+    "options": [
+     [
+      "Droits limités au strict nécessaire (moindre privilège)",
+      true
+     ],
+     [
+      "Traçabilité des actions et possibilité d'arrêt",
+      true
+     ],
+     [
+      "Autonomie augmentée progressivement selon la confiance acquise",
+      true
+     ],
+     [
+      "Isolation des environnements critiques et contrôle des accès réseau",
+      true
+     ],
+     [
+      "Donner d'emblée tous les accès pour éviter les blocages",
+      false
+     ],
+     [
+      "Supprimer les journaux pour réduire les coûts de stockage",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi un agent est-il plus exigeant en gouvernance qu'un assistant qui répond seulement ?",
+    "feedback": "La différence est la capacité d'agir sur des systèmes réels : l'erreur n'est plus seulement lue, elle est exécutée.",
+    "options": [
+     [
+      "Parce qu'il ne peut pas être surveillé",
+      false
+     ],
+     [
+      "Parce qu'une mauvaise décision devient une action, parfois irréversible ou invisible",
+      true
+     ],
+     [
+      "Parce qu'il est toujours moins précis",
+      false
+     ],
+     [
+      "Parce qu'il n'utilise jamais de données personnelles",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles familles d'impacts structurent l'analyse d'un produit d'IA dans ce module ?",
+    "feedback": "Les quatre familles sont économique, sociale, éthique et environnementale.",
+    "options": [
+     [
+      "Économiques",
+      true
+     ],
+     [
+      "Sociaux",
+      true
+     ],
+     [
+      "Éthiques",
+      true
+     ],
+     [
+      "Environnementaux",
+      true
+     ],
+     [
+      "Esthétiques uniquement",
+      false
+     ],
+     [
+      "Géopolitiques uniquement",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel risque guette une analyse d'impact qui se limite à l'utilisateur direct ?",
+    "feedback": "Les personnes dont on traite les données ou qui subissent une décision sont souvent peu consultées.",
+    "options": [
+     [
+      "Oublier les personnes impactées indirectement, souvent les plus exposées",
+      true
+     ],
+     [
+      "Obtenir un trop grand nombre de retours",
+      false
+     ],
+     [
+      "Surestimer les gains de productivité uniquement",
+      false
+     ],
+     [
+      "Aucun, l'utilisateur direct est le seul concerné",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Parmi ces éléments, lesquels font partie des cinq principes fondamentaux présentés ?",
+    "feedback": "Équité, transparence, confidentialité, responsabilité et durabilité ; la sécurité et la robustesse sont souvent associées.",
+    "options": [
+     [
+      "Équité",
+      true
+     ],
+     [
+      "Transparence",
+      true
+     ],
+     [
+      "Confidentialité",
+      true
+     ],
+     [
+      "Durabilité",
+      true
+     ],
+     [
+      "Rapidité de livraison",
+      false
+     ],
+     [
+      "Notoriété de la marque",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Laquelle de ces règles est vérifiable, donc mieux formulée ?",
+    "feedback": "Un principe devient exigence quand il est observable, mesurable et rattaché à un contrôle.",
+    "options": [
+     [
+      "Le produit doit être transparent",
+      false
+     ],
+     [
+      "L'IA doit être éthique",
+      false
+     ],
+     [
+      "Les utilisateurs doivent faire confiance au système",
+      false
+     ],
+     [
+      "Un bandeau indique l'usage de l'IA avant le premier échange, contrôlé à chaque version",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi retirer la colonne « genre » ou « origine » d'un jeu de données ne suffit-il pas à garantir l'équité ?",
+    "feedback": "Le biais passe par les corrélations (proxy) et par les données historiques ; c'est ce que montre l'atelier Python.",
+    "options": [
+     [
+      "Parce que la loi impose de conserver ces colonnes",
+      false
+     ],
+     [
+      "Parce qu'elle n'a jamais d'influence sur le résultat",
+      false
+     ],
+     [
+      "Des variables proxy et des étiquettes historiques biaisées peuvent reproduire la discrimination",
+      true
+     ],
+     [
+      "Parce que les modèles refusent de s'entraîner sans cette colonne",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans l'atelier Python, que mesure le taux de sélection par groupe ?",
+    "feedback": "Comparer les taux de sélection (par exemple leur rapport) est une mesure simple de disparité.",
+    "options": [
+     [
+      "La taille du fichier de données",
+      false
+     ],
+     [
+      "La part de personnes retenues par le modèle dans chaque groupe",
+      true
+     ],
+     [
+      "La vitesse d'entraînement du modèle",
+      false
+     ],
+     [
+      "Le nombre de variables utilisées",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'indique une exactitude presque identique entre deux groupes ?",
+    "feedback": "Une même exactitude globale peut coexister avec des taux de sélection ou d'erreurs différents selon les groupes.",
+    "options": [
+     [
+      "Elle peut masquer une différence de traitement : il faut aussi regarder les taux de décision et les erreurs par groupe",
+      true
+     ],
+     [
+      "Que le modèle est forcément équitable",
+      false
+     ],
+     [
+      "Que les données sont synthétiques",
+      false
+     ],
+     [
+      "Que le modèle est sous-appris",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles affirmations sur le règlement européen sur l'IA sont cohérentes avec ce module ?",
+    "feedback": "L'approche par niveaux de risque est une simplification pédagogique ; le RGPD continue de s'appliquer aux données personnelles.",
+    "options": [
+     [
+      "Il adopte une approche fondée sur les risques",
+      true
+     ],
+     [
+      "Le recrutement fait typiquement partie des usages sensibles à surveiller de près",
+      true
+     ],
+     [
+      "La transparence est attendue pour les interactions avec un système d'IA comme un assistant conversationnel",
+      true
+     ],
+     [
+      "La classification d'un système doit être vérifiée dans le texte et avec des juristes",
+      true
+     ],
+     [
+      "Il traite tous les systèmes d'IA de la même façon",
+      false
+     ],
+     [
+      "Il remplace le RGPD pour les données personnelles",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans le RGPD, quel principe parle directement aux équipes produit pour limiter les données collectées ?",
+    "feedback": "On ne collecte que le nécessaire pour une finalité claire ; la minimisation réduit à la fois les risques et la dette.",
+    "options": [
+     [
+      "La maximisation des signaux collectés",
+      false
+     ],
+     [
+      "La conservation illimitée",
+      false
+     ],
+     [
+      "L'opacité des traitements",
+      false
+     ],
+     [
+      "La minimisation des données",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que représente le mémo PRET ?",
+    "feedback": "C'est un repère pédagogique, pas un texte officiel.",
+    "options": [
+     [
+      "Un algorithme de détection des biais",
+      false
+     ],
+     [
+      "Une licence logicielle",
+      false
+     ],
+     [
+      "Un moyen mnémotechnique : Privacy, Responsibility, Explainability, Trust",
+      true
+     ],
+     [
+      "Un texte de loi européen",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "À quoi servent des méthodes comme SHAP ou LIME ?",
+    "feedback": "Elles éclairent l'influence des variables, mais ne prouvent pas une causalité.",
+    "options": [
+     [
+      "À réduire le coût de calcul de l'entraînement",
+      false
+     ],
+     [
+      "À comprendre l'influence des variables sur les décisions d'un modèle",
+      true
+     ],
+     [
+      "À garantir qu'un modèle ne se trompera jamais",
+      false
+     ],
+     [
+      "À anonymiser automatiquement les données",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Que contient une bonne Model Card ?",
+    "feedback": "La fiche trace ce que fait le modèle, ses limites et le cadre d'usage.",
+    "options": [
+     [
+      "Les usages prévus et non recommandés",
+      true
+     ],
+     [
+      "Les limites des données d'entraînement",
+      true
+     ],
+     [
+      "Les performances, y compris par groupe",
+      true
+     ],
+     [
+      "Un responsable et une version",
+      true
+     ],
+     [
+      "Le code source complet des utilisateurs",
+      false
+     ],
+     [
+      "Les mots de passe de l'équipe",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles décisions l'IA ne devrait-elle jamais prendre seule selon le module ?",
+    "feedback": "Dès qu'une décision a un impact fort, l'IA ne doit pas être seule.",
+    "options": [
+     [
+      "Un refus ou une exclusion",
+      true
+     ],
+     [
+      "Une décision à fort impact sur une personne",
+      true
+     ],
+     [
+      "Une action irréversible sans recours",
+      true
+     ],
+     [
+      "Une recommandation cachée et non expliquée",
+      true
+     ],
+     [
+      "Trier des e-mails dans des dossiers sans impact",
+      false
+     ],
+     [
+      "Proposer un titre de brouillon",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle question relève de la phase Run du cycle produit ?",
+    "feedback": "Run couvre le suivi, les plaintes, les erreurs silencieuses et la capacité d'arrêt.",
+    "options": [
+     [
+      "Comment détecte-t-on les problèmes et peut-on arrêter ou ajuster rapidement ?",
+      true
+     ],
+     [
+      "Quelle décision confie-t-on à l'IA ?",
+      false
+     ],
+     [
+      "Quelles données entrent dans le système ?",
+      false
+     ],
+     [
+      "Quel wording choisir pour le bouton ?",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est un exemple de dark pattern lié à la personnalisation ?",
+    "feedback": "La personnalisation qui enferme réduit le champ des possibles ; les autres options sont des bonnes pratiques.",
+    "options": [
+     [
+      "Afficher la raison d'une recommandation",
+      false
+     ],
+     [
+      "Offrir un bouton « Voir autre chose »",
+      false
+     ],
+     [
+      "Permettre de désactiver la personnalisation",
+      false
+     ],
+     [
+      "Enfermer l'utilisateur dans toujours les mêmes contenus sans moyen simple de changer de trajectoire",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles pratiques réduisent le risque de dark patterns avec l'IA ?",
+    "feedback": "La règle : l'utilisateur doit pouvoir comprendre, refuser et corriger.",
+    "options": [
+     [
+      "Rendre le refus aussi simple que l'acceptation",
+      true
+     ],
+     [
+      "Afficher pourquoi un élément est recommandé",
+      true
+     ],
+     [
+      "Introduire de la diversité dans les recommandations",
+      true
+     ],
+     [
+      "Suivre la satisfaction à long terme en plus du clic",
+      true
+     ],
+     [
+      "Optimiser uniquement le taux de clic",
+      false
+     ],
+     [
+      "Masquer les réglages dans plusieurs menus",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi une supervision humaine peut-elle rester symbolique ?",
+    "feedback": "Une supervision efficace demande information, temps et pouvoir réel de décision.",
+    "options": [
+     [
+      "Parce qu'elle est interdite par la loi",
+      false
+     ],
+     [
+      "Parce qu'elle empêche toute traçabilité",
+      false
+     ],
+     [
+      "Si la personne valide très vite des recommandations opaques sans pouvoir réel de s'en écarter",
+      true
+     ],
+     [
+      "Parce que les humains sont toujours moins fiables que le modèle",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Choisissez une fonctionnalité d'IA de votre produit (ou fictive). Décrivez en une dizaine de lignes la décision confiée à l'IA, un risque majeur, une mitigation côté produit et une mitigation côté design.",
+    "feedback": "Une bonne réponse nomme la décision (recommande, classe, prédit, tranche), identifie une personne impactée, propose une règle vérifiable et des éléments d'interface concrets (explication, refus, correction, recours).",
+    "options": []
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Expliquez en quelques phrases pourquoi « le modèle ne reçoit pas la variable sensible » ne suffit pas à prouver qu'il est équitable, et ce que vous contrôleriez à la place.",
+    "feedback": "Attendus : variables proxy, étiquettes historiques biaisées, mesure des taux de décision et des erreurs par groupe, revue humaine et suivi dans le temps.",
+    "options": []
+   }
+  ]
+ },
+ "assignment": {
+  "title": "Livrable pratique : audit d'IA responsable d'une fonctionnalité et plan de mitigation",
+  "instructions_md": "## Objectif\n\nDémontrer que vous savez **analyser une fonctionnalité d'IA** avec la grille de l'IA responsable et en tirer un **plan d'action** concret pour une équipe produit. Aucun accès à des données confidentielles n'est requis.\n\n## Consignes\n\n1. Choisissez une fonctionnalité d'IA **réelle publique** ou **fictive** (par exemple : recommandations d'un site de commerce, assistant de service client, tri de candidatures, assistant collaboratif pour équipes). Décrivez-la en cinq lignes : utilisateurs, décision confiée à l'IA (recommande, classe, prédit ou tranche), données utilisées.\n2. Remplissez le **canevas à quatre zones** : parties prenantes (y compris indirectes), risques, biais, mitigations (actions produit **et** design).\n3. Appliquez la **grille du cycle produit** (Discovery, Design, Build, Run) : au moins deux questions par étape, avec votre réponse.\n4. Rédigez **trois règles produit vérifiables** (sur le modèle Risque / Règle / Mesure / Fréquence) pour trois principes différents parmi équité, transparence, confidentialité, responsabilité, durabilité.\n5. Repérez **au moins un risque de dark pattern** et proposez une correction de design.\n6. Précisez la **supervision humaine** : quelles décisions ne sont jamais prises seules, qui reprend la main, avec quelle information et quel pouvoir.\n7. Indiquez les **points de conformité** à faire vérifier (données personnelles, niveau de risque, obligations de transparence) en restant général et en précisant que vous n'avez pas fait d'analyse juridique.\n8. *Option technique :* exécutez l'atelier Python, modifiez-le (par exemple retirez la variable proxy) et commentez l'évolution de l'écart entre groupes en cinq lignes.\n\n## Format\n\nUn document de deux à quatre pages, plus éventuellement le code. Évitez tout nom d'entreprise ou de personne réelle et toute donnée confidentielle ; ne citez aucun chiffre dont vous ne connaissez pas la source.\n\n## Grille d'évaluation\n\n- Qualité de l'analyse des risques et des parties prenantes, y compris indirectes (**30 %**).\n- Pertinence et concrétisation des mitigations produit et design (**25 %**).\n- Règles vérifiables, indicateurs et seuil d'arrêt (**20 %**).\n- Supervision humaine, dark patterns et conformité traités avec prudence et nuance (**15 %**).\n- Clarté de la rédaction et rigueur (pas d'affirmations non justifiées) (**10 %**).\n\n## Rendu\n\nTexte dans le champ de réponse et/ou un fichier PDF ou document joint."
+ }
+}

@@ -1,0 +1,819 @@
+{
+ "course": "M8",
+ "slug": "ai-product-strategy",
+ "source": "Slides du formateur (module : gestion de produits IA et stratégie), réécrits et complétés. Pas de vidéo : à ajouter depuis l'administration.",
+ "chapters": [
+  {
+   "title": "Comprendre les produits IA et leur écosystème",
+   "lessons": [
+    {
+     "title": "Qu'est-ce qu'un produit IA ?",
+     "kind": "reading",
+     "body_md": "## L'idée en une phrase\n\nUn **produit IA** est une application, un logiciel ou un service qui s'appuie sur l'intelligence artificielle pour **résoudre un problème concret** : il prend des décisions ou formule des recommandations à partir de données, et peut s'améliorer au fil du temps.\n\n## Ce qui le distingue\n\n- **Il apprend des données** plutôt que de suivre uniquement des règles écrites à la main.\n- **Il s'adapte** : deux utilisateurs différents peuvent obtenir des résultats différents.\n- **Il est probabiliste** : sa sortie est la meilleure estimation du modèle, pas une certitude.\n- **Il évolue** : la qualité dépend des données, qui changent avec le temps.\n\n## Exemples du quotidien\n\n- Un service de streaming qui propose des contenus personnalisés (recommandation).\n- Un assistant vocal qui comprend une demande orale (traitement du langage).\n- Un assistant conversationnel génératif qui rédige, résume ou explique (IA générative).\n- Un outil bancaire qui signale une transaction suspecte (détection d'anomalies).\n\n## Points d'attention\n\n- **L'IA n'est pas le produit.** Le produit, c'est la valeur apportée à l'utilisateur. Une fonctionnalité « boostée à l'IA » qui ne résout aucun problème n'est pas un produit IA, c'est une démonstration.\n- Tout ne nécessite pas de l'IA : si une règle simple suffit, elle sera moins chère, plus explicable et plus fiable.\n\n## Pour vérifier votre compréhension\n\nChoisissez un produit que vous utilisez. Quel problème résout-il, quelles données utilise-t-il, et que se passerait-il si ses prédictions étaient fausses une fois sur dix ?"
+    },
+    {
+     "title": "Produits IA et produits traditionnels : ce qui change pour le chef de produit",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre pourquoi la gestion d'un produit IA ne se résume pas à ajouter une fonctionnalité à un produit classique.\n\n## Le produit traditionnel\n\nLe développement est plutôt **linéaire** : on spécifie un comportement, on le construit, on le teste, on le livre. Le résultat est **défini à l'avance** et déterministe : la même entrée donne la même sortie. Les boucles de retour sont souvent espacées (une version, une enquête).\n\n## Le produit IA\n\n- **Expérimentation itérative** : on ne sait pas à l'avance quel niveau de performance sera atteignable. On le découvre en testant.\n- **Apprentissage à partir des données** : la qualité vient autant des données que du code.\n- **Résultats probabilistes** : il faut décider quel taux d'erreur est acceptable, et comment l'interface gère l'erreur.\n- **Cycles courts et réactivité aux données** : le comportement réel en production devient la principale source d'information.\n- **Vie après le lancement** : un modèle se dégrade si le monde change. Le lancement n'est pas la fin du travail, c'est le début de l'exploitation.\n\n## Conséquences concrètes sur votre métier\n\n- Les critères d'acceptation sont des **seuils de performance** (par exemple un rappel minimal), pas seulement « ça marche / ça ne marche pas ».\n- La roadmap contient des **hypothèses à valider**, pas uniquement des livraisons.\n- Il faut prévoir un **budget d'exploitation** (suivi, ré-entraînement) en plus du budget de construction.\n- L'expérience utilisateur doit **gérer l'incertitude** : indiquer un niveau de confiance, permettre la correction, prévoir un repli.\n\n## Piège fréquent\n\nPromettre une date et une performance fixes avant d'avoir vu les données. Mieux vaut s'engager sur une **démarche d'exploration bornée** (durée, critère d'arrêt) que sur un résultat chiffré.\n\n## Pour réfléchir\n\nQuelle règle de gestion de votre produit actuel pourrait devenir probabiliste avec de l'IA ? Qu'est-ce que cela changerait pour vos tests et vos engagements ?"
+    },
+    {
+     "title": "Le paysage technologique : de la puce à l'application",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nSe repérer dans la chaîne de valeur de l'IA pour savoir **où positionner votre produit** et de qui vous dépendez.\n\n## Les couches de l'écosystème\n\nOn peut lire le marché comme un empilement :\n\n- **Le matériel** : les puces spécialisées (processeurs graphiques et accélérateurs) qui permettent d'entraîner et d'exécuter les modèles.\n- **Les fournisseurs de modèles de fondation** : ils entraînent de grands modèles généralistes (texte, image, code) qu'on peut ensuite utiliser ou adapter.\n- **Les plateformes de modèles** : elles hébergent, catalogent et servent des modèles (propriétaires ou ouverts) via des API.\n- **Les plateformes applicatives et de données** : elles fournissent le socle pour construire (stockage, calcul, orchestration, gouvernance des données).\n- **Les constructeurs d'applications** : startups et entreprises qui intègrent ces briques dans un produit pour un besoin précis.\n- **L'écosystème open source** : modèles, bibliothèques et outils ouverts, présents à presque toutes les couches.\n\n## Ce que cela implique pour un produit\n\n- **Construire, acheter ou assembler ?** Utiliser une API est rapide mais crée une dépendance ; héberger un modèle ouvert donne plus de maîtrise mais demande des compétences et de l'infrastructure.\n- **Souveraineté et confidentialité** : où sont traitées les données ? Une exigence de cloud privé, hybride ou souverain peut orienter le choix.\n- **Multi-modèles** : rien n'oblige à n'utiliser qu'un seul modèle. On peut spécialiser (un petit modèle pour une tâche simple, un grand pour une tâche complexe) et prévoir de changer de fournisseur.\n- **Différenciation** : les modèles se banalisent. Votre avantage durable vient plutôt de **vos données, de votre connaissance du métier et de votre expérience utilisateur**.\n\n## Point d'attention\n\nLe paysage change très vite (acteurs, offres, prix). Appuyez vos décisions sur des **critères** (coût, qualité, latence, confidentialité, réversibilité) plutôt que sur un nom de fournisseur, et réévaluez-les régulièrement.\n\n## Mise en pratique\n\nDessinez les couches utilisées par un produit IA de votre choix. Quelle couche pourrait changer de fournisseur sans casser le produit ? Laquelle est la plus risquée ?"
+    },
+    {
+     "title": "Les parties prenantes d'un produit IA",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nSavoir qui fait quoi dans une équipe produit IA, et ce que vous devez attendre de chacun.\n\n## Les rôles clés\n\n- **Chef de produit IA** : identifie les opportunités, définit le périmètre, aligne le produit sur les objectifs business, arbitre entre valeur, faisabilité et risque.\n- **Data scientist** : construit et valide les modèles, mène les analyses, mesure la performance et l'incertitude.\n- **Data engineer** : conçoit et fait tourner les pipelines de données et les systèmes déployés, de façon fiable et capable de monter en charge.\n- **Gouvernance des données** : garantit la qualité, l'intégrité, la traçabilité et la conformité des données utilisées.\n\nÀ cela s'ajoutent selon les cas : le **designer** (expérience et gestion de l'erreur), le **développeur** (intégration), le **juridique et la sécurité**, les **experts métier** et les **utilisateurs**.\n\n## Votre rôle d'interface\n\nLe chef de produit n'a pas à entraîner un modèle, mais il doit **traduire** : un besoin métier en problème de données, une performance technique en impact business, une contrainte réglementaire en exigence produit.\n\n## Bonnes pratiques\n\n- Associez le data scientist **dès le cadrage** : il dira vite si le problème est réaliste avec les données disponibles.\n- Impliquez la gouvernance et le juridique **avant** la collecte, pas après.\n- Mettez un expert métier dans la boucle pour **juger la qualité** des résultats, pas seulement des métriques.\n- Clarifiez qui est responsable de la surveillance après lancement.\n\n## Pièges\n\n- Considérer l'équipe data comme un prestataire à qui l'on « passe commande » d'un modèle.\n- Oublier le data engineer : sans pipeline fiable, un bon prototype ne devient pas un produit.\n\n## Pour réfléchir\n\nPour votre projet actuel ou imaginaire, qui répond à chacune de ces questions : d'où viennent les données, qui valide la qualité, qui est réveillé si le modèle se dégrade ?"
+    }
+   ]
+  },
+  {
+   "title": "De l'idée au lancement",
+   "lessons": [
+    {
+     "title": "Le cadre d'identification des opportunités IA",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDisposer d'un filtre simple pour décider si une idée mérite de devenir un projet IA.\n\n## Trois questions fondatrices\n\n1. **Quel besoin utilisateur ?** Identifier les points de friction et les attentes réels, pas ceux que l'on imagine.\n2. **Quelles données ?** Évaluer leur disponibilité et leur qualité : sans elles, pas de modèle.\n3. **Quel objectif business ?** Relier le projet à un résultat mesurable : revenus, engagement, avantage concurrentiel, réduction de coûts.\n\nUne opportunité solide se situe à l'**intersection** des trois. Si l'une manque, vous avez une idée, pas encore un produit.\n\n## Questions complémentaires utiles\n\n- Le problème est-il **répétitif et à fort volume**, ou la décision est-elle rare ? L'IA excelle sur le premier cas.\n- Quel est le **coût d'une erreur** ? Une mauvaise recommandation de contenu est bénigne ; une erreur médicale ou financière ne l'est pas.\n- Existe-t-il une **solution plus simple** (règle, filtre, amélioration de l'interface) ?\n- Peut-on **mesurer le succès** avant et après ?\n\n## Exemple de lecture\n\nIdée : prédire les résiliations d'abonnés. Besoin : l'équipe relation client veut cibler ses actions. Données : historique d'usage et de facturation, en principe disponible. Objectif : réduire la perte d'abonnés. Coût d'erreur : modéré (un geste commercial inutile). Verdict : candidat sérieux pour un prototype.\n\n## Piège fréquent\n\nPartir de la technologie (« nous avons accès à tel modèle, que pourrions-nous en faire ? »). Partez du problème, puis choisissez la technique.\n\n## Mise en pratique\n\nNotez trois idées IA pour votre domaine. Pour chacune, attribuez une note de 1 à 3 au besoin, aux données et à l'impact business. Gardez celle dont le plus faible score est le plus élevé."
+    },
+    {
+     "title": "Évaluer la disponibilité et la qualité des données",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nSavoir poser les bonnes questions sur la donnée avant d'engager l'équipe.\n\n## Étape 1 : définir précisément la donnée recherchée\n\nQuelles informations faut-il pour prédire ou recommander ? Quelle est la **variable à prédire** (l'étiquette) et d'où vient-elle ? Si personne ne sait dire ce qu'est une « bonne » réponse, le problème est mal posé.\n\n## Étape 2 : identifier les sources potentielles\n\nBases internes, journaux d'usage, données de partenaires, données ouvertes, achats de jeux de données, saisies manuelles. Pour chacune : qui en est propriétaire, et a-t-on le droit de s'en servir pour ce nouvel usage ?\n\n## Étape 3 : évaluer la disponibilité\n\n- **Accessibilité** : peut-on réellement y accéder, techniquement et juridiquement ?\n- **Fréquence d'actualisation** : à quel rythme la donnée est-elle mise à jour ?\n- **Volume** : suffisant pour apprendre, y compris pour les cas rares ?\n\n## Étape 4 : évaluer la qualité\n\n- **Complétude** : y a-t-il beaucoup de valeurs manquantes ?\n- **Exactitude et précision** : les valeurs sont-elles justes et assez fines ?\n- **Cohérence** : mêmes formats et mêmes définitions d'une source à l'autre ?\n- **Fraîcheur** : la donnée reflète-t-elle la réalité d'aujourd'hui ?\n- **Fiabilité** : peut-on faire confiance à la façon dont elle a été collectée ?\n- **Utilisabilité** : est-elle documentée et exploitable sans effort démesuré ?\n\n## Étape 5 : lister les risques\n\nBiais de représentativité (certains groupes sont absents), données personnelles sensibles, dépendance à une source unique, fuite d'information sur la cible.\n\n## Piège fréquent\n\nDécouvrir en plein projet que la donnée existe « quelque part » mais n'est ni accessible, ni propre, ni autorisée. Un audit court de la donnée en amont évite des semaines perdues.\n\n## Mise en pratique\n\nPour une idée de votre choix, remplissez ces six critères de qualité avec « bon », « moyen » ou « inconnu ». Les « inconnu » sont votre plan d'investigation."
+    },
+    {
+     "title": "La discovery d'un produit IA",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nAdapter votre démarche de découverte aux spécificités de l'IA.\n\n## Les étapes\n\n1. **Préparer la discovery** : hypothèses, périmètre, profils à rencontrer.\n2. **Segmenter les utilisateurs** : les besoins et la tolérance à l'erreur varient selon les profils.\n3. **Collecter les besoins** : entretiens, observation, identification des points de douleur et des attentes.\n4. **Analyser les données existantes** : ce que racontent déjà les usages, les tickets de support, les journaux.\n5. **Prioriser** les besoins selon l'impact et la faisabilité.\n6. **Valider auprès des utilisateurs** : retour sur la priorisation et sur des maquettes ou prototypes.\n7. **Documenter** les besoins de façon partagée.\n8. **Boucler** : la discovery se répète, avec une boucle de retour continue.\n\n## Spécificités IA\n\n- **Observez le processus actuel** : comment la décision est-elle prise aujourd'hui ? Cette connaissance sert à définir la baseline et à créer des étiquettes.\n- **Testez la confiance** : un utilisateur acceptera-t-il une suggestion automatique ? À quelles conditions (explication, possibilité de corriger) ?\n- **Simulez avant de construire** : une méthode dite « magicien d'Oz », où un humain joue le rôle du modèle, permet de tester la valeur sans entraîner quoi que ce soit.\n- **Mesurez le coût d'une erreur côté utilisateur**, pas seulement côté technique.\n\n## Pièges\n\n- Demander aux utilisateurs « voulez-vous de l'IA ? » : ils parleront de leurs problèmes, pas de la technologie.\n- Interroger uniquement les enthousiastes.\n\n## Mise en pratique\n\nRédigez cinq questions d'entretien qui explorent comment une décision est prise aujourd'hui, sans jamais prononcer le mot « IA »."
+    },
+    {
+     "title": "Élaborer la vision d'un produit IA",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nRédiger une vision claire, qui mobilise l'équipe et reste ancrée dans la valeur utilisateur.\n\n## Ce qu'est une bonne vision\n\nUne phrase ou deux qui décrivent **l'expérience future de l'utilisateur** et la **différence réelle** que l'IA y apporte. Elle ne décrit pas l'architecture.\n\n## Exemple d'inspiration (générique)\n\n« Offrir à chaque utilisateur une expérience qui anticipe ses préférences et l'aide à découvrir ce qu'il aimera ensuite, grâce à un système qui s'adapte à lui en continu. »\n\nCe que cette vision met en jeu côté IA : une **personnalisation proactive**, fondée sur le comportement passé, et une **amélioration continue** grâce aux retours implicites (ce que l'utilisateur regarde, accepte ou ignore).\n\n## Conseils de rédaction\n\n- Restez **centré sur l'utilisateur** et son expérience.\n- Exprimez le **bénéfice concret** pour lui.\n- Soyez **inspirant, simple à retenir et ambitieux**.\n- Montrez **comment l'IA crée une différence** : sans elle, la même promesse serait-elle tenable ?\n- Vérifiez qu'elle résonne avec les **parties prenantes** et avec un besoin réel du marché.\n\n## Structure utilisable\n\n« Pour [utilisateur] qui [problème], [produit] est [catégorie] qui [bénéfice clé]. Contrairement à [alternative], il [différence permise par l'IA]. »\n\n## Pièges\n\n- Une vision technologique (« un moteur de deep learning de nouvelle génération ») qui ne parle pas de l'utilisateur.\n- Une vision trop vague pour guider les arbitrages.\n- Promettre une précision ou une autonomie que les données ne permettent pas.\n\n## Mise en pratique\n\nRédigez la vision d'un produit IA imaginaire en deux phrases, puis testez-la : un utilisateur peut-il la comprendre sans mot technique ?"
+    },
+    {
+     "title": "De la collecte des données au déploiement",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nParcourir le flux de travail d'un projet IA et repérer les boucles de retour.\n\n## Les grandes étapes\n\n1. **Collecte** des données utiles.\n2. **Préparation** : nettoyage, traitement des valeurs manquantes, construction des caractéristiques.\n3. **Entraînement** du modèle sur une partie des données.\n4. **Évaluation** sur des données jamais vues, avec des métriques adaptées au cas d'usage.\n5. **Décision** : la performance est-elle suffisante ?\n6. **Déploiement** en production.\n7. **Surveillance** et retour d'information.\n\n## Les deux boucles à retenir\n\n- Si la performance est insuffisante, deux leviers courants : **enrichir ou augmenter les données** (davantage d'exemples, plus variés, mieux étiquetés, ou génération d'exemples synthétiques quand c'est pertinent), ou **revoir le modèle et ses réglages**.\n- Après le déploiement, si la surveillance montre une dégradation, un **ré-entraînement** est nécessaire : on boucle vers la collecte et l'entraînement.\n\n## Le rôle du chef de produit à chaque étape\n\n- Collecte : s'assurer de la licéité et de la représentativité.\n- Évaluation : définir **avant** les seuils d'acceptation et le coût de chaque type d'erreur.\n- Déploiement : choisir une mise en production **progressive** (un petit pourcentage d'utilisateurs, un test A/B, un mode « fantôme » où le modèle calcule sans agir).\n- Surveillance : prévoir les indicateurs et la responsabilité.\n\n## Pièges\n\n- Évaluer sur les données d'entraînement : le modèle paraît excellent, la production déçoit.\n- Déployer sans plan de retour arrière.\n- Traiter le déploiement comme une ligne d'arrivée.\n\n## Question de réflexion\n\nQuel serait votre critère d'arrêt, c'est-à-dire le niveau de performance en dessous duquel vous renonceriez au projet ?"
+    }
+   ]
+  },
+  {
+   "title": "Opérationnaliser l'IA : MLOps, surveillance et KPI",
+   "lessons": [
+    {
+     "title": "MLOps : faire vivre l'IA en production",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre ce qu'est le MLOps et pourquoi un chef de produit doit s'y intéresser.\n\n## Définition\n\nLe **MLOps** (Machine Learning Operations) rassemble les pratiques et outils qui permettent de **déployer, automatiser et suivre** les modèles en production de façon efficace et fiable. C'est le pont entre le travail des data scientists (créer un modèle) et son usage réel par les utilisateurs, avec des garanties de qualité, de passage à l'échelle et de performance dans la durée.\n\n## Ce que l'on y trouve typiquement\n\n- **Pipelines automatisés** de préparation des données, d'entraînement et d'évaluation.\n- **Versionnement** du code, des données et des modèles.\n- **Déploiement contrôlé** (progressif, avec retour arrière possible).\n- **Surveillance** de la performance et de la qualité des données.\n- **Reproductibilité** : pouvoir refaire un entraînement à l'identique.\n- **Traçabilité** : savoir quel modèle a produit quelle décision.\n\n## Pourquoi cela concerne le chef de produit\n\n- Sans MLOps, un modèle brillant en prototype devient **fragile en production** : mises à jour manuelles, erreurs non détectées, dépendance à une seule personne.\n- Le MLOps détermine la **vitesse d'amélioration** : plus le cycle entraînement, test, déploiement est automatisé, plus vous itérez vite.\n- Il a un **coût** (équipe, outils, calcul) à intégrer au plan produit.\n\n## Question de maturité\n\nUn test simple : si le data scientist principal part en vacances, pouvez-vous ré-entraîner et redéployer le modèle ? Si la réponse est non, votre dette opérationnelle est élevée.\n\n## Piège\n\nReporter le sujet à « plus tard ». Une dette opérationnelle accumulée ralentit tout, surtout au moment où le produit rencontre son public."
+    },
+    {
+     "title": "Surveiller un modèle : performance et dérives",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nMettre en place une surveillance post-déploiement et reconnaître les deux grandes dérives.\n\n## Étape 1 : surveiller en continu\n\nAprès lancement, suivez les performances **en conditions réelles** : un tableau de bord montrant l'évolution du taux d'erreur ou de la précision, des alertes sur les seuils, un suivi du volume et de la qualité des données entrantes. Exemple : pour un modèle de prédiction de résiliation, comparez régulièrement les prédictions aux résiliations effectivement constatées.\n\n## Étape 2 : détecter les dérives\n\n- **Dérive des données (data drift)** : la distribution des données d'entrée change. Exemple : les préférences ou le profil des utilisateurs évoluent, et les recommandations perdent en pertinence. On la détecte en **comparant les données récentes à celles de l'entraînement**.\n- **Dérive du concept (concept drift)** : la relation entre les entrées et la cible change. Exemple : de nouvelles méthodes de fraude apparaissent, et un modèle entraîné sur d'anciens schémas les détecte moins bien. On la détecte en suivant la **performance** et en analysant les **faux négatifs**.\n\nLes deux peuvent coexister. La première peut être détectée sans connaître la vérité terrain ; la seconde exige de la connaître, parfois avec retard (on ne sait qu'un client est parti qu'après coup).\n\n## Autres signaux à suivre\n\n- Hausse des valeurs manquantes ou changement de format d'une source.\n- Écart entre la performance mesurée en test et celle observée en production.\n- Retours qualitatifs : tickets, corrections des utilisateurs.\n\n## Pièges\n\n- Ne suivre que la disponibilité technique : le service répond, mais ses réponses sont devenues mauvaises.\n- Attendre que les utilisateurs se plaignent.\n- Fixer des alertes si sensibles que plus personne n'y prête attention.\n\n## Mise en pratique\n\nPour un produit de votre choix, listez trois indicateurs de dérive des données et un indicateur de dérive du concept, avec le délai nécessaire pour connaître la vérité terrain."
+    },
+    {
+     "title": "Gérer les modèles dans la durée : ré-entraînement et versions",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nSavoir planifier l'entretien d'un modèle et sécuriser les changements.\n\n## Cycles de ré-entraînement\n\nLe **ré-entraînement** consiste à réentraîner le modèle avec des données plus récentes. Trois stratégies courantes :\n\n- **Périodique** : à intervalles fixes (par exemple mensuel ou trimestriel selon la vitesse d'évolution du domaine).\n- **Déclenché** : lorsqu'un indicateur de dérive ou de performance franchit un seuil.\n- **Continu** : mises à jour très fréquentes, plus exigeantes en automatisation et en contrôle.\n\nLe bon rythme dépend de la **vitesse de changement du domaine**, du **coût** d'un ré-entraînement et du **risque** d'un modèle obsolète.\n\n## Contrôle de version\n\nConservez **plusieurs versions** du modèle avec un historique : ce qui a changé, avec quelles données, quelles performances mesurées. Une numérotation de type v1.0, v1.1, v2.0 aide à communiquer. L'intérêt principal : pouvoir **revenir rapidement** à une version précédente si la performance chute après une mise à jour.\n\n## Déployer un nouveau modèle sans risque\n\n- **Mode fantôme** : le nouveau modèle calcule en parallèle sans influencer l'utilisateur.\n- **Déploiement progressif ou test A/B** : une fraction du trafic seulement.\n- **Critères de promotion** définis à l'avance : sur quelle métrique le nouveau modèle doit-il battre l'ancien ?\n\n## Pièges\n\n- Ré-entraîner automatiquement sans contrôle : un modèle plus récent n'est pas forcément meilleur.\n- Perdre la trace des données utilisées, ce qui empêche de reproduire ou d'expliquer.\n- Ignorer l'impact sur l'expérience : un changement de comportement brutal peut déstabiliser les utilisateurs.\n\n## Mise en pratique\n\nDéfinissez pour votre produit : le rythme de ré-entraînement, le déclencheur d'urgence, et la règle de retour arrière en une phrase chacun."
+    },
+    {
+     "title": "Les KPI d'un produit IA : modèle et business",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDistinguer les indicateurs techniques de ceux qui mesurent la valeur, et les relier.\n\n## KPI du modèle (classification)\n\n- **Précision** : parmi les prédictions positives, quelle part était correcte ? Elle compte quand les fausses alertes coûtent cher.\n- **Exactitude** : quelle part de **toutes** les prédictions est correcte ? Trompeuse quand les classes sont déséquilibrées.\n- **Rappel** : parmi les vrais cas positifs, combien a-t-on détectés ? Il compte quand rater un cas coûte cher.\n- **Score F1** : moyenne combinant précision et rappel, utile pour chercher un équilibre.\n\nExemple de piège : sur un phénomène rare, un modèle qui répond toujours « non » peut afficher une exactitude très élevée tout en ne détectant rien. Son rappel est nul.\n\n**Le choix de la métrique dépend du cas d'usage** : détection de fraude ou de maladie, on privilégie souvent le rappel ; filtrage automatique avec action irréversible, la précision.\n\n## KPI business\n\n- **Taux d'adoption** : part des utilisateurs qui utilisent réellement la fonctionnalité.\n- **Engagement** : temps passé, fréquence d'utilisation.\n- **Satisfaction** : enquêtes, Net Promoter Score (NPS).\n- À ajouter : conversion, rétention, gain de temps, coût évité, taux de correction par l'humain.\n\n## Relier les deux\n\nUne bonne métrique de modèle ne garantit pas un bon produit. Un modèle précis mais lent, incompréhensible ou mal intégré ne sera pas adopté. Construisez une **chaîne de causalité** : la performance du modèle améliore l'expérience, qui améliore l'usage, qui produit l'impact business. Vérifiez chaque maillon.\n\n## Pièges\n\n- Optimiser la métrique au détriment du produit.\n- Comparer à rien : toute performance se lit **par rapport à une baseline** (règle simple, processus humain actuel).\n- Négliger les métriques de garde-fou (plaintes, erreurs graves, équité entre groupes).\n\n## Mise en pratique\n\nPour un cas d'usage, choisissez une métrique modèle, une métrique d'adoption, une métrique d'impact et un garde-fou, et justifiez chaque choix en une phrase."
+    }
+   ]
+  },
+  {
+   "title": "Stratégie et mise sur le marché",
+   "lessons": [
+    {
+     "title": "Planification stratégique : de l'objectif business à la feuille de route",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDécliner un objectif business en étapes livrables, mesurables et réalistes.\n\n## Partir d'un objectif business\n\nExemple : « augmenter les ventes en ligne » sur l'année. L'objectif doit être **mesurable** et attribuable : à quel périmètre, quelle base de comparaison, quelle part est attribuable au produit IA ?\n\n## Découper par trimestre : un exemple de logique\n\n- **Trimestre 1** : lancer une première version opérationnelle (un produit minimum viable en production). Livrable : le service tourne. Objectif : activer le modèle et collecter des retours.\n- **Trimestre 2** : analyser et optimiser. Livrable : un rapport d'analyse et un modèle amélioré. Objectif : un premier gain mesurable sur la conversion.\n- **Trimestre 3** : affiner à partir des retours utilisateurs. Livrable : une nouvelle version en production. Objectif : un gain supplémentaire.\n- **Trimestre 4** : étendre à d'autres périmètres (catégories, marchés). Livrable : un modèle étendu. Objectif : généraliser l'impact.\n\nLes valeurs chiffrées sont à fixer **à partir de vos propres mesures** : un gain vu dans un exemple n'est pas une promesse pour votre produit.\n\n## Principes pour une feuille de route IA\n\n- **Jalons de décision** : à chaque étape, « poursuivre, ajuster ou arrêter » selon des critères connus d'avance.\n- **Hypothèses explicites** : « nous supposons que la donnée X suffit pour atteindre Y ».\n- **Marge d'incertitude** : l'IA a des délais difficiles à prévoir, ajoutez des plages plutôt que des dates uniques.\n- **Dépendances** : données, infrastructure, conformité, adoption par les équipes.\n- **Budget d'exploitation** : suivi, ré-entraînement, support.\n\n## Pièges\n\n- Une feuille de route faite uniquement de fonctionnalités.\n- Un objectif de gain figé avant mesure de la baseline.\n- Oublier la conduite du changement côté utilisateurs.\n\n## Mise en pratique\n\nPrenez un objectif business de votre choix et construisez une feuille de route de quatre trimestres avec, pour chacun, un livrable, un objectif intermédiaire et une décision de poursuite."
+    },
+    {
+     "title": "L'analyse concurrentielle d'un produit IA",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nPositionner votre produit en comparant des critères pertinents pour l'IA.\n\n## Analyser le marché\n\n- Identifier les concurrents **directs** (même besoin, même public) et **indirects** (autre manière de résoudre le même problème, y compris le tableur ou le processus manuel).\n- Comprendre leurs **forces et faiblesses** : fonctionnalités clés, performance perçue, prix, intégration.\n- Écouter les utilisateurs : avis, forums, tickets de support.\n\n## La matrice concurrentielle\n\nOn compare des produits (en colonnes) sur des critères (en lignes), avec une échelle simple : oui, partiel, non. Critères typiques pour un produit IA :\n\n- fraîcheur des résultats (temps réel ou mise à jour périodique) ;\n- niveau de personnalisation ;\n- facilité d'intégration ;\n- transparence et explicabilité ;\n- confidentialité et conformité ;\n- qualité mesurée sur un jeu de test commun ;\n- coût à l'usage.\n\nNotez que la transparence peut être un point faible de votre produit **et** un critère décisif pour certains clients : l'analyse doit aussi servir à vous faire changer.\n\n## Formuler le positionnement\n\nUne phrase qui dit ce qui vous rend unique, de façon vérifiable : « Notre moteur calcule ses recommandations en temps réel, là où d'autres les mettent à jour périodiquement, ce qui améliore la pertinence. »\n\n**Attention** : n'affirmez un gain chiffré (« +20 % d'engagement ») que si vous l'avez mesuré dans des conditions comparables ; sinon, formulez-le comme une hypothèse à tester.\n\n## Pièges\n\n- Se comparer uniquement sur des fonctionnalités et jamais sur la valeur délivrée.\n- Choisir des critères où l'on gagne à coup sûr.\n- Oublier que les modèles sous-jacents se banalisent : l'avantage durable vient des données, de l'intégration et de l'expérience.\n\n## Mise en pratique\n\nConstruisez une matrice avec trois produits réels ou fictifs et cinq critères. Quel critère est votre véritable différenciateur ?"
+    },
+    {
+     "title": "Conformité réglementaire : RGPD et réglementation européenne sur l'IA",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nConnaître les deux cadres principaux en Europe et savoir les intégrer au produit dès la conception. Cette leçon est une introduction pédagogique, pas un avis juridique : consultez vos équipes juridiques pour toute décision.\n\n## Le RGPD : protéger les données personnelles\n\n- **Objet** : la protection des données personnelles et de la vie privée.\n- **Champ** : tout traitement de données personnelles de personnes situées dans l'Union européenne.\n- **Principes clés** : licéité et information des personnes, **minimisation**, limitation des finalités, exactitude, durée de conservation limitée, sécurité, droits des personnes (accès, rectification, effacement…).\n- **Décisions automatisées** : des règles particulières encadrent les décisions produisant des effets significatifs sur une personne sans intervention humaine.\n- **Sanctions** : elles peuvent atteindre un pourcentage significatif du chiffre d'affaires annuel mondial. Les plafonds exacts sont à vérifier dans le texte.\n\n## Le règlement européen sur l'IA : encadrer les systèmes\n\n- **Objet** : assurer que les systèmes d'IA mis sur le marché ou utilisés dans l'Union soient sûrs, transparents et respectueux des droits fondamentaux.\n- **Approche par les risques** : certaines pratiques sont interdites, certains systèmes sont qualifiés **à haut risque** (avec des exigences renforcées), d'autres sont soumis à des **obligations de transparence**, le reste est peu encadré.\n- **Exigences typiques pour le haut risque** : gestion des risques, qualité des données, documentation, traçabilité, supervision humaine, robustesse et sécurité.\n- **Calendrier** : le texte a été adopté et s'applique de façon **progressive**. À la date de rédaction, vérifiez les échéances en vigueur pour votre cas.\n- **Acteurs visés** : les fournisseurs de systèmes d'IA et les organisations qui les déploient.\n\n## Les deux cadres s'ajoutent\n\nUn produit IA traitant des données personnelles est soumis aux **deux**. Le RGPD parle de **la donnée**, le règlement sur l'IA parle du **système**.\n\n## Bonnes pratiques produit\n\n- Cartographier les données personnelles utilisées et leur base légale **avant** de collecter.\n- Classer votre cas d'usage selon le niveau de risque.\n- Prévoir la **transparence** (informer qu'une IA intervient) et la **supervision humaine**.\n- Documenter les données, les choix et les tests.\n- Impliquer juridique et sécurité dès le cadrage.\n\n## Piège\n\nTraiter la conformité comme une étape finale. Une exigence découverte tard peut forcer à refaire les données ou l'architecture.\n\n## Mise en pratique\n\nPour votre idée de produit : listez les données personnelles utilisées, le niveau de risque présumé, et deux mesures de transparence à intégrer à l'interface."
+    },
+    {
+     "title": "Monétisation et modèles économiques",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nChoisir un modèle économique aligné avec la valeur réellement apportée par l'IA.\n\n## Étape 1 : choisir un modèle adapté\n\n- **Abonnement** : un tarif récurrent, souvent par paliers selon les fonctionnalités. Pertinent quand la **valeur est constante et récurrente** (un outil utilisé chaque semaine).\n- **Tarification à l'usage** : facturation selon le volume réel (requêtes, documents traités, minutes). Pertinent quand la **valeur dépend directement du volume**.\n- **Hybride** : un abonnement de base avec un quota, puis un paiement à l'usage au-delà.\n- **Fonctionnalité premium** : une option payante ajoutée à un produit existant.\n- **Au résultat** : prix lié à un gain mesuré, séduisant mais exigeant en mesure et en confiance.\n\n## Étape 2 : relier le prix à la valeur\n\nPlus la valeur est **tangible** (coûts évités, revenus supplémentaires, temps gagné), plus il est facile de justifier un prix élevé. Par exemple, un outil qui anticiperait des pannes d'équipements peut être valorisé en fonction des arrêts évités ; un moteur de recommandation, en fonction des ventes additionnelles. Les chiffres doivent venir de **vos mesures**, pas d'exemples génériques.\n\n## Particularité IA : le coût marginal\n\nContrairement à un logiciel classique, chaque usage peut avoir un **coût de calcul** non négligeable (appels à un modèle, infrastructure). Un abonnement illimité peut devenir déficitaire si certains utilisateurs consomment beaucoup. Calculez votre **coût par utilisation** et votre marge.\n\n## À prendre en compte\n\n- Le coût des données, du ré-entraînement et du support.\n- La **perception** de l'utilisateur : accepte-t-il de payer pour une sortie qui peut être imparfaite ?\n- Le niveau d'engagement contractuel (niveaux de service, garanties) que vous pouvez réellement tenir avec un modèle probabiliste.\n\n## Pièges\n\n- Fixer un prix sans connaître le coût par usage.\n- Promettre une performance chiffrée contractuelle sans l'avoir mesurée.\n- Choisir l'usage quand le client veut de la prévisibilité budgétaire.\n\n## Mise en pratique\n\nPour un produit imaginaire, comparez abonnement et usage sur trois profils de clients (faible, moyen, gros consommateur). Que gagnez-vous, que risquez-vous ?"
+    }
+   ]
+  },
+  {
+   "title": "Mise en pratique et synthèse",
+   "lessons": [
+    {
+     "title": "Atelier : concevoir une stratégie de produit axée sur l'IA",
+     "kind": "exercise",
+     "body_md": "## Objectif\n\nAppliquer toute la démarche du module à un scénario de marché, seul ou en petite équipe, avec des outils gratuits (un document partagé ou une feuille de papier suffisent).\n\n## Scénario de départ (à adapter)\n\nUn détaillant en ligne de taille moyenne veut mieux orienter ses clients dans un catalogue large et réduire les abandons de panier. Il dispose d'un historique de navigation et d'achats, d'un service client et de peu d'équipes data.\n\nVous pouvez remplacer ce scénario par un cas de votre propre domaine.\n\n## Partie A : remue-méninges (environ 15 minutes)\n\n1. Écrivez le **problème** en une phrase, du point de vue de l'utilisateur.\n2. Listez les **besoins** et points de friction (au moins cinq).\n3. Pour chacun, indiquez une **solution possible** et dites si l'IA est vraiment nécessaire ou si une règle suffirait.\n4. Choisissez **un** concept de produit IA à approfondir.\n\n## Partie B : ébauche de stratégie (environ 15 minutes)\n\nProduisez une feuille de route de haut niveau avec trois blocs :\n\n- **Idéation** : besoin, vision (deux phrases), données nécessaires et leur qualité estimée, métrique modèle et métrique business.\n- **Développement** : étapes de la collecte au déploiement, rôles impliqués, mode de lancement progressif, plan de surveillance et de ré-entraînement.\n- **Mise sur le marché** : positionnement face à deux alternatives, points de vigilance RGPD et réglementation sur l'IA, modèle économique et coût par utilisation.\n\n## Partie C : discussion\n\nPrésentez votre feuille de route à d'autres participants ou à un collègue. Demandez-leur d'attaquer **trois hypothèses** : laquelle est la plus risquée, quelle donnée manque, quel effet indésirable est possible ? Notez ce que vous changez.\n\n## Points d'attention\n\n- Ne chiffrez pas un gain sans dire d'où il viendrait ni comment vous le mesureriez.\n- Écrivez au moins un **critère d'arrêt**."
+    },
+    {
+     "title": "Atelier : détecter une dérive des données avec un indicateur de stabilité",
+     "kind": "exercise",
+     "body_md": "## Objectif\n\nMettre en œuvre une détection de dérive des données avec Python, pour comprendre concrètement ce que surveille un tableau de bord de production. Il vous faut Python avec `numpy` et `pandas`, par exemple dans un notebook en ligne gratuit.\n\n## Principe\n\nOn compare la distribution d'une variable à l'entraînement (référence) à sa distribution en production. L'indicateur utilisé ici s'appelle **Population Stability Index (PSI)**. Il découpe la référence en tranches de même effectif, puis mesure l'écart entre les proportions observées dans chaque tranche. Plus il est élevé, plus la distribution s'est éloignée.\n\n## Le code\n\nLes données sont simulées : l'âge dérive, le panier reste stable.\n\n\n```python\nimport numpy as np\nimport pandas as pd\n\nrng = np.random.default_rng(42)\n\n# Données vues à l'entraînement\ntrain = pd.DataFrame({\n    \"age\": rng.normal(40, 10, 5000),\n    \"panier\": rng.gamma(shape=2.0, scale=30.0, size=5000),\n})\n# Données observées en production : l'âge a dérivé, pas le panier\nprod = pd.DataFrame({\n    \"age\": rng.normal(46, 10, 5000),\n    \"panier\": rng.gamma(shape=2.0, scale=30.0, size=5000),\n})\n\ndef psi(reference, actual, bins=10):\n    \"\"\"Population Stability Index entre deux séries numériques.\"\"\"\n    edges = np.quantile(reference, np.linspace(0, 1, bins + 1))\n    edges[0], edges[-1] = -np.inf, np.inf\n    ref_share = np.histogram(reference, bins=edges)[0] / len(reference)\n    act_share = np.histogram(actual, bins=edges)[0] / len(actual)\n    ref_share = np.clip(ref_share, 1e-6, None)\n    act_share = np.clip(act_share, 1e-6, None)\n    return float(np.sum((act_share - ref_share) * np.log(act_share / ref_share)))\n\nfor col in train.columns:\n    print(col, round(psi(train[col], prod[col]), 3))\n```\n\n## Résultat attendu\n\nAvec la graine donnée, la sortie est de l'ordre de :\n\n```text\nage 0.43\npanier 0.002\n```\n\nLa dérive de l'âge ressort clairement, celle du panier est négligeable. Vos chiffres exacts peuvent varier légèrement si vous changez la graine ou la version des bibliothèques.\n\n## Lecture des valeurs\n\nIl existe des repères d'usage courants (en dessous d'environ 0,1, stable ; entre 0,1 et 0,25, à surveiller ; au-delà, dérive marquée), mais ce sont des **conventions empiriques, pas des lois**. Calibrez-les sur vos propres données et le coût d'une fausse alerte.\n\n## Pour aller plus loin\n\n1. Changez la moyenne de l'âge en production de 46 à 41, puis à 55. Comment évolue l'indicateur ?\n2. Ajoutez une variable de votre choix et calculez son PSI.\n3. Une dérive des données implique-t-elle forcément une baisse de performance ? Expliquez pourquoi on doit aussi suivre la performance quand la vérité terrain est disponible.\n\n## Limite à connaître\n\nCet indicateur ne détecte pas une dérive du concept (la relation entre entrées et cible change alors que les entrées restent identiques). Pour cela, il faut comparer les prédictions aux résultats réels."
+    },
+    {
+     "title": "Récapitulatif du module",
+     "kind": "reading",
+     "body_md": "## Les idées essentielles\n\n- Un **produit IA** résout un problème concret avec des données ; c'est la valeur apportée qui compte, pas la technologie.\n- Il diffère d'un produit traditionnel : **expérimentation itérative**, résultats probabilistes, vie après lancement.\n- L'écosystème se lit en **couches** (matériel, modèles, plateformes, applications) ; l'avantage durable vient des données, du métier et de l'expérience.\n- Une équipe IA réunit **chef de produit, data scientist, data engineer, gouvernance des données**, et des experts métier.\n- Une **opportunité** se juge sur trois axes : besoin utilisateur, données, objectif business.\n- Le flux va de la **collecte au déploiement**, avec des boucles : enrichir les données ou ré-entraîner.\n- Le **MLOps** fiabilise la production ; la **surveillance** détecte les dérives (données, concept) ; les **versions** permettent le retour arrière.\n- Deux familles de **KPI** : modèle (précision, exactitude, rappel, F1) et business (adoption, engagement, satisfaction) ; il faut les relier.\n- La **stratégie de mise sur le marché** combine feuille de route, analyse concurrentielle, conformité (RGPD, réglementation sur l'IA) et monétisation.\n\n## Check-list du chef de produit IA\n\n- Le problème est-il formulé du point de vue de l'utilisateur ?\n- Les données sont-elles disponibles, de qualité, et licites ?\n- Une baseline simple existe-t-elle, et le modèle la bat-il ?\n- Qui surveille, et quel est le seuil d'alerte ?\n- Que fait l'interface quand le modèle se trompe ?\n- Quel est le coût par utilisation, et le prix cohérent avec la valeur ?\n- Quel est le niveau de risque réglementaire ?\n\n## Pour continuer\n\nRéalisez le livrable du module : une stratégie complète de produit IA, présentée de façon à convaincre un comité de décision."
+    }
+   ]
+  }
+ ],
+ "quiz": {
+  "title": "Quiz du module",
+  "pass_percent": 70,
+  "max_attempts": null,
+  "questions": [
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle définition d'un produit IA est la plus juste ?",
+    "feedback": "Un produit IA se définit par le problème résolu et le recours à des données pour décider ou recommander. Le marketing ou la suppression d'emplois n'en sont pas des critères.",
+    "options": [
+     [
+      "Un produit qui utilise l'IA pour résoudre un problème concret en s'appuyant sur des données, par des décisions ou des recommandations",
+      true
+     ],
+     [
+      "Tout produit dont la communication mentionne le mot « IA »",
+      false
+     ],
+     [
+      "Un produit qui fonctionne uniquement avec des règles écrites à la main",
+      false
+     ],
+     [
+      "Un produit qui remplace obligatoirement les équipes humaines",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle caractéristique distingue le plus un produit IA d'un produit traditionnel ?",
+    "feedback": "Les sorties d'un modèle sont des estimations, et la qualité dépend de données qui changent. Cela impose tests de performance, suivi et gestion de l'erreur.",
+    "options": [
+     [
+      "Ses résultats sont probabilistes et dépendent de données qui évoluent",
+      true
+     ],
+     [
+      "Il n'a pas besoin de tests",
+      false
+     ],
+     [
+      "Il est toujours plus cher à construire",
+      false
+     ],
+     [
+      "Il donne toujours la même sortie pour la même entrée par conception",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi faut-il traiter le lancement d'un produit IA comme un début plutôt qu'une fin ?",
+    "feedback": "Le monde réel évolue : sans surveillance et ré-entraînement, les performances peuvent baisser. Ce n'est ni une expiration automatique ni une obligation légale générale.",
+    "options": [
+     [
+      "Parce que le modèle peut se dégrader quand les données ou le contexte changent",
+      true
+     ],
+     [
+      "Parce que le code d'un modèle expire automatiquement",
+      false
+     ],
+     [
+      "Parce que les utilisateurs refusent toujours la première version",
+      false
+     ],
+     [
+      "Parce que la réglementation interdit de figer un modèle",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans la lecture en couches de l'écosystème, que fournissent les fournisseurs de modèles de fondation ?",
+    "feedback": "Les modèles de fondation sont des modèles généralistes (texte, image, code…). Le matériel et les applications sont d'autres couches.",
+    "options": [
+     [
+      "De grands modèles généralistes qu'on peut utiliser ou adapter",
+      true
+     ],
+     [
+      "Les puces qui exécutent les calculs",
+      false
+     ],
+     [
+      "Les applications finales destinées aux utilisateurs",
+      false
+     ],
+     [
+      "Uniquement les jeux de données d'entraînement",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est, en général, l'avantage durable le plus défendable d'un produit IA face à la banalisation des modèles ?",
+    "feedback": "Les modèles accessibles à tous se banalisent. Les données exclusives, l'expertise métier et l'intégration dans l'expérience sont plus difficiles à copier.",
+    "options": [
+     [
+      "Ses données propres, sa connaissance du métier et son expérience utilisateur",
+      true
+     ],
+     [
+      "Le choix du fournisseur de modèle du moment",
+      false
+     ],
+     [
+      "Le nombre de paramètres du modèle utilisé",
+      false
+     ],
+     [
+      "L'usage d'un vocabulaire technique avancé dans la communication",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels critères aident à choisir entre une API de modèle externe et un modèle ouvert hébergé en propre ?",
+    "feedback": "Confidentialité, coût, compétences et réversibilité sont des critères structurants. Les éléments de notoriété ou d'apparence n'en sont pas.",
+    "options": [
+     [
+      "Les exigences de confidentialité et de localisation des données",
+      true
+     ],
+     [
+      "Le coût total et les compétences disponibles",
+      true
+     ],
+     [
+      "La possibilité de changer de fournisseur plus tard",
+      true
+     ],
+     [
+      "La couleur de l'interface du fournisseur",
+      false
+     ],
+     [
+      "Le nombre d'articles de presse publiés sur le fournisseur",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est le rôle principal du data engineer dans une équipe produit IA ?",
+    "feedback": "Le data engineer assure les pipelines et systèmes qui alimentent et déploient les modèles. La vision relève du chef de produit, la conformité de la gouvernance et du juridique.",
+    "options": [
+     [
+      "Concevoir, construire et faire tourner des systèmes de données fiables et évolutifs",
+      true
+     ],
+     [
+      "Définir la vision et les priorités produit",
+      false
+     ],
+     [
+      "Garantir seul la conformité juridique",
+      false
+     ],
+     [
+      "Mener les entretiens utilisateurs",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Parmi ces éléments, lesquels font partie du cadre d'identification d'une opportunité IA ?",
+    "feedback": "Le cadre croise besoin utilisateur, données et objectif business. Les effets d'annonce ne remplacent pas ces trois axes.",
+    "options": [
+     [
+      "Le besoin des utilisateurs",
+      true
+     ],
+     [
+      "La disponibilité et la qualité des données",
+      true
+     ],
+     [
+      "L'alignement avec un objectif business mesurable",
+      true
+     ],
+     [
+      "Le nombre de partenariats annoncés avec des fournisseurs de modèles",
+      false
+     ],
+     [
+      "La popularité du sujet dans les médias",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel critère de qualité des données évalue si les valeurs reflètent la situation actuelle ?",
+    "feedback": "La fraîcheur mesure l'actualité de la donnée. La complétude concerne les valeurs manquantes, la cohérence l'harmonie entre sources, l'utilisabilité la facilité d'exploitation.",
+    "options": [
+     [
+      "La fraîcheur",
+      true
+     ],
+     [
+      "La complétude",
+      false
+     ],
+     [
+      "La cohérence",
+      false
+     ],
+     [
+      "L'utilisabilité",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle question d'entretien est la mieux adaptée à la discovery d'un produit IA ?",
+    "feedback": "On explore le processus et les frictions réels. Les utilisateurs savent décrire leurs problèmes, pas choisir la technique.",
+    "options": [
+     [
+      "« Comment prenez-vous cette décision aujourd'hui, et qu'est-ce qui vous fait perdre du temps ? »",
+      true
+     ],
+     [
+      "« Voulez-vous de l'IA dans votre quotidien ? »",
+      false
+     ],
+     [
+      "« Quel algorithme préféreriez-vous voir utilisé ? »",
+      false
+     ],
+     [
+      "« Seriez-vous d'accord pour que le produit soit parfait ? »",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "À quoi sert une approche dite « magicien d'Oz » en discovery ?",
+    "feedback": "Un humain joue le rôle du système pour valider l'intérêt et les attentes à moindre coût.",
+    "options": [
+     [
+      "À tester la valeur d'une fonction en simulant le modèle par un humain avant de construire",
+      true
+     ],
+     [
+      "À entraîner plus vite un modèle de langage",
+      false
+     ],
+     [
+      "À automatiser le recueil des données",
+      false
+     ],
+     [
+      "À remplacer les tests de performance",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Laquelle de ces formulations est la meilleure vision de produit IA ?",
+    "feedback": "Une bonne vision parle de l'utilisateur et du bénéfice concret. Les autres formulations décrivent la technique.",
+    "options": [
+     [
+      "« Aider chaque lecteur à trouver sa prochaine lecture, en s'adaptant à ses goûts en continu. »",
+      true
+     ],
+     [
+      "« Un moteur d'apprentissage profond de nouvelle génération. »",
+      false
+     ],
+     [
+      "« Déployer le plus grand modèle possible. »",
+      false
+     ],
+     [
+      "« Maximiser le nombre de paramètres de notre système. »",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Après évaluation, la performance d'un modèle est insuffisante. Quelle action est cohérente avec le flux décrit ?",
+    "feedback": "Le flux comporte une boucle : on améliore données ou modèle puis on réévalue sur des données jamais vues. Évaluer sur l'entraînement gonfle artificiellement le score.",
+    "options": [
+     [
+      "Enrichir ou augmenter les données, ou revoir le modèle, puis réévaluer",
+      true
+     ],
+     [
+      "Déployer quand même et corriger en production",
+      false
+     ],
+     [
+      "Évaluer à nouveau sur les données d'entraînement pour obtenir un meilleur score",
+      false
+     ],
+     [
+      "Supprimer l'étape d'évaluation",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est le principal intérêt d'un déploiement progressif (fraction du trafic ou mode fantôme) ?",
+    "feedback": "Il permet de détecter les problèmes sur un périmètre restreint et de revenir en arrière facilement.",
+    "options": [
+     [
+      "Limiter le risque en observant le comportement réel avant la généralisation",
+      true
+     ],
+     [
+      "Supprimer le besoin de surveillance",
+      false
+     ],
+     [
+      "Éviter de définir des critères d'acceptation",
+      false
+     ],
+     [
+      "Garantir que le modèle ne se dégrade jamais",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que désigne le MLOps ?",
+    "feedback": "Le MLOps est le pont entre le développement d'un modèle et son exploitation fiable dans la durée.",
+    "options": [
+     [
+      "Les pratiques et outils qui déploient, automatisent et suivent les modèles en production",
+      true
+     ],
+     [
+      "Une technique pour entraîner des réseaux de neurones plus profonds",
+      false
+     ],
+     [
+      "Un type de modèle de langage",
+      false
+     ],
+     [
+      "Un cadre juridique européen",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Les prédictions d'un modèle de recommandation perdent en pertinence parce que les préférences des utilisateurs ont changé. De quoi s'agit-il ?",
+    "feedback": "Quand la distribution des entrées évolue par rapport à l'entraînement, on parle de dérive des données.",
+    "options": [
+     [
+      "D'une dérive des données",
+      true
+     ],
+     [
+      "D'une fuite de données",
+      false
+     ],
+     [
+      "D'un surapprentissage au sens strict",
+      false
+     ],
+     [
+      "D'un défaut de licence",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Comment détecte-t-on typiquement une dérive du concept ?",
+    "feedback": "La relation entrées-cible a changé : seule la comparaison des prédictions avec la réalité la révèle.",
+    "options": [
+     [
+      "En suivant l'évolution des performances et en analysant les erreurs, notamment les faux négatifs",
+      true
+     ],
+     [
+      "En comparant uniquement la taille des fichiers de données",
+      false
+     ],
+     [
+      "En relançant l'entraînement chaque jour sans mesure",
+      false
+     ],
+     [
+      "En observant le temps de réponse du serveur",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles pratiques sécurisent la gestion des versions de modèles ?",
+    "feedback": "Traçabilité, retour arrière et critères de promotion réduisent le risque. Écraser ou déployer sans comparer retire ces protections.",
+    "options": [
+     [
+      "Conserver un historique des versions avec leurs données et performances",
+      true
+     ],
+     [
+      "Pouvoir revenir rapidement à une version précédente",
+      true
+     ],
+     [
+      "Définir à l'avance des critères pour promouvoir un nouveau modèle",
+      true
+     ],
+     [
+      "Écraser l'ancienne version sans trace",
+      false
+     ],
+     [
+      "Ré-entraîner automatiquement et déployer sans comparer",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pour un modèle de détection d'une maladie grave où rater un cas est très coûteux, quelle métrique privilégier en priorité ?",
+    "feedback": "Le rappel mesure la part des vrais cas détectés. Rater un cas étant coûteux, on cherche à le maximiser, quitte à tolérer des fausses alertes.",
+    "options": [
+     [
+      "Le rappel",
+      true
+     ],
+     [
+      "L'exactitude seule",
+      false
+     ],
+     [
+      "La précision seule",
+      false
+     ],
+     [
+      "Le nombre de requêtes par seconde",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Sur un phénomène très rare, un modèle répond toujours « absent ». Que peut-on observer ?",
+    "feedback": "Comme la classe positive est rare, presque toutes les réponses « absent » sont justes, donc l'exactitude est élevée, mais aucun cas positif n'est détecté.",
+    "options": [
+     [
+      "Une exactitude élevée mais un rappel nul",
+      true
+     ],
+     [
+      "Une précision parfaite et un rappel parfait",
+      false
+     ],
+     [
+      "Une exactitude nulle",
+      false
+     ],
+     [
+      "Un score F1 élevé",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Parmi ces indicateurs, lesquels sont des KPI business d'un produit IA ?",
+    "feedback": "Adoption, engagement et satisfaction mesurent l'effet sur les utilisateurs. Rappel et F1 sont des KPI du modèle.",
+    "options": [
+     [
+      "Le taux d'adoption par les utilisateurs",
+      true
+     ],
+     [
+      "La fréquence d'utilisation",
+      true
+     ],
+     [
+      "Le Net Promoter Score",
+      true
+     ],
+     [
+      "Le rappel du modèle",
+      false
+     ],
+     [
+      "Le score F1",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est le principal risque d'annoncer à l'avance un gain chiffré de conversion pour un produit IA ?",
+    "feedback": "Un gain observé ailleurs n'est pas transposable. Il faut mesurer sa baseline et traiter le gain comme une hypothèse.",
+    "options": [
+     [
+      "S'engager sans avoir mesuré la baseline ni validé l'hypothèse sur ses propres données",
+      true
+     ],
+     [
+      "Dépasser le budget de communication",
+      false
+     ],
+     [
+      "Ne plus pouvoir utiliser de métriques",
+      false
+     ],
+     [
+      "Être obligé de publier le modèle en open source",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans une feuille de route IA, que signifie un jalon de décision ?",
+    "feedback": "L'incertitude propre à l'IA impose des moments de décision explicites fondés sur des critères définis d'avance.",
+    "options": [
+     [
+      "Un point où l'on choisit de poursuivre, d'ajuster ou d'arrêter selon des critères connus d'avance",
+      true
+     ],
+     [
+      "Une date de livraison garantie par l'équipe data",
+      false
+     ],
+     [
+      "Une réunion de communication interne",
+      false
+     ],
+     [
+      "La date de fin de vie du modèle",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans une matrice concurrentielle, quelle pratique est recommandée ?",
+    "feedback": "Une analyse honnête inclut les faiblesses et les concurrents indirects : elle sert à décider, pas à se rassurer.",
+    "options": [
+     [
+      "Choisir des critères qui comptent pour les clients, y compris ceux où l'on est en retard",
+      true
+     ],
+     [
+      "Ne comparer que sur des critères où l'on gagne",
+      false
+     ],
+     [
+      "Ne comparer que le prix",
+      false
+     ],
+     [
+      "Ne comparer qu'avec des concurrents directs",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles affirmations sur RGPD et réglementation européenne sur l'IA sont exactes ?",
+    "feedback": "Les deux cadres se cumulent : le RGPD concerne les données personnelles, le règlement sur l'IA les systèmes selon leur risque.",
+    "options": [
+     [
+      "Un produit IA qui traite des données personnelles peut être soumis aux deux",
+      true
+     ],
+     [
+      "Le règlement sur l'IA repose sur une approche par niveaux de risque",
+      true
+     ],
+     [
+      "Le RGPD pose notamment des principes de minimisation et de limitation des finalités",
+      true
+     ],
+     [
+      "Le RGPD ne s'applique pas aux systèmes d'IA",
+      false
+     ],
+     [
+      "Le règlement sur l'IA remplace entièrement le RGPD",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quand intégrer la conformité réglementaire à la démarche produit ?",
+    "feedback": "Une exigence découverte tard peut contraindre à refaire les données ou l'architecture.",
+    "options": [
+     [
+      "Dès le cadrage, avant la collecte des données",
+      true
+     ],
+     [
+      "Juste avant la mise en production",
+      false
+     ],
+     [
+      "Seulement en cas de plainte",
+      false
+     ],
+     [
+      "Uniquement lors de la version 2",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "La tarification à l'usage est particulièrement pertinente quand :",
+    "feedback": "À l'usage, le prix suit le volume, donc la valeur quand elle y est proportionnelle. L'abonnement convient à une valeur stable et récurrente.",
+    "options": [
+     [
+      "La valeur dépend directement du volume d'utilisation",
+      true
+     ],
+     [
+      "La valeur est identique quel que soit le volume",
+      false
+     ],
+     [
+      "Le client exige une facture fixe sans aucune variation",
+      false
+     ],
+     [
+      "Le coût de calcul par usage est nul",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi un abonnement illimité peut-il poser problème pour un produit IA ?",
+    "feedback": "Le coût marginal d'un produit IA n'est pas négligeable, il faut connaître le coût par utilisation et plafonner ou segmenter l'offre.",
+    "options": [
+     [
+      "Chaque usage a un coût de calcul, donc de gros consommateurs peuvent rendre l'offre déficitaire",
+      true
+     ],
+     [
+      "Parce que les modèles refusent d'être utilisés à haut volume",
+      false
+     ],
+     [
+      "Parce que le RGPD interdit les abonnements",
+      false
+     ],
+     [
+      "Parce que l'abonnement supprime la nécessité de surveiller",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Choisissez un produit IA fictif ou réel de votre domaine. Décrivez en une dizaine de lignes : le problème résolu, les données nécessaires et leur qualité, une métrique du modèle et une métrique business, un risque de dérive et la façon de le surveiller.",
+    "feedback": "Une bonne réponse relie le besoin utilisateur aux données, choisit des métriques cohérentes avec le coût des erreurs, distingue dérive des données et du concept, et prévoit un indicateur et une action.",
+    "options": []
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Un collègue propose d'ajouter de l'IA à un produit « parce que c'est tendance ». Quelles questions lui posez-vous avant d'engager l'équipe, et quelle alternative plus simple proposez-vous d'examiner ?",
+    "feedback": "Attendez : problème utilisateur réel, données disponibles et licites, objectif mesurable, coût d'une erreur, baseline. L'alternative peut être une règle, un filtre ou une amélioration de l'interface.",
+    "options": []
+   }
+  ]
+ },
+ "assignment": {
+  "title": "Livrable pratique : la stratégie d'un produit IA, du besoin à la mise sur le marché",
+  "instructions_md": "## Objectif\n\nDémontrer que vous savez construire et défendre la **stratégie complète d'un produit IA** devant un comité de décision, en reliant besoin, données, exploitation, conformité et modèle économique.\n\n## Consignes\n\nChoisissez un scénario (le scénario de l'atelier ou un cas de votre domaine, fictif ou inspiré de sources publiques). **N'utilisez aucune donnée confidentielle.** Rédigez un document de 3 à 5 pages (ou un diaporama équivalent) comprenant :\n\n1. **Opportunité** : le besoin utilisateur, la valeur attendue, l'objectif business mesurable, et une comparaison avec une solution plus simple sans IA.\n2. **Vision** : une vision en deux phrases, centrée sur l'utilisateur.\n3. **Données** : les données nécessaires, leurs sources, une évaluation de leur qualité sur au moins quatre critères (par exemple complétude, fraîcheur, cohérence, fiabilité) et les risques (biais, données personnelles).\n4. **Développement et exploitation** : les étapes de la collecte au déploiement, le mode de lancement progressif, le plan de surveillance (au moins un indicateur de dérive des données et un moyen de détecter une dérive du concept), la stratégie de ré-entraînement et de versions.\n5. **KPI** : au moins une métrique de modèle justifiée par le coût des erreurs, deux KPI business, un garde-fou, et la baseline de comparaison.\n6. **Mise sur le marché** : feuille de route sur quatre trimestres avec livrables, objectifs et jalons de décision ; matrice concurrentielle de trois offres sur au moins cinq critères ; positionnement en une phrase.\n7. **Conformité** : données personnelles concernées, niveau de risque présumé du système, mesures de transparence et de supervision humaine. Précisez que votre analyse nécessite une validation juridique.\n8. **Modèle économique** : modèle de tarification choisi et alternative écartée, estimation du coût par utilisation avec vos hypothèses, et lien entre prix et valeur.\n9. **Risques et critères d'arrêt** : trois risques principaux et le critère qui vous ferait arrêter.\n\nToute valeur chiffrée doit être présentée comme **hypothèse** avec sa justification, ou venir d'une source publique citée.\n\n## Grille d'évaluation\n\n- Pertinence du cadrage : besoin, vision, données, alternative sans IA (**20 %**).\n- Cohérence du plan de développement et d'exploitation : surveillance, dérives, versions (**20 %**).\n- Choix et justification des KPI, lien entre métriques du modèle et métriques business (**20 %**).\n- Qualité de la stratégie de mise sur le marché : feuille de route, concurrence, monétisation (**20 %**).\n- Prise en compte de la conformité et des risques, honnêteté sur les hypothèses (**10 %**).\n- Clarté, structure et capacité à convaincre un décideur (**10 %**).\n\n## Rendu\n\nDocument PDF, diaporama ou texte dans le champ de réponse. Vous pouvez joindre l'exécution de l'atelier de détection de dérive comme annexe, sans que ce soit obligatoire."
+ }
+}

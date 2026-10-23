@@ -1,0 +1,765 @@
+{
+ "course": "M5",
+ "slug": "context-engineering",
+ "source": "Slides du formateur (module : Context Engineering), réécrits et complétés. Pas de vidéo : à ajouter depuis l'administration.",
+ "chapters": [
+  {
+   "title": "Du prompt au contexte",
+   "lessons": [
+    {
+     "title": "Du prompt engineering au context engineering",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre pourquoi la formulation de la demande ne suffit plus, et ce que recouvre le *context engineering*.\n\n## Le point de départ : le prompt engineering\n\nPendant les premières années d'usage des assistants conversationnels, on a appris à bien poser sa question. Un ensemble de techniques s'est installé : donner un **rôle**, fournir un **contexte**, ajouter des **exemples**, poser des **contraintes**, imposer un **format de sortie**. Elles fonctionnent toujours, et elles restent utiles.\n\n## Pourquoi cela ne suffit plus\n\nLes modèles actuels ne sont plus de simples générateurs de texte. Ils peuvent **appeler des outils**, **interroger des bases de données**, **collaborer avec d'autres agents**, **raisonner en plusieurs étapes** et **conserver des informations** d'une session à l'autre. La question n'est donc plus « quel prompt écrire ? » mais :\n\n> Comment construire l'environnement complet dans lequel l'IA va prendre ses décisions ?\n\nC'est la définition pratique du **context engineering** : concevoir, sélectionner, structurer et maintenir **tout ce que le modèle voit** au moment de répondre.\n\n## Un exemple produit\n\nUn chef de produit demande : « Crée-moi une user story pour une fonctionnalité de paiement. »\n\n- En **prompt engineering**, on peaufine la phrase, on ajoute un rôle et un format.\n- En **context engineering**, on fournit en plus : le backlog existant, la feuille de route, les personas, les contraintes légales, les indicateurs de succès, la documentation technique et les décisions passées.\n\nLa question est la même. Le résultat n'a rien à voir, parce que **la différence est dans le contexte disponible**, pas dans la question.\n\n## Ce qu'il faut retenir\n\n- Le prompt est **une partie** du contexte, pas son tout.\n- Le contexte comprend les instructions, les documents, l'historique, les outils, la mémoire et les exemples.\n- Pour un chef de produit, c'est un travail de **conception**, comme celui d'une interface ou d'une architecture.\n\n## Pour vérifier votre compréhension\n\nPrenez une tâche que vous confiez régulièrement à un assistant IA. Listez dix informations que vous lui donnez rarement mais qu'un collègue humain connaîtrait. Lesquelles changeraient le plus le résultat ?"
+    },
+    {
+     "title": "De l'artisanat à l'industrialisation",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nSituer le context engineering dans la trajectoire de maturité des produits IA.\n\n## Une évolution déjà vue en développement logiciel\n\nAu début, utiliser un assistant ressemble à une conversation : on écrit, on observe, on ajuste. C'est **artisanal**, et c'est très bien pour explorer. Mais le développement logiciel est passé par les mêmes étapes :\n\n- au départ, des scripts, du bricolage, des essais et des erreurs ;\n- ensuite, de l'architecture, de la qualité, de l'industrialisation.\n\nLes produits IA suivent la même trajectoire. Dès qu'un système génère des livrables pour des équipes entières (un PRD, des user stories), on ne peut plus piloter à l'intuition : un produit a des coûts, des délais, des exigences de qualité.\n\n## Ce que l'on pilote désormais\n\nQuand un système génère un document produit, la qualité ne dépend plus uniquement du prompt. On pilote :\n\n- **quelles données** sont injectées ;\n- **quels outils** sont appelés ;\n- **quel agent** intervient ;\n- **quel niveau de réflexion** est demandé au modèle.\n\nOn passe d'une logique **conversationnelle** à une logique d'**architecture**.\n\n## Conséquence pour un chef de produit\n\n> La qualité du résultat dépend davantage du système que de la formulation.\n\nVotre rôle évolue : au-delà de « bien demander », vous décidez de ce que le système sait, de ce qu'il peut faire et de la manière dont on vérifie son travail.\n\n## Point d'attention\n\nNe dénigrez pas l'approche artisanale : elle reste la bonne façon de **découvrir** un cas d'usage. Le piège est de rester en mode artisanal quand l'usage devient collectif et critique.\n\n## Pour vérifier votre compréhension\n\nUn assistant IA est utilisé par votre équipe depuis six mois, chacun avec ses propres prompts. Citez trois risques de cette situation et une première mesure d'industrialisation."
+    },
+    {
+     "title": "Anatomie du contexte : tout ce que le modèle voit",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nSavoir décomposer le contexte d'un système IA en briques que l'on peut concevoir une à une.\n\n## La fenêtre de contexte\n\nUn modèle de langage ne répond qu'à partir de ce qui se trouve dans sa **fenêtre de contexte** : la quantité de texte (mesurée en *tokens*) qu'il peut prendre en compte en une fois. Rien de ce qui n'y figure n'existe pour lui, sauf ce qu'il a appris pendant son entraînement.\n\n## Les briques du contexte\n\n- **Instructions** : le rôle, les règles, le ton, les interdits, le format attendu.\n- **Connaissances** : documents, extraits de base de données, documentation produit, décisions passées.\n- **Historique** : les échanges précédents de la session.\n- **Outils** : la description des actions disponibles (rechercher, lire un ticket, créer une tâche) et leurs résultats.\n- **Mémoire** : informations conservées d'une session à l'autre (préférences, faits sur le projet).\n- **Exemples** : quelques cas modèles de bonne réponse.\n- **Demande** : la question ou la tâche du moment.\n\n## Exemple : générer une user story\n\nUn contexte bien conçu pour cette tâche pourrait contenir : les règles de rédaction de l'équipe (instructions), la feuille de route et le persona ciblé (connaissances), deux user stories jugées bonnes (exemples), les contraintes légales du paiement (connaissances) et, enfin, la demande.\n\n## Pièges\n\n- Oublier que **tout est en concurrence** pour une place limitée : chaque brique ajoutée en pousse une autre ou dilue l'attention.\n- Confondre « le modèle sait » et « le modèle a reçu » : un modèle n'a pas accès à vos documents internes s'ils ne lui sont pas fournis ou récupérés par un outil.\n\n## Mise en pratique\n\nDessinez, pour un cas d'usage de votre choix, un schéma à sept cases correspondant aux briques ci-dessus. Remplissez chaque case avec la source réelle de l'information (qui la maintient, où elle se trouve)."
+    }
+   ]
+  },
+  {
+   "title": "Concevoir un bon contexte",
+   "lessons": [
+    {
+     "title": "Plus de contexte n'est pas un meilleur contexte",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre pourquoi remplir la fenêtre de contexte est une mauvaise stratégie par défaut.\n\n## L'idée reçue\n\n« Les modèles acceptent désormais de très longs contextes, donc je peux tout y mettre. » C'est une erreur de raisonnement : la capacité technique d'accepter un long texte ne garantit pas qu'il sera exploité correctement.\n\n## L'analogie de la réunion\n\nImaginez que l'on vous remette, juste avant une réunion, trois ans de comptes rendus, toutes les présentations, tous les e-mails et toutes les notes. L'information est théoriquement disponible. Sauriez-vous retrouver vite ce qui compte ? Probablement pas. Les modèles se comportent de façon comparable : le signal se noie dans le bruit.\n\n## Les trois coûts d'un contexte surchargé\n\nPlus on injecte d'informations, plus :\n\n- le **coût** augmente (la facturation dépend en général du volume de texte traité) ;\n- la **latence** augmente (le temps de réponse s'allonge) ;\n- le **risque de confusion** augmente (informations contradictoires, détails hors sujet, mauvais passage retenu).\n\n## Exemple\n\nVous demandez : « Quels sont les trois problèmes majeurs remontés par nos clients ? »\n\n- Option A : vous injectez des milliers de tickets de support bruts.\n- Option B : vous injectez un **résumé structuré** des mêmes tickets (thèmes, fréquence, extraits représentatifs).\n\nLe résultat de l'option B est souvent meilleur, et toujours moins cher. Ce n'est pas une loi, c'est une tendance à vérifier par test sur vos données.\n\n## Règle de conduite\n\n> Le bon contexte est meilleur que plus de contexte.\n\nPour chaque information, posez-vous la question : si je la retirais, la réponse serait-elle moins bonne ? Si non, elle n'a rien à faire dans le contexte.\n\n## Pour vérifier votre compréhension\n\nQuelle partie du contexte de votre dernier gros prompt auriez-vous pu retirer sans perte ?"
+    },
+    {
+     "title": "Structurer l'information : la forme compte",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nSavoir organiser un contexte pour qu'il soit lisible par un modèle, comme une interface l'est pour un utilisateur.\n\n## Même contenu, meilleure structure\n\n- **Version A** : un énorme bloc de texte où se mélangent personas, objectifs, contraintes et documents.\n- **Version B** : le même contenu rangé en sections nommées : *Documents*, *Personas*, *Objectifs*, *Contraintes*.\n\nLa version B donne généralement de meilleurs résultats : le modèle sait ce que chaque passage représente et peut s'y référer. C'est le même principe qu'en conception d'interface : les informations n'ont pas changé, mais leur organisation améliore la compréhension.\n\n## Bonnes pratiques de structuration\n\n- Utiliser des **titres de sections explicites** ou des balises (par exemple `<contraintes>` ... `</contraintes>`) pour délimiter les blocs.\n- Séparer clairement les **instructions** des **données** : ce qui est à faire d'un côté, ce qui sert de matière de l'autre.\n- Mettre l'**essentiel au début ou à la fin** plutôt que noyé au milieu d'un long document.\n- Préférer les **listes courtes** aux paragraphes denses pour les règles.\n- Indiquer la **source** et la **date** d'un document quand elles comptent.\n\n## Exemple de squelette\n\n```\n# Rôle\nTu assistes un chef de produit.\n\n# Objectifs\n...\n\n# Personas\n...\n\n# Contraintes\n...\n\n# Documents\n...\n\n# Demande\nRédige une user story ...\n```\n\n## Pièges\n\n- Des sections trop nombreuses et vides : elles consomment du contexte pour rien.\n- Mélanger des instructions dans les données : un texte récupéré peut contenir des phrases qui ressemblent à des ordres. Délimitez-le comme **donnée**.\n\n## Mise en pratique\n\nPrenez un prompt long que vous avez écrit. Réorganisez-le selon le squelette ci-dessus sans changer le fond, puis comparez les deux réponses obtenues."
+    },
+    {
+     "title": "Mémoire, résumés, archivage et agents spécialisés",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nConnaître les mécanismes qui permettent de gérer un contexte limité dans la durée.\n\n## Le contexte est une ressource limitée\n\nImaginez un atelier produit. Si personne ne prend de notes, tout doit être répété à chaque séance. Si quelqu'un tient un compte rendu, l'équipe avance beaucoup plus vite. Un système IA a le même besoin : sans mécanisme, il oublie dès que la fenêtre est pleine ou la session terminée.\n\n## Quatre mécanismes complémentaires\n\n- **Mémoire** : conserver des faits utiles hors de la conversation (préférences de l'équipe, décisions prises) et les réinjecter quand c'est pertinent.\n- **Résumés** : condenser un long historique ou un long document en quelques points, au prix d'une perte de détail à surveiller.\n- **Archivage** : stocker l'information complète à l'extérieur du contexte et la retrouver à la demande (recherche dans une base de documents).\n- **Agents spécialisés** : répartir le travail entre plusieurs agents qui ne reçoivent chacun que ce dont ils ont besoin.\n\n## Exemple : une chaîne de production de documents produit\n\n- Un premier agent réalise la synthèse de la recherche utilisateur.\n- Un deuxième rédige le PRD à partir de cette synthèse.\n- Un troisième produit les user stories à partir du PRD.\n\nChaque agent a un contexte court et ciblé, ce qui est plus efficace qu'un unique contexte gigantesque.\n\n## Points d'attention\n\n- Un résumé **perd de l'information** : décidez de ce qui ne doit jamais être résumé (chiffres, contraintes légales, décisions).\n- Une mémoire peut conserver une **information périmée** : prévoyez une date et une possibilité de correction.\n- Les transmissions entre agents sont des points de fragilité : définissez des **formats de passation** clairs.\n\n## Pour vérifier votre compréhension\n\nDans votre activité, quelle information gagnerait à être mémorisée, laquelle à être archivée, et laquelle ne devrait jamais être résumée ?"
+    },
+    {
+     "title": "La précision : réduire l'ambiguïté",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nAppliquer la règle la plus rentable du module : réduire l'ambiguïté de la demande.\n\n## Le principe\n\nSi vous ne retenez qu'une idée : **soyez précis**. Plus l'ambiguïté diminue, plus le modèle est fiable. Un modèle n'est pas télépathe : il raisonne à partir du signal que vous lui fournissez, et comble les trous par des suppositions plausibles, parfois fausses.\n\n## Exemple\n\n- Demande vague : « Fais-moi une roadmap. »\n- Demande précise : « Construis une roadmap sur six mois pour un produit B2B de type SaaS, avec un objectif d'augmentation de l'adoption de 20 %, pour une équipe de six personnes. »\n\nLa seconde fournit un **horizon**, un **type de produit**, un **objectif mesurable** et une **contrainte de capacité**. Le modèle peut enfin faire des arbitrages réalistes.\n\n## Les cinq éléments d'une demande précise\n\n- **Objectif** : à quoi servira le résultat, pour qui.\n- **Périmètre** : ce qui est inclus et exclu.\n- **Contraintes** : délais, ressources, règles légales ou de marque.\n- **Critères de réussite** : comment saurez-vous que c'est bon ?\n- **Format** : structure, longueur, niveau de détail attendus.\n\n## Pièges\n\n- Confondre précision et longueur : dix lignes de détails inutiles ne valent pas deux contraintes décisives.\n- Donner un objectif chiffré **sans base de comparaison** : indiquez l'état actuel.\n- Laisser implicite ce qui vous semble évident : pour le modèle, rien n'est évident.\n\n## Mise en pratique\n\nRéécrivez trois de vos demandes habituelles en y ajoutant les cinq éléments. Notez ce qui a changé dans les réponses, puis gardez les versions précises comme modèles réutilisables."
+    }
+   ]
+  },
+  {
+   "title": "Modèles, raisonnement et nouvelles pratiques",
+   "lessons": [
+    {
+     "title": "Les modèles qui raisonnent",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre ce qui change quand un modèle planifie avant de répondre.\n\n## De la réponse immédiate à la démarche\n\nUne génération de modèles répondait immédiatement, sans véritable étape de réflexion. Des modèles plus récents, dits **modèles de raisonnement**, construisent d'abord un plan puis l'exécutent, parfois en plusieurs étapes, avant de produire la réponse finale.\n\n## Exemple\n\nQuestion : « Faut-il lancer cette fonctionnalité dans trois pays en même temps ? »\n\n- Un modèle sans phase de réflexion tend à produire une réponse rapide et générique.\n- Un modèle de raisonnement peut analyser les données fournies, identifier les risques, comparer plusieurs scénarios, puis formuler une recommandation argumentée.\n\n## L'analogie\n\nC'est la différence entre un stagiaire qui répond tout de suite et un expert qui prend quelques minutes pour réfléchir. La réponse arrive un peu plus tard, mais elle est généralement mieux fondée.\n\n## Ce que cela change pour vous\n\n- Vous choisissez le **niveau de réflexion** adapté à la tâche : léger pour une reformulation, plus poussé pour un arbitrage.\n- Le raisonnement a un **coût** : plus de temps, et souvent plus de tokens consommés.\n- Le modèle raisonne sur ce que vous lui donnez : un raisonnement brillant sur un contexte faux produit une conclusion fausse.\n\n## Point d'attention\n\nUne réponse bien argumentée n'est pas une réponse vraie. Gardez la vérification des faits et des chiffres, surtout pour une décision engageante.\n\n## Pour vérifier votre compréhension\n\nCitez une tâche de votre quotidien où la réponse immédiate suffit, et une où vous accepteriez d'attendre davantage pour une meilleure qualité."
+    },
+    {
+     "title": "Des pratiques qui vieillissent : remettre en question ses habitudes",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nAdopter le réflexe de réévaluer régulièrement ses techniques de prompt.\n\n## Une discipline qui bouge vite\n\nLes outils d'IA évoluent rapidement. Une technique recommandée à une période donnée peut devenir inutile, voire contre-productive, avec des modèles plus récents.\n\n## Exemple : « explique ton raisonnement étape par étape »\n\nCette consigne a longtemps servi à améliorer les réponses des modèles. Aujourd'hui, certains modèles raisonnent déjà en interne. Leur imposer de dérouler tout leur raisonnement peut :\n\n- ralentir la réponse ;\n- augmenter le coût ;\n- et, selon les cas, ne pas améliorer, voire dégrader, la qualité.\n\nComparaison : demander à un expert « montre-moi chaque pensée qui t'a mené à cette conclusion ». Parfois cela aide, parfois cela le perturbe. **Cela dépend du modèle et de la tâche**, d'où l'importance de tester.\n\n## Comment rester à jour sans se disperser\n\n- **Mesurer plutôt que croire** : comparez avant et après sur un petit jeu de cas représentatifs.\n- **Lire les recommandations d'usage** de la documentation du modèle que vous utilisez.\n- **Réexaminer vos modèles de prompts** à chaque changement de modèle.\n- **Simplifier** : retirez une consigne à la fois et observez si la qualité baisse réellement.\n\n## Piège\n\nCopier un prompt « miracle » trouvé en ligne sans le tester sur votre cas d'usage. Un prompt est lié à un modèle, à une tâche et à des données.\n\n## Mise en pratique\n\nPrenez votre prompt le plus chargé en consignes. Retirez-en la moitié, comparez les résultats sur cinq cas, et conservez uniquement les consignes dont l'absence se voit."
+    },
+    {
+     "title": "Choisir le bon modèle pour le bon cas d'usage",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nRemplacer la question « quel est le meilleur modèle ? » par une démarche d'adéquation.\n\n## Il n'existe pas une seule façon de travailler avec l'IA\n\nLes fournisseurs et les familles de modèles ne sont pas interchangeables. Ils diffèrent par leurs points forts, leur façon de réagir aux consignes, leurs fonctions (outils, multimodalité, longueur du contexte), leurs prix et leurs conditions d'utilisation. Ces différences évoluent d'une version à l'autre : **ne retenez pas de classement figé**.\n\n## L'analogie des outils de travail\n\nPour un chef de produit, c'est comme choisir entre un outil de maquettage, un tableau blanc collaboratif et un outil de suivi de tickets. Ils résolvent des problèmes proches, avec des approches différentes. Personne ne demande « quel est le meilleur outil » dans l'absolu.\n\n## La bonne question\n\n> Quel est le meilleur modèle **pour ce cas d'usage** ?\n\n## Critères de choix\n\n- **Qualité** sur votre tâche réelle, mesurée sur vos exemples.\n- **Coût** par requête et à l'échelle du volume attendu.\n- **Latence** acceptable pour l'utilisateur.\n- **Capacités** nécessaires : raisonnement, outils, images, long contexte.\n- **Confidentialité et conformité** : où vont les données, que prévoient les conditions d'utilisation.\n- **Dépendance** : possibilité de changer de modèle sans tout réécrire.\n\n## Méthode\n\nConstituez un petit jeu de test de 20 à 30 cas représentatifs, avec le résultat attendu. Faites passer deux ou trois modèles candidats, notez les résultats avec la même grille, et décidez sur la base des écarts, du coût et de la latence.\n\n## Piège\n\nChoisir sur une démonstration impressionnante ou sur un classement général. Votre cas d'usage n'est pas celui du classement."
+    },
+    {
+     "title": "Combiner plusieurs modèles : le routage",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre pourquoi un système utilise souvent plusieurs modèles, et comment le coût et la qualité s'arbitrent.\n\n## Le problème d'échelle\n\nImaginez un service qui reçoit 100 000 requêtes par jour. Utiliser le modèle le plus puissant, donc le plus coûteux et souvent le plus lent, pour chacune d'elles serait très cher, alors que beaucoup de requêtes sont simples.\n\n## La solution : le routage\n\nUn système moderne utilise **plusieurs modèles** :\n\n- un modèle **rapide et économique** traite la grande majorité des requêtes courantes (la slide du formateur évoque l'ordre de grandeur de 90 % ; le bon ratio dépend de votre cas) ;\n- un modèle **expert** n'intervient que lorsque la demande est complexe ou que le modèle léger n'est pas assez sûr.\n\nC'est l'organisation d'une équipe : un collaborateur gère le quotidien, un expert est sollicité sur les cas difficiles.\n\n## Comment décider d'escalader\n\n- selon le **type** de demande (classification préalable) ;\n- selon un **score de confiance** ou une vérification automatique de la réponse ;\n- selon l'**enjeu** : une décision à fort impact passe d'office par le modèle expert ;\n- sur **demande de l'utilisateur**.\n\n## Bénéfices attendus\n\nMoins de coût, plus de rapidité et, bien conçu, une qualité maintenue ou améliorée là où elle compte.\n\n## Pièges\n\n- Le routage ajoute un **composant à surveiller** : une mauvaise règle envoie les cas difficiles au petit modèle.\n- Mesurez la qualité **par segment de requêtes**, pas seulement en moyenne.\n\n## Pour vérifier votre compréhension\n\nDans un assistant que vous connaissez, quelles demandes iraient au modèle léger, lesquelles à l'expert, et quel signal déclencherait le passage de l'un à l'autre ?"
+    },
+    {
+     "title": "Optimisation automatique des prompts et multimodalité",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDécouvrir deux évolutions : l'optimisation outillée des consignes et l'entrée de contenus non textuels.\n\n## De l'essai manuel à l'évaluation systématique\n\nPendant longtemps, on testait une version A, une version B, une version C d'un prompt et l'on gardait celle qui semblait meilleure. Aujourd'hui, des systèmes peuvent **générer et évaluer de nombreuses variantes** automatiquement : formulations, exemples, structures. Ils mesurent ensuite la qualité, la précision ou la satisfaction, et sélectionnent la meilleure version.\n\nC'est la logique du **test A/B** produit. La question change : au lieu de « quel prompt est meilleur ? », on construit un système qui l'apprend à partir de **critères d'évaluation** que vous définissez.\n\n### Ce que cela exige de vous\n\n- un **jeu de cas** représentatifs ;\n- une **métrique** claire (grille de notation, vérification automatique, retour utilisateur) ;\n- la vigilance sur le **surapprentissage** : un prompt optimisé sur 20 cas peut échouer sur de nouveaux.\n\n## La multimodalité\n\nLes modèles actuels peuvent traiter, selon les cas, du **texte**, des **images**, de l'**audio**, de la **vidéo** et des **données en temps réel**.\n\nExemple : une designer fournit une capture d'écran, une maquette et un benchmark de concurrents, puis demande « quels problèmes d'ergonomie identifies-tu ? ». Le système analyse ensemble le contenu visuel, le contexte métier et les objectifs des utilisateurs.\n\n### Points d'attention\n\n- Les contenus non textuels **consomment du contexte** et ajoutent des risques de confidentialité (visages, données personnelles visibles).\n- La lecture d'une image peut être erronée : vérifiez les détails critiques.\n- Accompagnez toujours l'image d'un **contexte textuel** : objectif, public, question précise.\n\n## Mise en pratique\n\nChoisissez une page de votre produit. Fournissez une capture et un contexte (public, objectif), puis comparez la réponse avec celle obtenue sans contexte."
+    }
+   ]
+  },
+  {
+   "title": "Industrialiser et orchestrer",
+   "lessons": [
+    {
+     "title": "Du prototype au produit : l'industrialisation",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nMesurer l'écart entre une démonstration qui fonctionne et un produit fiable à grande échelle.\n\n## Un prototype n'est pas un produit\n\nFaire fonctionner un prototype est facile. Faire fonctionner un produit utilisé par des milliers de personnes est difficile. C'est la différence entre une maquette et un produit en usage réel.\n\n## Les enjeux qui apparaissent\n\n- **Coût** : chaque requête a un prix, qui se multiplie par le volume.\n- **Performance** : temps de réponse acceptable, y compris aux heures de pointe.\n- **Fiabilité** : résultats stables, cas limites gérés, erreurs détectées.\n- **Disponibilité** : que faire quand un service externe est indisponible ou lent ?\n\nL'industrialisation devient aussi importante que l'intelligence du modèle.\n\n## Les pratiques à mettre en place\n\n- **Évaluations automatiques** : un jeu de cas rejoué à chaque modification du contexte ou du modèle, pour détecter les régressions.\n- **Journalisation** : conserver ce qui a été envoyé au modèle et ce qu'il a répondu, dans le respect de la protection des données.\n- **Budgets** : plafonds de coût et de longueur de contexte.\n- **Repli** : un comportement prévu quand le modèle échoue (message clair, passage à un humain, modèle de secours).\n- **Contrôle humain** : validation pour les décisions à fort enjeu.\n- **Gestion des versions** : instructions, modèles de contexte et modèle utilisé sont versionnés.\n\n## Piège\n\nValider un système sur quelques exemples choisis à la main, puis le déployer. Les cas imprévus arrivent toujours en production.\n\n## Pour vérifier votre compréhension\n\nPour une fonctionnalité IA que vous imaginez, listez trois événements qui peuvent mal tourner en production et le comportement de repli que vous prévoiriez pour chacun."
+    },
+    {
+     "title": "Orchestrer un système : agents, modèles, mémoires, outils et contrôles",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nSe représenter l'architecture d'un système IA moderne et la piloter comme une équipe produit.\n\n## Au-delà du schéma « un utilisateur, un prompt, une réponse »\n\nLes systèmes actuels reposent sur la combinaison de :\n\n- **plusieurs agents** aux rôles distincts ;\n- **plusieurs modèles** choisis selon la tâche ;\n- **plusieurs mémoires** (court terme, long terme) ;\n- **plusieurs outils** (recherche, lecture de données, création de tâches) ;\n- **plusieurs couches de contrôle** (vérifications, validations, garde-fous).\n\n## L'analogie de l'équipe produit\n\nDans une équipe, il n'y a pas un seul chef de produit, un seul designer et un seul développeur qui font tout : il y a un **système collaboratif** avec des rôles, des passations et des revues. Les systèmes IA suivent la même logique.\n\n> Le futur n'est pas un prompt plus intelligent, c'est un système mieux orchestré.\n\n## Les questions de conception à se poser\n\n- **Qui fait quoi ?** Quel agent a quelle responsabilité, et avec quel contexte minimal ?\n- **Qui contrôle ?** Où se placent les vérifications, et qui valide en dernier ?\n- **Que se passe-t-il en cas d'erreur ?** Réessai, escalade, abandon propre.\n- **Quels droits ?** Un agent ne doit pouvoir appeler que les outils nécessaires à sa mission.\n- **Comment mesure-t-on ?** Un indicateur par étape permet de localiser les défauts.\n\n## Pièges\n\n- Multiplier les agents sans nécessité : chaque agent ajoute des coûts, de la latence et des points de défaillance. Commencez simple.\n- Laisser un agent agir sur des systèmes réels sans validation humaine préalable.\n\n## Mise en pratique\n\nDessinez l'architecture d'un système qui produit un PRD à partir de retours utilisateurs : agents, outils, mémoires, points de contrôle. Indiquez pour chaque agent le contexte qu'il reçoit et celui qu'il ne reçoit pas."
+    }
+   ]
+  },
+  {
+   "title": "Mise en pratique",
+   "lessons": [
+    {
+     "title": "Exercice guidé : assembler un paquet de contexte pour une user story",
+     "kind": "exercise",
+     "body_md": "## Objectif\n\nConstruire un contexte structuré pour une demande réelle, avec un budget de taille, puis comparer le résultat à celui d'une demande nue. Aucun outil payant n'est nécessaire : un assistant IA gratuit de votre choix et Python suffisent (l'étape 3 peut aussi se faire à la main).\n\n## Étape 1 : la demande nue\n\nDans un assistant IA, envoyez seulement :\n\n```\nRédige une user story pour une fonctionnalité de paiement mobile.\n```\n\nCopiez la réponse dans un fichier `reponse-A.txt`.\n\n## Étape 2 : préparer les briques\n\nRédigez, pour un produit fictif, cinq blocs courts : **Objectifs**, **Personas**, **Contraintes**, **KPI**, **Décisions passées**. Évitez toute donnée réelle ou confidentielle.\n\n## Étape 3 : assembler avec un budget\n\nLe script suivant assemble les blocs par ordre de priorité (1 = indispensable) tant que le budget de caractères est respecté, et conserve l'ordre logique des sections. Il a été exécuté et fonctionne avec Python 3.\n\n```python\n\"\"\"Assemble un paquet de contexte structuré avec un budget de taille.\"\"\"\n\nSECTIONS = [\n    (\"Objectifs\", \"Augmenter la conversion du paiement mobile.\", 1),\n    (\"Personas\", \"Camille, 34 ans, achète depuis son téléphone dans les transports.\", 2),\n    (\"Contraintes\", \"Authentification forte obligatoire. Pas de stockage du numéro de carte.\", 1),\n    (\"KPI\", \"Taux de conversion du paiement, taux d'abandon à l'étape paiement.\", 2),\n    (\"Décisions passées\", \"Le paiement en un clic a été écarté au trimestre dernier.\", 3),\n]\n\ndef assemble(sections, budget_chars):\n    \"\"\"Ajoute les sections par priorité (1 = indispensable) tant que le budget le permet.\"\"\"\n    chosen, used = [], 0\n    for title, text, _prio in sorted(sections, key=lambda s: s[2]):\n        block = f\"## {title}\\n{text}\\n\"\n        if used + len(block) > budget_chars:\n            continue\n        chosen.append((title, block))\n        used += len(block)\n    order = [s[0] for s in sections]\n    chosen.sort(key=lambda c: order.index(c[0]))\n    return \"\".join(b for _, b in chosen), used\n\nif __name__ == \"__main__\":\n    demande = \"Rédige une user story pour une fonctionnalité de paiement mobile.\"\n    contexte, taille = assemble(SECTIONS, budget_chars=300)\n    print(contexte)\n    print(f\"Taille du contexte : {taille} caractères\")\n    print(\"# Demande\\n\" + demande)\n```\n\nLancez-le, puis modifiez `budget_chars` (par exemple 150, 300, 600) pour constater quelles sections disparaissent. Le budget est ici en caractères, par simplicité : un système réel compte en *tokens*.\n\n## Étape 4 : la demande enrichie\n\nCollez dans l'assistant le contexte produit par le script, suivi de la demande. Copiez la réponse dans `reponse-B.txt`.\n\n## Étape 5 : comparer\n\nNotez sur 5 chaque réponse selon : adéquation au persona, respect des contraintes, mesurabilité, cohérence avec les décisions passées. Qu'est-ce qui a changé ? Qu'est-ce qui reste faux ?\n\n## Pièges\n\n- Un budget trop serré supprime une contrainte légale : c'est pourquoi la priorité 1 se définit avec soin.\n- Un seul essai ne prouve rien : les réponses varient, répétez au moins trois fois."
+    },
+    {
+     "title": "Exercice guidé : tester et comparer deux versions d'un contexte",
+     "kind": "exercise",
+     "body_md": "## Objectif\n\nPratiquer la logique du test A/B appliquée au contexte, avec une grille de notation explicite et sans outil spécialisé.\n\n## Étape 1 : choisir la tâche\n\nChoisissez une tâche récurrente et simple à évaluer, par exemple « résumer en trois problèmes principaux un lot de retours utilisateurs » (vous pouvez rédiger vous-même 15 retours fictifs).\n\n## Étape 2 : deux versions du contexte\n\n- **Version A** : tous les retours bruts, collés à la suite, avec la demande.\n- **Version B** : les retours classés par thème avec leur fréquence, une consigne de format et la demande.\n\n## Étape 3 : une grille de notation\n\nAvant de regarder les résultats, fixez une grille. Par exemple, 0 à 2 points pour chaque critère :\n\n- les problèmes identifiés correspondent aux thèmes réellement dominants ;\n- aucun problème inventé ;\n- format respecté ;\n- exploitabilité pour décider.\n\n## Étape 4 : lancer plusieurs fois\n\nExécutez chaque version au moins trois fois et notez chaque sortie. Idéalement, faites noter par une autre personne sans lui dire quelle version elle évalue.\n\n## Étape 5 : conclure avec prudence\n\nCalculez la moyenne par version. Avec un échantillon aussi petit, vous obtenez un **indice**, pas une preuve. Notez : la différence est-elle nette ? Le coût (taille du contexte) est-il comparable ? Quel autre test ferait changer d'avis ?\n\n## À retenir\n\nL'objectif n'est pas de gagner, mais de prendre l'habitude de **décider par la mesure** et de documenter les versions testées."
+    }
+   ]
+  },
+  {
+   "title": "Ressources",
+   "lessons": [
+    {
+     "title": "Glossaire du context engineering",
+     "kind": "reading",
+     "body_md": "## Termes essentiels\n\n- **Prompt** : instruction ou question adressée au modèle.\n- **Prompt engineering** : art de formuler une demande (rôle, exemples, contraintes, format).\n- **Context engineering** : conception de l'ensemble de ce que le modèle voit pour décider (instructions, données, outils, mémoire, historique).\n- **Fenêtre de contexte** : quantité maximale de texte que le modèle prend en compte en une fois.\n- **Token** : unité de découpage du texte utilisée pour compter la taille d'un contexte et la facturation.\n- **Latence** : délai entre l'envoi d'une requête et la réponse.\n- **Résumé** : version condensée d'un contenu, avec perte de détails.\n- **Mémoire** : information conservée en dehors de la conversation et réinjectée au besoin.\n- **Archivage et récupération** : stockage de documents hors contexte et recherche de passages pertinents à la demande.\n- **Agent** : composant qui poursuit un objectif en enchaînant des étapes, éventuellement avec des outils.\n- **Outil** : action que le modèle peut demander (recherche, lecture de données, création d'élément).\n- **Modèle de raisonnement** : modèle qui planifie et réfléchit avant de répondre.\n- **Routage** : orientation d'une requête vers le modèle le plus adapté selon sa difficulté ou son enjeu.\n- **Multimodal** : capable de traiter plusieurs types de contenu (texte, image, audio, vidéo).\n- **Jeu d'évaluation** : ensemble de cas de test avec le résultat attendu, rejoué à chaque changement.\n- **Régression** : dégradation involontaire de la qualité après une modification.\n- **Garde-fou** : contrôle qui empêche ou signale un comportement indésirable.\n- **Orchestration** : coordination des agents, modèles, outils et mémoires d'un système.\n- **Injection de prompt** : texte malveillant ou involontaire, présent dans les données, qui tente de détourner les instructions du modèle.\n\n## Rappel de la règle d'or\n\nUn bon contexte est **pertinent, structuré, précis et mesuré**."
+    },
+    {
+     "title": "Récapitulatif du module",
+     "kind": "reading",
+     "body_md": "## Ce que vous avez vu\n\n- Le **prompt engineering** reste utile, mais le résultat dépend surtout du **contexte** : instructions, données, outils, mémoire, historique.\n- Le travail passe de l'**artisanat** (essais et erreurs) à l'**industrialisation** (architecture, qualité, mesure).\n- **Plus de contexte n'est pas mieux** : coût, latence et confusion augmentent. Visez le bon contexte.\n- La **structure** de l'information améliore la compréhension, comme pour une interface.\n- Mémoire, résumés, archivage et agents spécialisés permettent de gérer un contexte limité.\n- Les **modèles de raisonnement** changent la façon de demander : certaines habitudes anciennes doivent être réévaluées par test.\n- Il n'y a pas de meilleur modèle dans l'absolu : choisissez par **cas d'usage**, et envisagez le **routage** entre modèles.\n- L'optimisation des prompts devient **systématique** et mesurée ; la **multimodalité** élargit les contextes possibles.\n- Passer à l'échelle demande de traiter **coût, performance, fiabilité, disponibilité**.\n- Le futur est un **système mieux orchestré**, pas seulement un prompt plus malin.\n\n## Cinq réflexes à garder\n\n- Décrire la demande avec objectif, périmètre, contraintes, critères et format.\n- Retirer du contexte tout ce qui ne change pas la réponse.\n- Séparer clairement instructions et données.\n- Tester avant de croire, sur un jeu de cas représentatifs.\n- Prévoir contrôle humain et comportement de repli.\n\n## Pour aller plus loin\n\nComplétez le livrable du module, puis rejouez-le avec un autre modèle : qu'est-ce qui change dans le contexte nécessaire ?"
+    }
+   ]
+  }
+ ],
+ "quiz": {
+  "title": "Quiz du module",
+  "pass_percent": 70,
+  "max_attempts": null,
+  "questions": [
+   {
+    "kind": "single_choice",
+    "prompt": "Que désigne le context engineering ?",
+    "feedback": "Le context engineering dépasse la formulation du prompt : il couvre tout l'environnement d'information dans lequel le modèle prend ses décisions.",
+    "options": [
+     [
+      "La conception de l'ensemble de ce que le modèle voit pour décider : instructions, données, outils, mémoire, historique",
+      true
+     ],
+     [
+      "L'optimisation de la formulation d'une seule question",
+      false
+     ],
+     [
+      "Le réglage des paramètres internes du modèle",
+      false
+     ],
+     [
+      "La rédaction de la documentation commerciale d'un produit IA",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pour une même demande de user story, qu'est-ce qui différencie surtout le context engineering du prompt engineering ?",
+    "feedback": "La question reste la même ; c'est la richesse et la pertinence du contexte disponible qui change le résultat.",
+    "options": [
+     [
+      "Le contexte fourni (backlog, personas, contraintes, KPI, décisions passées)",
+      true
+     ],
+     [
+      "Une question plus longue",
+      false
+     ],
+     [
+      "L'usage d'un ton plus poli",
+      false
+     ],
+     [
+      "Le nombre de fois où l'on relance le modèle",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels éléments font partie du contexte d'un système IA ?",
+    "feedback": "Le contexte regroupe tout ce que le modèle reçoit : instructions, connaissances, historique, outils, mémoire, exemples et demande. L'apparence de l'interface n'en fait pas partie.",
+    "options": [
+     [
+      "Les instructions",
+      true
+     ],
+     [
+      "L'historique de la conversation",
+      true
+     ],
+     [
+      "La description des outils disponibles",
+      true
+     ],
+     [
+      "Les informations de mémoire réinjectées",
+      true
+     ],
+     [
+      "Le logo de l'application",
+      false
+     ],
+     [
+      "La couleur du bouton d'envoi",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'implique le passage d'une logique conversationnelle à une logique d'architecture ?",
+    "feedback": "L'architecture consiste à décider ce que le système sait, ce qu'il peut faire et comment il est contrôlé, au-delà de la formulation.",
+    "options": [
+     [
+      "On pilote les données injectées, les outils appelés, l'agent qui intervient et le niveau de réflexion",
+      true
+     ],
+     [
+      "On cesse d'utiliser des prompts",
+      false
+     ],
+     [
+      "On remplace l'évaluation par l'intuition",
+      false
+     ],
+     [
+      "On confie toutes les décisions au modèle",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi la qualité du résultat dépend-elle « davantage du système que de la formulation » ?",
+    "feedback": "La formulation reste utile mais ne compense pas un contexte pauvre, des données absentes ou l'absence de contrôle.",
+    "options": [
+     [
+      "Parce que les données, outils et contrôles autour du modèle déterminent ce qu'il peut produire",
+      true
+     ],
+     [
+      "Parce que la formulation n'a plus aucun effet",
+      false
+     ],
+     [
+      "Parce que les modèles ignorent les instructions",
+      false
+     ],
+     [
+      "Parce qu'un système remplace toujours un humain",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un modèle accepte un très long contexte. Quelle conclusion est correcte ?",
+    "feedback": "La capacité d'accepter un long texte n'est pas la capacité de l'exploiter : le signal peut se noyer dans le bruit.",
+    "options": [
+     [
+      "Cela ne garantit pas qu'il exploitera bien toute l'information ; coût, latence et confusion peuvent augmenter",
+      true
+     ],
+     [
+      "Il faut y mettre tous les documents disponibles",
+      false
+     ],
+     [
+      "La qualité augmente proportionnellement à la taille du contexte",
+      false
+     ],
+     [
+      "Il n'y a plus besoin de structurer l'information",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels sont les effets possibles d'un contexte surchargé ?",
+    "feedback": "Plus on injecte de texte, plus on paie, plus on attend et plus le modèle peut se tromper de passage ou mélanger des informations.",
+    "options": [
+     [
+      "Un coût plus élevé",
+      true
+     ],
+     [
+      "Une latence plus élevée",
+      true
+     ],
+     [
+      "Un risque de confusion accru",
+      true
+     ],
+     [
+      "Une disparition automatique des erreurs",
+      false
+     ],
+     [
+      "Une réponse systématiquement plus fiable",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Vous voulez identifier les trois problèmes majeurs remontés par les clients. Quelle approche est généralement préférable ?",
+    "feedback": "Un résumé structuré est souvent plus efficace et moins coûteux que des données brutes massives ; cela reste à valider sur vos données.",
+    "options": [
+     [
+      "Injecter un résumé structuré des tickets, puis vérifier par test",
+      true
+     ],
+     [
+      "Injecter tous les tickets bruts sans tri",
+      false
+     ],
+     [
+      "Injecter un seul ticket pris au hasard",
+      false
+     ],
+     [
+      "Ne rien injecter et demander au modèle de deviner",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle règle résume le mieux le principe de sélection du contexte ?",
+    "feedback": "Il s'agit d'inclure ce qui change la réponse et de retirer le reste, sans sacrifier l'information indispensable.",
+    "options": [
+     [
+      "Le bon contexte vaut mieux que plus de contexte",
+      true
+     ],
+     [
+      "Plus de contexte vaut toujours mieux",
+      false
+     ],
+     [
+      "Le contexte doit être le plus court possible quelle que soit la tâche",
+      false
+     ],
+     [
+      "Le contexte n'a pas d'importance pour les gros modèles",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est l'intérêt de structurer le contexte en sections nommées (documents, personas, objectifs, contraintes) ?",
+    "feedback": "Un même contenu mieux organisé est généralement mieux exploité, comme une interface bien conçue.",
+    "options": [
+     [
+      "Le modèle sait ce que représente chaque passage et peut s'y référer",
+      true
+     ],
+     [
+      "Cela réduit toujours le coût à zéro",
+      false
+     ],
+     [
+      "Cela empêche toute erreur de raisonnement",
+      false
+     ],
+     [
+      "Cela dispense de fournir des documents",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi délimiter clairement les données récupérées par rapport aux instructions ?",
+    "feedback": "Un document peut contenir des phrases qui ressemblent à des consignes (injection de prompt). Le délimiter comme donnée limite le risque.",
+    "options": [
+     [
+      "Pour éviter qu'un texte contenu dans les données soit interprété comme un ordre",
+      true
+     ],
+     [
+      "Pour que le modèle ignore les données",
+      false
+     ],
+     [
+      "Pour réduire le nombre de tokens à zéro",
+      false
+     ],
+     [
+      "Parce que les modèles ne lisent que les instructions",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels mécanismes aident à gérer un contexte limité dans la durée ?",
+    "feedback": "Mémoire, résumés, archivage et agents spécialisés permettent de ne présenter au modèle que l'information utile à l'instant.",
+    "options": [
+     [
+      "La mémoire",
+      true
+     ],
+     [
+      "Les résumés",
+      true
+     ],
+     [
+      "L'archivage avec récupération à la demande",
+      true
+     ],
+     [
+      "Les agents spécialisés recevant chacun un contexte ciblé",
+      true
+     ],
+     [
+      "Le doublement systématique de tous les documents",
+      false
+     ],
+     [
+      "L'ajout de consignes répétées à chaque message",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est le principal risque d'un résumé ?",
+    "feedback": "Un résumé condense au prix d'une perte d'information : définissez ce qui ne doit jamais être résumé.",
+    "options": [
+     [
+      "Perdre des détails importants comme des chiffres ou des contraintes",
+      true
+     ],
+     [
+      "Il augmente toujours la taille du contexte",
+      false
+     ],
+     [
+      "Il rend le texte illisible pour le modèle",
+      false
+     ],
+     [
+      "Il supprime l'historique de la session",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans une chaîne de trois agents (recherche utilisateur, PRD, user stories), pourquoi limiter le contexte de chaque agent ?",
+    "feedback": "Des contextes courts et ciblés réduisent le coût, la latence et les confusions, à condition de bien définir les formats de passation.",
+    "options": [
+     [
+      "Chaque agent est plus efficace avec seulement les informations dont il a besoin",
+      true
+     ],
+     [
+      "Parce qu'un agent ne peut recevoir qu'une phrase",
+      false
+     ],
+     [
+      "Pour empêcher les agents de communiquer",
+      false
+     ],
+     [
+      "Parce que les agents ne comprennent pas les documents",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Laquelle de ces demandes réduit le mieux l'ambiguïté ?",
+    "feedback": "La demande précise donne horizon, type de produit, objectif mesurable et contrainte de capacité ; les autres ne fournissent aucun signal exploitable.",
+    "options": [
+     [
+      "Construis une roadmap de six mois pour un produit B2B SaaS, avec un objectif de +20 % d'adoption, pour une équipe de six personnes",
+      true
+     ],
+     [
+      "Fais-moi une roadmap",
+      false
+     ],
+     [
+      "Fais une roadmap complète et très détaillée",
+      false
+     ],
+     [
+      "Fais une roadmap comme un expert",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels éléments caractérisent une demande précise ?",
+    "feedback": "Objectif, périmètre, contraintes, critères de réussite et format réduisent les suppositions du modèle.",
+    "options": [
+     [
+      "Un objectif",
+      true
+     ],
+     [
+      "Des contraintes",
+      true
+     ],
+     [
+      "Des critères de réussite",
+      true
+     ],
+     [
+      "Un format attendu",
+      true
+     ],
+     [
+      "Une longueur maximale de texte sans information",
+      false
+     ],
+     [
+      "Des adjectifs flatteurs sur le modèle",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'est-ce qui distingue un modèle de raisonnement d'un modèle qui répond immédiatement ?",
+    "feedback": "Le raisonnement améliore souvent la qualité sur les tâches complexes, au prix de plus de temps et de tokens, sans garantir la vérité.",
+    "options": [
+     [
+      "Il planifie et réfléchit en plusieurs étapes avant de produire la réponse finale",
+      true
+     ],
+     [
+      "Il n'utilise jamais de contexte",
+      false
+     ],
+     [
+      "Il répond toujours plus vite",
+      false
+     ],
+     [
+      "Il garantit l'exactitude de ses réponses",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi l'instruction « explique ton raisonnement étape par étape » doit-elle être réévaluée ?",
+    "feedback": "Une pratique efficace à une période donnée peut devenir inutile ou contre-productive : seule la mesure sur votre cas permet de trancher.",
+    "options": [
+     [
+      "Avec certains modèles qui raisonnent déjà en interne, elle peut ralentir, coûter plus cher et ne pas améliorer la qualité",
+      true
+     ],
+     [
+      "Parce qu'elle est interdite par les modèles récents",
+      false
+     ],
+     [
+      "Parce qu'elle fonctionne toujours mieux qu'avant",
+      false
+     ],
+     [
+      "Parce qu'elle supprime le contexte",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle est la bonne question pour choisir un modèle ?",
+    "feedback": "Les modèles diffèrent par leurs points forts, coûts et fonctions ; l'adéquation au cas d'usage se mesure sur vos exemples.",
+    "options": [
+     [
+      "Quel est le meilleur modèle pour ce cas d'usage ?",
+      true
+     ],
+     [
+      "Quel est le meilleur modèle au monde ?",
+      false
+     ],
+     [
+      "Quel modèle a le plus de tokens de contexte ?",
+      false
+     ],
+     [
+      "Quel modèle est le plus utilisé ?",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un service reçoit un très grand volume de requêtes, la plupart simples. Quelle architecture est la plus raisonnable ?",
+    "feedback": "Le routage réduit le coût et la latence tout en réservant la puissance aux cas qui en ont besoin.",
+    "options": [
+     [
+      "Un modèle rapide et économique pour le courant, un modèle expert pour les cas complexes ou à fort enjeu",
+      true
+     ],
+     [
+      "Le modèle le plus puissant pour toutes les requêtes",
+      false
+     ],
+     [
+      "Le modèle le moins cher pour toutes les requêtes, y compris critiques",
+      false
+     ],
+     [
+      "Un tirage au sort entre les modèles",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles sont des conditions d'une optimisation automatique de prompts fiable ?",
+    "feedback": "Sans jeu de cas, métrique et test sur des cas nouveaux, on risque de surajuster le prompt à quelques exemples.",
+    "options": [
+     [
+      "Un jeu de cas représentatifs",
+      true
+     ],
+     [
+      "Une métrique d'évaluation claire",
+      true
+     ],
+     [
+      "Une vérification sur des cas non utilisés pour l'optimisation",
+      true
+     ],
+     [
+      "Un seul exemple très long",
+      false
+     ],
+     [
+      "L'absence de critères pour laisser le système libre",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est le principal enjeu qui apparaît entre un prototype et un produit utilisé à grande échelle ?",
+    "feedback": "À l'échelle, chaque requête a un coût, les délais comptent, et les cas limites arrivent : l'industrialisation devient aussi importante que le modèle.",
+    "options": [
+     [
+      "Coût, performance, fiabilité et disponibilité",
+      true
+     ],
+     [
+      "Le choix de la couleur de l'interface",
+      false
+     ],
+     [
+      "Le nombre de slides de présentation",
+      false
+     ],
+     [
+      "La suppression de toute évaluation",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles pratiques relèvent de l'industrialisation d'un système IA ?",
+    "feedback": "Évaluation continue, versions, repli et contrôle humain sont les bases d'un système fiable.",
+    "options": [
+     [
+      "Rejouer un jeu d'évaluation à chaque changement",
+      true
+     ],
+     [
+      "Versionner les instructions et le modèle utilisé",
+      true
+     ],
+     [
+      "Prévoir un comportement de repli en cas d'échec",
+      true
+     ],
+     [
+      "Valider par un humain les décisions à fort enjeu",
+      true
+     ],
+     [
+      "Modifier les prompts directement en production sans trace",
+      false
+     ],
+     [
+      "Évaluer sur trois exemples choisis à la main",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans l'analogie de l'équipe produit, que signifie « le futur est un système mieux orchestré » ?",
+    "feedback": "L'orchestration consiste à répartir les rôles et les contrôles ; multiplier les agents sans nécessité ajoute coût et fragilité.",
+    "options": [
+     [
+      "Les agents, modèles, mémoires, outils et contrôles collaborent avec des rôles clairs",
+      true
+     ],
+     [
+      "Un unique prompt très intelligent remplace tout le reste",
+      false
+     ],
+     [
+      "Les humains ne participent plus au système",
+      false
+     ],
+     [
+      "Plus il y a d'agents, mieux c'est, quel que soit le besoin",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Une designer fournit une capture d'écran et une question sur l'ergonomie. Que faut-il ajouter pour un résultat exploitable ?",
+    "feedback": "Le contenu visuel doit être accompagné du contexte métier et des objectifs utilisateurs ; et la lecture d'une image doit rester vérifiée.",
+    "options": [
+     [
+      "Un contexte textuel : objectif, public cible et question précise",
+      true
+     ],
+     [
+      "Rien : l'image suffit toujours",
+      false
+     ],
+     [
+      "Uniquement des adjectifs sur la qualité attendue",
+      false
+     ],
+     [
+      "Le maximum d'images possible sans texte",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Choisissez un cas d'usage de votre activité. Décrivez le contexte que vous donneriez à un assistant IA (briques, structure, ce que vous écarteriez) et la manière dont vous mesureriez que ce contexte améliore réellement les réponses.",
+    "feedback": "Une bonne réponse identifie les briques utiles (instructions, connaissances, exemples, mémoire), justifie ce qui est écarté, propose une structure claire et décrit un test comparatif avec une grille de notation sur plusieurs cas.",
+    "options": []
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Un collègue affirme : « Avec un contexte de plusieurs millions de tokens, je n'ai plus besoin de sélectionner l'information. » Rédigez votre réponse argumentée en trois à cinq phrases.",
+    "feedback": "Les points attendus : capacité n'est pas exploitation, coût et latence, risque de confusion, intérêt d'un contexte sélectionné et structuré, validation par test.",
+    "options": []
+   }
+  ]
+ },
+ "assignment": {
+  "title": "Livrable pratique : concevoir et évaluer le contexte d'un assistant produit",
+  "instructions_md": "## Objectif\n\nDémontrer que vous savez **concevoir, structurer et évaluer** le contexte d'un assistant IA pour une tâche de chef de produit, sans accès à des données confidentielles.\n\n## Consignes\n\n1. Choisissez une tâche récurrente (par exemple : rédiger des user stories, synthétiser des retours utilisateurs, préparer une feuille de route). Utilisez uniquement des données **fictives ou publiques**.\n2. Concevez le **paquet de contexte** : listez les briques (instructions, connaissances, exemples, mémoire, outils éventuels), leur source, leur priorité et ce que vous avez volontairement écarté.\n3. Rédigez le contexte structuré (sections nommées, instructions séparées des données) et une demande précise (objectif, périmètre, contraintes, critères, format).\n4. Comparez avec un assistant IA public ou gratuit **deux versions** : une demande nue (A) et la version avec contexte (B). Exécutez chaque version au moins trois fois.\n5. Notez les sorties avec une **grille fixée à l'avance** (au moins quatre critères) et présentez les résultats.\n6. Rédigez une **note d'une page** contenant : l'architecture envisagée (un ou plusieurs agents, un ou plusieurs modèles, avec justification), trois risques (surcharge, informations périmées, injection de prompt) et leurs parades, un plan de repli et de contrôle humain, et une recommandation.\n\n## Grille d'évaluation\n\n- Qualité de la conception du contexte : pertinence, structure, priorités, éléments écartés (**30 %**).\n- Rigueur de la comparaison : protocole, grille préétablie, répétitions, conclusion prudente (**30 %**).\n- Qualité de la note : architecture justifiée, risques, repli et contrôle humain (**25 %**).\n- Précision et clarté de la demande finale (**15 %**).\n\n## Rendu\n\nTexte dans le champ de réponse et/ou un fichier PDF ou document, incluant les deux versions testées et leurs notes."
+ }
+}

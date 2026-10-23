@@ -1,0 +1,783 @@
+{
+ "course": "M15",
+ "slug": "ai-economics-finops",
+ "source": "Slides du formateur (module 15 : économie de l'IA et FinOps), réécrits et complétés. Tous les prix sont fictifs. Pas de vidéo : à ajouter depuis l'administration.",
+ "chapters": [
+  {
+   "title": "Pourquoi l'IA change la logique des coûts",
+   "lessons": [
+    {
+     "title": "Un coût qui dépend du comportement du produit",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Comprendre pourquoi un service IA facturé à l'usage se pilote autrement qu'une infrastructure réservée.\n- Identifier les décisions de produit qui font varier la dépense sans ajouter d'utilisateurs.\n- Poser la définition de la démarche FinOps appliquée à l'IA.\n\n## Ce qui change\n\nSur une application classique, on réserve des machines, de la mémoire, du stockage : la facture suit surtout ce que l'on a provisionné. Avec un service IA facturé à l'usage, la dépense dépend aussi **du contenu des échanges** et **du chemin suivi pour produire une réponse**. Le cloud classique peut lui aussi avoir des coûts très variables ; ce qui nous intéresse ici, c'est la part de cette variation qui vient du comportement du produit.\n\nDeux personnes posent une question proche. L'une reçoit une réponse courte. L'autre joint un document, demande plusieurs vérifications et déclenche cinq appels supplémentaires. Le nombre d'utilisateurs est identique, la consommation ne l'est pas.\n\n## Exemple fictif\n\nTous les prix de ce module sont **fictifs** : ils servent à isoler un mécanisme, jamais à estimer un budget réel.\n\n- 100 000 demandes par jour à 0,006 $ chacune : **600 $ par jour**.\n- On ajoute une boucle qui exécute 10 appels équivalents par demande : 100 000 × 10 × 0,006 = **6 000 $ par jour**.\n\nLe trafic n'a pas bougé, c'est le fonctionnement de la tâche qui a changé. Les dix appels sont une hypothèse pédagogique : une modification de prompt ne multiplie pas systématiquement la facture par dix.\n\n## Le FinOps appliqué à l'IA\n\nLe FinOps est un travail commun entre le **produit**, la **technique** et la **finance** pour relier la consommation à la valeur obtenue. Le chef de produit agit directement sur la dépense : longueur des réponses, quantité de contexte envoyée, nombre de vérifications, nombre d'étapes autorisées à un agent.\n\n## Pièges\n\n- Estimer le coût avec le seul trafic, en oubliant que la taille du contexte et les appels supplémentaires comptent autant.\n- Déployer une modification de prompt ou de workflow sans mesurer son coût avant et après.\n\n## Pour réfléchir\n\nQuelle décision de produit récente de votre équipe a pu augmenter le coût **sans** ajouter un seul utilisateur ? Exemples à tester : réponses plus longues, plus de documents transmis, vérifications ajoutées, tentatives supplémentaires autorisées.\n"
+    },
+    {
+     "title": "Les coûts cachés derrière une réponse",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Dresser la liste des postes de dépense d'un produit IA, au-delà du prix du modèle.\n- Distinguer coûts variables, coûts fixes et coûts de construction.\n- Éviter les doublons et les oublis dans une estimation.\n\n## Le modèle n'est que la partie visible\n\nLe prix du modèle est la dépense la plus facile à voir. Pourtant, une réponse peut mobiliser plusieurs services. Prenons un assistant qui répond à partir de documents internes : il faut préparer les documents, les convertir en représentations numériques, les stocker, rechercher les passages utiles, puis éventuellement enregistrer les traces et évaluer la réponse. Un moteur de recherche externe ou l'exécution de code peuvent s'y ajouter.\n\n## Variable, fixe, construction\n\n- **Coûts variables** : ils arrivent à chaque demande (appels au modèle, recherche, évaluation automatique).\n- **Coûts fixes** : ils existent même quand personne n'utilise le service (base réservée, abonnement, équipe de maintenance, mise à jour des documents, traitement des incidents).\n- **Coûts de construction** : développement, intégration, conduite du changement. Ils n'entrent pas dans un coût de fonctionnement mensuel, mais ils doivent figurer dans un calcul de retour sur investissement.\n\n## Une question pour repérer les oublis\n\nQuand l'utilisateur clique sur **Envoyer**, quels services travaillent, et quelles personnes interviennent avant que la tâche soit considérée comme terminée ?\n\n## Exemple fictif de budget mensuel de fonctionnement\n\n```\nModèles                  : 2 000 $\nRecherche et stockage    :   500 $\nSuivi technique          :   300 $\nContrôle humain          : 1 200 $\nTotal                    : 4 000 $\n```\n\nIci, le modèle représente la moitié du total. C'est un exemple : selon le produit, les autres postes peuvent être beaucoup plus faibles ou beaucoup plus élevés. On ne retient aucun « coefficient multiplicateur » universel, on **mesure**.\n\n## Pièges\n\n- Compter deux fois un même coût (par exemple un service partagé réparti sur plusieurs produits).\n- Oublier le contrôle humain, souvent le poste le plus sous-estimé.\n- Mélanger frais de construction et frais de fonctionnement mensuels.\n\n## Mise en pratique\n\nListez les postes de votre produit (ou d'un produit imaginaire) en trois colonnes de texte : variable, fixe, construction. Quel poste manque le plus souvent dans vos estimations ?\n"
+    }
+   ]
+  },
+  {
+   "title": "Mesurer : tokens, requêtes, tâches",
+   "lessons": [
+    {
+     "title": "Tokens : entrée, sortie, raisonnement et cache",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Savoir ce que l'on paie quand on appelle un modèle.\n- Calculer le coût d'une requête avec une formule exacte.\n- Éviter les doubles comptages (cache, raisonnement).\n\n## Ce qu'est un token\n\nUn token est un morceau de texte traité par le modèle. Leur nombre dépend du texte **et** du découpage propre à chaque modèle : on évite donc de convertir des mots en tokens avec un ratio présenté comme exact. Pour un budget, on utilise les **compteurs de consommation** fournis par le service.\n\n## Entrée, sortie, raisonnement, cache\n\n- **Entrée** : la question, les instructions, le contexte, l'historique.\n- **Sortie** : les tokens générés. Sur certains modèles, les tokens de raisonnement, invisibles pour l'utilisateur, sont facturés comme de la sortie.\n- **Cache** : selon le fournisseur et sous conditions, une partie de l'entrée répétée peut être facturée à un tarif de lecture réduit. Les tokens lus en cache sont **une partie de l'entrée**, ils ne s'ajoutent pas à elle.\n\n## La formule\n\n```\ncoût_modèle = (tokens_entrée_hors_cache × prix_entrée\n             + tokens_lus_en_cache     × prix_lecture_cache\n             + tokens_écrits_en_cache  × prix_écriture_cache\n             + tokens_sortie_totale    × prix_sortie) ÷ 1 000 000\n```\n\nLa division par un million s'applique parce que les prix sont exprimés **par million de tokens**.\n\n## Exemple avec des prix fictifs\n\nPrix fictifs : 3 $ par million en entrée, 15 $ par million en sortie. Une requête : 1 000 tokens en entrée, 200 en sortie.\n\n- Entrée : 1 000 ÷ 1 000 000 × 3 = 0,003 $.\n- Sortie : 200 ÷ 1 000 000 × 15 = 0,003 $.\n- Total : **0,006 $**. Deux cents tokens générés coûtent autant que mille tokens reçus.\n\nAjoutons 800 tokens de raisonnement facturés en sortie : sortie totale = 1 000 tokens, soit 0,015 $, et un total de **0,018 $**, trois fois plus. Une réponse courte à l'écran peut donc coûter cher.\n\n## Pièges\n\n- Appliquer le prix d'entrée aux tokens de sortie.\n- Oublier de diviser par un million.\n- Ajouter les tokens de raisonnement alors que le compteur de sortie les inclut déjà.\n- Ajouter les tokens en cache à toute l'entrée au lieu de les en retrancher.\n- Reprendre les rapports de prix entrée/sortie d'un exemple : ils varient selon le modèle et l'offre.\n\n## Pour réfléchir\n\nSur un cas d'usage que vous connaissez, la sortie est-elle plutôt courte ou longue ? Quel serait l'effet d'un doublement de la longueur des réponses sur la facture ?\n"
+    },
+    {
+     "title": "Quelle unité choisir : requête, utilisateur, résultat réussi",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Passer du coût par requête au coût de la tâche complète.\n- Définir un « résultat réussi » mesurable.\n- Choisir la métrique à présenter au responsable métier.\n\n## Trois niveaux d'unité\n\n1. **Coût par requête** : utile aux équipes techniques pour expliquer des écarts.\n2. **Coût par tâche** : un ticket à résoudre peut déclencher une recherche, un appel au modèle, une vérification et parfois des reprises. Ne compter que le premier appel sous-estime le coût réel.\n3. **Coût par utilisateur ou par client** : les moyennes cachent souvent des usages très différents. Mille tickets à 16,80 $ au total et vingt tickets à environ 0,34 $ correspondent à peu près au même coût par ticket ; c'est le volume qui change. L'impact sur la marge dépend ensuite de ce que ce client paie.\n\n## Le coût par résultat réussi\n\nLe bon dénominateur dépend du produit : une réponse jugée correcte, un ticket résolu et non rouvert, un document validé. Il faut **définir précisément** ce que signifie « réussi ».\n\n```\ncoût_par_réussite = coût_total_sur_le_périmètre ÷ nombre_de_réussites\n```\n\nExemple fictif sur 1 000 demandes :\n\n- Solution A : 100 $ pour 800 réussites : 0,125 $ par réussite.\n- Solution B : 120 $ pour 950 réussites : environ 0,126 $ par réussite.\n\nLes coûts unitaires sont presque identiques, alors que B réussit 150 tâches de plus. Regardez aussi les échecs, leurs conséquences et le travail humain de reprise : une réponse peu chère qui doit être refaite peut finalement coûter davantage.\n\n## Règles de calcul\n\n- Même périmètre, même période pour toutes les solutions comparées.\n- Inclure les reprises humaines si elles ne sont pas déjà dans le coût.\n- Toujours accompagner le coût par réussite du taux de réussite et de la définition du résultat.\n\n## Pour réfléchir\n\nQuelle métrique présenteriez-vous au responsable métier ? Écrivez la définition d'une « tâche réussie » pour un produit que vous connaissez, en une phrase vérifiable.\n"
+    },
+    {
+     "title": "Conversations et contexte : la croissance du coût",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Comprendre pourquoi le coût d'une conversation augmente avec sa longueur.\n- Calculer l'entrée cumulée sur n tours.\n- Connaître les stratégies de maîtrise du contexte et leurs limites.\n\n## Le mécanisme\n\nLa dernière question contient rarement tout ce qu'il faut pour répondre : le système réutilise une partie de l'historique. Si on garde tout, chaque nouvel échange augmente la quantité de contexte à traiter.\n\nUne correction de vocabulaire importante : quand chaque tour ajoute une quantité constante de texte, la **taille de l'entrée croît de façon linéaire**, et le **total consommé sur la conversation croît de façon quadratique**. Une croissance exponentielle exigerait un autre mécanisme, par exemple un nombre de branches qui se multiplie à chaque étape.\n\n## Calcul\n\nHypothèses : question de 100 tokens, réponse de 100 tokens, historique complet, ni consigne système ni cache.\n\n- Entrée par tour : 100, 300, 500, 700, 900.\n- Entrée du tour n : 100 × (2n − 1).\n- Cumul sur n tours : **100 × n²**. À 5 tours : 2 500 ; à 10 tours : 10 000.\n\nDeux fois plus de tours, quatre fois plus de tokens d'entrée cumulés. Les tokens de sortie se comptent séparément.\n\n## Que faire ?\n\n- Garder les échanges récents.\n- Résumer les anciens (le résumé a lui aussi un coût et peut perdre une information utile).\n- Retrouver uniquement les informations pertinentes plutôt que tout renvoyer.\n- Utiliser le **cache de préfixe** pour des entrées répétées.\n\n## Deux caches à ne pas confondre\n\n- Le **cache de préfixe** réduit le prix de certaines entrées répétées : le modèle travaille toujours.\n- Le **cache sémantique** réutilise une réponse déjà produite pour une demande compatible.\n\n## Pièges\n\n- Croire qu'une API qui gère l'historique côté serveur rend le contexte gratuit : il faut vérifier la consommation réellement facturée.\n- Supposer qu'un seuil de contexte double toujours le tarif : les seuils et leurs effets dépendent de l'offre.\n\n## Mise en pratique\n\nCalculez à la main l'entrée cumulée pour 8 tours (réponse : 6 400 tokens), puis vérifiez avec la fonction `entree_cumulee` de la leçon sur le calculateur.\n"
+    }
+   ]
+  },
+  {
+   "title": "Choisir et optimiser",
+   "lessons": [
+    {
+     "title": "Choisir le modèle et le mode d'achat",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Séparer deux décisions : quel modèle, et comment acheter la capacité.\n- Calculer un seuil de rentabilité entre API à l'usage et capacité réservée.\n- Connaître les conditions qui limitent ce calcul.\n\n## Décision 1 : le modèle\n\nOn part d'**exemples représentatifs du travail réel** et d'un niveau de qualité attendu. Une classification simple peut convenir à un modèle compact ; une analyse complexe peut justifier un modèle plus coûteux ; un modèle spécialisé n'a de sens que si l'on dispose de données adaptées et d'assez de volume pour amortir sa préparation. Les noms de modèles changent vite : on décide sur des **résultats de tests**, jamais sur un classement de mémoire.\n\n## Décision 2 : le mode d'achat\n\n- **API à l'usage** : on commence sans réserver d'infrastructure, on paie la consommation.\n- **Auto-hébergement** : davantage de contrôle, mais il faut payer et exploiter les machines, y compris quand elles sont peu utilisées, et vérifier la licence du modèle.\n- **Capacité provisionnée** : on achète une capacité de traitement. Le budget est plus prévisible, mais le coût par tâche dépend du taux d'utilisation et de la taille des demandes.\n\n## Seuil de rentabilité\n\n```\nseuil = coût_fixe_mensuel ÷ (coût_variable_API − coût_variable_réservé)\n        (valable si l'écart est positif)\n```\n\nExemple fictif : solution réservée à 3 000 $ par mois, exploitation incluse ; API à 0,01 $ la tâche. Seuil : 3 000 ÷ 0,01 = **300 000 tâches par mois**. À 100 000 tâches l'API coûte 1 000 $ ; à 500 000 elle coûte 5 000 $.\n\nAvec un coût variable réservé de 0,004 $ par tâche : 3 000 ÷ (0,01 − 0,004) = 500 000 tâches.\n\n## Ce que le seuil ne dit pas\n\nLa capacité réservée doit aussi supporter le débit, la qualité et les pointes de charge. Si l'exploitation n'est pas incluse dans les 3 000 $, il faut l'ajouter. Et un écart nul ou négatif signifie que l'option réservée ne devient jamais rentable.\n\n## Mise en pratique\n\nRecalculez le seuil si le coût fixe passe à 4 000 $ et le prix API à 0,02 $ (réponse : 200 000 tâches par mois).\n"
+    },
+    {
+     "title": "Les leviers d'optimisation et leurs limites",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Connaître les principaux leviers d'économie et la dépense que chacun réduit.\n- Comprendre pourquoi leurs effets ne s'additionnent pas.\n- Calculer une économie nette.\n\n## Quatre leviers\n\n- **Cache sémantique** : réutiliser une réponse déjà calculée pour une demande compatible. Il évite l'appel de génération sur les demandes couvertes, mais le cache, la recherche de similarité et les vérifications ont un coût.\n- **Routage** : envoyer les cas simples vers une option moins chère et les autres vers une option plus capable. Des travaux publiés montrent des économies importantes sur des jeux de test précis ; cela ne signifie pas que la même proportion de vos réponses restera correcte. À tester sur **vos** cas.\n- **Cache de préfixe** : réutiliser la partie stable d'un prompt. La réduction ne porte que sur les entrées concernées, avec des conditions de longueur minimale, de durée de vie et, selon le fournisseur, de coût d'écriture.\n- **Traitement par lots** : pour les tâches qui peuvent attendre. Certaines offres accordent une réduction par rapport au traitement synchrone, en échange d'un délai ; on vérifie l'offre, le délai et les modèles éligibles.\n\nPour chaque levier, posez deux questions : **quelle dépense réduit-il ?** et **comment vérifie-t-on que la réponse reste acceptable ?**\n\n## Les pourcentages ne s'additionnent pas\n\nBase fictive : 100 $ d'appels au modèle.\n\n```\nLevier 1 : −20 %           → 100 × 0,8 = 80 $\nLevier 2 : −50 % du solde  →  80 × 0,5 = 40 $\nÉconomie brute = 60 $ (et non 70 %)\nCoût ajouté (cache, routage) = 5 $\nÉconomie nette = 55 $\n```\n\nLes leviers peuvent toucher les mêmes tokens ou des parties différentes du trafic ; on les compose de façon multiplicative et on retranche le coût des mécanismes ajoutés.\n\n## Attention aux droits\n\nPeut-on servir une réponse en cache à deux utilisateurs ayant des droits différents ? Seulement si le périmètre de droits et le contenu autorisé sont compatibles. Les droits d'accès et la version du document doivent faire partie de la clé de réutilisation.\n\n## Pour réfléchir\n\nPour un assistant documentaire, quel levier testeriez-vous en premier, sur quel jeu de demandes, avec quel critère d'acceptation ?\n"
+    },
+    {
+     "title": "Le triangle coût, délai, qualité",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Utiliser le triangle comme outil de discussion, pas comme loi.\n- Traduire un besoin en phrase de réussite mesurable.\n- Associer des configurations types à des besoins.\n\n## Un outil de discussion\n\nLe triangle coût / délai / qualité aide à poser la bonne question : quel niveau de service l'utilisateur attend-il, et quel coût peut-on accepter pour le fournir ? Ce n'est pas une loi : supprimer un appel inutile ou améliorer le contexte peut faire progresser les trois dimensions à la fois. Pour une configuration donnée, en revanche, des compromis demeurent.\n\n## Trois configurations types\n\n- **A : le résultat peut attendre.** Documents traités la nuit, modèle suffisamment capable, traitement par lots. La qualité est conservée, le délai est accepté.\n- **B : réponse rapide sur une tâche complexe.** On accepte une dépense plus élevée si elle répond au besoin. Une capacité réservée peut aider sur certains volumes mais ne garantit pas à elle seule une réponse instantanée. Un domaine sensible exige en plus des contrôles métier.\n- **C : tâche simple et bien délimitée.** Un petit modèle (éventuellement compressé) peut suffire, à condition que la qualité reste conforme au besoin. Moins cher ne veut pas dire plus d'erreurs acceptées.\n\n## La phrase de réussite\n\nAvant de choisir, écrivez : « La tâche est réussie si le résultat respecte **tel critère**, arrive **dans tel délai** et reste **sous tel coût**. »\n\n## Trois besoins à classer\n\n1. Dix mille résumés attendus demain matin : examiner d'abord un traitement asynchrone.\n2. Un assistant interactif sur un dossier complexe : mesurer qualité et délai d'une API synchrone adaptée.\n3. Affecter un ticket à l'une de dix catégories : commencer par une solution compacte et la comparer à une règle ou à un classifieur classique.\n\nAucun nom de modèle ne constitue une réponse suffisante : les choix restent conditionnés aux résultats d'un test métier.\n\n## Pour réfléchir\n\nÉcrivez la phrase de réussite d'une fonctionnalité de votre produit. Lequel des trois critères est le moins bien défini aujourd'hui ?\n"
+    }
+   ]
+  },
+  {
+   "title": "Budgéter, piloter, prouver la valeur",
+   "lessons": [
+    {
+     "title": "Du prix des tokens au coût de service",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Construire la cascade qui transforme un coût de tokens en coût de service.\n- Distinguer le prix d'une revue de son coût moyen réparti.\n- Évaluer l'effet d'un changement de taux de revue.\n\n## La cascade, pas à pas (valeurs fictives, par ticket)\n\n```\nModèle                           : 0,0168 $\n+ Recherche vectorielle          : 0,0020 $\n+ Suivi et évaluation            : 0,0010 $\n= Coût technique                 : 0,0198 $\n+ Revue humaine (5 % × 0,50 $)   : 0,0250 $\n= Coût de service par ticket     : 0,0448 $\n```\n\nDistinction essentielle : la revue coûte 0,50 $ **par ticket contrôlé**, mais seuls 5 % des tickets sont revus. Le coût moyen réparti sur tous les tickets est 0,05 × 0,50 = 0,025 $, et non 0,50 $.\n\n## Lectures utiles\n\n- Rapport au coût des tokens : 0,0448 ÷ 0,0168 ≈ 2,67. La formule « près de trois fois » correspond à **cet exemple**, pas à une règle générale.\n- Part de la revue : 0,025 ÷ 0,0448 ≈ 55,8 %. Pour réduire la dépense, ce poste mérite autant d'attention que le choix du modèle.\n- Volume : 100 000 tickets × 0,0448 = 4 480 $. Avec 1 000 $ de frais mensuels fixes non déjà inclus : 5 480 $ par mois.\n\n## Et si la revue passe à 10 % ?\n\n0,0198 + 0,10 × 0,50 = 0,0698 $ par ticket, soit environ 2 500 $ de plus par mois à 100 000 tickets, hors autres changements.\n\n## Pièges\n\n- Multiplier un coût unitaire par le volume en oubliant les abonnements fixes, la maintenance et la construction.\n- Confondre coût d'une revue et coût moyen de revue.\n- Présenter un total sans périmètre explicite.\n\n## Mise en pratique\n\nReprenez la cascade avec un taux de revue de 2 %. Quel est le nouveau coût par ticket ? (Réponse : 0,0198 + 0,01 = 0,0298 $.)\n"
+    },
+    {
+     "title": "Surveiller, plafonner, arrêter",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Définir des limites à plusieurs niveaux.\n- Concevoir les garde-fous d'un agent.\n- Diagnostiquer une dérive de coût.\n\n## Pourquoi surveiller\n\nUne fois en production, le coût peut changer sans que le nombre d'utilisateurs bouge : contexte qui s'allonge, outil qui répond mal, agent qui recommence davantage, nouvelle version qui produit des réponses plus longues.\n\n## Des limites à plusieurs niveaux\n\n- **Alerte souple** : prévient le responsable quand la consommation approche d'un seuil.\n- **Limite stricte** : applique une action (ralentir, mettre en attente, refuser). Le comportement de repli doit être conçu dans l'expérience utilisateur.\n- **Garde-fous d'agent** : nombre maximal d'étapes, de tentatives, durée maximale, et **budget par exécution**. Le nombre d'étapes seul ne suffit pas si une étape peut contenir un document énorme.\n- **Arrêt ciblé** : un bouton, testé, qui coupe le traitement concerné. Révoquer une clé partagée est possible mais peut toucher plusieurs applications.\n\nExemple de plafond : à 0,02 $ par étape, 25 étapes représentent 0,50 $. C'est une estimation si le prix par étape varie : ajoutez un compteur de coût estimé, tenez compte des appels en cours et gardez une marge avant le plafond.\n\n## Enquêter sur une hausse\n\nCas fictif : 10 000 tâches par jour. Avant : 0,04 $ par tâche, soit 400 $. Après : 0,08 $ par tâche, soit 800 $. Trafic inchangé, surcoût de 400 $ par jour.\n\nOrdre d'enquête proposé :\n\n1. Identifier ce qui a changé (versions, prompts, documents, types de demandes).\n2. Comparer avec un jeu de cas stable.\n3. Décomposer : tokens d'entrée, tokens de sortie, appels d'outils, tentatives.\n4. Contrôler la qualité en parallèle.\n5. Revenir à la version précédente si nécessaire.\n\nModifier le prompt sans diagnostic peut masquer la cause.\n\n## Indicateurs à suivre\n\nLa dépense, mais aussi le coût par tâche réussie, les tokens, les reprises et le délai.\n\n## Mise en pratique\n\nPour un agent que vous connaissez, écrivez ses quatre limites (étapes, tentatives, durée, budget) et le message affiché à l'utilisateur quand l'une d'elles est atteinte.\n"
+    },
+    {
+     "title": "Marge, retour sur investissement et valeur",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Calculer une marge brute sur un service vendu.\n- Calculer un ROI simple et un délai de récupération.\n- Éviter les doubles comptages de bénéfice.\n\n## Deux calculs distincts\n\nLa **marge** concerne un service vendu ; le **retour sur investissement** concerne un projet, construction comprise.\n\n```\nmarge_brute = (prix − coût_de_service) ÷ prix\nROI_simple  = (bénéfice − coût) ÷ coût\n```\n\n## Marge : exemple fictif\n\nPrix de 0,20 $ par ticket, coût de service 0,0448 $ : (0,20 − 0,0448) ÷ 0,20 = **77,6 %**. À 100 000 tickets : revenu 20 000 $, coût 4 480 $, marge 15 520 $. Ces montants ne sont pas un résultat net d'entreprise : les frais de développement, d'intégration ou de conduite du changement peuvent se trouver hors du périmètre.\n\n## ROI d'un assistant interne : exemple fictif\n\nIl n'y a pas toujours de revenu par ticket : on mesure du temps gagné, une capacité supplémentaire, des erreurs évitées.\n\n```\n10 000 demandes × 3 min ÷ 60       = 500 h par mois\n500 h × 30 $                       = 15 000 $ de capacité théorique\n15 000 $ × 40 % réellement réutilisé = 6 000 $ de bénéfice retenu par mois\nCoût sur 12 mois = 12 000 + 12 × 2 000 = 36 000 $\nBénéfice sur 12 mois = 72 000 $\nROI simple = (72 000 − 36 000) ÷ 36 000 = 100 %\n```\n\nAvec un gain mensuel net de 4 000 $ (6 000 − 2 000), la construction (12 000 $) se récupère en 3 mois.\n\n## Hypothèses à nommer\n\nPleine activité dès le début, sans actualisation ni fiscalité : adaptez si la montée en charge est progressive. Le temps gagné doit être **mesuré**, la capacité réutilisée **confirmée**, et un même bénéfice ne doit pas être compté deux fois (temps gagné et baisse de coût).\n\n## Pour réfléchir\n\nQuelle part du temps gagné par un outil est réellement réaffectée à du travail utile dans votre organisation ? Comment le vérifier ?\n"
+    },
+    {
+     "title": "Rendre la dépense visible : attribution et gouvernance",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Organiser la visibilité, le contrôle puis l'optimisation, dans cet ordre.\n- Comprendre à quoi servent les étiquettes et les formats de données de coût communs.\n- Se fixer des actions avec responsable et preuve de réalisation.\n\n## Trois niveaux de maturité\n\n**1. Visibilité.** Attribuer les coûts au bon produit, à la bonne équipe et à la bonne exécution : identifiants de service, clés séparées par usage, étiquettes dans les traces. Rapprocher les montants avec la facture.\n\n**2. Contrôle.** Désigner un responsable de budget, définir des alertes, **tester** ce qui se passe quand une limite est atteinte. Pour le cache, vérifier le taux de réutilisation réel ; pour l'arrêt d'urgence, vérifier qu'il coupe bien le traitement visé.\n\n**3. Optimisation.** Essayer routage, compression de modèle ou autres options sur un trafic représentatif. Leur intérêt dépend du volume, du matériel, du délai et de la qualité constatée.\n\n## Un langage commun pour les données de coût\n\nIl existe une spécification ouverte, appelée FOCUS, qui standardise les données de coût et d'usage. Deux notions utiles à la date de rédaction : un **coût facturé** (pour rapprocher les montants de la facture) et un **coût effectif** (qui répartit notamment les coûts liés aux engagements). On choisit la mesure selon la question posée. Aucune des deux ne couvre les frais humains du produit : revue, support, maintenance.\n\n## Une action par niveau\n\nChaque action doit être précise, un responsable et un résultat observable. Exemples :\n\n- Visibilité : rattacher chaque exécution à un produit et rapprocher les montants avec la facture.\n- Contrôle : tester le plafond d'étapes d'un agent et vérifier son comportement d'arrêt.\n- Optimisation : comparer deux configurations sur le même jeu de demandes, avec coût par réussite et délai.\n\n## Pièges\n\n- Optimiser avant de savoir où part l'argent.\n- Une clé API partagée par plusieurs produits : impossible d'attribuer proprement.\n- Des limites jamais testées.\n"
+    }
+   ]
+  },
+  {
+   "title": "Mise en pratique",
+   "lessons": [
+    {
+     "title": "Exercice : budget d'un assistant interne",
+     "kind": "exercise",
+     "body_md": "## Énoncé\n\nVous devez estimer le budget mensuel d'un assistant pour **5 000 collaborateurs**. Chacun effectue **20 requêtes par jour**. Une requête contient en moyenne **1 000 tokens d'entrée** et **200 tokens de sortie**. Tarifs **fictifs** : 3 $ par million de tokens en entrée, 15 $ par million en sortie. On compte **20 jours par mois** et une majoration de **20 %** pour l'infrastructure et la recherche documentaire.\n\nCalculez : requêtes par jour, coût quotidien du modèle, budget mensuel, total majoré, coût moyen par requête et par collaborateur. Annoncez les unités avant les montants. Faites d'abord le calcul à la main.\n\n## Corrigé pas à pas\n\n```\n1. Requêtes par jour    : 5 000 × 20 = 100 000\n2. Entrée par jour      : 100 000 × 1 000 = 100 M tokens → 100 × 3 = 300 $\n3. Sortie par jour      : 100 000 × 200   =  20 M tokens →  20 × 15 = 300 $\n4. Modèle par jour      : 600 $\n5. Modèle par mois      : 600 × 20 = 12 000 $  (2 000 000 requêtes)\n6. Majoration 20 %      : 2 400 $ → total 14 400 $\n7. Par requête          : 12 000 ÷ 2 000 000 = 0,006 $ ; majoré 0,0072 $\n8. Par collaborateur    : 14 400 ÷ 5 000 = 2,88 $ par mois\n```\n\nVérification par une seule requête : 0,003 + 0,003 = 0,006 $ ; 2 000 000 × 0,006 × 1,20 = 14 400 $.\n\n## Ce que le chiffre dit, et ne dit pas\n\nLa sortie coûte autant que l'entrée alors qu'elle contient cinq fois moins de tokens. 2,88 $ par personne et par mois est facile à discuter, mais ne prouve ni que le produit est cher ni qu'il est rentable : il faut le comparer à un résultat utile. Le calcul suppose que les 5 000 personnes l'utilisent toutes 20 fois par jour, ce qui est une hypothèse, pas un fait observé. Il exclut construction, formation, support, revue humaine et taxes.\n\n## Variantes à calculer\n\n- **30 % d'utilisateurs actifs** : 3 600 $ de modèle ; 4 320 $ si la majoration reste proportionnelle ; 6 000 $ si les 2 400 $ d'infrastructure sont entièrement fixes. Explicitez l'hypothèse.\n- **Réponses de 400 tokens** : sortie 12 000 $, modèle 18 000 $, total 21 600 $ (+ 50 %).\n- **80 % des demandes sur une option deux fois moins chère** : facteur 0,80 × 0,5 + 0,20 = 0,60 ; modèle 7 200 $ ; total 8 640 $ (ou 9 600 $ si l'infrastructure reste fixe). Vérifier la qualité et le coût du routage.\n\n## Erreurs à repérer\n\nOublier de diviser par un million ; appliquer le prix d'entrée à la sortie ; confondre 20 jours travaillés et 30 jours calendaires ; présenter 100 % d'utilisateurs actifs comme observé ; compter deux fois des tokens déjà inclus dans une consommation moyenne.\n"
+    },
+    {
+     "title": "Exercice : le calculateur FinOps en Python",
+     "kind": "exercise",
+     "body_md": "## Objectif\n\nDisposer d'un petit calculateur pour vérifier vos formules et tester vos hypothèses. Le code ci-dessous utilise uniquement la bibliothèque standard de Python. **Tous les prix sont fictifs** : remplacez-les par ceux de votre contexte, relevés à la date de votre étude.\n\n## Le code\n\nCopiez-le dans un fichier `finops.py`, puis lancez `python finops.py`. Les `assert` vérifient que les formules redonnent les valeurs de ce module ; le programme affiche `OK` si tout est cohérent.\n\n```python\n\"\"\"Calculateur FinOps IA : tous les prix ci-dessous sont FICTIFS.\"\"\"\n\nM = 1_000_000\n\n\ndef cout_requete(tok_in, tok_out, prix_in, prix_out, tok_cache=0, prix_cache=None):\n    \"\"\"Coût d'un appel. Les prix sont exprimés par million de tokens.\n    tok_cache fait partie de tok_in (il ne s'ajoute pas).\"\"\"\n    if prix_cache is None:\n        prix_cache = prix_in\n    if tok_cache > tok_in:\n        raise ValueError(\"tok_cache ne peut pas dépasser tok_in\")\n    entree = (tok_in - tok_cache) * prix_in + tok_cache * prix_cache\n    return (entree + tok_out * prix_out) / M\n\n\ndef cout_par_resultat(cout_total, nb_reussites):\n    return cout_total / nb_reussites\n\n\ndef entree_cumulee(n_tours, tok_question, tok_reponse):\n    \"\"\"Tokens d'entrée cumulés, historique complet conservé, sans consigne système.\"\"\"\n    total = 0\n    for t in range(1, n_tours + 1):\n        total += t * tok_question + (t - 1) * tok_reponse\n    return total\n\n\ndef seuil_rentabilite(cout_fixe, cout_var_api, cout_var_reserve=0.0):\n    ecart = cout_var_api - cout_var_reserve\n    if ecart <= 0:\n        return None  # la solution réservée ne devient jamais rentable\n    return cout_fixe / ecart\n\n\ndef marge_brute(prix, cout):\n    return (prix - cout) / prix\n\n\ndef roi_simple(benefice, cout):\n    return (benefice - cout) / cout\n\n\nif __name__ == \"__main__\":\n    # Coût d'une requête (tarifs fictifs : 3 en entrée, 15 en sortie, par million)\n    assert abs(cout_requete(1000, 200, 3, 15) - 0.006) < 1e-12\n    assert abs(cout_requete(1000, 1000, 3, 15) - 0.018) < 1e-12\n    # Cache : 800 tokens lus à 0,3 au lieu de 3\n    assert abs(cout_requete(1000, 200, 3, 15, tok_cache=800, prix_cache=0.3) - 0.00384) < 1e-12\n    # Réussites\n    print(\"A\", round(cout_par_resultat(100, 800), 4), \"B\", round(cout_par_resultat(120, 950), 4))\n    # Conversation\n    assert entree_cumulee(5, 100, 100) == 2500 and entree_cumulee(10, 100, 100) == 10000\n    # Seuil\n    assert seuil_rentabilite(3000, 0.01) == 300000\n    # Cascade\n    technique = 0.0168 + 0.002 + 0.001\n    revue = 0.05 * 0.50\n    total = technique + revue\n    assert abs(total - 0.0448) < 1e-12\n    print(\"part revue\", round(revue / total, 3), \"ratio\", round(total / 0.0168, 3))\n    assert abs(marge_brute(0.20, total) - 0.776) < 1e-9\n    # Exercice assistant interne\n    req_jour = 5000 * 20\n    modele_mois = req_jour * 20 * cout_requete(1000, 200, 3, 15)\n    total_mois = modele_mois * 1.2\n    assert req_jour == 100000 and abs(modele_mois - 12000) < 1e-6 and abs(total_mois - 14400) < 1e-6\n    print(\"par collaborateur\", total_mois / 5000, \"par requête\", total_mois / (req_jour * 20))\n    # ROI\n    benefice = 10_000 * 3 / 60 * 30 * 0.4\n    cout12 = 12_000 + 12 * 2_000\n    assert benefice == 6000 and cout12 == 36000\n    assert roi_simple(12 * benefice, cout12) == 1.0\n    # Scénario A (lots)\n    a = 500_000 * (800 * 0.20 + 50 * 0.80) / M\n    assert abs(a - 100) < 1e-9\n    # Scénario B\n    b = cout_requete(20_000 - 0, 2_000, 3, 15)\n    assert abs(b - 0.09) < 1e-12 and abs(2000 * b - 180) < 1e-6\n    print(\"OK\")\n```\n\n## Ce que fait chaque fonction\n\n- `cout_requete` : la formule de coût d'un appel, avec lecture en cache. `tok_cache` est un sous-ensemble de `tok_in`.\n- `cout_par_resultat` : coût divisé par le nombre de réussites.\n- `entree_cumulee` : tokens d'entrée cumulés d'une conversation à historique complet (formule 100 × n² dans le cas 100/100).\n- `seuil_rentabilite` : volume à partir duquel une solution à coût fixe devient plus économique. Renvoie `None` si elle ne l'est jamais.\n- `marge_brute` et `roi_simple` : les deux ratios de la leçon sur la marge.\n\n## Pistes d'expérimentation\n\n1. Calculez le coût d'une requête de 1 000 tokens dont 800 sont lus en cache à un tarif de lecture dix fois inférieur (fictif) : le résultat est 0,00384 $ au lieu de 0,006 $.\n2. Faites varier la longueur des réponses de 100 à 800 tokens et tracez mentalement l'effet sur le coût.\n3. Ajoutez une fonction qui calcule le coût de service d'un ticket avec un taux de revue en paramètre.\n\n## Attention\n\nUn calculateur ne remplace pas les compteurs de consommation du service ni la facture : il sert à raisonner et à comparer des scénarios avant mesure.\n"
+    },
+    {
+     "title": "Exercice : défendre une architecture sur deux scénarios",
+     "kind": "exercise",
+     "body_md": "## Énoncé\n\nPour chaque scénario, rédigez une décision argumentée : **modèle**, **mode de traitement**, **optimisation prioritaire**, **contrôle de qualité**, avec un coût chiffré, des unités et des hypothèses.\n\n- **Scénario A** : 500 000 fiches e-commerce par mois à classer. Raisonnement limité, personne n'attend de réponse immédiate.\n- **Scénario B** : 100 contrats par jour, beaucoup de texte, analyse complexe. Le métier déclare ne tolérer aucune erreur.\n\n## Piste de corrigé pour A\n\nVérifier d'abord si des règles ou un classifieur existant suffisent. Sinon, un modèle compact est un candidat cohérent : on demande une catégorie dans une **liste fermée** et une sortie structurée courte, par exemple un objet JSON contenant l'identifiant et la catégorie. On valide le JSON, l'identifiant et l'appartenance à la liste ; les sorties invalides partent en reprise.\n\nLe traitement par lots convient (pas d'attente en temps réel) ; comparer son délai au besoin. Un cache de préfixe n'aide que si le préfixe atteint le minimum exigé par le fournisseur : avec un prompt court, aucun gain ne doit entrer dans le budget, et il ne faut pas allonger le prompt pour atteindre un seuil. Un cache sémantique demande de la prudence : deux produits proches peuvent relever de catégories différentes.\n\nCoût (hypothèses fictives distinctes de l'exercice précédent) : 800 tokens d'entrée et 50 de sortie par fiche, 0,20 $ par million en entrée, 0,80 $ par million en sortie.\n\n```\nEntrée : 500 000 × 800 = 400 M tokens → 80 $\nSortie : 500 000 × 50  =  25 M tokens → 20 $\nTotal standard = 100 $ par mois\nAvec une remise par lots de 50 % supposée : 50 $ par mois, soit 0,0001 $ par fiche\n```\n\nÀ ajouter : stockage, reprises, suivi, contrôle humain. Qualité : jeu de fiches annotées incluant catégories rares et cas ambigus ; cas incertains vers un modèle plus capable ou une revue humaine. Un score de confiance produit par le modèle doit être vérifié avant de servir à cette décision.\n\n## Piste de corrigé pour B\n\nUn modèle capable d'analyser les passages complexes, testé sur des contrats représentatifs avec des experts. Au faible volume, une API à l'usage est un bon départ ; synchrone si un utilisateur attend, par lots si le délai le permet.\n\nLa recherche de passages (RAG) peut oublier une annexe ou un renvoi. Exemple fictif : la clause 8 prévoit 90 jours de préavis, une annexe ramène ce préavis à 30 jours pour une offre pilote. Une réponse « 90 jours » sans l'annexe est incomplète. Contrôlez la couverture du document, les annexes et les liens entre clauses ; selon le cas, préférez une lecture complète ou une analyse par sections.\n\n**Aucun modèle ne permet de promettre zéro erreur.** Traduisez l'exigence en contrôles : réponse appuyée sur des passages vérifiables, possibilité de signaler une information manquante, validation par un expert avant toute décision engageante.\n\n```\n2 000 analyses par mois ; 20 000 tokens d'entrée et 2 000 de sortie chacune\nEntrée : 20 000 × 3 ÷ 1 000 000 = 0,06 $ ; sortie : 2 000 × 15 ÷ 1 000 000 = 0,03 $\nModèle : 0,09 $ par analyse → 180 $ par mois\nRevue : 5 min à 60 $ de l'heure = 5 $ par analyse → 10 000 $ par mois\nModèle + revue = 10 180 $ par mois, avant OCR, recherche et stockage\n```\n\nRemarquez que la revue pèse presque tout le budget : c'est elle qu'il faut optimiser.\n\n## Critères de correction\n\nUne réponse solide relie le choix au résultat attendu et au délai ; chiffre un coût avec unités et hypothèses ; prévoit reprises et mesure de qualité ; maîtrise le coût à grand volume (A) ; traite la couverture documentaire et la validation experte (B). Une autre architecture est acceptable si elle s'appuie sur des mesures.\n"
+    },
+    {
+     "title": "Exercice : votre plan d'action en trois niveaux",
+     "kind": "exercise",
+     "body_md": "## Consigne\n\nChoisissez **une action par niveau** (visibilité, contrôle, optimisation) pour un produit IA que vous connaissez ou que vous imaginez, puis indiquez pour chacune : le **responsable**, l'**échéance** et la **preuve de réalisation**.\n\n## Exemples de réponses attendues\n\n- **Visibilité** : rattacher chaque exécution à un produit via des étiquettes, puis rapprocher le total mensuel avec la facture. Preuve : un écart inférieur à un seuil que vous fixez.\n- **Contrôle** : définir un plafond d'étapes et un budget par exécution pour un agent, puis le déclencher volontairement sur un cas de test. Preuve : le message de repli est affiché et le traitement s'arrête.\n- **Optimisation** : comparer deux configurations sur le même jeu de demandes. Preuve : un tableau de résultats en texte avec coût par réussite, taux de réussite et délai.\n\nD'autres réponses sont acceptables si elles contiennent une action précise, un responsable et un résultat observable.\n\n## Gabarit à compléter\n\n```\nNiveau        : visibilité | contrôle | optimisation\nAction        : ...\nResponsable   : ...\nÉchéance      : ...\nPreuve        : ...\nRisque        : ...\n```\n\n## Auto-contrôle\n\n- Votre action est-elle réalisable en quelques jours ?\n- La preuve est-elle observable par une autre personne que vous ?\n- Avez-vous évité le piège « optimiser avant de mesurer » ?\n"
+    }
+   ]
+  },
+  {
+   "title": "Ressources",
+   "lessons": [
+    {
+     "title": "Formules et glossaire de l'économie de l'IA",
+     "kind": "reading",
+     "body_md": "## Formules\n\n```\ncoût_requête   = (tok_entrée × prix_entrée + tok_sortie × prix_sortie) ÷ 1 000 000\n                 (cache : retrancher les tokens lus en cache de l'entrée standard\n                  et les facturer au tarif de lecture)\ncoût_utilisateur = coût_total_période ÷ nombre_d_utilisateurs_actifs\ncoût_par_réussite = coût_total ÷ nombre_de_réussites\nentrée_cumulée (100/100) = 100 × n²\nmarge_brute    = (prix − coût) ÷ prix\nseuil          = coût_fixe ÷ (coût_variable_A − coût_variable_B)\nROI_simple     = (bénéfice − coût) ÷ coût\ndélai_récupération = coût_construction ÷ gain_mensuel_net\néconomie_composée = 1 − (1 − r1) × (1 − r2) × ...\n```\n\n## Glossaire\n\n- **Token** : morceau de texte traité par un modèle ; le découpage dépend du modèle.\n- **Fenêtre de contexte** : quantité de texte que le modèle peut prendre en compte dans un appel.\n- **Tokens de raisonnement** : tokens générés pour réfléchir, parfois facturés comme sortie.\n- **Cache de préfixe** : réutilisation d'une partie stable du prompt à tarif réduit, sous conditions.\n- **Cache sémantique** : réutilisation d'une réponse déjà produite pour une demande compatible.\n- **Routage** : choix du modèle selon la demande.\n- **Traitement par lots** : exécution différée, souvent moins chère, avec un délai.\n- **Capacité provisionnée** : capacité de traitement réservée.\n- **Quantification** : compression d'un modèle pour réduire sa taille et ses besoins matériels, avec un impact possible sur la qualité.\n- **RAG** : génération appuyée sur la recherche de passages documentaires.\n- **FinOps** : pratique conjointe produit, technique et finance qui relie dépense et valeur.\n- **Marge brute** : part du prix qui reste après le coût de service.\n- **ROI** : gain relatif d'un projet par rapport à son coût.\n- **Coût facturé / coût effectif** : montant de la facture, et montant tenant compte notamment de la répartition des engagements.\n- **Alerte souple / limite stricte** : prévention d'un seuil, et action automatique en cas de dépassement.\n\nRappel : les tarifs changent vite. Relevez toujours les prix à la date de votre étude et notez-la dans votre document.\n"
+    },
+    {
+     "title": "Récapitulatif du module",
+     "kind": "reading",
+     "body_md": "## Les idées à retenir\n\n- Un service IA facturé à l'usage se pilote sur le **comportement du produit** : contexte, longueur des réponses, nombre d'appels, tentatives.\n- Le coût d'un produit dépasse celui du modèle : recherche, stockage, suivi, **contrôle humain**, maintenance, construction.\n- Le coût d'une requête se calcule avec une formule simple, à condition d'éviter les doubles comptages (cache, raisonnement).\n- La bonne unité est le **coût par résultat réussi**, avec une définition claire de la réussite.\n- Le total d'une conversation croît de façon **quadratique** avec sa longueur, pas exponentielle.\n- Les leviers d'optimisation se **composent**, ne s'additionnent pas, et ont un coût propre.\n- Toute économie doit rester compatible avec le délai et la qualité attendus.\n- On fixe des limites à plusieurs niveaux et on teste l'arrêt.\n- Marge et ROI sont deux calculs différents ; les bénéfices doivent être mesurés et non doublement comptés.\n\n## Votre démarche type\n\n1. Écrire la phrase de réussite : critère, délai, coût.\n2. Lister tous les postes de dépense.\n3. Calculer avec des hypothèses explicites et des prix datés.\n4. Tester sur des cas représentatifs, mesurer la qualité.\n5. Poser des limites, des alertes et un responsable.\n6. Réviser les chiffres avec les données réelles.\n\n## Pour aller plus loin\n\nPassez le quiz, puis réalisez le livrable : il vous demande de défendre un budget et une architecture devant un comité fictif.\n"
+    }
+   ]
+  }
+ ],
+ "quiz": {
+  "title": "Quiz du module",
+  "pass_percent": 70,
+  "max_attempts": null,
+  "questions": [
+   {
+    "kind": "single_choice",
+    "prompt": "Avec des prix fictifs de 2 $ par million de tokens en entrée et 10 $ par million en sortie, quel est le coût d'une requête de 2 000 tokens en entrée et 500 en sortie ?",
+    "feedback": "Entrée : 2 000 ÷ 1 000 000 × 2 = 0,004 $. Sortie : 500 ÷ 1 000 000 × 10 = 0,005 $. Total : 0,009 $.",
+    "options": [
+     [
+      "0,009 $",
+      true
+     ],
+     [
+      "0,0045 $",
+      false
+     ],
+     [
+      "0,014 $",
+      false
+     ],
+     [
+      "0,09 $",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "On traite 100 000 demandes par jour à 0,006 $ chacune (600 $ par jour). Une boucle ajoute 10 appels équivalents par demande. Que devient la dépense quotidienne dans cette hypothèse ?",
+    "feedback": "100 000 × 10 × 0,006 = 6 000 $ par jour. Le trafic n'a pas changé : c'est le fonctionnement de la tâche qui a modifié le coût. Le facteur 10 est une hypothèse pédagogique.",
+    "options": [
+     [
+      "60 000 $ par jour",
+      false
+     ],
+     [
+      "6 000 $ par jour",
+      true
+     ],
+     [
+      "600 $ par jour, car le trafic est identique",
+      false
+     ],
+     [
+      "1 600 $ par jour",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles décisions de produit peuvent augmenter le coût sans ajouter d'utilisateurs ?",
+    "feedback": "Plus de contexte, des réponses plus longues, des vérifications supplémentaires et davantage de tentatives augmentent la consommation à trafic constant. Un cache bien réglé tend plutôt à la réduire.",
+    "options": [
+     [
+      "Autoriser davantage de tentatives à un agent",
+      true
+     ],
+     [
+      "Réutiliser des réponses déjà calculées pour des demandes compatibles",
+      false
+     ],
+     [
+      "Allonger les réponses générées",
+      true
+     ],
+     [
+      "Transmettre davantage de documents à chaque demande",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Une requête génère 200 tokens visibles et 800 tokens de raisonnement facturés comme de la sortie, à 15 $ par million (fictif). Quel est le coût de la sortie ?",
+    "feedback": "La sortie facturée est de 200 + 800 = 1 000 tokens : 1 000 ÷ 1 000 000 × 15 = 0,015 $. Une réponse courte à l'écran peut donc coûter cher.",
+    "options": [
+     [
+      "0,003 $",
+      false
+     ],
+     [
+      "0,012 $",
+      false
+     ],
+     [
+      "0,018 $",
+      false
+     ],
+     [
+      "0,015 $",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Concernant les tokens lus en cache, quelle affirmation est correcte ?",
+    "feedback": "Les tokens lus en cache sont une partie de l'entrée, facturée à un tarif de lecture. Ils ne s'ajoutent pas une seconde fois à toute l'entrée.",
+    "options": [
+     [
+      "Ils font partie de l'entrée et ne doivent pas être comptés deux fois",
+      true
+     ],
+     [
+      "Ils s'ajoutent à la totalité de l'entrée",
+      false
+     ],
+     [
+      "Ils sont toujours gratuits",
+      false
+     ],
+     [
+      "Ils remplacent les tokens de sortie",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels postes peuvent figurer dans le coût de fonctionnement d'un assistant documentaire, en plus du prix du modèle ?",
+    "feedback": "Recherche, stockage, suivi technique, contrôle humain et maintenance font partie du coût de service. Les frais de construction se traitent à part dans un calcul de retour sur investissement.",
+    "options": [
+     [
+      "Recherche vectorielle et stockage",
+      true
+     ],
+     [
+      "Suivi technique et évaluation",
+      true
+     ],
+     [
+      "Contrôle humain d'une partie des réponses",
+      true
+     ],
+     [
+      "Mise à jour des documents et traitement des incidents",
+      true
+     ],
+     [
+      "Aucun autre poste : le modèle représente toujours la totalité de la dépense",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans une conversation où chaque tour ajoute 100 tokens de question et 100 de réponse, historique complet conservé, quelle est l'entrée cumulée sur 8 tours ?",
+    "feedback": "Le cumul est 100 × n². Pour n = 8 : 6 400 tokens. Chaque tour envoie 100 × (2n − 1) tokens : 100, 300, ..., 1 500.",
+    "options": [
+     [
+      "3 200 tokens",
+      false
+     ],
+     [
+      "25 600 tokens",
+      false
+     ],
+     [
+      "6 400 tokens",
+      true
+     ],
+     [
+      "1 600 tokens",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle est la bonne description de la croissance du coût d'une conversation dont chaque tour ajoute une quantité constante de texte ?",
+    "feedback": "L'entrée par tour croît linéairement, donc le cumul sur la conversation croît de façon quadratique. L'exponentielle demanderait un mécanisme de multiplication, comme des branches qui se démultiplient.",
+    "options": [
+     [
+      "Exponentielle dans les deux cas",
+      false
+     ],
+     [
+      "Constante, grâce à l'historique côté serveur",
+      false
+     ],
+     [
+      "Linéaire pour le total cumulé",
+      false
+     ],
+     [
+      "Entrée par tour linéaire, total cumulé quadratique",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un coût de modèle de 0,0168 $ par ticket, 0,002 $ de recherche et 0,001 $ de suivi sont complétés par une revue humaine de 5 % des tickets à 0,50 $ par ticket revu. Quel est le coût de service moyen par ticket ?",
+    "feedback": "Technique : 0,0198 $. Revue moyenne : 0,05 × 0,50 = 0,025 $. Total : 0,0448 $. Le prix de la revue est réparti sur tous les tickets, pas appliqué à chacun.",
+    "options": [
+     [
+      "0,0448 $",
+      true
+     ],
+     [
+      "0,5198 $",
+      false
+     ],
+     [
+      "0,0198 $",
+      false
+     ],
+     [
+      "0,0698 $",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Avec les mêmes données, que devient le coût moyen par ticket si le taux de revue passe de 5 % à 10 % ?",
+    "feedback": "0,0198 + 0,10 × 0,50 = 0,0698 $ par ticket. À 100 000 tickets, cela représente environ 2 500 $ de plus par mois.",
+    "options": [
+     [
+      "0,0448 $",
+      false
+     ],
+     [
+      "0,0698 $",
+      true
+     ],
+     [
+      "0,0498 $",
+      false
+     ],
+     [
+      "0,1198 $",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "La solution A coûte 100 $ pour 800 réussites ; la solution B coûte 120 $ pour 950 réussites (1 000 demandes chacune). Quelle conclusion est la plus juste ?",
+    "feedback": "Les coûts par réussite sont presque identiques (0,125 $ contre environ 0,126 $), mais B réussit 150 tâches de plus. Il faut aussi regarder les échecs et la reprise humaine.",
+    "options": [
+     [
+      "B est deux fois plus chère par réussite",
+      false
+     ],
+     [
+      "Le coût par réussite ne permet pas de comparer",
+      false
+     ],
+     [
+      "Coûts par réussite quasi identiques, B réussit davantage de tâches",
+      true
+     ],
+     [
+      "A est clairement meilleure car elle coûte moins cher au total",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Une solution réservée coûte 4 000 $ par mois (exploitation incluse). L'API coûte 0,02 $ par tâche (prix fictifs). Quel est le seuil de rentabilité simplifié ?",
+    "feedback": "4 000 ÷ 0,02 = 200 000 tâches par mois. En dessous, l'API est moins chère ; au-dessus, la capacité réservée l'emporte, sous réserve de débit, de qualité et de pointes de charge.",
+    "options": [
+     [
+      "80 tâches par mois",
+      false
+     ],
+     [
+      "20 000 tâches par mois",
+      false
+     ],
+     [
+      "2 000 000 tâches par mois",
+      false
+     ],
+     [
+      "200 000 tâches par mois",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Coût fixe réservé : 3 000 $ par mois. Coût variable API : 0,01 $ par tâche. Coût variable réservé : 0,004 $ par tâche. Quel est le seuil ?",
+    "feedback": "Seuil = 3 000 ÷ (0,01 − 0,004) = 500 000 tâches par mois. Si l'écart était nul ou négatif, la solution réservée ne deviendrait jamais rentable.",
+    "options": [
+     [
+      "500 000 tâches par mois",
+      true
+     ],
+     [
+      "300 000 tâches par mois",
+      false
+     ],
+     [
+      "750 000 tâches par mois",
+      false
+     ],
+     [
+      "214 286 tâches par mois",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un premier levier réduit la dépense de 20 %, un second réduit de moitié ce qui reste. Quelle est l'économie brute sur une base de 100 $ ?",
+    "feedback": "100 × 0,8 = 80 $, puis 80 × 0,5 = 40 $. L'économie brute est de 60 $ et non de 70 %. Il faut ensuite retrancher le coût des mécanismes ajoutés.",
+    "options": [
+     [
+      "40 $",
+      false
+     ],
+     [
+      "60 $",
+      true
+     ],
+     [
+      "70 $",
+      false
+     ],
+     [
+      "50 $",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles affirmations sur les caches sont correctes ?",
+    "feedback": "Le cache de préfixe réduit le prix d'entrées répétées, le modèle travaille encore ; le cache sémantique réutilise une réponse. Droits et version documentaire doivent entrer dans la règle de réutilisation. Le gain d'un cache doit être mesuré et peut être nul si les conditions du fournisseur ne sont pas remplies.",
+    "options": [
+     [
+      "Les droits d'accès doivent faire partie des règles de réutilisation d'une réponse en cache",
+      true
+     ],
+     [
+      "Un cache sémantique supprime tous les coûts d'une demande, y compris la recherche de similarité",
+      false
+     ],
+     [
+      "Le cache de préfixe et le cache sémantique sont deux mécanismes différents",
+      true
+     ],
+     [
+      "Le gain d'un cache de préfixe dépend de conditions fixées par le fournisseur",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Peut-on servir une réponse en cache à deux utilisateurs ayant des droits d'accès différents ?",
+    "feedback": "Seulement si le périmètre de droits et le contenu autorisé sont compatibles. Les droits et la version documentaire doivent faire partie des règles de réutilisation.",
+    "options": [
+     [
+      "Oui, toujours, la réponse étant identique",
+      false
+     ],
+     [
+      "Non, jamais, quel que soit le contexte",
+      false
+     ],
+     [
+      "Oui, si la demande est écrite de la même façon",
+      false
+     ],
+     [
+      "Seulement si les droits et le contenu autorisé sont compatibles",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dix mille résumés doivent être disponibles demain matin. Quelle option examiner en premier ?",
+    "feedback": "Le résultat peut attendre : un traitement asynchrone, par lots, est la première piste, à valider par un test de qualité et en vérifiant le délai de l'offre.",
+    "options": [
+     [
+      "Un traitement asynchrone par lots",
+      true
+     ],
+     [
+      "Une capacité réservée pour répondre instantanément",
+      false
+     ],
+     [
+      "Un modèle spécialisé à entraîner",
+      false
+     ],
+     [
+      "Un cache sémantique seul",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un service est vendu 0,20 $ par ticket pour un coût de service de 0,0448 $. Quelle est la marge brute sur ce périmètre ?",
+    "feedback": "(0,20 − 0,0448) ÷ 0,20 = 0,776, soit 77,6 %. Ce n'est pas un résultat net : construction et autres frais peuvent être hors périmètre.",
+    "options": [
+     [
+      "155,2 %",
+      false
+     ],
+     [
+      "77,6 %",
+      true
+     ],
+     [
+      "22,4 %",
+      false
+     ],
+     [
+      "4,48 %",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un projet coûte 36 000 $ sur 12 mois (construction et fonctionnement) et apporte 72 000 $ de bénéfice retenu. Quel est le ROI simple ?",
+    "feedback": "(72 000 − 36 000) ÷ 36 000 = 1, soit 100 %. Le résultat dépend d'hypothèses : usage stable, gains mesurés, pas de double comptage.",
+    "options": [
+     [
+      "50 %",
+      false
+     ],
+     [
+      "36 %",
+      false
+     ],
+     [
+      "100 %",
+      true
+     ],
+     [
+      "200 %",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles erreurs de calcul faut-il repérer dans une estimation de budget ?",
+    "feedback": "Ces quatre erreurs sont fréquentes : oubli de la division par un million, mélange des prix d'entrée et de sortie, confusion entre jours ouvrés et jours calendaires, utilisation de 100 % d'usage comme fait. Compter le périmètre complet n'est pas une erreur.",
+    "options": [
+     [
+      "Appliquer le prix d'entrée aux tokens de sortie",
+      true
+     ],
+     [
+      "Confondre 20 jours travaillés et 30 jours calendaires",
+      true
+     ],
+     [
+      "Présenter 100 % d'utilisateurs actifs comme un fait observé",
+      true
+     ],
+     [
+      "Préciser le périmètre et la période du calcul",
+      false
+     ],
+     [
+      "Oublier de diviser les tokens par un million",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans l'exercice du budget d'un assistant, 5 000 collaborateurs font 20 requêtes par jour sur 20 jours, à 0,006 $ le coût modèle par requête, avec une majoration de 20 %. Quel est le coût mensuel par collaborateur ?",
+    "feedback": "Requêtes mensuelles : 2 000 000. Modèle : 12 000 $. Majoré : 14 400 $. Par collaborateur : 14 400 ÷ 5 000 = 2,88 $.",
+    "options": [
+     [
+      "2,88 $",
+      true
+     ],
+     [
+      "0,0072 $",
+      false
+     ],
+     [
+      "0,60 $",
+      false
+     ],
+     [
+      "12,00 $",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle est la différence entre une alerte souple et une limite stricte ?",
+    "feedback": "L'alerte souple prévient d'un seuil approché ; la limite stricte déclenche une action (ralentir, mettre en attente, refuser). Son comportement de repli doit être conçu dans l'expérience utilisateur.",
+    "options": [
+     [
+      "L'alerte s'applique aux utilisateurs, la limite aux serveurs",
+      false
+     ],
+     [
+      "L'alerte prévient, la limite applique une action",
+      true
+     ],
+     [
+      "L'alerte coupe le service, la limite envoie un e-mail",
+      false
+     ],
+     [
+      "Il n'y a pas de différence, ce sont des synonymes",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels garde-fous sont pertinents pour un agent qui enchaîne des étapes et des appels d'outils ?",
+    "feedback": "Un maximum d'étapes, de tentatives et de durée, un budget par exécution et un arrêt ciblé testé sont complémentaires. Le nombre d'étapes seul ne suffit pas si une étape peut contenir un document énorme.",
+    "options": [
+     [
+      "Un arrêt ciblé que l'on a testé",
+      true
+     ],
+     [
+      "Aucune limite tant que le trafic utilisateur ne change pas",
+      false
+     ],
+     [
+      "Un nombre maximal d'étapes",
+      true
+     ],
+     [
+      "Un nombre maximal de tentatives et une durée maximale",
+      true
+     ],
+     [
+      "Un budget par exécution",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Le coût par tâche a doublé alors que le trafic est stable. Quel est le meilleur premier réflexe ?",
+    "feedback": "Identifier ce qui a changé et comparer à un jeu de cas stable avant de décomposer les tokens, appels et tentatives, tout en contrôlant la qualité. Modifier le prompt sans diagnostic peut masquer la cause.",
+    "options": [
+     [
+      "Réécrire le prompt immédiatement",
+      false
+     ],
+     [
+      "Révoquer toutes les clés API",
+      false
+     ],
+     [
+      "Attendre le mois suivant pour confirmer",
+      false
+     ],
+     [
+      "Identifier ce qui a changé et comparer avec un jeu de cas stable",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans une spécification commune de données de coût, à quoi sert principalement le coût facturé par opposition au coût effectif ?",
+    "feedback": "Le coût facturé sert à rapprocher les montants de la facture ; le coût effectif tient compte notamment de la répartition des coûts liés aux engagements. On choisit selon la question, et aucun ne couvre les frais humains du produit.",
+    "options": [
+     [
+      "À rapprocher les montants de la facture",
+      true
+     ],
+     [
+      "À mesurer les frais humains du produit",
+      false
+     ],
+     [
+      "À prévoir la qualité des réponses",
+      false
+     ],
+     [
+      "À remplacer les compteurs de tokens",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Pour analyser 100 contrats par jour avec un métier qui exige zéro erreur, quelles mesures sont cohérentes ?",
+    "feedback": "Aucun modèle ne permet de promettre zéro erreur : on traduit l'exigence en contrôles : couverture des annexes et renvois, passages sources vérifiables, signalement des informations manquantes, validation par un expert avant décision engageante.",
+    "options": [
+     [
+      "Promettre contractuellement zéro erreur grâce à un modèle plus puissant",
+      false
+     ],
+     [
+      "Contrôler la couverture du document, annexes et renvois compris",
+      true
+     ],
+     [
+      "Exiger des réponses appuyées sur des passages vérifiables",
+      true
+     ],
+     [
+      "Faire valider par un expert avant toute décision engageante",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pour classer 500 000 fiches avec un prompt de 800 tokens, le cache de préfixe du modèle exige une longueur minimale supérieure. Que faire dans le budget ?",
+    "feedback": "Si le préfixe n'atteint pas le minimum exigé, aucun gain de cache ne doit entrer dans le budget. On n'allonge pas le prompt uniquement pour atteindre un seuil ; on mesure les tokens réellement lus en cache si le préfixe est éligible.",
+    "options": [
+     [
+      "Ajouter du texte inutile pour atteindre le seuil",
+      false
+     ],
+     [
+      "Passer au temps réel",
+      false
+     ],
+     [
+      "Ne compter aucun gain de cache",
+      true
+     ],
+     [
+      "Compter le gain maximal annoncé",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Choisissez un produit IA que vous connaissez. Définissez en une phrase une « tâche réussie » (critère, délai, coût) et listez les postes de dépense à inclure dans son coût par tâche, avec une hypothèse chiffrée fictive pour chacun.",
+    "feedback": "Une bonne réponse définit un résultat vérifiable, couvre modèle, recherche, suivi, contrôle humain et reprises, annonce ses unités et ses hypothèses, et précise le périmètre.",
+    "options": []
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Un responsable demande : « Combien coûtera l'assistant pour tous nos collaborateurs ? » Expliquez en cinq lignes comment vous construiriez et défendriez une estimation, en citant au moins deux hypothèses à valider et un garde-fou à mettre en place.",
+    "feedback": "Attendu : volume, tokens moyens par requête, tarifs datés, taux d'usage réel, majoration ou postes détaillés, coût par collaborateur, comparaison à une valeur, hypothèses à valider (usage, longueur, taux de revue) et limites (alerte, plafond, arrêt).",
+    "options": []
+   }
+  ]
+ },
+ "assignment": {
+  "title": "Livrable : dossier de budget et d'architecture d'un produit IA",
+  "instructions_md": "## Objectif\n\nDémontrer que vous savez **estimer, défendre et piloter** le coût d'un produit IA devant un comité fictif réunissant produit, technique et finance. Le travail se fait entièrement avec des **hypothèses et des prix fictifs** que vous choisissez et indiquez clairement ; aucune donnée confidentielle n'est nécessaire.\n\n## Consignes\n\n1. Choisissez un cas d'usage (assistant interne, analyse de documents, traitement de tickets, classification de fiches, ou un cas de votre choix) et décrivez-le en cinq lignes : utilisateurs, volume, résultat attendu, délai.\n2. Écrivez la **phrase de réussite** : critère, délai, coût cible. Définissez précisément ce qu'est une tâche réussie.\n3. Établissez un **budget mensuel de fonctionnement** détaillé : modèle (avec formule et unités), recherche et stockage, suivi, contrôle humain, autres postes. Distinguez fixes, variables et coûts de construction. Indiquez que vos tarifs sont fictifs et la date de votre estimation.\n4. Calculez : coût par requête, par tâche, par utilisateur actif et par résultat réussi. Vous pouvez utiliser le calculateur Python du module, dont vous joignez la version adaptée si vous l'avez modifiée.\n5. Présentez **trois scénarios de sensibilité** (par exemple : taux d'usage, longueur des réponses, taux de revue humaine) avec leur effet chiffré.\n6. Proposez une **architecture** : modèle, mode de traitement (temps réel ou par lots), mode d'achat avec un **seuil de rentabilité** si pertinent, deux leviers d'optimisation chiffrés (économie brute et nette) et le contrôle de qualité associé.\n7. Calculez la **marge brute** (si le service est vendu) ou le **ROI simple** et le délai de récupération (si le service est interne), en nommant vos hypothèses et en évitant tout double comptage.\n8. Définissez un **plan de pilotage** : étiquettes ou identifiants d'attribution, alertes souples, limites strictes, garde-fous d'agent si besoin, arrêt ciblé, indicateurs suivis, responsable.\n9. Terminez par une **recommandation** en dix lignes maximum : aller, ajuster ou arrêter, et sous quelles conditions.\n\n## Grille d'évaluation\n\n- **Exactitude des calculs, unités et formules explicites** : 30 %.\n- **Complétude du périmètre de coût** (postes cachés, revue humaine, fixes et variables) et clarté des hypothèses : 20 %.\n- **Pertinence de l'architecture** (choix lié au résultat attendu, au délai, à la qualité ; leviers composés correctement, économie nette) : 20 %.\n- **Valeur et décision** (marge ou ROI sans double comptage, recommandation argumentée) : 15 %.\n- **Pilotage** (attribution, alertes, limites, arrêt, indicateurs) : 10 %.\n- **Clarté de la présentation** : 5 %.\n\n## Rendu\n\nUn document texte ou PDF de deux à quatre pages, dans le champ de réponse ou en pièce jointe, avec en annexe les calculs et, le cas échéant, le code utilisé.\n\n*Rappel : indiquez toujours que les prix utilisés sont fictifs ou datés, et ne présentez aucun tarif comme actuel ou contractuel.*\n"
+ }
+}

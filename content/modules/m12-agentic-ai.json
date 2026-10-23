@@ -1,0 +1,853 @@
+{
+ "course": "M12",
+ "slug": "agentic-ai",
+ "source": "Slides du formateur (module : IA agentique), réécrits et complétés. Pas de vidéo : à ajouter depuis l'administration.",
+ "chapters": [
+  {
+   "title": "Des modèles de langage aux agents",
+   "lessons": [
+    {
+     "title": "Le point de départ : ce que fait (et ne fait pas) un LLM",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre ce qu'est un modèle de langage au sens strict, pour mesurer ensuite précisément ce que l'agentique y ajoute.\n\n## Un LLM prédit des tokens\n\nUn **LLM** (Large Language Model) est un modèle statistique entraîné à prédire la suite d'un texte. Il ne manipule pas des mots mais des **tokens** : des unités de texte dont la taille varie. Un mot courant peut être un seul token, un mot long ou rare peut en former plusieurs, et la ponctuation ou l'espace qui précède un mot peuvent compter dans le découpage.\n\nChaque modèle possède son propre **tokenizer**, qui dépend du corpus d'entraînement, de l'algorithme de découpage et de la taille du vocabulaire. Un grand vocabulaire garde plus de mots entiers ; un petit vocabulaire découpe davantage. Le même texte n'a donc pas le même nombre de tokens d'un modèle à l'autre.\n\n## Pourquoi les tokens comptent pour un chef de produit\n\n- La **fenêtre de contexte** est une limite en nombre de tokens : c'est la « mémoire de travail » du modèle.\n- Le **coût** et souvent la **latence** dépendent du nombre de tokens lus et écrits.\n- La qualité du traitement dépend de la façon dont le texte est découpé (langues moins bien représentées, codes, nombres).\n\n## La prédiction\n\nFace à « Paris est la capitale de la », le modèle calcule une distribution de probabilités sur le token suivant : « France » reçoit une probabilité très élevée, d'autres mots une probabilité faible. Il choisit le plus probable, ou **échantillonne** selon un paramètre de **température**. C'est pourquoi un même prompt peut donner des réponses différentes : le modèle est **non déterministe**.\n\n## Le point clé\n\nUn LLM ne « sait » pas que Paris est une capitale : il reproduit des régularités statistiques apprises dans ses données. Pris seul, il ne vérifie pas ses affirmations, n'agit pas sur le monde et ne connaît pas vos systèmes internes. C'est exactement ce que l'agentique cherche à compenser.\n\n## Pour vérifier votre compréhension\n\nPrenez une phrase de votre métier et estimez combien de tokens elle contient. Quels mots seront probablement découpés ? Un outil de visualisation de tokenizer public vous permet de vérifier."
+    },
+    {
+     "title": "De l'IA générative à l'IA agentique : un changement de posture",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDistinguer un usage « question-réponse » d'un système orienté objectif.\n\n## Le mode conversationnel\n\nQuand vous utilisez un assistant classique, le schéma est : **prompt, inférence, réponse**. L'**inférence** est la phase où le modèle génère la réponse à partir de votre texte. Ce fonctionnement est essentiellement **sans état durable** (*stateless*) : le modèle ne conserve rien d'une conversation à l'autre, sauf si l'application lui renvoie l'historique ou une mémoire ajoutée par-dessus.\n\n## Le mode agentique\n\nUn **agent** est un système construit autour d'un modèle, qui :\n\n- reçoit un **objectif** plutôt qu'une simple question ;\n- maintient un **état** : mémoire, progression, résultats intermédiaires (*stateful*) ;\n- agit dans un environnement via des **outils** ;\n- observe le résultat de ses actions et ajuste sa suite.\n\nOn ne demande plus « résume cette réglementation » mais « assure que ce processus respecte la réglementation ».\n\n## Un exemple comparé\n\n- **Assistant** : produit un résumé du texte réglementaire que vous lui collez.\n- **Agent** : récupère le texte de référence, le compare à la politique interne, identifie les écarts, les classe par niveau de risque, rédige un plan d'action et crée les tickets correspondants, en vous demandant validation aux étapes sensibles.\n\nOn passe de **l'information à l'exécution**.\n\n## Pièges\n\n- Appeler « agent » n'importe quel chatbot. La question utile : le système **décide-t-il lui-même des étapes** et **agit-il** sur des systèmes ?\n- Croire qu'un agent est « plus intelligent » : le modèle sous-jacent est le même, c'est l'**architecture autour** qui change.\n\n## Pour vérifier votre compréhension\n\nReformulez une tâche que vous confiez aujourd'hui à un assistant sous forme d'objectif. Quelles actions l'agent devrait-il pouvoir réaliser, et lesquelles lui interdiriez-vous ?"
+    },
+    {
+     "title": "La boucle de l'agent et les trois A",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nConnaître le cycle de fonctionnement d'un agent et les trois propriétés qui le caractérisent.\n\n## La boucle\n\nUn agent fonctionne en boucle : **perception, raisonnement, action, observation, ajustement**. Ce schéma vient de la robotique et de la théorie des systèmes. À chaque tour, l'agent perçoit l'état de la situation, décide d'une action, l'exécute, observe ce qui s'est passé puis corrige son plan.\n\nL'agent poursuit une **fonction objectif** : une mesure qu'il cherche à maximiser ou minimiser (réduire un délai de traitement, maximiser un taux de conformité, minimiser un coût logistique). Une conséquence importante : **ce que vous mesurez est ce que l'agent optimisera**, y compris de manière imprévue si l'objectif est mal défini.\n\n## Les trois A\n\n- **Asynchrone** : l'agent peut agir sans déclenchement humain immédiat, sur des événements, des flux de données ou une surveillance continue. Exemple : un agent qui surveille des écritures comptables et ouvre une investigation quand il détecte une anomalie, sans que personne le lui ait demandé à cet instant.\n- **Autonome** : il décide sans validation humaine systématique, **dans un cadre défini** par des règles, des seuils et des politiques. Exemple : une commande d'achat est validée automatiquement si elle est sous un seuil, si le fournisseur est référencé et si le budget est disponible ; sinon elle est escaladée à un humain.\n- **Agency** : une capacité d'initiative orientée vers un but. Un chatbot répond ; un agent poursuit un objectif, en analysant, simulant des alternatives et proposant un arbitrage.\n\n## Autonomie ne veut pas dire liberté totale\n\nL'autonomie est toujours **bornée** : périmètre d'outils, seuils financiers, cas d'escalade. Définir ces bornes fait partie du travail du chef de produit.\n\n## Pour vérifier votre compréhension\n\nÉcrivez, pour un cas de votre choix, la fonction objectif de l'agent et trois conditions qui déclenchent l'escalade vers un humain."
+    }
+   ]
+  },
+  {
+   "title": "Anatomie d'un agent",
+   "lessons": [
+    {
+     "title": "Les quatre briques d'un agent",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDécrire l'anatomie d'un agent pour pouvoir spécifier un produit agentique.\n\n## 1. Le LLM : le moteur de raisonnement\n\nIl décompose le problème, formule les étapes et décide quoi faire. Il est **non déterministe** : pour une même entrée, il peut produire des sorties différentes, car il échantillonne dans une distribution de probabilités. Il faut donc concevoir le système pour tolérer cette variabilité (contrôles, tests, limites).\n\n## 2. La mémoire\n\n- **Court terme** : le contenu de la fenêtre de contexte. Limitée en tokens, elle coûte de l'argent et peut se saturer.\n- **Long terme** : des connaissances stockées hors du modèle, consultées à la demande (voir la leçon suivante sur le RAG).\n\n## 3. Les outils (*tools*)\n\nVia le **function calling**, le modèle génère un appel structuré : le nom d'une fonction et ses arguments, par exemple une fonction d'approbation de paiement avec un montant et une référence. **Le modèle ne fait que proposer l'appel ; c'est votre code qui l'exécute**, et peut donc le contrôler, le refuser ou le soumettre à validation. Les outils transforment du texte en effets réels, d'où leur criticité.\n\n## 4. Les instructions de base (*core instructions*)\n\nLes règles que l'agent ne doit pas enfreindre : contraintes légales, plafonds budgétaires, politiques internes, ton et périmètre. Attention : une instruction dans un prompt est un **guide**, pas une garantie. Les limites vraiment critiques doivent aussi être appliquées **dans le code** (par exemple un plafond de montant vérifié avant l'exécution de l'outil).\n\n## Exemple : un agent d'achats\n\nIl interroge le système d'achats, compare des fournisseurs, simule le coût total puis propose un arbitrage. Chaque verbe correspond à un outil ; chaque règle (plafond, fournisseurs autorisés) à une instruction ou à un contrôle.\n\n## Pour vérifier votre compréhension\n\nPour un agent de votre choix, listez ses outils, ses sources de mémoire et ses trois règles non négociables. Lesquelles faut-il imposer dans le code ?"
+    },
+    {
+     "title": "La mémoire longue durée : embeddings et RAG",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre comment un agent accède à des informations qu'il n'a pas dans son contexte.\n\n## Le principe du RAG\n\n**RAG** signifie *Retrieval-Augmented Generation* : génération augmentée par la recherche. Au lieu de compter sur ce que le modèle a mémorisé à l'entraînement, on lui fournit, au moment de la question, des extraits pertinents de vos documents.\n\n## Les étapes\n\n1. Les documents sont découpés en passages.\n2. Chaque passage est transformé en **embedding** : une représentation numérique du sens du texte, sous forme de vecteur dans un espace où des textes proches par le sens sont proches géométriquement.\n3. Les vecteurs sont stockés dans une **base vectorielle**.\n4. À chaque question, on calcule l'embedding de la question et on cherche les passages les plus proches, par exemple avec la **similarité cosinus**.\n5. Les passages retrouvés sont ajoutés au contexte du modèle, qui rédige sa réponse à partir d'eux.\n\n## Pourquoi c'est utile aux agents\n\n- Accès à des connaissances **privées et à jour** sans réentraîner un modèle.\n- Moins d'invention (hallucination) quand la réponse est ancrée dans des sources.\n- Possibilité de **citer les sources**, ce qui aide l'auditabilité.\n\n## Pièges\n\n- Un RAG n'élimine pas les erreurs : si la recherche ramène de mauvais passages, le modèle s'appuiera dessus avec aplomb.\n- La qualité dépend du découpage, de la fraîcheur et des droits d'accès des documents : un agent ne doit retrouver que ce que l'utilisateur est autorisé à voir.\n- Mettre « tout » dans le contexte n'est pas une solution : coût, latence et dilution de l'information augmentent.\n\n## Pour vérifier votre compréhension\n\nQuels documents de votre organisation un agent devrait-il pouvoir consulter ? Lesquels ne faut-il surtout pas indexer, et pourquoi ?"
+    },
+    {
+     "title": "Quatre niveaux de sophistication des agents",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nSituer un cas d'usage sur une échelle de capacités et de risques.\n\n## 1. Raisonnement de base\n\nL'agent utilise le **Chain-of-Thought** : il explicite ses étapes intermédiaires avant de conclure. Au lieu de répondre « risque élevé », il pose les éléments : une clause de pénalité, un historique de retards, un impact financier estimé, puis la conclusion. Cela améliore souvent la qualité sur les problèmes à plusieurs étapes et rend le raisonnement relisible. Attention : le raisonnement affiché est utile pour la relecture, mais ne prouve pas à lui seul que la conclusion est juste.\n\n## 2. Agent utilisateur d'outils\n\nIl choisit dynamiquement l'outil adapté parmi plusieurs : une API interne, un CRM, une base de connaissances. On ne génère plus seulement du texte, on **déclenche des systèmes**. Les points de vigilance : description claire de chaque outil, droits minimaux, validation des arguments.\n\n## 3. Agent d'utilisation d'ordinateur (*computer use*)\n\nUn modèle **multimodal** (texte et image) observe des captures d'écran, repère des éléments d'interface, clique et remplit des formulaires. C'est une manière d'automatiser des applications sans interface de programmation, à la façon d'un robot logiciel visuel. Il est en général plus lent et plus fragile qu'un appel d'API : à réserver aux cas où aucune API n'existe.\n\n## 4. Agent de programmation\n\nIl écrit du code, l'exécute dans un **bac à sable** (*sandbox*, un environnement isolé), lit l'erreur, corrige et relance, en boucle. Image utile : un développeur junior enfermé dans une pièce sécurisée. Le bac à sable est essentiel : le code généré ne doit jamais s'exécuter avec vos droits ni sur vos données de production.\n\n## La règle de gouvernance\n\nPlus l'agent agit profondément dans le système d'information, plus la gouvernance doit être forte : droits, journalisation, validation, tests.\n\n## Pour vérifier votre compréhension\n\nClassez trois de vos cas d'usage sur ces quatre niveaux. Pour chacun, quel serait le pire incident possible ?"
+    }
+   ]
+  },
+  {
+   "title": "Systèmes multi-agents et orchestration",
+   "lessons": [
+    {
+     "title": "Pourquoi passer au multi-agents ?",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre la notion de scalabilité cognitive et ses limites.\n\n## La scalabilité cognitive\n\nC'est la capacité d'un système à augmenter son traitement intellectuel quand la complexité de la tâche croît. Un agent unique chargé de tout atteint vite des limites :\n\n- **surcharge du contexte** : trop d'informations, de consignes et d'outils dans un seul prompt ;\n- **mélange des responsabilités** : le même agent analyse, décide et contrôle ;\n- **propagation des erreurs** : une erreur précoce contamine toute la suite.\n\n## Le système multi-agents (MAS)\n\nUn **MAS** répartit le travail entre plusieurs agents spécialisés. Bénéfices attendus :\n\n- **spécialisation** : chaque agent a un rôle, des instructions et des outils limités ;\n- **parallélisation** : plusieurs analyses avancent en même temps ;\n- **robustesse** : on peut contrôler, remplacer ou améliorer un agent sans tout refaire.\n\nExemple : lors de l'étude d'un rapprochement d'entreprises, des agents spécialisés en finance, en droit, en enjeux environnementaux et sociaux et en données travaillent chacun sur leur périmètre, coordonnés par un orchestrateur. L'image : passer d'un consultant isolé à un cabinet structuré.\n\n## Attention : plus d'agents n'est pas toujours mieux\n\nChaque agent supplémentaire ajoute des appels de modèle, de la latence, des coûts, des points de panne et de la difficulté de diagnostic. Une règle de bon sens : **commencez par le système le plus simple qui répond au besoin** (un appel, puis un workflow, puis un agent, puis plusieurs agents) et ne complexifiez que si vous mesurez un gain.\n\n## Pour vérifier votre compréhension\n\nVotre cas d'usage justifie-t-il vraiment plusieurs agents ? Dites quelle limite d'un agent unique vous constatez, mesures à l'appui."
+    },
+    {
+     "title": "Architecture hiérarchique : contrôle, communication, temporalité",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDécrire un système multi-agents hiérarchique (HMAS) selon trois dimensions.\n\n## Définition\n\nUn **HMAS** (*Hierarchical Multi-Agent System*) organise plusieurs agents selon une structure hiérarchique ou semi-hiérarchique pour résoudre un problème complexe. Il répond à trois questions : qui décide, qui parle à qui, à quelle échelle de temps.\n\n## 1. Le contrôle\n\n- **Centralisé** : un agent superviseur orchestre tout. Avantages : cohérence, contrôle, auditabilité. Limites : point de défaillance unique, moindre souplesse. Exemple : un agent central qui valide toutes les décisions d'un processus d'octroi de crédit.\n- **Décentralisé** : les agents décident localement. Avantages : rapidité, résilience, passage à l'échelle. Limite : risque d'incohérence globale. Exemple : dans un réseau électrique intelligent, chaque nœud ajuste sa charge localement.\n\n## 2. La communication\n\n- **Blackboard** (tableau noir) : les agents lisent et écrivent dans une **mémoire partagée**. Exemple : des agents financier, juridique et environnemental y déposent leurs analyses, qu'un orchestrateur exploite. Très traçable.\n- **Passage de messages** : communication directe entre agents. Plus rapide et plus souple, mais plus difficile à tracer.\n\n## 3. La temporalité\n\nCertains agents agissent en **temps réel** (réaction immédiate), d'autres en **planification stratégique** (horizon long). Un agent de trading réagit en très peu de temps ; un agent de stratégie travaille sur des semaines ou des mois. Mélanger les deux sans les séparer clairement crée des conflits.\n\n## Comment choisir\n\nQuand l'**auditabilité** prime (finance, santé, juridique), privilégiez un contrôle centralisé et un blackboard journalisé. Quand la **réactivité** prime, acceptez davantage de décentralisation, avec des garde-fous.\n\n## Pour vérifier votre compréhension\n\nPour un système à trois agents de votre choix, dessinez qui contrôle qui, où circule l'information et quel agent est temps réel."
+    },
+    {
+     "title": "Les patterns d'orchestration : routeur, orchestrateur, pipeline",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nChoisir le bon mode de coordination entre agents.\n\n## Définition\n\nL'**orchestration** est le mécanisme qui décide **quel agent agit, dans quel ordre et sur quelle tâche**. Trois patterns principaux.\n\n## Le routeur (*router*)\n\nUn modèle classe l'**intention** de la demande et l'envoie au bon agent. Exemple : « Je conteste ma facture » est orienté vers l'agent de facturation, de réclamation ou le juridique selon le contenu. Simple, peu coûteux, très utile en entrée de système. Piège : une mauvaise classification envoie la demande au mauvais endroit ; prévoyez une catégorie « autre » et une escalade.\n\n## L'orchestrateur (méta-agent)\n\nUn **méta-agent** supervise d'autres agents : il décompose une tâche complexe en sous-tâches, les délègue, collecte les résultats et assemble la réponse. Exemple : pour répondre à un appel d'offres, il mobilise des agents technique, tarification, juridique et rédaction. Flexible, mais plus coûteux et plus difficile à prévoir.\n\n## La chaîne (*pipeline*)\n\nUne suite d'étapes fixes : analyse, synthèse, validation, reporting. L'enchaînement est **déterministe** : l'ordre est décidé à l'avance, seul le contenu de chaque étape est généré. Facile à tester et à auditer.\n\n## Le message clé\n\nOn passe du « si... alors... » rigide à une **décision probabiliste contrôlée**. Contrôlée signifie que les parties incertaines sont enfermées dans un cadre déterministe : étapes imposées, schémas de sortie validés, limites.\n\n## Comment choisir\n\n- Parcours connu et stable : **pipeline**.\n- Demandes variées à répartir : **routeur**.\n- Problème ouvert à décomposer : **orchestrateur**.\n\nCes patterns se combinent : un routeur en entrée, des pipelines pour les cas courants, un orchestrateur pour les cas complexes.\n\n## Pour vérifier votre compréhension\n\nQuel pattern choisiriez-vous pour le traitement des demandes de remboursement de votre organisation, et pourquoi ?"
+    },
+    {
+     "title": "ReAct, réflexion et frameworks",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nConnaître les patterns de planification et d'auto-correction, et situer le rôle des frameworks.\n\n## ReAct : raisonner puis agir\n\n**ReAct** (*Reason + Act*) alterne réflexion et action :\n\n1. **Thought** : l'agent raisonne sur ce qu'il doit faire.\n2. **Action** : il appelle un outil.\n3. **Observation** : il lit le résultat.\n4. **Correction** : il ajuste son plan et recommence ou conclut.\n\nUn agent capable d'utiliser le retour de ses actions pour modifier sa stratégie est dit **réflexif**. L'exercice de ce module reprend exactement cette boucle.\n\n## Le pattern de réflexion\n\nUn agent **critique le travail d'un autre**. Exemple : un agent de rédaction produit un texte, un agent de conformité le contrôle, un agent d'audit vérifie la traçabilité. C'est un contrôle qualité automatisé. Limite : deux modèles peuvent partager les mêmes angles morts ; la critique automatique réduit les erreurs mais ne remplace pas la relecture humaine sur les sujets sensibles.\n\n## Les frameworks\n\nPlusieurs bibliothèques aident à construire des agents. À la date de rédaction, on distingue trois grandes approches :\n\n- une approche par **machine à états** : le système évolue entre des états selon des transitions prédéfinies, ce qui donne un contrôle fin du déroulement ;\n- une approche par **rôles** : on décrit des agents avec un rôle, un objectif et des outils, ce qui est plus accessible ;\n- une approche par **conversation entre agents** : flexible, mais plus difficile à maîtriser.\n\nLes outils évoluent vite : évaluez-les sur vos besoins plutôt que sur leur popularité.\n\n## Le message clé\n\n**Le framework n'est pas la stratégie.** Choisissez d'abord l'architecture (patterns, niveau d'autonomie, contrôles), puis l'outil qui permet de la réaliser. Vous devez pouvoir en changer sans repenser le produit.\n\n## Pour vérifier votre compréhension\n\nDécrivez en quatre lignes un cycle ReAct pour un agent qui doit répondre à « Quel est le délai moyen de livraison du mois dernier ? »."
+    }
+   ]
+  },
+  {
+   "title": "Gouverner et industrialiser",
+   "lessons": [
+    {
+     "title": "L'humain dans la boucle et les niveaux d'autonomie",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDéfinir le bon niveau de supervision humaine pour chaque action d'un agent.\n\n## Human-in-the-Loop\n\n**HITL** signifie qu'un humain intervient dans la boucle de décision. Il reste indispensable pour trois raisons principales : la **conformité réglementaire**, la **responsabilité juridique** (une organisation ne peut pas se défausser sur une machine) et la **gestion du risque**.\n\n## Quatre niveaux d'autonomie\n\n1. **Suggestion** : l'agent propose, l'humain décide et exécute.\n2. **Copilot** : l'agent prépare et exécute avec l'humain, pas à pas.\n3. **Validation obligatoire** : l'agent exécute seulement après approbation explicite.\n4. **Autonomie supervisée** : l'agent agit seul dans un cadre défini, l'humain surveille et peut intervenir.\n\nLe niveau se choisit **par action**, pas par agent : lire un document peut être autonome, envoyer un courriel à un client demander une validation, payer une facture en exiger deux.\n\n## Critères pour choisir le niveau\n\n- **Impact** : l'action est-elle réversible ? Quel est le pire coût ?\n- **Montant ou exposition** : seuils financiers, données personnelles concernées.\n- **Fiabilité mesurée** : taux d'erreur observé sur des cas réels.\n- **Obligations** : exigences de contrôle humain applicables au domaine.\n\nOn monte en autonomie **progressivement**, quand les mesures le justifient.\n\n## Auditabilité\n\nL'**auditabilité** est la capacité à retracer chaque décision : quelle demande, quelles données, quels outils appelés, quelle validation, quel résultat. Pour une organisation soumise à des contrôles, c'est non négociable.\n\n## Piège : la validation de façade\n\nUn humain qui valide cent propositions par heure sans pouvoir les examiner n'exerce aucun contrôle réel. Concevez l'interface de validation pour qu'elle montre l'essentiel, les risques et les alternatives.\n\n## Pour vérifier votre compréhension\n\nPour trois actions d'un agent de votre choix, attribuez un niveau d'autonomie et justifiez-le."
+    },
+    {
+     "title": "Industrialiser : boucles infinies et explosion des coûts",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nAnticiper les deux premiers défis techniques et économiques du passage à l'échelle.\n\n## Les boucles infinies\n\nDans un système multi-agents, des agents peuvent se renvoyer la balle sans jamais converger : un analyste demande une validation, un critique conteste, l'analyste reformule, et ainsi de suite. Conséquences : ressources consommées pour rien, latence dégradée, risque de blocage.\n\n**Solution : le TTL** (*Time To Live*), un nombre maximal d'itérations autorisées. Chaque échange décrémente le compteur ; à zéro, le processus s'arrête et escalade. Bonnes pratiques :\n\n- fixer un TTL adapté à chaque cas d'usage ;\n- ajouter des conditions d'arrêt « intelligentes » (convergence des réponses, score de confiance suffisant) ;\n- prévoir un **résultat de repli** et une escalade humaine quand le TTL est atteint.\n\n## L'explosion des coûts\n\nChaque appel de modèle coûte des tokens, en entrée et en sortie. Dans un système multi-agents, un traitement apparemment simple peut déclencher de nombreux appels, souvent beaucoup plus que prévu. Le coût devient difficile à prédire et la dérive budgétaire est un risque réel.\n\nLeviers :\n\n- **mesurer** le coût par agent et par cas d'usage ;\n- **optimiser les prompts** : moins de tokens, plus de précision ;\n- **mettre en cache** les réponses réutilisables ;\n- **choisir le modèle adapté** à chaque tâche : tous les agents n'ont pas besoin du plus puissant ;\n- **regrouper ou limiter** les appels ;\n- fixer un **budget maximal par tâche**, avec arrêt automatique.\n\n## Le réflexe produit\n\nCalculez le **coût par tâche réussie** et comparez-le au coût du processus actuel. Un agent techniquement brillant mais plus cher que l'humain qu'il assiste n'est pas un produit viable.\n\n## Pour vérifier votre compréhension\n\nPour un cas d'usage multi-agents, estimez le nombre d'appels de modèle par tâche, puis proposez un TTL et un plafond de budget."
+    },
+    {
+     "title": "Industrialiser : observabilité et perte de contexte",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nRendre un système agentique diagnostiquable et préserver l'information qui circule entre agents.\n\n## L'observabilité\n\nLes systèmes à base de LLM sont difficiles à expliquer : on ne sait pas exactement pourquoi une réponse a été produite, et on ne peut pas toujours rejouer à l'identique un comportement, à cause du non-déterminisme. L'**observabilité** est la capacité à suivre les interactions, comprendre les décisions et reconstituer un raisonnement.\n\nSans journaux, impossible de diagnostiquer une erreur ou de comprendre une dérive. Pratiques recommandées :\n\n- journaliser **entrées, sorties, prompts intermédiaires, appels d'outils et résultats** ;\n- identifier chaque exécution par un **identifiant de trace** qui suit la chaîne d'agents ;\n- visualiser le workflow sous forme de graphe ;\n- utiliser des outils de **traçage** et des tableaux de bord dédiés aux LLM ;\n- conserver des **jeux de tests de non-régression** pour rejouer des cas critiques.\n\nPensez à la protection des données : les journaux peuvent contenir des informations personnelles ou confidentielles ; définissez leur durée de conservation et leurs accès.\n\n## La perte de contexte\n\nLa fenêtre de contexte est limitée. Entre agents, l'information peut se **diluer**, être **tronquée** ou **mal transmise**. Effets : réponses incohérentes, perte d'éléments clés, dégradation progressive de la qualité.\n\nRemèdes :\n\n- **résumés intermédiaires** structurés ;\n- **mémoire externe** (base vectorielle, RAG, blackboard) ;\n- **transmission ciblée** : donner à chaque agent seulement ce dont il a besoin ;\n- **schémas d'échange** explicites (champs obligatoires) plutôt que du texte libre.\n\n## À retenir\n\nLes systèmes multi-agents sont plus puissants mais aussi beaucoup plus complexes à maîtriser. Le vrai enjeu est de bâtir des systèmes **robustes, observables et économiquement viables**.\n\n## Pour vérifier votre compréhension\n\nQuelles cinq informations enregistreriez-vous à chaque appel d'outil pour pouvoir expliquer une décision six mois plus tard ?"
+    },
+    {
+     "title": "Éthique, biais émergents et réglementation",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nIdentifier les risques propres aux systèmes multi-agents et les placer dans un cadre de gouvernance.\n\n## Les biais émergents\n\nUn **biais émergent** n'existe pas au niveau d'un agent pris isolément mais apparaît au niveau **collectif**. Exemple : plusieurs agents optimisent chacun la rentabilité ; ensemble, ils finissent par écarter systématiquement certains profils de clients, alors qu'aucune règle ne le demandait. Un test agent par agent ne le détecterait pas : il faut évaluer le **système de bout en bout** sur des cas représentatifs et suivre les résultats par groupe.\n\nAutres risques propres à l'agentique : objectif mal spécifié et exploité de façon inattendue, actions irréversibles, instructions malveillantes cachées dans un document ou une page web lue par l'agent (injection de prompt), fuite de données via les outils.\n\n## Le cadre réglementaire européen\n\nLe règlement européen sur l'IA (souvent appelé « AI Act ») classe les systèmes selon quatre niveaux de risque : minimal, limité, élevé et inacceptable. Les systèmes qui prennent ou préparent des décisions affectant des personnes, par exemple dans l'accès au crédit ou à l'emploi, peuvent relever du niveau « élevé » et impliquent des obligations : gestion des risques, documentation, journalisation, supervision humaine. Le classement d'un cas précis demande une analyse juridique : ne le décidez pas seul.\n\n## Le message clé : *governance by design*\n\nLa gouvernance se conçoit **dès le départ**, pas après le lancement : périmètre d'actions, niveaux d'autonomie, journalisation, tests d'équité, procédure d'incident, responsable identifié.\n\n## Pour vérifier votre compréhension\n\nImaginez deux agents qui optimisent chacun un objectif différent sur le même client. Quel effet collectif non voulu pourrait apparaître, et comment le détecteriez-vous ?"
+    },
+    {
+     "title": "Et demain : distillation et données synthétiques",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre deux techniques qui influencent le coût et la souveraineté des systèmes agentiques.\n\n## La distillation\n\nLa **distillation** consiste à utiliser un grand modèle comme « enseignant » pour entraîner un modèle plus petit, qui apprend à reproduire son comportement sur une tâche donnée. Intérêts potentiels :\n\n- **réduire les coûts et la latence** à l'usage ;\n- **spécialiser** un modèle sur un métier ;\n- **mieux maîtriser** son déploiement (hébergement, confidentialité).\n\nPoints d'attention : le petit modèle est en général moins polyvalent que l'original ; vérifiez les **conditions d'utilisation** du modèle enseignant, certaines limitent l'usage de ses sorties pour entraîner d'autres modèles ; et mesurez la qualité sur vos propres cas.\n\n## Les données synthétiques\n\nCe sont des données **générées artificiellement** pour entraîner ou tester un système. Elles sont utiles quand les données réelles sont rares, sensibles ou coûteuses à annoter, par exemple pour créer des scénarios de test d'un agent. Limites : elles reproduisent les biais et les erreurs du générateur, peuvent manquer de diversité et ne remplacent pas une validation sur des cas réels. Une donnée synthétique n'est pas automatiquement anonyme : vérifiez qu'elle ne reproduit pas des informations réelles.\n\n## Lecture produit\n\nCes techniques n'entrent en jeu qu'après avoir validé la valeur : commencez avec un modèle généraliste, mesurez, puis optimisez les coûts là où le volume le justifie.\n\n## Pour vérifier votre compréhension\n\nSur quel agent de votre portefeuille la distillation aurait-elle le plus d'impact économique ? Quelles données auriez-vous besoin pour la valider ?"
+    }
+   ]
+  },
+  {
+   "title": "Cas d'usage",
+   "lessons": [
+    {
+     "title": "Cas d'usage : la fabrique logicielle agentique",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nVoir comment une équipe d'agents peut accélérer un processus déjà structuré.\n\n## Le processus de départ\n\nUn projet numérique suit un cycle : rédaction des spécifications, développement, tests, déploiement, supervision. Chaque étape mobilise une équipe, avec des temps d'attente entre elles.\n\n## La version agentique\n\nUne équipe d'agents spécialisés, coordonnée par un orchestrateur :\n\n- **Agent Product Owner** : analyse la demande métier, la reformule en récits utilisateurs, la décompose en tâches techniques, propose une priorisation.\n- **Agent Développeur** : génère le code en respectant les standards internes, écrit les tests unitaires.\n- **Agent QA** : lance les tests automatisés, détecte les anomalies, renvoie un retour exploitable.\n- **Agent DevOps** : prépare la chaîne d'intégration et de déploiement continus, déploie en environnement de préproduction, surveille les journaux.\n\nLa boucle développeur-QA tourne de façon autonome jusqu'à ce que les tests passent ou que le TTL soit atteint.\n\n## Où l'humain reste indispensable\n\n- validation de l'**architecture** ;\n- **arbitrage des priorités** ;\n- contrôle de la **sécurité** et revue du code avant mise en production ;\n- décision de déploiement.\n\n## Gains attendus et mesures\n\nOn peut raisonnablement attendre un gain surtout sur les **tâches répétitives et bien bornées** (squelettes de code, tests, documentation). Ne retenez aucun chiffre de gain sans le mesurer chez vous : comparez délai, taux de défauts et temps de revue avant et après, sur un périmètre pilote.\n\n## Risques à traiter\n\nCode généré avec des failles ou des dépendances inadaptées, spécifications mal comprises, dette technique accumulée, confidentialité du code source envoyé à un modèle externe.\n\n## Pour vérifier votre compréhension\n\nQuelle étape de votre cycle de développement automatiseriez-vous en premier, et quel indicateur utiliseriez-vous pour juger du résultat ?"
+    },
+    {
+     "title": "Cas d'usage : la chaîne logistique augmentée",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre pourquoi un environnement instable et multi-critères est un terrain naturel pour des agents.\n\n## Un problème multi-variables\n\nUne chaîne logistique dépend de nombreux facteurs : stocks, délais des fournisseurs, coûts de transport, météo, tensions géopolitiques, variations de la demande. C'est un problème **multi-systèmes, multi-critères, dynamique**, avec des arbitrages permanents.\n\n## La version agentique\n\n- **Agent Prévision de la demande** : analyse l'historique des ventes, intègre la saisonnalité et des signaux faibles (météo, événements).\n- **Agent Stock** : surveille les niveaux dans les entrepôts et anticipe les ruptures.\n- **Agent Transport** : compare les transporteurs, simule les coûts, intègre les risques sur les itinéraires.\n- **Agent Arbitrage global** : optimise le coût total sous contraintes.\n\n## L'objectif sous contrainte\n\nLe système minimise le **coût total** sous la contrainte d'un **niveau de disponibilité** des produits fixé par l'entreprise. Cette formulation est typique d'un bon objectif d'agent : un critère à optimiser plus des contraintes explicites.\n\n## Exemple de scénario\n\nUne perturbation majeure sur un grand axe maritime allonge les délais d'un fournisseur lointain. L'agent détecte l'allongement et la baisse prévisionnelle du stock, puis propose : augmenter une production locale, réallouer des stocks entre entrepôts, négocier une alternative de transport partielle plus rapide. **Un humain valide la stratégie globale** avant exécution, car elle engage des coûts et des engagements contractuels.\n\n## Points d'attention\n\n- Qualité et fraîcheur des données de chaque système.\n- Compromis entre agents aux objectifs concurrents : l'arbitre doit connaître la **hiérarchie des objectifs**.\n- Boucles de recommandation : des réajustements trop fréquents peuvent créer de l'instabilité.\n\n## Pour vérifier votre compréhension\n\nÉcrivez l'objectif et deux contraintes d'un agent d'arbitrage pour un processus de votre organisation."
+    }
+   ]
+  },
+  {
+   "title": "Mise en pratique et synthèse",
+   "lessons": [
+    {
+     "title": "Exercice 1 : construire une boucle d'agent minimale",
+     "kind": "exercise",
+     "body_md": "## Objectif\n\nComprendre par la pratique la boucle d'un agent sans clé d'API ni compte : vous allez coder les **mécanismes autour du modèle** (outils, mémoire des observations, TTL, validation humaine). Le « modèle » est ici remplacé par une fonction déterministe, ce qui rend l'exercice **reproductible et gratuit**. Dans un vrai système, cette fonction serait un appel à un LLM.\n\n## Prérequis\n\nPython 3.9 ou supérieur, aucune bibliothèque externe. Un éditeur de texte ou un notebook en ligne gratuit suffit.\n\n## Le scénario\n\nUn agent doit maintenir le stock d'une référence. Il consulte le stock, décide s'il faut réapprovisionner et, si la commande dépasse un seuil de montant, **s'arrête pour demander validation humaine**.\n\n## Le code\n\nCopiez-le dans un fichier `agent.py` :\n\n```python\n\"\"\"Mini-agent pédagogique : boucle Pensée -> Action -> Observation, avec TTL, budget et validation humaine.\"\"\"\n\nSTOCK = {\"A-100\": 12, \"B-200\": 3}      # stock simulé\nSEUIL_AUTO = 500                       # euros : au-dessus, validation humaine\nPRIX = {\"A-100\": 40.0, \"B-200\": 120.0}\n\ndef consulter_stock(ref):\n    return STOCK.get(ref, \"référence inconnue\")\n\ndef commander(ref, quantite):\n    return f\"commande passée : {quantite} x {ref}\"\n\nOUTILS = {\"consulter_stock\": consulter_stock, \"commander\": commander}\n\ndef politique(objectif, historique):\n    \"\"\"Faux « LLM » déterministe : décide de la prochaine étape selon l'historique.\"\"\"\n    if not historique:\n        return {\"pensee\": \"Je dois connaître le stock de B-200.\",\n                \"action\": \"consulter_stock\", \"arguments\": {\"ref\": \"B-200\"}}\n    derniere = historique[-1]\n    if derniere[\"action\"] == \"consulter_stock\" and isinstance(derniere[\"observation\"], int):\n        if derniere[\"observation\"] < 5:\n            return {\"pensee\": \"Stock bas : je réapprovisionne.\",\n                    \"action\": \"commander\", \"arguments\": {\"ref\": \"B-200\", \"quantite\": 10}}\n        return {\"pensee\": \"Stock suffisant.\", \"action\": \"terminer\", \"arguments\": {}}\n    return {\"pensee\": \"Objectif atteint.\", \"action\": \"terminer\", \"arguments\": {}}\n\ndef cout_estime(action, args):\n    return args.get(\"quantite\", 0) * PRIX.get(args.get(\"ref\"), 0)\n\ndef lancer_agent(objectif, ttl=5, approbation=lambda a, args: False, politique=politique):\n    journal, historique = [], []\n    for tour in range(1, ttl + 1):                       # TTL : nombre max d'itérations\n        decision = politique(objectif, historique)\n        action, args = decision[\"action\"], decision[\"arguments\"]\n        if action == \"terminer\":\n            journal.append((tour, decision[\"pensee\"], \"terminer\", \"fin\"))\n            return {\"statut\": \"terminé\", \"journal\": journal}\n        if action not in OUTILS:                         # liste blanche d'outils\n            journal.append((tour, decision[\"pensee\"], action, \"outil refusé\"))\n            return {\"statut\": \"refusé\", \"journal\": journal}\n        if action == \"commander\" and cout_estime(action, args) > SEUIL_AUTO:\n            if not approbation(action, args):            # validation humaine obligatoire\n                journal.append((tour, decision[\"pensee\"], action, \"en attente de validation\"))\n                return {\"statut\": \"escalade humaine\", \"journal\": journal}\n        obs = OUTILS[action](**args)\n        historique.append({\"action\": action, \"observation\": obs})\n        journal.append((tour, decision[\"pensee\"], action, obs))\n    return {\"statut\": \"TTL atteint\", \"journal\": journal}\n\nif __name__ == \"__main__\":\n    for ttl, appro in [(5, lambda a, p: False), (5, lambda a, p: True), (1, lambda a, p: True)]:\n        r = lancer_agent(\"Maintenir le stock de B-200\", ttl=ttl, approbation=appro)\n        print(ttl, r[\"statut\"])\n        for l in r[\"journal\"]:\n            print(\"  \", l)\n```\n\n## À exécuter\n\n```bash\npython agent.py\n```\n\nRésultat attendu : trois exécutions. La première s'arrête en **escalade humaine** (la commande coûte 1 200, au-dessus du seuil de 500). La deuxième, avec approbation, se **termine** après avoir passé la commande. La troisième, avec un TTL de 1, s'arrête au statut **TTL atteint**.\n\n## Lecture guidée\n\n- `politique` joue le rôle du LLM : elle reçoit l'objectif et l'historique des observations, et renvoie une pensée et une action.\n- `OUTILS` est une **liste blanche** : une action absente est refusée.\n- `for tour in range(1, ttl + 1)` est le **TTL**.\n- Le test sur `cout_estime` implémente la **validation humaine** par seuil, dans le code et pas dans un prompt.\n- `journal` est une trace minimale d'**observabilité**.\n\n## Questions\n\n1. Quel statut obtenez-vous si l'agent demande un outil qui n'existe pas ? (Modifiez `politique` pour le tester.)\n2. Où placeriez-vous un plafond de budget en tokens ?\n3. Quelles informations manquent au journal pour une vraie auditabilité ?"
+    },
+    {
+     "title": "Exercice 2 : étendre l'agent et mesurer ses limites",
+     "kind": "exercise",
+     "body_md": "## Objectif\n\nModifier l'agent pour éprouver ses garde-fous, comme on le ferait sur un vrai produit.\n\n## Étape 1 : provoquer une boucle infinie\n\nRemplacez la fonction `politique` par une version qui ne conclut jamais :\n\n```python\ndef politique_bavarde(objectif, historique):\n    return {\"pensee\": \"Je revérifie.\", \"action\": \"consulter_stock\",\n            \"arguments\": {\"ref\": \"B-200\"}}\n```\n\nPuis lancez :\n\n```python\nr = lancer_agent(\"Maintenir le stock\", ttl=4, politique=politique_bavarde)\nprint(r[\"statut\"], len(r[\"journal\"]))\n```\n\nVous devez obtenir **TTL atteint** et **4** lignes de journal : le TTL a empêché une exécution sans fin. Sans lui, l'agent tournerait indéfiniment.\n\n## Étape 2 : tester le refus d'outil\n\n```python\ndef politique_audacieuse(objectif, historique):\n    return {\"pensee\": \"Je supprime tout.\", \"action\": \"supprimer_base\",\n            \"arguments\": {}}\n\nprint(lancer_agent(\"Test\", politique=politique_audacieuse)[\"statut\"])\n```\n\nRésultat attendu : **refusé**. La liste blanche a bloqué l'action avant toute exécution.\n\n## Étape 3 : ajouter un budget\n\nAjoutez un paramètre `budget_max` à `lancer_agent` : à chaque tour, ajoutez un coût fictif (par exemple 1 unité par appel de la politique), et arrêtez l'exécution avec le statut `\"budget épuisé\"` quand le total dépasse le maximum. Testez avec un budget de 2 sur la politique bavarde.\n\n## Étape 4 : ajouter un second agent critique\n\nÉcrivez une fonction `critique(journal)` qui renvoie `True` si la dernière observation est cohérente (par exemple une quantité commandée strictement positive) et `False` sinon. Appelez-la avant de renvoyer le statut `terminé` : si elle renvoie `False`, le statut devient `escalade humaine`. Vous venez de réaliser un mini **pattern de réflexion**.\n\n## Pour aller plus loin\n\nRemplacez `politique` par un appel à un modèle accessible gratuitement (offre gratuite d'un fournisseur ou modèle local), en demandant une sortie JSON avec les champs `pensee`, `action` et `arguments`. **Validez toujours ce JSON** avant d'exécuter quoi que ce soit : le modèle peut produire un format invalide ou une action hors liste.\n\n## Ce que vous devez en retenir\n\nLe modèle est la partie la plus visible, mais les **garde-fous** (liste blanche, TTL, budget, validation, journal) font la différence entre une démonstration et un produit."
+    },
+    {
+     "title": "Récapitulatif du module et trois idées clés",
+     "kind": "reading",
+     "body_md": "## Ce que vous avez vu\n\n- Un **LLM** prédit des tokens ; il ne vérifie pas, n'agit pas, ne connaît pas vos systèmes. Un **agent** ajoute un objectif, un état, des outils et une boucle perception-raisonnement-action-observation.\n- Les **trois A** : asynchrone, autonome (dans un cadre), agency.\n- Les **quatre briques** : LLM, mémoire (contexte et RAG), outils (function calling), instructions de base.\n- Quatre **niveaux** : raisonnement, outils, utilisation d'ordinateur, programmation.\n- Le **multi-agents** pour la scalabilité cognitive ; les dimensions d'un HMAS : contrôle, communication, temporalité.\n- Les patterns : **routeur, orchestrateur, pipeline**, ReAct, réflexion.\n- La **gouvernance** : niveaux d'autonomie, HITL, auditabilité, TTL, coûts, observabilité, contexte, biais émergents, cadre réglementaire.\n\n## Les trois idées clés\n\n1. **Penser architecture, pas prompt.** Le comportement d'un agent vient de sa conception globale.\n2. **Commencer par un cas d'usage au retour sur investissement mesurable.** Définissez l'indicateur avant de construire.\n3. **Gouverner avant d'automatiser.** Les règles, les contrôles et les traces précèdent l'autonomie.\n\nL'agentique n'est pas une fonctionnalité qu'on ajoute : c'est une **transformation d'organisation et de processus**.\n\n## Check-list du chef de produit\n\n- Quel objectif et quelles contraintes ?\n- Quel est le système le plus simple qui suffit ?\n- Quels outils, avec quels droits minimaux ?\n- Quel niveau d'autonomie pour chaque action ?\n- Quel TTL, quel budget, quel plan de repli ?\n- Quelles traces, quels tests, quels indicateurs ?\n- Qui est responsable en cas d'incident ?\n\n## Pour aller plus loin\n\nRelisez le livrable du module et préparez-le avec ces questions comme fil conducteur."
+    }
+   ]
+  }
+ ],
+ "quiz": {
+  "title": "Quiz du module",
+  "pass_percent": 70,
+  "max_attempts": null,
+  "questions": [
+   {
+    "kind": "single_choice",
+    "prompt": "Que prédit exactement un LLM ?",
+    "feedback": "Un LLM calcule une distribution de probabilités sur le token suivant. Il ne vérifie pas la vérité et n'exécute pas d'actions.",
+    "options": [
+     [
+      "Le token suivant, à partir d'une distribution de probabilités",
+      true
+     ],
+     [
+      "La vérité d'une affirmation, après vérification dans une base",
+      false
+     ],
+     [
+      "Le mot suivant selon une règle grammaticale fixe",
+      false
+     ],
+     [
+      "L'intention de l'utilisateur, puis l'action à exécuter",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi les tokens sont-ils importants pour un produit à base de LLM ?",
+    "feedback": "La fenêtre de contexte, le coût et la latence se mesurent en tokens ; ils ne garantissent ni l'exactitude ni l'identification.",
+    "options": [
+     [
+      "Ils déterminent la taille du contexte, le coût et souvent la latence",
+      true
+     ],
+     [
+      "Ils garantissent que les réponses sont exactes",
+      false
+     ],
+     [
+      "Ils identifient l'utilisateur de manière unique",
+      false
+     ],
+     [
+      "Ils remplacent les embeddings dans le RAG",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un même prompt peut produire des réponses différentes parce que le LLM est :",
+    "feedback": "L'échantillonnage (influencé par la température) rend la sortie variable. Le modèle n'est pas réentraîné à chaque requête.",
+    "options": [
+     [
+      "non déterministe : il échantillonne dans une distribution",
+      true
+     ],
+     [
+      "connecté à Internet en continu",
+      false
+     ],
+     [
+      "réentraîné après chaque requête",
+      false
+     ],
+     [
+      "limité par son tokenizer uniquement",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle différence principale entre un assistant conversationnel classique et un agent ?",
+    "feedback": "C'est l'architecture autour du modèle (objectif, état, outils, boucle) qui change, pas nécessairement la taille du modèle.",
+    "options": [
+     [
+      "L'agent poursuit un objectif, garde un état et agit via des outils",
+      true
+     ],
+     [
+      "L'agent utilise un modèle de langage plus grand",
+      false
+     ],
+     [
+      "L'agent ne se trompe jamais",
+      false
+     ],
+     [
+      "L'agent n'a pas besoin d'instructions",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle séquence décrit la boucle d'un agent ?",
+    "feedback": "La boucle agentique enchaîne perception, raisonnement, action, observation et ajustement.",
+    "options": [
+     [
+      "Perception, raisonnement, action, observation, ajustement",
+      true
+     ],
+     [
+      "Entraînement, validation, test, déploiement",
+      false
+     ],
+     [
+      "Prompt, réponse, fin",
+      false
+     ],
+     [
+      "Collecte, étiquetage, entraînement, évaluation",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que signifie « asynchrone » dans les trois A de l'agentique ?",
+    "feedback": "Asynchrone : l'agent réagit à des signaux ou flux de données, sans requête humaine à cet instant.",
+    "options": [
+     [
+      "L'agent peut agir sur des événements sans déclenchement humain immédiat",
+      true
+     ],
+     [
+      "L'agent répond plus lentement qu'un humain",
+      false
+     ],
+     [
+      "L'agent ne partage pas d'informations",
+      false
+     ],
+     [
+      "L'agent fonctionne sans modèle",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que signifie « autonome » dans le contexte d'un agent d'entreprise ?",
+    "feedback": "L'autonomie est bornée par des règles, seuils et politiques ; l'escalade reste prévue pour les cas hors cadre.",
+    "options": [
+     [
+      "Décider sans validation systématique, dans un cadre de règles et de seuils",
+      true
+     ],
+     [
+      "Agir sans aucune règle ni limite",
+      false
+     ],
+     [
+      "Ne jamais escalader vers un humain",
+      false
+     ],
+     [
+      "Fonctionner hors ligne",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles sont les briques d'un agent présentées dans le module ?",
+    "feedback": "Les quatre briques sont le LLM, la mémoire, les outils et les instructions de base.",
+    "options": [
+     [
+      "Un LLM pour le raisonnement",
+      true
+     ],
+     [
+      "Une mémoire (court et long terme)",
+      true
+     ],
+     [
+      "Des outils appelés par function calling",
+      true
+     ],
+     [
+      "Des instructions de base",
+      true
+     ],
+     [
+      "Un écran de contrôle graphique obligatoire",
+      false
+     ],
+     [
+      "Un tokenizer unique partagé par tous les modèles",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans le function calling, qui exécute réellement la fonction ?",
+    "feedback": "Le modèle propose un appel structuré ; l'application l'exécute et peut donc le valider, le refuser ou l'escalader.",
+    "options": [
+     [
+      "Votre code applicatif, à partir de l'appel structuré proposé par le modèle",
+      true
+     ],
+     [
+      "Le modèle lui-même, directement",
+      false
+     ],
+     [
+      "Le tokenizer",
+      false
+     ],
+     [
+      "La base vectorielle",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi appliquer une limite critique (plafond de montant) dans le code plutôt que seulement dans le prompt ?",
+    "feedback": "Un modèle peut ne pas respecter une consigne. Les contrôles critiques doivent être appliqués de façon déterministe.",
+    "options": [
+     [
+      "Une instruction de prompt est un guide, pas une garantie",
+      true
+     ],
+     [
+      "Le code est toujours plus rapide qu'un prompt",
+      false
+     ],
+     [
+      "Les prompts sont interdits en production",
+      false
+     ],
+     [
+      "Le modèle ne lit pas les prompts",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que représente un embedding ?",
+    "feedback": "Les embeddings placent des textes proches par le sens à proximité dans un espace vectoriel.",
+    "options": [
+     [
+      "Une représentation numérique du sens d'un texte sous forme de vecteur",
+      true
+     ],
+     [
+      "Une copie chiffrée du document",
+      false
+     ],
+     [
+      "Un résumé rédigé par le modèle",
+      false
+     ],
+     [
+      "Un identifiant d'utilisateur",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est le rôle du RAG ?",
+    "feedback": "Le RAG récupère des passages pertinents et les ajoute au contexte ; il réduit mais n'élimine pas les erreurs.",
+    "options": [
+     [
+      "Fournir au modèle des extraits pertinents de documents au moment de la question",
+      true
+     ],
+     [
+      "Réentraîner le modèle chaque nuit",
+      false
+     ],
+     [
+      "Remplacer la fenêtre de contexte",
+      false
+     ],
+     [
+      "Supprimer toute hallucination",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels sont des risques liés à un RAG mal conçu ?",
+    "feedback": "La qualité de la recherche, les droits d'accès et la fraîcheur des documents conditionnent la fiabilité.",
+    "options": [
+     [
+      "Retrouver de mauvais passages et répondre avec aplomb",
+      true
+     ],
+     [
+      "Exposer des documents que l'utilisateur ne devrait pas voir",
+      true
+     ],
+     [
+      "Utiliser des documents périmés",
+      true
+     ],
+     [
+      "Rendre le modèle déterministe",
+      false
+     ],
+     [
+      "Supprimer le besoin de tests",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que fait le Chain-of-Thought ?",
+    "feedback": "Expliciter les étapes améliore souvent le raisonnement et la relecture, sans prouver que la conclusion est correcte.",
+    "options": [
+     [
+      "Le modèle explicite ses étapes intermédiaires avant de conclure",
+      true
+     ],
+     [
+      "Le modèle chaîne plusieurs bases de données",
+      false
+     ],
+     [
+      "Le modèle enchaîne des agents en pipeline",
+      false
+     ],
+     [
+      "Le modèle chiffre ses sorties",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel type d'agent est le plus adapté pour automatiser une application ancienne qui n'a aucune API ?",
+    "feedback": "Le computer use manipule l'interface visuellement ; il est plus fragile qu'une API et se réserve à ce cas.",
+    "options": [
+     [
+      "Un agent d'utilisation d'ordinateur, qui observe l'écran et clique",
+      true
+     ],
+     [
+      "Un agent de raisonnement de base",
+      false
+     ],
+     [
+      "Un routeur sémantique",
+      false
+     ],
+     [
+      "Un agent de distillation",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi un agent de programmation s'exécute-t-il dans un bac à sable ?",
+    "feedback": "Le bac à sable limite l'impact d'un code erroné ou malveillant.",
+    "options": [
+     [
+      "Pour isoler le code généré de vos systèmes et données",
+      true
+     ],
+     [
+      "Pour accélérer l'entraînement du modèle",
+      false
+     ],
+     [
+      "Pour augmenter la fenêtre de contexte",
+      false
+     ],
+     [
+      "Pour éviter d'utiliser des tokens",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles limites d'un agent unique justifient un système multi-agents ?",
+    "feedback": "Un MAS répartit les rôles pour limiter ces trois problèmes, au prix d'une complexité accrue.",
+    "options": [
+     [
+      "Surcharge du contexte",
+      true
+     ],
+     [
+      "Mélange des responsabilités",
+      true
+     ],
+     [
+      "Propagation des erreurs",
+      true
+     ],
+     [
+      "Impossibilité d'utiliser des outils",
+      false
+     ],
+     [
+      "Interdiction réglementaire de tout agent",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est un inconvénient du contrôle centralisé dans un HMAS ?",
+    "feedback": "Le contrôle centralisé apporte cohérence et auditabilité, mais crée un point unique de défaillance.",
+    "options": [
+     [
+      "Un point de défaillance unique et moins de souplesse",
+      true
+     ],
+     [
+      "Une moindre auditabilité",
+      false
+     ],
+     [
+      "Une incohérence globale accrue",
+      false
+     ],
+     [
+      "L'impossibilité d'avoir un superviseur",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'est-ce qu'un blackboard dans un système multi-agents ?",
+    "feedback": "Le blackboard centralise les contributions, ce qui facilite la traçabilité.",
+    "options": [
+     [
+      "Une mémoire partagée où les agents déposent et lisent des informations",
+      true
+     ],
+     [
+      "Un mode de communication privé entre deux agents",
+      false
+     ],
+     [
+      "Un type de modèle de langage",
+      false
+     ],
+     [
+      "Un outil de visualisation de tokens",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel pattern convient à un parcours stable et connu : analyse, synthèse, validation, reporting ?",
+    "feedback": "Un pipeline impose l'ordre des étapes, ce qui le rend facile à tester et à auditer.",
+    "options": [
+     [
+      "Le pipeline (chaîne) déterministe",
+      true
+     ],
+     [
+      "L'orchestrateur ouvert",
+      false
+     ],
+     [
+      "Le routeur sémantique seul",
+      false
+     ],
+     [
+      "La décentralisation totale",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que fait un routeur sémantique ?",
+    "feedback": "Le routeur classe l'intention ; la décomposition en sous-tâches est le rôle de l'orchestrateur.",
+    "options": [
+     [
+      "Il identifie l'intention d'une demande et l'oriente vers le bon agent",
+      true
+     ],
+     [
+      "Il décompose toute tâche en sous-tâches",
+      false
+     ],
+     [
+      "Il stocke les embeddings",
+      false
+     ],
+     [
+      "Il remplace la validation humaine",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans ReAct, quel est l'enchaînement correct ?",
+    "feedback": "ReAct alterne raisonnement et action, puis ajuste selon l'observation.",
+    "options": [
+     [
+      "Réflexion, action, observation, correction",
+      true
+     ],
+     [
+      "Observation, entraînement, action, test",
+      false
+     ],
+     [
+      "Action, déploiement, réflexion, oubli",
+      false
+     ],
+     [
+      "Indexation, recherche, génération, évaluation",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle phrase résume le mieux la relation entre framework et stratégie ?",
+    "feedback": "Le framework est un moyen ; l'architecture et les contrôles font la stratégie.",
+    "options": [
+     [
+      "Choisir d'abord l'architecture, puis l'outil qui la réalise",
+      true
+     ],
+     [
+      "Choisir le framework le plus populaire, l'architecture suivra",
+      false
+     ],
+     [
+      "Le framework impose la gouvernance",
+      false
+     ],
+     [
+      "Un framework dispense des tests",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Parmi ces niveaux d'autonomie, lesquels sont cités dans le module ?",
+    "feedback": "Les quatre niveaux vont de la simple suggestion à l'autonomie supervisée. Le niveau se choisit par action.",
+    "options": [
+     [
+      "Suggestion",
+      true
+     ],
+     [
+      "Copilot",
+      true
+     ],
+     [
+      "Validation obligatoire",
+      true
+     ],
+     [
+      "Autonomie supervisée",
+      true
+     ],
+     [
+      "Autonomie totale sans journalisation",
+      false
+     ],
+     [
+      "Désactivation temporaire",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "À quoi sert un TTL dans un système multi-agents ?",
+    "feedback": "Le TTL arrête le processus au bout d'un nombre maximal d'itérations et déclenche un repli ou une escalade.",
+    "options": [
+     [
+      "Limiter le nombre d'itérations pour éviter les boucles infinies",
+      true
+     ],
+     [
+      "Réduire la taille des tokens",
+      false
+     ],
+     [
+      "Chiffrer les échanges",
+      false
+     ],
+     [
+      "Choisir le modèle le moins cher",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels leviers permettent de maîtriser les coûts d'un système multi-agents ?",
+    "feedback": "Mesure, cache, choix du modèle et plafonds sont les leviers. Multiplier les appels fait l'inverse.",
+    "options": [
+     [
+      "Mesurer le coût par agent et par cas d'usage",
+      true
+     ],
+     [
+      "Mettre en cache les réponses réutilisables",
+      true
+     ],
+     [
+      "Adapter le modèle à la difficulté de la tâche",
+      true
+     ],
+     [
+      "Fixer un budget maximal par tâche",
+      true
+     ],
+     [
+      "Multiplier les agents critiques sans limite",
+      false
+     ],
+     [
+      "Doubler systématiquement la taille des prompts",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'est-ce que l'observabilité d'un système agentique ?",
+    "feedback": "L'observabilité repose sur la journalisation et le traçage des appels, indispensables avec un comportement non déterministe.",
+    "options": [
+     [
+      "La capacité à suivre les interactions et reconstituer les décisions grâce aux traces",
+      true
+     ],
+     [
+      "La capacité d'un agent à voir l'écran",
+      false
+     ],
+     [
+      "Une mesure de la taille du contexte",
+      false
+     ],
+     [
+      "Un synonyme de transparence du code du modèle",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'est-ce qu'un biais émergent ?",
+    "feedback": "Il se révèle lors de l'évaluation du système de bout en bout, pas agent par agent.",
+    "options": [
+     [
+      "Un biais qui n'apparaît qu'au niveau collectif des agents",
+      true
+     ],
+     [
+      "Un biais présent dans chaque agent individuellement",
+      false
+     ],
+     [
+      "Un biais de la fenêtre de contexte",
+      false
+     ],
+     [
+      "Un biais corrigé par la distillation",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans le règlement européen sur l'IA, combien de niveaux de risque sont présentés dans le module ?",
+    "feedback": "Quatre niveaux. Le classement d'un cas précis demande une analyse juridique.",
+    "options": [
+     [
+      "Quatre : minimal, limité, élevé, inacceptable",
+      true
+     ],
+     [
+      "Deux : autorisé et interdit",
+      false
+     ],
+     [
+      "Trois : faible, moyen, fort",
+      false
+     ],
+     [
+      "Cinq, dont un niveau « expérimental »",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Choisissez un processus de votre organisation et décrivez comment vous le confieriez à un système agentique : objectif, outils, niveau d'autonomie par action, garde-fous (TTL, budget, validation) et indicateur de succès.",
+    "feedback": "Une bonne réponse formule un objectif mesurable, liste des outils aux droits minimaux, attribue un niveau d'autonomie par action, prévoit TTL, budget, journalisation et escalade, et définit un indicateur comparé à la situation actuelle.",
+    "options": []
+   }
+  ]
+ },
+ "assignment": {
+  "title": "Livrable pratique : dossier de conception d'un système agentique gouverné",
+  "instructions_md": "## Objectif\n\nDémontrer votre capacité à **concevoir un système agentique** pour un cas d'usage réaliste et à le gouverner, sans données confidentielles ni code obligatoire.\n\n## Consignes\n\nChoisissez un processus métier **fictif ou public** (traitement de demandes de remboursement, veille réglementaire, planification d'approvisionnements, tri de candidatures, etc.). Rédigez un dossier de 3 à 5 pages contenant :\n\n1. **Cadrage** : problème, utilisateurs, objectif de l'agent (fonction objectif et contraintes explicites) et pourquoi un agent est justifié par rapport à un simple assistant ou à un workflow fixe.\n2. **Architecture** : schéma textuel ou dessin des agents, du pattern d'orchestration (routeur, orchestrateur, pipeline), du contrôle (centralisé ou décentralisé), de la communication (blackboard ou messages) et de la mémoire (contexte, RAG).\n3. **Outils et droits** : liste des outils avec droits minimaux et arguments à valider.\n4. **Niveaux d'autonomie** : tableau en liste (ne pas utiliser de tableau Markdown) attribuant un niveau à au moins cinq actions, avec justification.\n5. **Garde-fous d'industrialisation** : TTL, budget par tâche avec estimation du nombre d'appels, journalisation, plan de repli, gestion du contexte.\n6. **Risques et conformité** : biais émergents possibles, risques de sécurité, analyse préliminaire du niveau de risque au regard du règlement européen sur l'IA (en précisant qu'une validation juridique serait nécessaire).\n7. **Mesure** : indicateurs de valeur et de qualité, protocole de pilote.\n8. **Optionnel** : le code de l'exercice étendu (budget, critique) avec un court journal d'exécution.\n\n## Grille d'évaluation\n\n- Pertinence du cadrage et de la justification de l'approche agentique (**20 %**).\n- Cohérence de l'architecture, des outils et des patterns choisis (**25 %**).\n- Qualité de la gouvernance : niveaux d'autonomie, validation humaine, auditabilité (**25 %**).\n- Garde-fous d'industrialisation réalistes : TTL, coûts, observabilité, contexte (**15 %**).\n- Rigueur sur les risques, la conformité et les indicateurs, sans chiffre non justifié (**15 %**).\n\n## Rendu\n\nTexte dans le champ de réponse et/ou fichier PDF, document ou archive."
+ }
+}

@@ -34,3 +34,15 @@ Bandeau d'accueil, profil du formateur, FAQ, **témoignages** (publication seule
 ## Contenu de démonstration
 
 `db/dev-fixture.sql` crée des leçons, un quiz et un devoir **factices** pour le module M4 : textes marqués `[CONTENU DE TEST]`, aucune vidéo. À n'utiliser qu'en développement.
+
+## Contenu rédigé fourni avec le dépôt (brouillons)
+
+`content/modules/*.json` contient, pour 15 modules, des leçons-textes, un quiz (20 à 30 questions), un livrable avec grille ; `content/blog/*.md` contient 12 articles. Le format est décrit dans `content/FORMAT.md` et vérifié par `tests/content.test.ts` (structure, quiz cohérents, aucune mention d'employeur ou de collègue).
+
+Chargement **en brouillon** (rien n'est visible tant que vous ne publiez pas) :
+
+```bash
+DATABASE_URL=… DATABASE_SSL=require npm run content:load -- --all --blog
+```
+
+Un module qui a déjà des chapitres est ignoré (`--replace` le recrée, sauf si des apprenants ont de l'activité). Chaque texte est un **complément** à vos vidéos, réécrit à partir de vos slides : relisez-le, ajoutez vos vidéos, puis publiez leçon par leçon (Administration → Cours) et les articles (Contenu du site). Les modules M3 (IA générative), M9 (AI Product Delivery) et M18 (AI-Powered Discovery) n'ont pas encore de slides fournis.

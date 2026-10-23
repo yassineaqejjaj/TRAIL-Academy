@@ -1,0 +1,763 @@
+{
+ "course": "M6",
+ "slug": "vibe-coding",
+ "source": "Slides du formateur (module Vibe Coding), réécrits et complétés. Pas de vidéo : à ajouter depuis l'administration.",
+ "chapters": [
+  {
+   "title": "Comprendre le vibe coding",
+   "lessons": [
+    {
+     "title": "Le vibe coding : tester une idée vite, pas apprendre à coder",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Définir le vibe coding avec vos mots.\n- Comprendre pourquoi, pour un chef de produit, **le code n'est pas le livrable : la décision l'est**.\n\n## L'idée en une phrase\n\nLe **vibe coding** consiste à décrire en langage naturel ce que l'on veut obtenir, à laisser une IA générer une première version d'application, puis à observer, ajuster et décider. Le terme est volontairement familier : on pilote « à l'intention », sans écrire soi-même chaque ligne.\n\n## La boucle de travail\n\n1. Le chef de produit **décrit le problème** : qui, pourquoi, quelles règles.\n2. L'IA **génère une première version** utilisable.\n3. Le chef de produit **observe et ajuste** : il clique, remarque ce qui manque ou ce qui gêne, et reformule.\n4. Il **décide** : continuer, pivoter ou arrêter.\n\nLe but n'est pas d'obtenir un produit fini, mais de **raccourcir le temps entre une hypothèse et une réaction concrète**. Un prototype cliquable déclenche des retours que dix pages de spécifications n'obtiennent pas : les gens réagissent beaucoup mieux à ce qu'ils voient qu'à ce qu'ils doivent imaginer.\n\n## Ce que le vibe coding n'est pas\n\n- Ce n'est pas devenir développeur.\n- Ce n'est pas livrer un produit en production sans équipe technique.\n- Ce n'est pas une garantie de qualité : une application qui « s'affiche » n'est pas une application correcte, sûre ou maintenable.\n\n## Un piège fréquent\n\nConfondre la vitesse de génération avec la vitesse de **décision**. Si vous produisez trois prototypes en une heure mais que personne ne les évalue, vous n'avez rien appris. Fixez toujours, avant de générer, la question à laquelle le prototype doit répondre (par exemple : « les freelances comprennent-ils le parcours de création d'une tâche sans aide ? »).\n\n## À vous de jouer\n\nPensez à une idée de fonctionnalité qui traîne dans votre backlog. Écrivez en une phrase **la décision** qu'un prototype vous aiderait à prendre."
+    },
+    {
+     "title": "Quand le vibe coding est utile, et quand il ne l'est pas",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nSavoir décider, dans une situation donnée, si le vibe coding est le bon outil.\n\n## Les situations où il est utile\n\n- **Tester une idée rapidement** avant d'engager une équipe.\n- **Clarifier un besoin** : un écran vaut mieux qu'un paragraphe ambigu.\n- **Créer un prototype cliquable** pour des tests utilisateurs ou une démonstration.\n- **Aligner** produit, design et métier autour d'un objet commun.\n- **Comparer plusieurs options** : générer deux ou trois variantes d'un parcours coûte peu.\n\n## Les situations où il est mal adapté\n\n- Le produit est **déjà en production** : modifier un système existant demande de comprendre son architecture, ses données et ses dépendances.\n- La **logique métier est complexe** : règles de calcul, cas particuliers, exceptions réglementaires. L'IA produira quelque chose de plausible, pas forcément de juste.\n- Il y a des **enjeux légaux ou de sécurité** : données personnelles, paiements, santé, finance.\n- La **performance est critique** : volumétrie, temps de réponse, disponibilité.\n- Le **cadre n'est pas clair** : si vous ne savez pas décrire le problème, l'IA ne le devinera pas pour vous.\n\n## Une règle simple\n\nPosez-vous deux questions : **« Que se passe-t-il si ce prototype est faux ? »** et **« Est-ce que des données réelles ou sensibles vont y circuler ? »** Si l'erreur est peu coûteuse et que les données sont fictives, le vibe coding est un excellent terrain d'exploration. Sinon, passez par une équipe technique.\n\n## Le vibe coding ne remplace pas une équipe technique\n\nIl aide à **décider plus tôt**, pas à **sécuriser un produit final**. Un bon réflexe : considérer le prototype comme une pièce jointe très détaillée au brief destiné aux développeurs, pas comme une première version à mettre en ligne.\n\n## Mise en situation\n\nClassez ces cas : (a) une page de démonstration pour un nouveau parcours d'inscription, (b) une refonte du calcul des frais sur une application en production, (c) trois variantes d'un tableau de bord pour un atelier avec le métier. Lesquels se prêtent au vibe coding ? Justifiez avec les deux questions ci-dessus."
+    },
+    {
+     "title": "Les rôles à l'ère du vibe coding",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre ce qui change, et ce qui ne change pas, pour chaque rôle d'une équipe produit.\n\n## Le principe\n\nLe vibe coding **ne change pas les rôles** : il change la **vitesse** et la **clarté**. Il supprime surtout des tâches lentes et du flou, pas la responsabilité de chacun.\n\n## Rôle par rôle\n\n### Chef de produit\n- **Fait** : cadre le problème, fixe les règles, décide.\n- **Gagne** : moins de spécifications longues et d'allers-retours, un objet concret très tôt.\n- **Garde** : la vision produit, les choix et les priorités.\n- Si le résultat est mauvais, la cause est souvent un **cadrage insuffisant** plutôt que l'outil.\n\n### Designer produit\n- **Fait** : parcourt le prototype, repère ce qui est confus, simplifie.\n- **Gagne** : moins de maquettes jetables, plus de retours en situation.\n- **Garde** : le sens du parcours, l'empathie utilisateur, la cohérence visuelle.\n\n### Développeur\n- **Fait** : examine le prototype, comprend l'intention, identifie les limites techniques.\n- **Gagne** : moins de spécifications floues et d'idées mal cadrées.\n- **Garde** : l'architecture, la qualité du code, la gestion de la dette technique.\n\n### Testeur / QA\n- **Fait** : joue avec le prototype, essaie des cas simples puis extrêmes, remonte les blocages.\n- **Gagne** : intervient plus tôt, donc moins de surprises en fin de cycle.\n- **Garde** : le regard critique, la logique métier, la qualité finale.\n\n### Métier / partie prenante\n- **Fait** : voit, comprend, donne un avis clair.\n- **Gagne** : plus besoin d'imaginer à partir de diapositives, des décisions moins tardives.\n- **Garde** : la décision finale et la connaissance du terrain.\n\n## Point d'attention\n\nUn prototype généré par IA crée parfois l'illusion que « tout est presque prêt ». Expliquez explicitement aux parties prenantes ce qui est **réel** (le parcours, les écrans) et ce qui est **factice** (données, règles, sécurité).\n\n## À vous de jouer\n\nChoisissez un rôle autre que le vôtre et listez deux questions que cette personne poserait en découvrant votre prototype."
+    },
+    {
+     "title": "Ce que l'IA fait bien et moins bien",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nCalibrer votre confiance : savoir quoi déléguer à l'IA et quoi garder.\n\n## Ce que l'IA fait bien\n\n- **Générer vite** une première version : écrans, structure, composants.\n- **Proposer des variantes** : trois mises en page, deux parcours, plusieurs formulations.\n- **Créer une base fonctionnelle** sur laquelle itérer ou qu'un développeur pourra reprendre.\n\n## Ce qu'elle fait moins bien\n\n- **Comprendre le vrai besoin de l'utilisateur** : elle ne l'a pas rencontré, elle n'a que votre description.\n- **Prioriser** : elle ajoutera volontiers dix fonctions quand une seule suffirait.\n- **Juger la valeur métier** : elle ne sait pas ce qui compte pour votre activité, vos marges ou vos contraintes.\n\n## La formule à retenir\n\n**L'IA est rapide, elle n'est pas responsable.** On gagne du temps, pas du jugement. La responsabilité des choix, des erreurs et de leurs conséquences reste humaine.\n\n## Autres limites à garder en tête\n\n- L'IA peut produire du code qui **semble fonctionner** mais contient des erreurs ou des failles, surtout sur les cas limites. Elle peut aussi corriger un bogue en en introduisant un autre.\n- Elle peut **affirmer avec aplomb** des choses fausses : ne présumez pas qu'une fonction décrite dans l'interface est réellement implémentée, vérifiez en l'utilisant.\n- Les résultats **varient** d'une génération à l'autre : un même prompt ne donne pas forcément deux fois le même écran.\n\n## Mise en pratique\n\nPrenez un prototype ou une capture mentale d'une application que vous connaissez. Notez trois choses que l'IA pourrait produire facilement et trois décisions qu'elle ne devrait jamais prendre seule."
+    }
+   ]
+  },
+  {
+   "title": "Écrire un bon prompt produit",
+   "lessons": [
+    {
+     "title": "La structure d'un prompt produit",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nRédiger un prompt comme un **mini brief produit**.\n\n## Pourquoi le soin du prompt compte\n\nUn prompt n'est pas une formule magique : c'est un brief. Plus vous êtes clair sur l'objectif et les règles, moins vous aurez à corriger ensuite. Deux prompts prennent le même temps à écrire, mais le second donne un cadre à l'IA, alors que le premier la laisse deviner, et quand elle devine, elle se trompe souvent.\n\n## Les cinq éléments\n\n1. **Objectif de l'application** : à quoi sert-elle, quel problème résout-elle ?\n2. **Utilisateurs visés** : pour qui, dans quel contexte ?\n3. **Fonctions attendues** : les actions essentielles, en verbes (créer, modifier, terminer…).\n4. **Règles simples** : ce qui est autorisé, interdit ou obligatoire.\n5. **Contraintes claires** : appareil, ton, langue, niveau de détail visuel, ce qu'il ne faut **pas** faire.\n\n## Exemple : flou contre clair\n\nPrompt flou :\n\n```\nJe veux une app sympa pour gérer des tâches.\n```\n\nPrompt clair :\n\n```\nApplication de gestion de tâches pour freelances.\nConnexion par e-mail.\nCréer, modifier et terminer une tâche.\nInterface simple, pensée d'abord pour le mobile.\n```\n\nLe second précise l'utilisateur, l'authentification, les actions et une contrainte de design. Il est encore court : un brief efficace tient souvent en quelques lignes bien pensées.\n\n## Pièges courants\n\n- **Demander tout d'un coup** : une application entière avec vingt fonctions. Commencez par le cœur du parcours.\n- **Rester dans l'adjectif** (« moderne », « sympa ») sans critère observable.\n- **Oublier ce qui est hors périmètre** : dites-le (« pas de paiement pour l'instant »).\n\n## À vous de jouer\n\nRéécrivez ce prompt avec les cinq éléments : « Une app pour les équipes qui réservent des salles. »"
+    },
+    {
+     "title": "Itérer par petites étapes",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nConduire un prototype par **prompts successifs** sans le dégrader.\n\n## Le principe\n\nLe travail avec un outil de génération d'applications est **itératif** : prompt initial, génération, puis demandes de plus en plus précises pour ajouter, retirer ou corriger. Chaque itération est une mini-décision produit.\n\n## Bonnes pratiques\n\n- **Une demande à la fois.** Si vous demandez cinq changements en un prompt et que quelque chose casse, vous ne saurez pas d'où vient le problème.\n- **Tester avant de continuer.** Après chaque modification, parcourez l'aperçu : le changement demandé est-il là ? Ce qui marchait marche-t-il encore ?\n- **Être précis sur l'endroit et le comportement.** « Ajoute un bouton \"Archiver\" sur chaque carte de tâche ; au clic, la tâche disparaît de la liste principale » vaut mieux que « améliore la liste ».\n- **Décrire le symptôme d'un bogue**, pas la cause supposée : « Quand je clique sur Terminer, rien ne change à l'écran », avec l'étape précédente et le résultat attendu.\n- **Dire ce qu'il ne faut pas toucher** : « Ne modifie pas la page de connexion. »\n\n## Exemples de prompts d'itération\n\n- « Ajoute une page de profil affichant le nom et l'e-mail de l'utilisateur. »\n- « Ajoute un champ de recherche au-dessus de la liste, qui filtre par titre. »\n- « Rends la mise en page lisible sur téléphone. »\n\n## Le piège de la dérive\n\nÀ force de prompts, le prototype s'éloigne de l'intention initiale et accumule des fonctions que personne n'a demandées. Relisez régulièrement votre **objectif de départ** et supprimez ce qui ne sert pas la question posée. Les outils proposent en général un historique ou des versions : servez-vous-en pour revenir à un état sain plutôt que d'empiler des corrections.\n\n## Question de réflexion\n\nQuand arrêtez-vous d'itérer ? Formulez un critère de fin avant de commencer (par exemple : « le parcours principal est démontrable de bout en bout en trois minutes »)."
+    },
+    {
+     "title": "Trois prompts types à adapter",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDisposer de modèles réutilisables pour trois usages fréquents du chef de produit.\n\nCes exemples sont des **points de départ** : adaptez-les, ne les copiez pas aveuglément.\n\n## 1. Prototype de parcours à valider\n\n```\nContexte : application de réservation de salles de réunion pour de petites équipes.\nUtilisateurs : collaborateurs qui réservent depuis leur téléphone.\nParcours à montrer : choisir une date, voir les salles libres, réserver, recevoir une confirmation à l'écran.\nRègles : une salle ne peut pas être réservée deux fois sur le même créneau ; créneaux de 30 minutes.\nContraintes : données fictives, interface sobre, pas de paiement, textes en français.\n```\n\n## 2. Comparer deux options de conception\n\n```\nGénère deux versions de l'écran d'accueil d'un tableau de bord de suivi de tâches.\nVersion A : liste simple triée par échéance.\nVersion B : colonnes par statut (à faire, en cours, terminé).\nGarde les mêmes données fictives dans les deux versions pour pouvoir comparer.\n```\n\n## 3. Formulaire avec règles de validation\n\n```\nCrée un formulaire de demande de congé : dates de début et de fin, type de congé, commentaire facultatif.\nRègles : la date de fin ne peut pas précéder la date de début ; le type est obligatoire ; afficher un message d'erreur clair sous le champ concerné.\n```\n\n## Ce que ces prompts ont en commun\n\n- Un **contexte** et un **utilisateur** nommés.\n- Un **périmètre** limité à un parcours.\n- Des **règles** vérifiables : vous pourrez tester qu'elles sont respectées.\n- Des **données fictives** : on évite d'y introduire des informations réelles.\n\n## Piège\n\nUne règle bien formulée dans le prompt n'est pas forcément **bien appliquée** par l'application. Essayez de la violer pour le vérifier (réserver deux fois le même créneau, saisir des dates inversées).\n\n## À vous de jouer\n\nÉcrivez un quatrième prompt sur un cas de votre quotidien, puis soulignez les règles que vous irez tester volontairement."
+    }
+   ]
+  },
+  {
+   "title": "Panorama des outils d'AI NoCode",
+   "lessons": [
+    {
+     "title": "Du low-code au no-code piloté par l'IA",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nSituer le vibe coding dans l'histoire du low-code et du no-code.\n\n## Les concepts\n\n- **Low-code** : assembler des **blocs pré-conçus** et des interfaces visuelles pour accélérer le développement, en écrivant un peu de code lorsque nécessaire.\n- **No-code** : même principe, sans écrire de code du tout.\n- **IA générative appliquée** : au lieu de glisser-déposer des blocs, on **décrit** ce que l'on veut et l'outil produit l'application.\n\nCes approches **démocratisent** la création d'applications en ouvrant la porte à des profils non techniques, et réduisent le cycle entre l'idée et un objet testable.\n\n## Ce que cela change pour le produit\n\nTransformer sa logique produit en blocs visuels ou en prompts abaisse la barrière d'entrée : on valide des hypothèses sans attendre un budget ou un planning de développement.\n\n## Limites communes à tous ces outils\n\n- **Dépendance à la plateforme** : ce que l'outil ne sait pas faire est difficile à contourner.\n- **Maîtrise limitée** de ce qui se passe sous le capot, donc difficulté à diagnostiquer certaines erreurs.\n- **Gouvernance** : qui a le droit de créer, de publier, d'y mettre des données ?\n- **Maintenabilité** : un prototype généré n'a pas forcément la structure qu'attend une équipe qui devra le faire vivre.\n\n## Question de réflexion\n\nDans votre organisation, quelles décisions sont aujourd'hui retardées parce qu'il faut attendre de pouvoir « voir » quelque chose ? Un prototype généré pourrait-il les débloquer ?"
+    },
+    {
+     "title": "Lovable : pile technique et workflow",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre ce que produit un outil comme Lovable, et ce qu'il y a « sous le capot ».\n\n*À la date de rédaction. Les outils évoluent vite : vérifiez toujours les fonctionnalités et conditions actuelles sur le site de l'éditeur.*\n\n## Le positionnement\n\nLovable se présente comme un « co-ingénieur IA » : on décrit une application en langage naturel, et l'outil génère l'interface, le code et une partie du backend. Il vise à la fois les non-développeurs et les équipes techniques qui souhaitent éviter la configuration initiale et le code répétitif.\n\n## La pile technique\n\nSelon la présentation de l'outil :\n\n- **Frontend** : React avec Vite et Tailwind CSS.\n- **Backend** : Supabase, qui fournit une base de données PostgreSQL, l'authentification et des fonctions serverless.\n- **Versionnage** : intégration avec GitHub pour conserver et modifier le code hors de l'interface.\n\nPas besoin de maîtriser ces technologies, mais il est utile d'en connaître les noms : ils vous permettront de dialoguer avec les développeurs, qui sauront reprendre le projet.\n\n## Le workflow\n\n1. Prompt initial.\n2. Génération d'un prototype et aperçu intégré.\n3. Prompts successifs pour ajouter des fonctionnalités ou corriger des bogues.\n4. Assistance de l'IA pour **détecter des erreurs** et **proposer des corrections**.\n5. Connexion de services, versionnage, déploiement.\n\n## Atouts\n\n- Prototype jusqu'à un parcours testable en quelques minutes à quelques heures.\n- Interfaces, tableaux de bord, structure de projet exploitables ensuite par des développeurs.\n\n## Limites\n\n- **Tarification à crédits** : chaque itération consomme des crédits, ce qui peut freiner l'exploration ; économiser des prompts, c'est aussi mieux les formuler.\n- Les conditions d'offre gratuite et de tarifs changent : consultez-les avant de planifier un atelier.\n\n## Mise en pratique\n\nPour une idée, écrivez les quatre ou cinq écrans que vous attendez du prototype avant de lancer la génération. Cela vous servira de liste de contrôle pour l'évaluer."
+    },
+    {
+     "title": "D'autres outils et comment choisir",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nConnaître l'écosystème et savoir choisir un outil selon son besoin.\n\n*À la date de rédaction. Cette liste n'est pas exhaustive et évolue rapidement.*\n\n## Des outils du même type\n\nLes supports du module citent plusieurs plateformes de génération d'applications à partir de prompts :\n\n- **Lovable** : application complète, avec intégration Supabase et GitHub.\n- **Bolt**, **Base44**, **Replit** : autres plateformes qui génèrent et exécutent des applications à partir d'une description.\n- **Figma Make** : prototypage à partir de prompts dans l'écosystème de design Figma.\n- **Google AI Studio** : espace pour créer des applications avec des modèles d'IA.\n\nLeurs fonctions précises, leurs limites et leurs offres gratuites **changent souvent** : vérifiez-les avant de choisir.\n\n## Critères de choix\n\n- **Le type de livrable** : maquette interactive, application avec comptes et données, démonstrateur d'un usage d'IA ?\n- **Le profil des utilisateurs** : à l'aise avec le design, avec le code, avec ni l'un ni l'autre ?\n- **La sortie** : pouvez-vous exporter le code ou le relier à un dépôt pour qu'une équipe le reprenne ?\n- **Le coût** : modèle de tarification, limites de l'offre gratuite, risque de blocage en plein atelier.\n- **Les données et la sécurité** : où sont hébergées les données ? Que dit la politique de votre organisation sur ces outils ?\n\n## Un conseil pratique\n\nNe choisissez pas un outil pour ses promesses, mais pour **votre question**. Faites le même brief dans deux outils et comparez le **temps nécessaire**, la **qualité du résultat** et la **facilité de reprise** par un développeur.\n\n## Question de réflexion\n\nPour un atelier avec dix collègues non techniques, quels trois critères seraient décisifs pour choisir l'outil ?"
+    },
+    {
+     "title": "Données, sécurité et gouvernance",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nUtiliser ces outils sans exposer votre organisation.\n\n## Règle d'or\n\n**Pas de données réelles ni sensibles dans un prototype généré par IA.** Utilisez des données fictives, plausibles mais inventées. Cela vaut pour les données clients, les données personnelles, les documents internes confidentiels, les clés d'accès.\n\n## Pourquoi\n\n- Vous ne maîtrisez pas toujours **où** les données et le code sont stockés ni **qui** peut y accéder.\n- Le code généré peut comporter des **failles** : contrôles d'accès absents, validations insuffisantes, informations sensibles exposées côté client.\n- Les conditions d'utilisation des outils peuvent s'appliquer à ce que vous y saisissez.\n\n## Les clés d'API\n\nPour brancher un service (paiement, modèle d'IA, base de données externe), il faut fournir des **clés**. Ne les écrivez jamais dans un prompt ni dans un fichier public. Préférez les mécanismes de gestion de secrets de la plateforme, utilisez des clés de **test** ou à droits limités, et révoquez-les en fin d'atelier.\n\n## Checklist avant de partager un prototype\n\n- Les données sont-elles fictives ?\n- Un utilisateur peut-il voir les données d'un autre ? (testez avec deux comptes)\n- Les clés sont-elles absentes du code visible et du dépôt ?\n- L'adresse de partage est-elle connue uniquement des personnes visées ?\n- Avez-vous indiqué que c'est un **prototype**, sans garantie de sécurité ni de disponibilité ?\n\n## Gouvernance\n\nRenseignez-vous sur la politique de votre organisation : outils autorisés, données autorisées, validation avant diffusion. En cas de doute, demandez à l'équipe sécurité **avant** d'ouvrir un compte, pas après.\n\n## À vous de jouer\n\nRédigez trois règles d'usage de ces outils que vous proposeriez à votre équipe."
+    }
+   ]
+  },
+  {
+   "title": "Atelier pratique : de l'idée au prototype en ligne",
+   "lessons": [
+    {
+     "title": "Préparer l'atelier et cadrer le prototype",
+     "kind": "exercise",
+     "body_md": "## Objectif de l'atelier\n\nCréer, enrichir, partager et évaluer un prototype d'application de votre choix, en quatre étapes. Prévoyez environ deux heures.\n\n## Préparation\n\n- Une **adresse e-mail** pour créer un compte.\n- Un compte sur la plateforme de génération de votre choix. Lovable est celle présentée dans le module ; si son offre gratuite ne suffit pas, utilisez-en une autre de la liste vue précédemment ou un outil gratuit équivalent. L'exercice vaut pour toute plateforme qui génère une application à partir d'une description.\n- Optionnel : un compte **GitHub** pour le versionnage.\n- Un document texte pour noter vos prompts et vos observations.\n\n## Avant de lancer l'outil : le cadrage (15 minutes)\n\nRédigez, dans votre document :\n\n1. **La décision à éclairer** : par exemple « faut-il investir dans un outil de suivi de tâches pour freelances ? »\n2. **L'utilisateur** et son contexte.\n3. **Le parcours principal** en trois à cinq actions.\n4. **Trois règles** à vérifier.\n5. **Le critère de réussite** : par exemple « une personne qui n'a jamais vu l'application réalise le parcours en moins de trois minutes sans aide ».\n\n## Idées de sujets\n\n- Gestion de tâches pour freelances.\n- Blog avec comptes, articles et commentaires.\n- Réservation de salles.\n- Suivi de demandes internes avec statuts.\n\n## Conseil de gestion des crédits\n\nSi l'outil fonctionne à crédits, **n'en gaspillez pas** : un bon prompt initial vaut mieux que dix corrections. Regroupez les changements de même nature, mais gardez une modification à la fois par sujet.\n\n## Pièges\n\n- Commencer à générer avant d'avoir une question à laquelle répondre.\n- Partir sur un sujet trop ambitieux. Si votre parcours dépasse cinq actions, réduisez.\n- Saisir des informations réelles dans le prototype."
+    },
+    {
+     "title": "Étape 1 : créer le compte et écrire le premier prompt",
+     "kind": "exercise",
+     "body_md": "## Objectif\n\nObtenir une première version à partir d'un prompt structuré.\n\n## Démarche\n\n1. Rendez-vous sur le site de la plateforme choisie et créez un compte (adresse e-mail ou compte tiers selon ce que propose l'outil). Si votre organisation encadre ces outils, vérifiez d'abord la politique d'usage.\n2. Repérez le **champ de saisie du prompt** (par exemple intitulé « Ask Lovable… » dans cet outil).\n3. Écrivez un prompt à partir de votre cadrage en reprenant les cinq éléments : objectif, utilisateurs, fonctions, règles, contraintes.\n\n## Exemple de départ\n\n```\nApplication de gestion de tâches pour freelances.\nConnexion par e-mail.\nFonctions : créer, modifier, marquer comme terminée et supprimer une tâche ; chaque tâche a un titre, une échéance et un statut.\nRègles : une tâche terminée n'apparaît plus dans la liste principale ; l'échéance ne peut pas être dans le passé.\nContraintes : interface simple, pensée d'abord pour le mobile, textes en français, données fictives uniquement.\n```\n\nLancez la génération. L'outil construit la structure, l'interface et, selon les cas, une partie du backend. Patientez jusqu'à l'apparition d'un aperçu.\n\n## À observer\n\n- L'application correspond-elle à votre prompt ? Notez **ce qui est présent**, **ce qui manque** et **ce qui a été ajouté sans demande**.\n- Les règles sont-elles appliquées ? Essayez de les contourner.\n- Le parcours principal est-il faisable de bout en bout ?\n\n## Trace à conserver\n\nDans votre document : le prompt exact, une description écrite de ce que vous observez (pas de capture requise) et vos trois premières remarques.\n\n## Pour aller plus loin\n\nRelancez le même prompt une seconde fois, si votre quota le permet, et comparez : qu'est-ce qui change d'une génération à l'autre ?"
+    },
+    {
+     "title": "Étape 2 : itérer et personnaliser",
+     "kind": "exercise",
+     "body_md": "## Objectif\n\nAméliorer le prototype par prompts successifs, de façon maîtrisée.\n\n## Démarche\n\n1. Testez l'application dans l'**aperçu intégré** : naviguez, remplissez, cliquez.\n2. Utilisez le **chat** pour demander des modifications, **une à la fois**.\n3. Après chaque changement, retestez le parcours complet.\n\n## Exemples de demandes\n\n- « Ajoute une page de profil. »\n- « Ajoute un champ de recherche qui filtre les tâches par titre. »\n- « Change la couleur principale en bleu et utilise une police plus lisible. »\n- « Rends l'affichage correct sur téléphone. »\n\nSelon les outils, vous pouvez aussi **fournir des images** ou préciser des polices pour personnaliser l'interface. Si vous utilisez une image, veillez à avoir le droit de l'utiliser.\n\n## Quand l'outil signale une erreur\n\nLes outils proposent souvent de corriger eux-mêmes. Avant d'accepter, relisez le message : décrivez en vos propres mots ce qui s'est passé. Si la correction échoue deux fois, **changez d'approche** : reformulez, revenez à une version précédente ou simplifiez la demande, plutôt que de répéter le même prompt.\n\n## Journal de bord\n\nPour chaque itération, consignez :\n\n1. Le prompt.\n2. Le résultat attendu.\n3. Le résultat obtenu.\n4. Ce que cela vous apprend sur votre idée de produit.\n\n## Exercice de robustesse\n\nJouez le rôle du testeur : saisissez un titre vide, un titre très long, des caractères spéciaux, une date incohérente. Notez trois cas où l'application se comporte mal et corrigez-en au moins un par prompt."
+    },
+    {
+     "title": "Étape 3 : données, comptes et versionnage",
+     "kind": "exercise",
+     "body_md": "## Objectif\n\nDonner de la profondeur au prototype : enregistrer des données, gérer des utilisateurs, conserver l'historique du code.\n\n## Données et authentification\n\nLes plateformes de ce type s'appuient en général sur un service de base de données. Dans l'outil présenté, c'est Supabase, qui fournit des tables, l'authentification des utilisateurs et le stockage de fichiers.\n\nVous pouvez demander depuis le chat, par exemple :\n\n- « Active l'authentification par e-mail. »\n- « Crée une table de tâches avec titre, échéance, statut et propriétaire. »\n- « Fais en sorte qu'un utilisateur ne voie que ses propres tâches. »\n\nSuivez les étapes de connexion proposées par l'outil et vérifiez à chaque fois ce qui a réellement été créé.\n\n## Test indispensable : l'isolation des données\n\nCréez **deux comptes de test** (adresses fictives ou alias dont vous disposez). Ajoutez des tâches avec le premier, connectez-vous avec le second. **Voit-il les tâches du premier ?** Si oui, le prototype a un problème de contrôle d'accès : c'est exactement le type de défaut qu'il faut signaler aux développeurs avant toute mise en production.\n\n## Versionnage avec GitHub (optionnel)\n\nConnecter un dépôt permet de **conserver l'historique** des modifications et de **modifier le code hors de l'interface**, par exemple par un développeur de l'équipe. C'est aussi ce qui rend le prototype transmissible.\n\n## Services externes\n\nVous pouvez relier des services tiers (paiement, modèle d'IA, base de données de type tableur). Cela demande des **clés d'API**. Pour l'atelier :\n\n- n'utilisez que des clés de **test** ;\n- n'en collez jamais dans un prompt ni dans un fichier public ;\n- laissez de côté tout service de paiement réel.\n\n## Livrable intermédiaire\n\nNotez dans votre journal : ce qui est stocké, où, qui peut y accéder, et ce que vous n'avez **pas** vérifié."
+    },
+    {
+     "title": "Étape 4 : tester avec des utilisateurs et déployer",
+     "kind": "exercise",
+     "body_md": "## Objectif\n\nConfronter le prototype à de vraies personnes et le rendre accessible.\n\n## Test utilisateur express\n\n1. Choisissez **deux ou trois personnes** correspondant à votre utilisateur cible.\n2. Donnez-leur une **tâche** à accomplir, sans explication (« Ajoutez une tâche pour vendredi, puis marquez-la comme terminée »).\n3. **Observez sans aider** : où hésitent-elles ? Que disent-elles ?\n4. Notez les **points de blocage** et les surprises, puis posez trois questions : « Qu'avez-vous compris ? », « Qu'est-ce qui vous a gêné ? », « Utiliseriez-vous cela ? »\n\nLe lien d'aperçu de la plateforme suffit pour une courte session ; selon les outils, il peut être public pour quiconque le détient. Ne diffusez donc que des données fictives.\n\n## Déploiement\n\nLes plateformes proposent en général un **déploiement en un clic** : l'application est accessible en ligne, sur un sous-domaine fourni ou, sur option, sur un domaine personnalisé. Pour un usage plus avancé, le code peut être exporté vers un service d'hébergement tiers via le dépôt connecté.\n\nAvant de publier, reprenez la **checklist** du chapitre précédent. Rappelez que l'objet est un **prototype** : pas de promesse de disponibilité, de sécurité ni de support.\n\n## Décider\n\nTerminez par la décision posée au départ :\n\n1. Qu'avez-vous appris ?\n2. L'idée **mérite-t-elle d'aller plus loin** ? Sous quelles conditions ?\n3. Que faudrait-il, techniquement et fonctionnellement, pour passer à un vrai produit ? Quels risques identifiez-vous ?\n\n## Transmettre à l'équipe technique\n\nUn prototype validé se transmet avec : l'**objectif**, les **parcours**, les **règles**, les **résultats des tests**, la **liste de ce qui est factice**, et le dépôt de code s'il existe. C'est le point de départ du travail de l'équipe, pas son aboutissement."
+    }
+   ]
+  },
+  {
+   "title": "Ressources",
+   "lessons": [
+    {
+     "title": "Les limites à garder en tête et la transmission aux développeurs",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nFaire passer un prototype à une équipe technique sans malentendu.\n\n## Ce que le prototype est\n\nUn **objet de discussion** : il montre une intention, des parcours et des règles. Il est précieux parce qu'il rend le brief concret.\n\n## Ce qu'il n'est pas\n\n- Une **architecture** réfléchie.\n- Une application **sécurisée**.\n- Une base de code **conçue pour durer** : elle peut être redondante, mal structurée ou difficile à tester.\n- Une **estimation** : ne déduisez pas de la vitesse de génération le temps nécessaire pour faire un produit réel.\n\n## Le dossier de passage\n\n1. **Intention** : problème, utilisateurs, décision à prendre.\n2. **Parcours** validés par les tests.\n3. **Règles métier** explicites, y compris celles que le prototype applique mal.\n4. **Écarts connus** : tout ce qui est factice, absent ou douteux.\n5. **Résultats des tests** : ce qui a fonctionné, ce qui a bloqué.\n6. **Lien et dépôt** du prototype, s'il existe.\n\n## Une posture\n\nPrésentez le prototype à l'équipe comme une **question posée**, pas comme une réponse imposée. Les développeurs pourront décider de reconstruire autrement : ce n'est pas un échec, c'est le rôle du prototype d'avoir permis d'y voir clair.\n\n## À vous de jouer\n\nRédigez le dossier de passage en cinq lignes pour le prototype de l'atelier."
+    },
+    {
+     "title": "Récapitulatif du module",
+     "kind": "reading",
+     "body_md": "## Les idées essentielles\n\n- Le vibe coding sert à **tester une idée vite** et à **décider plus tôt**. Le code n'est pas le livrable : la décision l'est.\n- Il est utile pour explorer, clarifier, prototyper, aligner et comparer. Il est mal adapté à la production, à la logique métier complexe, aux enjeux légaux ou de sécurité et aux contextes critiques en performance.\n- Il ne change pas les rôles : il accélère et clarifie. Chef de produit, designer, développeur, testeur et métier gardent leurs responsabilités.\n- L'IA **génère vite**, propose des variantes et crée une base ; elle comprend mal le besoin réel, priorise mal et ne juge pas la valeur métier. Elle est rapide, elle n'est pas responsable.\n- Un bon prompt est un **mini brief** : objectif, utilisateurs, fonctions, règles, contraintes.\n- On itère **par petites étapes**, en testant après chaque changement.\n- Les outils d'AI NoCode (dont Lovable, Bolt, Base44, Replit, Figma Make, Google AI Studio) évoluent vite : vérifiez fonctions et tarifs, surveillez les crédits.\n- **Données fictives**, clés protégées, accès testés : la sécurité n'est jamais automatique.\n- Un prototype se **transmet** avec un dossier clair, pas comme un produit fini.\n\n## Checklist de fin de module\n\n- Je sais dire à quelle décision mon prototype répond.\n- Je sais écrire un prompt structuré.\n- Je sais tester les règles et les cas limites.\n- Je sais ce qui est factice et ce qui ne l'est pas.\n- Je sais ce que je transmettrais à l'équipe technique.\n\n## Pour aller plus loin\n\n- Refaites le même brief dans un second outil et comparez.\n- Demandez à un développeur de relire le code généré et de lister ses trois principales réserves.\n- Préparez un atelier de prototypage de deux heures pour votre équipe."
+    }
+   ]
+  }
+ ],
+ "quiz": {
+  "title": "Quiz du module",
+  "pass_percent": 70,
+  "max_attempts": null,
+  "questions": [
+   {
+    "kind": "single_choice",
+    "prompt": "Pour un chef de produit, quel est le véritable livrable du vibe coding ?",
+    "feedback": "Le code n'est pas le livrable : la décision l'est. Le prototype sert à comprendre vite et à trancher.",
+    "options": [
+     [
+      "La décision que le prototype permet de prendre",
+      true
+     ],
+     [
+      "Le code source complet",
+      false
+     ],
+     [
+      "L'application prête pour la production",
+      false
+     ],
+     [
+      "La spécification détaillée",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle séquence décrit correctement la boucle du vibe coding ?",
+    "feedback": "On décrit le problème, l'IA génère une première version, on observe et ajuste, puis on décide de continuer ou non.",
+    "options": [
+     [
+      "Décrire le problème, générer, observer et ajuster, décider",
+      true
+     ],
+     [
+      "Écrire les specs, coder, tester, livrer",
+      false
+     ],
+     [
+      "Générer, mettre en production, observer les utilisateurs, corriger",
+      false
+     ],
+     [
+      "Choisir la technologie, concevoir l'architecture, générer",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans lequel de ces cas le vibe coding est-il le plus approprié ?",
+    "feedback": "Explorer et comparer des options à faible coût est son terrain de prédilection. Les trois autres cas impliquent production, données sensibles ou performance critique.",
+    "options": [
+     [
+      "Produire trois variantes d'un parcours pour un atelier avec le métier",
+      true
+     ],
+     [
+      "Modifier le calcul des frais d'une application en production",
+      false
+     ],
+     [
+      "Gérer des données de santé de patients réels",
+      false
+     ],
+     [
+      "Optimiser le temps de réponse d'un service très sollicité",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles situations rendent le vibe coding mal adapté ?",
+    "feedback": "Production, logique complexe et enjeux légaux ou de sécurité sont des limites. Prototyper et comparer sont au contraire des usages typiques.",
+    "options": [
+     [
+      "Le produit est déjà en production",
+      true
+     ],
+     [
+      "La logique métier est complexe",
+      true
+     ],
+     [
+      "Il y a des enjeux légaux ou de sécurité",
+      true
+     ],
+     [
+      "Il faut créer un prototype cliquable pour un test utilisateur",
+      false
+     ],
+     [
+      "Il faut comparer plusieurs options d'interface",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que change le vibe coding pour les rôles d'une équipe produit ?",
+    "feedback": "Le vibe coding ne remplace personne : il enlève des tâches lentes et du flou. Chaque rôle garde ce qui compte vraiment.",
+    "options": [
+     [
+      "Il change la vitesse et la clarté, pas les responsabilités",
+      true
+     ],
+     [
+      "Il supprime le besoin de développeurs",
+      false
+     ],
+     [
+      "Il transfère toute la décision à l'IA",
+      false
+     ],
+     [
+      "Il rend le testeur inutile",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quand un résultat généré est décevant, quelle cause est souvent à examiner en premier ?",
+    "feedback": "Un mauvais résultat vient souvent d'un cadrage flou : l'IA devine quand le brief ne précise ni objectif ni règles.",
+    "options": [
+     [
+      "Un cadrage insuffisant dans le prompt",
+      true
+     ],
+     [
+      "Un mauvais choix de couleur de l'interface",
+      false
+     ],
+     [
+      "Un navigateur trop ancien",
+      false
+     ],
+     [
+      "Un nom de projet mal choisi",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que garde principalement le développeur à l'ère du vibe coding ?",
+    "feedback": "Le développeur reste responsable de l'architecture, de la qualité et de la gestion de la dette technique.",
+    "options": [
+     [
+      "L'architecture, la qualité du code et la dette technique",
+      true
+     ],
+     [
+      "La rédaction des spécifications fonctionnelles",
+      false
+     ],
+     [
+      "La décision finale de lancement",
+      false
+     ],
+     [
+      "L'animation des ateliers métier",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Que fait l'IA plutôt bien dans ce contexte ?",
+    "feedback": "Génération rapide, variantes et base fonctionnelle sont ses points forts. Juger la valeur métier et prioriser restent humains.",
+    "options": [
+     [
+      "Générer vite une première version",
+      true
+     ],
+     [
+      "Proposer des variantes",
+      true
+     ],
+     [
+      "Créer une base fonctionnelle",
+      true
+     ],
+     [
+      "Juger la valeur métier d'une fonction",
+      false
+     ],
+     [
+      "Prioriser le backlog à la place du chef de produit",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que signifie la formule « l'IA est rapide, elle n'est pas responsable » ?",
+    "feedback": "La rapidité n'engage pas la responsabilité : les choix, les erreurs et leurs conséquences restent du côté des humains.",
+    "options": [
+     [
+      "On gagne du temps, mais la responsabilité des choix reste humaine",
+      true
+     ],
+     [
+      "L'IA ne peut jamais produire de code correct",
+      false
+     ],
+     [
+      "Il faut éviter d'utiliser l'IA en entreprise",
+      false
+     ],
+     [
+      "L'IA est toujours plus lente qu'un développeur",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels éléments composent un bon prompt produit ?",
+    "feedback": "Un prompt est un mini brief : objectif, utilisateurs, fonctions, règles, contraintes. Les adjectifs vagues ne remplacent pas ces éléments.",
+    "options": [
+     [
+      "L'objectif de l'application",
+      true
+     ],
+     [
+      "Les utilisateurs visés",
+      true
+     ],
+     [
+      "Les fonctions attendues",
+      true
+     ],
+     [
+      "Les règles et contraintes",
+      true
+     ],
+     [
+      "Une description purement esthétique (« moderne et sympa »)",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel prompt est le plus efficace ?",
+    "feedback": "Le premier précise utilisateur, authentification, actions et contrainte de design. Les autres laissent l'IA deviner.",
+    "options": [
+     [
+      "« Application de gestion de tâches pour freelances. Connexion par e-mail. Créer, modifier, terminer une tâche. Interface mobile d'abord. »",
+      true
+     ],
+     [
+      "« Je veux une app sympa pour gérer des tâches. »",
+      false
+     ],
+     [
+      "« Fais-moi une belle application. »",
+      false
+     ],
+     [
+      "« Une app, comme les autres, mais mieux. »",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi vaut-il mieux demander une modification à la fois ?",
+    "feedback": "En isolant les changements, on identifie la cause d'une régression et on peut revenir en arrière plus simplement.",
+    "options": [
+     [
+      "Pour savoir d'où vient un problème si quelque chose casse",
+      true
+     ],
+     [
+      "Parce que l'outil refuse plusieurs demandes",
+      false
+     ],
+     [
+      "Parce que cela coûte toujours moins cher",
+      false
+     ],
+     [
+      "Parce que l'aperçu ne peut afficher qu'un changement",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Comment décrire utilement un bogue à l'outil ?",
+    "feedback": "Décrivez ce que vous voyez et ce que vous attendiez : l'outil dispose alors d'un cadre précis pour diagnostiquer.",
+    "options": [
+     [
+      "Le symptôme observé, l'étape précédente et le résultat attendu",
+      true
+     ],
+     [
+      "Une cause technique supposée, sans contexte",
+      false
+     ],
+     [
+      "Seulement « ça ne marche pas »",
+      false
+     ],
+     [
+      "Une liste de dix autres améliorations à faire en même temps",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels sont des signes de « dérive » d'un prototype ?",
+    "feedback": "La dérive survient quand on empile des changements sans relire l'objectif. Un parcours principal démontrable est plutôt un bon signe.",
+    "options": [
+     [
+      "Des fonctions que personne n'a demandées s'accumulent",
+      true
+     ],
+     [
+      "Il s'éloigne de la question posée au départ",
+      true
+     ],
+     [
+      "Les corrections s'empilent sans retour à un état stable",
+      true
+     ],
+     [
+      "Le parcours principal est démontrable de bout en bout",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est le rôle d'une règle formulée dans le prompt, comme « pas de réservation en double » ?",
+    "feedback": "Une règle écrite n'est pas forcément correctement appliquée. Il faut tester les cas qui devraient échouer.",
+    "options": [
+     [
+      "Elle doit être vérifiée en essayant de la violer",
+      true
+     ],
+     [
+      "Elle est garantie dès qu'elle est écrite",
+      false
+     ],
+     [
+      "Elle n'a aucun effet sur le résultat",
+      false
+     ],
+     [
+      "Elle remplace les tests",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle est la différence entre low-code et no-code ?",
+    "feedback": "Le low-code assemble des blocs avec un peu de code possible ; le no-code s'en passe totalement.",
+    "options": [
+     [
+      "Le low-code autorise un peu de code, le no-code non",
+      true
+     ],
+     [
+      "Le no-code exige des compétences avancées en programmation",
+      false
+     ],
+     [
+      "Le low-code n'existe plus depuis l'IA",
+      false
+     ],
+     [
+      "Il n'y en a aucune",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "D'après les supports, quelle pile technique est associée à Lovable, à la date de rédaction ?",
+    "feedback": "La présentation cite React avec Vite et Tailwind CSS côté client, et Supabase pour base de données, authentification et fonctions serverless. Les outils évoluent : vérifiez.",
+    "options": [
+     [
+      "React, Vite, Tailwind CSS pour le frontend et Supabase pour le backend",
+      true
+     ],
+     [
+      "Uniquement des feuilles de calcul",
+      false
+     ],
+     [
+      "Un système propriétaire sans code",
+      false
+     ],
+     [
+      "Java pour le frontend et Oracle pour la base",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel inconvénient pratique le système de crédits peut-il entraîner ?",
+    "feedback": "Chaque itération peut consommer des crédits, d'où l'intérêt de prompts bien formulés.",
+    "options": [
+     [
+      "Limiter le nombre d'itérations possibles",
+      true
+     ],
+     [
+      "Interdire tout déploiement",
+      false
+     ],
+     [
+      "Empêcher d'utiliser GitHub",
+      false
+     ],
+     [
+      "Supprimer le prototype à chaque modification",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels critères aident à choisir un outil de génération d'applications ?",
+    "feedback": "Livrable, reprise du code, coût et sécurité sont déterminants. L'identité visuelle de l'outil n'est pas un critère.",
+    "options": [
+     [
+      "Le type de livrable attendu",
+      true
+     ],
+     [
+      "La possibilité d'exporter ou de versionner le code",
+      true
+     ],
+     [
+      "Le modèle de tarification",
+      true
+     ],
+     [
+      "Les contraintes de données et de sécurité",
+      true
+     ],
+     [
+      "La couleur du logo de l'outil",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle donnée peut-on saisir sans risque particulier dans un prototype d'atelier ?",
+    "feedback": "On n'utilise que des données fictives : on ne maîtrise pas toujours où elles sont stockées ni qui y accède.",
+    "options": [
+     [
+      "Des données fictives inventées",
+      true
+     ],
+     [
+      "La liste réelle des clients",
+      false
+     ],
+     [
+      "Des documents internes confidentiels",
+      false
+     ],
+     [
+      "Les clés d'accès de production",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que doit-on faire des clés d'API lors d'un atelier ?",
+    "feedback": "Les clés sont des secrets : clés de test, gestion de secrets de la plateforme, révocation en fin d'atelier.",
+    "options": [
+     [
+      "Utiliser des clés de test et ne jamais les coller dans un prompt",
+      true
+     ],
+     [
+      "Les partager dans le chat pour que l'outil les mémorise",
+      false
+     ],
+     [
+      "Les publier dans un dépôt public pour les retrouver",
+      false
+     ],
+     [
+      "Utiliser des clés de production pour plus de réalisme",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que révèle un test avec deux comptes dont le second voit les données du premier ?",
+    "feedback": "Chaque utilisateur ne doit voir que ses données : sinon, le contrôle d'accès est défaillant et le prototype ne doit pas être utilisé avec des données réelles.",
+    "options": [
+     [
+      "Un problème de contrôle d'accès à signaler aux développeurs",
+      true
+     ],
+     [
+      "Un comportement normal d'un prototype",
+      false
+     ],
+     [
+      "Une fonctionnalité de partage réussie",
+      false
+     ],
+     [
+      "Un bogue d'affichage sans importance",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est l'intérêt de connecter un dépôt GitHub à un prototype ?",
+    "feedback": "Le versionnage garde l'historique et rend le prototype transmissible aux développeurs, sans garantir sa qualité ni sa sécurité.",
+    "options": [
+     [
+      "Conserver l'historique et permettre de modifier le code hors de l'outil",
+      true
+     ],
+     [
+      "Rendre l'application automatiquement sécurisée",
+      false
+     ],
+     [
+      "Supprimer le besoin de tests",
+      false
+     ],
+     [
+      "Doubler le nombre de crédits",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Comment mener un test utilisateur express ?",
+    "feedback": "Observer sans aider révèle les blocages réels. Les testeurs doivent ressembler à l'utilisateur cible.",
+    "options": [
+     [
+      "Donner une tâche à accomplir et observer sans aider",
+      true
+     ],
+     [
+      "Expliquer chaque écran avant le test",
+      false
+     ],
+     [
+      "Demander aux testeurs de lire le code",
+      false
+     ],
+     [
+      "Ne tester qu'avec des personnes de l'équipe projet",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Que doit contenir un dossier de passage vers l'équipe technique ?",
+    "feedback": "Le dossier présente intention, parcours, règles, écarts et tests. Un prototype n'est pas, par nature, prêt pour la production.",
+    "options": [
+     [
+      "L'intention et la décision visée",
+      true
+     ],
+     [
+      "Les parcours et règles métier",
+      true
+     ],
+     [
+      "La liste de ce qui est factice ou douteux",
+      true
+     ],
+     [
+      "Les résultats des tests",
+      true
+     ],
+     [
+      "Une promesse que le code est prêt pour la production",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi ne faut-il pas déduire d'un prototype généré en quelques minutes le temps nécessaire pour un vrai produit ?",
+    "feedback": "La rapidité de génération ne reflète ni la sécurité, ni l'architecture, ni les tests, ni l'exploitation d'un produit réel.",
+    "options": [
+     [
+      "Parce que sécurité, architecture et qualité demandent un travail distinct",
+      true
+     ],
+     [
+      "Parce que les développeurs travaillent toujours plus lentement",
+      false
+     ],
+     [
+      "Parce que le prototype n'a pas d'interface",
+      false
+     ],
+     [
+      "Parce que l'IA ne génère jamais de code utile",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Décrivez en quelques lignes une idée de produit que vous souhaiteriez tester par vibe coding : la décision à éclairer, le prompt initial (objectif, utilisateurs, fonctions, règles, contraintes) et le critère qui vous dirait que l'idée mérite d'aller plus loin.",
+    "feedback": "Une bonne réponse nomme une décision précise, un prompt structuré avec des règles vérifiables et un critère de réussite observable, et précise ce qui restera factice.",
+    "options": []
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Un collègue veut mettre en ligne tel quel un prototype généré par IA, avec les données réelles de clients. Quels arguments et quelles vérifications lui opposez-vous ?",
+    "feedback": "Attendus : le prototype n'est pas sécurisé par nature, les données doivent être fictives, il faut tester l'isolation des comptes, protéger les clés, consulter la politique de l'organisation et passer par l'équipe technique avant toute production.",
+    "options": []
+   }
+  ]
+ },
+ "assignment": {
+  "title": "Livrable pratique : un prototype testé et son dossier de décision",
+  "instructions_md": "## Objectif\n\nDémontrer que vous savez **cadrer, générer, tester et évaluer** un prototype d'application avec un outil de génération par IA, puis **transmettre** le résultat à une équipe produit ou technique. Aucune donnée confidentielle n'est nécessaire : utilisez un sujet fictif ou public.\n\n## Consignes\n\n1. **Cadrage (une demi-page)** : la décision à éclairer, l'utilisateur cible, le parcours principal (3 à 5 actions), trois règles à vérifier et un critère de réussite.\n2. **Prompt initial** : rédigez-le avec les cinq éléments (objectif, utilisateurs, fonctions, règles, contraintes). Joignez-le tel quel.\n3. **Génération et itérations** : réalisez le prototype avec l'outil de votre choix (offre gratuite ou publique). Faites **au moins trois itérations** et tenez un **journal** : prompt, résultat attendu, résultat obtenu, enseignement.\n4. **Tests** : testez les trois règles en essayant de les violer, ainsi que deux cas limites de votre choix. Si l'application gère des comptes, testez l'isolation des données avec deux comptes de test.\n5. **Test utilisateur** : observez au moins **deux personnes** réalisant le parcours sans aide ; consignez blocages et citations marquantes.\n6. **Dossier de décision (une à deux pages)** :\n   - ce que vous avez appris et la **recommandation** (continuer, pivoter, arrêter) ;\n   - ce qui est **factice ou non vérifié** dans le prototype ;\n   - **trois risques** (sécurité, données, maintenabilité, dépendance à l'outil, coûts) ;\n   - le **dossier de passage** à l'équipe technique en cinq lignes.\n7. Précisez l'outil utilisé et si vous avez atteint une limite (crédits, fonctions). Aucune capture d'écran n'est exigée : une description écrite suffit, ou un lien de partage si votre prototype ne contient que des données fictives.\n\n## Grille d'évaluation\n\n- Qualité du cadrage et du prompt initial : clarté, règles vérifiables, périmètre réaliste (**25 %**).\n- Démarche d'itération et journal : modifications ciblées, enseignements tirés (**20 %**).\n- Qualité des tests : règles violées volontairement, cas limites, test utilisateur observé (**25 %**).\n- Dossier de décision : recommandation argumentée, distinction entre réel et factice, risques pertinents (**20 %**).\n- Respect des règles d'usage : données fictives, aucune clé exposée, mention du caractère prototype (**10 %**).\n\n## Rendu\n\nTexte dans le champ de réponse et/ou un fichier PDF ou document. Si vous partagez un lien, vérifiez qu'il ne donne accès à aucune donnée réelle."
+ }
+}

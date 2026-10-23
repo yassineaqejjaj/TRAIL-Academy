@@ -1,0 +1,718 @@
+{
+ "course": "M16",
+ "slug": "ai-adoption-change",
+ "source": "Slides du formateur (module 16 : adoption de l'IA et conduite du changement), réécrits et complétés. Pas de vidéo : à ajouter depuis l'administration.",
+ "chapters": [
+  {
+   "title": "Du déploiement à l'adoption",
+   "lessons": [
+    {
+     "title": "Déployer un outil n'est pas changer une façon de travailler",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Distinguer la **mise à disposition** d'un outil et le **changement de pratique** qu'il est censé produire.\n- Comprendre pourquoi l'effort d'accompagnement fait partie du produit.\n\n## Le fil rouge du module\n\nTout au long du module, nous suivons une équipe de support client qui veut préparer ses réponses avec l'IA. L'outil est choisi, les accès sont donnés, une première session de présentation a eu lieu. Quelques semaines plus tard, certains conseillers l'utilisent chaque jour, d'autres ont arrêté. Qu'est-ce qui explique l'écart ?\n\n## Trois dimensions à relier\n\nUne adoption réussie articule la **technique** (modèle, connexions, interface), les **processus** (où la tâche commence, qui valide, qui reprend la main) et les **personnes** (compétences, confiance, intérêt personnel). Une réponse correcte produite par un modèle doit encore trouver sa place dans le travail, être comprise, vérifiée, puis utilisée au bon moment.\n\n## Des chiffres à manier avec prudence\n\nOn entend souvent qu'une très grande majorité des projets d'IA échouent, ou qu'il faudrait répartir l'effort selon un repère du type « 10 % algorithmes, 20 % technique et données, 70 % personnes et processus ». Retenez-les comme des **estimations ou des repères de réflexion**, pas comme des lois : ils ne disent pas que 70 % des échecs ont une cause humaine, ni comment construire votre budget. Leur message utile : on sous-investit souvent dans l'accompagnement.\n\n## Pourquoi l'IA générative ajoute une difficulté\n\nTout déploiement logiciel demande un accompagnement humain. Avec l'IA générative, une réponse **plausible peut être fausse**. La vérification devient donc une compétence à part entière, à intégrer dans la tâche.\n\n## Exemple\n\nUn bon modèle, relié à la base documentaire, avec une interface rapide : si les conseillers doivent recopier les tickets, ignorent qui assume une mauvaise réponse, et que leur manager exige de travailler exactement comme avant, l'usage restera fragile.\n\n## Piège fréquent\n\nConsidérer le projet terminé le jour où les connexions fonctionnent. Pour l'utilisateur, le vrai travail commence à ce moment.\n\n## Mise en pratique\n\nSur un projet récent, qui était responsable du **premier mois d'usage réel** ? « Toute l'équipe » sans noms ni disponibilité n'est pas une réponse : visez un responsable métier, un responsable produit, un relais technique et du temps prévu."
+    },
+    {
+     "title": "Les niveaux d'adoption : accès, activation, usage, pratique durable",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Distinguer quatre niveaux d'adoption et définir un événement observable pour chacun.\n- Calculer des taux en nommant toujours le dénominateur.\n\n## Les quatre niveaux\n\n1. **Accès** : la personne a une licence et peut ouvrir l'outil. C'est un prérequis, rien de plus.\n2. **Activation** : elle a essayé au moins une fois. Cela peut rester une curiosité.\n3. **Usage sur une vraie tâche** : par exemple, un conseiller prépare un brouillon de réponse avec l'IA. Un gain, même modeste par tâche, peut compter beaucoup si la tâche est répétée des centaines de fois.\n4. **Pratique durable** : la personne sait quand utiliser l'outil, comment vérifier la proposition et comment reprendre la main ; l'équipe a intégré cette façon de travailler ; on mesure qualité et temps total.\n\nL'objectif n'est **pas** de mettre de l'IA partout : certaines tâches doivent garder leur fonctionnement actuel. On cherche un usage régulier là où l'IA aide réellement.\n\n## Définir un événement observable\n\nPour chaque niveau : un accès accordé ; une première tâche terminée ; un usage utile dans la semaine ; un processus répété sur plusieurs semaines. Sans définition écrite, deux équipes annoncent le même « taux d'adoption » en mesurant des choses différentes.\n\n## Exemple chiffré (données fictives)\n\nSur 100 personnes équipées : 80 ont essayé, 40 utilisent l'outil chaque semaine, 25 l'ont intégré à un processus défini depuis quatre semaines.\n\n- Activation : 80 / 100 = 80 %.\n- Usage hebdomadaire : 40 / 100 = 40 %.\n- Adoption selon la définition à quatre semaines : 25 / 100 = 25 %.\n- Parmi les utilisateurs hebdomadaires : 25 / 40 = 62,5 %.\n\nTous ces pourcentages sont justes ; ils répondent à des questions différentes. **Nommez toujours le dénominateur.**\n\n## Point d'attention\n\nUn usage régulier ne suffit pas : il doit être relié à une qualité acceptable et à une valeur mesurée.\n\n## Mise en pratique\n\nPour une tâche que vous connaissez, écrivez en une phrase l'événement observable de chacun des quatre niveaux."
+    },
+    {
+     "title": "Choisir le premier cas d'usage : impact et faisabilité",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Prioriser un premier cas avec deux axes : effet sur le travail et facilité de mise en place.\n- Repérer ce que la matrice ne montre pas : le risque.\n\n## Les deux axes\n\n- **Effet sur le travail** : volume, temps passé, erreurs évitées, rapidité du service.\n- **Faisabilité** : données disponibles, accès aux bons documents, qualité des réponses, intégration aux outils existants. Une démonstration réussie sur un exemple ne prouve pas la faisabilité.\n\nQuatre zones en résultent : haut-droite, cas utile et abordable (à viser en premier) ; bas-droite, tâches faciles à essayer qui font apprendre (résumé de réunion), à l'impact global à mesurer ; bas-gauche, coût de mise en place supérieur au bénéfice ; haut-gauche, fort effet mais difficile à construire.\n\n## Une limite importante : le risque est hors du dessin\n\nUn cas bien placé peut rester **sensible**. Examinez séparément les conséquences d'une erreur, les données utilisées et la possibilité de revenir en arrière. Difficile techniquement ne veut pas dire dangereux, et inversement.\n\n## Quand l'IA n'est pas le bon outil\n\nPour additionner des montants ou appliquer une règle exacte, utilisez un calcul ou un moteur de règles. L'IA peut aider à lire la demande ou à expliquer le résultat ; l'outil adapté fait le calcul.\n\n## Exercice de classement\n\n1. Préparer une réponse à une question fréquente, avec validation humaine : candidat prioritaire si sources, droits et qualité le permettent.\n2. Résumer une réunion interne : gain rapide possible, après accord sur les données et vérification.\n3. Calculer un total de factures : calcul déterministe ; l'IA prépare, un calcul fiable produit le total.\n4. Décider seul de bloquer un compte client : conséquences importantes ; pas d'autonomie dans un premier pilote, circuit de décision humain.\n\nD'autres placements sont acceptables si les hypothèses sont explicitées.\n\n## Mise en pratique\n\nPlacez trois tâches de votre contexte sur la matrice et, pour chacune, notez : données, erreur possible, validation."
+    }
+   ]
+  },
+  {
+   "title": "Lever les freins et piloter",
+   "lessons": [
+    {
+     "title": "Comprendre les réticences et le Shadow AI",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Transformer un « ça se trompe tout le temps » en situation observable.\n- Comprendre le Shadow AI et y répondre autrement que par l'interdiction.\n\n## Écouter avant de répondre\n\nDerrière une critique, il peut y avoir une vraie erreur, une mauvaise source ou une tâche mal adaptée : il faut la traiter. Il peut aussi y avoir une inquiétude : perdre de l'autonomie, voir son expertise moins reconnue, faire plus de travail sans aide. Le modèle de l'iceberg invite à écouter ces sujets ; il ne permet pas de **deviner** ce que pense une personne.\n\nDeux questions utiles : « Montrez-moi la dernière situation où l'outil vous a ralenti. » Puis : « Qu'est-ce qui devrait changer pour que vous l'utilisiez en confiance ? » On passe du jugement général à un cas précis.\n\n## Le Shadow AI\n\nLe terme désigne les usages d'IA qui **échappent au cadre prévu** par l'organisation. Causes possibles : l'outil approuvé répond mal aux besoins, les règles sont trop difficiles à comprendre, ou les personnes ne savent pas quelles solutions existent. Un outil public n'est pas automatiquement dangereux : le risque dépend des **données transmises**, des conditions d'utilisation et des contrôles prévus.\n\n## La règle doit tenir en une phrase\n\nQuel outil est approuvé, pour quelles données, et à qui demander de l'aide si le besoin n'est pas couvert ? Une interdiction seule ne règle pas le problème de travail ; proposez une solution autorisée et corrigez vite les blocages.\n\n## Jeu de rôle\n\nLe conseiller : « Je ne vais pas passer plus de temps à corriger un robot. Et mes données clients, elles partent où ? » Une réponse solide : reconnaître la question ; proposer un ticket de test où l'on mesure le temps complet, vérification comprise ; montrer la règle validée pour le pilote et les champs à retirer ; garder la validation avant envoi ; fixer un retour et une décision à date précise.\n\n## À éviter\n\nPromettre une sécurité absolue, une précision parfaite ou l'absence de tout changement sur les postes.\n\n## Mise en pratique\n\nRédigez votre réponse en cinq étapes : reprendre sans minimiser, demander un cas, montrer la règle, définir un test, fixer une date."
+    },
+    {
+     "title": "Cadrer un pilote : hypothèse, bac à sable, mode parallèle, usage contrôlé",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Écrire un pilote qui conduit à une décision : poursuivre, corriger ou arrêter.\n- Enchaîner bac à sable, observation en parallèle et usage contrôlé.\n\n## Commencer par l'hypothèse\n\nExemple : « Préparer une réponse à partir de sources approuvées réduit le temps de traitement, vérification comprise, sans baisser la qualité attendue. »\n\n## Trois phases possibles\n\n1. **Bac à sable** : tickets fictifs ou données autorisées pour le test ; on vérifie accès, sources et comportement quand l'outil ne trouve pas la réponse.\n2. **Observation en parallèle** : l'IA propose pendant que le processus habituel continue, sans déclencher d'action. Attention : faire deux fois la tâche alourdit la charge ; distinguez ce coût temporaire du temps du processus cible.\n3. **Usage contrôlé** avec validation humaine : on compare des tickets de difficulté comparable et on mesure le parcours complet, de la lecture à la validation finale, reprises incluses.\n\n## Qui, combien de temps\n\nÀ titre d'exemple de cadrage : 10 conseillers sur une équipe de 50, quatre semaines. Choisissez des profils variés, des horaires différents et quelques personnes aux réserves argumentées : elles aident à voir ce qui ne marche pas. Prévoyez un responsable métier, un responsable produit, un contact technique, une règle de retour au processus habituel et des **conditions d'arrêt** (erreur grave, accès inadapté à des données, dégradation de la qualité).\n\n## Fiche de cadrage en six lignes\n\nHypothèse, périmètre, participants, durée avec mesure initiale, validation (qui décide de l'envoi), décision (poursuivre, ajuster, arrêter à la revue finale).\n\n## Questions à faire formuler\n\nQui valide ? Quels tickets exclure ? Que fait-on quand la source manque ? Où signale-t-on une erreur ? Une simple liste de participants ne cadre pas un pilote.\n\n## Mise en pratique\n\nRédigez la fiche en six lignes pour votre cas, puis ajoutez trois conditions d'arrêt."
+    },
+    {
+     "title": "Les ambassadeurs : des relais crédibles dans les équipes",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Comprendre le rôle d'un ambassadeur IA.\n- Choisir et soutenir des relais selon les bons critères.\n\n## Le rôle\n\nUne fonction de recherche documentaire présentée en démonstration reste abstraite. Un collègue qui montre comment il retrouve la bonne procédure sur un ticket que vous traitez chaque semaine rend l'usage **compréhensible et reproductible**. L'ambassadeur montre un cas réel, explique comment il contrôle le résultat et fait remonter les problèmes.\n\n## Critères de choix\n\nNe choisissez pas seulement les plus gros utilisateurs. Cherchez : connaissance du métier, confiance des collègues, disponibilité, patience, capacité à reconnaître les limites de l'outil. Un profil très à l'aise techniquement mais peu disponible ne remplira pas forcément ce rôle ; il peut en revanche servir d'appui technique.\n\n## Combien\n\nCela dépend de la taille de l'équipe, des horaires et du temps accordé. Pour une équipe de 50, deux ambassadeurs peuvent suffire au départ.\n\n## Le rôle de la hiérarchie\n\nL'aide entre pairs complète le cadre, elle ne le remplace pas : direction et managers donnent le temps, arbitrent les priorités et traitent les difficultés.\n\n## Conditions de réussite\n\nUn créneau reconnu dans la charge, des permanences courtes, un rendez-vous régulier avec l'équipe produit. Reconnaissez aussi les **erreurs détectées** : si seules les réussites sont valorisées, les problèmes disparaissent des remontées.\n\n## Exercice de choix\n\nProfil A : expert technique enthousiaste, peu disponible, peu lié au métier. Profil B : conseillère expérimentée, écoutée, prudente, volontaire pour tester. Profil C : conseiller récent, pédagogue, qui documente ses essais. B et C forment un bon binôme si leurs managers dégagent du temps ; A peut apporter un appui technique.\n\n## Mise en pratique\n\nNommez deux ambassadeurs (ou deux rôles) pour votre cas et notez pour chacun : disponibilité, confiance, pédagogie, retour critique."
+    }
+   ]
+  },
+  {
+   "title": "Former, répartir le travail, mesurer",
+   "lessons": [
+    {
+     "title": "Former par la pratique : prompts, jugement, retour immédiat",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Concevoir une formation ancrée dans une tâche réelle.\n- Intégrer la compétence de vérification.\n\n## Partir de la tâche\n\nUne formation utile commence par ce que la personne doit accomplir : préparer une réponse client, puis vérifier qu'elle suit la procédure en vigueur. Les fonctions de l'outil s'expliquent pendant l'exercice.\n\n## Trois piliers\n\n1. **Bibliothèque de consignes** : elle aide à démarrer si elle précise contexte, sources et format attendu, et dit quoi faire quand une information manque. Chaque modèle a un responsable et une date de révision.\n2. **Jugement** : une réponse fluide peut être inexacte. On apprend à retrouver la source, vérifier une affirmation et repérer une promesse que l'organisation n'a jamais faite.\n3. **Pratique avec retour immédiat** : la personne essaie, explique son contrôle, puis refait la tâche avec moins d'aide. On évalue sa capacité à travailler, pas sa présence.\n\n## Sur les promesses chiffrées\n\nLes gains annoncés (par exemple passer de deux heures à quelques minutes) sont des ambitions. Ils se mesurent sur le travail complet. De même, une répartition 70 % pratique, 20 % échanges, 10 % théorie est un choix de format, pas une loi scientifique.\n\n## Démonstration guidée (données fictives)\n\nMessage client : accès au compte perdu après un changement de téléphone. Procédure fictive : vérifier l'identité par le canal approuvé, ne jamais demander de mot de passe, orienter vers le portail officiel, transmettre au niveau 2 si la vérification échoue, aucun délai garanti.\n\nConsigne à copier dans un outil autorisé :\n\n```\nPrépare un brouillon de réponse de moins de 90 mots au message client, uniquement à partir de la procédure fournie. Ne demande aucun secret, ne promets aucun délai, n'invente pas de lien. Si une information manque, indique-la séparément pour le conseiller.\n```\n\nCritères de qualité attendus : pas de secret demandé, pas de délai, pas de lien inventé, manque signalé à part. Une sortie en direct peut varier : on juge les **critères**, pas le texte exact.\n\n## Exercice de contrôle\n\nMauvais brouillon : « Envoyez votre mot de passe et nous réinitialiserons votre compte sous une heure. » Défauts : demande de secret, délai inventé, vérification d'identité absente. Reprenez phrase par phrase : garder, corriger ou supprimer, en justifiant par la procédure."
+    },
+    {
+     "title": "Répartir le travail entre l'IA et l'humain",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Écrire qui fait quoi quand l'IA prépare le premier jet.\n- Anticiper les effets sur les juniors, le bénéfice personnel et le retour d'expérience.\n\n## Le temps se déplace\n\nOn passe moins de temps devant la page vide et davantage à **cadrer la demande, vérifier les faits et décider** de ce qui est utilisable. Cela exige de la compétence métier. Le cycle : proposition de l'IA, révision humaine, retour sur ce qui a fonctionné.\n\n## « Humain dans la boucle » ne suffit pas\n\nCette mention reste vague si personne ne sait quoi vérifier ni quand. Écrivez : qui contrôle les faits, qui peut envoyer, qui reprend la main si le cas sort du périmètre.\n\n## Les juniors\n\nPrévoyez des moments où ils expliquent leur raisonnement et réalisent certaines tâches sans assistance. Sinon ils risquent d'approuver un texte sans avoir appris à repérer l'erreur. Demandez-leur de justifier chaque correction par une source.\n\n## Le bénéfice personnel\n\nChacun veut savoir ce qu'il fera du temps gagné : traiter les cas complexes avec plus de disponibilité, réduire les recherches répétitives. Cette décision relève du manager. Ne promettez pas à la place de la direction qu'aucun poste ne changera : dites ce qui est décidé et ce qui reste à discuter.\n\n## Le retour utilisateur\n\nIl ne réentraîne pas automatiquement le modèle. Selon le système, il peut corriger la documentation, les consignes, l'interface ou les tests. Il faut un **responsable** qui transforme chaque signalement en changement.\n\n## Exercice\n\nL'IA propose une réponse avec un geste commercial. Qui décide, qui vérifie la règle, qui envoie ? Réponse type : l'IA prépare un brouillon ; le conseiller vérifie sources et règles dans sa délégation ; un rôle habilité décide si le geste dépasse cette délégation ; le conseiller envoie après validations ; l'équipe produit analyse le signalement. Une responsabilité nommée à chaque étape, plus une solution pour les exceptions."
+    },
+    {
+     "title": "Choisir des indicateurs qui reflètent le travail réel",
+     "kind": "exercise",
+     "body_md": "## Objectifs\n\n- Passer des indicateurs de mise à disposition aux indicateurs de tâche.\n- Calculer usage, gain de temps, capacité récupérée et taux de correction.\n\n## Ce que les chiffres de déploiement disent (et ne disent pas)\n\nLicences, connexions et heures de formation indiquent ce qui a été mis à disposition, pas si le travail s'améliore.\n\n## Indicateurs proches de la tâche\n\n- **Utilisateurs actifs hebdomadaires** : définissez une activité utile (un ticket éligible traité avec une proposition de l'IA réellement examinée), pas une simple ouverture de l'outil.\n- **Temps par tâche** : le temps « après » doit inclure relecture, corrections et validation, sur des cas de difficulté comparable, avec suivi des erreurs et reprises après envoi.\n- **Taux de correction (override)** : distinguez retouche de ton, correction factuelle et rejet complet. Un taux très bas peut traduire de bonnes propositions ou une validation trop rapide ; un taux élevé, des utilisateurs attentifs ou des cas complexes. Lisez-le avec un contrôle qualité sur échantillon.\n- **Processus transformés** : pour chacun, volume réellement traité et résultat obtenu.\n\n## Exercice chiffré (données fictives)\n\n50 conseillers éligibles, 35 actifs dans la semaine, 1 000 tickets effectivement assistés dans le mois, 18 minutes avant et 7 minutes après (contrôle compris), 200 propositions corrigées.\n\n- Usage hebdomadaire : 35 / 50 = 70 %.\n- Gain par ticket : 18 - 7 = 11 minutes.\n- Réduction du temps : 11 / 18 = 61,1 %.\n- Capacité récupérée : 1 000 × 11 / 60 = 183,3 heures.\n- Taux de correction : 200 / 1 000 = 20 %.\n\n## Pièges\n\n- Les 183 heures sont de la **capacité estimée**, pas une économie en euros ni une réduction d'effectif.\n- Ne multipliez pas une seconde fois 1 000 par 70 % : ces tickets sont déjà ceux réellement assistés.\n- Ces calculs supposent des moyennes comparables ; suivez aussi la médiane et les temps longs.\n\n## Mise en pratique\n\nRefaites les calculs avec vos propres chiffres fictifs, en écrivant l'unité à chaque ligne."
+    },
+    {
+     "title": "Un tableau de bord qui aide à décider",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Composer un tableau de bord en quatre blocs.\n- Définir pour chaque indicateur une définition, une source, une fréquence, un responsable et un seuil d'action.\n\n## Quatre blocs complémentaires\n\n1. **Engagement et rétention** : combien de personnes réalisent une tâche utile, et reviennent-elles ? Pour la rétention, suivez le **même groupe** dans le temps ; deux totaux globaux peuvent masquer le départ des premiers utilisateurs compensé par l'arrivée de nouveaux.\n2. **Compréhension des difficultés** : retours courts (où le temps est-il perdu, à quelle étape a-t-on abandonné, quelle information manquait) et, avec accord, observation d'une tâche.\n3. **Résultat métier** : temps complet, volume réellement assisté, qualité contrôlée, reprises. Si vous convertissez des heures en équivalent temps plein, précisez la convention d'heures et l'usage réel de la capacité.\n4. **Usages admis, incidents, exceptions** : l'absence d'alerte ne prouve pas l'absence de problème ; vérifiez que l'on sait signaler et que quelqu'un traite.\n\n## Les cinq attributs d'un indicateur\n\nDéfinition, source, fréquence, responsable, seuil qui déclenche une action. Sans cela, on regarde les mêmes courbes chaque semaine sans rien changer.\n\n## Niveau de suivi\n\nPrivilégiez l'équipe et le type de tâche. Si des données individuelles sont nécessaires, leur objectif et leur accès doivent être clairs pour les personnes concernées.\n\n## Exercice de lecture\n\nUsage hebdomadaire à 70 %, temps moyen de 18 à 7 minutes, mais conformité sur échantillon passée de 95 % à 82 %. Étendez-vous ? Non : suspendez l'extension, analysez les réponses non conformes (sources, types de tickets, consigne, qualité du contrôle humain), puis restreignez le cas ou revenez au processus habituel. Un seuil comme 95 % est une hypothèse pédagogique à adapter au risque du métier ; une erreur grave peut imposer l'arrêt même si la moyenne est bonne.\n\n## Mise en pratique\n\nDessinez un tableau à quatre colonnes en texte : indicateur, résultat, seuil, action. Complétez-le pour la conformité de l'exemple, avec un responsable et une date de revue."
+    }
+   ]
+  },
+  {
+   "title": "Améliorer, apprendre des autres, planifier",
+   "lessons": [
+    {
+     "title": "La boucle d'amélioration continue",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Diagnostiquer un problème sur le parcours complet, pas sur le modèle seul.\n- Mettre en place une boucle d'amélioration avec versions et retour arrière.\n\n## Une première version est un point de départ\n\nEn usage réel, on découvre des cas manquants, des étapes trop longues, des règles mal comprises.\n\n## La boucle\n\n1. Version en usage.\n2. Signaux du tableau de bord et retours des équipes.\n3. **Audit de friction** : suivre le travail de près, quel écran la personne ouvre, ce qu'elle recopie, ce qu'elle vérifie, quand elle renonce.\n4. Classement des causes : source absente, réponse trop longue, délai, validation mal définie. Chaque cause appelle une correction différente.\n5. Correction, puis **rejeu de cas de test représentatifs** : qualité et temps complet avant de proposer la nouvelle version.\n6. Communication : les ambassadeurs montrent ce qui a changé ; on informe ceux qui avaient signalé le problème.\n\nGardez la **version** des consignes et des sources, et la possibilité de revenir à la précédente.\n\n## Quel rythme\n\nUn rythme trimestriel est un exemple pour un service installé. Pendant les premières semaines d'un pilote, prévoyez un point court chaque semaine et une prise en charge immédiate des incidents importants.\n\n## Cas de diagnostic (fictif)\n\n« Les conseillers disent perdre du temps ; la génération prend 5 secondes. » Que regarder ? Le temps pour ouvrir les outils, trouver le document, copier les informations, contrôler et remettre la proposition dans le ticket, ainsi que la fréquence des cas non couverts. Dans l'exemple, trois copier-coller et une recherche de source prennent huit minutes. Correction ciblée : accès direct aux sources ou intégration dans le ticket, dans le cadre prévu. Rejouez des cas comparables et décidez.\n\n## À retenir\n\nUn modèle plus rapide ne résout pas un problème situé autour de lui. Mesurez la tâche complète."
+    },
+    {
+     "title": "Lire un retour d'expérience publié avec esprit critique",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Extraire des mécanismes réutilisables d'un témoignage d'entreprise.\n- Ne pas confondre activité et valeur.\n\n## Un type de source à manier avec soin\n\nLes fournisseurs publient des retours d'expérience de clients : un concours de prompts pour repérer des utilisateurs avancés devenus relais, des permanences, un forum interne, des assistants créés par les équipes, un usage de résumé de contrats, une direction impliquée. Ces témoignages décrivent un contexte à une date donnée, ils sont rédigés par une partie intéressée et rapportent surtout des **données d'activité** (nombre d'assistants créés, volume de conversations, participants à un forum).\n\n## Ce que ces chiffres ne prouvent pas\n\n- Un grand nombre d'assistants peut contenir doublons et essais peu utilisés.\n- Un grand nombre de conversations peut refléter un usage utile ou un travail de correction.\n- Les participants à un forum ne sont pas les utilisateurs actifs de l'outil.\n- Des leviers regroupés en blocs ne démontrent ni phases successives, ni effet causal de chaque action.\n\n## Ce qu'il manque pour parler de valeur\n\nUne comparaison sur une tâche définie, le temps complet, la qualité, les coûts et les résultats réellement utilisés. Aucun nombre d'activité ne prouve seul la valeur métier.\n\n## Transposer des mécanismes, pas des résultats\n\nPrésentez vos adaptations comme **votre proposition**, pas comme des résultats de l'entreprise citée.\n\n- Relais internes : deux conseillers reconnus dans l'équipe.\n- Permanences : un créneau régulier avec cas et sources.\n- Partage : une fiche courte par usage réutilisable.\n- Direction : temps prévu et arbitrage des priorités.\n- Mesure : usage utile, temps total, qualité.\n\n## Mise en pratique\n\nChoisissez un témoignage publié par un éditeur ou une organisation. Listez cinq chiffres qu'il cite, puis, pour chacun, la donnée qu'il vous faudrait pour conclure sur la valeur."
+    },
+    {
+     "title": "Atelier : construire votre plan d'adoption sur une page",
+     "kind": "exercise",
+     "body_md": "## Objectifs\n\n- Remplir cinq zones avec des décisions assez concrètes pour organiser un pilote.\n\n## Consigne\n\nChoisissez une population précise et une tâche qu'elle réalise souvent (à défaut, l'équipe de support de 50 conseillers du module). Évitez « tous les collaborateurs ».\n\n## Les cinq zones et un exemple de réponse\n\n1. **Population cible** : conseillers de premier niveau traitant des questions fréquentes couvertes par une base de connaissances approuvée ; 10 participants sur 50, niveaux d'expérience et horaires variés.\n2. **Processus à améliorer** : de l'ouverture d'un ticket éligible à l'envoi d'une réponse validée (lecture, recherche des procédures, brouillon avec références, vérification, correction, envoi). Source absente ou doute : traitement habituel ou niveau 2. L'outil respecte les droits d'accès existants. Hors périmètre : litiges, gestes commerciaux hors délégation, cas sans source approuvée.\n3. **Bénéfice pour l'utilisateur**, à la première personne : « Je trouve plus facilement la bonne procédure et je prépare ma réponse plus vite, en gardant la décision d'envoyer. » Prévoyez un échange avec le manager sur l'usage du temps gagné ; pas de promesse non décidée.\n4. **Deux ambassadeurs** : une conseillère expérimentée aux réserves précises, un conseiller pédagogue ; par exemple une heure par semaine reconnue dans leur charge.\n5. **Trois indicateurs** avec définition, cible et mesure : usage utile hebdomadaire (au moins 7 participants sur 10 sur les deux dernières semaines), temps complet (12 minutes ou moins contre 18 de référence), qualité (au moins 95 % de conformité sur un échantillon défini avant le test, sans erreur grave).\n\nCes cibles servent l'exercice ; adaptez-les au risque du métier. Un incident grave ou une donnée transmise hors cadre déclenche une analyse et peut imposer l'arrêt même si les cibles sont atteintes. Ajoutez sous la fiche le responsable métier, le responsable produit et la date de décision.\n\n## Vérification sur données fictives\n\n8 participants actifs sur 10 : 80 %. Moyenne de 7 minutes : réduction de (18 - 7) / 18 = 61,1 %. Qualité : 97 / 100 = 97 %. Les trois cibles sont atteintes ; cent réponses contrôlées ne garantissent pas l'absence de défaut sur tous les cas futurs. Extrapolation : 1 000 tickets par mois à 11 minutes gagnées font 183,3 heures de capacité, une hypothèse après extension, pas un résultat observé.\n\n## Questions de relecture\n\n« Qui exactement ? Quelle tâche ? Qui valide ? Comment le saurez-vous ? » Si vous écrivez « nombre de licences », demandez-vous ce qui prouve une tâche terminée ; « 100 % de précision » demande une grille, un échantillon et une règle pour les erreurs graves."
+    },
+    {
+     "title": "Du pilote à l'extension : décider et suivre",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Relier préparation, lancement et extension.\n- Décider à partir de preuves.\n\n## Trois moments\n\n- **Préparation** : tâche et population précises, travail actuel décrit, données admises, responsabilités, mesure du succès convenue entre direction et métier.\n- **Lancement** : test sur un périmètre limité, ambassadeurs aux premières utilisations, consignes partagées, équipe produit qui traite les retours. Les **mesures de base** doivent exister avant le pilote : on prépare le suivi en amont.\n- **Extension** : résultats comparables, qualité acceptable, vérification que l'aide, les données et le support suivent la hausse de volume ; suivi régulier et revue des rôles quand la répartition du travail change.\n\nDes audits trimestriels peuvent convenir à un service installé ; pendant un pilote ou après un incident, adaptez le rythme.\n\n## Une checklist reliée à des preuves\n\nMesure initiale, liste des cas admis, personnes disponibles, grille de qualité, date de décision. Cocher « formation faite » ne dit pas si quelqu'un sait accomplir la tâche.\n\n## Exercice de décision\n\nA. Usage régulier, gain confirmé, qualité attendue, aide disponible, aucune alerte importante non traitée : extension progressive avec mêmes indicateurs et vérification sur les nouveaux cas.\nB. Usage fort et gain de temps, mais erreurs graves : suspendre l'extension, selon la gravité arrêter le périmètre concerné, traiter la cause, rejouer les tests.\nC. Bonne qualité mais peu d'usage car plusieurs copier-coller : améliorer le parcours avec les utilisateurs, puis mesurer à nouveau une tâche complète.\n\nPour chaque situation, écrivez : décision, raison, prochaine preuve attendue.\n\n## Votre prochaine action\n\nSur quelle tâche testerez-vous ce plan, avec qui, et à quelle date ? Écrivez ces trois éléments."
+    }
+   ]
+  }
+ ],
+ "quiz": {
+  "title": "Quiz du module",
+  "pass_percent": 70,
+  "max_attempts": null,
+  "questions": [
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle situation illustre le mieux la différence entre déploiement et adoption ?",
+    "feedback": "Le déploiement met l'outil à disposition ; l'adoption suppose un changement de pratique sur des tâches réelles, avec vérification et responsabilités claires.",
+    "options": [
+     [
+      "L'outil est accessible à tous mais la moitié des équipes ne s'en sert plus après quelques semaines",
+      true
+     ],
+     [
+      "L'outil a été acheté puis installé sur tous les postes",
+      false
+     ],
+     [
+      "Le fournisseur a livré la dernière version du modèle",
+      false
+     ],
+     [
+      "Une formation de présentation a été organisée",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Comment présenter un chiffre du type « plus de 80 % des projets d'IA échouent » ?",
+    "feedback": "C'est une estimation citée, pas un taux universel mesuré sur tous les projets. Son utilité est de rappeler l'importance de définir le succès et de mesurer après le lancement.",
+    "options": [
+     [
+      "Comme une loi s'appliquant à tous les projets",
+      false
+     ],
+     [
+      "Comme une estimation citée, à manier avec prudence",
+      true
+     ],
+     [
+      "Comme un chiffre à reprendre sans nuance dans un plan projet",
+      false
+     ],
+     [
+      "Comme la preuve que l'IA ne fonctionne pas en entreprise",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que représente un repère de répartition d'effort du type 10/20/70 ?",
+    "feedback": "C'est un repère pour vérifier qu'on investit assez dans les personnes et les processus. Il ne fournit pas une formule exacte pour chaque budget ni une cause des échecs.",
+    "options": [
+     [
+      "Une formule exacte à appliquer à tout budget IA",
+      false
+     ],
+     [
+      "La part des échecs due à des causes humaines",
+      false
+     ],
+     [
+      "Un repère de réflexion sur l'effort d'accompagnement",
+      true
+     ],
+     [
+      "Une norme réglementaire",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi la vérification est-elle une compétence centrale avec l'IA générative ?",
+    "feedback": "Une réponse fluide et plausible peut contenir une erreur ; la vérification doit donc faire partie de la tâche.",
+    "options": [
+     [
+      "Parce que les modèles refusent de répondre sans validation",
+      false
+     ],
+     [
+      "Parce qu'une réponse plausible peut être fausse",
+      true
+     ],
+     [
+      "Parce que les réponses sont toujours trop longues",
+      false
+     ],
+     [
+      "Parce que les licences l'exigent",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans les quatre niveaux d'adoption, que signifie l'« activation » ?",
+    "feedback": "L'activation correspond à un premier essai. Elle ne prouve ni usage sur une vraie tâche ni pratique durable.",
+    "options": [
+     [
+      "La personne a reçu une licence",
+      false
+     ],
+     [
+      "La personne a essayé l'outil au moins une fois",
+      true
+     ],
+     [
+      "La personne l'utilise sur un processus défini depuis des semaines",
+      false
+     ],
+     [
+      "L'équipe a atteint ses objectifs de qualité",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Sur 100 personnes équipées, 40 utilisent l'outil chaque semaine et 25 l'ont intégré à un processus défini. Quel pourcentage parmi les utilisateurs hebdomadaires a intégré le processus ?",
+    "feedback": "25 / 40 = 62,5 %. Le dénominateur change la question : 25 % se rapporte aux 100 équipés.",
+    "options": [
+     [
+      "25 %",
+      false
+     ],
+     [
+      "40 %",
+      false
+     ],
+     [
+      "62,5 %",
+      true
+     ],
+     [
+      "80 %",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi faut-il nommer le dénominateur d'un taux d'adoption ?",
+    "feedback": "Sans dénominateur et sans définition, deux équipes peuvent annoncer le même taux en mesurant des choses différentes.",
+    "options": [
+     [
+      "Pour que le taux paraisse plus élevé",
+      false
+     ],
+     [
+      "Parce que les outils l'imposent",
+      false
+     ],
+     [
+      "Pour éviter que les taux soient comparés à tort",
+      true
+     ],
+     [
+      "Pour réduire le nombre d'indicateurs",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels éléments entrent dans la faisabilité d'un premier cas d'usage ?",
+    "feedback": "Données, accès aux documents, qualité des réponses et intégration aux outils comptent. L'effet attendu relève de l'autre axe, et un succès de démonstration ne prouve rien.",
+    "options": [
+     [
+      "Les données disponibles",
+      true
+     ],
+     [
+      "L'accès aux bons documents",
+      true
+     ],
+     [
+      "La qualité des réponses obtenues",
+      true
+     ],
+     [
+      "L'enthousiasme du fournisseur",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle limite présente la matrice impact / faisabilité ?",
+    "feedback": "Le risque n'est pas un axe : un cas bien placé peut rester sensible, et il faut examiner conséquences d'erreur, données et retour arrière.",
+    "options": [
+     [
+      "Elle ignore le volume de tâches",
+      false
+     ],
+     [
+      "Elle ne s'applique qu'aux équipes support",
+      false
+     ],
+     [
+      "Elle ne prend pas en compte le risque",
+      true
+     ],
+     [
+      "Elle impose de commencer par le cas le plus difficile",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que faire pour additionner un total de factures de façon exacte ?",
+    "feedback": "Une opération exacte et déterministe relève d'un calcul ou d'un moteur de règles ; l'IA peut aider à lire la demande ou expliquer le résultat.",
+    "options": [
+     [
+      "Demander à l'IA de calculer et recopier le résultat",
+      false
+     ],
+     [
+      "Faire deux fois la demande et prendre la moyenne",
+      false
+     ],
+     [
+      "Utiliser un calcul fiable, l'IA pouvant préparer les données",
+      true
+     ],
+     [
+      "Renoncer à automatiser toute tâche numérique",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un conseiller dit « ça se trompe tout le temps ». Quelle première réaction est la plus utile ?",
+    "feedback": "Demander un cas précis permet de distinguer une vraie erreur, une mauvaise source, une tâche mal adaptée ou une inquiétude sous-jacente.",
+    "options": [
+     [
+      "Lui rappeler que l'outil est validé",
+      false
+     ],
+     [
+      "Lui demander de montrer la dernière situation où l'outil l'a ralenti",
+      true
+     ],
+     [
+      "Lui promettre une précision parfaite",
+      false
+     ],
+     [
+      "Ignorer la remarque et suivre les indicateurs",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles causes peuvent expliquer du Shadow AI ?",
+    "feedback": "Outil approuvé mal adapté, règles confuses ou méconnaissance des solutions disponibles sont des causes plausibles. Une simple curiosité n'explique pas à elle seule le phénomène et l'interdiction ne le résout pas.",
+    "options": [
+     [
+      "Un outil approuvé qui répond mal aux besoins",
+      true
+     ],
+     [
+      "Des règles trop difficiles à comprendre",
+      true
+     ],
+     [
+      "Le manque d'information sur les solutions disponibles",
+      true
+     ],
+     [
+      "Une interdiction claire et accompagnée d'une alternative",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un outil d'IA public est-il automatiquement non sécurisé ?",
+    "feedback": "Le risque dépend des données transmises, des conditions d'utilisation et des contrôles prévus ; la règle d'équipe doit préciser quel outil pour quelles données.",
+    "options": [
+     [
+      "Oui, toujours",
+      false
+     ],
+     [
+      "Non, il est toujours sûr",
+      false
+     ],
+     [
+      "Cela dépend des données transmises, des conditions d'utilisation et des contrôles",
+      true
+     ],
+     [
+      "Seulement s'il est gratuit",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que doit permettre avant tout un pilote ?",
+    "feedback": "Un pilote sert à décider (poursuivre, corriger, arrêter) sur la base d'une hypothèse écrite.",
+    "options": [
+     [
+      "Impressionner la direction",
+      false
+     ],
+     [
+      "Former tous les utilisateurs",
+      false
+     ],
+     [
+      "Remplacer la mesure initiale",
+      false
+     ],
+     [
+      "Prendre une décision : poursuivre, corriger ou arrêter",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est le piège du mode parallèle (l'IA propose pendant que le processus habituel continue) ?",
+    "feedback": "Faire deux fois la tâche alourdit la charge ; ce coût temporaire ne doit pas être confondu avec le temps du processus cible.",
+    "options": [
+     [
+      "L'IA déclenche des actions sans contrôle",
+      false
+     ],
+     [
+      "Il supprime toute mesure",
+      false
+     ],
+     [
+      "Il ne peut pas utiliser de données fictives",
+      false
+     ],
+     [
+      "Il double le travail, ce qui fausse la lecture du temps cible",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Que doit contenir le cadrage d'un pilote ?",
+    "feedback": "Un responsable métier, une règle de retour, des conditions d'arrêt et une hypothèse sont indispensables ; la simple liste de participants ne cadre pas un pilote.",
+    "options": [
+     [
+      "Une hypothèse écrite",
+      true
+     ],
+     [
+      "Un responsable métier et un responsable produit",
+      true
+     ],
+     [
+      "Des conditions d'arrêt",
+      true
+     ],
+     [
+      "Uniquement la liste des participants",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel profil est le plus adapté pour un ambassadeur ?",
+    "feedback": "Connaissance du métier, confiance des collègues, disponibilité et pédagogie comptent plus que le volume d'usage.",
+    "options": [
+     [
+      "Le plus gros utilisateur de l'outil",
+      false
+     ],
+     [
+      "Quelqu'un de crédible, disponible et pédagogue",
+      true
+     ],
+     [
+      "Le responsable informatique",
+      false
+     ],
+     [
+      "Un volontaire sans temps dédié",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi reconnaître aussi les erreurs détectées par les ambassadeurs ?",
+    "feedback": "Si seules les réussites sont valorisées, les problèmes disparaissent des remontées et le produit ne s'améliore pas.",
+    "options": [
+     [
+      "Pour limiter leur charge de travail",
+      false
+     ],
+     [
+      "Pour éviter que les problèmes ne disparaissent des remontées",
+      true
+     ],
+     [
+      "Parce que les erreurs sont rares",
+      false
+     ],
+     [
+      "Pour justifier un budget",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que contient une bonne consigne de départ dans une bibliothèque de prompts ?",
+    "feedback": "Contexte, sources, format attendu et conduite à tenir en cas d'information manquante, avec un responsable et une date de révision.",
+    "options": [
+     [
+      "Uniquement une question courte",
+      false
+     ],
+     [
+      "Le nom de l'outil",
+      false
+     ],
+     [
+      "Un texte identique pour tous les métiers",
+      false
+     ],
+     [
+      "Contexte, sources, format et conduite si une information manque",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que signifie « humain dans la boucle » s'il n'est pas précisé ?",
+    "feedback": "Sans précision sur qui vérifie quoi, quand et qui reprend la main, la mention reste trop vague pour être appliquée.",
+    "options": [
+     [
+      "Une garantie suffisante de qualité",
+      false
+     ],
+     [
+      "Une obligation réglementaire précise",
+      false
+     ],
+     [
+      "Une mention vague tant que les rôles ne sont pas écrits",
+      true
+     ],
+     [
+      "Une validation automatique",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Le retour des utilisateurs réentraîne-t-il automatiquement le modèle ?",
+    "feedback": "Non : selon le système, il peut alimenter la documentation, les consignes, l'interface ou les tests, à condition qu'un responsable le transforme en changement.",
+    "options": [
+     [
+      "Oui, systématiquement",
+      false
+     ],
+     [
+      "Non, mais il peut améliorer la documentation, les consignes ou les tests",
+      true
+     ],
+     [
+      "Oui, mais uniquement chaque trimestre",
+      false
+     ],
+     [
+      "Non, il ne sert à rien",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Données fictives : 35 conseillers actifs sur 50, 1 000 tickets assistés, 18 puis 7 minutes (contrôle compris). Quelle capacité estimée est récupérée sur le mois ?",
+    "feedback": "1 000 × 11 / 60 = 183,3 heures. C'est une capacité estimée, pas une économie automatique.",
+    "options": [
+     [
+      "183,3 heures",
+      true
+     ],
+     [
+      "116,7 heures",
+      false
+     ],
+     [
+      "11 000 heures",
+      false
+     ],
+     [
+      "128,3 heures",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels sont les pièges de lecture d'un taux de correction (override) ?",
+    "feedback": "Un taux bas peut cacher une validation trop rapide, un taux haut peut venir de cas complexes ou d'utilisateurs attentifs ; il se lit avec un contrôle qualité sur échantillon. Il est sans objet de le considérer comme un indicateur isolé.",
+    "options": [
+     [
+      "Un taux très bas peut traduire une validation trop rapide",
+      true
+     ],
+     [
+      "Un taux élevé peut venir de cas plus complexes",
+      true
+     ],
+     [
+      "Il doit être lu avec un contrôle qualité sur échantillon",
+      true
+     ],
+     [
+      "Il suffit à prouver la qualité des propositions",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Usage à 70 %, temps passé de 18 à 7 minutes, conformité sur échantillon de 95 % à 82 %. Quelle décision ?",
+    "feedback": "Le gain de temps ne suffit pas : on suspend l'extension et on analyse les réponses non conformes avant de restreindre ou corriger.",
+    "options": [
+     [
+      "Étendre immédiatement",
+      false
+     ],
+     [
+      "Suspendre l'extension et analyser les défauts",
+      true
+     ],
+     [
+      "Ignorer la conformité car l'usage est bon",
+      false
+     ],
+     [
+      "Augmenter le nombre d'utilisateurs pour avoir plus de données",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans l'audit de friction, que recherche-t-on ?",
+    "feedback": "On suit le parcours complet : écrans ouverts, copier-coller, vérifications, moment d'abandon ; la vitesse du modèle n'est qu'un élément.",
+    "options": [
+     [
+      "La vitesse de génération uniquement",
+      false
+     ],
+     [
+      "Le coût de la licence",
+      false
+     ],
+     [
+      "Le parcours réel : recopies, recherches, abandons",
+      true
+     ],
+     [
+      "Le nombre de prompts écrits",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Que ne démontre pas un chiffre d'activité issu d'un témoignage fournisseur (nombre d'assistants créés, de conversations) ?",
+    "feedback": "Ces nombres ne disent ni le temps complet, ni la qualité, ni les coûts ; ils peuvent inclure doublons ou travail de correction.",
+    "options": [
+     [
+      "La valeur métier à elle seule",
+      true
+     ],
+     [
+      "L'absence de doublons ou d'essais peu utilisés",
+      true
+     ],
+     [
+      "Un effet causal de chaque action décrite",
+      true
+     ],
+     [
+      "Que des personnes ont utilisé l'outil",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Décrivez en quelques lignes la première action que vous mèneriez pour passer d'un déploiement à une adoption sur une tâche précise de votre contexte.",
+    "feedback": "Une bonne réponse nomme une population et une tâche précises, un bénéfice pour l'utilisateur, un contrôle humain, des ambassadeurs, trois indicateurs définis et une date de décision.",
+    "options": []
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Un pilote affiche un fort usage et un gain de temps, mais quelques erreurs graves. Que décidez-vous et sur quelles preuves reprendre ?",
+    "feedback": "On suspend l'extension, on traite la cause (sources, consigne, contrôle), on rejoue des cas de test et on reprend selon une grille de qualité définie avant le test.",
+    "options": []
+   }
+  ]
+ },
+ "assignment": {
+  "title": "Livrable pratique : votre plan d'adoption IA sur une page",
+  "instructions_md": "## Objectif\n\nDémontrer que vous savez préparer l'adoption d'un outil d'IA sur une tâche précise et décider à partir de preuves.\n\n## Consignes\n\n1. Choisissez une population précise et une tâche qu'elle réalise souvent (ou l'équipe de support fictive de 50 conseillers du module). Aucune donnée confidentielle n'est nécessaire : utilisez des données fictives.\n2. Rédigez un plan d'adoption d'**une page** avec cinq zones :\n   - population cible et périmètre (cas inclus et exclus) ;\n   - processus à améliorer, de son début à sa fin, avec le contrôle humain placé dans le parcours ;\n   - bénéfice immédiat pour l'utilisateur, formulé à la première personne ;\n   - deux ambassadeurs (ou rôles), leur disponibilité et leur mission ;\n   - trois indicateurs avec définition, dénominateur, cible, source, fréquence et responsable.\n3. Ajoutez une **fiche de pilote** de six lignes : hypothèse, périmètre, participants, durée, validation, décision, plus au moins trois conditions d'arrêt.\n4. Traitez une **réticence** réaliste (par exemple sur les données ou le temps de correction) : écrivez la réponse en cinq étapes.\n5. Appliquez vos indicateurs à des **données fictives** de fin de pilote et écrivez la décision (poursuivre, ajuster, arrêter) avec ses preuves. Précisez ce que vos chiffres ne démontrent pas.\n\n## Grille d'évaluation\n\n- Précision de la population, de la tâche et du processus (**25 %**).\n- Qualité des indicateurs : définitions, dénominateurs, cibles, calculs corrects (**25 %**).\n- Pilote et gouvernance : rôles, contrôle humain, conditions d'arrêt, données admises (**20 %**).\n- Traitement des réticences et du bénéfice utilisateur, sans promesse non décidée (**15 %**).\n- Lecture critique : décision argumentée et limites des chiffres (**15 %**).\n\n## Rendu\n\nTexte dans le champ de réponse et/ou fichier PDF ou document."
+ }
+}

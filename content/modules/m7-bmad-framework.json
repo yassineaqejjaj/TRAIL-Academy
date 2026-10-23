@@ -1,0 +1,834 @@
+{
+ "course": "M7",
+ "slug": "bmad-framework",
+ "source": "Slides du formateur (module 7 : méthode BMAD), réécrits et complétés. Pas de vidéo : à ajouter depuis l'administration.",
+ "chapters": [
+  {
+   "title": "Pourquoi une méthode pour développer avec l'IA",
+   "lessons": [
+    {
+     "title": "Du vibe coding à la spécification structurée",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre pourquoi aller vite avec l'IA ne suffit pas, et ce que BMAD (Breakthrough Method of Agile AI-Driven Development, une méthode open source) cherche à corriger.\n\n## Le constat\n\nAvec des assistants de code, il est devenu possible de produire une première application en quelques heures. Mais **développer plus vite ne veut pas dire développer mieux** : on peut se retrouver avec des fonctionnalités qui ne répondent pas au besoin, des interfaces incohérentes ou du code difficile à maintenir.\n\nLa raison est simple : une IA exécute très bien des instructions, mais **elle ne devine pas ce que vous avez en tête**.\n\n## Un exemple\n\nDemandez « crée-moi une application RH ». Vous obtiendrez probablement quelque chose, mais rien ne garantit que cela corresponde à vos besoins. Précisez maintenant :\n\n- qui sont les utilisateurs (salariés, managers, service RH) ;\n- quelles fonctionnalités sont attendues ;\n- quelles règles métier s'appliquent (par exemple qui valide une demande) ;\n- quelles contraintes techniques existent.\n\nLe résultat sera nettement meilleur, parce que l'IA n'a plus à inventer ces éléments.\n\n## L'idée centrale de BMAD\n\nStructurer le besoin et donner à l'IA **le bon contexte avant de lui demander de développer**. Notre principale limite n'est plus seulement notre capacité à coder, mais notre capacité à expliquer précisément ce que nous voulons construire.\n\n## Point d'attention\n\nBMAD n'oppose pas la méthode au vibe coding : il vise à **garder la vitesse tout en apportant de la structure**, pour ne pas perdre le contrôle.\n\n## Question de réflexion\n\nPensez à un prototype que vous avez généré avec une IA. Quelles informations n'aviez-vous pas données et que l'IA a dû deviner ?"
+    },
+    {
+     "title": "La dette de contexte",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nReconnaître la dette de contexte et comprendre comment elle s'installe dans un projet mené par prompts isolés.\n\n## Comment ça se passe\n\nAu début, tout fonctionne : un dashboard, une API ou une application apparaissent en quelques minutes. Puis le projet grandit :\n\n- lundi, vous demandez un système d'authentification ;\n- mercredi, vous ajoutez des rôles utilisateurs ;\n- vendredi, vous intégrez un circuit de validation.\n\nEt là, certaines fonctionnalités ne marchent plus, le code devient difficile à maintenir et l'IA ne respecte plus forcément les décisions précédentes.\n\n## Définition\n\nLa **dette de contexte** désigne l'accumulation de décisions non documentées et d'informations perdues. Chaque nouvelle modification devient plus compliquée, car ni vous, ni l'équipe, ni l'IA ne disposez d'une référence fiable sur ce qui a été décidé et pourquoi.\n\n## Pourquoi l'IA aggrave le problème\n\nUn assistant n'a de mémoire que ce que vous lui fournissez dans la conversation ou dans les fichiers du projet. Si les règles métier n'existent que dans votre tête ou dans un ancien échange, elles seront oubliées ou contredites.\n\n## La réponse de BMAD\n\nAu lieu de prompts isolés, on construit une **base commune** : besoins métier, règles produit, choix techniques, architecture. L'IA travaille alors à partir d'un contexte clair et plus cohérent.\n\n## Pièges fréquents\n\n- Décider « à l'oral » dans le chat et ne rien écrire.\n- Corriger un bug sans noter la règle métier qu'il révélait.\n- Laisser deux versions contradictoires d'une même règle dans des endroits différents.\n\n## Mise en pratique\n\nListez trois décisions prises récemment sur un de vos projets. Pour chacune : est-elle écrite quelque part, et quelqu'un d'autre (ou une IA) pourrait-il la retrouver ?"
+    },
+    {
+     "title": "« La spécification est le nouveau code »",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre comment l'IA déplace la difficulté du « comment construire » vers le « quoi construire et pourquoi », et ce que cela change pour les métiers du produit.\n\n## Un déplacement de la difficulté\n\nPendant longtemps, la principale difficulté était le temps de développement. Aujourd'hui, l'IA permet de générer du code, des interfaces ou des API beaucoup plus rapidement. Ce qui devient central, c'est de savoir **quoi construire et pourquoi**.\n\nLa formule du module résume cela : **la spécification est le nouveau code**. La qualité de ce que vous écrivez en amont conditionne celle de ce que l'IA produit en aval.\n\n## Exemple\n\nSi vous demandez « le meilleur CRM possible », l'IA proposera une solution, mais elle ne connaît ni vos utilisateurs, ni vos processus internes, ni vos contraintes métier. **C'est toujours à vous de donner la direction.**\n\n## Ce que cela change pour les métiers\n\nQue l'on soit chef de produit, designer, business analyst ou développeur, on passera progressivement moins de temps sur certaines tâches de production et davantage sur :\n\n- la compréhension des besoins ;\n- les arbitrages et les choix ;\n- la qualité des décisions.\n\nPlus l'IA devient performante, plus la capacité à être **clair et précis** prend de la valeur.\n\n## Pièges fréquents\n\n- Croire qu'une spécification est un document figé et lourd : elle doit être utile, relue et mise à jour.\n- Confondre spécifier et sur-spécifier (on y reviendra avec l'ignorance sélective).\n\n## Question de réflexion\n\nSi l'IA écrivait demain 100 % de votre code, quels documents voudriez-vous avoir rédigés avant de la lancer ?"
+    },
+    {
+     "title": "Une équipe d'agents spécialisés",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nIdentifier les rôles d'agents présentés dans BMAD et comprendre pourquoi spécialiser vaut mieux que tout demander à un seul agent.\n\n## Le problème du « tout-en-un »\n\nOn demande souvent à un seul agent de comprendre le besoin, concevoir l'interface, définir l'architecture, développer et tester. Imaginez une entreprise où une seule personne serait chef de produit, designer, architecte, développeur et testeur : ce serait difficile à tenir.\n\n## L'approche BMAD\n\nUtiliser **plusieurs agents spécialisés**, comme dans une équipe produit. Les rôles présentés dans les slides :\n\n- **Analyste** : cherche à comprendre le besoin.\n- **Product Manager** : définit la vision et les objectifs.\n- **Product Owner** : organise le produit en grands blocs fonctionnels (Epics).\n- **Scrum Master** : organise le travail et prépare les tâches de développement.\n- **UX** : réfléchit aux parcours et à l'expérience utilisateur.\n- **Architecte** : définit les choix techniques.\n- **Développeur** : construit la solution.\n- **QA** : vérifie que tout fonctionne correctement.\n\nChaque agent travaille sur un sujet précis et **produit des informations que les autres réutilisent**.\n\n## Exemple\n\nPour une plateforme de formation : l'Analyste identifie les besoins, le PM définit les fonctionnalités, l'UX conçoit les parcours, puis les agents techniques construisent et testent.\n\n## À retenir\n\n- Les **humains restent responsables des décisions importantes** : les agents accompagnent, ils ne décident pas à notre place.\n- La force de la méthode n'est pas d'avoir plusieurs agents, mais de **les faire travailler ensemble de manière structurée**, avec des documents qui circulent de l'un à l'autre.\n\n## Question de réflexion\n\nDans votre équipe actuelle, quel rôle manque le plus souvent autour d'une idée de produit avant qu'elle ne soit développée ?"
+    }
+   ]
+  },
+  {
+   "title": "Les quatre phases : analyse et planification",
+   "lessons": [
+    {
+     "title": "Les quatre phases : de l'idée au produit",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nMémoriser le fil conducteur de BMAD : quatre phases qui transforment progressivement une idée en produit.\n\n## Les quatre phases\n\n1. **Analyse** : comprendre le problème. Qui sont les utilisateurs ? Quels sont leurs besoins ? Quelle valeur veut-on apporter ?\n2. **Planification** : définir ce que l'on construit : fonctionnalités, priorités, règles métier, critères de succès. C'est là que se structurent les spécifications produit.\n3. **Conception** : on sait pourquoi et quoi construire, on définit **comment** : parcours utilisateurs, architecture, choix techniques.\n4. **Implémentation** : le développement avec l'IA. Comme la préparation est faite, les agents disposent du contexte nécessaire pour produire quelque chose de plus cohérent.\n\n## Une logique de questions\n\n- Analyse : **pourquoi** et **pour qui** ?\n- Planification : **quoi** ?\n- Conception : **comment** ?\n- Implémentation : **faire**, avec contexte.\n\n## « Toutes ces étapes vont nous faire perdre du temps ? »\n\nC'est l'objection classique. La réponse de la méthode : c'est l'inverse, car on évite les erreurs, les incompréhensions et les corrections à répétition. L'objectif n'est pas seulement de développer plus vite, mais de **construire le bon produit dès le départ**.\n\n## Pièges fréquents\n\n- Sauter directement à la phase 4 parce que l'outil le permet.\n- Faire des phases 1 à 3 de façon si lourde qu'on ne livre jamais : l'esprit « agile » du nom de la méthode demande des documents proportionnés au projet.\n\n## Mise en pratique\n\nPrenez une idée de produit en une phrase. Écrivez, pour chaque phase, la question principale à laquelle vous devez pouvoir répondre avant de passer à la suivante."
+    },
+    {
+     "title": "Phase d'analyse : de l'idée au Project Brief",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nSavoir clarifier une idée vague grâce au rôle de l'Analyste et produire un Project Brief.\n\n## Point de départ\n\nTout commence souvent par une idée floue, par exemple : « Et si on utilisait l'IA pour améliorer notre support client ? ». Le réflexe est d'ouvrir un assistant de code et de commencer. Problème : on ne sait pas encore ce que l'on cherche à résoudre.\n\n## Le rôle de l'Analyste\n\nL'agent Analyste aide à clarifier l'idée en posant les bonnes questions :\n\n- Qui sont les utilisateurs ?\n- Quel problème rencontrent-ils ?\n- Quelle valeur veut-on apporter ?\n- Quelles sont nos contraintes ?\n\nÀ ce stade, **on ne parle pas encore de fonctionnalités ni de technologies** : on cherche à bien comprendre le besoin.\n\n## Le Project Brief\n\nCe travail produit un premier document, court : le **Project Brief**. Il résume le problème, les utilisateurs concernés, les objectifs et les résultats attendus. C'est la **base commune** entre vous et les agents, pour que tout le monde parte de la même compréhension.\n\n## Exemple de plan court\n\n- Contexte et problème.\n- Utilisateurs concernés.\n- Objectifs et résultats attendus.\n- Contraintes connues.\n- Questions encore ouvertes.\n\n## Pièges fréquents\n\n- Décrire une solution (« un chatbot ») au lieu d'un problème.\n- Remplir le brief avec les réponses de l'IA sans les valider avec de vrais utilisateurs.\n\n## Mise en pratique\n\nRédigez en 10 lignes le Project Brief de l'idée « améliorer notre support client avec l'IA ». Notez les cinq questions auxquelles vous ne savez pas répondre : ce sont vos prochaines tâches."
+    },
+    {
+     "title": "Phase de planification : le PRD",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre le rôle du PRD (Product Requirements Document) et savoir en décrire les composantes.\n\n## Pourquoi un PRD\n\nDans un projet classique, le produit imagine une chose, le design la comprend autrement et le développement l'interprète encore différemment. Le PRD devient la **référence commune** du projet, pour les équipes comme pour les agents IA : on y centralise les informations importantes afin d'éviter ces écarts.\n\n## Les trois grands éléments\n\n- **Exigences fonctionnelles** : ce que le produit doit faire. Exemples : un utilisateur peut créer un compte ; un manager peut valider une demande.\n- **Exigences non fonctionnelles** : sécurité, performance, conformité. Exemples : répondre en moins de deux secondes ; respecter le RGPD.\n- **Epics** : grands blocs fonctionnels qui servent à organiser le produit puis à le découper en user stories.\n\n## Bien rédiger une exigence\n\nUne exigence utile est **vérifiable** : on doit pouvoir dire si elle est satisfaite ou non. « L'application doit être rapide » est vague ; « une recherche renvoie ses résultats en moins de deux secondes dans les cas courants » se teste.\n\n## Principe à retenir\n\nPlus le PRD est clair et complet, **moins l'IA a besoin de faire des suppositions**, et plus le résultat a de chances de correspondre à vos attentes. Tous les agents s'appuient sur le même document.\n\n## Pièges fréquents\n\n- Un PRD qui liste des solutions techniques au lieu d'exigences.\n- Oublier les exigences non fonctionnelles, que l'IA ne devinera pas.\n\n## Mise en pratique\n\nPour une application de demande de congés, écrivez trois exigences fonctionnelles, deux non fonctionnelles et trois Epics possibles."
+    },
+    {
+     "title": "La Trigger Map : relier objectifs métier et besoins utilisateurs",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nUtiliser la Trigger Map pour vérifier qu'un produit sert à la fois l'entreprise et ses utilisateurs.\n\n## Le principe\n\nUn bon produit répond **à la fois** aux objectifs de l'entreprise et aux besoins des utilisateurs. La démarche en deux temps :\n\n1. **Pourquoi construit-on ce produit ?** Réduire les coûts, améliorer la satisfaction client, gagner en productivité ?\n2. **Pour qui, et qu'est-ce qui les pousse à agir ?** Qui sont les utilisateurs, quels problèmes rencontrent-ils au quotidien, qu'est-ce qui pourrait les amener à utiliser la solution ?\n\nLa Trigger Map aide à identifier deux choses : les **frustrations actuelles** et les **bénéfices attendus**.\n\n## Exemple : un assistant IA pour une équipe support\n\n- Côté entreprise : réduire le temps de traitement des demandes.\n- Côté utilisateur : retrouver une information rapidement, sans chercher dans plusieurs outils.\n\nC'est en **reliant ces deux besoins** que l'on crée de la valeur : l'objectif business seul ne motive pas l'utilisateur, et le besoin utilisateur seul ne justifie pas l'investissement.\n\n## Pourquoi c'est crucial avec l'IA\n\nCréer un chatbot ou un agent est devenu relativement simple. Mais si personne n'en a réellement besoin, il ne sera pas utilisé. On ne construit pas parce que la technologie le permet, mais parce qu'un vrai problème existe.\n\n## Pièges fréquents\n\n- Remplir la carte avec des utilisateurs imaginaires jamais interrogés.\n- Un objectif business sans lien avec aucune frustration utilisateur.\n\n## Mise en pratique\n\nDessinez en texte une mini Trigger Map : un objectif métier, deux profils d'utilisateurs, pour chacun une frustration et un bénéfice attendu."
+    }
+   ]
+  },
+  {
+   "title": "Conception et préparation du développement",
+   "lessons": [
+    {
+     "title": "Concevoir avant de dessiner : parcours et wireframes",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre pourquoi BMAD place la compréhension du problème avant les maquettes finales.\n\n## Le piège de l'écran d'abord\n\nAvec le vibe coding, on commence souvent par les écrans : on crée quelques maquettes et on demande à l'IA de les développer. Mais **une belle interface ne fait pas un bon produit** : elle peut être très réussie visuellement sans répondre aux besoins réels.\n\n## L'ordre proposé\n\n1. Comprendre le problème et définir la stratégie produit.\n2. Identifier les **parcours utilisateurs**.\n3. Réaliser des **wireframes simples**.\n4. Préciser les **règles métier** et les comportements attendus.\n5. Seulement ensuite : interfaces finales et développement.\n\n## Exemple : une application de réservation\n\nOn peut générer très vite un joli calendrier avec un bouton « Réserver ». Mais a-t-on réfléchi :\n\n- aux annulations ;\n- aux disponibilités ;\n- aux conflits de réservation ;\n- aux différents profils d'utilisateurs ?\n\n## Ce que cela ne dit pas\n\nIl ne s'agit pas de supprimer le design ni de le ralentir. Il s'agit de s'assurer que l'on conçoit **la bonne expérience avant de la développer**. Créer une interface est devenu rapide ; comprendre ce qu'il faut concevoir reste notre responsabilité.\n\n## Mise en pratique\n\nPour une application de réservation de salles, listez les cinq cas limites (annulation, double réservation, etc.) qu'un simple calendrier avec un bouton ne gère pas."
+    },
+    {
+     "title": "L'ignorance sélective : spécifier ce qui compte",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre pourquoi la spécification compte plus que le visuel, et comment choisir ce qu'il faut préciser.\n\n## Une maquette ne suffit pas\n\nUn humain comprend assez naturellement ce que permet une interface en la regardant. Pour une IA, une belle maquette ne suffit pas toujours : elle a aussi besoin de connaître les **règles métier**, les **actions possibles** et les **scénarios utilisateurs**.\n\n## Le concept d'ignorance sélective\n\nOn n'a pas besoin de tout spécifier dans les moindres détails : on précise **ce qui est vraiment important** et on accepte de laisser le reste ouvert, quitte à l'ajuster ensuite.\n\n## Exemple : un formulaire d'inscription\n\nÀ préciser tout de suite :\n\n- les champs obligatoires ;\n- les règles de validation ;\n- les messages d'erreur ;\n- ce qui se passe une fois le formulaire envoyé.\n\nPeut attendre : la couleur exacte de chaque bouton.\n\n## Une démarche légère\n\nOn peut partir d'un simple croquis, ajouter quelques annotations, décrire les comportements attendus, puis laisser l'IA aider à produire l'interface et le code.\n\n## Critère pratique\n\nPosez-vous la question : **si l'IA devine mal ce point, quel est le coût ?** Une règle de validation mal devinée peut bloquer des utilisateurs ; une nuance de couleur se corrige en une minute. Spécifiez d'abord ce qui est coûteux à corriger.\n\n## Mise en pratique\n\nPour un formulaire de demande de remboursement, listez cinq éléments à spécifier absolument et trois que vous laisseriez volontairement à l'IA."
+    },
+    {
+     "title": "Le design system comme source de contexte",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre comment le rôle du design évolue et comment un design system peut guider les agents.\n\n## Une évolution, pas une disparition\n\nJusqu'ici, les maquettes étaient conçues dans un outil de design avant le développement. Aujourd'hui, des assistants de génération (les slides citent Cursor et Lovable) produisent rapidement des interfaces, des composants et des parcours complets. Les outils évoluent vite : retenez le principe plus que les noms.\n\nLe designer ne devient pas inutile, son rôle évolue : plutôt que de tout dessiner à partir de zéro, il peut **partir d'une première version générée, puis l'améliorer** : ajuster les composants, travailler l'expérience utilisateur, garantir le respect du design system.\n\n## L'outil de design comme bibliothèque de référence\n\nUn outil comme Figma ne sert plus seulement à créer des maquettes : il peut devenir une **source de contexte** pour les agents. On peut leur fournir les bons composants, les couleurs, les espacements et les règles de design.\n\n## La boucle vertueuse\n\n1. L'IA génère une interface.\n2. Le designer l'améliore.\n3. Ces améliorations peuvent être réutilisées par les agents lors des générations suivantes.\n\nL'IA ne repart donc plus de zéro à chaque fois.\n\n## Point d'attention\n\nLes modalités exactes de connexion entre un agent et un design system dépendent de l'outil utilisé et évoluent ; vérifiez la documentation à jour avant de bâtir un processus dessus.\n\n## À retenir\n\nLe design system garantit la cohérence, et le designer reste **au centre des décisions UX**.\n\n## Question de réflexion\n\nQuelles règles de design de votre produit (composants, espacements, ton des messages) faudrait-il écrire pour qu'un agent les respecte sans vous demander à chaque fois ?"
+    },
+    {
+     "title": "Epic Sharding : le bon contexte, au bon moment, au bon agent",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre le problème de surcharge de contexte et la technique de découpage en Epics.\n\n## Le problème\n\nMême si les modèles traitent beaucoup d'informations, plus on leur en donne, plus ils risquent de **passer à côté de détails** ou de produire des réponses incohérentes. Imaginez fournir un PRD très volumineux, toute l'architecture et toutes les règles métier pour développer une fonctionnalité précise : beaucoup d'informations, mais peu sont utiles à la tâche.\n\n## L'Epic Sharding\n\nLe Product Owner découpe le produit en grands blocs fonctionnels, les **Epics**. Pour une application e-commerce :\n\n- gestion des utilisateurs ;\n- catalogue produit ;\n- paiement.\n\nChaque Epic est ensuite découpé en **user stories** avec les informations nécessaires à son développement. Chaque agent travaille avec un **contexte ciblé** plutôt qu'avec toute la documentation.\n\n## Garder la vision d'ensemble\n\nOn conserve une vision globale et les **dépendances** entre fonctionnalités (le paiement dépend des utilisateurs, par exemple) ; on évite seulement de charger les agents d'informations inutiles.\n\n## Le principe à retenir\n\nAvec l'IA, l'objectif n'est pas de donner le maximum de contexte, mais **le bon contexte, au bon moment, au bon agent**.\n\n## Pièges fréquents\n\n- Des Epics si larges qu'ils ne réduisent rien.\n- Des Epics découpés sans noter leurs dépendances.\n- Des informations transversales (sécurité, vocabulaire métier) oubliées dans chaque extrait.\n\n## Mise en pratique\n\nDécoupez une application de gestion de notes de frais en quatre Epics, et pour chacun, notez de quelle information du PRD un agent aurait besoin."
+    },
+    {
+     "title": "Le Scrum Master : des Epics aux Stories prêtes à développer",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre comment passer de la vision produit au développement concret grâce au découpage en Stories.\n\n## Pourquoi découper encore\n\nUn Epic reste un bloc large. On ne peut pas demander à une IA de tout développer d'un coup en espérant un résultat parfait. Le **Scrum Master IA** prend les Epics et les découpe en tâches plus petites, plus précises, plus faciles à réaliser.\n\n## Exemple\n\nPlutôt que « créer tout un système de gestion des utilisateurs », une Story précise : **créer un formulaire d'inscription avec validation de l'email et gestion des erreurs**.\n\n## Ce que contient une Story préparée\n\n- les **critères d'acceptation** ;\n- les **contraintes techniques** ;\n- les **dépendances** ;\n- le **contexte du projet** utile à cette tâche.\n\nChaque Story devient un mini-cahier des charges que l'agent développeur peut utiliser directement.\n\n## La chaîne complète\n\n- Le Product définit ce qu'on veut construire.\n- Le PO organise les fonctionnalités en Epics.\n- Le Scrum Master prépare le travail pour les agents de développement.\n\n## Exemple de critères d'acceptation\n\n- Un email invalide affiche un message d'erreur explicite.\n- Un email déjà utilisé n'est pas accepté et l'utilisateur est informé.\n- À l'envoi réussi, l'utilisateur voit une confirmation.\n\nChaque critère est observable : on peut le tester.\n\n## Mise en pratique\n\nRédigez une Story « réinitialiser son mot de passe » avec quatre critères d'acceptation et une dépendance."
+    },
+    {
+     "title": "Architecture et Readiness Check : êtes-vous prêt à développer ?",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre le rôle de l'architecture et du contrôle de préparation avant de lancer le développement.\n\n## Pourquoi une étape de vérification\n\nL'IA génère du code très vite. Si le projet est mal préparé, on développe rapidement **quelque chose qu'il faudra corriger**. L'IA accélère aussi bien les bonnes décisions que les mauvaises.\n\n## Premier élément : l'architecture\n\nElle définit comment le système va fonctionner :\n\n- quels sont les composants ;\n- comment ils communiquent ;\n- quelles technologies sont utilisées ;\n- quelles sont les contraintes de sécurité.\n\nUne IA peut produire du code qui fonctionne mais **ne s'intègre pas** dans le reste de l'application. L'architecture est le cadre qui évite cela.\n\n## Second élément : le Readiness Check\n\nUne checklist avant de démarrer. On vérifie que :\n\n- le PRD est clair ;\n- les Epics sont bien définis ;\n- les dépendances sont identifiées ;\n- les critères d'acceptation sont suffisamment précis.\n\nSi des éléments manquent, on les complète avant de passer au développement.\n\n## Un Go / No Go\n\nLa question est binaire : **est-on prêt à développer, oui ou non ?** Un « non » n'est pas un échec, c'est une erreur évitée à bas coût.\n\n## Pièges fréquents\n\n- Un Go de principe pour « ne pas perdre de temps ».\n- Une checklist remplie par l'IA sans relecture humaine.\n\n## Mise en pratique\n\nÉcrivez votre propre Readiness Check en huit questions auxquelles on répond par oui ou non, puis appliquez-le à un projet en cours."
+    }
+   ]
+  },
+  {
+   "title": "Gouvernance, collaboration multi-agents et mise en pratique",
+   "lessons": [
+    {
+     "title": "Gouvernance et traçabilité",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre pourquoi documenter la construction d'un produit IA est un enjeu, surtout en environnement réglementé.\n\n## Au-delà du « ça marche »\n\nAvec l'IA, la question n'est plus seulement de savoir si l'application fonctionne, mais aussi de **pouvoir expliquer comment elle a été construite**. Dans des secteurs comme la banque ou l'assurance, on doit pouvoir répondre à des questions simples :\n\n- Pourquoi a-t-on fait ce choix ?\n- Qui l'a validé ?\n- Quelles règles métier ont été prises en compte ?\n\n## Ce que BMAD apporte\n\nComme le travail est structuré dès le départ, on conserve une trace des **besoins**, des **décisions produit**, des **choix techniques** et des **validations**. On comprend plus facilement pourquoi une fonctionnalité existe et comment elle a été développée.\n\n## Le contexte réglementaire\n\nDes textes comme l'AI Act européen imposent, selon les systèmes concernés, des obligations de documentation, de gestion des risques et de supervision humaine. Le niveau d'exigence dépend de la catégorie du système : consultez votre service juridique ou conformité pour votre cas.\n\n## Attention\n\n**Utiliser BMAD ne garantit pas la conformité réglementaire.** La méthode fournit une bonne base documentaire qui facilite les contrôles et les audits ; elle ne remplace pas une analyse de conformité.\n\n## Prototype et échelle\n\nCréer un prototype avec l'IA est devenu relativement simple. Déployer et maintenir des solutions IA à grande échelle demande beaucoup plus de rigueur.\n\n## Mise en pratique\n\nPour une fonctionnalité de votre choix, notez : la décision, la personne qui l'a validée, la date, et la justification. Où conserveriez-vous cet enregistrement pour qu'il reste retrouvable ?"
+    },
+    {
+     "title": "Le Party Mode : faire débattre plusieurs agents",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre le Party Mode et en connaître les atouts et les limites.\n\n## Principe\n\nBMAD utilise des agents spécialisés. Avec le **Party Mode**, plusieurs agents interviennent **dans une même discussion** pour confronter leurs points de vue, comme une réunion d'équipe produit dont les participants sont des agents IA.\n\n## Exemple : un assistant IA pour des managers\n\n- Le **Product Manager** se concentre sur la valeur business et les objectifs.\n- L'**UX** réfléchit à l'expérience et à l'usage par les managers.\n- L'**Architecte** soulève les questions techniques : sécurité, gestion des données.\n- Le **QA** cherche les risques et les scénarios oubliés.\n\nChaque agent apporte un regard différent sur le même problème. Ils peuvent se poser des questions, remettre en cause des idées et proposer des améliorations.\n\n## Limites à garder en tête\n\n- Cela **ne garantit pas** que les propositions soient bonnes.\n- Un débat entre agents peut converger vers un faux consensus ; l'accord de plusieurs IA n'est pas une preuve.\n- **Les décisions finales vous reviennent.**\n\n## Comment l'utiliser\n\n1. Posez un problème précis et le contexte nécessaire.\n2. Demandez à chaque rôle de se positionner.\n3. Relevez les désaccords : ce sont les sujets à trancher.\n4. Décidez, puis consignez la décision dans le PRD ou l'architecture.\n\n## À retenir\n\nOn ne se contente plus de poser une question à une IA : on **anime une discussion entre plusieurs expertises**.\n\n## Mise en pratique\n\nMême sans l'outil, simulez le principe dans un assistant : demandez à quatre rôles de critiquer successivement une même idée de fonctionnalité, puis résumez les trois désaccords principaux."
+    },
+    {
+     "title": "Cas pratique : une plateforme de suivi de projets",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nSuivre un cas complet qui illustre la logique de BMAD : comprendre, structurer, aligner, puis accélérer.\n\n## L'idée de départ\n\n« Créer une plateforme permettant aux équipes de mieux suivre leurs projets, leurs livrables et leurs jalons. » On ne sait pas encore qui sont les utilisateurs, quels problèmes ils rencontrent, quelles fonctionnalités sont nécessaires, ni quelles sont les contraintes.\n\n## Étape 1 : comprendre le problème\n\nLa première question n'est pas « que construire ? » mais « **pourquoi ce produit doit-il exister ?** ». Hypothèses à vérifier : manque de visibilité, trop d'outils différents, difficulté à suivre les dépendances, temps perdu en reporting manuel.\n\n## Étape 2 : structurer la vision produit\n\nUtilisateurs cibles, proposition de valeur, indicateurs, principaux cas d'usage : visualiser les jalons, identifier les risques, générer des synthèses de projet, aider les managers à décider.\n\n## Étape 3 : collaboration multi-agents\n\n- Analyste : quels sont les irritants actuels ?\n- Product Manager : quelles fonctionnalités créent le plus de valeur ?\n- UX : comment simplifier l'expérience ?\n- Architecte : comment gérer la scalabilité et les intégrations ?\n- QA : quels sont les risques et les cas limites ?\n\n## Étape 4 : découpage et implémentation\n\nEpics possibles : gestion des projets, gestion des jalons, reporting, assistant IA, notifications. Puis des Stories plus petites. **Et seulement alors**, on demande aux agents de développer.\n\n## Le message clé\n\nOn ne commence pas par « génère-moi une application ». On commence par **comprendre, structurer, aligner, puis accélérer**. La puissance de l'IA tient aussi à sa capacité à nous aider à mieux réfléchir, collaborer et structurer nos décisions ; une fois ce travail fait, le développement devient plus rapide et plus fiable.\n\n## Question de réflexion\n\nDans ce cas, quelle étape seriez-vous le plus tenté de sauter, et quelle erreur coûteuse cela risquerait-il de provoquer ?"
+    },
+    {
+     "title": "Exercice guidé : du Project Brief aux Stories avec un assistant gratuit",
+     "kind": "exercise",
+     "body_md": "## Objectif\n\nAppliquer la chaîne BMAD sur un petit projet, avec n'importe quel assistant conversationnel accessible gratuitement. Aucune installation de la méthode n'est nécessaire : vous reproduisez l'esprit des rôles en changeant d'angle à chaque conversation.\n\n## Avant de commencer\n\nChoisissez une idée simple et non confidentielle, par exemple « une application pour suivre les demandes de matériel dans une équipe ». N'y mettez aucune donnée réelle de personne ou d'entreprise.\n\n## Étape 1 : Analyste\n\nDemandez à l'assistant de **se comporter comme un analyste** et de vous poser, une par une, des questions sur les utilisateurs, le problème, la valeur attendue et les contraintes. Répondez honnêtement, y compris « je ne sais pas ». Demandez ensuite un **Project Brief** d'une page.\n\n## Étape 2 : Product Manager\n\nDans une nouvelle conversation, collez le brief et demandez un **PRD** avec exigences fonctionnelles, non fonctionnelles et Epics. Relisez et corrigez ce qui est faux ou inventé.\n\n## Étape 3 : Product Owner et Scrum Master\n\nDemandez de découper un Epic en **Stories**, chacune avec des critères d'acceptation vérifiables et des dépendances.\n\n## Étape 4 : Readiness Check\n\nFaites relire l'ensemble par un rôle de QA : quels manques, quelles contradictions, quels risques ? Terminez par votre **Go / No Go** motivé.\n\n## Étape 5 : Party Mode simulé\n\nDemandez à trois rôles (PM, UX, Architecte) de débattre d'une fonctionnalité litigieuse, puis tranchez vous-même.\n\n## Points d'attention\n\n- Gardez chaque document dans un fichier : c'est votre base de contexte.\n- Ne transmettez à chaque étape que ce qui est utile (esprit de l'Epic Sharding).\n- Notez au moins une erreur ou une invention de l'IA que vous avez dû corriger.\n\n## Ce que vous devez obtenir\n\nUn brief, un PRD court, un Epic découpé en trois Stories, un verdict Go / No Go."
+    },
+    {
+     "title": "Récapitulatif, bonnes pratiques et limites",
+     "kind": "reading",
+     "body_md": "## Les idées à emporter\n\n- **Le problème** : l'IA exécute mais ne devine pas ; sans contexte structuré, on subit la dette de contexte.\n- **La réponse** : la spécification devient centrale ; on structure le besoin avant de développer.\n- **L'équipe** : plusieurs agents spécialisés (Analyste, PM, PO, Scrum Master, UX, Architecte, Développeur, QA), supervisés par des humains.\n- **Le cycle** : Analyse, Planification, Conception, Implémentation.\n- **Les documents** : Project Brief, PRD (exigences fonctionnelles, non fonctionnelles, Epics), architecture, Stories.\n- **Le contexte** : donner le bon contexte, au bon moment, au bon agent (Epic Sharding).\n- **Les garde-fous** : Readiness Check (Go / No Go), traçabilité, Party Mode comme aide à la réflexion.\n\n## Limites à reconnaître\n\n- La méthode ne garantit ni la qualité du produit ni la conformité réglementaire : elle crée de bonnes conditions.\n- Les agents peuvent se tromper, inventer ou être d'accord à tort ; la décision et la relecture restent humaines.\n- Le poids documentaire doit rester proportionné : un petit prototype n'exige pas la même formalisation qu'un produit réglementé.\n- Les outils et leurs fonctions évoluent vite ; vérifiez la documentation officielle de la méthode et de vos outils avant de vous y fier.\n\n## Checklist de fin de module\n\n1. Savez-vous écrire un Project Brief en une page ?\n2. Savez-vous distinguer exigence fonctionnelle, non fonctionnelle et Epic ?\n3. Savez-vous écrire une Story avec des critères d'acceptation vérifiables ?\n4. Savez-vous appliquer un Go / No Go avant de développer ?\n5. Savez-vous dire ce que vous laisseriez à l'IA et ce que vous décideriez vous-même ?\n\n## Pour aller plus loin\n\nConsultez le dépôt et la documentation officiels de la méthode BMAD pour voir comment ses agents et ses workflows sont réellement fournis, et adaptez ce module à la version que vous utilisez."
+    }
+   ]
+  }
+ ],
+ "quiz": {
+  "title": "Quiz du module",
+  "pass_percent": 70,
+  "max_attempts": null,
+  "questions": [
+   {
+    "kind": "single_choice",
+    "prompt": "Que signifie l'acronyme BMAD tel qu'il est présenté dans ce module ?",
+    "feedback": "BMAD est présentée comme une méthode open source de développement agile piloté par l'IA (Breakthrough Method of Agile AI-Driven Development).",
+    "options": [
+     [
+      "Backlog Management for Agile Delivery",
+      false
+     ],
+     [
+      "Business Model Analysis and Design",
+      false
+     ],
+     [
+      "Breakthrough Method of Agile AI-Driven Development",
+      true
+     ],
+     [
+      "Better Machine Assisted Development",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi développer plus vite avec l'IA ne garantit-il pas de développer mieux ?",
+    "feedback": "L'IA exécute bien des instructions mais ne peut pas deviner le besoin ; sans contexte, on risque des fonctionnalités inadaptées ou du code difficile à maintenir.",
+    "options": [
+     [
+      "Parce que le code généré par l'IA est toujours de mauvaise qualité",
+      false
+     ],
+     [
+      "Parce que l'IA ne sait pas écrire de code structuré",
+      false
+     ],
+     [
+      "Parce que les outils d'IA interdisent les projets de plus d'une semaine",
+      false
+     ],
+     [
+      "Parce que l'IA exécute les instructions mais ne devine pas ce que vous avez en tête",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'appelle-t-on la dette de contexte ?",
+    "feedback": "La dette de contexte naît quand les décisions ne sont pas écrites : l'IA, comme l'équipe, ne les respecte plus et chaque évolution devient plus difficile.",
+    "options": [
+     [
+      "Le coût mensuel des abonnements aux outils d'IA",
+      false
+     ],
+     [
+      "L'accumulation de décisions non documentées et d'informations perdues qui complique chaque modification",
+      true
+     ],
+     [
+      "La quantité de texte qu'un modèle ne peut plus lire",
+      false
+     ],
+     [
+      "Le retard pris sur le planning par l'équipe de développement",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que signifie la formule « la spécification est le nouveau code » ?",
+    "feedback": "Quand l'IA génère le code, la difficulté se déplace vers le quoi construire et pourquoi : la spécification devient l'élément central.",
+    "options": [
+     [
+      "La spécification doit être écrite dans un langage de programmation",
+      false
+     ],
+     [
+      "Les développeurs ne sont plus nécessaires",
+      false
+     ],
+     [
+      "La qualité de ce que l'on décrit en amont conditionne ce que l'IA produit",
+      true
+     ],
+     [
+      "Le code n'a plus besoin d'être relu",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel principe BMAD défend-il vis-à-vis du vibe coding ?",
+    "feedback": "L'objectif n'est pas d'abandonner le vibe coding mais de conserver sa vitesse en ajoutant de la structure pour ne pas perdre le contrôle.",
+    "options": [
+     [
+      "L'utiliser uniquement pour les prototypes jetables",
+      false
+     ],
+     [
+      "Garder la vitesse tout en apportant de la structure",
+      true
+     ],
+     [
+      "L'abandonner complètement",
+      false
+     ],
+     [
+      "Le réserver aux développeurs expérimentés",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est l'intérêt d'utiliser plusieurs agents spécialisés plutôt qu'un seul ?",
+    "feedback": "La spécialisation s'inspire d'une équipe produit : chaque rôle produit des éléments réutilisés par les suivants. Elle ne supprime ni les erreurs ni la supervision humaine.",
+    "options": [
+     [
+      "Cela supprime le besoin de validation humaine",
+      false
+     ],
+     [
+      "Cela garantit l'absence d'erreurs",
+      false
+     ],
+     [
+      "Chaque agent travaille sur un sujet précis et produit des informations que les autres réutilisent",
+      true
+     ],
+     [
+      "Cela réduit mécaniquement le coût à zéro",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Parmi ces rôles, lesquels sont présentés comme des agents de la méthode ?",
+    "feedback": "Les slides présentent notamment l'Analyste, le Product Manager, le Scrum Master, l'UX, l'Architecte, le Développeur, le QA, ainsi que le Product Owner pour le découpage en Epics.",
+    "options": [
+     [
+      "Scrum Master",
+      true
+     ],
+     [
+      "Architecte",
+      true
+     ],
+     [
+      "QA",
+      true
+     ],
+     [
+      "Directeur financier",
+      false
+     ],
+     [
+      "Commercial",
+      false
+     ],
+     [
+      "Analyste",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qui reste responsable des décisions importantes dans BMAD ?",
+    "feedback": "Les agents accompagnent mais ne décident pas à la place des humains.",
+    "options": [
+     [
+      "Les agents, de façon autonome",
+      false
+     ],
+     [
+      "L'agent Architecte uniquement",
+      false
+     ],
+     [
+      "Les humains",
+      true
+     ],
+     [
+      "Le modèle le plus récent",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est l'ordre des quatre phases de BMAD ?",
+    "feedback": "On comprend d'abord le problème, puis on définit ce qu'on construit, puis comment, et on développe en dernier avec le contexte préparé.",
+    "options": [
+     [
+      "Planification, Analyse, Implémentation, Conception",
+      false
+     ],
+     [
+      "Implémentation, Analyse, Conception, Planification",
+      false
+     ],
+     [
+      "Conception, Analyse, Implémentation, Planification",
+      false
+     ],
+     [
+      "Analyse, Planification, Conception, Implémentation",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que cherche-t-on à faire pendant la phase d'analyse ?",
+    "feedback": "L'analyse porte sur qui sont les utilisateurs, quels sont leurs besoins et quelle valeur apporter, sans parler encore de technologie.",
+    "options": [
+     [
+      "Déployer en production",
+      false
+     ],
+     [
+      "Comprendre le problème, les utilisateurs et la valeur à apporter",
+      true
+     ],
+     [
+      "Choisir le langage de programmation",
+      false
+     ],
+     [
+      "Écrire les tests automatisés",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'est-ce que le Project Brief ?",
+    "feedback": "Le Project Brief est la base commune entre l'équipe et les agents au sortir de l'analyse.",
+    "options": [
+     [
+      "Le rapport de tests final",
+      false
+     ],
+     [
+      "La liste complète des tâches de développement",
+      false
+     ],
+     [
+      "Le schéma d'architecture technique",
+      false
+     ],
+     [
+      "Un document court qui résume le problème, les utilisateurs, les objectifs et les résultats attendus",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels éléments trouve-t-on dans un PRD selon le module ?",
+    "feedback": "Le PRD réunit exigences fonctionnelles, exigences non fonctionnelles et Epics. Il ne contient pas de code complet ni d'identifiants.",
+    "options": [
+     [
+      "Le code source complet",
+      false
+     ],
+     [
+      "Des Epics",
+      true
+     ],
+     [
+      "Des exigences fonctionnelles",
+      true
+     ],
+     [
+      "Des exigences non fonctionnelles",
+      true
+     ],
+     [
+      "Les identifiants de connexion des utilisateurs",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Laquelle de ces exigences est une exigence non fonctionnelle ?",
+    "feedback": "Sécurité, performance et conformité sont des exigences non fonctionnelles ; créer un compte ou valider une demande sont fonctionnelles.",
+    "options": [
+     [
+      "Un manager peut valider une demande",
+      false
+     ],
+     [
+      "Un utilisateur peut modifier son profil",
+      false
+     ],
+     [
+      "L'application doit respecter le RGPD",
+      true
+     ],
+     [
+      "Un utilisateur peut créer un compte",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi un PRD clair améliore-t-il les résultats de l'IA ?",
+    "feedback": "Plus le PRD est précis, moins l'IA comble les trous par des hypothèses qui peuvent être fausses.",
+    "options": [
+     [
+      "Elle fonctionne plus vite sur le matériel",
+      false
+     ],
+     [
+      "Elle devine mieux les intentions non écrites",
+      false
+     ],
+     [
+      "Elle n'a plus besoin de modèle de langage",
+      false
+     ],
+     [
+      "Elle a moins de suppositions à faire",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "À quoi sert la Trigger Map ?",
+    "feedback": "La Trigger Map aide à vérifier que le produit sert à la fois l'entreprise et ses utilisateurs.",
+    "options": [
+     [
+      "À relier les objectifs de l'entreprise aux frustrations et bénéfices des utilisateurs",
+      true
+     ],
+     [
+      "À planifier le calendrier des livraisons",
+      false
+     ],
+     [
+      "À cartographier les serveurs de l'application",
+      false
+     ],
+     [
+      "À répertorier les bugs connus",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi la Trigger Map est-elle particulièrement utile avec l'IA ?",
+    "feedback": "La facilité technique ne garantit pas l'usage : il faut un vrai problème à résoudre.",
+    "options": [
+     [
+      "Parce que créer un chatbot ou un agent est simple, mais s'il ne répond à aucun besoin il ne sera pas utilisé",
+      true
+     ],
+     [
+      "Parce qu'elle est obligatoire dans la réglementation",
+      false
+     ],
+     [
+      "Parce qu'elle remplace les tests utilisateurs",
+      false
+     ],
+     [
+      "Parce qu'elle génère le code automatiquement",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans l'approche BMAD, que fait-on avant de produire des maquettes finales ?",
+    "feedback": "On conçoit d'abord la bonne expérience, puis on passe aux interfaces finales.",
+    "options": [
+     [
+      "Choisir la palette de couleurs",
+      false
+     ],
+     [
+      "Comprendre le problème, identifier les parcours, faire des wireframes simples et préciser les règles métier",
+      true
+     ],
+     [
+      "Rien : on part directement des écrans",
+      false
+     ],
+     [
+      "Écrire tout le code de l'application",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que désigne l'ignorance sélective ?",
+    "feedback": "On cible la spécification sur ce qui compte, comme les règles de validation d'un formulaire, plutôt que sur des détails comme la couleur d'un bouton.",
+    "options": [
+     [
+      "Laisser l'IA décider de toutes les règles métier",
+      false
+     ],
+     [
+      "Préciser ce qui est vraiment important et ne pas tout spécifier dans le moindre détail",
+      true
+     ],
+     [
+      "Ne jamais écrire de spécification",
+      false
+     ],
+     [
+      "Ignorer volontairement les besoins des utilisateurs",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Pour un formulaire d'inscription, que faut-il préciser en priorité ?",
+    "feedback": "Les comportements et règles sont prioritaires ; les détails esthétiques peuvent attendre.",
+    "options": [
+     [
+      "Le nom de la police du pied de page",
+      false
+     ],
+     [
+      "Les règles de validation",
+      true
+     ],
+     [
+      "Ce qui se passe après l'envoi",
+      true
+     ],
+     [
+      "Les messages d'erreur",
+      true
+     ],
+     [
+      "La couleur exacte de chaque bouton",
+      false
+     ],
+     [
+      "Les champs obligatoires",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Comment le rôle de l'outil de design évolue-t-il avec l'IA selon le module ?",
+    "feedback": "Le design system devient une source de contexte, tandis que le designer reste au centre des décisions UX.",
+    "options": [
+     [
+      "Il peut servir de bibliothèque de référence (composants, règles) fournie aux agents",
+      true
+     ],
+     [
+      "Il disparaît complètement",
+      false
+     ],
+     [
+      "Il remplace le designer",
+      false
+     ],
+     [
+      "Il ne sert plus qu'à exporter du code",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel problème l'Epic Sharding cherche-t-il à résoudre ?",
+    "feedback": "Trop de contenu peut faire manquer des détails ; on donne à chaque agent un contexte ciblé.",
+    "options": [
+     [
+      "Le manque de licences pour les outils",
+      false
+     ],
+     [
+      "La surcharge de contexte : donner trop d'informations non pertinentes à un agent",
+      true
+     ],
+     [
+      "L'absence de tests unitaires",
+      false
+     ],
+     [
+      "La lenteur du réseau",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel principe résume l'Epic Sharding ?",
+    "feedback": "Il ne s'agit pas de maximiser le contexte mais de le cibler tout en gardant les dépendances en vue.",
+    "options": [
+     [
+      "Aucun contexte pour éviter les biais",
+      false
+     ],
+     [
+      "Le maximum de contexte à chaque agent",
+      false
+     ],
+     [
+      "Un seul agent avec tout le contexte",
+      false
+     ],
+     [
+      "Le bon contexte, au bon moment, au bon agent",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que prépare le Scrum Master pour chaque Story ?",
+    "feedback": "Chaque Story devient un mini-cahier des charges exploitable directement par l'agent développeur.",
+    "options": [
+     [
+      "Le plan de communication",
+      false
+     ],
+     [
+      "Critères d'acceptation, contraintes techniques, dépendances et contexte du projet",
+      true
+     ],
+     [
+      "Le contrat avec les utilisateurs",
+      false
+     ],
+     [
+      "Le budget annuel",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est le rôle du Readiness Check ?",
+    "feedback": "C'est une checklist (PRD clair, Epics définis, dépendances identifiées, critères précis) avant de démarrer.",
+    "options": [
+     [
+      "Tester les performances en production",
+      false
+     ],
+     [
+      "Vérifier que le projet est prêt avant de développer, comme un Go / No Go",
+      true
+     ],
+     [
+      "Mesurer la satisfaction après la livraison",
+      false
+     ],
+     [
+      "Sélectionner les fournisseurs",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi l'IA rend-elle l'étape de préparation encore plus importante ?",
+    "feedback": "Un projet mal préparé génère très vite quelque chose qu'il faudra corriger.",
+    "options": [
+     [
+      "Parce qu'elle est plus chère à l'usage",
+      false
+     ],
+     [
+      "Parce qu'elle refuse de coder sans PRD",
+      false
+     ],
+     [
+      "Parce qu'elle ne peut pas corriger son code",
+      false
+     ],
+     [
+      "Parce qu'elle accélère aussi bien les bonnes décisions que les mauvaises",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Que permet de conserver BMAD en matière de traçabilité ?",
+    "feedback": "La structuration dès le départ conserve la trace des besoins, décisions, choix techniques et validations.",
+    "options": [
+     [
+      "Les besoins",
+      true
+     ],
+     [
+      "Les décisions produit",
+      true
+     ],
+     [
+      "Les mots de passe des utilisateurs",
+      false
+     ],
+     [
+      "Les validations",
+      true
+     ],
+     [
+      "Les conversations privées de l'équipe",
+      false
+     ],
+     [
+      "Les choix techniques",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que garantit l'utilisation de BMAD en matière de conformité à l'AI Act ?",
+    "feedback": "Le module précise que la méthode facilite contrôles et audits mais ne garantit pas la conformité.",
+    "options": [
+     [
+      "La dispense de supervision humaine",
+      false
+     ],
+     [
+      "La conformité complète",
+      false
+     ],
+     [
+      "La certification officielle du produit",
+      false
+     ],
+     [
+      "Rien automatiquement : elle fournit une base documentaire, pas une garantie de conformité",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'est-ce que le Party Mode ?",
+    "feedback": "Comme une réunion d'équipe produit dont les participants sont des agents IA.",
+    "options": [
+     [
+      "Un mode de déploiement automatique",
+      false
+     ],
+     [
+      "Une discussion où plusieurs agents spécialisés confrontent leurs points de vue",
+      true
+     ],
+     [
+      "Un mode de test de charge",
+      false
+     ],
+     [
+      "Un mode où l'IA décide seule",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle réserve faut-il garder face aux propositions du Party Mode ?",
+    "feedback": "L'accord de plusieurs IA n'est pas une preuve ; c'est à vous de trancher.",
+    "options": [
+     [
+      "Elles ne peuvent concerner que la technique",
+      false
+     ],
+     [
+      "Elles sont toujours correctes si plusieurs agents sont d'accord",
+      false
+     ],
+     [
+      "Elles remplacent le PRD",
+      false
+     ],
+     [
+      "Elles ne sont pas forcément bonnes : la décision finale reste humaine",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Choisissez une idée de produit et décrivez, en une dizaine de lignes, comment vous appliqueriez les quatre phases de BMAD avant de demander à une IA de développer. Précisez quel document vous produiriez à chaque phase.",
+    "feedback": "Une bonne réponse nomme les quatre phases (analyse, planification, conception, implémentation) et les documents associés : Project Brief, PRD avec Epics, architecture et parcours, Stories avec critères d'acceptation, Readiness Check avant le développement.",
+    "options": []
+   }
+  ]
+ },
+ "assignment": {
+  "title": "Livrable pratique : le dossier BMAD d'un produit IA",
+  "instructions_md": "\n## Objectif\n\nDémontrer que vous savez structurer une idée de produit avec la logique de BMAD, de l'analyse jusqu'au Go / No Go, avant tout développement.\n\n## Consignes\n\nChoisissez une idée de produit d'IA **non confidentielle** (par exemple un assistant de recherche documentaire pour une équipe support). N'utilisez aucune donnée réelle de personne ou d'entreprise. Vous pouvez utiliser n'importe quel assistant conversationnel public ou gratuit pour vous aider, mais vous devez relire, corriger et assumer le contenu.\n\nRédigez un dossier contenant :\n\n1. **Project Brief** (une page) : problème, utilisateurs, valeur attendue, objectifs, contraintes, questions ouvertes.\n2. **Trigger Map simplifiée** : un objectif métier, deux profils d'utilisateurs, leurs frustrations et bénéfices attendus.\n3. **PRD allégé** : au moins cinq exigences fonctionnelles et trois non fonctionnelles vérifiables, et trois à cinq Epics avec leurs dépendances.\n4. **Trois Stories** issues d'un même Epic, chacune avec au moins trois critères d'acceptation observables.\n5. **Architecture en quelques lignes** : composants, communication, contraintes de sécurité.\n6. **Readiness Check** : une checklist d'au moins huit points, avec votre verdict Go ou No Go motivé.\n7. **Synthèse de débat multi-rôles** (Party Mode simulé) : trois points de désaccord entre rôles et la décision que vous prenez pour chacun.\n8. **Note de limites** : où l'IA s'est trompée ou a inventé, et ce que vous avez corrigé.\n\n## Grille d'évaluation\n\n- Qualité du Project Brief et de la Trigger Map : problème clair, lien entre objectifs métier et besoins utilisateurs (**20 %**).\n- PRD : exigences vérifiables, distinction fonctionnel / non fonctionnel, Epics cohérents (**25 %**).\n- Stories : taille adaptée, critères d'acceptation observables, dépendances (**20 %**).\n- Readiness Check, architecture et décision Go / No Go argumentée (**15 %**).\n- Regard critique : débat multi-rôles, erreurs de l'IA identifiées, décisions humaines explicites (**15 %**).\n- Clarté et traçabilité du dossier : décisions et justifications retrouvables (**5 %**).\n\n## Rendu\n\nUn document texte ou PDF, ou le texte directement dans le champ de réponse.\n"
+ }
+}

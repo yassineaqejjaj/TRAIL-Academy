@@ -18,6 +18,7 @@
     "gateway": "node services/stream-gateway/src/server.ts",
     "screenshots": "tsx --env-file-if-exists=.env.local scripts/capture-screenshots.mts",
     "storage:setup": "tsx scripts/setup-storage.mts",
+    "content:load": "tsx scripts/load-content.mts",
     "check:env": "tsx scripts/check-env.mts",
     "demo": "tsx --env-file-if-exists=.env.local scripts/demo.mts"
   },

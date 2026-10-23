@@ -1,0 +1,780 @@
+{
+ "course": "M14",
+ "slug": "ai-ux",
+ "source": "Slides du formateur (module 14 : AI UX et interaction humain-IA), réécrits et complétés. Pas de vidéo : à ajouter depuis l'administration.",
+ "chapters": [
+  {
+   "title": "Les fondations de l'UX des produits IA",
+   "lessons": [
+    {
+     "title": "Du déterministe au probabiliste",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre pourquoi un produit IA ne se conçoit pas comme une application classique, et en déduire ce que l'interface doit rendre possible.\n\n## Le fil rouge du module\n\nTout au long du module, nous utiliserons un **assistant commercial** fictif. Un client demande une remise. L'assistant consulte le dossier, prépare une proposition et rédige un message. La question de conception est toujours la même : à quel moment le commercial intervient-il, et que doit-il voir pour décider ?\n\n## Deux logiques différentes\n\nDans une application classique, un clic sur « Envoyer » déclenche une action précise : l'adresse est renseignée, le message est prêt, le système applique des règles écrites à l'avance. Le même geste produit le même résultat.\n\nAvec l'IA générative, la même demande peut donner plusieurs réponses plausibles. Le contexte fourni, le modèle et ses réglages font varier le résultat. Surtout, une phrase qui paraît très sûre peut contenir une erreur.\n\nPrenons la demande : « Prépare une réponse à ce client qui souhaite 20 % de remise. » L'IA peut rédiger une acceptation très polie, demander une validation ou proposer une autre remise. Le ton peut être impeccable dans les trois cas. Ce qui compte, c'est de savoir si la proposition respecte les règles du dossier.\n\n## Conséquences sur l'interface\n\n- Distinguer **la demande du client**, **les faits trouvés** et **la proposition de l'IA**.\n- Rendre la vérification et la correction faciles.\n- Séparer clairement la **production d'un texte** et le **droit d'exécuter une action**.\n\n## Points d'attention\n\n- Un pourcentage affiché par un modèle (« je suis sûr à 85 % ») n'est pas automatiquement une probabilité fiable.\n- Une mention « l'IA apprend » ne signifie pas que le modèle se réentraîne à chaque échange. Le produit ne doit annoncer que ce qu'il fait réellement.\n- L'opposition déterministe/probabiliste est un schéma simplifié : certaines sorties IA peuvent être rendues assez stables, et une application classique peut intégrer du hasard. L'essentiel est de **prévoir des réponses variables et des erreurs possibles**.\n\n## Mise en pratique\n\nComparez deux réponses simulées à la demande de remise de 20 %. Réponse A : « Bonne nouvelle, nous vous accordons 20 % de remise. » Réponse B : « J'ai préparé une proposition. La remise demandée nécessite une validation. Aucun message n'a été envoyé. » Quelles informations vous manquent pour choisir la bonne ? (Indice : règles commerciales, montant du devis, droits du commercial, accords déjà donnés.)"
+    },
+    {
+     "title": "Les modes d'interaction humain-IA",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDistinguer quatre façons d'organiser la relation avec l'IA et choisir un mode pour chaque tâche.\n\n## Quatre modes\n\n- **Assistant** : il répond à une demande ponctuelle (« Résume ce compte rendu »). L'utilisateur formule, récupère une proposition et décide de son usage.\n- **Copilote** : il travaille dans le même espace que l'utilisateur. Il propose un passage de texte, une formule ou un morceau de code ; l'utilisateur garde, modifie ou rejette, puis la collaboration continue. Le produit doit faciliter les retouches et préserver le travail de la personne.\n- **Automatisation** : elle intervient en arrière-plan. Un filtre antispam en est l'exemple classique : pas de confirmation à chaque classement, mais la possibilité de récupérer un message mal classé et de changer les réglages.\n- **Agent** : il enchaîne plusieurs étapes pour atteindre un objectif. Notre assistant commercial consulte un dossier, retrouve la règle et prépare une proposition. L'utilisateur doit voir l'avancement, les accès utilisés et les points où une décision est attendue.\n\n## Un même produit, plusieurs modes\n\nCes catégories coexistent. La rédaction peut fonctionner en copilote tandis que la collecte d'informations passe par un agent. **On choisit un mode par tâche, voire par étape**, et pas pour le produit entier : le nom commercial d'un produit ne renseigne pas sur ce qu'il fait.\n\nPour classer une situation, trois questions suffisent : **qui déclenche, qui décide, qui exécute ?**\n\n## Nuances\n\n- La carte des modes est un outil de discussion, pas une taxonomie rigide.\n- L'effort humain dépend de la qualité de conception et de la tâche : un agent mal cadré peut demander beaucoup de surveillance.\n- Un copilote n'est pas forcément « asynchrone » : la collaboration peut être immédiate.\n\n## Mise en pratique\n\nClassez ces quatre situations : (1) l'outil résume un document après une demande ; (2) l'outil propose des modifications dans un document que vous éditez ; (3) l'outil classe automatiquement les messages indésirables ; (4) l'outil consulte trois sources, prépare une proposition et attend un accord avant de continuer. Corrigé : assistant, copilote, automatisation, agent avec point de validation. Acceptez une autre réponse si elle décrit clairement qui déclenche, qui décide et qui exécute."
+    },
+    {
+     "title": "Calibrer l'autonomie selon le risque métier",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDécider ce que l'IA peut faire seule, ce qu'elle propose et ce qu'elle transmet à une personne.\n\n## Deux axes de décision\n\nCroisez deux questions :\n- **Preuves** : sur quoi peut-on s'appuyer pour évaluer la réponse ?\n- **Impact** : que coûterait une erreur ?\n\nCela donne quatre situations types :\n- **Risque faible, résultat facile à vérifier** : automatisation envisageable (par exemple classer un document dans un dossier personnel, avec retour en arrière possible).\n- **Information insuffisante, risque faible** : dégradation gracieuse. Le service reste utilisable avec moins d'automatisation : plusieurs options, une question de précision, ou retour à la saisie manuelle.\n- **Impact fort** : validation réelle. Le commercial doit voir le client, le montant, la remise et la règle appliquée avant de décider.\n- **Risque fort et informations insuffisantes** : transfert à une personne compétente, avec ce qui a été trouvé, ce qui manque et ce qui a déjà été fait, pour éviter de refaire tout le travail.\n\n## Ce qui nourrit la « certitude »\n\nElle doit venir de **mesures et de vérifications adaptées à la tâche**, jamais du seul ton affirmatif de la réponse. On tient aussi compte des droits, du nombre de personnes touchées, du coût de l'erreur et de la possibilité de revenir en arrière.\n\nUne validation humaine doit pouvoir **changer le résultat**. Si l'utilisateur n'a ni les informations ni le temps de vérifier, le bouton « Valider » n'apporte presque aucun contrôle.\n\n## Calcul juste n'est pas action autorisée\n\nRègles fictives : devis D-1042 à 10 000 euros HT ; le conseiller approuve jusqu'à 10 % de remise ; au-delà, l'accord d'un responsable est requis. À 10 %, la remise est de 1 000 euros (total 9 000 euros HT). À 20 %, 2 000 euros (total 8 000 euros HT). Les deux calculs sont justes, mais le second n'est pas autorisé. **La qualité du calcul et le droit d'exécuter sont deux vérifications distinctes.**\n\n## Mise en pratique\n\nPlacez ces actions : (A) proposer un objet d'e-mail ; (B) appliquer 10 % et préparer le message ; (C) accorder 20 % sans accord du responsable ; (D) répondre alors que deux règles se contredisent. Pistes : A automatique et modifiable ; B calcul et brouillon possibles, mais modification du devis et envoi soumis aux droits ; C bloqué ; D afficher le désaccord, garder le brouillon, demander une décision humaine."
+    }
+   ]
+  },
+  {
+   "title": "Concevoir la collaboration et le contrôle",
+   "lessons": [
+    {
+     "title": "La boucle Human-in-the-Loop",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDéfinir concrètement la place de l'humain dans le fonctionnement du produit, au-delà de la formule « l'humain valide ».\n\n## Les trois temps de la boucle\n\n1. **L'IA produit une proposition lisible.** L'utilisateur doit retrouver les données importantes, comprendre ce qui a été déduit et voir ce qui manque.\n2. **L'humain accepte, corrige ou refuse.** Il faut définir qui intervient et avec quels droits. Le conseiller peut modifier un brouillon ; le responsable peut approuver une remise au-dessus du plafond. Ce sont deux rôles différents.\n3. **Le système décide de ce qu'il fait du retour.** Une correction peut simplement modifier le document en cours, enregistrer une préférence, ouvrir un signalement ou alimenter un jeu de tests.\n\n## « Le système apprend » : préciser le mécanisme\n\nUn clic ne change pas automatiquement le modèle. Un processus réaliste : une équipe analyse les retours, corrige une source, ajuste les consignes, puis **teste la nouvelle version avant de la diffuser**.\n\nCe point compte pour l'utilisateur : si on lui annonce que l'IA a appris, il s'attend à ne plus revoir l'erreur. Soyez précis sur ce qui a réellement été enregistré.\n\n## Rendre le contrôle utile et supportable\n\nL'humain doit se concentrer sur ce qui demande son jugement, avec une commande pour arrêter le traitement. Une réponse comme « l'humain contrôle » reste incomplète tant que l'on ne sait pas **qui valide, quelle information il consulte et quelle action il peut refuser**.\n\n## Exemple de scénario\n\nBrouillon simulé : « Nous confirmons une remise de 20 %. » Le conseiller corrige à 10 %. Le calcul est refait avec la règle fixe : remise de 1 000 euros, total de 9 000 euros HT. Le système affiche : « Brouillon corrigé. Aucun message envoyé. Souhaitez-vous signaler une erreur de règle ? »\n\nQu'est-ce qui a changé dans le système ? Le brouillon courant et son calcul. Si un signalement est choisi, un retour peut être enregistré pour analyse. Aucune modification du modèle ne doit être supposée.\n\n## Question de réflexion\n\nDans un produit que vous connaissez, qui valide, que voit-il et que peut-il refuser ?"
+    },
+    {
+     "title": "Rendre l'incertitude visible",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nConcevoir des messages qui aident l'utilisateur à savoir **quoi vérifier**, plutôt que des scores opaques.\n\n## Le piège du badge chiffré\n\nUn badge « Match : 82 % » pose une question : que mesure ce chiffre ? La proximité entre deux textes ? Une fréquence de succès observée sur des cas comparables ? Une simple estimation produite par le modèle ? Selon la réponse, on ne peut pas en tirer les mêmes conclusions. Si le chiffre n'est pas justifiable, mieux vaut une information actionnable : « Deux sources se contredisent sur le plafond de remise. Vérification nécessaire. »\n\n## Distinguer établi et hypothèse\n\nUne augmentation du chiffre d'affaires peut être mesurée dans les données ; son lien avec une campagne marketing demande une autre preuve. L'interface doit rendre cette différence compréhensible.\n\n## Des explications vérifiables\n\nPour le commercial, afficher la règle utilisée, sa date et le passage concerné vaut mieux qu'une longue justification rédigée par l'IA. **Une explication bien écrite peut aussi être fausse.** Les liens doivent ouvrir les vrais documents utilisés, au bon passage.\n\n## Accessibilité\n\nNe comptez pas sur la couleur seule : accompagnez-la d'un texte ou d'un symbole explicite. Un surlignage jaune ne dit ni ce qui est douteux ni l'action attendue.\n\n## Exemple de réécriture\n\nMessage à corriger : « Remise approuvée. Confiance : 98 %. » Contexte : la politique à jour limite le conseiller à 10 %, une ancienne campagne mentionne 20 %, le client demande 20 %.\n\nVersion possible : « La remise de 20 % dépasse votre plafond de 10 %. Une ancienne campagne mentionne 20 %, mais son application à ce dossier n'est pas confirmée. Demandez l'accord du responsable. Aucun devis modifié, aucun message envoyé. »\n\nCette version isole le fait vérifié (plafond actuel), l'information incertaine (campagne), la conséquence (accord nécessaire) et les commandes (« Consulter les sources », « Demander une validation », « Modifier le brouillon »).\n\n## Mise en pratique\n\nPrenez un écran IA que vous utilisez et listez chaque chiffre ou badge affiché. Pour chacun, pouvez-vous dire ce qu'il mesure ?"
+    },
+    {
+     "title": "Reprise de contrôle et gestion des erreurs",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nPermettre à l'utilisateur de corriger précisément ce qui est « presque bon », d'arrêter ou d'annuler, et de gérer les échecs d'exécution.\n\n## Corriger sans tout redemander\n\nQuand l'IA produit un résultat presque correct (un graphique, un brouillon), obliger l'utilisateur à réécrire un prompt l'oblige à traduire une petite correction en nouvelle demande, au risque de voir d'autres éléments changer. Proposez des **commandes directes** : champ de date, liste de choix, bouton pour masquer une partie. L'IA prépare une première version, l'interface permet des modifications précises. Ces commandes se réalisent avec une interface classique ; aucun protocole particulier n'est requis.\n\nPour le commercial : un champ « Taux de remise », un montant recalculé, un brouillon modifiable. Passer de 10 % à 8 % donne une remise de 800 euros et un total de 9 200 euros HT, en conservant destinataire, objet et passages déjà validés. L'ancien montant reste dans l'historique.\n\n## Arrêter, annuler, corriger : trois choses différentes\n\n- **Arrêter la génération** : interrompre un traitement en cours.\n- **Annuler une modification locale** : restaurer la version précédente du brouillon ou du devis, selon le périmètre annoncé.\n- **Corriger une action déjà exécutée** : un message envoyé ne peut pas toujours être rappelé. Annoncez la limite et proposez la suite adaptée.\n\nNe promettez jamais un retour arrière global sans mécanisme correspondant.\n\n## Quand l'issue est incertaine\n\nSi un appel réseau échoue, on ne sait pas toujours si l'action a eu lieu. Affichez un état **« Statut à vérifier »**, contrôlez le statut réel avant de proposer un nouvel essai et conservez un identifiant d'action pour éviter les doublons.\n\n## Question de réflexion\n\nQue doit faire exactement le bouton « Annuler » de votre produit avant, puis après l'envoi ?"
+    },
+    {
+     "title": "La friction désirable",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nSavoir quand ajouter volontairement un moment de vérification, et comment le concevoir pour qu'il serve vraiment.\n\n## Retirer des clics, mais pas partout\n\nOn cherche souvent à raccourcir les parcours. Pour une action à fort impact, on peut au contraire ajouter une vérification. Un bouton « Tout approuver » convient à un lot sans risque ; il devient dangereux si chaque élément exige un jugement, car l'utilisateur confirme alors une série sans regarder.\n\n## Une friction liée au contenu\n\nLes mécanismes mécaniques (maintenir un bouton trois secondes, faire défiler un texte obligatoirement) sont des options à tester : faire défiler ne prouve pas qu'on a lu, attendre ne prouve pas qu'on a repéré l'erreur. Préférez une confirmation qui **fait apparaître les éléments à contrôler**.\n\nComparez :\n- Version A : « Êtes-vous sûr ? Oui / Non. »\n- Version B : « Envoyer au client une proposition de 9 000 euros HT avec 10 % de remise ? » avec les commandes « Revenir au brouillon » et « Confirmer l'envoi ».\n\nLa version B rend visibles destinataire, montant et taux, donc permet de repérer une erreur. Son efficacité reste à tester avec des utilisateurs.\n\n## Friction et droits : deux choses distinctes\n\nSi le taux passe à 20 % sans accord du responsable, l'envoi reste bloqué pour ce rôle. Une confirmation supplémentaire du conseiller ne remplace pas le droit manquant. Et si le contenu change après une validation, **l'ancienne validation doit être réévaluée**.\n\n## Accessibilité\n\nUne commande qui impose de maintenir la souris peut exclure certains utilisateurs. Vérifiez l'usage au clavier et avec les outils d'assistance.\n\n## Point de vocabulaire\n\nLes références aux « Système 1 » et « Système 2 » de la psychologie cognitive servent d'intention : interrompre un automatisme pour faire vérifier un élément précis. Un bouton ne garantit pas, à lui seul, cette attention."
+    }
+   ]
+  },
+  {
+   "title": "Confiance, retours et interfaces agentiques",
+   "lessons": [
+    {
+     "title": "La confiance calibrée",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nViser une confiance qui correspond aux capacités réelles du produit, ni trop faible, ni trop forte.\n\n## Trois situations\n\n- **Défiance excessive** : l'utilisateur abandonne un outil pourtant utile, après une mauvaise première expérience, une promesse trop large ou des résultats difficiles à comprendre.\n- **Confiance excessive** : il accepte trop facilement une réponse fausse. Une interface soignée et un ton affirmatif donnent parfois une impression de fiabilité supérieure à la qualité réelle.\n- **Confiance calibrée** : il connaît le périmètre de l'outil. Il sait que l'assistant peut préparer un brouillon et retrouver une règle, et qu'une remise exceptionnelle demande une validation.\n\nLa courbe qui illustre ces situations est un schéma pédagogique, pas une mesure ni une formule pour calculer le niveau idéal de confiance.\n\n## Promettre ce que l'on peut vérifier\n\nPrésentez les capacités, les limites et l'état réel du travail. « J'ai préparé un brouillon » est vérifiable. « Je m'occupe de tout » crée une attente beaucoup plus large.\n\nUn ton chaleureux et un nom donné à l'assistant sont possibles, à condition de rester clair sur le fait qu'il s'agit d'un système automatisé. Lui attribuer une compréhension parfaite du client ou une responsabilité humaine fausse les attentes.\n\n## Réécriture\n\nMessage à corriger : « Je connais parfaitement votre client. Vous pouvez me faire confiance, j'ai tout géré. »\n\nVersion possible : « J'ai préparé un brouillon à partir du dossier et de la règle commerciale indiquée. Vérifiez le montant et le destinataire avant l'envoi. Aucun message n'a été envoyé. » Elle indique le travail effectué, les éléments utilisés, les vérifications attendues et l'état de l'envoi.\n\n## Satisfaction n'est pas justesse\n\nUn utilisateur très satisfait peut accepter une erreur. La satisfaction et la confiance déclarée doivent donc être comparées à la **qualité réelle des décisions**.\n\n## Question de réflexion\n\nQuelle phrase de votre produit promet plus que ce qu'il peut tenir ?"
+    },
+    {
+     "title": "Capter le feedback utile",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nRecueillir des retours exploitables sans alourdir l'expérience, et savoir ce qu'on a réellement le droit de promettre ensuite.\n\n## Signaux implicites\n\nLe comportement de l'utilisateur est un indice : déplacer un message classé indésirable vers un dossier important suggère une erreur de classement. Restez prudent : copier une réponse ne prouve pas qu'elle est juste, quitter une page ne prouve pas qu'elle était inutile.\n\n## Retours explicites\n\nUn simple pouce vers le bas ne dit pas quoi changer. Proposez des motifs courts : « Trop long », « Inexact », « Hors sujet » appellent des actions différentes. Une longueur excessive relève d'une préférence de rédaction ; une erreur factuelle demande de vérifier les sources ou le raisonnement.\n\nMieux encore, **lier le retour à l'élément concerné** : le commercial sélectionne le taux de remise et signale « Règle mal appliquée ». L'équipe sait quel champ pose problème et peut reproduire le cas.\n\nÉvitez le formulaire de dix questions : une catégorie courte puis un commentaire facultatif suffisent.\n\n## Confirmer honnêtement\n\n« Vos préférences ont été mises à jour » n'est acceptable que si une préférence a vraiment été enregistrée, avec un périmètre clair et la possibilité de la modifier. Sinon : « Votre signalement a été enregistré. »\n\n## Que conserver pour analyser un signalement ?\n\nLe type d'erreur, le champ concerné, la version du modèle et des consignes, les références des sources, la proposition et sa correction dans le périmètre autorisé. Ne conservez que ce qui est utile, accessible aux bonnes personnes et conforme à vos règles de protection des données.\n\n## Et ensuite ?\n\nL'équipe reproduit le problème sur un cas de test, corrige la source ou la configuration, vérifie le résultat avant diffusion. Le retour devient un élément d'amélioration **contrôlé**.\n\n## Mise en pratique\n\nConcevez les quatre motifs de signalement pour un écran IA de votre choix, puis écrivez la phrase de confirmation exacte."
+    },
+    {
+     "title": "Expérience agentique et Generative UI",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre comment une interface peut s'adapter au travail d'un agent tout en gardant des contrôles prévisibles.\n\n## Adapter la forme à la tâche\n\nL'IA peut adapter la forme de son résultat : un tableau pour comparer des offres, une fiche (devis, taux, montant) pour vérifier une remise. Sur une validation commerciale, on veut des champs stables, des montants vérifiables et une commande de confirmation. Sur une comparaison, davantage de souplesse de présentation est acceptable.\n\n## Trois familles d'approches\n\nDes protocoles et standards émergents structurent ces échanges. Les définitions ci-dessous sont simplifiées et valables à la date de rédaction ; consultez la documentation officielle pour l'état courant.\n\n- **Protocole agent-application (type AG-UI)** : un protocole d'échange entre un agent et une application destinée à l'utilisateur, qui peut transmettre avancement, messages et changements d'état. Il peut s'utiliser avec des composants préparés par l'équipe.\n- **Description déclarative d'interface (type A2UI)** : l'agent décrit l'interface en données structurées, que le client interprète avec un **catalogue de composants autorisés**. L'agent demande un formulaire ou une carte sans produire librement du code à exécuter.\n- **Interface fournie par un serveur d'outils (type MCP Apps)** : un serveur MCP fournit une interface interactive à une application compatible, affichée dans un cadre isolé avec des échanges contrôlés. Elle peut être préparée à l'avance ; sa génération en temps réel reste un choix de réalisation.\n\nCes approches couvrent des fonctions différentes et peuvent se compléter.\n\n## Le nom ne garantit pas la sécurité\n\nAucun nom de protocole ne définit à lui seul un niveau de sécurité. Examinez les composants, les droits et les actions réellement autorisés. Surtout : **masquer un bouton dans l'interface ne suffit pas**. Les droits se vérifient dans le service qui exécute l'action. Quelle que soit la technique, une demande de 20 % sans accord du responsable doit rester bloquée.\n\n## Mise en pratique\n\nPour la même validation (devis de 10 000 euros HT, remise de 10 %, total de 9 000 euros HT), esquissez une carte préparée par l'équipe, puis une description structurée (titre, champ de taux, total, bouton). Où vérifiez-vous que le conseiller a le droit d'accorder la remise ?"
+    },
+    {
+     "title": "Patterns et anti-patterns de conception",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDisposer de règles simples à reprendre en revue produit.\n\n## Quatre patterns\n\n- **Le libellé du bouton annonce l'action.** « Générer un brouillon » crée une proposition ; « Envoyer » n'apparaît que lorsque l'utilisateur a vu destinataire et contenu. Le mot « Envoyer » n'est pas un problème en soi : le problème est de mélanger génération et envoi, ou d'exécuter sans rendre les conséquences visibles.\n- **Les sources servent à vérifier.** Pour la remise, ouvrir la règle applicable, retrouver le plafond et sa date. Un lien vers un document qui ne contient pas l'information donne une fausse impression de preuve.\n- **Les retouches de l'utilisateur sont protégées.** Si le commercial a validé le montant et corrigé le nom du client, une nouvelle rédaction doit les conserver. Options : verrouiller des champs, régénération limitée, historique.\n- **Le contrôle de l'action finale est défini.** Action sensible : validation adaptée. Tâche à faible risque : délégation explicite, avec limites et moyen de la retirer. L'équipe doit savoir **ce qui est délégué, à qui, sur quel périmètre et avec quelle possibilité d'arrêt**.\n\n## Mini-audit\n\nInterface fictive : un bouton « Faire le nécessaire » génère et envoie le message ; une pastille « Vérifié » n'ouvre aucune source ; le bouton « Régénérer » remplace le texte et le montant déjà corrigés.\n\nTrois changements prioritaires :\n1. Séparer « Préparer le brouillon » de « Confirmer l'envoi », avec aperçu du destinataire et du contenu.\n2. Remplacer la pastille vague par des références vérifiables et un état correspondant aux contrôles réellement effectués.\n3. Régénérer la rédaction en conservant les champs validés, avec comparaison et restauration des versions.\n\n## Cas de régénération\n\n« Je garde le total de 9 000 euros HT et je raccourcis uniquement le message » : taux, montant et destinataire restent identiques. Si une nouvelle version touche un élément déjà approuvé, signalez le changement et redemandez la validation nécessaire.\n\n## Mise en pratique\n\nAuditez un produit IA de votre choix avec ces quatre patterns et notez trois écarts."
+    }
+   ]
+  },
+  {
+   "title": "Mesurer la collaboration humain-IA",
+   "lessons": [
+    {
+     "title": "Les indicateurs de l'expérience IA",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nChoisir et définir des indicateurs qui reflètent le travail réel et pas seulement les clics.\n\n## Quatre indicateurs, quatre précautions\n\n- **Taux d'acceptation** (suggestions gardées sans modification). Élevé, il peut traduire de bonnes propositions ou cacher des erreurs que personne n'a repérées.\n- **Taux d'intervention** (corrections humaines). Une hausse peut signaler un problème de qualité, ou montrer que les utilisateurs exploitent mieux les commandes de correction. Regardez le type de retouche et le temps qu'elle demande.\n- **Abandon.** Il peut venir de l'attente, d'un parcours peu clair ou d'un résultat inutile, ou du fait que l'utilisateur a déjà obtenu l'information. Identifiez l'étape.\n- **Confiance ou satisfaction déclarée.** C'est un retour déclaré, pas une mesure de justesse. Connaissez la question posée et le nombre de répondants. Un ratio de pouces positifs n'est pas automatiquement une note sur cinq.\n\nTout chiffre de tableau de bord montré en exemple est illustratif : ce n'est ni un objectif recommandé ni un résultat observé.\n\n## Indicateurs complémentaires pour le commercial\n\n- Le **temps total** pour produire une proposition correcte, relecture comprise.\n- Les **erreurs qui atteignent le client**.\n- La part des tentatives hors droits effectivement bloquées.\n\nComparez avec le parcours sans IA, et distinguez cas simples et demandes exceptionnelles.\n\n## Définir chaque indicateur\n\nPour chacun, précisez le dénominateur, la période de mesure, les cas exclus et les populations comparées. Avant d'interpréter un pourcentage, demandez-vous toujours : **un pourcentage de quoi ?**\n\n## Tester la vigilance\n\nOn peut utiliser des cas fictifs avec erreurs connues, dans une séance annoncée aux participants. Trois erreurs détectées sur quatre donnent 75 % de détection sur cet échantillon, un nombre trop petit pour estimer la performance en usage réel.\n\n## Question de réflexion\n\nQuel indicateur de votre produit pourrait s'améliorer alors que le travail réel se dégrade ?"
+    },
+    {
+     "title": "Exercice de calcul : bien choisir son dénominateur",
+     "kind": "exercise",
+     "body_md": "## Objectif\n\nCalculer des indicateurs sur deux bases différentes et éviter les conclusions abusives.\n\n## Données fictives\n\n- 100 sessions commencées.\n- 5 abandons avant l'apparition d'une suggestion.\n- 95 suggestions affichées.\n- Parmi elles : 70 acceptées sans retouche, 15 corrigées, 10 refusées.\n\nLes catégories de résultat sont exclusives dans cet exercice.\n\n## Questions\n\n1. Taux d'acceptation sans retouche parmi les suggestions affichées ?\n2. Taux de correction parmi les suggestions affichées ?\n3. Taux d'abandon parmi les sessions commencées ?\n4. Taux d'utilisation (avec ou sans retouche) parmi les suggestions affichées ?\n\nEssayez avant de lire la suite.\n\n## Corrigé\n\n1. 70 / 95 × 100 = 73,7 %.\n2. 15 / 95 × 100 = 15,8 %.\n3. 5 / 100 × 100 = 5 %.\n4. (70 + 15) / 95 × 100 = 89,5 %.\n\nLes refus représentent 10 / 95, soit 10,5 %. Acceptation, correction et refus totalisent 100 % des 95 suggestions. L'abandon utilise **un autre dénominateur** (100 sessions).\n\n## Technique\n\nÉcrivez les deux bases (« 100 sessions », « 95 suggestions ») et placez chaque événement dans la bonne base avant de calculer.\n\n## Peut-on dire que 89,5 % des suggestions sont correctes ?\n\nNon. Ce chiffre mesure leur **utilisation**. Il faut vérifier la qualité sur un échantillon et observer les erreurs acceptées.\n\n## Pour aller plus loin\n\nRefaites le calcul en ajoutant 8 suggestions acceptées qui contenaient une erreur découverte plus tard. Quelle part des suggestions utilisées était fausse ? Quel indicateur supplémentaire auriez-vous voulu avoir dès le départ ?"
+    }
+   ]
+  },
+  {
+   "title": "Atelier : le canevas agentique",
+   "lessons": [
+    {
+     "title": "Cadrer le cas et les quatre cases du canevas",
+     "kind": "exercise",
+     "body_md": "## Objectif\n\nConcevoir le parcours de l'assistant commercial en remplissant un canevas en quatre cases, puis expliquer ce que l'utilisateur voit avant qu'une action parte.\n\n## Matériel\n\nUne feuille, un tableau blanc ou un document partagé. Aucun compte, outil d'IA ni accès externe n'est nécessaire : les données sont fictives et le parcours est une simulation, sans envoi réel. Prévoyez environ 20 minutes seul ou en petit groupe.\n\n## Le dossier\n\nUn client demande 20 % de remise sur le devis D-1042 (10 000 euros HT). Le conseiller peut approuver jusqu'à 10 %. Au-delà, l'accord explicite d'un responsable est requis ; il n'existe pas au départ. La politique commerciale à jour confirme le plafond de 10 %. Une ancienne campagne mentionne 20 %, mais son application à ce dossier n'est pas établie.\n\nL'agent peut consulter le dossier et les documents autorisés, calculer des montants et préparer un brouillon. **La demande initiale n'autorise aucun envoi.**\n\n## Les quatre cases\n\n1. **Déclencheur** : ce que demande le conseiller, le périmètre, ce qui est affiché à l'écran (devis, client, mention « Préparation uniquement »).\n2. **Inférence de l'IA** : données consultées, outils (consultation, recherche documentaire, calculateur déterministe, génération de brouillon), ce que l'agent fait seul. Préciser le calcul à 10 % (1 000 euros, total 9 000 euros HT) et à 20 % (2 000 euros, total 8 000 euros HT, accord manquant).\n3. **Mode de secours** : que voit-on si les sources se contredisent, si le dossier est inaccessible, si le résultat d'une exécution est incertain ?\n4. **Validation** : qui valide quoi avant exécution, avec quelles informations visibles.\n\nAjoutez **une phrase exacte** affichée à l'utilisateur et **un indicateur de réussite** défini (dénominateur, période).\n\n## Questions pour vous guider\n\n- Où voit-on qu'aucun message n'a encore été envoyé ?\n- Que se passe-t-il si je remplace 10 % par 20 % ?\n- Qui peut approuver ce dépassement ?\n- Que conserve-t-on si je demande une nouvelle rédaction ?\n- Comment sait-on que l'envoi a réellement réussi ?\n\nSi vous êtes en groupe, une personne présente et une autre joue l'utilisateur qui cherche à mettre le parcours en défaut."
+    },
+    {
+     "title": "Corrigé commenté : un parcours pas à pas",
+     "kind": "exercise",
+     "body_md": "## Objectif\n\nComparer votre canevas à un parcours de référence. Plusieurs parcours sont acceptables si droits, états et actions restent cohérents.\n\n## Les quatre cases, version de référence\n\n1. **Déclencheur** : « Prépare une proposition sur le devis D-1042. Le client demande 20 %. Vérifie les règles et laisse-moi relire avant tout envoi. »\n2. **Inférence** : l'agent consulte le dossier, trouve le plafond actuel de 10 % et l'ancienne campagne, calcule avec un outil déterministe et prépare un brouillon à l'état « Brouillon ».\n3. **Secours** : si les sources divergent, afficher les deux références et ne pas choisir silencieusement la plus favorable. Commandes : « Consulter les sources », « Préparer à 10 % », « Demander un accord », « Reprendre manuellement ». Dossier inaccessible : conserver la saisie, indiquer ce qui manque. Résultat incertain : « Statut à vérifier ».\n4. **Validation** : pour 10 %, le conseiller habilité vérifie client, devis, taux, montant, destinataire, texte. Pour 20 %, accord explicite du responsable sur ce client, ce devis et ce taux. Les services vérifient les droits au moment de l'exécution. Si un élément change après validation, la validation est réévaluée.\n\n## Déroulé de simulation en sept étapes\n\n1. Le conseiller formule la demande ; le système annonce qu'aucun envoi n'aura lieu et montre les étapes observables.\n2. Les deux sources et leur désaccord sont affichés : aucune acceptation automatique de 20 %.\n3. « Préparer à 10 % » : taux 10 %, remise 1 000 euros, total 9 000 euros HT, statut « Non envoyé ».\n4. Le conseiller saisit 20 % : total 8 000 euros HT calculé, mais « Accord du responsable requis ». Modification et envoi restent bloqués pour ce rôle ; aucun message de confiance ni second clic ne contourne ce contrôle.\n5. Retour à 10 % et demande d'un texte plus court : seule la rédaction change, la version précédente reste récupérable.\n6. Aperçu final : client, devis, remise, total, destinataire, texte relu. Choix : revenir au brouillon ou confirmer. « Envoi simulé confirmé » n'apparaît qu'après l'étape de résultat prévue.\n7. Variante avec coupure : « Statut à vérifier », contrôle de l'envoi avant relance, identifiant d'action pour éviter le doublon.\n\n## Auto-évaluation sur 5 points\n\nUn point par critère : intention et périmètre explicites ; données, outils et autonomie définis ; mode de secours qui conserve le travail ; validation par le bon rôle sur la bonne version ; indicateur défini avec résultat attendu. **Un parcours qui permet un envoi non autorisé doit être corrigé, quel que soit le total.**\n\n## Erreurs fréquentes\n\n- « Confiance supérieure à 95 %, donc envoi automatique » : quelle mesure soutient le score ? Les droits restent nécessaires.\n- « L'humain valide tout » : qui, avec quelles informations, et que peut-il refuser ?\n- « En cas d'erreur, on recommence » : comment conserver la saisie et éviter le doublon ?\n- « L'IA apprend du clic » : quel mécanisme enregistre et utilise ce retour ?"
+    },
+    {
+     "title": "Checklist de l'UX IA et plan d'action",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDisposer d'une grille de relecture réutilisable et repartir avec un changement concret.\n\n## Trois points de relecture\n\n**1. Autonomie.** L'utilisateur comprend-il ce que le produit peut faire seul ? Voit-il les limites de la proposition et les informations à vérifier ? Dans notre cas, il distingue une demande de 20 %, une proposition à 10 % et un accord réellement obtenu.\n\n**2. Contrôle.** Peut-il modifier un champ, conserver ses retouches, arrêter le traitement ? Sait-il ce qui peut encore être annulé ? Testez aussi les cas inconfortables : source inaccessible, réponse incomplète, interruption au milieu du parcours.\n\n**3. Actions sensibles.** La validation affiche-t-elle les éléments utiles ? Est-ce la bonne personne qui décide ? Les droits sont-ils vérifiés au moment de l'exécution ?\n\n## Transformer en critères testables\n\n- « Si le conseiller saisit 20 % sans accord du responsable, l'envoi est bloqué et l'interface explique la prochaine étape. »\n- « Une nouvelle rédaction conserve le montant validé. »\n\nCôté PM : inscrire ces comportements au backlog avec les résultats attendus. Côté design : montrer les états du parcours et les commandes de reprise. Côté technique : relier les écrans aux vrais contrôles et aux vrais statuts.\n\n## Trois questions de vérification\n\n- Une réponse très assurée suffit-elle à autoriser une action ? **Non** : il faut les preuves adaptées, les droits et les validations du cas.\n- Un retour utilisateur modifie-t-il automatiquement le modèle ? **Non** : cela dépend du mécanisme réellement prévu.\n- Quel temps mesurer pour estimer le gain ? Le temps complet jusqu'à un résultat **correct**, avec relecture et corrections.\n\n## Plan d'action\n\nChoisissez une fonctionnalité IA que vous connaissez. Prenez un cas simple, un cas avec information manquante et un cas où l'IA se trompe. Si le parcours tient dans les trois situations, vous avez une base à tester avec des utilisateurs.\n\nEngagez-vous sur **une seule chose** à vérifier à votre prochaine revue : texte du bouton de validation, affichage d'une source, conservation des corrections ou traitement d'une erreur. Formulez-la de façon testable, par exemple : « L'utilisateur voit le montant et le destinataire avant de confirmer. »"
+    }
+   ]
+  }
+ ],
+ "quiz": {
+  "title": "Quiz du module",
+  "pass_percent": 70,
+  "max_attempts": null,
+  "questions": [
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle conséquence de conception découle du caractère probabiliste d'un produit IA ?",
+    "feedback": "Une même demande peut donner plusieurs réponses plausibles, et une phrase sûre d'elle peut être fausse. L'interface doit donc faciliter vérification et correction.",
+    "options": [
+     [
+      "Prévoir des réponses variables et des erreurs possibles, et rendre la vérification et la correction faciles",
+      true
+     ],
+     [
+      "Supprimer toute possibilité de modification pour garantir la cohérence",
+      false
+     ],
+     [
+      "Afficher systématiquement un pourcentage de certitude produit par le modèle",
+      false
+     ],
+     [
+      "Empêcher l'utilisateur de reformuler sa demande",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un modèle écrit « je suis sûr à 85 % ». Que peut-on en conclure ?",
+    "feedback": "Un pourcentage énoncé par un modèle n'est pas une mesure calibrée en soi. Il faut savoir ce qu'il mesure avant de l'afficher.",
+    "options": [
+     [
+      "Rien d'automatique : ce n'est pas nécessairement une probabilité fiable",
+      true
+     ],
+     [
+      "Que la réponse est correcte dans 85 % des cas observés",
+      false
+     ],
+     [
+      "Que le modèle a été validé à 85 % par des experts",
+      false
+     ],
+     [
+      "Que l'utilisateur peut valider sans vérifier",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans l'assistant commercial, que signifie « séparer la production d'un texte du droit d'exécuter une action » ?",
+    "feedback": "La proposition est modifiable ; l'exécution dépend des droits et des validations prévus. Produire du texte n'autorise pas l'action.",
+    "options": [
+     [
+      "Rédiger un brouillon ne donne aucun droit de modifier le devis ou d'envoyer le message",
+      true
+     ],
+     [
+      "Le texte doit toujours être écrit par un humain",
+      false
+     ],
+     [
+      "L'action ne doit jamais être automatisée, quel que soit le risque",
+      false
+     ],
+     [
+      "L'IA doit refuser de rédiger tout message contenant un montant",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un outil consulte trois sources, prépare une proposition et attend un accord avant de continuer. De quel mode relève-t-il ?",
+    "feedback": "Il enchaîne plusieurs étapes vers un objectif et prévoit un point de décision humain : c'est un agent avec validation.",
+    "options": [
+     [
+      "Agent avec point de validation",
+      true
+     ],
+     [
+      "Assistant à demande ponctuelle",
+      false
+     ],
+     [
+      "Automatisation en arrière-plan sans intervention",
+      false
+     ],
+     [
+      "Copilote dans un document partagé",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelles questions aident à classer une situation dans un mode d'interaction ?",
+    "feedback": "Le nom commercial ne renseigne pas sur ce que fait réellement l'outil ; on analyse chaque étape selon qui déclenche, décide et exécute.",
+    "options": [
+     [
+      "Qui déclenche, qui décide, qui exécute",
+      true
+     ],
+     [
+      "Quel est le nom commercial du produit",
+      false
+     ],
+     [
+      "Quel modèle est utilisé et sa taille",
+      false
+     ],
+     [
+      "Combien de clics comporte le parcours",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles affirmations sur les modes d'interaction sont exactes ?",
+    "feedback": "Les modes coexistent et se choisissent par tâche. L'effort humain dépend de la conception. Un copilote peut collaborer en temps réel.",
+    "options": [
+     [
+      "Un même produit peut combiner plusieurs modes selon les tâches",
+      true
+     ],
+     [
+      "Un filtre antispam relève de l'automatisation, avec récupération possible d'un message mal classé",
+      true
+     ],
+     [
+      "Un agent peut demander beaucoup de surveillance s'il est mal cadré",
+      true
+     ],
+     [
+      "Un copilote est nécessairement asynchrone",
+      false
+     ],
+     [
+      "Un agent ne demande jamais d'effort humain",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Risque fort et informations insuffisantes : que doit faire le produit ?",
+    "feedback": "On évite de faire reprendre tout le travail à la personne, tout en gardant un jugement humain pour un cas à fort enjeu.",
+    "options": [
+     [
+      "Transmettre le dossier à une personne compétente avec ce qui a été trouvé, ce qui manque et ce qui a déjà été fait",
+      true
+     ],
+     [
+      "Exécuter l'action en affichant un avertissement discret",
+      false
+     ],
+     [
+      "Demander à l'IA de recommencer jusqu'à obtenir un score élevé",
+      false
+     ],
+     [
+      "Afficher un message d'erreur et effacer le travail réalisé",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Le devis fait 10 000 euros HT et le plafond du conseiller est de 10 %. Un calcul à 20 % donne 8 000 euros HT. Que penser de ce calcul ?",
+    "feedback": "La qualité du calcul et le droit d'exécuter sont deux vérifications distinctes.",
+    "options": [
+     [
+      "Il est juste, mais l'action reste non autorisée sans accord du responsable",
+      true
+     ],
+     [
+      "Il est faux car la remise dépasse le plafond",
+      false
+     ],
+     [
+      "Il est autorisé car l'IA a bien calculé",
+      false
+     ],
+     [
+      "Il est autorisé si la confiance affichée dépasse 95 %",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Qu'est-ce qui doit nourrir le niveau de certitude utilisé pour calibrer l'autonomie ?",
+    "feedback": "Un ton assuré ou un beau texte ne prouvent rien. On tient compte des preuves, de l'impact et de la réversibilité.",
+    "options": [
+     [
+      "Des mesures et des vérifications adaptées à la tâche",
+      true
+     ],
+     [
+      "Les droits, le nombre de personnes touchées et le coût de l'erreur",
+      true
+     ],
+     [
+      "La possibilité de revenir en arrière",
+      true
+     ],
+     [
+      "Le ton affirmatif de la réponse",
+      false
+     ],
+     [
+      "La qualité de la rédaction du message",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un utilisateur corrige un brouillon. Qu'a-t-on le droit d'affirmer par défaut ?",
+    "feedback": "Un clic ne réentraîne pas le modèle. Une équipe peut analyser les retours, corriger une source ou des consignes, et tester avant diffusion.",
+    "options": [
+     [
+      "Le brouillon courant a changé ; aucune modification du modèle ne doit être supposée",
+      true
+     ],
+     [
+      "Le modèle a appris de la correction",
+      false
+     ],
+     [
+      "Le modèle ne fera plus jamais cette erreur",
+      false
+     ],
+     [
+      "Toutes les sources ont été mises à jour",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que signifie « l'humain contrôle » de façon suffisamment précise ?",
+    "feedback": "La formule reste vide tant que ces trois éléments ne sont pas précisés.",
+    "options": [
+     [
+      "On sait qui valide, quelle information il consulte et quelle action il peut refuser",
+      true
+     ],
+     [
+      "Un humain est mentionné dans la documentation",
+      false
+     ],
+     [
+      "Un bouton « Tout approuver » est présent",
+      false
+     ],
+     [
+      "Un responsable reçoit une copie de chaque message",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un badge « Match : 82 % » est affiché sans explication. Quel est le problème principal ?",
+    "feedback": "Proximité de textes, fréquence de succès ou estimation du modèle : les conclusions diffèrent. Une information actionnable vaut mieux.",
+    "options": [
+     [
+      "On ne sait pas ce que le chiffre mesure, donc on ne sait pas quoi en conclure",
+      true
+     ],
+     [
+      "Le chiffre est trop précis",
+      false
+     ],
+     [
+      "Les badges sont interdits en interface",
+      false
+     ],
+     [
+      "82 % est toujours un mauvais score",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels éléments rendent une explication utile à la vérification ?",
+    "feedback": "Une explication bien écrite peut être fausse ; on cherche des éléments vérifiables. La couleur seule n'est pas accessible.",
+    "options": [
+     [
+      "La règle utilisée et sa date",
+      true
+     ],
+     [
+      "Le passage concerné du document",
+      true
+     ],
+     [
+      "Un lien qui ouvre le vrai document source",
+      true
+     ],
+     [
+      "Une longue justification très bien rédigée par l'IA",
+      false
+     ],
+     [
+      "Un surlignage jaune sans texte",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "« Remise approuvée. Confiance : 98 %. » alors que le plafond du conseiller est de 10 % et le client demande 20 %. Quelle réécriture est la meilleure ?",
+    "feedback": "Le message doit isoler le fait vérifié, l'incertitude et la suite possible, avec les commandes adaptées.",
+    "options": [
+     [
+      "Indiquer que 20 % dépasse le plafond, signaler l'incertitude sur l'ancienne campagne et proposer de demander l'accord du responsable",
+      true
+     ],
+     [
+      "Conserver le message en augmentant la confiance à 100 %",
+      false
+     ],
+     [
+      "Retirer le message et ne rien afficher",
+      false
+     ],
+     [
+      "Afficher « Erreur » sans autre détail",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "L'utilisateur veut passer de 10 % à 8 % sur un brouillon. Quelle conception est préférable ?",
+    "feedback": "Des commandes directes évitent de traduire une petite correction en nouvelle demande et de voir d'autres éléments changer.",
+    "options": [
+     [
+      "Un champ de taux modifiable qui recalcule le montant en conservant les autres champs",
+      true
+     ],
+     [
+      "Lui demander de réécrire entièrement son prompt",
+      false
+     ],
+     [
+      "Régénérer tout le brouillon sans comparaison",
+      false
+     ],
+     [
+      "Bloquer toute modification après la première génération",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles actions sont distinctes dans la reprise de contrôle ?",
+    "feedback": "Ce sont trois situations différentes. Un message envoyé ne peut pas toujours être rappelé : il faut annoncer la limite.",
+    "options": [
+     [
+      "Arrêter la génération",
+      true
+     ],
+     [
+      "Annuler une modification locale",
+      true
+     ],
+     [
+      "Corriger une action déjà exécutée",
+      true
+     ],
+     [
+      "Rappeler automatiquement tout message envoyé",
+      false
+     ],
+     [
+      "Promettre un retour arrière global",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un appel réseau échoue pendant l'envoi : on ne sait pas si le message est parti. Que faire ?",
+    "feedback": "Relancer sans vérifier risque un doublon. Un identifiant d'action aide à l'éviter.",
+    "options": [
+     [
+      "Afficher « Statut à vérifier » et contrôler l'état avant tout nouvel essai",
+      true
+     ],
+     [
+      "Relancer immédiatement l'envoi",
+      false
+     ],
+     [
+      "Afficher « Envoyé » par défaut",
+      false
+     ],
+     [
+      "Effacer le brouillon",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle confirmation d'envoi rend le mieux une erreur détectable ?",
+    "feedback": "Les éléments à contrôler sont visibles. Les mécanismes mécaniques ne prouvent pas que l'erreur a été repérée ; l'efficacité reste à tester.",
+    "options": [
+     [
+      "« Envoyer une proposition de 9 000 euros HT avec 10 % de remise à ce client ? » avec les commandes Revenir au brouillon et Confirmer l'envoi",
+      true
+     ],
+     [
+      "« Êtes-vous sûr ? Oui / Non »",
+      false
+     ],
+     [
+      "Maintenir le bouton trois secondes sans autre information",
+      false
+     ],
+     [
+      "Faire défiler un texte obligatoire avant de pouvoir cliquer",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Le taux passe à 20 % sans accord du responsable. Une confirmation supplémentaire du conseiller suffit-elle ?",
+    "feedback": "La friction ne remplace jamais les droits. Si le contenu change, toute ancienne validation doit être réévaluée.",
+    "options": [
+     [
+      "Non : elle ne remplace pas le droit manquant, et l'envoi reste bloqué pour ce rôle",
+      true
+     ],
+     [
+      "Oui, une double confirmation vaut accord",
+      false
+     ],
+     [
+      "Oui, si le message affiche une forte confiance",
+      false
+     ],
+     [
+      "Oui, si le client est connu",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quand peut-on afficher « Vos préférences ont été mises à jour » ?",
+    "feedback": "Sinon, on écrit simplement « Votre signalement a été enregistré ». Le produit n'annonce que ce qu'il fait.",
+    "options": [
+     [
+      "Seulement si une préférence a réellement été enregistrée, avec un périmètre clair et modifiable",
+      true
+     ],
+     [
+      "Chaque fois que l'utilisateur clique sur un retour",
+      false
+     ],
+     [
+      "Dès qu'un utilisateur est satisfait",
+      false
+     ],
+     [
+      "Toujours, pour rassurer",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels éléments conserver pour analyser un signalement d'erreur ?",
+    "feedback": "On conserve ce qui est utile et accessible aux bonnes personnes, dans le respect des règles de protection des données.",
+    "options": [
+     [
+      "Le type d'erreur et le champ concerné",
+      true
+     ],
+     [
+      "La version du modèle et des consignes",
+      true
+     ],
+     [
+      "Les références des sources utilisées",
+      true
+     ],
+     [
+      "Toutes les données personnelles de l'utilisateur, sans limite",
+      false
+     ],
+     [
+      "Aucune information, pour simplifier",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est le piège d'un taux d'acceptation de 89,5 % ?",
+    "feedback": "Il faut vérifier la qualité sur un échantillon et observer les erreurs acceptées.",
+    "options": [
+     [
+      "Il mesure l'utilisation des suggestions, pas leur justesse : des erreurs ont pu être acceptées",
+      true
+     ],
+     [
+      "Il prouve que 89,5 % des suggestions sont correctes",
+      false
+     ],
+     [
+      "Il n'est jamais calculable",
+      false
+     ],
+     [
+      "Il est toujours trop bas",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "100 sessions commencées, 5 abandons, 95 suggestions affichées dont 70 acceptées sans retouche. Quel est le taux d'acceptation sans retouche parmi les suggestions affichées ?",
+    "feedback": "Le dénominateur correct est le nombre de suggestions affichées (95). L'abandon, lui, se mesure sur les 100 sessions.",
+    "options": [
+     [
+      "70 / 95, soit environ 73,7 %",
+      true
+     ],
+     [
+      "70 / 100, soit 70 %",
+      false
+     ],
+     [
+      "70 / 5, soit 1 400 %",
+      false
+     ],
+     [
+      "(70 + 5) / 100, soit 75 %",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi une hausse du taux d'intervention n'est-elle pas forcément mauvaise ?",
+    "feedback": "Elle peut aussi signaler un problème de qualité : il faut regarder le type de retouche et le temps qu'elle demande.",
+    "options": [
+     [
+      "Elle peut montrer que les utilisateurs exploitent mieux les commandes de correction",
+      true
+     ],
+     [
+      "Parce qu'une correction n'a jamais de coût",
+      false
+     ],
+     [
+      "Parce qu'elle prouve que le modèle s'améliore",
+      false
+     ],
+     [
+      "Parce qu'elle réduit automatiquement l'abandon",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel temps faut-il mesurer pour estimer le gain apporté par l'IA sur la proposition commerciale ?",
+    "feedback": "Un brouillon rapide qu'il faut longuement corriger peut faire perdre du temps. Comparez au parcours sans IA.",
+    "options": [
+     [
+      "Le temps complet jusqu'à un résultat correct, relecture et corrections comprises",
+      true
+     ],
+     [
+      "Le temps de génération du brouillon",
+      false
+     ],
+     [
+      "Le temps de lecture de la première réponse",
+      false
+     ],
+     [
+      "Le nombre de clics sur « Générer »",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "À propos des approches d'interface agentique (protocole agent-application, description déclarative, interface fournie par un serveur d'outils), quelles affirmations sont justes ?",
+    "feedback": "Il faut examiner composants, droits et actions autorisées. Une demande hors droits doit rester bloquée quelle que soit la technique.",
+    "options": [
+     [
+      "Leur nom ne garantit pas à lui seul un niveau de sécurité",
+      true
+     ],
+     [
+      "Les droits doivent être vérifiés dans le service qui exécute l'action",
+      true
+     ],
+     [
+      "Elles peuvent se compléter car elles couvrent des fonctions différentes",
+      true
+     ],
+     [
+      "Masquer un bouton dans l'interface suffit à empêcher une action interdite",
+      false
+     ],
+     [
+      "Elles dispensent de définir des validations",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans le mini-audit, un bouton « Régénérer » remplace le texte et le montant déjà corrigés par l'utilisateur. Quelle est la correction prioritaire ?",
+    "feedback": "Les retouches de l'utilisateur doivent être protégées : champs verrouillés, régénération limitée et historique.",
+    "options": [
+     [
+      "Régénérer en conservant les champs validés, avec comparaison et restauration des versions",
+      true
+     ],
+     [
+      "Supprimer le bouton Régénérer",
+      false
+     ],
+     [
+      "Ajouter un message de félicitations après la régénération",
+      false
+     ],
+     [
+      "Cacher le montant",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Choisissez une fonctionnalité IA que vous connaissez. Décrivez un cas simple, un cas avec information manquante et un cas où l'IA se trompe : pour chacun, ce que voit l'utilisateur, ce qu'il peut modifier ou refuser, et qui valide avant une action sensible.",
+    "feedback": "Question relue par le formateur. Une bonne réponse précise les états de l'interface, les droits, le mode de secours et la conservation du travail de l'utilisateur.",
+    "options": []
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Proposez deux indicateurs pour évaluer la collaboration humain-IA sur votre cas. Pour chacun, indiquez le dénominateur, la période de mesure, une limite d'interprétation et ce que vous mesureriez en complément.",
+    "feedback": "Question relue par le formateur. Une bonne réponse précise le dénominateur, évite de confondre utilisation et justesse, et inclut le temps jusqu'à un résultat correct.",
+    "options": []
+   }
+  ]
+ },
+ "assignment": {
+  "title": "Livrable pratique : le parcours UX d'une fonctionnalité IA agentique",
+  "instructions_md": "## Objectif\n\nConcevoir et défendre le parcours complet d'une fonctionnalité IA qui agit pour un utilisateur, en montrant ce qu'il voit, ce qu'il contrôle et comment on mesure la réussite. Le livrable est réalisable sans accès à des données confidentielles : utilisez le cas de l'assistant commercial du module, ou un cas fictif de votre choix.\n\n## Consignes\n\n1. **Cadrez le cas.** Intention de l'utilisateur, tâche déléguée, règles fictives (plafond, rôles, droits) et ce que la demande initiale n'autorise pas.\n2. **Choisissez le mode d'interaction** (assistant, copilote, automatisation, agent) pour chaque étape, et justifiez en précisant qui déclenche, qui décide et qui exécute.\n3. **Remplissez le canevas en quatre cases** : déclencheur, inférence de l'IA (données, outils, autonomie), mode de secours, mécanisme de validation.\n4. **Dessinez ou décrivez cinq écrans ou états** : proposition, incertitude ou sources en désaccord, correction directe d'un champ, confirmation avant action sensible, statut après exécution (y compris « statut à vérifier »). Un schéma sur papier ou un wireframe simple suffit.\n5. **Rédigez trois messages exacts** affichés à l'utilisateur : un message d'incertitude, une confirmation d'action sensible et une confirmation de retour utilisateur qui ne promet que ce qui est réellement enregistré.\n6. **Définissez trois indicateurs** avec dénominateur, période et limites d'interprétation, dont le temps complet jusqu'à un résultat correct.\n7. **Écrivez cinq critères d'acceptation testables** (par exemple : « Si le rôle saisit un taux au-dessus du plafond sans accord, l'envoi est bloqué et l'interface explique la suite »).\n8. **Testez** votre parcours avec un cas simple, un cas avec information manquante et un cas où l'IA se trompe, et notez ce que vous changeriez.\n\n## Grille d'évaluation\n\n- Cadrage, choix du mode d'interaction et calibrage de l'autonomie selon le risque (**20 %**).\n- Qualité du canevas : droits, validation par le bon rôle sur la bonne version, aucune action non autorisée possible (**25 %**).\n- Rendu de l'incertitude, reprise de contrôle et mode de secours : écrans et messages exacts, honnêtes et vérifiables (**25 %**).\n- Indicateurs bien définis : dénominateurs, limites, distinction entre utilisation et justesse (**15 %**).\n- Critères d'acceptation testables et résultats des trois cas d'essai (**15 %**).\n\n## Rendu\n\nUn document (texte, PDF ou lien) avec les écrans ou schémas, les messages exacts, les indicateurs et les critères d'acceptation, ou un texte dans le champ de réponse."
+ }
+}

@@ -1,0 +1,758 @@
+{
+ "course": "M4",
+ "slug": "prompt-engineering",
+ "source": "Slides du formateur (module 4 : Introduction au Prompt Engineering), réécrits et complétés. Pas de vidéo : à ajouter depuis l'administration.",
+ "chapters": [
+  {
+   "title": "Comprendre le prompt engineering",
+   "lessons": [
+    {
+     "title": "Qu'est-ce que le prompt engineering ?",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDéfinir ce qu'est un prompt, comprendre pourquoi sa qualité change la valeur de la réponse, et voir que c'est une compétence de travail avant d'être une compétence technique.\n\n## Définition\n\nUn **prompt** est la consigne que vous donnez à un modèle de langage. Le **prompt engineering** (ingénierie de requête) consiste à formuler cette consigne avec méthode : tâche, contexte, contraintes, forme attendue, parfois exemples. Plutôt que de laisser le modèle répondre de façon générique, vous **cadrez** la réponse.\n\nUn prompt n'est pas une formule magique. C'est un mini-cahier des charges : une intention claire, un cadre, un rôle éventuel, et la responsabilité de savoir ce que l'on attend vraiment.\n\n## Même outil, résultats très différents\n\nComparez deux demandes :\n\n- *« Génère une fonctionnalité. »*\n- *« Propose une fonctionnalité pour une application mobile e-commerce, destinée à des utilisateurs pressés, qui aide à comparer deux produits en moins de 30 secondes, avec un focus sur le prix, les avis et la disponibilité en stock. »*\n\nLa première laisse le modèle deviner la cible, le canal, le critère de réussite. Il comblera ces blancs avec les hypothèses les plus courantes, donc souvent génériques. La seconde supprime ces choix implicites.\n\n## Pourquoi c'est un sujet de produit\n\nUn chef de produit passe sa vie à transformer des idées floues en spécifications. Rédiger un bon prompt mobilise exactement les mêmes réflexes : clarifier le problème, définir la cible, fixer un critère d'acceptation. Un prompt flou est comme une spécification mal écrite : il produit un résultat qu'il faudra corriger.\n\n## À retenir\n\n- Le prompt est une **consigne structurée**, pas une phrase magique.\n- La précision de la demande conditionne l'utilité de la réponse.\n- Vous restez **responsable** du résultat : le modèle assiste, vous décidez.\n\n## Pour réfléchir\n\nPrenez une demande que vous avez faite à un assistant cette semaine. Qu'aviez-vous laissé implicite que le modèle a dû deviner ?"
+    },
+    {
+     "title": "Cas d'usage au quotidien",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nRepérer les grandes familles de tâches pour lesquelles un assistant conversationnel apporte un gain, et savoir où le prompt fait la différence.\n\n## Six familles d'usages courantes\n\n- **Traitement de texte** : synthétiser, traduire, reformuler, produire une note de synthèse à partir d'un document que vous fournissez.\n- **Formation** : questions-réponses, explications adaptées à un niveau, proposition de parcours d'apprentissage.\n- **Analyse** : structurer une veille, comparer des options, explorer des documents publics.\n- **Réponse aux clients** : brouillons de réponses, base pour un assistant de support.\n- **Création** : générer, adapter ou décliner des contenus (idées, textes, variantes).\n- **Organisation** : planifier, structurer un agenda, préparer un ordre du jour.\n\n## Le gain de temps n'est pas automatique\n\nLe gain n'existe que si la demande est bien posée. Sinon vous passez le temps gagné à corriger, reformuler et vérifier. Le vrai levier n'est donc pas l'outil choisi, mais la **qualité de la demande** et la qualité de la relecture.\n\n## Quels usages pour un chef de produit ?\n\n- Reformuler un besoin utilisateur en user story candidate.\n- Synthétiser des retours d'utilisateurs.\n- Préparer une trame de comparaison entre deux options.\n- Rédiger une première version d'une communication de lancement.\n- Générer des cas limites pour compléter des critères d'acceptation.\n\nDans tous ces cas, le résultat est un **brouillon à retravailler**, pas un livrable final.\n\n## Mise en pratique\n\nChoisissez trois tâches de votre semaine à venir. Pour chacune, notez : l'entrée que vous fourniriez, la sortie utilisable que vous attendez, et la personne qui validera le résultat."
+    },
+    {
+     "title": "Limites et risques : biais et hallucinations",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nConnaître les deux risques principaux de l'IA générative au travail et en déduire des réflexes de vérification.\n\n## Les hallucinations\n\nUn modèle de langage produit du texte **plausible**. Il n'a pas de mécanisme intrinsèque qui garantit qu'une affirmation est vraie. Il peut donc inventer un chiffre, une source, une citation ou une fonctionnalité, avec un ton parfaitement assuré. On parle d'**hallucination**.\n\nIl peut être convaincant et faux en même temps. Plus une réponse est précise (chiffres, noms, références), plus il faut la vérifier.\n\n## Les biais\n\nLes modèles sont construits à partir de grandes quantités de textes produits par des humains. Ils peuvent donc reproduire des **biais** présents dans ces données, et orienter subtilement une analyse ou une formulation : stéréotypes, point de vue dominant, exemples centrés sur un contexte culturel particulier.\n\n## Un troisième point : la confidentialité\n\nCe que vous collez dans un outil public peut sortir de votre périmètre de contrôle. Avant d'envoyer un document, demandez-vous s'il contient des données personnelles ou confidentielles, et ce que votre organisation autorise. Anonymisez ou utilisez des données fictives.\n\n## Règle de travail\n\n> Toute réponse doit être **relue, comprise et validée** avant usage.\n\nL'IA assiste, elle ne décide pas à votre place. On ne cherche pas des réponses brillantes, on cherche des réponses **utilisables**.\n\n## Réflexes concrets\n\n- Demandez les **hypothèses** et les **limites** de la réponse.\n- Vérifiez toute donnée chiffrée ou citée dans une source indépendante.\n- Fournissez vous-même les faits (extraits, données) et demandez au modèle de s'y limiter.\n- Autorisez explicitement la réponse « je ne sais pas » ou « information non fournie ».\n\n## Question de réflexion\n\nDans votre métier, quelle serait l'erreur la plus coûteuse si une réponse inventée passait inaperçue ? Quel contrôle mettriez-vous en place ?"
+    },
+    {
+     "title": "Anatomie d'un bon prompt",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nIdentifier les cinq ingrédients que l'on retrouve, sous des noms différents, dans tous les frameworks de prompt.\n\n## Les ingrédients\n\n1. **La tâche** : ce que le modèle doit faire, avec un verbe d'action précis (rédiger, comparer, classer, résumer).\n2. **Le contexte** : situation, cible, canal, contraintes. Sans contexte, le modèle remplit les blancs à votre place.\n3. **Le rôle ou le point de vue** : qui parle ? Un analyste, un relecteur critique, un rédacteur pédagogue.\n4. **Le format** : forme et longueur de la sortie (email court, liste de cinq points, tableau décrit en texte, JSON).\n5. **Les exemples** : un ou plusieurs modèles de ce que vous considérez comme bon.\n\nS'y ajoutent souvent des **contraintes** (ce qu'il ne faut pas faire, limites de longueur, vocabulaire interdit) et une instruction sur la **gestion de l'incertitude**.\n\n## Un prompt, étape par étape\n\nPrompt initial : *« Écris un texte sur notre nouvelle fonction. »*\n\nPrompt retravaillé :\n\n- Contexte : application de réservation de cours de sport, utilisateurs actifs, peu de temps.\n- Tâche : rédiger un texte de présentation de la fonction « réservation en deux clics ».\n- Format : 5 à 6 lignes, ton simple, orienté bénéfice.\n- Exemple : une phrase d'accroche du ton souhaité.\n\n## Pièges fréquents\n\n- **Mélanger plusieurs intentions** dans une seule demande (résumer, critiquer et traduire à la fois) : la réponse devient confuse.\n- **Demander « des idées » sans critère** : le modèle ne sait pas ce qui est un bon résultat.\n- **Écrire un prompt énorme** sans structure : préférez des sections claires.\n- **Supposer que le modèle connaît votre contexte interne** : il ne le connaît que si vous le fournissez.\n\n## Mise en pratique\n\nPrenez un prompt que vous utilisez souvent. Soulignez chacun des cinq ingrédients. Lesquels manquent ? Ajoutez-en deux et comparez les résultats."
+    }
+   ]
+  },
+  {
+   "title": "Les frameworks de prompt",
+   "lessons": [
+    {
+     "title": "Pourquoi utiliser un framework ?",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre à quoi servent les frameworks de prompt et comment s'en servir sans les réciter.\n\n## Une aide à la réflexion\n\nUn framework est un **acronyme-checklist** : il vous force à vous poser les bonnes questions avant d'envoyer la demande. Ce n'est pas une recette figée. Son but est d'éviter de passer dix minutes à structurer chaque prompt.\n\nLa logique commune : si vous clarifiez le contexte, précisez l'action et définissez le format attendu, la réponse devient utile. Sinon elle reste vague, comme une spécification mal écrite.\n\n## Il en existe beaucoup\n\nOn rencontre de nombreux acronymes (APE, CARE, RACE, COAST, TAG, ERA, RISE, TRACE, ACTIF, et d'autres). Ils recoupent les mêmes ingrédients, ordonnés ou nommés différemment. Inutile de tous les mémoriser.\n\nCe module en retient quatre, choisis pour leurs usages complémentaires :\n\n- **CARE** : tâches créatives et de reformulation, où le contexte et l'exemple cadrent le résultat.\n- **ACTIF** : contenus lus par d'autres humains (emails, annonces), où le ton, l'identité et le format comptent.\n- **TRACE** : raisonnement structuré, arbitrages et recommandations.\n- **RISE** : analyse de matière brute (retours utilisateurs, verbatims, notes d'entretien).\n\n## Comment choisir ?\n\nPosez-vous une question : *quel est le principal risque de ma demande ?*\n\n- Résultat générique ou hors sujet : ajoutez contexte et exemple (**CARE**).\n- Message froid, mal ciblé ou mal formaté : travaillez ton, identité, format (**ACTIF**).\n- Conclusion hâtive ou non justifiée : guidez le raisonnement (**TRACE**).\n- Analyse brouillonne de données brutes : imposez des étapes (**RISE**).\n\n## À retenir\n\nUn bon framework est celui qui correspond à votre usage réel. Vous pouvez en adapter ou en créer un (leçon dédiée en fin de chapitre)."
+    },
+    {
+     "title": "Le framework CARE : Contexte, Action, Résultat, Exemple",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nMaîtriser CARE et l'appliquer à une tâche créative ou de reformulation.\n\n## Les quatre lettres\n\n- **C - Contexte** : la situation, pour qui, dans quel cadre, avec quelles contraintes (type de produit, cible, canal, contraintes de temps ou de ton). Objectif : éviter les réponses vagues ou hors sujet.\n- **A - Action** : ce que le modèle doit faire, dit clairement (rédiger, proposer, reformuler, résumer, structurer). Évitez « aide-moi » ou « donne-moi des idées ».\n- **R - Résultat** : ce que vous voulez obtenir concrètement : longueur, structure, style, niveau de détail.\n- **E - Exemple** : un modèle de ce que vous jugez bon (une phrase, un extrait, un ancien livrable). C'est souvent la partie qui fait le plus de différence.\n\n## Exemple concret\n\n- **Contexte** : application mobile de réservation de cours de sport. Cible : utilisateurs actifs, peu de temps, usage rapide.\n- **Action** : rédiger un texte de présentation d'une fonctionnalité.\n- **Résultat** : 5 à 6 lignes, ton simple et clair, orienté bénéfice pour l'utilisateur.\n- **Exemple** : « Réservez votre cours en deux clics, sans friction, même à la dernière minute. »\n\n## Quand l'utiliser\n\nPour orienter le modèle sur un angle précis, pour des tâches par reconnaissance de motifs (« fais comme dans l'exemple »), pour générer du contenu créatif dans une ligne éditoriale définie.\n\n## Piège\n\nUn exemple trop marquant est **copié** : le modèle reprend sa structure et ses tournures. Si vous voulez de la variété, fournissez deux exemples différents et précisez « inspirez-vous du niveau de qualité, pas de la formulation ».\n\n## Mise en pratique\n\nRédigez un prompt CARE pour obtenir une description de produit de trois lignes pour un outil de votre choix. Testez-le avec et sans la partie Exemple, puis notez la différence."
+    },
+    {
+     "title": "Le framework ACTIF : Action, Contexte, Tonalité, Identité, Format",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nUtiliser ACTIF pour produire des contenus destinés à d'autres humains avec le bon ton et la bonne forme.\n\n## Les cinq lettres\n\n- **A - Action** : ce que doit faire le modèle (rédiger un email, reformuler un message, préparer une annonce, structurer un argumentaire).\n- **C - Contexte** : la situation, la cible, le canal, les contraintes clés. Sans contexte, le modèle remplit les blancs à votre place, souvent mal.\n- **T - Tonalité** : la façon de s'exprimer (professionnelle et directe, simple et pédagogique, engageante mais sobre, rassurante et claire). C'est ici que l'on évite les messages froids, trop lisses ou trop marketing.\n- **I - Identité** : le rôle que prend le modèle (consultant produit expérimenté, designer pragmatique, manager proche de son équipe). On dit **qui parle**, pas seulement quoi dire.\n- **F - Format** : la forme finale (email, message court, post), le nombre de paragraphes, la présence d'un objet ou d'un appel à l'action.\n\n## Exemple concret\n\n- **Action** : rédiger un email de suivi après une réunion de cadrage.\n- **Contexte** : réunion de cadrage produit ; le destinataire hésite sur la prochaine étape.\n- **Tonalité** : professionnelle, claire, rassurante.\n- **Identité** : consultant produit expérimenté, orienté solution.\n- **Format** : email court : objet, deux paragraphes, une question de conclusion.\n\n## Pourquoi c'est efficace\n\nACTIF réduit les réponses génériques, améliore la qualité perçue des contenus et rappelle que **le prompt est déjà un acte de communication**. Si vous ne précisez ni le ton, ni l'identité, ni le format, le modèle choisit pour vous.\n\n## Attention au rôle\n\nDonner un rôle oriente le style et le point de vue, mais ne rend pas le modèle plus fiable sur les faits. « Agis comme un expert en X » ne remplace pas la vérification. Évitez aussi les rôles qui impliquent une valeur légale ou médicale que le modèle ne peut pas porter.\n\n## Mise en pratique\n\nRédigez un prompt ACTIF pour un email de remerciement après un échange téléphonique avec un client potentiel. Comparez avec la demande brute « écris un email de remerciement »."
+    },
+    {
+     "title": "Le framework TRACE : Task, Reasoning, Action, Constraints, Example",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nUtiliser TRACE quand il faut raisonner juste, pas écrire joli : arbitrages, recommandations, analyses.\n\n## Les cinq lettres\n\n- **T - Task** : le problème à résoudre, formulé comme une question produit claire (prioriser des fonctionnalités, analyser un compromis, préparer une décision).\n- **R - Reasoning** : le type de raisonnement attendu (comparer avantages et inconvénients, raisonner par impact utilisateur et effort, distinguer court et long terme, expliciter les hypothèses). Sans cela, le modèle improvise.\n- **A - Action** : le livrable final (recommandation argumentée, liste priorisée, plan en étapes).\n- **C - Constraints** : les règles qui rendent la réponse réaliste (budget, taille d'équipe, délai, dépendances techniques).\n- **E - Example** : un exemple de sortie attendue (recommandation en cinq points, conclusion en trois phrases).\n\n## Exemple concret : arbitrage produit\n\n- **Task** : décider s'il faut lancer une nouvelle fonctionnalité ou améliorer l'existant.\n- **Reasoning** : analyser impact utilisateur, coût de développement, risques.\n- **Action** : formuler une recommandation claire avec justification.\n- **Constraints** : équipe de trois développeurs, délai de six semaines.\n- **Example** : « Recommandation : améliorer l'existant en priorité car impact fort, coût maîtrisé, risque faible. »\n\n## Pourquoi c'est utile\n\nSi vous ne cadrez pas le raisonnement, vous obtenez une opinion bien formulée. TRACE aide à produire des recommandations dont on peut **discuter les hypothèses**, et réduit les conclusions hâtives.\n\n## Pièges\n\n- Demander une recommandation sans fournir les **faits** : le modèle inventera des données.\n- Oublier les contraintes : la réponse sera séduisante mais irréaliste.\n- Prendre la recommandation pour une décision : c'est une **entrée** pour votre arbitrage.\n\n## Mise en pratique\n\nReprenez une décision récente de votre équipe et écrivez-la sous forme TRACE. Qu'est-ce qui était implicite à l'époque et que le prompt vous oblige à expliciter ?"
+    },
+    {
+     "title": "Le framework RISE : Rôle, Inputs, Steps, Expected result",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nUtiliser RISE pour transformer de la matière brute (retours utilisateurs, verbatims) en insights exploitables.\n\n## Les quatre lettres\n\n- **R - Rôle** : l'angle d'analyse (analyste produit, designer UX, chercheur en recherche utilisateur). Il évite les lectures hors sujet.\n- **I - Inputs** : les données à analyser, fournies **brutes**, sans interprétation : verbatims, retours clients, notes d'entretien, réponses à un questionnaire. Règle simple : si l'entrée est floue, l'analyse le sera aussi.\n- **S - Steps** : les étapes attendues : regrouper par thème, identifier les irritants majeurs, repérer les signaux faibles, formuler des insights. On guide le chemin, pas seulement la destination.\n- **E - Expected result** : le résultat final concret : liste d'insights priorisés, synthèse en cinq points, recommandations actionnables.\n\n## Exemple concret\n\n- **Rôle** : designer UX senior.\n- **Inputs** : vingt verbatims issus de tests utilisateurs sur un tunnel de paiement.\n- **Steps** : regrouper par thème ; identifier les points de friction ; prioriser par fréquence et impact.\n- **Expected result** : une synthèse avec trois problèmes majeurs et des pistes d'amélioration.\n\n## Pourquoi c'est efficace\n\nRISE structure l'analyse qualitative, limite les interprétations hasardeuses et transforme du brut en décision. Donner de la matière brute sans méthode produit du bruit.\n\n## Points d'attention\n\n- **Exigez des preuves** : demandez que chaque thème soit appuyé par des citations tirées des verbatims fournis.\n- **Fréquences** : les comptages produits par un modèle de langage sont à vérifier à la main sur un petit échantillon.\n- **Données personnelles** : retirez noms et identifiants avant de les coller dans un outil.\n- **Échantillon** : une synthèse de vingt retours ne dit rien de la population entière.\n\n## Mise en pratique\n\nRédigez dix verbatims fictifs sur un parcours d'inscription, puis appliquez un prompt RISE. Vérifiez que chaque thème cité renvoie bien à des verbatims réels."
+    },
+    {
+     "title": "Exercice : comparer CARE, ACTIF, TRACE et RISE sur une même situation",
+     "kind": "exercise",
+     "body_md": "## Mission\n\nSentir par l'expérience la différence entre une demande floue et une demande cadrée. L'objectif n'est pas d'obtenir un prompt parfait mais de **comparer**.\n\nOutil : n'importe quel assistant conversationnel gratuit ou public. N'y saisissez que des données fictives.\n\n## Scénario fictif\n\nUne équipe lance en interne un nouvel outil d'assistance après plusieurs mois de test. Les collaborateurs le connaissent mais aucune communication officielle n'a été faite.\n\n## Étape 1 : la version floue (1 min)\n\nEnvoyez : *« Écris une communication pour le lancement de l'outil. »* Conservez la réponse.\n\n## Étape 2 : la version CARE (5 min)\n\n- **Contexte** : outil interne d'assistance, testé plusieurs mois, connu des collaborateurs, aucune communication officielle à ce jour.\n- **Action** : créer la communication interne de lancement officiel.\n- **Résultat** : un email, avec un bref rappel du contexte, une présentation de l'outil et de ses fonctions.\n- **Exemple** : une phrase d'accroche de votre choix, dans le ton souhaité.\n\n## Étape 3 : la version ACTIF (5 min)\n\nReprenez le même scénario avec une tonalité (par exemple engageante mais sobre), une identité (responsable de la communication interne) et un format précis (objet, trois paragraphes, un appel à l'action).\n\n## Étape 4 : un arbitrage avec TRACE (5 min)\n\nDemandez : *faut-il lancer cette communication par email ou par une session de démonstration en direct ?* Précisez le raisonnement attendu, les contraintes et le format de la recommandation.\n\n## Étape 5 : débrief\n\nRemplissez pour chaque version : ce qui est utilisable tel quel, ce qu'il faut corriger, ce qui a été inventé. Quel ingrédient a le plus changé le résultat ? Notez la réponse.\n\n## Ce qu'il faut observer\n\nLa version floue contient généralement beaucoup de formules génériques ; la version CARE s'ajuste au contexte ; la version ACTIF change nettement le ton et la forme. Les résultats varient d'une exécution à l'autre : relancez deux fois avant de conclure."
+    },
+    {
+     "title": "Créer et combiner ses propres frameworks",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nPasser de l'application d'un acronyme à la construction d'un cadre adapté à vos usages.\n\n## Pourquoi créer le sien ?\n\nLes frameworks existants sont des points de départ. Votre activité a ses propres besoins : un chef de produit voudra peut-être toujours préciser les utilisateurs cibles, les métriques de succès et les contraintes réglementaires. Un cadre sur mesure les rappellera automatiquement.\n\n## Méthode en quatre temps\n\n1. **Listez** cinq de vos demandes récurrentes (synthèse de réunion, rédaction de user story, réponse à un client...).\n2. **Identifiez** ce que vous précisez à chaque fois et ce que le modèle devine mal.\n3. **Nommez** les rubriques (quatre à six) et rédigez une question pour chacune.\n4. **Testez** sur trois cas réels fictifs, ajustez, puis conservez le gabarit.\n\n## Exemple d'hybride\n\nPartir de CARE et ajouter un **rôle** : Contexte, Action, Rôle, Résultat, Exemple. On obtient un cadre créatif qui bénéficie aussi d'un point de vue d'expert.\n\nAutre exemple : un gabarit pour la rédaction de user stories avec les rubriques Persona, Besoin, Contraintes, Format de sortie, Critères d'acceptation attendus.\n\n## Écrire un gabarit réutilisable\n\nUtilisez des **marqueurs** à remplir, par exemple :\n\n```\nContexte : [produit, cible, canal]\nAction : [verbe + livrable]\nRôle : [point de vue souhaité]\nRésultat : [format, longueur, ton]\nExemple : [modèle de sortie]\n```\n\n## Pièges\n\n- **Cadre trop lourd** : s'il faut cinq minutes pour le remplir, personne ne l'utilisera.\n- **Rubriques redondantes** : fusionnez celles qui se recoupent.\n- **Cadre jamais testé** : comparez toujours sa sortie à celle d'une demande simple.\n\n## Mise en pratique\n\nCréez un gabarit pour une tâche que vous répétez chaque semaine. Gardez-le dans un document partagé avec votre équipe et améliorez-le après chaque usage."
+    }
+   ]
+  },
+  {
+   "title": "Les méthodes de prompting",
+   "lessons": [
+    {
+     "title": "Zero-shot et few-shot",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDistinguer les prompts sans exemple (zero-shot) et avec quelques exemples (few-shot), et savoir quand utiliser chacun.\n\n## Définitions\n\n- **Zero-shot** : vous donnez uniquement l'instruction. Le modèle répond avec ses connaissances générales.\n- **Few-shot** : vous ajoutez un ou plusieurs exemples d'entrées et de sorties attendues. Le modèle n'est pas ré-entraîné : les exemples **orientent** sa réponse au sein de la conversation.\n\nLe terme *one-shot* désigne le cas d'un seul exemple.\n\n## Quand les utiliser\n\nCes approches conviennent bien quand :\n\n- le besoin est simple ;\n- le sujet est large ;\n- vous cherchez une réponse rapide ou êtes encore en phase d'exploration.\n\nLe few-shot est particulièrement utile pour **imposer un format**, un style ou un étiquetage précis (classification, extraction, reformulation).\n\n## Limites\n\nAvec peu de cadre, la qualité dépend presque entièrement de la formulation. Une demande vague donne une réponse vague ; une demande qui mélange plusieurs intentions donne une réponse confuse. Le modèle n'est pas là pour corriger votre flou : il peut l'amplifier. Pour des besoins précis ou des décisions, il faut davantage de structure.\n\n## Conseils pour de bons exemples\n\n- Choisissez des exemples **représentatifs**, y compris un cas difficile ou ambigu.\n- **Variez** les cas : si tous vos exemples sont positifs, le modèle penchera vers « positif ».\n- Gardez un **format identique** pour chaque exemple.\n- Évitez l'ordre trop régulier (alterner les étiquettes plutôt que de les regrouper).\n\n## À retenir\n\nZero-shot et few-shot sont parfaits pour démarrer et explorer. Dès que vous voulez maîtriser le résultat, structurez davantage la demande avec un framework."
+    },
+    {
+     "title": "Exercice : classification de sentiments en few-shot",
+     "kind": "exercise",
+     "body_md": "## Mission\n\nMesurer l'effet des exemples sur une tâche de classification. Outil : n'importe quel assistant conversationnel public. Les textes sont fictifs.\n\n## Étape 1 : zero-shot\n\nEnvoyez :\n\n```\nClasse le texte suivant en positif, neutre ou négatif.\nTexte : Le choix des activités est très pertinent\nClassification :\n```\n\nNotez la réponse et son format (une seule étiquette ? une phrase d'explication ?).\n\n## Étape 2 : few-shot\n\nEnvoyez maintenant :\n\n```\nClasse le texte en positif, neutre ou négatif.\n\nTexte : Aujourd'hui, il fait un temps magnifique\nClassification : Positif\n\nTexte : Les meubles sont grands.\nClassification : Neutre\n\nTexte : Je n'aime pas votre attitude\nClassification : Négatif\n\nTexte : Le choix des activités est très pertinent\nClassification :\n```\n\nComparez : la réponse est-elle plus brève, mieux formatée, identique en contenu ?\n\n## Étape 3 : cas difficiles\n\nAjoutez à votre liste trois textes ambigus et testez-les dans les deux modes :\n\n- une ironie (« Bravo, encore une mise à jour qui casse tout. ») ;\n- une phrase factuelle avec un mot négatif (« Le service a été interrompu hier de 10 h à 11 h. ») ;\n- un avis mitigé (« Beau design, mais l'application est lente. »).\n\nLes modèles hésitent souvent sur ces cas. Que faites-vous : ajouter une quatrième étiquette « mitigé », ajouter un exemple de chaque type, préciser une règle dans l'instruction ?\n\n## Étape 4 : bilan\n\n- Quels gains apporte le few-shot sur le format ?\n- Quelle règle de classification avez-vous dû expliciter ?\n- Pour un usage en production, comment mesureriez-vous la qualité ? Indice : un petit jeu de textes annotés à la main, et un calcul de la proportion de bonnes réponses (notion vue dans le module sur le Machine Learning)."
+    },
+    {
+     "title": "Chain-of-Thought : raisonner étape par étape",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre le Chain-of-Thought (chaîne de raisonnement), ses bénéfices et ses limites.\n\n## Principe\n\nAu lieu de demander directement une conclusion, vous demandez au modèle de **décomposer** le problème en étapes intermédiaires, puis de conclure. On cherche un raisonnement lisible, pas seulement une réponse.\n\nDeux façons de l'obtenir :\n\n- **Demander le raisonnement** : « Indique ton raisonnement étape par étape. »\n- **Imposer la méthode** : vous listez vous-même les étapes à suivre (vérifier A, puis évaluer B, puis conclure).\n\n## Une analogie\n\nPréparer un plat : on fixe l'objectif, on liste les ingrédients, on prépare avant de lancer, on suit l'ordre des étapes, on contrôle en cours de route, on combine au bon moment, on vérifie le résultat, puis on retient la leçon. Sauter une étape ou changer l'ordre dégrade le résultat. Le raisonnement guidé fonctionne de même.\n\n## Quand l'utiliser\n\n- Questions complexes à plusieurs paramètres.\n- Analyse d'un problème utilisateur, comparaison d'options, recommandation.\n- Situations où une réponse rapide mais approximative ne suffit pas.\n\n## Bénéfices\n\nMeilleure cohérence, et surtout **lisibilité** : vous pouvez vérifier si la logique tient, repérer une hypothèse fragile, ajuster.\n\n## Limites\n\n- Réponses plus longues et plus lourdes à relire.\n- Un raisonnement peut **paraître logique et rester faux** si les données de départ sont incomplètes ou erronées.\n- La démarche est analytique : peu adaptée quand on cherche de l'intuition ou de la créativité brute.\n- Le raisonnement affiché n'est pas toujours le reflet fidèle du calcul interne du modèle : traitez-le comme une explication à examiner, pas comme une preuve.\n- À la date de rédaction, certains modèles raisonnent par défaut avant de répondre ; demander « étape par étape » y est moins déterminant. Testez sur votre outil.\n\n## À retenir\n\nLe Chain-of-Thought est un outil pour **penser**, pas seulement pour répondre. Dès qu'il y a une décision, un arbitrage ou une logique à tester, il est utile."
+    },
+    {
+     "title": "Exercice : du raisonnement demandé au raisonnement imposé",
+     "kind": "exercise",
+     "body_md": "## Mission\n\nComparer trois façons de poser la même question. Outil : un assistant conversationnel public ; données fictives.\n\n## Application 1 : demander le raisonnement\n\nEnvoyez :\n\n```\nGénère au moins 10 idées d'activités pour un événement d'entreprise. Ces idées doivent être innovantes et ordonnées en grandes thématiques. Indique-moi ton raisonnement étape par étape.\n```\n\nObservez : le raisonnement explique-t-il vraiment pourquoi les idées sont innovantes, ou répète-t-il la demande ?\n\n## Application 2 : imposer la méthode\n\nEnvoyez un prompt qui fixe les étapes. Exemple, dans un contexte de gestion d'un dossier fictif de remboursement :\n\n```\nTu es un analyste chargé d'examiner une demande de remboursement. Suis ces étapes :\n1. Vérification de la couverture : relis les conditions fournies ci-dessous et détermine si le cas est couvert, en citant la clause concernée.\n2. Évaluation des coûts : compare le montant réclamé avec les montants de référence fournis.\n3. Conclusion : accepte, refuse ou demande des pièces complémentaires, avec une justification en trois phrases.\n\nConditions : [collez ici trois ou quatre clauses fictives]\nDemande : [décrivez un cas fictif avec un montant]\nMontants de référence : [fournissez deux ou trois valeurs fictives]\n```\n\nObservez : le modèle respecte-t-il l'ordre ? Cite-t-il bien les clauses fournies ou invente-t-il d'autres règles ?\n\n## Application 3 : tester les limites\n\nSupprimez volontairement une des clauses essentielles et relancez. Le modèle signale-t-il l'information manquante, ou comble-t-il le vide avec une règle inventée ? Ajoutez ensuite la consigne : *« Si une information nécessaire manque, dis-le et ne conclus pas. »*\n\n## Bilan\n\n- Quelle application a produit la sortie la plus facile à vérifier ?\n- Dans un vrai produit, qui validerait la décision finale ? Un raisonnement convaincant ne remplace pas une validation humaine."
+    },
+    {
+     "title": "Self-consistency : croiser les réponses",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nUtiliser la cohérence entre plusieurs réponses pour sécuriser une décision.\n\n## Principe\n\nAu lieu de faire confiance à une seule réponse, vous demandez au modèle **plusieurs réponses ou raisonnements** à la même question, puis vous cherchez ce qui **converge**. Ce n'est pas le chemin qui compte le plus, mais la stabilité de la conclusion.\n\nDans les travaux de recherche, la méthode consiste à générer plusieurs chemins de raisonnement et à retenir la conclusion qui revient le plus souvent. En usage quotidien, on l'applique de façon plus simple.\n\n## Deux applications concrètes\n\n1. **Répéter la même demande** plusieurs fois (idéalement dans des conversations distinctes), comparer les réponses et retenir ce qui fait consensus ou ce qui est le plus solide.\n2. **Changer de posture** : demander au modèle de jouer un expert tiers qui **challenge sa propre proposition** pour faire apparaître les angles morts et les failles.\n\n## Quand l'utiliser\n\n- Sujet complexe.\n- Enjeu de décision.\n- Volonté de réduire le risque d'erreur.\n\nC'est une méthode pour **sécuriser**, pas pour produire vite.\n\n## Un exemple de prompt de challenge\n\n```\nVoici un email de réponse à un client : [texte].\nTu es un responsable expérimenté. Challenge cet email : liste les faiblesses (ton, clarté, risques), puis propose une version améliorée.\n```\n\n## Limites\n\n- Plus long et plus coûteux en temps.\n- **Une conclusion stable peut quand même être fausse** : si le modèle repose sur la même lacune ou le même biais, les réponses se ressembleront et la cohérence sera trompeuse.\n- Aucune méthode ne remplace la vérification des faits.\n\n## À retenir\n\nSelf-consistency est une assurance supplémentaire quand l'enjeu est élevé. Combinez-la avec une vérification humaine et des sources indépendantes."
+    },
+    {
+     "title": "Exercice : rédiger puis challenger un email",
+     "kind": "exercise",
+     "body_md": "## Mission\n\nAppliquer un framework ACTIF puis une étape de challenge de type self-consistency. Outil : un assistant conversationnel public ; contexte fictif.\n\n## Étape 1 : le brouillon (ACTIF)\n\nEnvoyez un prompt de la forme suivante en adaptant le contenu :\n\n```\nAction : écris un email de remerciement après un appel avec un client.\nContexte : l'appel portait sur une éventuelle souscription à un contrat d'assurance. Le document de présentation sera joint.\nTonalité : rassurante et engageante, afin d'inciter à étudier l'offre.\nIdentité : conseiller relation client expérimenté.\nFormat : remerciement pour l'échange de ce matin, rappel des options proposées, puis mes coordonnées.\n```\n\n## Étape 2 : le challenge\n\nDans la même conversation, envoyez :\n\n```\nTu es le responsable du service relation client. Challenge l'email ci-dessus : identifie ses faiblesses puis propose une version plus pertinente.\n```\n\n## Étape 3 : la comparaison croisée\n\nOuvrez une **nouvelle conversation**, relancez l'étape 1 telle quelle, et comparez les deux brouillons : quels points reviennent à l'identique (probablement solides) ? Quels éléments changent (à examiner de près) ?\n\n## Étape 4 : vérification\n\nRelisez l'email final avec cette liste :\n\n- Aucune promesse que vous ne pouvez pas tenir (taux, garanties, délais).\n- Aucune information inventée (noms, dates, chiffres).\n- Mentions réglementaires éventuelles ajoutées par un humain compétent.\n- Ton conforme à celui de votre organisation.\n\n## Bilan\n\nNotez : combien de temps a pris le cycle complet, ce que le challenge a réellement apporté, et ce qu'il n'a **pas** détecté. Ce dernier point est le plus instructif."
+    },
+    {
+     "title": "Combiner frameworks et méthodes",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nAssocier un framework (la structure) et une méthode (la manière de raisonner) pour des besoins complexes.\n\n## Le principe\n\nUn **framework** organise le contenu de la demande ; une **méthode** pilote le comportement du modèle. Ils se combinent naturellement.\n\n## Trois combinaisons utiles\n\n### CARE + few-shot\n\nVous demandez au moins dix idées d'activités pour un événement d'entreprise, classées par grandes thématiques, avec les catégories en gras, un ton neutre et concis. Vous ajoutez deux ou trois exemples d'idées dans le niveau de qualité attendu. Le modèle respecte mieux l'esprit et la forme.\n\n### CARE + Chain-of-Thought\n\nMême demande, mais vous ajoutez : « Explique ton raisonnement en indiquant en quoi chaque idée est innovante. » Vous obtenez de quoi juger la pertinence de chaque proposition.\n\n### ACTIF + self-consistency\n\nVous rédigez un email avec ACTIF, puis vous demandez à un expert fictif (un responsable) de le challenger. Le contenu final est plus robuste.\n\n## Un exemple complet\n\nContexte : une équipe prépare le lancement d'un produit d'assurance **fictif** couvrant des événements imaginaires. Demande : un plan de communication sur trois mois, présenté sous forme de liste structurée avec, pour chaque action, objectif, échéance, format et cible, suivi d'un raisonnement sur les choix de priorité.\n\nSi l'outil n'affiche pas de tableaux, demandez des listes à rubriques constantes ou un format CSV facile à copier dans un tableur.\n\n## Règle d'économie\n\nPlus vous empilez, plus la réponse s'allonge et plus elle devient difficile à relire. Partez du plus simple, ajoutez un élément à la fois et gardez ce qui améliore réellement le résultat.\n\n## Mise en pratique\n\nChoisissez une demande de votre quotidien. Écrivez trois variantes : un framework seul, framework plus exemples, framework plus raisonnement guidé. Comparez-les sur vos critères de qualité."
+    },
+    {
+     "title": "Astuces et idées reçues sur les prompts",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDistinguer les astuces qui reposent sur de bonnes pratiques de celles qui relèvent de la superstition.\n\n## Les « astuces émotionnelles »\n\nOn rencontre des formules du type « prends une inspiration profonde », « c'est important pour ma carrière », « je sais que tu peux y arriver » ou « es-tu sûr de toi ? ». Elles jouent sur la motivation, la concentration, l'enjeu ou le doute.\n\nCe qu'on peut dire avec prudence :\n\n- Les modèles de langage sont entraînés sur des textes humains : leurs réponses peuvent varier selon le ton de l'instruction.\n- L'effet est **inconstant**, variable selon le modèle, la tâche et la version, et n'est jamais garanti.\n- Le gain, s'il existe, est bien plus faible que celui d'un contexte précis ou d'un exemple.\n\n## Ce qui fonctionne de façon plus fiable\n\n- **« Es-tu sûr ? »** utilisé comme **étape de vérification** : demandez plutôt « relis ta réponse et liste les points que tu ne peux pas justifier ».\n- **Demander de signaler l'incertitude** : « indique ce qui est supposé et ce qui est issu des données fournies ».\n- **Fixer un critère de qualité** : « la réponse est bonne si un débutant peut l'appliquer sans question ».\n\n## Bonnes pratiques d'itération\n\n1. Relancez avec **une seule modification à la fois**, sinon vous ne saurez pas ce qui a aidé.\n2. Gardez les versions : prompt, réponse, verdict.\n3. Si une réponse est mauvaise, **diagnostiquez** (contexte manquant ? tâche ambiguë ? format absent ?) avant d'ajouter des mots.\n4. Séparez les tâches : une conversation par sujet.\n\n## Éthique d'usage\n\nNe manipulez pas un modèle pour contourner ses garde-fous, et ne prétendez pas qu'un contenu généré est de votre seule main si votre organisation exige de le déclarer.\n\n## À retenir\n\nUn prompt clair vaut mieux qu'une formule ingénieuse. Testez toute astuce sur vos propres cas avant de l'adopter."
+    }
+   ]
+  },
+  {
+   "title": "Mise en pratique : construire et évaluer ses prompts",
+   "lessons": [
+    {
+     "title": "Créer son premier assistant personnalisé",
+     "kind": "exercise",
+     "body_md": "## Mission\n\nTransformer un bon prompt en **assistant réutilisable**. Plusieurs outils publics proposent cette fonction sous des noms variables (assistant personnalisé, projet avec instructions, agent configurable). Les options gratuites évoluent : vérifiez à la date de votre exercice ce que permet votre outil. À défaut, collez simplement votre gabarit au début de chaque nouvelle conversation, le principe reste le même.\n\n## Les cinq étapes\n\n1. **Nommer** l'assistant (par exemple « Rédacteur de user stories »).\n2. **Insérer le prompt** : le gabarit d'instructions (rôle, règles, format de sortie).\n3. **Ajouter des documents de contexte** si l'outil le permet : glossaire, charte de ton, exemples de bonnes sorties. N'importez que des documents publics ou fictifs.\n4. **Tester** sur trois cas, dont un cas limite.\n5. **Enregistrer et partager** avec votre équipe, en précisant ce qu'il fait et ne fait pas.\n\n## Exemple d'instructions pour un assistant de user stories\n\n```\nRôle : tu aides un chef de produit à rédiger des user stories.\nEntrée : une description de besoin en langage libre.\nRègles :\n- Produis une user story au format « En tant que [persona], je veux [action] afin de [bénéfice] ».\n- Ajoute trois critères d'acceptation vérifiables.\n- Liste les questions ouvertes. N'invente aucune donnée chiffrée.\n- Si le besoin est trop flou, pose d'abord au plus trois questions.\nFormat de sortie : titre, user story, critères d'acceptation, questions ouvertes.\n```\n\n## Tester l'assistant\n\nPréparez trois entrées : un besoin clair, un besoin vague, un besoin hors périmètre (qui n'est pas une user story). L'assistant doit réussir, poser des questions, et refuser poliment le troisième.\n\n## Pièges\n\n- **Instructions trop longues** qui se contredisent.\n- **Documents confidentiels** importés par commodité.\n- **Aucune consigne de refus** : l'assistant répond à tout, même hors sujet.\n\n## Livraison\n\nNotez la version de vos instructions et votre jeu de test : ce sont vos actifs réutilisables, à faire évoluer comme un produit."
+    },
+    {
+     "title": "Évaluer et améliorer un prompt comme un produit",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nAppliquer une démarche produit à vos prompts : critères, jeu de test, itération, versionnage.\n\n## Pourquoi évaluer ?\n\nUn prompt qui marche sur un exemple peut échouer sur le suivant. Les modèles produisent des réponses variables d'une exécution à l'autre. Pour fiabiliser un usage récurrent, on passe d'un test à l'œil à une **évaluation légère**.\n\n## Les quatre étapes\n\n1. **Définir les critères** de réussite : exactitude vis-à-vis des données fournies, respect du format, ton, longueur, absence d'invention.\n2. **Constituer un jeu de test** de cinq à dix cas : des cas typiques, des cas limites, et au moins un cas piège (information manquante, demande hors périmètre).\n3. **Noter** chaque réponse sur chaque critère (par exemple 0, 1 ou 2), de préférence avec deux relecteurs.\n4. **Itérer** : modifier le prompt sur un seul point, relancer tout le jeu, comparer.\n\n## Un petit journal de prompts\n\nPour chaque version, conservez : le texte du prompt, la date, le modèle ou l'outil utilisé, la note moyenne et les erreurs observées. Quand un outil change de version, relancez le jeu de test : le comportement peut changer sans que votre prompt ait bougé.\n\n## Les trois erreurs classiques\n\n- **Ne tester qu'un cas**, le plus favorable.\n- **Changer plusieurs choses à la fois**.\n- **Juger au ressenti** sans grille.\n\n## Lien avec l'évaluation en production\n\nSi un prompt est intégré à un produit, cette démarche devient le socle de l'évaluation continue, traitée dans le module consacré à l'évaluation et à l'observabilité.\n\n## Mise en pratique\n\nPrenez le prompt de votre assistant de l'exercice précédent, créez sept cas de test et notez-le. Quelle règle ajouteriez-vous au vu des échecs ?"
+    },
+    {
+     "title": "Récapitulatif du module",
+     "kind": "reading",
+     "body_md": "## Les dix idées à retenir\n\n1. Un **prompt** est une consigne structurée ; le prompt engineering est une compétence de travail, proche de la rédaction de spécifications.\n2. Les assistants servent de nombreux usages, mais le gain de temps dépend de la qualité de la demande.\n3. **Hallucinations, biais, confidentialité** : toute réponse doit être relue, comprise et validée.\n4. Un bon prompt combine **tâche, contexte, rôle, format, exemples** et, au besoin, contraintes.\n5. **CARE** : Contexte, Action, Résultat, Exemple. Pour créer et reformuler avec un cadre précis.\n6. **ACTIF** : Action, Contexte, Tonalité, Identité, Format. Pour les contenus lus par d'autres.\n7. **TRACE** : Task, Reasoning, Action, Constraints, Example. Pour raisonner et recommander.\n8. **RISE** : Rôle, Inputs, Steps, Expected result. Pour analyser de la matière brute.\n9. **Zero-shot / few-shot**, **Chain-of-Thought** et **self-consistency** sont des méthodes à choisir selon l'enjeu : exploration rapide, raisonnement lisible, décision à sécuriser.\n10. Un prompt se **teste et s'améliore** comme un produit : critères, jeu de test, versions.\n\n## Aide-mémoire de choix\n\n- Besoin simple et rapide : zero-shot, éventuellement avec un exemple.\n- Contenu à publier : ACTIF, puis relecture et challenge.\n- Décision à préparer : TRACE avec raisonnement explicite, puis vérification des faits.\n- Analyse de retours : RISE, avec citations obligatoires.\n- Tâche répétée : gabarit ou assistant personnalisé, avec jeu de test.\n\n## Pour aller plus loin\n\nLe prochain pas est d'automatiser vos prompts les plus utilisés, de mesurer leur qualité sur la durée et de les intégrer dans des produits, thèmes abordés dans les modules suivants du parcours."
+    }
+   ]
+  }
+ ],
+ "quiz": {
+  "title": "Quiz du module",
+  "pass_percent": 70,
+  "max_attempts": null,
+  "questions": [
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'est-ce que le prompt engineering ?",
+    "feedback": "Il s'agit de formuler avec méthode la consigne donnée à un modèle (tâche, contexte, format, exemples) pour cadrer et améliorer la réponse. Ce n'est ni un ré-entraînement du modèle ni une formule magique.",
+    "options": [
+     [
+      "Ré-entraîner un modèle sur ses propres données",
+      false
+     ],
+     [
+      "Formuler méthodiquement des consignes pour cadrer la réponse d'un modèle",
+      true
+     ],
+     [
+      "Écrire du code pour compiler un modèle de langage",
+      false
+     ],
+     [
+      "Choisir le modèle le plus rapide du marché",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi la demande « Propose une fonctionnalité pour une app mobile e-commerce, pour des utilisateurs pressés, qui aide à comparer deux produits en moins de 30 secondes » est-elle meilleure que « Génère une fonctionnalité » ?",
+    "feedback": "Elle précise cible, canal, contrainte et objectif, ce qui évite que le modèle devine ces éléments avec des hypothèses génériques.",
+    "options": [
+     [
+      "Parce qu'elle est plus longue",
+      false
+     ],
+     [
+      "Parce qu'elle réduit les choix implicites que le modèle devrait deviner",
+      true
+     ],
+     [
+      "Parce qu'elle utilise un vocabulaire technique",
+      false
+     ],
+     [
+      "Parce qu'elle empêche toute hallucination",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que désigne une hallucination d'un modèle de langage ?",
+    "feedback": "Le modèle produit un texte plausible mais non garanti vrai : chiffre, source ou fait inventé, présenté avec assurance.",
+    "options": [
+     [
+      "Un bug d'affichage de l'interface",
+      false
+     ],
+     [
+      "Une réponse plausible mais fausse ou inventée, énoncée avec assurance",
+      true
+     ],
+     [
+      "Un refus de répondre à la question",
+      false
+     ],
+     [
+      "Une réponse trop longue",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels réflexes réduisent le risque lié aux hallucinations ?",
+    "feedback": "Fournir les faits, autoriser le « je ne sais pas », demander les hypothèses et vérifier les chiffres sont des garde-fous efficaces. Un ton assuré n'est pas un gage d'exactitude.",
+    "options": [
+     [
+      "Fournir soi-même les données et demander de s'y limiter",
+      true
+     ],
+     [
+      "Autoriser explicitement la réponse « information non fournie »",
+      true
+     ],
+     [
+      "Faire confiance aux réponses chiffrées car elles sont précises",
+      false
+     ],
+     [
+      "Vérifier chiffres et sources dans une référence indépendante",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle est la règle de base avant d'utiliser une réponse d'IA dans un livrable ?",
+    "feedback": "Toute réponse doit être relue, comprise et validée : l'IA assiste, l'humain reste responsable de la décision.",
+    "options": [
+     [
+      "La publier si elle paraît cohérente",
+      false
+     ],
+     [
+      "La relire, la comprendre et la valider",
+      true
+     ],
+     [
+      "La faire reformuler par le même modèle sans autre contrôle",
+      false
+     ],
+     [
+      "La croire si elle cite des sources",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans le framework CARE, que signifie la lettre « E » ?",
+    "feedback": "E signifie Exemple : un modèle de ce que l'on considère comme un bon résultat, souvent l'élément qui change le plus la réponse.",
+    "options": [
+     [
+      "Évaluation",
+      false
+     ],
+     [
+      "Exemple",
+      true
+     ],
+     [
+      "Exigence",
+      false
+     ],
+     [
+      "Expertise",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels éléments relèvent du « Contexte » dans CARE ?",
+    "feedback": "Le contexte décrit la situation : produit, cible, canal, contraintes. Le format de sortie relève du Résultat et le modèle de sortie de l'Exemple.",
+    "options": [
+     [
+      "La cible utilisateur",
+      true
+     ],
+     [
+      "Le canal (application, email, présentation)",
+      true
+     ],
+     [
+      "La longueur attendue de la sortie",
+      false
+     ],
+     [
+      "Les contraintes de temps ou de ton",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pour quel besoin le framework ACTIF est-il particulièrement adapté ?",
+    "feedback": "ACTIF ajoute tonalité, identité et format : il convient aux contenus lus par d'autres humains (emails, annonces, messages).",
+    "options": [
+     [
+      "Analyser un fichier de données chiffrées",
+      false
+     ],
+     [
+      "Rédiger un contenu destiné à d'autres personnes avec le bon ton et la bonne forme",
+      true
+     ],
+     [
+      "Entraîner un modèle de classification",
+      false
+     ],
+     [
+      "Vérifier la véracité d'une citation",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans ACTIF, que précise la lettre « I » ?",
+    "feedback": "I correspond à l'Identité : le rôle ou le point de vue que le modèle doit prendre (qui parle).",
+    "options": [
+     [
+      "Les Instructions de sécurité",
+      false
+     ],
+     [
+      "L'Identité, c'est-à-dire le rôle du modèle",
+      true
+     ],
+     [
+      "L'Intention commerciale",
+      false
+     ],
+     [
+      "L'Importance de la demande",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que se passe-t-il si vous ne précisez ni ton, ni identité, ni format dans un contenu à rédiger ?",
+    "feedback": "Le modèle choisit pour vous, avec des valeurs par défaut souvent génériques.",
+    "options": [
+     [
+      "Le modèle refuse de répondre",
+      false
+     ],
+     [
+      "Le modèle choisit lui-même, souvent de façon générique",
+      true
+     ],
+     [
+      "Le modèle adopte automatiquement le ton de votre organisation",
+      false
+     ],
+     [
+      "Le modèle vous pose toujours les questions manquantes",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Donner un rôle au modèle (« agis comme un expert en… ») permet surtout de :",
+    "feedback": "Le rôle oriente le style et le point de vue, mais ne garantit pas l'exactitude des faits : la vérification reste nécessaire.",
+    "options": [
+     [
+      "Garantir l'exactitude des faits",
+      false
+     ],
+     [
+      "Orienter le style et l'angle de la réponse",
+      true
+     ],
+     [
+      "Accéder à des données confidentielles de l'expert",
+      false
+     ],
+     [
+      "Supprimer les biais",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "TRACE est surtout conçu pour :",
+    "feedback": "TRACE guide le raisonnement avant la réponse : arbitrages, comparaisons, recommandations.",
+    "options": [
+     [
+      "Écrire de façon élégante",
+      false
+     ],
+     [
+      "Structurer un raisonnement pour un arbitrage ou une recommandation",
+      true
+     ],
+     [
+      "Traduire un document",
+      false
+     ],
+     [
+      "Générer des images",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Parmi ces rubriques, lesquelles composent le framework TRACE ?",
+    "feedback": "TRACE = Task, Reasoning, Action, Constraints, Example. « Tone » et « Identity » appartiennent à ACTIF dans ce cours.",
+    "options": [
+     [
+      "Task",
+      true
+     ],
+     [
+      "Reasoning",
+      true
+     ],
+     [
+      "Tone",
+      false
+     ],
+     [
+      "Constraints",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi indiquer des contraintes (budget, équipe, délai) dans un prompt de recommandation ?",
+    "feedback": "Les contraintes rendent la recommandation réaliste ; sans elles, la réponse peut être séduisante mais inapplicable.",
+    "options": [
+     [
+      "Pour allonger la réponse",
+      false
+     ],
+     [
+      "Pour rendre la recommandation réaliste",
+      true
+     ],
+     [
+      "Pour que le modèle n'invente plus rien",
+      false
+     ],
+     [
+      "Pour éviter d'avoir à fournir des faits",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "RISE est le plus adapté pour :",
+    "feedback": "RISE impose un rôle, des inputs bruts, des étapes et un résultat attendu : idéal pour synthétiser des retours utilisateurs.",
+    "options": [
+     [
+      "Rédiger un slogan",
+      false
+     ],
+     [
+      "Analyser des verbatims ou retours utilisateurs bruts de façon structurée",
+      true
+     ],
+     [
+      "Choisir un modèle de langage",
+      false
+     ],
+     [
+      "Mesurer la latence d'une API",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle précaution est essentielle quand on demande une analyse thématique de verbatims à un modèle ?",
+    "feedback": "Les comptages et regroupements d'un modèle de langage peuvent être inexacts : exiger des citations et contrôler sur un échantillon limite les erreurs.",
+    "options": [
+     [
+      "Aucune, l'analyse est toujours exacte",
+      false
+     ],
+     [
+      "Exiger des citations tirées des verbatims et vérifier un échantillon à la main",
+      true
+     ],
+     [
+      "Supprimer tous les verbatims négatifs",
+      false
+     ],
+     [
+      "Demander un résultat en une seule phrase",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'est-ce qu'un prompt zero-shot ?",
+    "feedback": "Zero-shot : l'instruction seule, sans exemple.",
+    "options": [
+     [
+      "Un prompt sans aucun mot",
+      false
+     ],
+     [
+      "Un prompt qui contient uniquement l'instruction, sans exemple",
+      true
+     ],
+     [
+      "Un prompt qui ne peut pas échouer",
+      false
+     ],
+     [
+      "Un prompt exécuté sans connexion Internet",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles pratiques améliorent un prompt few-shot ?",
+    "feedback": "Exemples représentatifs, variés, de format identique et sans regroupement des étiquettes. Un seul type d'étiquette biaise le modèle.",
+    "options": [
+     [
+      "Utiliser des exemples représentatifs",
+      true
+     ],
+     [
+      "Varier les étiquettes des exemples",
+      true
+     ],
+     [
+      "Fournir uniquement des exemples positifs",
+      false
+     ],
+     [
+      "Garder un format identique pour chaque exemple",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est le principal intérêt du Chain-of-Thought pour un chef de produit ?",
+    "feedback": "Il rend le raisonnement lisible : on peut vérifier la logique, repérer une hypothèse fragile et ajuster.",
+    "options": [
+     [
+      "Il accélère toujours la réponse",
+      false
+     ],
+     [
+      "Il rend le raisonnement lisible et donc vérifiable",
+      true
+     ],
+     [
+      "Il garantit une conclusion exacte",
+      false
+     ],
+     [
+      "Il remplace la collecte de données",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles sont des limites du Chain-of-Thought ?",
+    "feedback": "Réponses plus longues, raisonnement plausible mais faux si données erronées, peu adapté à la créativité. Il n'est pas garanti correct.",
+    "options": [
+     [
+      "Réponses plus longues à relire",
+      true
+     ],
+     [
+      "Un raisonnement peut paraître logique et rester faux",
+      true
+     ],
+     [
+      "Il élimine toute erreur si les étapes sont listées",
+      false
+     ],
+     [
+      "Moins adapté à l'intuition et à la créativité brute",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "En self-consistency, que cherche-t-on à comparer ?",
+    "feedback": "On compare les conclusions de plusieurs réponses ou raisonnements pour repérer ce qui converge.",
+    "options": [
+     [
+      "Les longueurs des réponses",
+      false
+     ],
+     [
+      "La cohérence des conclusions de plusieurs réponses à la même question",
+      true
+     ],
+     [
+      "Le nombre de mots clés répétés",
+      false
+     ],
+     [
+      "La vitesse de réponse",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi une conclusion stable sur plusieurs réponses peut-elle rester fausse ?",
+    "feedback": "Si la lacune ou le biais est le même, les réponses convergent vers la même erreur : la cohérence ne prouve pas l'exactitude.",
+    "options": [
+     [
+      "Elle ne peut pas être fausse",
+      false
+     ],
+     [
+      "Parce que le modèle partage la même lacune ou le même biais dans chaque réponse",
+      true
+     ],
+     [
+      "Parce que la température est nulle par définition",
+      false
+     ],
+     [
+      "Parce que le few-shot n'a pas été utilisé",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Demander au modèle de jouer un responsable qui challenge son propre email relève de :",
+    "feedback": "C'est la seconde application de la self-consistency : changer de posture pour faire apparaître les angles morts.",
+    "options": [
+     [
+      "Zero-shot",
+      false
+     ],
+     [
+      "Self-consistency par changement de posture",
+      true
+     ],
+     [
+      "Fine-tuning",
+      false
+     ],
+     [
+      "Classification",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pour savoir quelle modification d'un prompt a amélioré le résultat, il faut :",
+    "feedback": "Changer un seul élément à la fois permet d'attribuer l'effet ; sinon on ne peut pas distinguer les causes.",
+    "options": [
+     [
+      "Modifier plusieurs éléments à la fois pour aller plus vite",
+      false
+     ],
+     [
+      "Modifier un seul élément à la fois et comparer sur le même jeu de test",
+      true
+     ],
+     [
+      "Allonger le prompt à chaque essai",
+      false
+     ],
+     [
+      "Changer d'outil à chaque essai",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle affirmation sur les « astuces émotionnelles » (« c'est important pour ma carrière ») est la plus juste ?",
+    "feedback": "L'effet éventuel est inconstant et plus faible que celui du contexte ou d'un exemple : à tester, jamais à considérer comme garanti.",
+    "options": [
+     [
+      "Elles garantissent de meilleures réponses",
+      false
+     ],
+     [
+      "Leur effet est inconstant et secondaire par rapport au contexte et aux exemples",
+      true
+     ],
+     [
+      "Elles sont interdites par tous les outils",
+      false
+     ],
+     [
+      "Elles remplacent un framework",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Que doit contenir un petit jeu de test pour évaluer un prompt ?",
+    "feedback": "Des cas typiques, des cas limites et un cas piège donnent une vision réaliste ; un seul cas favorable n'est pas représentatif.",
+    "options": [
+     [
+      "Des cas typiques",
+      true
+     ],
+     [
+      "Des cas limites",
+      true
+     ],
+     [
+      "Un cas piège (information manquante ou hors périmètre)",
+      true
+     ],
+     [
+      "Uniquement le cas le plus favorable",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Choisissez une tâche récurrente de votre métier. Écrivez un prompt structuré avec le framework de votre choix (CARE, ACTIF, TRACE ou RISE), justifiez ce choix et indiquez comment vous vérifieriez la réponse avant de l'utiliser.",
+    "feedback": "Question relue par le formateur. Une bonne réponse contient un prompt complet (contexte, action, format), une justification du framework et au moins deux contrôles concrets (faits, hypothèses, validation humaine, données confidentielles).",
+    "options": []
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Dans quels cas préférez-vous un prompt zero-shot, few-shot, Chain-of-Thought ou une vérification par self-consistency ? Illustrez avec un exemple de votre contexte.",
+    "feedback": "Question relue par le formateur. Une bonne réponse relie chaque méthode à l'enjeu (exploration rapide, format imposé, raisonnement à vérifier, décision à sécuriser) et mentionne les limites.",
+    "options": []
+   }
+  ]
+ },
+ "assignment": {
+  "title": "Livrable pratique : un prompt de référence testé et sa fiche d'évaluation",
+  "instructions_md": "## Objectif\n\nDémontrer que vous savez concevoir un prompt structuré pour un usage professionnel, le tester sur plusieurs cas et en documenter les limites.\n\n## Consignes\n\n1. **Choisissez une tâche récurrente** de votre métier (synthèse de retours utilisateurs, rédaction de user stories, email de suivi, préparation d'un arbitrage...). Utilisez uniquement des données **fictives ou publiques**.\n2. **Rédigez deux versions du prompt** :\n   - une version simple (une ou deux phrases) ;\n   - une version structurée avec un framework vu dans le module (CARE, ACTIF, TRACE, RISE) ou un framework hybride que vous créez, avec au moins une méthode : exemples, raisonnement guidé ou étape de challenge.\n3. **Testez-les sur au moins cinq cas** : trois cas typiques, un cas limite, un cas piège (information manquante ou demande hors périmètre). Utilisez l'outil conversationnel public de votre choix.\n4. **Rédigez une fiche de deux pages maximum** contenant :\n   - la tâche, le public et le critère de réussite ;\n   - les deux prompts (texte complet) ;\n   - un tableau de résultats sous forme de liste : pour chaque cas, une note de 0 à 2 sur chaque critère choisi (exactitude vis-à-vis des données, respect du format, ton, absence d'invention) ;\n   - les erreurs observées et ce que vous avez modifié ensuite (une modification à la fois) ;\n   - **trois risques** (hallucination, biais, confidentialité) et la façon dont vous les maîtrisez ;\n   - une recommandation : ce prompt peut-il être partagé avec une équipe ? Sous quelles conditions ?\n5. Joignez vos réponses brutes d'IA (ou des extraits) en annexe.\n\n## Grille d'évaluation\n\n- Qualité et structure du prompt : usage pertinent du framework et de la méthode choisie (**30 %**).\n- Rigueur des tests : cas variés, critères explicites, une modification à la fois (**25 %**).\n- Lecture critique : erreurs identifiées, hallucinations détectées, limites assumées (**25 %**).\n- Gestion des risques et de la confidentialité, recommandations (**10 %**).\n- Clarté de la fiche et respect du format demandé (**10 %**).\n\n## Rendu\n\nTexte dans le champ de réponse et/ou fichier PDF ou document. Ne transmettez aucune donnée confidentielle."
+ }
+}

@@ -1,0 +1,839 @@
+{
+ "course": "M11",
+ "slug": "rag",
+ "source": "Slides du formateur (module 11 : Retrieval Augmented Generation, fusionné avec le module 8), réécrits et complétés. Pas de vidéo : à ajouter depuis l'administration.",
+ "chapters": [
+  {
+   "title": "Pourquoi le RAG et comment il fonctionne",
+   "lessons": [
+    {
+     "title": "Les limites d'un modèle de langage seul",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre pourquoi un modèle de langage utilisé seul ne suffit pas pour un usage professionnel, et ce que le RAG vient corriger.\n\n## Trois limites naturelles\n\n- **Des connaissances figées.** Un modèle est entraîné à un moment donné. Un événement ou une règle publiée après son entraînement lui est inconnu.\n- **Aucun accès à vos données privées.** Il ne connaît ni vos procédures internes, ni vos bases clients, ni vos documents contractuels, sauf si on les lui fournit.\n- **Des réponses inventées.** Quand l'information lui manque, il peut produire une réponse fluide mais fausse. Il ne le fait pas par malveillance : il est conçu pour écrire la suite la plus plausible.\n\n## Pourquoi c'est un problème de produit\n\nUn conseiller qui répond à un client avec une règle de retour inexacte crée un litige. Dans un usage professionnel, une réponse approximative a un coût : il faut donc pouvoir **retrouver la source** et **vérifier** ce qui est affirmé.\n\n## Ce que le RAG propose\n\nRAG signifie *Retrieval Augmented Generation*, soit une génération enrichie par la recherche. L'idée est de fournir au modèle, au moment de répondre, les passages de documents qui concernent la question. Le modèle n'a plus à se souvenir : il lit, sélectionne et reformule.\n\n## Point d'attention\n\nLe RAG **réduit** le risque d'invention, il ne le supprime pas. Un modèle peut encore mal utiliser un bon contexte, et une recherche peut ramener un mauvais passage.\n\n## Question de réflexion\n\nDans votre activité, citez une question que vos collègues ou clients posent souvent et dont la réponse se trouve dans un document interne. Que se passerait-il si un assistant répondait de mémoire ?"
+    },
+    {
+     "title": "Le principe : un examen à livre ouvert",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nSavoir expliquer le RAG sans vocabulaire technique, puis le décomposer en étapes.\n\n## L'image du livre ouvert\n\nSans RAG, le modèle répond de mémoire, comme un étudiant qui essaie de se souvenir de son cours. Avec RAG, c'est un **examen à livre ouvert** : le système cherche d'abord les bonnes pages, puis le modèle rédige à partir de ces pages. Le rôle du modèle change : il ne devine plus, il **lit et synthétise**.\n\n## Le trajet en six temps\n\n1. L'utilisateur pose une **question**.\n2. Le système **recherche** des passages dans les documents de l'organisation.\n3. Il **sélectionne** un contexte réduit.\n4. Le modèle reçoit la question, le contexte et des **consignes** (répondre uniquement à partir du contexte, citer, dire quand l'information manque).\n5. Il rédige une **réponse**.\n6. La réponse s'accompagne de ses **sources**.\n\n## Ce que le RAG ne fait pas\n\n- Il **ne réentraîne pas** le modèle : les règles arrivent dans le contexte au moment de répondre. Pour actualiser une règle, on met à jour les sources et leur préparation, pas les paramètres du modèle.\n- Il ne garantit pas la qualité : si la recherche fournit une règle incomplète ou périmée, le modèle s'appuiera dessus.\n\n## Trois étapes à retenir\n\n**Préparer** les documents, **retrouver** les passages utiles, **répondre** à partir de ce qui a été retrouvé. Si une étape est mal faite, tout le reste en souffre. Cette idée structure le module.\n\n## Question de réflexion\n\nPourquoi est-il plus simple de mettre à jour une règle de retour dans un système RAG que dans un modèle réentraîné ?"
+    },
+    {
+     "title": "La chaîne complète et notre fil conducteur",
+     "kind": "reading",
+     "body_md": "## Deux moments distincts\n\nUn système RAG fonctionne en deux temps.\n\n**La préparation des connaissances** (hors ligne, répétée quand les sources changent) :\n- **ingestion** : lire les sources ;\n- **chunking** : les découper en passages ;\n- **embedding** : représenter chaque passage par des nombres ;\n- **indexation** dans une base vectorielle, avec des **métadonnées** (source, version, pays, droits).\n\n**Le parcours à chaque question** :\n- la question est représentée (embedding) ;\n- le système retrouve des passages (retrieval) ;\n- le modèle génère la réponse à partir du contexte ;\n- la réponse cite ses sources.\n\nL'**évaluation** observe l'ensemble : le contexte retrouvé, la réponse et le résultat pour l'utilisateur.\n\n## Notre cas fictif\n\nTout au long du module, on suit une enseigne fictive de chaussures et vêtements. Un assistant aide les conseillers à répondre aux questions de retour. Exemple de question : *« Puis-je retourner mes baskets après 10 jours en France ? »*\n\nLes sources fictives : une procédure de retour, une FAQ client, des fiches produit. Règle fictive : retour sous 14 jours avec justificatif, articles personnalisés exclus. Une ancienne procédure existe aussi, mais elle est remplacée.\n\n## Deux questions à se poser à chaque étape\n\n**Qu'est-ce qui entre ? Qu'est-ce qui sort ?** Cette habitude permet de suivre le mécanisme sans se perdre dans les noms d'outils.\n\n## Mise en pratique\n\nSi on vous dit seulement « retour sous 14 jours », quelles informations importantes manquent encore pour répondre à ce client ? Notez-les : ce sont les conditions et exceptions dont la place dans les documents influencera la qualité des réponses."
+    }
+   ]
+  },
+  {
+   "title": "Préparer les connaissances",
+   "lessons": [
+    {
+     "title": "L'ingestion : rendre les sources lisibles",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre ce qui entre et ce qui sort de l'ingestion, et pourquoi elle comporte des décisions métier.\n\n## Entrée et sortie\n\n- **Entrée** : des sources dispersées (procédure PDF, page de wiki, FAQ, catalogue produit).\n- **Sortie** : un contenu lisible, organisé et rattaché à sa source, avec son titre, ses sections et parfois ses tableaux.\n\n## Extraire sans perdre le sens\n\nLe titre « Articles personnalisés » doit rester associé à la phrase qui décrit l'exception. Si le titre est perdu, on ne sait plus à quels articles s'applique la phrase. De même, les en-têtes d'un tableau indiquent à quel produit correspond « 14 jours ».\n\n## Le cas des documents scannés\n\nPour une personne, une page scannée est lisible ; pour le système, c'est une image. L'**OCR** (reconnaissance de caractères) en extrait du texte, mais peut se tromper : un chiffre mal lu ou des colonnes mélangées changent le sens d'une règle. Un contrôle sur un échantillon est prudent.\n\n## Des décisions métier, pas seulement techniques\n\n- Quelles sources font **référence** ? Lesquelles sont encore **valides** ?\n- Qui peut les **consulter** ?\n- À quelle **fréquence** changent-elles, et comment les mettre à jour ?\n\nLe système ne peut pas toujours deviner seul quel document fait autorité : il faut rendre la **version** et la **validité** explicites.\n\n## Piège classique\n\nIndexer en bloc tout un espace de partage, anciennes versions comprises. Le système retrouvera alors des règles périmées avec la même assurance que les règles actuelles.\n\n## Question de réflexion\n\nVous avez une FAQ à jour et un ancien PDF qui indique un autre délai. Comment le feriez-vous comprendre au système ?"
+    },
+    {
+     "title": "Le chunking : créer des passages utiles",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre ce qu'est un chunk, pourquoi on découpe, et ce qu'on risque en découpant mal.\n\n## Définition\n\nUn **chunk** est un morceau de contenu que le moteur peut retrouver séparément. Le **chunking** consiste à découper un document en chunks.\n\n## Pourquoi découper ?\n\nUne question porte souvent sur une petite partie d'un document. Envoyer cent pages au modèle ajouterait beaucoup de texte inutile, et le modèle ne peut lire qu'une quantité limitée de texte à la fois (sa **fenêtre de contexte**). Découper permet de transmettre une quantité adaptée au besoin.\n\n## L'équilibre à trouver\n\n- **Trop petit** : le passage devient incompréhensible seul, on perd le sens.\n- **Trop grand** : il traite plusieurs sujets, la recherche perd en précision et l'information utile est noyée.\n\nIl n'existe pas de taille parfaite valable pour tous les documents. Une FAQ ne se découpe pas comme un contrat ou un manuel.\n\n## L'erreur la plus coûteuse\n\nSéparer « retour sous 14 jours » de « articles personnalisés exclus ». La recherche peut ramener uniquement la règle générale. Le modèle reçoit alors une information qui paraît suffisante mais qui conduit à une mauvaise réponse pour un client concerné par l'exception.\n\n## Un critère simple\n\nChaque passage doit rester **compréhensible lorsqu'il arrive seul** dans un résultat de recherche. Posez-vous la question : si ce passage était la seule chose lue, comprendrait-on la règle et ses conditions ?\n\n## Mise en pratique (30 secondes)\n\nPour une question sur un article personnalisé, quelles phrases garderiez-vous ensemble ? Réponse possible : le délai, le justificatif et l'exception, avec le titre de section ; le dépôt en magasin peut rester dans un autre passage car il répond à une autre question."
+    },
+    {
+     "title": "Les stratégies de découpage",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nConnaître les principales manières de découper et leurs effets.\n\n## Quatre approches\n\n**Par taille.** On crée des passages d'une longueur donnée (souvent mesurée en **tokens**, de petites unités de texte utilisées par les modèles). C'est simple et mécanique, mais la coupure peut tomber au milieu d'une idée.\n\n**Par structure.** On s'appuie sur les titres, paragraphes et sections. Une procédure bien organisée garde ainsi ensemble la règle et ses conditions. Cette approche dépend de la qualité de la structure extraite à l'ingestion.\n\n**Avec chevauchement.** La fin d'un passage est reprise au début du suivant, pour conserver du contexte autour d'une coupure. Trop de chevauchement crée des répétitions dans l'index et parfois dans les résultats. Il se combine avec les autres méthodes.\n\n**Passage précis et section liée.** On retrouve un petit passage précis, puis on fournit au modèle la section plus large qui le contient. Exemple : une clause courte de contrat reste liée à la section qui définit les termes employés. On gagne en précision à la recherche, puis on redonne du contexte à la réponse.\n\n## Choisir sans se laisser séduire\n\nUne méthode plus sophistiquée n'est pas forcément meilleure. Pour une procédure de retour structurée par sections, on commence par un découpage par sections, puis on observe ce qui se passe sur de vraies questions.\n\n## Cas des FAQ\n\nL'unité naturelle est une **question avec sa réponse**, en gardant les conditions qui lui sont liées.\n\n## Bonnes pratiques\n\n- Partir des **unités de sens** du document.\n- Garder le titre de section avec le passage.\n- Tester sur des questions représentatives et ajuster.\n\n## Question de réflexion\n\nPour un contrat de plusieurs dizaines de pages avec une section de définitions, quelle stratégie vous semble la plus adaptée, et pourquoi ?"
+    },
+    {
+     "title": "Les métadonnées : donner son périmètre à un passage",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre que la proximité de sens ne suffit pas, et que les métadonnées définissent le périmètre d'usage d'un passage.\n\n## Le problème\n\nDeux procédures de retour, l'une pour la France et l'autre pour l'Espagne, peuvent être très proches par le texte. Une ancienne version et sa remplaçante aussi. Un passage peut donc être **proche du sujet et pourtant inadapté** à la situation.\n\n## Ce que sont les métadonnées\n\nDes informations qui accompagnent un passage, comme l'étiquette d'un dossier :\n- **pays** ou entité concernée ;\n- **version** et **validité** (en cours, remplacée) ;\n- **droits d'accès** (qui peut le lire) ;\n- **lien vers la source** et titre de section.\n\n## Comment elles servent\n\nLa recherche ne demande plus seulement « un texte proche de retour de baskets ». Elle précise : *dans les documents applicables en France, en version en vigueur, et accessibles à cet utilisateur.* Elles permettent aussi de fournir une **citation** utile, avec un lien vers la bonne section.\n\n## Points d'attention\n\n- Les métadonnées **n'agissent pas toutes seules** : l'application doit les utiliser dans ses filtres.\n- Les **droits d'accès** doivent être appliqués **avant** que le contenu soit transmis au modèle.\n- Il faut les maintenir à jour quand les sources changent.\n\n## Question de produit\n\nQuelles informations changent réellement la réponse ? Pour notre cas, le pays et la validité. Pour un assistant RH international, on pourrait ajouter l'entité, la population concernée ou la période de validité. Pour votre produit, lesquelles retiendriez-vous, et pourquoi ?"
+    }
+   ]
+  },
+  {
+   "title": "Embeddings et bases vectorielles",
+   "lessons": [
+    {
+     "title": "Les embeddings : représenter le sens en nombres",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre ce qu'est un embedding et quel est son rôle exact dans la chaîne.\n\n## Définition\n\nUn **embedding** est une représentation d'un texte sous forme de nombres. Cette liste de nombres s'appelle un **vecteur**. Un **modèle d'embedding** calcule ce vecteur à partir du texte.\n\n## Un exemple\n\nLe passage « chaussure endommagée » et la question « ma basket est abîmée » n'ont presque aucun mot en commun, mais leur sens est proche. Une fois transformés en vecteurs, ils peuvent être comparés, et on constate qu'ils sont proches.\n\n## Ce qu'il faut bien comprendre\n\n- Les listes de nombres d'un vrai système sont bien plus longues que dans un schéma. Chaque valeur n'a pas forcément une signification que l'on pourrait nommer : c'est la **relation entre les vecteurs complets** qui compte.\n- Pour comparer question et passages, leurs vecteurs doivent être **compatibles** : on utilise le même modèle d'embedding. Changer de modèle oblige généralement à **recalculer** les vecteurs du corpus.\n- Le **texte du passage reste conservé**. Les nombres servent à rechercher ; le modèle qui rédige reçoit le texte, pas la liste de nombres.\n\n## Deux modèles, deux rôles\n\nLe **modèle d'embedding** contribue à sélectionner les contenus. Le **modèle de langage** rédige la réponse. Les confondre est une erreur fréquente.\n\n## Intérêt métier\n\nRapprocher le vocabulaire du client (« basket abîmée ») de celui de la documentation (« chaussure endommagée »).\n\n## Question de réflexion\n\nSi l'équipe décide de changer de modèle d'embedding pour de meilleurs résultats, quelles conséquences pour l'index existant ?"
+    },
+    {
+     "title": "La recherche par proximité de sens",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre comment un système retrouve des textes de même sens, et connaître les limites de cette proximité.\n\n## L'image de la carte\n\nImaginez des textes placés sur une carte selon leur sens. Les textes proches sur le fond sont voisins. « Ma basket est abîmée » se trouve près de « chaussure endommagée », loin de « modifier mon adresse de livraison ». La recherche sémantique cherche les passages dont le vecteur est **le plus proche** de celui de la question. Ce n'est qu'une image : une vraie représentation compte beaucoup plus de dimensions.\n\n## Recherche par mots et recherche par sens\n\n- **Par mots (lexicale)** : on retrouve les documents contenant les mots de la requête. Si le mot est absent, le résultat l'est aussi.\n- **Par sens (sémantique)** : on retrouve des documents proches par l'idée, même avec des mots différents. C'est précieux dans un support client, une base RH ou un manuel technique dont les utilisateurs ignorent le vocabulaire.\n\n## Les limites\n\n- **Proche n'est pas applicable.** Un passage peut parler de retours mais concerner un autre pays ou une version remplacée. D'où l'importance des métadonnées.\n- **Les détails exacts comptent.** Un code produit, un numéro de contrat ou une référence d'erreur ne sont pas de simples thèmes. La recherche par sens seule peut les confondre avec des références voisines. On verra comment combiner mots et sens.\n\n## Question de réflexion\n\nSi le premier résultat parle bien de retours mais concerne un autre pays, est-il utilisable ? Que faut-il ajouter au système pour l'écarter ?"
+    },
+    {
+     "title": "La base vectorielle : stocker et retrouver",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre ce que stocke une base vectorielle, ce qu'elle renvoie, et ce qu'elle ne fait pas.\n\n## Ce qu'elle stocke\n\nPour chaque passage indexé :\n- un **identifiant** ;\n- son **vecteur** ;\n- son **texte** (ou un lien vers ce texte) ;\n- ses **métadonnées** (pays, version, lien vers la source…).\n\nCes éléments restent associés : le système doit pouvoir passer du vecteur au contenu utilisable.\n\n## Ce qu'elle fait\n\nLa question arrive avec son vecteur et ses **filtres**. La base utilise un **index**, une organisation qui facilite la recherche, comme un catalogue évite de parcourir toutes les pages de tous les livres. Elle renvoie des **passages candidats** avec leurs informations associées. À grande échelle, certains index recherchent des voisins de façon **approximative** pour gagner du temps ; l'équipe technique arbitre entre vitesse, mémoire et qualité.\n\n## Ce qu'elle ne fait pas\n\nElle **ne rédige pas** la réponse. Elle fournit des candidats. Le produit décide lesquels retenir, comment les présenter au modèle et que faire si les résultats sont insuffisants.\n\n## Le top-k\n\nLe **top-k** est le nombre de candidats demandés : un top-5 en demande cinq, si le système peut les fournir. Ce n'est **pas** une note de confiance. Demander plus de résultats peut retrouver une information manquante, mais ajoute aussi du bruit.\n\n## Question de réflexion\n\nLa base renvoie cinq passages. Faut-il forcément les envoyer tous au modèle ? (Non : on peut les filtrer, les reclasser, supprimer les doublons et ne garder que l'utile.)"
+    },
+    {
+     "title": "Choisir une base vectorielle",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nSavoir mener une discussion de choix avec l'équipe technique à partir des besoins du produit.\n\n## Quatre noms fréquents\n\nÀ la date de rédaction, on rencontre souvent ces solutions :\n- **pgvector** : extension de PostgreSQL qui ajoute le stockage et la recherche de vecteurs. Pertinent quand le produit utilise déjà PostgreSQL.\n- **Pinecone** : service géré de recherche vectorielle, pour déléguer une partie de l'exploitation.\n- **Qdrant** : moteur open source, également proposé en service cloud géré.\n- **Weaviate** : base open source avec offre cloud gérée, et des fonctions de recherche et d'intégration de modèles.\n\nCes repères ne constituent **pas un classement**. Plusieurs solutions peuvent répondre au même besoin, et leurs offres évoluent : vérifiez toujours la documentation officielle.\n\n## Partir du besoin, pas du fournisseur\n\n- **Beaucoup de questions simultanées** : capacité de recherche et temps de réponse.\n- **Documents modifiés souvent** : ajout, remplacement et suppression des passages ; délai acceptable entre publication et prise en compte.\n- **Périmètres par pays ou équipe** : métadonnées, filtres, gestion des accès.\n- **Petite équipe technique** : partage des tâches d'exploitation et de maintenance.\n- **Budget à maîtriser** : coût du stockage, des recherches, des traitements **et** du temps de l'équipe.\n\n## Ce qu'aucune base ne règle\n\nAucune solution ne rend pertinent un mauvais découpage ou un corpus mal préparé. La qualité dépend de toute la chaîne.\n\n## Mise en pratique\n\nÉcrivez trois critères de choix pour un assistant interne sur des procédures mises à jour chaque jour. Classez-les : rapidité, fraîcheur des mises à jour, séparation des accès. Lequel est le plus sensible pour vous ?"
+    }
+   ]
+  },
+  {
+   "title": "La recherche et la réponse",
+   "lessons": [
+    {
+     "title": "Le retrieval : sélectionner le bon contexte",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre la sélection en deux temps et la différence entre nombre de résultats et utilité.\n\n## Deux temps\n\n1. Une **recherche assez large** fait remonter des candidats à partir de la question et de son périmètre (par exemple trente).\n2. Une **sélection ciblée** : reclassement facultatif, suppression des doublons, élimination de ce qui n'aide pas, pour constituer le contexte final (par exemple cinq passages).\n\nCes nombres sont illustratifs : il n'existe pas de valeur universelle.\n\n## Pourquoi deux temps ?\n\nLa première étape préfère laisser entrer plusieurs candidats pour ne pas rater une information importante. La seconde choisit ceux qui répondent le mieux.\n\n## Plus n'est pas mieux\n\nPour notre cas, un bon contexte réunit le délai, le justificatif et l'exception. Ajouter des pages sur l'entretien des chaussures n'améliore pas la réponse : le modèle lit davantage et l'information utile devient moins visible. Plus de passages peuvent améliorer la **couverture**, mais ajoutent du **bruit**.\n\n## Règle de diagnostic\n\nSi le passage contenant l'exception n'apparaît **jamais** parmi les candidats, un reclassement ne le fera pas apparaître : il travaille sur ce qu'on lui donne. Il faut d'abord corriger la préparation et la recherche initiale.\n\n## Question de réflexion\n\nVotre assistant oublie une exception. Dans quel ordre vérifieriez-vous : le découpage, la recherche, le reclassement, la génération ?"
+    },
+    {
+     "title": "La recherche hybride : combiner mots et sens",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre pourquoi on combine recherche lexicale et sémantique.\n\n## Le cas\n\nUn client écrit : *« Ma RA-204 est abîmée, que faire ? »* La référence **RA-204** est précise : il faut la retrouver sans la confondre avec un autre produit. Le mot **abîmée** doit être rapproché de « endommagée ».\n\n## Deux branches\n\n- **Recherche lexicale** : repère les termes exacts, utile pour les codes, références, noms de produits, numéros de contrat, messages d'erreur.\n- **Recherche sémantique** : rapproche les formulations différentes d'une même idée.\n\nChaque branche produit une liste de candidats. Une étape de **fusion** les combine en un classement commun. Les méthodes varient : certaines s'appuient sur les scores, d'autres sur la position dans chaque liste. Vous n'avez pas besoin de retenir une formule pour comprendre l'intérêt.\n\n## Limites\n\nLa recherche hybride ne garantit pas que chaque résultat soit **applicable**. Les filtres de pays, de validité et d'accès restent nécessaires.\n\n## Exemple d'analyse\n\nDans « erreur E417 lors de la connexion », **E417** appelle une attention aux mots exacts ; le **problème de connexion** exprime le besoin, plutôt traité par le sens.\n\n## Mise en pratique\n\nTrouvez dans votre domaine trois requêtes qui contiennent une référence exacte et une formulation libre. Pourquoi une recherche uniquement sémantique pourrait-elle échouer sur chacune ?"
+    },
+    {
+     "title": "Le reranking : affiner le classement",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre ce que fait un reranker, quand il aide et quand il ne peut rien.\n\n## Principe\n\nLe **reranking** (reclassement) reprend une liste de candidats et examine plus finement leur relation avec la question. Dans un fonctionnement courant, le reranker lit **ensemble la question et chaque passage** pour estimer sa pertinence, alors que la recherche initiale compare des représentations calculées séparément.\n\n## Exemple\n\nQuestion : *« Retour d'une basket personnalisée ? »* Candidats initiaux : livraison, délai de retour, exception produit, entretien. Après reclassement : exception produit, délai de retour, livraison, entretien. Mêmes candidats, ordre différent, et le passage central remonte.\n\n## Quand c'est utile\n\nLorsque **les bons passages sont présents mais mal classés**. C'est le cas d'une exception retrouvée mais très basse dans la liste.\n\n## Ce qu'il ne fait pas\n\n- Il ne **répare pas** un document absent de l'index.\n- Il ne remplace pas une règle ancienne par une nouvelle si celle-ci n'a jamais été retrouvée.\n\n## Coût\n\nUn traitement supplémentaire ajoute du **délai** et du **coût**. Il se justifie si le gain de pertinence est observé sur des questions représentatives.\n\n## Question de réflexion\n\nSi le passage « exception produit » est absent de la liste de candidats, que regardez-vous en premier ? (Préparation des documents, découpage, filtres, recherche initiale.)"
+    },
+    {
+     "title": "HyDE et reformulation : enrichir le point de départ",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre comment enrichir une question pauvre avant la recherche, et les précautions à prendre.\n\n## Le problème\n\nUn nouvel arrivant demande : *« Mon matériel à l'arrivée ? »* La question est courte. La procédure parle peut-être de « dotation », de « poste de travail » ou d'« attribution d'équipement ». Peu de mots rendent la proximité difficile à établir.\n\n## HyDE\n\n**HyDE** (*Hypothetical Document Embeddings*, technique décrite dans un article de recherche de 2023) procède ainsi :\n1. le modèle imagine un **court texte hypothétique** qui ressemblerait à une procédure répondant à la question ;\n2. on calcule l'**embedding de ce texte** ;\n3. on cherche avec lui de **vrais documents** ;\n4. la réponse s'appuie sur les procédures réellement retrouvées.\n\n## La règle d'or\n\nLe texte inventé **n'est pas une preuve**. Il peut mentionner un outil, une équipe ou un délai qui n'existent pas. Il sert uniquement à orienter la recherche. Si le texte hypothétique parle d'une « livraison du PC sous deux jours » et qu'aucune procédure réelle ne le confirme, ce délai ne doit pas apparaître dans la réponse.\n\n## Coûts et risques\n\nHyDE ajoute une génération avant la recherche et peut orienter dans une mauvaise direction. À mesurer sur les cas concernés.\n\n## Autres améliorations en amont\n\n- **Reformuler** la question avant la recherche, par exemple lever une ambiguïté (« Apple » : produit ou marque ?).\n- **Demander une précision** à l'utilisateur.\n- **Vérifier les résultats** avant de répondre, par exemple avec un second modèle qui juge leur pertinence.\n\n## Exercice : relier problème et mécanisme\n\nRéférence exacte plus description libre : recherche hybride. Exception retrouvée mais très bas : reranking. Question courte et pauvre en vocabulaire : HyDE, reformulation ou précision. Ne les appliquez pas tous systématiquement."
+    },
+    {
+     "title": "La génération : ce que reçoit le modèle",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre les entrées du modèle au moment de rédiger et les limites d'une citation.\n\n## Trois entrées\n\n1. La **question** de l'utilisateur.\n2. Les **passages retenus** (le contenu métier).\n3. Les **consignes** : répondre clairement, uniquement à partir du contexte, citer les sources, dire quand l'information manque.\n\nLe modèle, qui apporte ses capacités de rédaction, joue alors un rôle de **synthétiseur** : il écrit bien, mais à partir des faits fournis.\n\n## Exemple\n\nQuestion : « Retour après 10 jours ? » Contexte : retour sous 14 jours avec justificatif, articles personnalisés exclus. Réponse attendue : « Oui, sous 14 jours avec justificatif pour cet article standard. Source : procédure v2. »\n\n## Quand une condition manque\n\nSi la nature du produit est inconnue, la bonne expérience est de **demander une précision** (« Votre article est-il personnalisé ? ») plutôt que de conclure. Si deux sources se contredisent, le produit doit prévoir comment le gérer, au lieu de laisser l'utilisateur deviner.\n\n## Le contexte long\n\nQuand on fournit trop de texte, on observe parfois que le modèle exploite moins bien les informations situées au milieu. Un contexte court et ciblé reste préférable.\n\n## Un lien n'est pas une preuve\n\nLa présence d'une citation est utile, mais elle ne prouve pas que chaque phrase est correcte. Il faut vérifier que le passage cité **soutient réellement** ce qui est affirmé. Distinguez « une réponse avec un lien » et « une réponse fidèle à ce lien ».\n\n## Question de réflexion\n\nRédigez les consignes que vous donneriez au modèle pour le cas de retours. Que doit-il faire si la procédure ne mentionne pas le pays du client ?"
+    }
+   ]
+  },
+  {
+   "title": "Évaluer un système RAG",
+   "lessons": [
+    {
+     "title": "Observer trois niveaux : contexte, réponse, usage",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nSavoir où regarder quand un RAG se trompe, et comprendre précision et rappel du contexte.\n\n## Trois niveaux\n\n1. **Le contexte retrouvé** : les passages sont-ils utiles ? manque-t-il une information ?\n2. **La réponse produite** : ses affirmations sont-elles soutenues par le contexte ? applique-t-elle correctement la règle ?\n3. **La tâche de l'utilisateur** : le conseiller a-t-il pu traiter la demande ? en combien de temps, vérification comprise ?\n\nUne belle phrase ne suffit pas si elle n'aide pas à terminer le travail. Si l'exception est bien dans le contexte mais n'est pas appliquée dans la réponse, c'est la **génération** (et la présentation du contexte) qu'il faut regarder, pas la recherche.\n\n## Précision et rappel du contexte\n\n- **Précision du contexte** : parmi les passages transmis, quelle part est utile ? Elle mesure le **bruit**.\n- **Rappel du contexte** : parmi les passages nécessaires, quelle part a été retrouvée ? Elle mesure les **manques**.\n\nExemple pédagogique : trois passages sont nécessaires (A délai, B exception, C dépôt). Le système transmet A, D, B, E. Utiles : A et B. Précision : 2/4 = 50 %. Rappel : 2/3, soit environ 67 %.\n\nRetirer D et E donne une précision de 100 % mais C manque toujours : rappel incomplet. Ajouter C en gardant D et E donne un rappel complet mais du bruit. **Une seule mesure ne suffit pas.** Le résultat visé : A, B et C, sans D ni E.\n\n## Attention aux définitions\n\nLes outils d'évaluation utilisent des variantes (prise en compte du rang des résultats, comparaison d'affirmations avec une réponse de référence). Les pourcentages ci-dessus sont des calculs pédagogiques par passages, pas des scores d'un outil particulier.\n\n## Question de réflexion\n\nPour la question « Quelles sont les conditions et où déposer mon retour ? », quels passages sont nécessaires dans votre corpus ?"
+    },
+    {
+     "title": "La fidélité au contexte (faithfulness)",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre ce que mesure la fidélité, et ce qu'elle ne garantit pas.\n\n## Principe\n\nLa **fidélité** (*faithfulness*) examine si les **affirmations** d'une réponse trouvent un appui dans les passages fournis. On décompose la réponse en affirmations et on vérifie chacune.\n\n## Exemple\n\nContexte : retour sous 14 jours avec justificatif. Réponse : « 14 jours », « avec justificatif », « transport gratuit ». Les deux premières affirmations sont soutenues, la troisième n'a aucun appui. Score pédagogique : 2/3, environ 67 %.\n\nNe concluez pas que le transport est payant : on constate seulement que la réponse **n'a pas de base** pour affirmer sa gratuité.\n\n## Les limites à connaître\n\n- **Fidèle ne veut pas dire à jour.** Si le contexte contient une ancienne procédure, une réponse peut lui être totalement fidèle tout en donnant une règle périmée.\n- **Fidèle ne veut pas dire complet.** Une réponse qui indique le délai mais omet une condition peut être entièrement soutenue et pourtant insuffisante.\n- **Fidèle ne veut pas dire juste pour le métier.**\n\nOn complète donc la fidélité par la **couverture de la question** et la **justesse métier**, et par une lecture humaine d'un échantillon.\n\n## Question de réflexion\n\nUne réponse fidèle à 100 % est-elle forcément suffisante pour le client ? Citez deux situations où non."
+    },
+    {
+     "title": "La boucle d'amélioration",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nSavoir mener une amélioration de façon contrôlée et comparable.\n\n## La boucle\n\n1. **Constituer un jeu de questions métier** avec, pour chacune, les informations attendues et une réponse de référence.\n2. **Comparer deux versions** du système, par exemple un découpage A qui sépare la règle de son exception et un découpage B qui les garde ensemble.\n3. **Lire les résultats** : contexte, réponse, délai, effort demandé à l'utilisateur.\n4. **Ajuster**, puis recommencer **sur les mêmes questions**.\n\n## Pourquoi les mêmes questions\n\nPour savoir si le changement vient du système. Si vous modifiez à la fois le corpus, les questions et le modèle, vous ne pouvez plus expliquer l'amélioration.\n\n## Composer un bon jeu de questions\n\n- les demandes **fréquentes** ;\n- les cas où une **condition manque** ;\n- les cas où les sources **ne suffisent pas** (le système doit alors le dire) ;\n- les cas où une **ancienne règle** pourrait être confondue avec la nouvelle ;\n- des questions mises **à part** pour vérifier que le réglage fonctionne au-delà des exemples utilisés pour l'ajuster.\n\n## Évaluateurs automatiques\n\nIls permettent d'examiner plus de cas, mais peuvent se tromper. Une lecture humaine sur un échantillon vérifie qu'ils correspondent aux attentes métier. Il n'existe pas de seuil universel : une aide interne à la recherche et une réponse envoyée directement à un client n'ont pas les mêmes exigences.\n\n## Mise en pratique\n\nRédigez dix questions de test pour le cas de retours, dont au moins trois pièges (condition manquante, ancienne version, information absente des sources)."
+    }
+   ]
+  },
+  {
+   "title": "Sécurité et responsabilité",
+   "lessons": [
+    {
+     "title": "Risques et bonnes pratiques d'un RAG",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nIdentifier les principaux risques propres à un RAG et les réflexes de protection.\n\n## Un système RAG n'est pas neutre\n\nParce qu'il lit des documents, il peut être détourné ou mal utilisé.\n\n## Trois risques majeurs\n\n- **Instructions cachées dans les documents** (on parle d'injection de consignes). Un texte indexé peut contenir des phrases qui cherchent à influencer le comportement du modèle. Le contenu récupéré est de la **donnée**, pas des ordres.\n- **Faux contenus ou contenus erronés** ajoutés au corpus. Mauvaises données, mauvaises réponses.\n- **Accès à des documents sensibles.** Si les droits sont mal gérés, l'assistant peut exposer des informations internes à quelqu'un qui n'aurait pas dû les voir.\n\n## Bonnes pratiques\n\n- **Consignes claires** : répondre à partir du contexte, indiquer quand l'information manque, ne pas exécuter d'instructions trouvées dans les documents.\n- **Droits d'accès stricts** : un utilisateur ne voit que ce qu'il a le droit de voir, et le filtrage a lieu **avant** l'envoi au modèle.\n- **Sources liées à chaque réponse**, pour permettre la vérification.\n- **Gouvernance du corpus** : qui peut ajouter ou modifier un document, comment on le valide, comment on retire une version périmée.\n- **Suivi continu** de la qualité (voir le chapitre précédent).\n\n## Rôle du chef de produit\n\nCes risques concernent directement l'équipe produit : définir les périmètres, les droits, les règles de réponse quand l'information manque, et le parcours d'escalade vers un humain.\n\n## Question de réflexion\n\nListez trois documents de votre organisation que vous ne voudriez pas voir apparaître dans la réponse d'un assistant ouvert à tous. Quel mécanisme garantirait leur exclusion ?"
+    }
+   ]
+  },
+  {
+   "title": "Les patterns avancés",
+   "lessons": [
+    {
+     "title": "L'agentic RAG : choisir la suite du parcours",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre ce que change l'approche agentic par rapport à un RAG simple.\n\n## Principe\n\nUn RAG simple suit un parcours fixe : une recherche, puis une réponse. Un **agentic RAG** adapte la **suite** du parcours aux résultats déjà obtenus.\n\n## La boucle\n\n1. Choisir une source et une question de recherche.\n2. Exécuter la recherche.\n3. Lire les résultats.\n4. Les informations sont-elles **suffisantes** ? Si oui, répondre avec les sources. Sinon, compléter la recherche (autre source, demande de précision) et recommencer.\n\n## Exemple : une panne après livraison\n\n*« Mon appareil ne démarre plus. Quelle prise en charge est possible ? »*\n- Identifier l'appareil dans une commande que l'utilisateur est autorisé à consulter. Si le modèle reste inconnu, demander la précision.\n- Consulter le manuel et proposer le dépannage documenté.\n- Si le problème est résolu, expliquer la solution avec le manuel. Sinon, chercher la garantie applicable.\n\nLe système a besoin d'un retour du client ou d'une information fiable pour savoir si le dépannage a fonctionné : avoir affiché une procédure ne prouve pas que le problème est résolu.\n\n## Les limites fixées par le produit\n\nOutils disponibles, sources autorisées, nombre d'étapes, temps maximal, et **sortie compréhensible** si les informations restent insuffisantes. Dans ce module, les outils servent à rechercher et expliquer ; effectuer un remboursement ou modifier une commande demanderait d'autres fonctions et d'autres règles.\n\n## Nuance\n\nUn parcours entièrement programmé avec des conditions peut produire un schéma similaire sans confier chaque décision à un agent.\n\n## Question de réflexion\n\nPourquoi ne pas chercher systématiquement la garantie dès le départ ?"
+    },
+    {
+     "title": "Le multi-hop : relier des recherches dépendantes",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre les recherches en plusieurs étapes dont chacune dépend de la précédente.\n\n## Exemple\n\n*« Puis-je retourner l'article de la commande 8472 ? »* Le client ne donne ni la référence ni les caractéristiques du produit.\n\n1. **Identifier** : la commande donne la référence (fictive) RA-204-P.\n2. **Qualifier** : la fiche de cette référence indique que l'article est personnalisé.\n3. **Relier** : cette caractéristique mène à la règle applicable en France, qui exclut les articles personnalisés du retour standard.\n4. **Répondre** : expliquer l'exclusion en citant les sources qui soutiennent chaque lien.\n\nChaque résultat fournit la **clé** de la recherche suivante. Trois recherches indépendantes lancées en parallèle ne suffiraient pas, puisque la référence n'est connue qu'après la première.\n\n## Multi-hop et agentic\n\nCe sont deux notions différentes. **Multi-hop** décrit des recherches dont les résultats dépendent les uns des autres. **Agentic** décrit le fait de choisir la suite du parcours. Un parcours multi-hop peut être prévu à l'avance par l'application ou choisi par un agent.\n\n## Point de vigilance\n\nUne erreur au début **se transmet**. Si l'on prend la mauvaise référence produit, on appliquera une bonne règle au mauvais article. Chaque lien doit rester rattaché à une information fiable.\n\n## Question de réflexion\n\nQuelle information permet de passer de la première à la deuxième étape ? De la deuxième à la troisième ?"
+    },
+    {
+     "title": "GraphRAG et choisir son pattern",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre l'apport d'un graphe de relations et savoir comparer les quatre approches vues.\n\n## Un graphe\n\nUn graphe représente des éléments (entités) et les relations entre eux. Exemple achats : *« Quels produits dépendent du fournisseur A ? »* Le fournisseur A fournit le composant B, qui entre dans les produits C et D. On peut en conclure que C et D dépendent de A, par l'intermédiaire de B. Si l'on ne sait pas que B entre dans D, on ne peut pas établir cette dépendance à partir des informations présentées.\n\n## Ce que fait GraphRAG\n\nLa recherche suit des **relations explicites**, puis fournit au modèle les éléments, leurs liens et les passages associés pour expliquer. Certaines implémentations regroupent aussi des entités liées et en produisent des résumés, notamment pour répondre à des questions globales sur un ensemble de documents.\n\n## Coûts et précautions\n\n- Il faut **construire** le graphe (à partir de données structurées ou par extraction depuis des documents) puis le **maintenir**.\n- Une relation extraite à tort peut mener à une conclusion erronée même si le schéma paraît clair.\n- Pour une liste déjà disponible dans une base structurée, une requête directe peut suffire.\n\n## Comparer les patterns\n\n- **RAG simple** : une recherche prépare le contexte (expliquer une procédure de retour).\n- **Agentic RAG** : le système choisit la prochaine recherche (adapter le parcours à une panne).\n- **Multi-hop** : un résultat guide la recherche suivante (relier une commande à une règle).\n- **GraphRAG** : la recherche exploite des relations (fournisseurs, composants, produits).\n\nIls peuvent se combiner : un agent peut faire du multi-hop dans un graphe. Il n'y a pas de progression obligatoire. **Chaque étape ajoutée augmente potentiellement le délai, le coût et la maintenance** : choisissez selon ce que la question exige et ce que les sources permettent.\n\n## Exercice\n\nTrois besoins : adapter la prochaine recherche selon un résultat ; relier une commande à une règle ; comprendre quels produits dépendent d'un fournisseur. Quel pattern pour chacun ?"
+    }
+   ]
+  },
+  {
+   "title": "Atelier pratique : concevoir et tester un parcours RAG",
+   "lessons": [
+    {
+     "title": "Atelier : dessiner le parcours d'une question",
+     "kind": "exercise",
+     "body_md": "## Objectif\n\nRaconter, par un schéma commenté, comment l'information voyage des documents jusqu'à la réponse. Travail seul ou en groupe de 2 à 4, sur papier ou outil de dessin gratuit. Environ 15 minutes.\n\n## Le dossier (entièrement fictif)\n\nQuestion du client : *« Puis-je renvoyer ma RA-204 personnalisée achetée il y a 10 jours ? »* Le client est en France, possède son justificatif et confirme que l'article est personnalisé.\n\nSources :\n- **Procédure France v2** : retour sous 14 jours avec justificatif ; articles personnalisés exclus.\n- **FAQ dépôt** : un retour accepté se dépose en magasin avec son justificatif.\n- **Fiche RA-204** : ce modèle existe en version standard et personnalisée.\n- **Ancienne procédure v1** : retour sous 30 jours ; version remplacée.\n\nTravaillez uniquement avec ces informations. Ne choisissez pas encore de base de données : commencez par ce qu'il faut savoir pour répondre.\n\n## Votre schéma, case par case\n\n- **Sources** : lesquelles retenez-vous ? lesquelles excluez-vous, pourquoi ?\n- **Passages** : écrivez un exemple de chunk.\n- **Embeddings** : quel rôle ?\n- **Index** : quelles métadonnées (valeurs concrètes) ?\n- **Question** : quel périmètre ?\n- **Recherche** : quelle stratégie, pourquoi ?\n- **Contexte** : quels passages arrivent au modèle ?\n- **Réponse** : ce que le client entend et la source citée.\n- **Évaluation** : quels passages utiles, quelles affirmations soutenues ?\n\n## Une solution possible\n\nProcédure France v2 en périmètre courant. Un chunk réunissant délai, justificatif et exclusion des personnalisés. Métadonnées : pays France, version v2, validité en cours, lien vers la source. Recherche hybride : le code RA-204 d'un côté, le sens « retour d'un article personnalisé » de l'autre. Contexte final : le passage de la v2 (la fiche produit peut contribuer). Réponse : la procédure exclut les articles personnalisés de ce retour standard, avec citation. Elle ne doit ni conclure que le retour est possible parce que l'achat date de dix jours, ni inventer une autre solution commerciale. Évaluation : l'exception est-elle retrouvée, les passages sont-ils utiles, chaque affirmation est-elle soutenue ? Une recherche simple bien réglée peut suffire : les patterns avancés ne sont pas indispensables ici.\n\n## Auto-vérification\n\nPouvez-vous justifier chaque affirmation de votre réponse par un élément du dossier ?"
+    },
+    {
+     "title": "Exercice de code : un mini-RAG de bout en bout",
+     "kind": "exercise",
+     "body_md": "## Objectif\n\nVoir fonctionner, sur un corpus minuscule, les mécanismes du module : filtrage par métadonnées, recherche, construction du contexte, mesure de précision et de rappel. Cet exercice est facultatif pour les profils non techniques : lisez le code et les commentaires.\n\n## Ce que fait (et ne fait pas) ce code\n\n- Il utilise une **recherche lexicale TF-IDF** de `scikit-learn`, sans embeddings ni modèle de langage : cela rend l'exemple gratuit, local et reproductible. Le principe de filtrage et de sélection du contexte est le même qu'avec des embeddings.\n- Il n'appelle **aucun modèle de langage** : il construit le prompt que l'on enverrait au modèle.\n\n## Prérequis\n\nPython 3 avec `scikit-learn` installé (`pip install scikit-learn`).\n\n## Le code\n\n```python\nfrom sklearn.feature_extraction.text import TfidfVectorizer\nfrom sklearn.metrics.pairwise import cosine_similarity\n\n# 1. Passages (chunks) avec métadonnées - contenu entièrement fictif\nPASSAGES = [\n    {\"id\": \"D1\", \"pays\": \"France\", \"version\": \"v2\", \"valide\": True,\n     \"texte\": \"Procédure retour France. Retour sous 14 jours avec justificatif. Les articles personnalisés sont exclus du retour standard.\"},\n    {\"id\": \"D2\", \"pays\": \"France\", \"version\": \"v2\", \"valide\": True,\n     \"texte\": \"FAQ dépôt. Un retour accepté se dépose en magasin avec son justificatif.\"},\n    {\"id\": \"D3\", \"pays\": \"France\", \"version\": \"v2\", \"valide\": True,\n     \"texte\": \"Fiche RA-204. Ce modèle de chaussure existe en version standard et en version personnalisée.\"},\n    {\"id\": \"D4\", \"pays\": \"France\", \"version\": \"v1\", \"valide\": False,\n     \"texte\": \"Ancienne procédure retour France. Retour sous 30 jours. Cette version est remplacée.\"},\n    {\"id\": \"D5\", \"pays\": \"Espagne\", \"version\": \"v2\", \"valide\": True,\n     \"texte\": \"Procedimiento de devolución España. Devolución en 30 días con justificante.\"},\n]\n\ndef filtrer(passages, pays):\n    \"\"\"Filtre de périmètre appliqué AVANT la recherche : pays + version en vigueur.\"\"\"\n    return [p for p in passages if p[\"pays\"] == pays and p[\"valide\"]]\n\ndef rechercher(question, passages, k=3):\n    \"\"\"Recherche lexicale TF-IDF (ni embeddings ni LLM) : suffit pour comprendre le principe.\"\"\"\n    vec = TfidfVectorizer(lowercase=True)\n    matrice = vec.fit_transform([p[\"texte\"] for p in passages] + [question])\n    scores = cosine_similarity(matrice[-1], matrice[:-1]).ravel()\n    classes = sorted(zip(scores, passages), key=lambda x: -x[0])\n    return [(round(float(s), 3), p) for s, p in classes[:k]]\n\ndef construire_prompt(question, candidats):\n    contexte = \"\\n\".join(f\"[{p['id']}, {p['version']}] {p['texte']}\" for _, p in candidats)\n    return (\"Réponds uniquement à partir du contexte. Cite l'identifiant du passage. \"\n            \"Si l'information manque, dis-le.\\n\\n\"\n            f\"Contexte :\\n{contexte}\\n\\nQuestion : {question}\")\n\ndef precision_rappel(transmis, necessaires):\n    utiles = set(transmis) & set(necessaires)\n    return len(utiles) / len(transmis), len(utiles) / len(necessaires)\n\nif __name__ == \"__main__\":\n    question = \"Puis-je renvoyer ma RA-204 personnalisée achetée il y a 10 jours ?\"\n    perimetre = filtrer(PASSAGES, \"France\")\n    candidats = rechercher(question, perimetre, k=3)\n    for score, p in candidats:\n        print(score, p[\"id\"], p[\"texte\"][:50])\n    print()\n    print(construire_prompt(question, candidats))\n    ids = [p[\"id\"] for _, p in candidats]\n    prec, rap = precision_rappel(ids, [\"D1\", \"D3\"])\n    print(f\"\\nPrécision du contexte : {prec:.0%} ; rappel : {rap:.0%}\")\n```\n\n## Résultat attendu\n\nLe filtre écarte la version remplacée (D4) et la procédure espagnole (D5). Les trois passages restants sont ordonnés par score ; la précision du contexte est de 67 % et son rappel de 100 % pour les passages nécessaires D1 et D3 (valeurs obtenues avec ce corpus fictif).\n\n## À observer et à tester\n\n1. **Supprimez le filtre** (appelez `rechercher` sur `PASSAGES`). Quels passages parasites apparaissent ? Que dit cela du rôle des métadonnées ?\n2. Observez le score de D1, **faible alors que c'est le passage clé** : le texte de la question contient « personnalisée » et le passage « personnalisés ». Une recherche purement lexicale ne rapproche pas ces deux formes. Que permettrait une recherche sémantique ou hybride ?\n3. Passez `k` à 1, puis à 4. Comment évoluent précision et rappel ?\n4. Ajoutez un passage de votre choix (une exception, une nouvelle version) et une question. Le système la gère-t-il ?\n5. Transmettez le prompt généré à l'assistant de votre choix et vérifiez que sa réponse reste fidèle au contexte.\n\n## Prolongements\n\nRemplacez TF-IDF par un modèle d'embedding de votre choix, puis comparez. Ajoutez un petit jeu de questions de test et calculez précision et rappel pour chacune."
+    }
+   ]
+  }
+ ],
+ "quiz": {
+  "title": "Quiz du module",
+  "pass_percent": 70,
+  "max_attempts": null,
+  "questions": [
+   {
+    "kind": "single_choice",
+    "prompt": "Que signifie RAG ?",
+    "feedback": "RAG désigne une génération enrichie par la recherche : on retrouve des passages utiles, puis on les fournit au modèle qui rédige.",
+    "options": [
+     [
+      "Retrieval Augmented Generation : une génération enrichie par la recherche",
+      true
+     ],
+     [
+      "Rapid Algorithm Generation : une génération accélérée par un algorithme",
+      false
+     ],
+     [
+      "Recursive Answer Graph : un graphe de réponses récursives",
+      false
+     ],
+     [
+      "Random Access Gateway : une passerelle d'accès aux données",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Parmi ces propositions, laquelle est une limite naturelle d'un modèle de langage utilisé seul ?",
+    "feedback": "Connaissances figées, absence d'accès aux données privées et risque d'invention sont les trois limites qui motivent le RAG.",
+    "options": [
+     [
+      "Il peut ignorer des informations récentes ou privées et inventer une réponse plausible",
+      true
+     ],
+     [
+      "Il ne sait pas écrire de phrases complètes",
+      false
+     ],
+     [
+      "Il ne peut traiter que des questions en anglais",
+      false
+     ],
+     [
+      "Il ne peut jamais être utilisé en entreprise",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pour mettre à jour une règle de retour dans un système RAG, que fait-on en général ?",
+    "feedback": "La règle arrive dans le contexte au moment de répondre : actualiser les sources et l'index suffit, sans réentraîner nécessairement le modèle.",
+    "options": [
+     [
+      "On met à jour les sources et leur préparation, sans réentraîner nécessairement le modèle",
+      true
+     ],
+     [
+      "On réentraîne obligatoirement le modèle de langage",
+      false
+     ],
+     [
+      "On modifie les paramètres du modèle d'embedding à la main",
+      false
+     ],
+     [
+      "On attend la prochaine version du modèle de langage",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle est la bonne chronologie des étapes d'un RAG ?",
+    "feedback": "La préparation des connaissances se fait en amont et se met à jour quand les sources changent ; le parcours de recherche et de génération se répète à chaque question.",
+    "options": [
+     [
+      "Ingestion, chunking, embedding, indexation, puis à chaque question : recherche et génération",
+      true
+     ],
+     [
+      "Génération, recherche, chunking, ingestion",
+      false
+     ],
+     [
+      "Embedding de la réponse, ingestion, chunking, question",
+      false
+     ],
+     [
+      "Question, ingestion de tous les documents, génération, indexation",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi découpe-t-on les documents en chunks ?",
+    "feedback": "Découper permet de retrouver et de transmettre uniquement les passages utiles, dans la limite de la fenêtre de contexte du modèle.",
+    "options": [
+     [
+      "Une question porte souvent sur une petite partie du document, et le modèle ne peut lire qu'une quantité limitée de texte",
+      true
+     ],
+     [
+      "Pour supprimer les informations confidentielles",
+      false
+     ],
+     [
+      "Pour que le modèle d'embedding ne lise jamais le texte",
+      false
+     ],
+     [
+      "Parce que les bases vectorielles refusent les fichiers PDF",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un chunk contient « retour sous 14 jours avec justificatif » mais pas « articles personnalisés exclus », qui est dans un autre chunk. Quel risque principal ?",
+    "feedback": "Séparer une règle de son exception donne un contexte qui paraît suffisant mais qui est incomplet pour les cas concernés par l'exception.",
+    "options": [
+     [
+      "La recherche peut ramener la règle générale sans son exception et conduire à une mauvaise réponse",
+      true
+     ],
+     [
+      "Le modèle d'embedding refusera de calculer le vecteur",
+      false
+     ],
+     [
+      "La base vectorielle supprimera le second chunk",
+      false
+     ],
+     [
+      "Le délai de 14 jours sera automatiquement modifié",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est l'inconvénient de passages trop grands ?",
+    "feedback": "Trop grands, les passages perdent en précision ; trop petits, ils perdent en sens. Il faut chercher l'équilibre selon les documents et les questions.",
+    "options": [
+     [
+      "Ils traitent plusieurs sujets, ce qui réduit la précision de la recherche et noie l'information utile",
+      true
+     ],
+     [
+      "Ils empêchent de stocker les métadonnées",
+      false
+     ],
+     [
+      "Ils rendent l'embedding impossible à comparer à celui d'une question",
+      false
+     ],
+     [
+      "Ils obligent à réentraîner le modèle de langage",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel découpage consiste à reprendre la fin d'un passage au début du suivant ?",
+    "feedback": "Le chevauchement conserve du contexte autour d'une coupure, au prix de répétitions dans l'index et parfois dans les résultats.",
+    "options": [
+     [
+      "Le chevauchement",
+      true
+     ],
+     [
+      "Le découpage par structure",
+      false
+     ],
+     [
+      "Le reranking",
+      false
+     ],
+     [
+      "Le découpage par métadonnées",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pour une FAQ composée de questions et réponses, quelle unité naturelle choisir pour un passage ?",
+    "feedback": "L'unité de sens d'une FAQ est la paire question-réponse, accompagnée de ses conditions.",
+    "options": [
+     [
+      "Une question avec sa réponse et les conditions qui lui sont liées",
+      true
+     ],
+     [
+      "Un paragraphe de taille fixe, quel que soit son contenu",
+      false
+     ],
+     [
+      "La FAQ entière en un seul passage",
+      false
+     ],
+     [
+      "Chaque phrase isolée",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles informations peut-on raisonnablement stocker comme métadonnées d'un passage ?",
+    "feedback": "Pays, version, validité, droits d'accès et lien vers la source servent à filtrer et à citer. Les valeurs d'un vecteur n'ont pas de signification nommable individuellement.",
+    "options": [
+     [
+      "Le pays concerné",
+      true
+     ],
+     [
+      "La version et sa validité",
+      true
+     ],
+     [
+      "Les droits d'accès",
+      true
+     ],
+     [
+      "La valeur de chaque coordonnée du vecteur interprétée en mots",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi la proximité de sens ne suffit-elle pas à garantir qu'un passage est applicable ?",
+    "feedback": "La proximité mesure le sujet, pas le périmètre. Les métadonnées et les filtres apportent l'applicabilité.",
+    "options": [
+     [
+      "Une procédure d'un autre pays ou une version remplacée peut être très proche par le sens",
+      true
+     ],
+     [
+      "Parce que les embeddings ne représentent jamais le sens",
+      false
+     ],
+     [
+      "Parce que la recherche sémantique ne fonctionne qu'avec des mots exacts",
+      false
+     ],
+     [
+      "Parce que le modèle de langage ignore toujours le contexte",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "À quel moment doivent s'appliquer les droits d'accès dans un RAG ?",
+    "feedback": "Le filtrage doit empêcher le contenu non autorisé d'atteindre le modèle : une fois le texte dans le contexte, il peut se retrouver dans la réponse.",
+    "options": [
+     [
+      "Avant que le contenu soit transmis au modèle",
+      true
+     ],
+     [
+      "Après la génération, en masquant des mots dans la réponse",
+      false
+     ],
+     [
+      "Uniquement lors de l'ingestion initiale, une fois pour toutes",
+      false
+     ],
+     [
+      "Ils n'ont pas à être gérés car le modèle ne retient rien",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que produit un modèle d'embedding ?",
+    "feedback": "L'embedding sert à comparer des textes par leur sens. La rédaction de la réponse est le rôle du modèle de langage.",
+    "options": [
+     [
+      "Un vecteur, c'est-à-dire une liste de nombres représentant un texte",
+      true
+     ],
+     [
+      "La réponse rédigée destinée à l'utilisateur",
+      false
+     ],
+     [
+      "Un résumé du passage en une phrase",
+      false
+     ],
+     [
+      "Une note de confiance sur la véracité du texte",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "L'équipe change de modèle d'embedding. Quelle conséquence est la plus probable ?",
+    "feedback": "Question et passages doivent être représentés par des vecteurs compatibles, donc par le même modèle d'embedding.",
+    "options": [
+     [
+      "Il faut généralement recalculer les vecteurs du corpus pour qu'ils restent comparables à ceux des questions",
+      true
+     ],
+     [
+      "Rien : les anciens vecteurs restent compatibles avec n'importe quel modèle",
+      false
+     ],
+     [
+      "Il faut réécrire tous les documents sources",
+      false
+     ],
+     [
+      "Il faut réentraîner le modèle de langage",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'est-ce que le top-k ?",
+    "feedback": "Le top-k fixe combien de résultats on demande ; ce n'est pas une mesure de fiabilité. Plus de résultats peut couvrir davantage mais ajoute du bruit.",
+    "options": [
+     [
+      "Le nombre de candidats demandés à la recherche",
+      true
+     ],
+     [
+      "Un score de confiance de la réponse finale",
+      false
+     ],
+     [
+      "Le nombre de documents dans le corpus",
+      false
+     ],
+     [
+      "La taille maximale d'un chunk",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que renvoie la base vectorielle à l'issue de la recherche ?",
+    "feedback": "La base fournit des candidats ; le produit décide ensuite lesquels retenir et le modèle de langage rédige.",
+    "options": [
+     [
+      "Des passages candidats avec leurs informations associées",
+      true
+     ],
+     [
+      "La réponse finale rédigée pour le client",
+      false
+     ],
+     [
+      "Uniquement des vecteurs sans texte ni source",
+      false
+     ],
+     [
+      "Un verdict sur la validité juridique de la règle",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans quel cas la recherche hybride est-elle particulièrement utile ?",
+    "feedback": "La branche lexicale traite la référence exacte, la branche sémantique rapproche les formulations ; les filtres restent nécessaires.",
+    "options": [
+     [
+      "Quand la question mêle une référence exacte et une formulation libre",
+      true
+     ],
+     [
+      "Quand tous les documents sont dans une seule langue",
+      false
+     ],
+     [
+      "Quand on veut supprimer le besoin de filtres",
+      false
+     ],
+     [
+      "Quand le corpus ne contient qu'un seul document",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un reranker ne peut pas aider quand...",
+    "feedback": "Le reranker travaille sur les candidats qu'il reçoit : il améliore l'ordre, pas la couverture de la recherche initiale.",
+    "options": [
+     [
+      "le passage utile n'a jamais été retrouvé parmi les candidats",
+      true
+     ],
+     [
+      "le passage utile est présent mais classé en dernière position",
+      false
+     ],
+     [
+      "deux passages utiles sont classés trop bas",
+      false
+     ],
+     [
+      "la question est longue et précise",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans HyDE, que devient le texte hypothétique généré par le modèle ?",
+    "feedback": "Le texte imaginé peut contenir des erreurs. La réponse ne doit s'appuyer que sur des sources réellement retrouvées.",
+    "options": [
+     [
+      "Il sert à orienter la recherche mais n'est jamais une source pour la réponse",
+      true
+     ],
+     [
+      "Il est cité comme source dans la réponse finale",
+      false
+     ],
+     [
+      "Il remplace les documents de l'index",
+      false
+     ],
+     [
+      "Il est ajouté au corpus pour les questions futures",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles affirmations sur la précision et le rappel du contexte sont exactes ?",
+    "feedback": "Précision et rappel décrivent le contexte, pas la réponse : un contexte complet peut encore être mal utilisé par le modèle.",
+    "options": [
+     [
+      "La précision mesure la part de passages transmis qui sont utiles",
+      true
+     ],
+     [
+      "Le rappel mesure la part des passages nécessaires qui ont été retrouvés",
+      true
+     ],
+     [
+      "Ajouter des passages inutiles peut baisser la précision sans baisser le rappel",
+      true
+     ],
+     [
+      "Un rappel de 100 % garantit que la réponse sera correcte",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Sur trois passages nécessaires, le système en transmet quatre dont deux utiles. Quels sont la précision et le rappel pédagogiques ?",
+    "feedback": "Précision : 2 utiles sur 4 transmis. Rappel : 2 retrouvés sur 3 nécessaires.",
+    "options": [
+     [
+      "Précision 50 %, rappel environ 67 %",
+      true
+     ],
+     [
+      "Précision environ 67 %, rappel 50 %",
+      false
+     ],
+     [
+      "Précision 50 %, rappel 50 %",
+      false
+     ],
+     [
+      "Précision 100 %, rappel environ 67 %",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Une réponse est fidèle à 100 % à son contexte. Que peut-on en conclure ?",
+    "feedback": "La fidélité compare les affirmations au contexte fourni ; elle ne vérifie ni la validité de la source ni la couverture de la question.",
+    "options": [
+     [
+      "Rien sur l'actualité ni l'exhaustivité : le contexte peut être périmé ou la réponse incomplète",
+      true
+     ],
+     [
+      "Qu'elle est forcément correcte et complète",
+      false
+     ],
+     [
+      "Que la recherche a trouvé tous les passages nécessaires",
+      false
+     ],
+     [
+      "Que le client sera satisfait",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels éléments d'un bon jeu de questions de test pour un RAG ?",
+    "feedback": "Un jeu utile contient aussi les cas difficiles et les cas où les sources ne suffisent pas, pour vérifier que le système le dit.",
+    "options": [
+     [
+      "Des demandes fréquentes",
+      true
+     ],
+     [
+      "Des cas où une condition manque",
+      true
+     ],
+     [
+      "Des cas où une ancienne règle pourrait être confondue avec la nouvelle",
+      true
+     ],
+     [
+      "Uniquement des questions dont la réponse est évidente",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi comparer deux versions d'un RAG sur les mêmes questions ?",
+    "feedback": "Si l'on change plusieurs éléments à la fois, on ne sait plus expliquer l'amélioration. Il faut aussi garder des questions à part pour vérifier la généralisation.",
+    "options": [
+     [
+      "Pour attribuer une différence de résultat au changement testé",
+      true
+     ],
+     [
+      "Pour éviter d'avoir à lire les réponses",
+      false
+     ],
+     [
+      "Pour garantir un score de 100 %",
+      false
+     ],
+     [
+      "Parce que les questions ne doivent jamais évoluer",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels sont des risques propres à un système RAG ?",
+    "feedback": "Le RAG permet au contraire de lier chaque réponse à ses sources ; les trois autres risques relèvent de la sécurité et de la gouvernance du corpus.",
+    "options": [
+     [
+      "Des instructions cachées dans des documents indexés",
+      true
+     ],
+     [
+      "Des contenus faux ajoutés au corpus",
+      true
+     ],
+     [
+      "Un accès à des documents sensibles si les droits sont mal gérés",
+      true
+     ],
+     [
+      "L'impossibilité de citer des sources",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans l'exemple de la panne, qu'est-ce qui distingue un agentic RAG d'un RAG simple ?",
+    "feedback": "L'adaptation de la suite (répondre, chercher ailleurs, demander une précision) caractérise l'approche agentic, dans des limites fixées par le produit.",
+    "options": [
+     [
+      "Le système choisit la suite du parcours selon les résultats obtenus",
+      true
+     ],
+     [
+      "Il n'utilise aucun document",
+      false
+     ],
+     [
+      "Il réentraîne le modèle à chaque question",
+      false
+     ],
+     [
+      "Il exécute automatiquement des remboursements",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi la question « Puis-je retourner l'article de la commande 8472 ? » relève-t-elle du multi-hop ?",
+    "feedback": "La référence n'est connue qu'après la première étape, ce qui rend les recherches dépendantes et non parallélisables.",
+    "options": [
+     [
+      "Chaque recherche dépend du résultat de la précédente : commande, puis fiche produit, puis règle applicable",
+      true
+     ],
+     [
+      "Parce qu'elle utilise trois bases vectorielles différentes",
+      false
+     ],
+     [
+      "Parce qu'elle contient un code produit",
+      false
+     ],
+     [
+      "Parce qu'elle est posée en France",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans quel cas GraphRAG est-il le plus pertinent ?",
+    "feedback": "Un graphe a un coût de construction et de maintenance : il se justifie quand les liens entre entités sont nécessaires pour répondre.",
+    "options": [
+     [
+      "Quand la réponse dépend de relations entre entités réparties dans plusieurs sources",
+      true
+     ],
+     [
+      "Quand on cherche une seule définition dans un document court",
+      false
+     ],
+     [
+      "Quand on veut éviter de préparer les données",
+      false
+     ],
+     [
+      "Quand la liste est déjà disponible dans une base structurée interrogeable directement",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Une enseigne fictive veut un assistant qui répond aux conseillers sur les règles de retour de plusieurs pays, avec des procédures mises à jour régulièrement. Décrivez en une dizaine de lignes le parcours que vous proposeriez (préparation des documents, métadonnées, recherche, réponse) et deux indicateurs pour évaluer le résultat.",
+    "feedback": "Une bonne réponse mentionne : ingestion avec version et validité, chunks qui gardent règle et exception, métadonnées (pays, version, validité, droits), filtres avant recherche, recherche hybride si références exactes, réponse avec source, consigne de dire quand l'information manque, et des indicateurs comme le rappel du contexte pour l'exception ou la fidélité des affirmations.",
+    "options": []
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Un assistant RAG donne une réponse fausse sur une exception de retour. Décrivez la démarche de diagnostic que vous suivriez, dans quel ordre, et ce que vous observeriez à chaque étape.",
+    "feedback": "On remonte la chaîne : l'information existe-t-elle dans la source ? est-elle ingérée et bien découpée ? les filtres sont-ils corrects ? est-elle dans les candidats puis dans le contexte final ? Si oui et que la réponse l'ignore, le problème vient de la génération ou des consignes. Une comparaison avant/après sur les mêmes questions valide la correction.",
+    "options": []
+   }
+  ]
+ },
+ "assignment": {
+  "title": "Concevoir et évaluer le parcours RAG d'un assistant métier",
+  "instructions_md": "## Objectif\n\nDémontrer que vous savez **concevoir, justifier et évaluer** le parcours complet d'un assistant RAG pour un cas métier, et en discuter avec une équipe produit et technique. Le livrable est un dossier de conception de deux à quatre pages. Aucune donnée confidentielle n'est nécessaire : travaillez sur un cas fictif ou sur des documents publics.\n\n## Consignes\n\n1. **Choisissez un cas** : le dossier de l'atelier (retours d'une enseigne fictive) ou un cas de votre choix construit avec **au moins quatre sources fictives ou publiques**, dont une ancienne version remplacée et une source d'un autre périmètre (pays, entité).\n2. **Décrivez la préparation des connaissances** : sources retenues et écartées, règle d'ingestion, stratégie de découpage justifiée, au moins deux exemples concrets de chunks, métadonnées avec valeurs.\n3. **Décrivez le parcours d'une question** : périmètre et filtres, mécanisme de recherche choisi (lexicale, sémantique, hybride, reranking, HyDE ou autre) et pourquoi, nombre de candidats et de passages retenus, consignes données au modèle, forme de la réponse et des citations, comportement quand l'information manque.\n4. **Justifiez votre niveau de complexité** : un RAG simple suffit-il ou faut-il un pattern avancé (agentic, multi-hop, GraphRAG) ? Quel serait le coût en délai et en maintenance ?\n5. **Concevez l'évaluation** : dix questions de test dont au moins trois pièges ; pour chacune, les passages nécessaires et une réponse de référence ; calcul de la précision et du rappel du contexte sur au moins deux questions ; contrôle de fidélité sur au moins une réponse (affirmations soutenues ou non).\n6. **Identifiez trois risques** (par exemple version périmée, droits d'accès, instruction cachée dans un document) et la mesure de prévention pour chacun.\n7. **Facultatif** : exécutez et adaptez le mini-RAG de l'exercice de code à votre corpus, et joignez le résultat commenté.\n\n## Grille d'évaluation\n\n- Cohérence et justification du découpage et des métadonnées (**25 %**).\n- Pertinence du parcours de recherche et de réponse, y compris le comportement quand l'information manque (**25 %**).\n- Qualité du plan d'évaluation : jeu de questions, calculs de précision et rappel, fidélité, exactitude des calculs (**25 %**).\n- Lucidité sur les risques et sur le niveau de complexité choisi (**15 %**).\n- Clarté du dossier : un lecteur non technique peut suivre le trajet de l'information (**10 %**).\n\n## Rendu\n\nTexte dans le champ de réponse et/ou fichier PDF, avec schéma photographié ou dessiné si vous le souhaitez.\n\n*Aucune affirmation sur un outil ou un fournisseur n'est attendue sans référence à sa documentation officielle.*"
+ }
+}

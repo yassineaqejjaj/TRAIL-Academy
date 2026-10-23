@@ -1,0 +1,791 @@
+{
+ "course": "M1",
+ "slug": "machine-learning",
+ "source": "Slides du formateur (module 1 : Introduction à l'IA / ML), réécrits et complétés. Pas de vidéo : à ajouter depuis l'administration.",
+ "chapters": [
+  {
+   "title": "Comprendre l'intelligence artificielle",
+   "lessons": [
+    {
+     "title": "Qu'est-ce que l'IA ?",
+     "kind": "reading",
+     "body_md": "## L'idée en une phrase\n\nL'intelligence artificielle (IA) regroupe les méthodes qui permettent à une machine d'accomplir des tâches qui demandent habituellement de l'intelligence humaine : comprendre un texte, reconnaître une image, planifier, décider, apprendre.\n\n## Deux repères historiques à connaître\n\n- **Alan Turing (1950)** pose la question « une machine peut-elle penser ? » et propose un test, aujourd'hui appelé **test de Turing** : si, lors d'une conversation écrite, un humain ne distingue plus la machine d'une personne, on peut dire qu'elle fait preuve d'un comportement intelligent.\n- **John McCarthy (1956)**, qui a popularisé le terme « intelligence artificielle », la décrit comme la science et l'ingénierie de la fabrication de machines intelligentes, en particulier de programmes informatiques intelligents. Point important : l'IA n'a pas à imiter la biologie, elle doit **fonctionner**.\n\n## Le premier programme d'IA\n\n**Logic Theorist** (1955-1956, Allen Newell, Herbert Simon et Cliff Shaw) reproduisait la démarche de résolution de problèmes d'un mathématicien. Il a démontré 38 des 52 premiers théorèmes des *Principia Mathematica* de Whitehead et Russell. On le considère comme le premier programme d'IA.\n\n## Ce qu'il faut retenir\n\n- L'IA est un **champ** large, pas une technologie unique.\n- Elle se définit par ce que le système **sait faire**, pas par la façon dont il est construit.\n- Un système peut sembler intelligent sans comprendre ce qu'il fait : gardez toujours un regard critique sur ses résultats.\n\n## Pour vérifier votre compréhension\n\nCitez trois produits que vous utilisez cette semaine et qui reposent sur de l'IA. Pour chacun, quelle tâche « intelligente » accomplit-il ?"
+    },
+    {
+     "title": "Une brève histoire de l'IA : essors et hivers",
+     "kind": "reading",
+     "body_md": "## Pourquoi l'histoire compte pour un chef de produit\n\nL'IA a connu des vagues d'enthousiasme suivies de désillusions. Reconnaître ce schéma aide à juger sérieusement les promesses d'aujourd'hui.\n\n## Les grandes étapes\n\n- **1950** : Alan Turing publie *Computing Machinery and Intelligence*.\n- **1956** : l'atelier de Dartmouth, où le terme « intelligence artificielle » est proposé. L'optimisme est immense.\n- **1958** : Frank Rosenblatt présente le **perceptron**, un des premiers modèles capables d'apprendre à partir d'exemples.\n- **1969** : Marvin Minsky et Seymour Papert montrent les limites du perceptron simple (il ne sépare que des données linéairement séparables).\n- **Années 1970 puis fin des années 1980** : deux **hivers de l'IA**. Les promesses n'ont pas été tenues, les financements s'effondrent.\n- **1997** : Deep Blue bat le champion du monde d'échecs Garry Kasparov.\n- **2012** : un réseau de neurones profond remporte nettement la compétition de reconnaissance d'images ImageNet. Le **deep learning** s'impose.\n- **2016** : AlphaGo bat un des meilleurs joueurs de go.\n- **2017** : l'architecture **Transformer** est publiée (*Attention Is All You Need*). Elle est à l'origine des modèles de langage actuels.\n- **Fin 2022** : ChatGPT met l'IA générative à la portée du grand public.\n\n## Qu'est-ce qui a changé depuis les hivers ?\n\nTrois ingrédients se sont réunis : **beaucoup plus de données**, **beaucoup plus de puissance de calcul** (notamment les GPU) et **de meilleurs algorithmes**.\n\n## Le perceptron en bref\n\nLe perceptron est le « neurone » de base :\n\n1. il reçoit des **entrées** ;\n2. chaque entrée est multipliée par un **poids** ;\n3. on calcule la **somme pondérée** ;\n4. une **fonction d'activation** décide de la sortie.\n\nIl apprend en ajustant ses poids à chaque erreur de prédiction. Empilés en nombreuses couches, ces neurones forment les réseaux de neurones profonds (module 2).\n\n## Leçon pour les produits\n\nUn hiver de l'IA survient quand on **sur-promet** et que l'on **sous-estime** les données et l'intégration. Demandez toujours : *sur quelles données, avec quelle fiabilité mesurée, pour quel usage ?*"
+    },
+    {
+     "title": "IA, Machine Learning, Deep Learning, IA générative : les poupées russes",
+     "kind": "reading",
+     "body_md": "## Quatre termes, un emboîtement\n\n- **Intelligence artificielle** : le champ tout entier.\n- **Machine Learning (apprentissage automatique)** : une approche de l'IA où le système **apprend à partir de données** au lieu d'être programmé règle par règle.\n- **Deep Learning (apprentissage profond)** : une famille de méthodes de ML fondée sur des **réseaux de neurones à nombreuses couches**.\n- **IA générative** : des modèles, le plus souvent profonds, capables de **produire** du contenu nouveau (texte, image, code, audio).\n\nChaque terme est un **sous-ensemble** du précédent.\n\n## IA étroite et IA générale\n\n- **IA étroite** : excelle sur une tâche précise (détecter une fraude, recommander un film). C'est la **seule** que l'on sait construire aujourd'hui.\n- **IA générale** : une IA aussi polyvalente qu'un humain. C'est un objectif de recherche, pas un produit.\n\nLes modèles de langage actuels paraissent polyvalents, mais restent des systèmes entraînés pour une tâche (prédire la suite d'un texte) dont des capacités larges émergent. Les modèles dits « de raisonnement » prennent plus de temps pour élaborer leur réponse avant de la donner.\n\n## Les modèles ne remplacent pas le ML classique\n\nPour de nombreux produits, un modèle de ML classique sur des données **tabulaires** (prix, comportements, historiques) reste plus **rapide, moins cher et plus facile à expliquer** qu'un grand modèle de langage. Le bon outil dépend du problème.\n\n## Exercice rapide\n\nPour chacun des cas, dites s'il relève plutôt du ML classique, du deep learning ou de l'IA générative : prévoir la demande d'un produit le mois prochain ; reconnaître des défauts sur des photos de pièces ; rédiger la première version d'un e-mail commercial."
+    }
+   ]
+  },
+  {
+   "title": "Les fondamentaux du Machine Learning",
+   "lessons": [
+    {
+     "title": "Définition et trois façons d'apprendre",
+     "kind": "reading",
+     "body_md": "## Définition\n\nLe **Machine Learning** (ML) est le champ de l'IA qui permet à un système d'**améliorer sa performance à partir de données**, sans que chaque règle soit écrite à la main.\n\nProgrammation classique : *règles + données → réponses*.\nMachine Learning : *données + réponses → règles (le modèle)*.\n\n## Les trois grandes approches\n\n### 1. Apprentissage supervisé\nLe modèle apprend à partir d'exemples **étiquetés** : pour chaque entrée, on connaît la bonne réponse.\n- *Classification* : prédire une catégorie (fraude / pas fraude, spam / pas spam).\n- *Régression* : prédire un nombre (un prix, une demande).\n\n### 2. Apprentissage non supervisé\nLes données n'ont **pas d'étiquettes**. Le modèle cherche des structures : regrouper des clients semblables (*clustering*), repérer des anomalies, réduire la dimension.\n\n### 3. Apprentissage par renforcement\nUn **agent** agit dans un environnement, reçoit des **récompenses** ou des pénalités et apprend par essais et erreurs une stratégie qui maximise sa récompense cumulée. Exemples : jeux, robotique, optimisation de décisions séquentielles.\n\n## Comment choisir ?\n\n- Vous avez des exemples avec la bonne réponse ? → **supervisé**.\n- Vous voulez explorer ou segmenter sans réponse connue ? → **non supervisé**.\n- Vous décidez en continu et recevez un retour sur vos décisions ? → **renforcement**.\n\n## Question de produit\n\nQuelle approche choisiriez-vous pour : (a) estimer la durée de livraison d'une commande ; (b) créer des segments de clients pour une campagne ; (c) ajuster en temps réel le prix d'une offre ?"
+    },
+    {
+     "title": "Caractéristiques (features) et étiquettes (labels)",
+     "kind": "reading",
+     "body_md": "## Deux notions centrales\n\n- Les **caractéristiques** (*features*) sont les données d'**entrée** fournies au modèle : les informations qu'il utilise pour apprendre et prédire.\n- Les **étiquettes** (*labels*, ou *target*) sont les **réponses à prédire**. En apprentissage supervisé, chaque ensemble de caractéristiques est associé à une étiquette.\n\n## Exemples\n\n- **Recommandation de contenus** : caractéristiques = historique de visionnage, notes données, genres préférés, temps passé ; étiquette = « a regardé jusqu'au bout » ou non.\n- **Détection de fraude** : caractéristiques = montant, heure, pays, historique du client ; étiquette = fraude / légitime.\n- **Prix d'un logement** : caractéristiques = surface, quartier, étage ; étiquette = prix de vente.\n\n## Ce qui fait la qualité d'un modèle : les données\n\nUn proverbe du domaine : *garbage in, garbage out*. Si les caractéristiques sont incomplètes, biaisées ou mal mesurées, aucun algorithme ne compensera.\n\nPoints d'attention pour un chef de produit :\n\n- **Où viennent les étiquettes ?** Les produire coûte souvent cher (annotation manuelle).\n- **Les caractéristiques seront-elles disponibles au moment de la prédiction ?** Utiliser une information qui n'existe qu'*après* l'événement à prédire est une **fuite de données** (*data leakage*) : le modèle paraît excellent en test et échoue en production.\n- **Y a-t-il des données sensibles ?** (santé, origine, etc.) Elles appellent un cadre légal et éthique.\n\n## Mini-exercice\n\nVous voulez prédire si un client va résilier son abonnement le mois prochain. Listez cinq caractéristiques plausibles, et dites pour chacune si elle est disponible *avant* la résiliation."
+    },
+    {
+     "title": "Diviser les données : entraînement, validation, test",
+     "kind": "reading",
+     "body_md": "## Pourquoi diviser ?\n\nUn modèle doit être évalué sur des données **qu'il n'a jamais vues**. Sinon, on mesure sa mémoire, pas sa capacité à **généraliser**.\n\n## Les ensembles\n\n- **Ensemble d'entraînement** : sert à apprendre les relations entre caractéristiques et étiquettes.\n- **Ensemble de validation** (facultatif mais courant) : sert à **comparer des réglages** et à choisir le meilleur modèle pendant le développement.\n- **Ensemble de test** : utilisé **une seule fois, à la fin**, pour estimer honnêtement la performance attendue.\n\nRépartition fréquente : 70 % / 15 % / 15 % ou 80 % / 20 % lorsqu'on n'a que deux ensembles. Il n'y a pas de proportion universelle.\n\n## Pièges\n\n- **Fuite entre ensembles** : des doublons, ou des lignes très proches, présents à la fois dans l'entraînement et le test gonflent artificiellement le score.\n- **Données temporelles** : pour prédire l'avenir, on entraîne sur le passé et on teste sur la période **suivante** (pas de mélange aléatoire).\n- **Classes déséquilibrées** : si 1 % des cas sont des fraudes, la division doit conserver cette proportion dans chaque ensemble (*stratification*).\n- **Réutiliser le test pour régler le modèle** revient à l'avoir vu : il faut alors un nouvel ensemble de test.\n\n## Règle pratique\n\nDécidez de la méthode d'évaluation **avant** d'entraîner, avec les personnes qui connaissent le métier."
+    },
+    {
+     "title": "Entraîner un modèle : paramètres et hyperparamètres",
+     "kind": "reading",
+     "body_md": "## Qu'est-ce qu'entraîner ?\n\nEntraîner, c'est faire passer les données d'entraînement dans un algorithme qui **ajuste ses réglages internes** pour réduire son **erreur de prédiction**. Cette erreur est mesurée par une **fonction de coût** (ou de perte).\n\nDifférents algorithmes existent : régression linéaire ou logistique, arbres de décision, forêts aléatoires, réseaux de neurones, etc.\n\n## Paramètres : ce que le modèle apprend\n\nLes **paramètres** sont les valeurs internes **ajustées automatiquement** pendant l'entraînement. Dans un réseau de neurones, ce sont les **poids** des connexions. Ils sont modifiés par des algorithmes d'optimisation comme la **descente de gradient**.\n\n## Hyperparamètres : ce que vous choisissez\n\nLes **hyperparamètres** sont des réglages définis **avant** l'entraînement et **non appris** par le modèle : le taux d'apprentissage, le nombre de couches, le nombre d'arbres d'une forêt, la profondeur maximale d'un arbre…\n\nIls influencent fortement la façon dont le modèle apprend et sa performance finale.\n\n## En résumé\n\n- **Paramètres** : appris par le modèle, à partir des données.\n- **Hyperparamètres** : choisis par l'équipe, avant l'entraînement.\n\n## À retenir pour piloter\n\nQuand une équipe annonce « on a amélioré le modèle », demandez : *quels réglages ont changé, sur quel ensemble a-t-on mesuré, et par rapport à quelle référence ?*"
+    },
+    {
+     "title": "Évaluer un modèle : précision, rappel, F1",
+     "kind": "reading",
+     "body_md": "## Le piège de l'exactitude seule\n\nImaginez que 1 transaction sur 100 est frauduleuse. Un « modèle » qui répond toujours *légitime* a **99 % d'exactitude**… et ne détecte **aucune** fraude. Il faut donc des métriques adaptées.\n\n## La matrice de confusion\n\nPour une classification binaire (positif = événement recherché) :\n\n- **Vrais positifs (VP)** : cas positifs correctement détectés.\n- **Faux positifs (FP)** : fausses alertes.\n- **Faux négatifs (FN)** : cas positifs manqués.\n- **Vrais négatifs (VN)** : cas négatifs correctement écartés.\n\n## Les métriques\n\n- **Exactitude** (*accuracy*) = (VP + VN) / total. La part des prédictions correctes.\n- **Précision** = VP / (VP + FP). Parmi les alertes levées, combien étaient justifiées ?\n- **Rappel** (*recall*) = VP / (VP + FN). Parmi les vrais cas, combien a-t-on trouvés ?\n- **Score F1** = moyenne harmonique de la précision et du rappel. Il est élevé seulement si **les deux** le sont.\n\nUn modèle très précis qui rate beaucoup de cas aura un F1 bas ; un modèle qui détecte tout mais se trompe souvent aussi.\n\n## Quelle métrique privilégier ? Une décision de produit\n\n- **Dépistage médical, fraude grave** : rater un cas coûte cher → privilégier le **rappel**.\n- **Filtre anti-spam, modération automatique avec suppression** : une fausse alerte pénalise l'utilisateur → privilégier la **précision**.\n\nLe **seuil de décision** permet d'arbitrer entre les deux. Ce choix relève du produit et du métier, pas seulement de la data science.\n\n## Surapprentissage et sous-apprentissage\n\n- **Surapprentissage** (*overfitting*) : le modèle « apprend par cœur » l'entraînement et généralise mal. Signe : excellent score en entraînement, nettement moins bon en test.\n- **Sous-apprentissage** (*underfitting*) : le modèle est trop simple pour capturer la structure des données. Signe : mauvais score partout.\n\n## Toujours comparer à une référence\n\nVotre modèle bat-il une règle simple (toujours la classe majoritaire, une règle métier) ? Sans cette **référence de base** (*baseline*), un score ne veut rien dire."
+    },
+    {
+     "title": "Améliorer un modèle : optimisation et régularisation",
+     "kind": "reading",
+     "body_md": "## Les leviers d'amélioration\n\n1. **Les données** (le plus rentable, souvent) : en obtenir davantage, nettoyer les erreurs, corriger les déséquilibres, ajouter des caractéristiques pertinentes. Lorsque les données manquent, on peut les **augmenter** (*data augmentation*), par exemple en retournant ou recadrant des images.\n2. **L'optimisation des hyperparamètres** : tester systématiquement plusieurs réglages (recherche sur grille, recherche aléatoire) en s'appuyant sur l'ensemble de validation.\n3. **La régularisation** : ajouter des contraintes au modèle pour limiter le surapprentissage et améliorer sa capacité à généraliser.\n4. **Le choix de l'algorithme** : parfois un modèle plus simple suffit, et il est plus facile à expliquer.\n5. **Les méthodes d'ensemble** (*ensemble learning*) : combiner plusieurs modèles, comme dans une forêt aléatoire.\n\n## La boucle d'amélioration\n\nÉvaluer → diagnostiquer (surapprentissage ou sous-apprentissage ?) → agir sur le bon levier → réévaluer. Si les résultats ne sont pas satisfaisants, il faut soit **ré-entraîner**, soit **enrichir les données**.\n\n## Quand s'arrêter ?\n\nDès que la performance atteint le **niveau requis par le produit**. Un gain de deux points de F1 qui coûte trois mois de travail n'est pas toujours rentable. Définissez le seuil de réussite avant de commencer.\n\n## Après la mise en production\n\nUn modèle se dégrade quand le monde change (**dérive des données**). Prévoyez un suivi continu et un ré-entraînement planifié : c'est le sujet du module *AI Evaluation & Observability*."
+    },
+    {
+     "title": "Les applications clés du Machine Learning",
+     "kind": "reading",
+     "body_md": "## Trois familles d'usages\n\n### Prédiction et analyse prédictive\n- **Prévision des ventes** à partir des tendances historiques.\n- **Maintenance prédictive** : anticiper quand un équipement nécessitera une intervention pour éviter la panne.\n- **Prévision de la demande** pour mieux gérer les stocks.\n\n### Segmentation et clustering\n- **Segmentation de la clientèle** : regrouper des clients similaires pour cibler les actions marketing.\n- **Analyse de marché** : repérer des segments et des opportunités.\n- **Détection d'anomalies** : repérer ce qui s'écarte nettement des groupes habituels (fraude, incident).\n\n### Reconnaissance de motifs et analyse de tendances\n- **Reconnaissance de formes** dans des images ou des séquences.\n- **Analyse de séries temporelles** : tendances, saisonnalités, cycles.\n- **Analyse de sentiments** à partir d'avis et de commentaires.\n\n## Associer approche et cas d'usage\n\n- Classification d'images, détection de fraude, prévisions : plutôt **supervisé**.\n- Segmentation, recommandation exploratoire, visualisation de grandes bases : plutôt **non supervisé**.\n- Décisions en temps réel, navigation robotique, apprentissage de tâches : plutôt **renforcement**.\n\n## Avant de lancer un projet de ML : cinq questions\n\n1. Quelle **décision** le modèle va-t-il améliorer, et qui l'utilisera ?\n2. Quelles **données** avons-nous, avec quelle qualité et quels droits d'usage ?\n3. Quel **niveau de performance** rend le produit utile ? Quelle baseline ?\n4. Que se passe-t-il quand le modèle **se trompe** ?\n5. Comment mesurera-t-on la **valeur** après la mise en production ?"
+    },
+    {
+     "title": "Le cycle de vie d'un projet de ML",
+     "kind": "reading",
+     "body_md": "## Les grandes étapes\n\n1. **Cadrer le problème** : objectif métier, décision à améliorer, critère de succès, contraintes.\n2. **Collecter et comprendre les données** : sources, qualité, droits, représentativité.\n3. **Préparer les données** : nettoyage, valeurs manquantes, encodage des variables, création de caractéristiques.\n4. **Diviser** les données (entraînement / validation / test).\n5. **Entraîner** un premier modèle simple, puis le comparer à la baseline.\n6. **Évaluer** avec les bonnes métriques ; diagnostiquer.\n7. **Améliorer** : données, hyperparamètres, régularisation, algorithme.\n8. **Tester** une dernière fois sur l'ensemble de test.\n9. **Déployer** et **surveiller**.\n10. **Boucler** : si le modèle ne tient pas ses promesses, ré-entraîner ou enrichir les données.\n\n## Rôles typiques\n\n- **Chef de produit** : problème, valeur, critères d'acceptation, risques.\n- **Data scientist / ML engineer** : modèle, évaluation, industrialisation.\n- **Data engineer** : pipelines de données.\n- **Expert métier** : qualité des étiquettes, interprétation des erreurs.\n\n## Pourquoi tant de projets échouent\n\nRarement à cause de l'algorithme. Plutôt : un problème mal cadré, des données indisponibles ou non représentatives, aucune métrique de valeur, ou aucun plan pour l'intégration et le suivi.\n\n## Ce que doit exiger un chef de produit\n\nUn premier **prototype simple de bout en bout** rapidement, plutôt qu'un modèle sophistiqué après six mois. On apprend plus d'une version basique en conditions réelles que d'une version parfaite en laboratoire."
+    }
+   ]
+  },
+  {
+   "title": "Mise en pratique : prédire la survie des passagers du Titanic",
+   "lessons": [
+    {
+     "title": "Cadrer le projet et comprendre les données",
+     "kind": "exercise",
+     "body_md": "## Votre mission\n\nConstruire un modèle de Machine Learning qui **prédit si un passager du Titanic a survécu**, à partir de ses caractéristiques. Ce cas est un classique de la data science : petit, lisible et parfait pour parcourir tout le cycle de vie d'un projet.\n\n## Étape 1 : cadrer\n\n- **Problème** : classification binaire (survécu : 1 / décédé : 0).\n- **Approche** : apprentissage supervisé.\n- **Étiquette** : la colonne `Survived`.\n- **Succès** : battre la baseline « tout le monde décède ».\n\n## Étape 2 : les données\n\nLe jeu de données Titanic contient une ligne par passager. Chargez la version publique utilisée dans le code de la leçon suivante (891 passagers). Colonnes principales :\n\n- `Survived` : 0 = décédé, 1 = survivant (**l'étiquette**).\n- `Pclass` : classe du billet (1, 2, 3).\n- `Sex`, `Age` : sexe et âge.\n- `SibSp`, `Parch` : nombre de frères/sœurs/conjoints et de parents/enfants à bord.\n- `Fare` : prix du billet.\n- `Embarked` : port d'embarquement.\n\nLes colonnes `Name`, `Ticket`, `Cabin` et `PassengerId` ne sont pas utilisées dans ce premier modèle (identifiants ou trop de valeurs manquantes).\n\n## Train et test\n\nDans les compétitions, on fournit un fichier d'**entraînement** (étiquette connue) et un fichier de **test** (étiquette cachée). Les deux ont les **mêmes colonnes**, sauf la cible. Ici, nous créons nous-mêmes un ensemble de test en gardant 20 % des passagers de côté.\n\n## À faire avant de coder\n\n1. Quelle part de passagers a survécu ? (Indice : un peu moins de 40 %.) Que dit-elle sur la baseline ?\n2. Selon vous, quelles caractéristiques influencent la survie ? Notez vos hypothèses : vous les comparerez au modèle.\n3. Y a-t-il des colonnes à **ne pas** utiliser car elles fuiraient la réponse ?\n\n## Outils possibles\n\nPython avec `pandas` et `scikit-learn` (code fourni), ou une plateforme visuelle de data science de votre choix. Le raisonnement est identique."
+    },
+    {
+     "title": "Préparer les données et entraîner le modèle",
+     "kind": "exercise",
+     "body_md": "## Ce que fait le code\n\n1. **Charge** les données.\n2. **Sépare** les caractéristiques (`X`) de l'étiquette (`y`).\n3. **Divise** en entraînement (80 %) et test (20 %), en conservant la proportion de survivants (`stratify`).\n4. **Prépare** les données : valeurs numériques manquantes remplacées par la médiane ; valeurs catégorielles manquantes par la plus fréquente, puis transformées en colonnes 0/1 (*one-hot*).\n5. **Entraîne** une forêt aléatoire (un ensemble de nombreux arbres de décision).\n6. **Évalue** sur l'ensemble de test.\n\nPour installer les bibliothèques : `pip install pandas scikit-learn`.\n\n## Le code\n\n```python\nimport pandas as pd\nfrom sklearn.compose import ColumnTransformer\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.impute import SimpleImputer\nfrom sklearn.metrics import classification_report, confusion_matrix\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.preprocessing import OneHotEncoder\n\nurl = \"https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv\"\ndf = pd.read_csv(url)\n\nfeatures = [\"Pclass\", \"Sex\", \"Age\", \"SibSp\", \"Parch\", \"Fare\", \"Embarked\"]\nX, y = df[features], df[\"Survived\"]\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, test_size=0.2, random_state=42, stratify=y\n)\n\nnumeric = [\"Pclass\", \"Age\", \"SibSp\", \"Parch\", \"Fare\"]\ncategorical = [\"Sex\", \"Embarked\"]\nprep = ColumnTransformer([\n    (\"num\", SimpleImputer(strategy=\"median\"), numeric),\n    (\"cat\", Pipeline([\n        (\"imp\", SimpleImputer(strategy=\"most_frequent\")),\n        (\"onehot\", OneHotEncoder(handle_unknown=\"ignore\")),\n    ]), categorical),\n])\n\nmodel = Pipeline([\n    (\"prep\", prep),\n    (\"clf\", RandomForestClassifier(n_estimators=200, random_state=42)),\n])\nmodel.fit(X_train, y_train)\n\npred = model.predict(X_test)\nprint(confusion_matrix(y_test, pred))\nprint(classification_report(y_test, pred, digits=2))\nprint(\"Baseline (tout le monde meurt) :\", round((y_test == 0).mean(), 3))\n```\n\n## Pourquoi un « pipeline » ?\n\nLa préparation (médiane, encodage) est **apprise sur l'entraînement uniquement** puis appliquée au test. Calculer la médiane sur toutes les données avant la division serait une **fuite de données**.\n\n## Ce que vous devez observer\n\n- La baseline « tout le monde décède » donne environ **61,5 %** d'exactitude sur cet échantillon de test.\n- Le modèle ci-dessus obtient autour de **82 %** d'exactitude (le résultat peut varier légèrement selon les versions des bibliothèques).\n- Regardez la **matrice de confusion** : combien de survivants manque-t-on (faux négatifs) ?\n\n## Essayez\n\n- Changez `random_state` : le score bouge-t-il ? Que cela vous dit-il sur la fiabilité d'un seul découpage ?\n- Remplacez `RandomForestClassifier` par `LogisticRegression` (importée depuis `sklearn.linear_model`). Comparez."
+    },
+    {
+     "title": "Évaluer, interpréter et améliorer",
+     "kind": "exercise",
+     "body_md": "## Lire les résultats\n\nÀ partir de la matrice de confusion et du rapport de classification :\n\n- Calculez à la main la **précision** et le **rappel** de la classe « survivant ». Vérifiez avec le rapport.\n- Le modèle se trompe-t-il plus souvent en **manquant** des survivants ou en en **inventant** ?\n- Si ce modèle servait à prioriser des secours, quelle erreur serait la plus grave ? Quelle métrique privilégier ?\n\n## Comprendre ce que le modèle a retenu\n\nAjoutez à la fin du script :\n\n```python\nimport pandas as pd\n\nnoms = model.named_steps[\"prep\"].get_feature_names_out()\nimportances = model.named_steps[\"clf\"].feature_importances_\nprint(pd.Series(importances, index=noms).sort_values(ascending=False).head(8))\n```\n\nQuelles caractéristiques pèsent le plus ? Correspondent-elles à vos hypothèses de départ ? Attention : **l'importance n'est pas une causalité**.\n\n## Pistes d'amélioration à tester (une à la fois)\n\n1. **Hyperparamètres** : `n_estimators`, `max_depth`, `min_samples_leaf`. Mesurez sur un ensemble de **validation** (ou en validation croisée), pas sur le test.\n2. **Régularisation** : limitez `max_depth` et observez l'écart entre score d'entraînement et score de test. Réduit-on le surapprentissage ?\n3. **Nouvelles caractéristiques** : taille de la famille (`SibSp + Parch + 1`), titre extrait de la colonne `Name` (M., Mme, Miss…).\n4. **Un autre algorithme**.\n\n## Réflexion de produit\n\n- Que ferait-on de ces prédictions dans un vrai produit ?\n- Les données contiennent-elles des **biais** (qui est représenté, comment les informations ont été collectées) ?\n- Qu'est-ce qui changerait si l'on devait prédire pour de **nouveaux** passagers d'une autre époque ? (Pensez à la **dérive** des données.)\n\n## Livrable\n\nVoir l'évaluation « Livrable pratique » du module."
+    }
+   ]
+  },
+  {
+   "title": "Ressources",
+   "lessons": [
+    {
+     "title": "Glossaire de l'IA, du Machine Learning et du Deep Learning",
+     "kind": "reading",
+     "body_md": "## Notions générales\n\n- **Intelligence artificielle (IA)** : simulation de capacités de l'intelligence humaine par des machines.\n- **Apprentissage automatique (Machine Learning, ML)** : l'IA qui apprend à partir de données, sans être programmée règle par règle.\n- **Apprentissage profond (Deep Learning)** : ML fondé sur des réseaux de neurones à nombreuses couches.\n- **IA générative** : modèles qui produisent du contenu nouveau (texte, image, code, audio).\n- **LLM (Large Language Model)** : grand modèle de langage, en général de type Transformer, entraîné sur de très grands volumes de texte.\n- **Transformer** : architecture de réseau de neurones, au cœur des modèles de langage.\n\n## Types d'apprentissage\n\n- **Apprentissage supervisé** : à partir de données étiquetées.\n- **Apprentissage non supervisé** : sans étiquettes, en cherchant une structure.\n- **Apprentissage par renforcement** : un agent apprend par essais, erreurs et récompenses.\n- **Transfer learning** : réutiliser un modèle pré-entraîné pour une nouvelle tâche.\n- **Apprentissage fédéré** : entraîner un modèle sur plusieurs appareils ou serveurs sans centraliser les données.\n- **Ensemble learning** : combiner plusieurs modèles pour de meilleures performances.\n\n## Données et entraînement\n\n- **Caractéristique (feature)** : donnée d'entrée du modèle.\n- **Étiquette (label, target)** : résultat à prédire.\n- **Ensemble d'entraînement / de validation / de test** : voir la leçon sur la division des données.\n- **Paramètres** : valeurs internes apprises par le modèle (poids).\n- **Hyperparamètres** : réglages fixés avant l'entraînement (taux d'apprentissage, nombre de couches…).\n- **Taux d'apprentissage (learning rate)** : vitesse à laquelle le modèle ajuste ses paramètres.\n- **Fonction de coût (ou de perte)** : mesure de l'erreur entre prédictions et valeurs réelles.\n- **Rétropropagation (backpropagation)** : méthode de mise à jour des poids d'un réseau de neurones.\n- **Fuite de données (data leakage)** : utiliser, à l'entraînement, une information indisponible au moment de la prédiction.\n\n## Qualité et évaluation\n\n- **Surapprentissage (overfitting)** : le modèle apprend « par cœur » l'entraînement et généralise mal.\n- **Sous-apprentissage (underfitting)** : le modèle est trop simple pour capturer la structure des données.\n- **Exactitude (accuracy)**, **précision**, **rappel (recall)**, **score F1** : voir la leçon d'évaluation.\n- **Biais** : erreur systématique introduite par des données ou un modèle erronés ou incomplets.\n- **Explainable AI (XAI)** : techniques permettant de comprendre et d'interpréter les décisions d'un modèle.\n- **Régularisation** : contrainte ajoutée au modèle pour limiter le surapprentissage.\n- **Clustering** : regroupement automatique de données similaires.\n\n## Architectures de réseaux\n\n- **Réseau de neurones artificiel** : modèle inspiré, de loin, des neurones biologiques.\n- **Couches cachées** : couches situées entre l'entrée et la sortie.\n- **CNN (réseau convolutif)** : souvent utilisé pour les images.\n- **RNN (réseau récurrent)** : adapté aux séquences (séries temporelles, texte).\n- **Modèle génératif** : produit des données qui ressemblent à celles d'entraînement. **Modèle discriminatif** : distingue des catégories.\n\n## Infrastructure\n\n- **GPU** : processeur graphique, très utilisé pour le calcul en apprentissage profond.\n- **TPU** : processeur conçu pour accélérer l'apprentissage profond.\n- **Scalabilité** : capacité à gérer une charge croissante.\n- **Traitement distribué** : répartir un calcul sur plusieurs machines.\n- **API** : interface permettant à des logiciels de communiquer entre eux."
+    },
+    {
+     "title": "Récapitulatif du module",
+     "kind": "reading",
+     "body_md": "## Les dix idées à retenir\n\n1. L'IA est un **champ** ; le ML en est une approche ; le deep learning, une famille de méthodes de ML ; l'IA générative, des modèles qui **produisent** du contenu.\n2. Toute l'IA que l'on sait construire aujourd'hui est **étroite**.\n3. L'histoire de l'IA alterne **essors et hivers** : méfiez-vous des promesses sans données ni mesures.\n4. Le ML **apprend à partir des données** : supervisé, non supervisé, par renforcement.\n5. **Caractéristiques** = entrées, **étiquettes** = réponses à prédire.\n6. On évalue toujours sur des données **jamais vues** (test), choisies avant l'entraînement.\n7. **Paramètres** = appris ; **hyperparamètres** = choisis avant.\n8. L'exactitude ne suffit pas : **précision, rappel et F1**, et toujours **une baseline**.\n9. Surapprentissage et sous-apprentissage se diagnostiquent en comparant entraînement et test.\n10. Un projet ML est un **cycle** : cadrer, préparer, entraîner, évaluer, améliorer, déployer, surveiller.\n\n## Pour aller plus loin\n\nLe module suivant, **Deep Learning**, approfondit les réseaux de neurones, dont le perceptron est l'ancêtre."
+    }
+   ]
+  }
+ ],
+ "quiz": {
+  "title": "Quiz du module",
+  "pass_percent": 70,
+  "max_attempts": null,
+  "questions": [
+   {
+    "kind": "single_choice",
+    "prompt": "Qui a posé la question « une machine peut-elle penser ? » et proposé un test de comportement ?",
+    "feedback": "C'est Alan Turing, en 1950. Le test de Turing évalue si un humain distingue la machine d'une personne lors d'une conversation écrite.",
+    "options": [
+     [
+      "Alan Turing",
+      true
+     ],
+     [
+      "John McCarthy",
+      false
+     ],
+     [
+      "Frank Rosenblatt",
+      false
+     ],
+     [
+      "Geoffrey Hinton",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel programme de 1955-1956 est considéré comme le premier programme d'IA ?",
+    "feedback": "Logic Theorist (Newell, Simon et Shaw) a démontré 38 des 52 premiers théorèmes des Principia Mathematica.",
+    "options": [
+     [
+      "Logic Theorist",
+      true
+     ],
+     [
+      "Deep Blue",
+      false
+     ],
+     [
+      "AlphaGo",
+      false
+     ],
+     [
+      "ChatGPT",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'appelle-t-on un « hiver de l'IA » ?",
+    "feedback": "Les hivers de l'IA (années 1970, puis fin des années 1980) ont suivi des périodes de sur-promesse.",
+    "options": [
+     [
+      "Une période de désillusion et de baisse des financements après des promesses non tenues",
+      true
+     ],
+     [
+      "Une panne mondiale de serveurs",
+      false
+     ],
+     [
+      "Un algorithme d'entraînement",
+      false
+     ],
+     [
+      "Une loi sur l'IA",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels facteurs expliquent le retour en force de l'IA depuis les années 2010 ?",
+    "feedback": "Données, calcul et algorithmes : les trois ensemble. Les réseaux de neurones sont au contraire au centre du renouveau.",
+    "options": [
+     [
+      "Beaucoup plus de données disponibles",
+      true
+     ],
+     [
+      "Beaucoup plus de puissance de calcul (GPU)",
+      true
+     ],
+     [
+      "De meilleurs algorithmes",
+      true
+     ],
+     [
+      "L'abandon des réseaux de neurones",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle relation décrit le mieux IA, Machine Learning et Deep Learning ?",
+    "feedback": "Ils s'emboîtent : IA ⊃ ML ⊃ Deep Learning.",
+    "options": [
+     [
+      "Le deep learning est un sous-ensemble du machine learning, lui-même un sous-ensemble de l'IA",
+      true
+     ],
+     [
+      "Ce sont trois synonymes",
+      false
+     ],
+     [
+      "L'IA est un sous-ensemble du deep learning",
+      false
+     ],
+     [
+      "Le machine learning exclut l'IA",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle forme d'IA sait-on construire aujourd'hui ?",
+    "feedback": "L'IA générale reste un objectif de recherche.",
+    "options": [
+     [
+      "L'IA étroite, spécialisée dans des tâches",
+      true
+     ],
+     [
+      "L'IA générale équivalente à un humain",
+      false
+     ],
+     [
+      "Les deux, de manière équivalente",
+      false
+     ],
+     [
+      "Aucune",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle est la différence essentielle entre programmation classique et Machine Learning ?",
+    "feedback": "Programmation classique : règles + données → réponses. ML : données + réponses → règles.",
+    "options": [
+     [
+      "En ML, on fournit données et réponses pour obtenir les règles (le modèle)",
+      true
+     ],
+     [
+      "Le ML n'utilise jamais de données",
+      false
+     ],
+     [
+      "La programmation classique apprend toute seule",
+      false
+     ],
+     [
+      "Il n'y en a aucune",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Vous disposez d'un historique de transactions déjà marquées « fraude » ou « légitime ». Quelle approche choisir ?",
+    "feedback": "Les données sont étiquetées : c'est un problème de classification supervisée.",
+    "options": [
+     [
+      "Apprentissage supervisé",
+      true
+     ],
+     [
+      "Apprentissage non supervisé",
+      false
+     ],
+     [
+      "Apprentissage par renforcement",
+      false
+     ],
+     [
+      "Aucune approche de ML ne convient",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Vous voulez regrouper vos clients en segments sans catégories prédéfinies. Quelle approche ?",
+    "feedback": "Sans étiquettes, on cherche des structures dans les données : clustering.",
+    "options": [
+     [
+      "Apprentissage non supervisé (clustering)",
+      true
+     ],
+     [
+      "Apprentissage supervisé",
+      false
+     ],
+     [
+      "Régression",
+      false
+     ],
+     [
+      "Renforcement",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un agent apprend à gérer un entrepôt en recevant des récompenses ou des pénalités. De quelle approche s'agit-il ?",
+    "feedback": "Apprendre par essais et erreurs avec récompenses est la définition du renforcement.",
+    "options": [
+     [
+      "Apprentissage par renforcement",
+      true
+     ],
+     [
+      "Apprentissage supervisé",
+      false
+     ],
+     [
+      "Clustering",
+      false
+     ],
+     [
+      "Prétraitement",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans un modèle de prédiction de résiliation d'abonnement, « le client a résilié ou non » est…",
+    "feedback": "C'est la réponse à prédire : l'étiquette.",
+    "options": [
+     [
+      "L'étiquette (target)",
+      true
+     ],
+     [
+      "Une caractéristique",
+      false
+     ],
+     [
+      "Un hyperparamètre",
+      false
+     ],
+     [
+      "Un paramètre",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Lesquelles de ces informations sont des caractéristiques (features) plausibles pour prédire un prix de logement ?",
+    "feedback": "Le prix de vente est l'étiquette ; l'utiliser comme entrée serait une fuite de données.",
+    "options": [
+     [
+      "Surface",
+      true
+     ],
+     [
+      "Quartier",
+      true
+     ],
+     [
+      "Étage",
+      true
+     ],
+     [
+      "Le prix de vente final",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi évalue-t-on un modèle sur un ensemble de test distinct de l'entraînement ?",
+    "feedback": "Évaluer sur les données d'entraînement mesure la mémoire, pas la généralisation.",
+    "options": [
+     [
+      "Pour mesurer sa capacité à généraliser à des données jamais vues",
+      true
+     ],
+     [
+      "Pour accélérer l'entraînement",
+      false
+     ],
+     [
+      "Pour augmenter la taille des données",
+      false
+     ],
+     [
+      "Pour réduire le nombre de paramètres",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "À quoi sert principalement l'ensemble de validation ?",
+    "feedback": "On l'utilise pendant le développement ; le test reste réservé à la mesure finale.",
+    "options": [
+     [
+      "Comparer des réglages et choisir le meilleur modèle avant le test final",
+      true
+     ],
+     [
+      "Remplacer l'ensemble d'entraînement",
+      false
+     ],
+     [
+      "Stocker les résultats",
+      false
+     ],
+     [
+      "Anonymiser les données",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle est la bonne façon de séparer les données pour prédire les ventes du mois prochain ?",
+    "feedback": "Avec des données temporelles, on respecte l'ordre du temps pour éviter de « voir le futur ».",
+    "options": [
+     [
+      "Entraîner sur le passé et tester sur la période suivante",
+      true
+     ],
+     [
+      "Mélanger au hasard passé et futur",
+      false
+     ],
+     [
+      "Tester sur les données d'entraînement",
+      false
+     ],
+     [
+      "Ne pas tester",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle est la différence entre paramètres et hyperparamètres ?",
+    "feedback": "Poids = paramètres. Taux d'apprentissage, nombre de couches = hyperparamètres.",
+    "options": [
+     [
+      "Les paramètres sont appris pendant l'entraînement ; les hyperparamètres sont choisis avant",
+      true
+     ],
+     [
+      "Ils sont identiques",
+      false
+     ],
+     [
+      "Les hyperparamètres sont appris, les paramètres choisis",
+      false
+     ],
+     [
+      "Les paramètres n'existent que pour les LLM",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Lesquels sont des hyperparamètres ?",
+    "feedback": "Les poids sont des paramètres, appris par le modèle.",
+    "options": [
+     [
+      "Le taux d'apprentissage",
+      true
+     ],
+     [
+      "Le nombre de couches d'un réseau",
+      true
+     ],
+     [
+      "Les poids des neurones",
+      false
+     ],
+     [
+      "La profondeur maximale d'un arbre",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Sur 1 000 transactions, 10 sont frauduleuses. Un modèle répond toujours « légitime ». Quelle est son exactitude et pourquoi est-ce trompeur ?",
+    "feedback": "Avec des classes déséquilibrées, l'exactitude seule masque l'échec : il faut regarder le rappel et la précision.",
+    "options": [
+     [
+      "99 % : très élevée alors qu'il ne détecte aucune fraude",
+      true
+     ],
+     [
+      "50 % : il se trompe une fois sur deux",
+      false
+     ],
+     [
+      "0 % : il ne trouve rien",
+      false
+     ],
+     [
+      "100 % : il est parfait",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un modèle lève 40 alertes de fraude, dont 30 sont justifiées. Quelle est sa précision ?",
+    "feedback": "Précision = VP / (VP + FP) = 30 / 40 = 75 %.",
+    "options": [
+     [
+      "75 %",
+      true
+     ],
+     [
+      "30 %",
+      false
+     ],
+     [
+      "40 %",
+      false
+     ],
+     [
+      "25 %",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Il y a 50 vraies fraudes, le modèle en détecte 30. Quel est son rappel ?",
+    "feedback": "Rappel = VP / (VP + FN) = 30 / 50 = 60 %.",
+    "options": [
+     [
+      "60 %",
+      true
+     ],
+     [
+      "30 %",
+      false
+     ],
+     [
+      "75 %",
+      false
+     ],
+     [
+      "40 %",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quand le score F1 est-il élevé ?",
+    "feedback": "Le F1 est une moyenne harmonique : un des deux bas suffit à le tirer vers le bas.",
+    "options": [
+     [
+      "Quand la précision et le rappel sont tous deux élevés",
+      true
+     ],
+     [
+      "Quand seule la précision est élevée",
+      false
+     ],
+     [
+      "Quand seul le rappel est élevé",
+      false
+     ],
+     [
+      "Quand le modèle a beaucoup de paramètres",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pour un dépistage où rater un cas est très coûteux, quelle métrique faut-il privilégier ?",
+    "feedback": "On cherche à manquer le moins de cas positifs possible : le rappel.",
+    "options": [
+     [
+      "Le rappel",
+      true
+     ],
+     [
+      "La précision uniquement",
+      false
+     ],
+     [
+      "Le nombre de paramètres",
+      false
+     ],
+     [
+      "La vitesse d'entraînement",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un modèle obtient 99 % en entraînement et 70 % en test. De quoi s'agit-il probablement ?",
+    "feedback": "Un grand écart entre entraînement et test signale que le modèle a appris « par cœur ».",
+    "options": [
+     [
+      "D'un surapprentissage (overfitting)",
+      true
+     ],
+     [
+      "D'un sous-apprentissage",
+      false
+     ],
+     [
+      "D'un excellent modèle",
+      false
+     ],
+     [
+      "D'une erreur de la fonction d'activation",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels leviers peuvent réduire le surapprentissage ?",
+    "feedback": "Tester sur l'entraînement ne corrige rien : cela cache le problème.",
+    "options": [
+     [
+      "Régularisation",
+      true
+     ],
+     [
+      "Plus de données",
+      true
+     ],
+     [
+      "Réduire la complexité du modèle",
+      true
+     ],
+     [
+      "Tester sur l'ensemble d'entraînement",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'est-ce que la fuite de données (data leakage) ?",
+    "feedback": "Le modèle paraît excellent en test et échoue en production.",
+    "options": [
+     [
+      "Utiliser à l'entraînement une information qui ne sera pas disponible au moment de la prédiction",
+      true
+     ],
+     [
+      "Une cyberattaque sur la base de données",
+      false
+     ],
+     [
+      "La suppression de lignes",
+      false
+     ],
+     [
+      "Une perte de connexion réseau",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Avant d'évaluer un modèle, quelle référence faut-il se donner ?",
+    "feedback": "Sans baseline, un score ne veut rien dire.",
+    "options": [
+     [
+      "Une baseline simple (règle métier, classe majoritaire)",
+      true
+     ],
+     [
+      "Aucune, le score suffit",
+      false
+     ],
+     [
+      "Le modèle le plus complexe possible",
+      false
+     ],
+     [
+      "Le nombre de lignes de code",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle application relève de la maintenance prédictive ?",
+    "feedback": "Prédire une panne à partir de signaux et d'historiques de maintenance.",
+    "options": [
+     [
+      "Anticiper quand un équipement nécessitera une intervention",
+      true
+     ],
+     [
+      "Rédiger des e-mails",
+      false
+     ],
+     [
+      "Traduire un document",
+      false
+     ],
+     [
+      "Choisir une couleur de logo",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans le projet Titanic, quelle colonne est l'étiquette ?",
+    "feedback": "On cherche à prédire la survie : la colonne Survived.",
+    "options": [
+     [
+      "Survived",
+      true
+     ],
+     [
+      "Age",
+      false
+     ],
+     [
+      "Fare",
+      false
+     ],
+     [
+      "Pclass",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi construit-on un pipeline de préparation qui apprend la médiane sur l'entraînement uniquement ?",
+    "feedback": "Calculer la médiane sur toutes les données avant la division serait une fuite.",
+    "options": [
+     [
+      "Pour éviter qu'une information du jeu de test influence l'entraînement",
+      true
+     ],
+     [
+      "Pour que le code soit plus court",
+      false
+     ],
+     [
+      "Parce que la médiane est interdite sur le test",
+      false
+     ],
+     [
+      "Pour réduire la mémoire",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Décrivez un cas d'usage de votre contexte professionnel où le Machine Learning apporterait de la valeur. Précisez : l'approche (supervisée, non supervisée ou renforcement), les caractéristiques, l'étiquette éventuelle, la métrique que vous privilégieriez et pourquoi.",
+    "feedback": "Question relue par le formateur. Une bonne réponse relie le problème métier, la donnée disponible, le choix de la métrique et les risques d'erreur.",
+    "options": []
+   }
+  ]
+ },
+ "assignment": {
+  "title": "Livrable pratique : votre premier modèle de ML et sa note de synthèse",
+  "instructions_md": "## Objectif\n\nDémontrer que vous savez conduire un petit projet de Machine Learning **et le présenter à un décideur**.\n\n## Consignes\n\n1. Reprenez le projet **Titanic** (leçons de la mise en pratique) et exécutez le code fourni.\n2. Réalisez **au moins une amélioration** parmi : un autre algorithme, des hyperparamètres ajustés (mesurés sur validation ou validation croisée), une nouvelle caractéristique, de la régularisation.\n3. Rédigez une **note de synthèse d'une page** destinée à un responsable non technique, qui contient :\n   - le problème posé et la **baseline** utilisée ;\n   - les **résultats** (exactitude, précision, rappel, F1 de la classe « survivant ») avant et après votre amélioration ;\n   - l'**interprétation** : que retient le modèle ? Où se trompe-t-il ? Quelle erreur est la plus coûteuse ?\n   - **trois risques** (biais des données, fuite de données, dérive) et la manière de les surveiller ;\n   - une **recommandation** : ce modèle serait-il utile dans un produit ? Sous quelles conditions ?\n4. Joignez le code (ou un lien) ou collez-le à la fin de votre réponse.\n\n## Grille d'évaluation\n\n- Exactitude technique et cohérence des chiffres (**40 %**).\n- Comparaison à une baseline et lecture critique des métriques (**25 %**).\n- Qualité de la note : clarté, recommandations, risques (**25 %**).\n- Respect du protocole : évaluation sur des données jamais vues, absence de fuite (**10 %**).\n\n## Rendu\n\nTexte dans le champ de réponse et/ou un fichier PDF, notebook ou archive.\n\n*Vous pouvez remplacer le jeu de données Titanic par un jeu de données public de votre choix, à condition de le préciser et de le justifier.*"
+ }
+}
