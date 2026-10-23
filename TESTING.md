@@ -2,16 +2,16 @@
 
 ## Ce qui tourne
 
-La CI GitHub Actions (`.github/workflows/ci.yml`) exécute types, lint, les 340 tests, l'audit des dépendances, le build, puis les 18 parcours Playwright sur Chromium (base embarquée, build de production) : **succès constaté sur GitHub** pour le commit `6ac17d7`.
+La CI GitHub Actions (`.github/workflows/ci.yml`) exécute types, lint, les 339 tests, l'audit des dépendances, le build, puis les 18 parcours Playwright sur Chromium (base embarquée, build de production) : **succès constaté sur GitHub** pour le commit `6ac17d7`.
 
 | Niveau | Commande | Contenu |
 |---|---|---|
 | Types, lint | `npm run typecheck` / `npm run lint` | propres |
-| Unitaires, base, intégration | `npm test` | **340 tests, 17 fichiers** |
+| Unitaires, base, intégration | `npm test` | **339 tests, 17 fichiers** |
 | Bout en bout | `npx playwright test` | **9 parcours** dans Chrome, sur un build de production |
 | Audit | `npm audit --omit=dev` | 0 vulnérabilité |
 
-### Détail des 340 tests
+### Détail des 339 tests
 
 - **Base de données (PGlite, vraies migrations)** : `db`, `learning`, `commerce`, `admin`, `dev-fixture` — accès par entitlement, expiration, correction des quiz (ensemble exact, réponse libre exclue, limite de tentatives), complétion configurable, attestation unique, achat (offre fermée, déjà détenu, session falsifiée, devise, rejeu, retry après échec), remboursements et litiges, publication conditionnée, historique de prix, ordre, cycles de prérequis, accès manuels motivés, métriques, audit en écriture seule, inscriptions d'intérêt.
 - **Couche d'accès sur TCP réel** (`db-layer`) : lecture publique, isolation par utilisateur, aucune fuite de rôle ni d'identité sur connexion réutilisée, rôle de confiance, tables d'auth inaccessibles, annulation sur erreur, paramètres liés, dates en ISO, mode connexion unique.
