@@ -301,3 +301,45 @@ describe("public syllabus and free preview", () => {
     expect((await as(null, () => db.query(`select public_preview_lesson('${courseSlug}') as p`))).rows[0]).toEqual({ p: null });
   });
 });
+
+describe("real reviews: private invitations, consent, verification", () => {
+  const svc = async <T>(fn: () => Promise<T>) => { await db.exec("set role service_role;"); try { return await fn(); } finally { await db.exec("reset role;"); } };
+  const submit = (token: string, consent = true, quote = "Un retour détaillé et honnête sur le module : clair, concret, exigeant sur les livrables.") =>
+    svc(() => db.query<{ id: string }>(`select submit_review($1, 'Camille Test', 'Product Owner', null, $2, ${consent}) as id`, [token, quote]));
+  let token: string;
+  it("only an administrator creates invitations, and only a hash is stored", async () => {
+    await expect(as(U1, () => db.query(`select admin_create_review_invitation('x y', 30)`))).rejects.toThrow();
+    token = (await as(ADMIN, () => db.query<{ t: string }>(`select admin_create_review_invitation('Camille, PO', 30) as t`))).rows[0].t;
+    expect(token).toMatch(/^[0-9a-f]{36}$/);
+    expect(await count(`select 1 from review_invitations where token_hash = '${token}'`)).toBe(0);
+    expect(await as(U1, () => count("select 1 from review_invitations"))).toBe(0);
+  });
+  it("the link opens the form only while unused and unexpired", async () => {
+    expect((await svc(() => db.query<{ ok: boolean }>(`select review_invitation_open('${token}') as ok`))).rows[0].ok).toBe(true);
+    expect((await svc(() => db.query<{ ok: boolean }>(`select review_invitation_open('${"0".repeat(36)}') as ok`))).rows[0].ok).toBe(false);
+    await expect(as(null, () => db.query(`select review_invitation_open('${token}')`))).rejects.toThrow();
+  });
+  it("refuses a submission without consent, with a short text, or with a wrong link", async () => {
+    await expect(submit(token, false)).rejects.toThrow(/consent_required/);
+    await expect(submit(token, true, "trop court")).rejects.toThrow();
+    await expect(submit("1".repeat(36))).rejects.toThrow(/invitation_invalid/);
+    expect(await count("select 1 from review_submissions")).toBe(0);
+  });
+  it("accepts one submission per link and nothing is published by it", async () => {
+    await submit(token);
+    await expect(submit(token)).rejects.toThrow(/invitation_invalid/);
+    expect(await count("select 1 from review_submissions where status = 'pending'")).toBe(1);
+    expect(await count("select 1 from testimonials where author_name = 'Camille Test'")).toBe(0);
+  });
+  it("publishing requires an administrator and a recorded verification, and creates a verified testimonial", async () => {
+    const id = (await db.query<{ id: string }>(`select id from review_submissions limit 1`)).rows[0].id;
+    await expect(as(U1, () => db.query(`select admin_approve_review('${id}', 'verified by me')`))).rejects.toThrow();
+    await expect(as(ADMIN, () => db.query(`select admin_approve_review('${id}', 'ok')`))).rejects.toThrow(/reference_required/);
+    await as(ADMIN, () => db.query(`select admin_approve_review('${id}', 'a suivi M2, accès offert, échange par e-mail')`));
+    const t = (await db.query<{ status: string; verified_at: string | null; consent_reference: string }>(`select status, verified_at, consent_reference from testimonials where author_name = 'Camille Test'`)).rows[0];
+    expect(t.status).toBe("published");
+    expect(t.verified_at).not.toBeNull();
+    expect(t.consent_reference).toContain("consentement explicite");
+    await expect(as(ADMIN, () => db.query(`select admin_approve_review('${id}', 'second time')`))).rejects.toThrow(/not_pending/);
+  });
+});

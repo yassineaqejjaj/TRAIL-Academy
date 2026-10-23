@@ -5,6 +5,7 @@ import { ExpertiseTags, InstructorPhoto, instructor } from "@/components/instruc
 import { ButtonLink, Card, Container, Faq, Section, kickerCls } from "@/components/ui";
 import { getCatalog } from "@/lib/catalog/load";
 import { getFaq, getSection, getTestimonials } from "@/lib/cms";
+import { MIN_PUBLISHED_REVIEWS } from "@/lib/reviews";
 
 export const revalidate = 60;
 
@@ -75,7 +76,7 @@ export default async function Home() {
         </Container>
       </section>
 
-      {testimonials.length > 0 && (
+      {testimonials.length >= MIN_PUBLISHED_REVIEWS && (
         <Section kicker="Témoignages" title="Ce qu'en disent les apprenants">
           <div className="grid gap-4 md:grid-cols-3">{testimonials.map((t) => <Card key={t.id}><blockquote className="text-sm">« {t.quote} »</blockquote><p className="mt-3 text-sm font-semibold">{t.author_name}</p>{t.author_role && <p className="text-xs text-muted">{t.author_role}</p>}</Card>)}</div>
         </Section>

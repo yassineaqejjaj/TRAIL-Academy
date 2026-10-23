@@ -13,6 +13,8 @@ PostgreSQL ≥ 15. Migrations dans `db/migrations/` (rejouables avec `npm run db
 | `0006_rate_limit.sql` | Limiteur de débit partagé : `app_rate_limits`, `hit_rate_limit`, `purge_rate_limits` (service uniquement) |
 | `0007_gdpr.sql` | `export_my_data` (utilisateur, ses données seulement), `anonymize_user` (service) |
 | `0008_video_pipeline.sql` | File d'encodage : `video_assets`, `admin_register_video`, `admin_retry_video`, `claim_video_job` (SKIP LOCKED, reprise après 30 min, 3 essais), `finish_video_job` |
+| `0009_public_syllabus.sql` | `public_syllabus`, `public_preview_lesson` : programme (titres) et leçon d'aperçu d'un module publié, lisibles sans compte |
+| `0010_reviews.sql` | Avis réels : invitations à lien privé (hash), soumissions avec consentement, `admin_approve_review` (vérification consignée), `admin_reject_review` |
 
 ## Rôles et identité
 

@@ -17,7 +17,7 @@ Une plateforme de formation professionnelle à l'intelligence artificielle, con�
 
 ![Accueil de TRAIL Academy](docs/screenshots/01-accueil.png)
 
-> **État honnête du projet.** Les phases A à D (fondations, apprentissage, commerce, administration) sont construites et testées : 330 tests automatisés et 17 parcours de bout en bout dans un vrai navigateur, contre PostgreSQL, sur un build de production, le tout vérifié aussi par la CI GitHub. Les phases E (entreprises) et F (durcissement) ne sont pas commencées. **Rien n'a encore tourné contre Stripe, un stockage S3, un serveur SMTP ou un déploiement Vercel/Railway réels** : voir [ce qui est vérifié et ce qui ne l'est pas](#9-ce-qui-est-vérifié-et-ce-qui-ne-lest-pas). Les paiements réels sont bloqués par conception tant qu'une revue juridique n'a pas eu lieu.
+> **État honnête du projet.** Les phases A à D (fondations, apprentissage, commerce, administration) sont construites et testées : 340 tests automatisés et 18 parcours de bout en bout dans un vrai navigateur, contre PostgreSQL, sur un build de production, le tout vérifié aussi par la CI GitHub. Les phases E (entreprises) et F (durcissement) ne sont pas commencées. **Rien n'a encore tourné contre Stripe, un stockage S3, un serveur SMTP ou un déploiement Vercel/Railway réels** : voir [ce qui est vérifié et ce qui ne l'est pas](#9-ce-qui-est-vérifié-et-ce-qui-ne-lest-pas). Les paiements réels sont bloqués par conception tant qu'une revue juridique n'a pas eu lieu.
 
 ## Sommaire
 
@@ -80,6 +80,10 @@ Les prix sont des **données** modifiables dans l'administration (historique con
 - **Schémas intégrés** aux leçons (Mermaid : processus, séquences, matrices, chronologies), accessibles et adaptés au mode sombre.
 - **Lecture audio** des textes (synthèse vocale du navigateur, vitesse et voix au choix, bloc lu surligné).
 - **Aperçu gratuit sans compte** d'une vraie leçon par module, **programme détaillé** public (titres des leçons), **suggestions de modules suivants** après achat, partage LinkedIn de l'attestation, lettre d'information sous les articles.
+
+### De vrais avis, uniquement
+
+Aucun avis n'est généré. Le formateur invite une personne réelle par un **lien privé à usage unique** ; elle écrit avec ses mots et **consent** à la publication ; le formateur **vérifie et consigne comment**, puis publie (la base refuse sinon). La section « Témoignages » n'apparaît qu'à partir de 3 avis publiés. Guide et messages types : [`docs/BETA_TESTERS.md`](docs/BETA_TESTERS.md).
 
 ### Les règles qui font la confiance
 
@@ -292,7 +296,7 @@ Doublons, rejeux, sessions falsifiées, mauvaise devise, paiements différés ou
 | **Défaut sûr** | Offre fermée tant que non explicitement ouverte ; clés Stripe *live* refusées sans deux drapeaux explicites ; absence de configuration = message clair, jamais une fausse réussite |
 | **Validation aux frontières** | Zod sur chaque formulaire et route ; types MIME **et** extensions vérifiés ; taille plafonnée par le bucket lui-même (POST pré-signé) |
 | **Traçabilité** | Journal d'audit en écriture seule (acteur, avant/après) sur contenu, prix, commandes, paiements, accès ; toute action manuelle sensible exige un motif |
-| **Tests proportionnés au risque** | 330 tests dont migrations + RLS sur PostgreSQL ; **tests par mutation manuelle** des règles critiques (casser la règle doit faire échouer un test) ; 17 parcours de bout en bout |
+| **Tests proportionnés au risque** | 340 tests dont migrations + RLS sur PostgreSQL ; **tests par mutation manuelle** des règles critiques (casser la règle doit faire échouer un test) ; 18 parcours de bout en bout |
 | **Environnements reproductibles** | Migrations versionnées et rejouables (`npm run db:migrate`), seed généré depuis le code, base locale sans Docker (`npm run db:dev`), `docker-compose.yml` production-like |
 | **CI** | `.github/workflows/ci.yml` : types, lint, tests, audit des dépendances, build, puis e2e Playwright sur le build de production |
 | **Dépendances** | 0 vulnérabilité sur les dépendances de production (`npm audit --omit=dev`) ; bibliothèques établies pour l'authentification et le chiffrement, rien de fait maison côté cryptographie |
@@ -363,7 +367,7 @@ docker compose up -d     # PostgreSQL 17, MinIO (S3), Mailpit (boîte mail sur :
 | Commande | Rôle |
 |---|---|
 | `npm run dev` / `build` / `start` | Next.js |
-| `npm test` | 330 tests (unitaires, base de données, intégration) |
+| `npm test` | 340 tests (unitaires, base de données, intégration) |
 | `npm run typecheck` / `lint` | TypeScript / ESLint |
 | `npm run db:dev` | PostgreSQL local embarqué |
 | `npm run db:migrate [-- --seed] [-- --fixture]` | Applique les migrations (rejouable) |
@@ -399,10 +403,10 @@ Toutes les variables sont dans [`.env.example`](.env.example), regroupées par s
 
 | Élément | État |
 |---|---|
-| Schéma, migrations, RLS, règles d'apprentissage, de commerce et d'administration | ✅ 330 tests sur PostgreSQL embarqué ; migrations rejouées de bout en bout sur une base en TCP |
+| Schéma, migrations, RLS, règles d'apprentissage, de commerce et d'administration | ✅ 340 tests sur PostgreSQL embarqué ; migrations rejouées de bout en bout sur une base en TCP |
 | Couche d'accès (rôle par transaction, aucune fuite de privilèges entre requêtes, tables d'auth fermées) | ✅ testée sur une vraie connexion TCP |
 | Authentification : inscription, vérification obligatoire, session HttpOnly, réinitialisation qui révoque les sessions, Argon2id | ✅ testée de bout en bout (bibliothèque + base) |
-| Application complète en navigateur : visiteur, inscription, progression persistante, quiz, livrable, relecture, attestation, publication d'un module, contrôles d'accès | ✅ 17 parcours Playwright dans Chrome, sur build de production |
+| Application complète en navigateur : visiteur, inscription, progression persistante, quiz, livrable, relecture, attestation, publication d'un module, contrôles d'accès | ✅ 18 parcours Playwright dans Chrome, sur build de production |
 | Les 27 routes publiques, apprenant et admin | ✅ HTTP 200 sans erreur ni avertissement de console (relevé en mode développement) |
 | Vérification de signature Stripe, normalisation, traitement des événements | ✅ testés avec de vraies signatures générées localement |
 | Passerelle de streaming (jetons, traversée de chemins, plages d'octets, réécriture des playlists) | ✅ testée avec un faux stockage |
@@ -411,7 +415,7 @@ Toutes les variables sont dans [`.env.example`](.env.example), regroupées par s
 | **Stripe** (Checkout, portail, factures, taxes, codes promo, remboursements, litiges de bout en bout) | ⚠️ jamais exécuté |
 | **MinIO/S3 réel** (envoi, téléchargement, CORS) et **lecture vidéo HLS** par `hls.js` via la passerelle | ⚠️ jamais exécuté |
 | **SMTP réel**, **Google OAuth**, **déploiement Vercel/Railway**, **`docker-compose.yml`** | ⚠️ jamais exécutés |
-| **CI GitHub Actions** (types, lint, 330 tests, audit, build, puis 17 parcours Playwright sur Chromium/Ubuntu) | ✅ exécutée avec succès sur GitHub (commit `6ac17d7`) |
+| **CI GitHub Actions** (types, lint, 340 tests, audit, build, puis 18 parcours Playwright sur Chromium/Ubuntu) | ✅ exécutée avec succès sur GitHub (commit `6ac17d7`) |
 | Accessibilité (audit automatisé), Lighthouse, Core Web Vitals | ❌ non mesurés |
 
 Détails et protocole : [`TESTING.md`](TESTING.md).

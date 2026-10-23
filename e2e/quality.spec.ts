@@ -41,7 +41,7 @@ test("signed-in and admin screens have no axe violations and no CSP violation; p
   await sql("insert into user_roles (user_id, role) values ($1, 'admin')", [await userId(email)]);
   await signIn(page, email);
   const found: string[] = [];
-  for (const path of ["/compte", "/compte/commandes", "/compte/donnees", "/admin", "/admin/cours", "/admin/produits", "/admin/production"]) {
+  for (const path of ["/compte", "/compte/commandes", "/compte/donnees", "/admin", "/admin/cours", "/admin/produits", "/admin/production", "/admin/avis"]) {
     for (const scheme of ["light", "dark"] as const) found.push(...(await audit(page, path, scheme)));
   }
   expect(found, found.join("\n")).toEqual([]);
@@ -130,4 +130,44 @@ test.describe("written content: preview, syllabus, diagrams, read aloud", () => 
     const { violations } = await new AxeBuilder({ page }).withTags(WCAG).analyze();
     expect(violations.map((v) => `${v.id}: ${v.nodes[0]?.target.join(" ")}`)).toEqual([]);
   });
+});
+
+test("real reviews: the instructor invites, the person writes with consent, the instructor verifies and publishes", async ({ page, browser }) => {
+  const admin = uniqueEmail("avis");
+  await signUp(page, "Formateur Avis", admin);
+  await verifyEmail(admin);
+  await sql("insert into user_roles (user_id, role) values ($1, 'admin')", [await userId(admin)]);
+  await signIn(page, admin);
+
+  await page.goto("/admin/avis");
+  await page.getByLabel(/Qui invitez-vous/).fill("Camille, Product Owner (test)");
+  await page.getByRole("button", { name: "Créer le lien" }).click();
+  const message = await page.getByText(/Lien créé pour/).innerText();
+  const link = /(https?:\/\/\S+\/avis\/[0-9a-f]{36})/.exec(message)![1];
+  const path = new URL(link).pathname;
+
+  const guest = await (await browser.newContext()).newPage();
+  await guest.goto(path);
+  await expect(guest.getByRole("heading", { name: "Votre avis sur TRAIL Academy" })).toBeVisible();
+  await guest.getByLabel(/Votre nom/).fill("Camille Test");
+  await guest.getByLabel(/Votre métier/).fill("Product Owner");
+  await guest.getByLabel(/Votre avis/).fill("Un retour de test suffisamment long pour être accepté par le formulaire, écrit avec mes propres mots.");
+  await guest.getByRole("button", { name: "Envoyer mon avis" }).click();
+  await expect(guest.getByText("Votre avis a bien été reçu")).toHaveCount(0); // consent box unchecked: the browser blocks the submission
+  await guest.getByLabel(/J'accepte que mon nom/).check();
+  await guest.getByRole("button", { name: "Envoyer mon avis" }).click();
+  await expect(guest.getByText("Votre avis a bien été reçu")).toBeVisible();
+  await guest.goto(path);
+  await expect(guest.getByText("Lien indisponible")).toBeVisible(); // single use
+
+  await page.goto("/admin/avis");
+  await expect(page.getByText("Un retour de test suffisamment long")).toBeVisible();
+  expect((await sql("select 1 from testimonials where author_name = 'Camille Test'")).length).toBe(0); // received is not published
+  await page.getByLabel(/Comment avez-vous vérifié/).fill("A suivi le module avec un accès offert, échange par e-mail");
+  await page.getByLabel(/Je confirme que cette personne existe/).check();
+  await page.getByRole("button", { name: "Publier" }).click();
+  await expect(page.getByText("Avis publié.")).toBeVisible();
+  const [t] = await sql<{ status: string; verified_at: string | null }>("select status, verified_at from testimonials where author_name = 'Camille Test'");
+  expect(t.status).toBe("published");
+  expect(t.verified_at).not.toBeNull();
 });
