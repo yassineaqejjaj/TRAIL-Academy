@@ -2,6 +2,8 @@
 
 <!-- portfolio-summary:start -->
 
+![Project overview](docs/assets/github-cover.svg)
+
 > **Professional AI learning platform** | **Status:** En développement : intégrations externes et paiements réels non validés.
 >
 > [Architecture](ARCHITECTURE.md) · [Demo / verification](TESTING.md) · [Source code](https://github.com/yassineaqejjaj/TRAIL-Academy)
