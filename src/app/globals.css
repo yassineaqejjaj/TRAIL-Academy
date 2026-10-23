@@ -1,26 +1,101 @@
 @import "tailwindcss";
 
+/* TRAIL Academy design tokens — 8-point spacing is Tailwind's default 4px scale used in multiples of 2. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #faf8f4;
+  --surface: #ffffff;
+  --surface-2: #f1eee7;
+  --fg: #0b1f3a;
+  --fg-muted: #4a5a70;
+  --border: #e3ded6;
+  --primary: #0b1f3a;
+  --primary-fg: #ffffff;
+  --accent: #0b7a83;
+  --accent-soft: #e8f1f2;
+  --warn: #7a4e00;
+  --warn-soft: #fff1d6;
+  --danger: #b42318;
+  --success: #067647;
+  --ring: #0b7a83;
+  --band: #0b1f3a;
+  --band-fg: #ffffff;
+  --band-muted: #b7c4d8;
 }
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root[data-theme="dark"] {
+  --bg: #0d1117;
+  --surface: #151b24;
+  --surface-2: #1c2430;
+  --fg: #eef2f7;
+  --fg-muted: #9fb0c4;
+  --border: #2a3441;
+  --primary: #eef2f7;
+  --primary-fg: #0b1f3a;
+  --accent: #3ccfc0;
+  --accent-soft: #123a3d;
+  --warn: #f5c26b;
+  --warn-soft: #3a2d10;
+  --danger: #ff8a80;
+  --success: #5fd49a;
+  --ring: #3ccfc0;
+  --band: #151b24;
+  --band-fg: #eef2f7;
+  --band-muted: #9fb0c4;
 }
-
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme="light"]) {
+    --bg: #0d1117;
+    --surface: #151b24;
+    --surface-2: #1c2430;
+    --fg: #eef2f7;
+    --fg-muted: #9fb0c4;
+    --border: #2a3441;
+    --primary: #eef2f7;
+    --primary-fg: #0b1f3a;
+    --accent: #3ccfc0;
+    --accent-soft: #123a3d;
+    --warn: #f5c26b;
+    --warn-soft: #3a2d10;
+    --danger: #ff8a80;
+    --success: #5fd49a;
+    --ring: #3ccfc0;
+    --band: #151b24;
+    --band-fg: #eef2f7;
+    --band-muted: #9fb0c4;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--fg-muted);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-fg: var(--primary-fg);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --color-band: var(--band);
+  --color-band-fg: var(--band-fg);
+  --color-band-muted: var(--band-muted);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
+
+html { scroll-behavior: smooth; }
+h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.01em; text-wrap: balance; }
+h1 { letter-spacing: -0.02em; }
+summary { cursor: pointer; }
+button { font-family: inherit; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-sans); line-height: 1.6; }
+:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+
+/* Skeleton loading state */
+.skeleton { background: linear-gradient(90deg, var(--surface-2), var(--border), var(--surface-2)); background-size: 200% 100%; animation: shimmer 1.4s infinite; border-radius: 8px; }
+@keyframes shimmer { to { background-position: -200% 0; } }
