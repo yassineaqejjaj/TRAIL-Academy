@@ -1,0 +1,799 @@
+{
+ "course": "M9",
+ "slug": "ai-product-delivery",
+ "source": "Contenu conçu à partir du programme du module 9 (livraison de produits IA), sans slides sources. Pas de vidéo : à ajouter depuis l'administration.",
+ "chapters": [
+  {
+   "title": "Le cycle de développement IA",
+   "lessons": [
+    {
+     "title": "Pourquoi livrer un produit IA est différent",
+     "kind": "reading",
+     "body_md": "## Ce que vous saurez faire\n\nÀ la fin de cette leçon, vous saurez expliquer pourquoi un cycle de delivery classique ne suffit pas pour un produit IA, et quelles questions ajouter à votre planification.\n\n## Une sortie qui varie\n\nDans un produit traditionnel, une même entrée produit en principe la même sortie : un test réussi hier reste réussi demain tant que le code ne change pas. Avec un modèle génératif, la sortie est **incertaine** : deux appels identiques peuvent produire deux textes différents, et un changement de formulation dans une consigne peut déplacer le comportement de façon inattendue. Le modèle, la consigne (prompt), les documents fournis en contexte et les paramètres sont autant de leviers qui influencent le résultat sans qu'une ligne de code applicatif ne change.\n\n## Quatre conséquences pour le delivery\n\n- **La qualité se mesure, elle ne se constate pas.** On parle de taux de réussite sur un jeu de cas, pas de « ça marche ».\n- **L'effort est moins prévisible.** Passer d'une démonstration convaincante à un comportement fiable peut prendre bien plus de temps que prévu, et on le découvre tard si on ne mesure pas tôt.\n- **Le produit évolue après la livraison.** Les usages réels, les données et les modèles sous-jacents changent : livrer n'est pas la fin du travail.\n- **Le coût et la latence dépendent du comportement.** Une consigne plus longue ou une architecture à plusieurs appels change la facture et le délai de réponse.\n\n## Ce que cela change dans votre planification\n\nAjoutez systématiquement trois questions à vos réunions de cadrage : *comment saura-t-on que c'est assez bon ?* *Que se passe-t-il quand c'est faux ?* *Comment reviendra-t-on en arrière ?* Les autres modules détaillent la stratégie (M8) et l'évaluation (M17) ; ici, on s'intéresse à l'**organisation du travail** qui permet de livrer sereinement.\n\n## Pour réfléchir\n\nPensez à une fonctionnalité IA que vous avez vue en démonstration. Quelle partie de sa fiabilité reposait sur des exemples choisis à l'avance ? Qu'auriez-vous voulu mesurer avant de promettre une date ?\n"
+    },
+    {
+     "title": "Les étapes d'un cycle de développement IA",
+     "kind": "reading",
+     "body_md": "## Un cycle, pas une ligne droite\n\nLe cycle de vie d'un produit IA enchaîne des étapes qui se répètent. Une présentation simple en cinq temps :\n\n1. **Cadrer** : problème utilisateur, tâche réussie, erreurs inacceptables, contraintes de coût, de délai et de données.\n2. **Explorer** : prototypes et spikes pour vérifier qu'une approche est plausible (voir la leçon suivante).\n3. **Construire** : développer la solution avec ses garde-fous, en écrivant tôt les cas d'évaluation.\n4. **Valider** : rejouer les évaluations, faire relire par des experts métier, décider de la mise en production selon des critères écrits à l'avance.\n5. **Exploiter et itérer** : déploiement progressif, surveillance, retours utilisateurs, améliorations.\n\n## Les boucles qui comptent\n\nLe point clé est que l'étape 5 **alimente** l'étape 1 : ce que l'on observe en production nourrit le backlog et le jeu d'évaluation. On parle d'**itération** plutôt que de projet à livrer une fois.\n\nDeux boucles coexistent :\n\n- une **boucle courte** (heures ou jours) : modifier une consigne, rejouer l'évaluation, comparer ;\n- une **boucle longue** (semaines) : observer la production, trier les retours, décider d'une évolution plus structurante (nouvelle source de données, autre modèle, nouveau garde-fou).\n\n## Points d'attention\n\n- Ne sautez pas l'exploration : elle évite de s'engager sur une approche qui ne tiendra pas.\n- Ne repoussez pas l'évaluation « à la fin » : elle sert à **piloter**, pas seulement à contrôler (chapitre 3).\n- Ne considérez pas la mise en production comme une ligne d'arrivée : elle ouvre la phase où l'on apprend le plus.\n\n## Mise en pratique\n\nDessinez le cycle de votre produit (ou d'un produit fictif) avec, pour chaque étape, le livrable attendu et la personne qui décide de passer à la suite.\n"
+    },
+    {
+     "title": "Prototype jetable ou code de production ?",
+     "kind": "reading",
+     "body_md": "## Deux objectifs différents\n\nUn **prototype** sert à apprendre vite : est-ce que cette idée marche pour de vrais utilisateurs ? Un **produit en production** sert à fonctionner de façon fiable, sûre, maintenable et surveillée. Confondre les deux est l'une des erreurs de delivery les plus fréquentes avec l'IA, car un prototype génératif peut sembler très abouti après quelques heures de travail.\n\n## Ce que l'on accepte dans un prototype jetable\n\n- des données d'exemple choisies à la main ;\n- peu ou pas de gestion d'erreurs, de droits d'accès ou de journalisation ;\n- une consigne ajustée au fil de l'eau, sans historique ;\n- aucune garantie sur le coût ou le délai.\n\n## Ce qui doit exister avant la production\n\n- un **jeu d'évaluation** versionné et des critères de décision ;\n- la gestion des **versions** de modèle, de consigne et de configuration ;\n- des **garde-fous** (filtrage, limites, validation de format) et un comportement défini en cas d'échec ;\n- la **journalisation** des appels avec protection des données personnelles ;\n- un **plan de repli** et un déploiement progressif ;\n- un **propriétaire** identifié.\n\n## La règle du prototype jetable\n\nDécidez dès le départ du statut du prototype : **il sera jeté**, ou il fera l'objet d'une reprise explicite. Si l'on souhaite le conserver, on l'inscrit dans le backlog comme un travail de durcissement et non comme « presque terminé ». Rendez-le visible : la partie la plus difficile d'un produit IA se situe souvent entre la démonstration et la mise en production.\n\n## Pour réfléchir\n\nDans votre organisation, qui peut dire « ce prototype n'ira pas en production » ? Et sur quels critères ?\n"
+    },
+    {
+     "title": "Les spikes : réduire l'incertitude avant de s'engager",
+     "kind": "reading",
+     "body_md": "## Qu'est-ce qu'un spike ?\n\nUn **spike** est une courte investigation, limitée dans le temps, dont le but est de **répondre à une question** et non de livrer une fonctionnalité. Cette pratique agile est particulièrement utile avec l'IA, où beaucoup de questions ne se tranchent qu'en essayant.\n\n## Bonnes questions de spike en IA\n\n- *Le modèle sait-il faire cette tâche avec les documents dont nous disposons ?*\n- *Quelle qualité obtient-on avec une approche simple (une consigne bien écrite) avant d'envisager plus complexe ?*\n- *Quel délai et quel coût par requête avec cette architecture, sur un échantillon représentatif ?*\n- *Les données disponibles sont-elles suffisantes, accessibles, autorisées ?*\n\n## Cadrer un spike\n\nChaque spike gagne à être écrit en quelques lignes :\n\n- **Question** à laquelle il répond ;\n- **Durée maximale** (par exemple deux jours ; valeur à adapter à votre équipe) ;\n- **Livrable** : une note de décision et, si utile, un petit jeu de cas, pas un produit ;\n- **Critère de sortie** : ce qui permet de dire « oui », « non » ou « il faut approfondir ».\n\n## Erreurs fréquentes\n\n- Un spike qui s'étire et devient un projet : respectez la durée, quitte à conclure « inconnu ».\n- Un spike sans cas d'évaluation : on repart avec une impression plutôt qu'une mesure.\n- Un spike dont le résultat n'est pas daté ni conservé : il sera refait.\n\n## Mise en pratique\n\nRédigez le cadrage d'un spike pour la question « un assistant peut-il répondre aux questions fréquentes à partir de notre base de connaissances ? » : question, durée, livrable, critère de sortie.\n"
+    },
+    {
+     "title": "Rôles et responsabilités dans une équipe de delivery IA",
+     "kind": "reading",
+     "body_md": "## Qui fait quoi ?\n\nLes intitulés varient d'une organisation à l'autre ; ce qui compte est que **chaque responsabilité ait un propriétaire**. Rôles courants :\n\n- **Chef de produit** : définit la tâche réussie, arbitre qualité, coût et délai, décide du lancement avec les parties prenantes.\n- **Ingénieur IA / ML** : conçoit l'architecture, gère modèles et consignes, construit les évaluations.\n- **Ingénieur logiciel / plateforme** : intègre, déploie, met en place les drapeaux de fonctionnalité, la journalisation et le repli.\n- **Expert métier** : valide les attentes, relit les cas limites et critiques, qualifie les erreurs.\n- **Designer** : conçoit l'expérience en cas d'erreur ou d'incertitude (M14).\n- **Responsable sécurité, conformité, données** : vérifie les risques, les droits sur les données, la protection des informations personnelles (M10, M13).\n- **Support / opérations** : reçoit les retours, escalade les incidents.\n\n## Les décisions à attribuer explicitement\n\n- Qui **valide le jeu d'évaluation** et ses mises à jour ?\n- Qui **décide du go/no-go** ? Sur quelle base ?\n- Qui peut **déclencher le plan de repli**, y compris hors des heures de bureau ?\n- Qui **trie les retours** utilisateurs et alimente le backlog ?\n- Qui est **propriétaire** du produit après le lancement ?\n\n## Un outil simple : la matrice des responsabilités\n\nPour chaque décision, indiquez qui **réalise**, qui **décide**, qui est **consulté** et qui est **informé**. Une seule personne décide ; plusieurs peuvent être consultées. Limitez la liste aux décisions qui bloquent réellement le delivery.\n\n## Pour réfléchir\n\nSi la qualité baisse un samedi soir, qui est prévenu, qui décide, et qu'a-t-il le droit de faire sans demander d'accord ?\n"
+    }
+   ]
+  },
+  {
+   "title": "Delivery agile IA",
+   "lessons": [
+    {
+     "title": "Un backlog pour un produit IA : hypothèses et critères mesurables",
+     "kind": "reading",
+     "body_md": "## Des user stories toujours utiles, mais incomplètes\n\nUne user story classique (« en tant que… je veux… afin de… ») reste un bon point de départ. Avec l'IA, ses **critères d'acceptation** ne peuvent pas toujours être binaires : on ne peut pas garantir qu'un assistant réussira dans 100 % des cas. On écrit donc des critères **mesurables sur un jeu de cas** :\n\n- *« Sur le jeu d'évaluation v1, au moins 85 % des cas habituels sont réussis »* (chiffre fictif, à fixer avec votre équipe) ;\n- *« Aucun cas critique n'échoue »* ;\n- *« Le délai P95 reste sous un seuil défini »*.\n\n## Trois types d'éléments de backlog\n\n- **Fonctionnalités** : ce que l'utilisateur voit.\n- **Expériences et spikes** : questions à trancher, avec durée limitée.\n- **Fondations** : jeu d'évaluation, journalisation, repli, tableau de bord. Elles sont souvent oubliées parce que l'utilisateur ne les voit pas ; elles conditionnent pourtant la mise en production.\n\n## Formuler une hypothèse\n\nPour un élément incertain, préférez une hypothèse à une promesse : *« Nous pensons que fournir à l'assistant les trois derniers échanges améliorera la réussite sur les cas de suivi de dossier. Nous le saurons en comparant les deux versions sur le jeu v1. »* Ce format rend le résultat acceptable même s'il est négatif : on a appris.\n\n## Estimer sans fausse précision\n\nLes estimations d'éléments à forte incertitude sont fragiles. Séparez ce qui est **connu** (intégration, interface) de ce qui est **à explorer** (qualité du comportement) et donnez à ce dernier une durée limitée plutôt qu'une promesse de résultat.\n\n## Mise en pratique\n\nPrenez une fonctionnalité IA et réécrivez-la en trois éléments de backlog : une story avec critères mesurables, un spike, une fondation.\n"
+    },
+    {
+     "title": "Definition of Ready et Definition of Done adaptées à l'IA",
+     "kind": "reading",
+     "body_md": "## Rappel\n\nLa **Definition of Ready** (DoR) dit quand un élément peut entrer dans un sprint. La **Definition of Done** (DoD) dit quand il est réellement terminé. Ce sont des accords d'équipe, révisables. Avec l'IA, elles doivent intégrer des conditions propres à l'incertitude.\n\n## Exemples de DoR pour un élément IA\n\n- La **tâche réussie** et les erreurs inacceptables sont décrites.\n- Un **échantillon de cas d'évaluation** existe (même petit) ou sa création fait partie de l'élément.\n- Les **données nécessaires** sont identifiées, accessibles et autorisées.\n- Les **contraintes** de coût et de délai sont connues.\n- Le **comportement en cas d'échec** est décidé (message, repli, escalade).\n\n## Exemples de DoD pour un élément IA\n\n- Les évaluations ont été **rejouées** sur le jeu versionné et les résultats sont consignés.\n- Les **critères bloquants** sont respectés ; aucune **régression** par rapport à la version en service.\n- Les versions de **modèle, consigne et configuration** sont identifiées.\n- La **journalisation** est en place, sans donnée sensible inutile.\n- La **documentation** (comportement attendu, limites connues) est à jour.\n- Une **revue** par une personne autre que l'auteur a eu lieu, y compris sur la consigne.\n\n## Précautions\n\n- Une DoD trop longue se contourne ; gardez les conditions essentielles et adaptez-les au risque de l'élément.\n- « Terminé » ne signifie pas « en production » : la mise en production dépend de critères supplémentaires (chapitre 5).\n\n## Mise en pratique\n\nÉcrivez cinq critères de DoR et cinq de DoD pour un assistant qui résume des comptes rendus de réunion. Faites relire par un collègue : lesquels ne seraient jamais vérifiés en pratique ?\n"
+    },
+    {
+     "title": "Versions de modèles et de prompts",
+     "kind": "reading",
+     "body_md": "## Pourquoi versionner\n\nEn IA, le comportement dépend de plusieurs éléments qui changent indépendamment du code applicatif : le **modèle** (et sa version), la **consigne**, les **paramètres** (par exemple la température), les **documents de contexte**, et les **règles de filtrage**. Sans historique, impossible d'expliquer une dégradation ni de revenir en arrière.\n\n## Que versionner\n\n- Les **consignes** (prompts), stockées comme du code, avec revue et historique.\n- La **référence exacte du modèle** utilisée, pas seulement un nom générique.\n- Les **paramètres** de génération et la configuration de recherche documentaire.\n- Les **jeux d'évaluation** (leçon du chapitre 3).\n- Un **identifiant de release** qui associe l'ensemble : « release 14 = consigne v7 + modèle X + jeu v3 ».\n\n## Modèles fournis par un tiers\n\nUn fournisseur peut mettre à jour ou retirer une version de modèle selon sa propre politique. Bonnes pratiques :\n\n- **épingler** une version précise lorsque c'est possible ;\n- suivre les **annonces de dépréciation** et inscrire la migration au backlog ;\n- **rejouer** les évaluations avant tout changement de version, comme pour une modification de code.\n\n## Journal des changements\n\nTenez un court journal : date, changement, raison, résultat d'évaluation, auteur de la décision. Il sert lors des incidents, des audits et des rétrospectives.\n\n## Piège courant\n\nModifier une consigne « juste un mot » directement en production. Traitez toute consigne comme du code : revue, test, déploiement progressif.\n\n## Mise en pratique\n\nDéfinissez le format d'un identifiant de release pour un produit fictif et listez les cinq éléments qu'il référence.\n"
+    }
+   ]
+  },
+  {
+   "title": "Développement piloté par l'évaluation",
+   "lessons": [
+    {
+     "title": "Développement piloté par l'évaluation : le principe",
+     "kind": "reading",
+     "body_md": "## Écrire le test avant la fonctionnalité\n\nDans le développement piloté par les tests, on écrit le test avant le code. Le **développement piloté par l'évaluation** transpose l'idée à l'IA : on définit **d'abord** des cas d'évaluation et des critères, puis on construit et on améliore le système jusqu'à les satisfaire, sans les modifier au passage pour se faciliter la tâche.\n\n## Pourquoi c'est particulièrement utile\n\n- Cela **force à préciser** la tâche réussie avant de coder.\n- Cela rend le progrès **visible** : on voit le taux de réussite évoluer.\n- Cela **protège** contre l'illusion de progrès : une amélioration sur un exemple en dégrade parfois d'autres.\n- Cela facilite les décisions : un désaccord se règle en regardant les cas.\n\n## Le cycle en quatre gestes\n\n1. **Écrire** quelques cas (habituels, limites, critiques) et un critère de décision.\n2. **Mesurer** la version actuelle : c'est le point de départ.\n3. **Modifier** une chose à la fois (consigne, contexte, modèle, garde-fou).\n4. **Rejouer**, comparer, décider de conserver ou non ; consigner le résultat.\n\n## Limites à connaître\n\n- Un jeu d'évaluation **trop petit** donne une fausse impression de précision.\n- **Optimiser pour le jeu** de test finit par le rendre peu représentatif : gardez une partie de cas « cachés » qui ne sert pas au réglage.\n- L'évaluation automatique n'est pas toute la qualité : relecture humaine et retours réels restent nécessaires.\n\nPour la construction détaillée du jeu, les juges et les métriques, reportez-vous au module M17 ; ici, nous nous concentrons sur la place de l'évaluation dans l'organisation du delivery.\n\n## Pour réfléchir\n\nQuel est le premier cas que vous écririez pour votre produit IA, et qui devrait le valider ?\n"
+    },
+    {
+     "title": "Jeux d'évaluation versionnés dans le cycle de delivery",
+     "kind": "reading",
+     "body_md": "## Un jeu d'évaluation est un actif du produit\n\nIl se maintient comme du code : il a une **version**, un **propriétaire**, un historique et des règles de modification. Comparer deux résultats n'a de sens que sur **la même version** du jeu.\n\n## Règles de gestion simples\n\n- Chaque version porte un identifiant (par exemple « v1.2 ») et une **date**.\n- Toute modification (ajout, suppression, correction d'un attendu) est **revue** et **consignée** avec sa raison.\n- Quand le jeu change, **rejouez la version en service** sur le nouveau jeu pour obtenir une référence comparable.\n- Séparez un jeu de **réglage** (utilisé pour itérer) d'un jeu de **validation** (consulté pour décider) : le second ne sert pas à ajuster la consigne.\n\n## Où trouver de nouveaux cas\n\n- Les **incidents** de production (chaque incident significatif devient un cas).\n- Les **retours** utilisateurs qualifiés.\n- Les cas **limites** proposés par les experts métier.\n- Des cas **synthétiques**, relus par un humain, pour couvrir des situations rares.\n\nÉvitez de copier des données personnelles réelles dans le jeu : anonymisez ou inventez des données équivalentes.\n\n## Intégration au delivery\n\n- La **DoD** exige que les évaluations soient rejouées sur la version courante du jeu.\n- La **revue de sprint** présente les résultats avec la version du jeu.\n- Le **plan de release** cite la version du jeu utilisée pour décider.\n\n## Mise en pratique\n\nRédigez la règle de modification d'un jeu d'évaluation en cinq lignes : qui propose, qui valide, comment on consigne, comment on recalcule la référence, qui peut le supprimer.\n"
+    },
+    {
+     "title": "Tests de non-régression des prompts et revues",
+     "kind": "reading",
+     "body_md": "## Une consigne est du code qui se casse en silence\n\nModifier une consigne pour corriger un cas peut dégrader d'autres cas, sans erreur visible. Un **test de non-régression** consiste à rejouer le jeu d'évaluation après chaque changement et à comparer le résultat à la version en service.\n\n## Que comparer\n\n- Le **taux de réussite global** et par zone (habituelle, limite, critique).\n- La liste des **cas qui passaient et échouent maintenant** : même si le total progresse, une régression sur un cas critique peut bloquer.\n- Le **coût** et le **délai** : une consigne plus riche peut doubler la facture sans que l'on s'en aperçoive.\n\n## Gérer la variabilité\n\nComme la sortie varie, un cas qui échoue une fois n'est pas forcément cassé. Pratiques courantes : **rejouer plusieurs fois** les cas sensibles, distinguer les échecs **systématiques** des échecs **intermittents**, et fixer des seuils de tolérance **écrits à l'avance** pour éviter les débats après coup. Un test qui échoue de façon intermittente est une information, pas du bruit à ignorer.\n\n## Revues\n\n- **Revue de consigne** : comme une revue de code, par une personne autre que l'auteur, qui lit la consigne et regarde les résultats d'évaluation.\n- **Revue des cas** : un expert métier relit les cas limites et critiques.\n- **Revue de release** : on confronte critères, résultats et risques avant le déploiement.\n\n## Automatiser\n\nDéclenchez la relecture automatique à chaque changement de consigne, de modèle ou de configuration. Un échec bloquant empêche le déploiement : c'est le principe du **gating**, détaillé dans l'atelier suivant.\n\n## Pour réfléchir\n\nCombien de modifications de consigne votre équipe a-t-elle faites sans rejouer de test ? Quel incident cela aurait-il pu éviter ?\n"
+    },
+    {
+     "title": "Atelier : une porte de qualité en Python sur un jeu fictif",
+     "kind": "exercise",
+     "body_md": "## Objectif\n\nConstruire une **porte de qualité** qui décide automatiquement si une version candidate peut avancer, à partir de résultats d'évaluation. Les données sont **entièrement fictives** et volontairement petites : avec 12 cas, un seul cas change fortement un taux. Dans un vrai projet, définissez le nombre minimal de cas avant d'interpréter une mesure.\n\n## Les règles de la porte\n\n- taux de réussite global au moins égal à un seuil ;\n- **zone critique** : tous les cas doivent passer ;\n- aucune violation de sécurité ;\n- délai P95 sous un seuil (méthode du rang le plus proche) ;\n- coût par tâche réussie sous un seuil ;\n- **non-régression** : pas de baisse supérieure à une tolérance par rapport à la version en service.\n\nLes critères sont reliés par un ET : un seul échec bloque la mise en production.\n\n## Le code\n\n```python\n\"\"\"Porte de qualité (gating) sur un jeu d'évaluation FICTIF.\n\nChaque cas : (id, zone, réussi, violation_sécurité, délai_en_s, coût_en_euros).\nTous les chiffres sont inventés pour l'exercice.\n\"\"\"\nimport math\n\nZONES = (\"habituel\", \"limite\", \"critique\")\n\n# Version en service (A) et version candidate (B), même jeu v1.2 de 12 cas.\nJEU_A = [\n    (\"C01\", \"habituel\", 1, 0, 1.1, 0.010), (\"C02\", \"habituel\", 1, 0, 1.3, 0.011),\n    (\"C03\", \"habituel\", 1, 0, 1.2, 0.010), (\"C04\", \"habituel\", 1, 0, 1.6, 0.012),\n    (\"C05\", \"habituel\", 0, 0, 1.4, 0.011), (\"C06\", \"limite\", 1, 0, 1.8, 0.013),\n    (\"C07\", \"limite\", 0, 0, 2.0, 0.014), (\"C08\", \"limite\", 1, 0, 1.7, 0.012),\n    (\"C09\", \"limite\", 1, 0, 1.9, 0.013), (\"C10\", \"critique\", 1, 0, 1.5, 0.012),\n    (\"C11\", \"critique\", 1, 0, 1.6, 0.012), (\"C12\", \"critique\", 1, 0, 2.1, 0.015),\n]\nJEU_B = [\n    (\"C01\", \"habituel\", 1, 0, 1.0, 0.016), (\"C02\", \"habituel\", 1, 0, 1.2, 0.017),\n    (\"C03\", \"habituel\", 1, 0, 1.1, 0.016), (\"C04\", \"habituel\", 1, 0, 1.5, 0.018),\n    (\"C05\", \"habituel\", 1, 0, 1.3, 0.017), (\"C06\", \"limite\", 1, 0, 1.7, 0.019),\n    (\"C07\", \"limite\", 0, 0, 1.9, 0.021), (\"C08\", \"limite\", 1, 0, 1.6, 0.018),\n    (\"C09\", \"limite\", 1, 0, 2.6, 0.020), (\"C10\", \"critique\", 1, 0, 1.4, 0.018),\n    (\"C11\", \"critique\", 0, 0, 1.5, 0.018), (\"C12\", \"critique\", 1, 0, 2.0, 0.022),\n]\n\nSEUILS = {\n    \"reussite_min\": 0.80,          # taux de réussite global, >= seuil\n    \"critique_min\": 1.00,          # zone critique : tout doit passer\n    \"violations_max\": 0,           # aucune violation de sécurité\n    \"p95_delai_max_s\": 2.5,        # délai P95 <= seuil\n    \"cout_par_reussite_max\": 0.025,  # euros par tâche réussie, <= seuil\n    \"regression_max\": 0.05,        # baisse tolérée vs version en service\n}\n\n\ndef p95(valeurs):\n    \"\"\"Percentile 95 par rang le plus proche (nearest-rank).\"\"\"\n    tri = sorted(valeurs)\n    rang = math.ceil(0.95 * len(tri))\n    return tri[rang - 1]\n\n\ndef mesurer(jeu):\n    n = len(jeu)\n    reussis = sum(c[2] for c in jeu)\n    critiques = [c for c in jeu if c[1] == \"critique\"]\n    return {\n        \"n\": n,\n        \"reussite\": reussis / n,\n        \"critique\": sum(c[2] for c in critiques) / len(critiques),\n        \"violations\": sum(c[3] for c in jeu),\n        \"p95\": p95([c[4] for c in jeu]),\n        \"cout_par_reussite\": sum(c[5] for c in jeu) / reussis,\n    }\n\n\ndef decider(candidat, reference, s=SEUILS):\n    \"\"\"Retourne (decision, liste de (critère, ok, détail)). ET logique.\"\"\"\n    controles = [\n        (\"réussite globale\", candidat[\"reussite\"] >= s[\"reussite_min\"],\n         f\"{candidat['reussite']:.2f} (min {s['reussite_min']:.2f})\"),\n        (\"zone critique\", candidat[\"critique\"] >= s[\"critique_min\"],\n         f\"{candidat['critique']:.2f} (min {s['critique_min']:.2f})\"),\n        (\"violations de sécurité\", candidat[\"violations\"] <= s[\"violations_max\"],\n         f\"{candidat['violations']} (max {s['violations_max']})\"),\n        (\"délai P95\", candidat[\"p95\"] <= s[\"p95_delai_max_s\"],\n         f\"{candidat['p95']:.1f} s (max {s['p95_delai_max_s']:.1f} s)\"),\n        (\"coût par réussite\", candidat[\"cout_par_reussite\"] <= s[\"cout_par_reussite_max\"],\n         f\"{candidat['cout_par_reussite']:.4f} EUR (max {s['cout_par_reussite_max']:.3f})\"),\n        (\"non-régression\", candidat[\"reussite\"] >= reference[\"reussite\"] - s[\"regression_max\"],\n         f\"{candidat['reussite']:.2f} vs {reference['reussite']:.2f} (tolérance {s['regression_max']:.2f})\"),\n    ]\n    return all(ok for _, ok, _ in controles), controles\n\n\nif __name__ == \"__main__\":\n    ref, cand = mesurer(JEU_A), mesurer(JEU_B)\n    print(f\"Jeu v1.2 : {ref['n']} cas (données fictives)\")\n    ok, controles = decider(cand, ref)\n    for nom, passe, detail in controles:\n        print(f\"[{'OK ' if passe else 'KO '}] {nom} : {detail}\")\n    print(\"DÉCISION :\", \"GO\" if ok else \"NO-GO (au moins un critère bloquant échoue)\")\n```\n\n## Résultat obtenu à l'exécution\n\n```text\nJeu v1.2 : 12 cas (données fictives)\n[OK ] réussite globale : 0.83 (min 0.80)\n[KO ] zone critique : 0.67 (min 1.00)\n[OK ] violations de sécurité : 0 (max 0)\n[KO ] délai P95 : 2.6 s (max 2.5 s)\n[OK ] coût par réussite : 0.0220 EUR (max 0.025)\n[OK ] non-régression : 0.83 vs 0.83 (tolérance 0.05)\nDÉCISION : NO-GO (au moins un critère bloquant échoue)\n```\n\n## À observer\n\n- Le taux global (0,83) passe : si l'on ne regardait que lui, on lancerait. Mais un cas **critique** échoue et le délai P95 dépasse le seuil de 0,1 s : deux critères bloquants.\n- La version candidate améliore un cas habituel mais **dégrade un cas critique** : c'est l'intérêt de découper par zone.\n- Le coût reste dans la limite, mais il est nettement plus élevé que celui de la version en service : un seuil absolu ne montre pas ce glissement. Ajoutez au besoin une comparaison relative.\n\n## À vous de jouer\n\n1. Remplacez le statut du cas C11 par une réussite et relancez : la zone critique passe-t-elle ? Que reste-t-il à corriger ?\n2. Passez le délai du cas C09 à 2,4 s : que devient le P95 ?\n3. Remplacez `>=` par `>` pour le seuil de réussite : que change cette décision pour un taux exactement égal au seuil ? Qui doit trancher ?\n4. Ajoutez un critère de votre choix et défendez son seuil.\n\nCe code est un point de départ pédagogique, pas un outil d'évaluation complet : voir M17 pour les mesures, les juges et les statistiques.\n"
+    }
+   ]
+  },
+  {
+   "title": "Monitoring et itération",
+   "lessons": [
+    {
+     "title": "Déploiement progressif : canary, drapeaux de fonctionnalité et repli",
+     "kind": "reading",
+     "body_md": "## Ne pas tout lancer d'un coup\n\nUn déploiement **progressif** expose la nouveauté à une petite partie du trafic ou des utilisateurs, observe, puis élargit. Pour l'IA, c'est essentiel : les essais avant lancement ne couvrent jamais la diversité des usages réels.\n\n## Trois mécanismes\n\n- **Canary** : la nouvelle version reçoit une petite part du trafic, la version en service gère le reste. On compare les indicateurs côte à côte avant d'étendre.\n- **Drapeau de fonctionnalité (feature flag)** : un interrupteur, modifiable sans redéploiement, qui active la fonction pour certains utilisateurs, ou la coupe instantanément.\n- **Plan de repli (rollback)** : procédure testée pour revenir à la version précédente de la consigne, du modèle ou de la configuration.\n\n## Étapes possibles d'un déploiement\n\n1. Utilisateurs internes ou testeurs volontaires.\n2. Petit groupe d'utilisateurs réels (canary).\n3. Élargissement par paliers, chacun avec une condition de passage.\n4. Généralisation, puis surveillance renforcée pendant une période définie.\n\nLes pourcentages et durées sont des décisions locales : choisissez-les selon le risque, le volume et la capacité à observer.\n\n## Conditions d'arrêt\n\nDéfinissez **avant** le lancement ce qui déclenche un arrêt ou un retour arrière : dépassement du délai, hausse de signalements, violation de sécurité, coût anormal. Précisez qui peut agir seul.\n\n## Testez le repli\n\nUn plan de repli jamais exécuté est une hypothèse. Faites un exercice avant la production : couper le drapeau, revenir à la version précédente, vérifier que tout fonctionne.\n\n## Mise en pratique\n\nDécrivez les trois paliers d'un déploiement fictif, avec la condition de passage de chaque palier.\n"
+    },
+    {
+     "title": "Journalisation et signaux de production",
+     "kind": "reading",
+     "body_md": "## Ce qu'il faut pouvoir reconstituer\n\nLorsqu'un utilisateur signale une réponse problématique, l'équipe doit pouvoir **retrouver ce qui s'est passé** : quelle version de la consigne et du modèle, quel contexte fourni, quels outils appelés, quel délai, quel coût. Sans journalisation, on devine.\n\n## Que journaliser\n\n- **Identifiants** : requête, session (pseudonymisée), versions de modèle, de consigne, de jeu de règles, drapeaux actifs.\n- **Mesures** : délais par étape, nombre de jetons, coût estimé, erreurs, décisions des garde-fous.\n- **Résultat observable** : réponse envoyée, action déclenchée, signal de l'utilisateur (accepté, corrigé, rejeté).\n\nLe détail des traces et des spans est traité dans le module M17.\n\n## Respecter la vie privée\n\n- Ne conservez que ce qui est **nécessaire**.\n- **Masquez ou pseudonymisez** les données personnelles.\n- Fixez une **durée de conservation** et des **droits d'accès** limités.\n- Sachez qui doit être consulté (responsable données, conformité) avant de stocker des contenus d'utilisateurs.\n\n## Signaux à surveiller\n\n- **Qualité** : échantillon de réponses relues, taux d'échec des contrôles automatiques.\n- **Usage** : volume, types de demandes, abandons.\n- **Techniques** : délais, erreurs, coût par requête.\n- **Risque** : refus, contenus bloqués, escalades.\n\nUn tableau de bord utile est lu **régulièrement par quelqu'un qui peut agir**.\n\n## Pour réfléchir\n\nSi un utilisateur écrivait demain « la réponse d'hier était fausse », pourriez-vous retrouver la version exacte qui l'a produite ?\n"
+    },
+    {
+     "title": "Boucles de retour utilisateur",
+     "kind": "reading",
+     "body_md": "## Des retours multiples\n\nLes retours arrivent sous plusieurs formes :\n\n- **explicites** : pouce vers le haut ou le bas, commentaire libre, signalement ;\n- **implicites** : l'utilisateur reformule, copie la réponse, abandonne, contacte le support ;\n- **issus d'experts** : relecture d'un échantillon par des spécialistes métier.\n\n## Un signal n'est pas un verdict\n\nUn avis négatif peut venir d'une mauvaise réponse, mais aussi d'une règle métier légitime mal acceptée, d'une attente irréaliste ou d'une interface confuse. Il faut **qualifier** avant d'agir : trier, catégoriser, regarder la trace correspondante. À l'inverse, l'absence de retours ne prouve pas la qualité : beaucoup d'utilisateurs ne réagissent pas.\n\n## Concevoir la collecte\n\n- Rendez le retour **facile** (un geste) et **contextualisé** (lié à la réponse).\n- Proposez quelques **catégories** (inexact, incomplet, hors sujet, inapproprié) pour faciliter le tri.\n- **Informez** sur l'usage des retours et protégez les données.\n- **Fermez la boucle** quand c'est possible : dites que le retour a été pris en compte.\n\n## Du retour au changement\n\n1. **Collecter** et regrouper.\n2. **Qualifier** : bug, limite connue, besoin nouveau, mauvaise attente.\n3. **Prioriser** selon fréquence et gravité.\n4. **Transformer** en élément de backlog et en **nouveau cas d'évaluation**.\n5. **Vérifier** après correction que le problème a disparu sans régression.\n\n## Mise en pratique\n\nImaginez trois retours utilisateurs sur un assistant fictif et indiquez, pour chacun, la qualification, la priorité et le cas d'évaluation à créer.\n"
+    },
+    {
+     "title": "Mettre en place la boucle d'itération",
+     "kind": "reading",
+     "body_md": "## De l'observation à l'amélioration\n\nUne **boucle d'itération** est un rythme régulier où l'équipe observe, décide, change, vérifie. Sans rituel, la surveillance devient une consultation passive de tableaux de bord.\n\n## Un rythme simple\n\n- **Chaque jour ou chaque semaine** : lecture des signaux d'alerte et d'un échantillon de conversations. Qui ? Une personne désignée à tour de rôle.\n- **Chaque sprint** : tri des retours, mise à jour du jeu d'évaluation, priorisation des améliorations.\n- **Chaque trimestre** (fréquence à adapter) : revue stratégique : coûts, modèles disponibles, dette technique, pertinence du produit.\n\n## Chaque itération en cinq actions\n\n1. **Observer** les indicateurs et les retours.\n2. **Diagnostiquer** : où dans la chaîne le problème apparaît (recherche, consigne, modèle, garde-fou, interface) ?\n3. **Choisir** une amélioration et en écrire l'hypothèse.\n4. **Tester** sur le jeu d'évaluation, puis en déploiement progressif.\n5. **Consigner** le résultat, y compris quand l'hypothèse était fausse.\n\n## Éviter les pièges\n\n- **Réagir à chaque anecdote** : un cas isolé n'est pas une tendance ; on le consigne et on observe sa fréquence.\n- **Changer plusieurs choses à la fois** : on ne sait plus ce qui a eu un effet.\n- **Oublier de retirer** les contournements temporaires.\n- **Ne jamais arrêter** une fonction qui ne tient pas ses promesses : l'arrêt est parfois la meilleure décision de produit.\n\n## Indicateurs de santé de la boucle\n\nDélai entre un incident et le nouveau test correspondant ; part des retours triés ; âge du plus ancien élément critique non traité. Ces mesures montrent si la boucle fonctionne, indépendamment du modèle.\n\n## Pour réfléchir\n\nQui, dans votre équipe, est responsable de lire un échantillon de réponses chaque semaine ? Si personne, que faut-il décider ?\n"
+    },
+    {
+     "title": "La dette technique propre aux produits IA",
+     "kind": "reading",
+     "body_md": "## Une dette qui s'accumule vite\n\nLa **dette technique** désigne les raccourcis qui accélèrent aujourd'hui et ralentissent demain. Les produits IA en cumulent de spécifiques, souvent invisibles car les résultats « semblent fonctionner ».\n\n## Exemples fréquents\n\n- **Consignes empilées** : chaque incident ajoute une phrase, jusqu'à une consigne longue, contradictoire, que personne n'ose modifier.\n- **Évaluation obsolète** : le jeu ne reflète plus les usages réels.\n- **Dépendance à une version de modèle** non suivie, jusqu'à l'annonce de son retrait.\n- **Dépendances cachées** : une fonctionnalité qui dépend de la sortie d'une autre sans contrat clair.\n- **Contournements temporaires** : règles ad hoc, listes d'exceptions, drapeaux jamais retirés.\n- **Données de contexte non maintenues** : documents périmés ou contradictoires.\n- **Journalisation insuffisante** : impossible de diagnostiquer.\n\n## Gérer la dette\n\n- **La rendre visible** : un label dans le backlog, une liste revue chaque sprint.\n- **Réserver de la capacité** régulière (la proportion dépend de votre contexte) plutôt qu'un « grand nettoyage » reporté.\n- **Simplifier** : réécrire une consigne en s'appuyant sur le jeu d'évaluation pour vérifier qu'on ne régresse pas.\n- **Retirer** les drapeaux et contournements après usage, avec une date limite posée à la création.\n\n## Un bon réflexe\n\nÀ chaque fois que vous ajoutez un contournement, créez en même temps l'élément de backlog qui le supprimera, avec un propriétaire et une échéance.\n\n## Mise en pratique\n\nListez trois éléments de dette potentielle sur un produit IA que vous connaissez, et pour chacun : le risque, le coût de ne rien faire, une première action.\n"
+    }
+   ]
+  },
+  {
+   "title": "Préparation à la production",
+   "lessons": [
+    {
+     "title": "Critères de mise en production : qualité, risque, coût et latence",
+     "kind": "reading",
+     "body_md": "## Décider avec des critères écrits à l'avance\n\nUne mise en production est une **décision**. Les critères doivent être posés avant d'avoir les résultats pour éviter d'ajuster le seuil aux chiffres. Ils se regroupent en quatre familles.\n\n## 1. Qualité\n\n- Taux de réussite global et par zone (habituelle, limite, critique).\n- Absence de **régression** par rapport à la version en service.\n- Validation d'un échantillon par des experts métier.\n\n## 2. Risque\n\n- Zéro échec sur les cas **critiques** du jeu d'évaluation (ce qui ne garantit pas l'absence de risque, cela indique seulement qu'aucun cas testé n'a échoué).\n- Garde-fous en place et testés ; revue sécurité et conformité réalisée si le contexte l'impose.\n\n## 3. Latence\n\nLe **délai de réponse** est une partie de l'expérience : un résultat excellent mais trop lent peut ne pas être utilisé. Mesurez-le par **percentile** (par exemple le délai en dessous duquel se situent 95 % des requêtes) plutôt que par moyenne, qui masque les cas lents. Fixez un seuil par type d'usage.\n\n## 4. Coût\n\nRapportez le coût à la **tâche réussie**, pas à la requête : un système moins cher par appel qui échoue plus souvent peut coûter davantage par résultat utile. Fixez un seuil de coût unitaire et un plafond global, et vérifiez-les à la charge attendue (voir M15).\n\n## Combiner les critères\n\nLes critères bloquants se combinent par un **ET** : un seul échec arrête. Précisez pour chacun le seuil, le périmètre, le nombre minimal de cas, et si le seuil est inclus (« supérieur ou égal ») ou non (« strictement supérieur »). Les critères non bloquants relèvent de la discussion.\n\n## Pour réfléchir\n\nQuel critère de votre dernier lancement a été ajusté après coup ? Que faut-il changer pour éviter cela la prochaine fois ?\n"
+    },
+    {
+     "title": "Plan de repli, runbook et communication d'incident",
+     "kind": "reading",
+     "body_md": "## Préparer le pire pour qu'il reste gérable\n\nUn incident avec un produit IA ne ressemble pas toujours à une panne : le service répond, mais avec un contenu inapproprié, faux ou coûteux. Il faut donc des **conditions de déclenchement** adaptées.\n\n## Un runbook concis\n\nUn **runbook** est un document court, utilisable sous pression. Il contient :\n\n- les **symptômes** et seuils qui déclenchent l'alerte ;\n- la **personne d'astreinte** et son suppléant ;\n- les **actions possibles**, par ordre de gravité : désactiver le drapeau, revenir à la version précédente de la consigne, basculer sur un mode dégradé, suspendre la fonction ;\n- les **vérifications** après l'action ;\n- la **communication** : qui prévient les utilisateurs, la direction, le support, la conformité ;\n- le **suivi** : post-mortem et création des tests.\n\n## Modes dégradés\n\nPrévoir un comportement sûr quand l'IA n'est pas fiable : réponse prudente, redirection vers un humain ou un contenu statique, désactivation d'une action sensible. Le **mode dégradé** est conçu avec l'équipe d'expérience utilisateur (M14).\n\n## Après l'incident\n\nUn **post-mortem sans recherche de coupable** décrit la chronologie, la cause, ce qui a bien fonctionné, ce qui manquait. Chaque incident significatif produit : un **cas d'évaluation**, un correctif, éventuellement une règle de gating supplémentaire.\n\n## Exercice de répétition\n\nSimulez un incident (en environnement de test) : un membre de l'équipe doit couper la fonction en suivant uniquement le runbook. Les écarts révèlent les manques.\n\n## Mise en pratique\n\nRédigez le runbook d'une page pour un assistant fictif qui se met à répondre de façon inappropriée : symptômes, première action, qui prévenir, vérification.\n"
+    },
+    {
+     "title": "Checklist go/no-go : la grille de préparation à la production",
+     "kind": "exercise",
+     "body_md": "## Objectif\n\nTransformer les critères en une **checklist** et une **grille de décision** que l'équipe remplit avant chaque lancement. Elle complète la checklist de preuves du module M17 en ajoutant les dimensions d'organisation et d'exploitation.\n\n## Les huit blocs\n\n1. **Cadrage** : tâche réussie, erreurs inacceptables, propriétaire du produit.\n2. **Évaluation** : jeu versionné, résultats par zone, comparaison avec la version en service, validation métier.\n3. **Critères bloquants** : liste écrite avant les résultats, seuils, périmètre, nombre de cas.\n4. **Versions** : modèle, consigne, configuration et jeu identifiés dans un identifiant de release.\n5. **Risque et conformité** : revue sécurité et données, garde-fous testés, mode dégradé défini.\n6. **Exploitation** : journalisation sans excès de données, tableau de bord, alertes, astreinte, runbook.\n7. **Déploiement** : drapeau, canary, paliers, conditions d'arrêt, repli testé.\n8. **Après le lancement** : boucle de retours, fréquence de revue, budget de dette technique.\n\n## Utiliser la grille\n\nPour chaque ligne, attribuez un statut : **Prêt**, **Prêt avec réserve** (avec action et date) ou **Non prêt**. Une ligne « critique » à *Non prêt* donne un **no-go** ; une réserve doit avoir un propriétaire et une date.\n\n## Exemple fictif d'une ligne\n\n- **Élément** : repli testé.\n- **Preuve attendue** : compte rendu d'un exercice de retour à la version précédente.\n- **Statut** : Prêt avec réserve.\n- **Réserve** : l'exercice n'a pas couvert la coupure hors des heures de bureau ; à faire avant le palier suivant, responsable : ingénieur plateforme.\n\n## Qui signe ?\n\nLe chef de produit propose, mais la décision engage plusieurs fonctions : produit, ingénierie, métier, et, selon le risque, sécurité et conformité. Consignez qui a décidé et à quelle date.\n\n## Mise en pratique\n\nRemplissez la grille pour un produit fictif de votre choix (huit blocs, deux à trois lignes chacun, avec statut et preuve). Identifiez le bloc qui bloquerait le lancement dans votre organisation actuelle.\n"
+    },
+    {
+     "title": "Planifier le delivery : de la feuille de route au calendrier de lancement",
+     "kind": "reading",
+     "body_md": "## Un plan qui assume l'incertitude\n\nLe **plan de delivery** relie le cycle (chapitre 1), le rythme agile (chapitre 2), l'évaluation (chapitre 3), l'exploitation (chapitre 4) et les critères de lancement (chapitre 5). Il tient en quelques pages.\n\n## Contenu type\n\n- **Objectif produit** et tâche réussie.\n- **Jalons de décision** plutôt que livraisons garanties : fin des spikes, première évaluation sur un jeu v1, démonstration comparative, go/no-go, paliers de déploiement.\n- **Dépendances** : données, accès, revues sécurité, disponibilité des experts métier.\n- **Risques** et plans d'atténuation (qualité insuffisante, coût trop élevé, retrait d'une version de modèle).\n- **Rôles** et décisions attribuées.\n- **Critères de mise en production** et plan de repli.\n- **Rythme d'itération** après le lancement.\n\n## Ordonner le travail\n\nUne règle utile : **ce qui réduit le plus l'incertitude d'abord**. Avant de peaufiner l'interface, vérifiez que le comportement atteint le niveau requis sur le jeu d'évaluation. Commencez par un **tracer bullet** : une version minimale qui traverse toute la chaîne (entrée, traitement, sortie, journalisation, évaluation), pour détecter tôt les obstacles d'intégration.\n\n## Communiquer avec les parties prenantes\n\nPrésentez des **fourchettes** et des **conditions** (« si l'évaluation atteint tel niveau au jalon 2, nous passons au canary ») plutôt que des promesses fermes. Rappelez ce qui est connu, ce qui est à explorer, et ce que vous ferez si l'hypothèse échoue.\n\n## Mise en pratique\n\nConstruisez un plan en quatre jalons pour un assistant fictif de recherche documentaire, en indiquant pour chacun la décision attendue et qui la prend.\n"
+    },
+    {
+     "title": "Récapitulatif du module",
+     "kind": "reading",
+     "body_md": "## Les idées à retenir\n\n- Le delivery IA gère une **sortie incertaine** : la qualité se mesure sur un jeu de cas, et se surveille après le lancement.\n- Un **prototype** sert à apprendre ; la production exige évaluation, versions, garde-fous, journalisation et repli. Décidez si le prototype est jetable.\n- Les **spikes** réduisent l'incertitude avec une question, une durée et un critère de sortie.\n- Les **Definition of Ready et Done** intègrent évaluation, versions, revue et comportement en cas d'échec.\n- Le **développement piloté par l'évaluation** écrit les cas avant de construire ; les jeux sont **versionnés** et les prompts passent des tests de **non-régression**.\n- Le **déploiement progressif** (canary, drapeaux, repli testé) limite l'impact des erreurs ; la **journalisation** permet de comprendre.\n- La **boucle d'itération** transforme signaux et retours en backlog et en nouveaux tests ; la **dette technique IA** se gère activement.\n- Les **critères de mise en production** combinent qualité, risque, latence et coût, écrits à l'avance et reliés par un ET.\n- Chaque responsabilité a un **propriétaire** ; le go/no-go est une décision d'équipe, consignée.\n\n## Pour aller plus loin\n\n- M8 : stratégie produit et opérationnalisation.\n- M17 : construire le jeu d'évaluation, les juges et les traces.\n- M15 : économie de l'IA et suivi des coûts.\n- M10 et M13 : IA responsable, sûreté et sécurité.\n\n## Avant le livrable\n\nRelisez votre dernier lancement IA : quels critères étaient écrits avant ? Quelle preuve manquait ? Qui pouvait arrêter le service ? Ces trois réponses sont le point de départ de votre plan de delivery.\n"
+    }
+   ]
+  }
+ ],
+ "quiz": {
+  "title": "Quiz du module",
+  "pass_percent": 70,
+  "max_attempts": null,
+  "questions": [
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi une même consigne peut-elle donner des réponses différentes d'un appel à l'autre ?",
+    "feedback": "La variabilité fait partie du fonctionnement des modèles génératifs ; on mesure donc la qualité sur un ensemble de cas plutôt que sur un exemple.",
+    "options": [
+     [
+      "La sortie d'un modèle génératif est incertaine : elle n'est pas strictement reproductible",
+      true
+     ],
+     [
+      "Parce que le code applicatif change à chaque appel",
+      false
+     ],
+     [
+      "Parce que le serveur est mal configuré",
+      false
+     ],
+     [
+      "Parce que les utilisateurs formulent toujours différemment",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle est la bonne décision de départ pour un prototype ?",
+    "feedback": "Un prototype sert à apprendre. Le conserver demande un travail de durcissement (évaluation, versions, repli, journalisation) qu'il faut planifier.",
+    "options": [
+     [
+      "Décider s'il sera jeté ou s'il fera l'objet d'une reprise explicite inscrite au backlog",
+      true
+     ],
+     [
+      "Le déployer tel quel dès qu'il convainc en démonstration",
+      false
+     ],
+     [
+      "Le conserver sans rien changer pour gagner du temps",
+      false
+     ],
+     [
+      "Ajouter des fonctionnalités jusqu'à ce qu'il soit « presque prêt »",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est l'objectif principal d'un spike ?",
+    "feedback": "Un spike produit une connaissance (une note de décision), pas une fonctionnalité. Il a une durée maximale et un critère de sortie.",
+    "options": [
+     [
+      "Répondre à une question précise dans un temps limité",
+      true
+     ],
+     [
+      "Livrer une première version de la fonctionnalité",
+      false
+     ],
+     [
+      "Remplacer la phase d'évaluation",
+      false
+     ],
+     [
+      "Estimer le budget définitif du projet",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle formulation de critère d'acceptation convient le mieux à une fonctionnalité IA ?",
+    "feedback": "Un critère doit être mesurable sur un jeu de cas versionné. « Toujours » et « satisfaits » ne sont pas vérifiables en l'état.",
+    "options": [
+     [
+      "Sur le jeu d'évaluation v1, la zone critique est entièrement réussie et la réussite globale dépasse le seuil fixé",
+      true
+     ],
+     [
+      "L'assistant répond toujours correctement",
+      false
+     ],
+     [
+      "Les utilisateurs sont satisfaits",
+      false
+     ],
+     [
+      "Le modèle est le plus récent du marché",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels éléments ont leur place dans une Definition of Done adaptée à un élément IA ?",
+    "feedback": "La DoD vérifie des preuves : évaluations, versions, revue. Le goût du commanditaire et la taille du modèle ne sont pas des critères d'achèvement.",
+    "options": [
+     [
+      "Les évaluations ont été rejouées sur le jeu versionné",
+      true
+     ],
+     [
+      "Les versions de modèle et de consigne sont identifiées",
+      true
+     ],
+     [
+      "Une personne autre que l'auteur a relu la consigne",
+      true
+     ],
+     [
+      "La démonstration a plu au commanditaire",
+      false
+     ],
+     [
+      "Le modèle utilisé est le plus volumineux disponible",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que signifie « Definition of Ready » pour un élément IA ?",
+    "feedback": "La DoR concerne l'entrée dans le sprint. La mise en production relève de critères distincts.",
+    "options": [
+     [
+      "Les conditions pour qu'il entre en sprint : tâche réussie, échantillon de cas, données, contraintes et comportement en cas d'échec",
+      true
+     ],
+     [
+      "Les conditions pour qu'il soit mis en production",
+      false
+     ],
+     [
+      "La liste des fonctionnalités du produit",
+      false
+     ],
+     [
+      "Le planning de livraison",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi versionner les consignes comme du code ?",
+    "feedback": "Sans historique ni revue, une modification de consigne peut dégrader le comportement sans trace ni possibilité de retour.",
+    "options": [
+     [
+      "Pour expliquer une dégradation, comparer et revenir en arrière",
+      true
+     ],
+     [
+      "Parce que les consignes sont secrètes",
+      false
+     ],
+     [
+      "Parce que c'est exigé pour appeler un modèle",
+      false
+     ],
+     [
+      "Pour réduire le coût de chaque appel",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels éléments un identifiant de release gagne-t-il à référencer ?",
+    "feedback": "Une release associe tous les éléments qui influencent le comportement afin de reproduire et expliquer un résultat.",
+    "options": [
+     [
+      "La version de la consigne",
+      true
+     ],
+     [
+      "La référence exacte du modèle",
+      true
+     ],
+     [
+      "La version du jeu d'évaluation",
+      true
+     ],
+     [
+      "Les paramètres de génération",
+      true
+     ],
+     [
+      "Le nom de la personne qui a relu la consigne en dernier",
+      false
+     ],
+     [
+      "L'humeur de l'équipe lors du dernier sprint",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "En développement piloté par l'évaluation, que fait-on en premier ?",
+    "feedback": "Les cas et critères précèdent la construction, ce qui permet de mesurer le progrès et d'éviter de les ajuster pour se faciliter la tâche.",
+    "options": [
+     [
+      "On écrit quelques cas et un critère de décision, puis on mesure l'état de départ",
+      true
+     ],
+     [
+      "On optimise la consigne puis on cherche des exemples qui la valident",
+      false
+     ],
+     [
+      "On déploie en canary pour observer",
+      false
+     ],
+     [
+      "On choisit le modèle le plus performant",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "À quoi sert de garder des cas « cachés » ou un jeu de validation séparé ?",
+    "feedback": "Si l'on ajuste la consigne sur les mêmes cas que ceux qui servent à décider, la mesure devient optimiste.",
+    "options": [
+     [
+      "À limiter le risque d'optimiser pour le jeu de réglage et de surestimer la qualité",
+      true
+     ],
+     [
+      "À réduire le coût d'exécution des tests",
+      false
+     ],
+     [
+      "À remplacer les retours des utilisateurs",
+      false
+     ],
+     [
+      "À cacher les échecs aux parties prenantes",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quand le jeu d'évaluation change de version, que faut-il faire ?",
+    "feedback": "Une comparaison n'a de sens qu'à jeu identique ; la référence doit être recalculée.",
+    "options": [
+     [
+      "Rejouer la version en service sur le nouveau jeu pour obtenir une référence comparable",
+      true
+     ],
+     [
+      "Comparer directement aux résultats de l'ancien jeu",
+      false
+     ],
+     [
+      "Ignorer la version précédente",
+      false
+     ],
+     [
+      "Supprimer l'historique des résultats",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Qu'est-ce qu'un test de non-régression de consigne doit comparer ?",
+    "feedback": "Un total qui progresse peut cacher une régression sur un cas critique ; coût et délai peuvent aussi évoluer.",
+    "options": [
+     [
+      "Le taux de réussite par zone",
+      true
+     ],
+     [
+      "La liste des cas qui passaient et échouent maintenant",
+      true
+     ],
+     [
+      "Le coût et le délai",
+      true
+     ],
+     [
+      "Le nombre de mots de la consigne uniquement",
+      false
+     ],
+     [
+      "La beauté de la mise en forme des réponses uniquement",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un cas échoue une fois sur cinq exécutions. Quelle lecture est la plus raisonnable ?",
+    "feedback": "Avec une sortie variable, on distingue échecs systématiques et intermittents, et on fixe à l'avance une tolérance.",
+    "options": [
+     [
+      "C'est une information : un échec intermittent à qualifier, pas du bruit à ignorer",
+      true
+     ],
+     [
+      "Le test est cassé et doit être supprimé",
+      false
+     ],
+     [
+      "Le cas est forcément mal écrit",
+      false
+     ],
+     [
+      "Il suffit de relancer jusqu'à obtenir une réussite",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans l'atelier Python, pourquoi la version candidate est-elle bloquée alors que sa réussite globale est acceptable ?",
+    "feedback": "Les critères sont reliés par un ET ; un échec sur la zone critique ou le délai suffit à arrêter.",
+    "options": [
+     [
+      "Parce qu'au moins un critère bloquant échoue : un cas critique et le délai P95",
+      true
+     ],
+     [
+      "Parce que le taux global est toujours trop bas",
+      false
+     ],
+     [
+      "Parce que le code interdit les versions plus coûteuses",
+      false
+     ],
+     [
+      "Parce que le jeu compte moins de vingt cas",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'est-ce qu'un déploiement canary ?",
+    "feedback": "Le canary limite l'impact d'une erreur et permet de comparer les indicateurs côte à côte.",
+    "options": [
+     [
+      "Une exposition de la nouvelle version à une petite part du trafic, comparée à la version en service avant extension",
+      true
+     ],
+     [
+      "Un déploiement réservé aux tests de sécurité",
+      false
+     ],
+     [
+      "Un déploiement qui remplace instantanément l'ancienne version",
+      false
+     ],
+     [
+      "Un retour automatique à l'ancienne version",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est l'intérêt principal d'un drapeau de fonctionnalité ?",
+    "feedback": "Le drapeau est un levier d'exposition et d'arrêt rapide ; il complète le repli sans le remplacer.",
+    "options": [
+     [
+      "Activer ou couper une fonction sans redéploiement, pour certains utilisateurs ou tous",
+      true
+     ],
+     [
+      "Accélérer la génération des réponses",
+      false
+     ],
+     [
+      "Réduire le nombre de tests nécessaires",
+      false
+     ],
+     [
+      "Remplacer le plan de repli",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels éléments un plan de repli solide comprend-il ?",
+    "feedback": "Un repli non testé reste une hypothèse ; décisions et déclencheurs doivent exister avant la production.",
+    "options": [
+     [
+      "Des conditions de déclenchement définies à l'avance",
+      true
+     ],
+     [
+      "Une personne identifiée pour décider",
+      true
+     ],
+     [
+      "Un exercice de retour à la version précédente réalisé avant le lancement",
+      true
+     ],
+     [
+      "La promesse qu'aucun incident ne surviendra",
+      false
+     ],
+     [
+      "Une procédure qui ne sera décrite qu'après le premier incident",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que doit permettre la journalisation d'un produit IA ?",
+    "feedback": "On vise la reconstitution du parcours observable, avec minimisation, protection des données et durée de conservation fixée.",
+    "options": [
+     [
+      "Retrouver quelles versions, quel contexte et quels outils ont produit une réponse donnée",
+      true
+     ],
+     [
+      "Conserver tous les contenus indéfiniment",
+      false
+     ],
+     [
+      "Remplacer l'évaluation avant lancement",
+      false
+     ],
+     [
+      "Enregistrer le raisonnement interne du modèle",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles pratiques protègent la vie privée dans la journalisation ?",
+    "feedback": "Minimisation, pseudonymisation, accès restreint et durée de conservation sont des bonnes pratiques établies.",
+    "options": [
+     [
+      "Ne conserver que ce qui est nécessaire",
+      true
+     ],
+     [
+      "Masquer ou pseudonymiser les données personnelles",
+      true
+     ],
+     [
+      "Limiter les droits d'accès et fixer une durée de conservation",
+      true
+     ],
+     [
+      "Tout conserver au cas où",
+      false
+     ],
+     [
+      "Partager les journaux avec toute l'entreprise",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un utilisateur clique sur « pouce vers le bas ». Que faut-il en conclure ?",
+    "feedback": "Un retour est un signal, pas un verdict : on le trie avec la trace et l'expertise métier avant d'agir.",
+    "options": [
+     [
+      "C'est un signal à qualifier : la réponse peut être mauvaise, mais aussi un refus légitime ou une attente irréaliste",
+      true
+     ],
+     [
+      "La réponse était forcément fausse",
+      false
+     ],
+     [
+      "L'utilisateur n'a pas compris l'interface",
+      false
+     ],
+     [
+      "Il faut changer de modèle immédiatement",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que faire d'un incident de production significatif une fois corrigé ?",
+    "feedback": "Chaque incident significatif enrichit le jeu d'évaluation : c'est l'une des liaisons essentielles de la boucle d'itération.",
+    "options": [
+     [
+      "Créer un cas d'évaluation correspondant pour éviter qu'il ne se reproduise",
+      true
+     ],
+     [
+      "Le supprimer de l'historique",
+      false
+     ],
+     [
+      "Ne rien ajouter pour ne pas biaiser le jeu",
+      false
+     ],
+     [
+      "Attendre qu'il se répète trois fois",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Lesquels sont des exemples de dette technique propre à l'IA ?",
+    "feedback": "La dette vient des raccourcis non résorbés. Les deux derniers choix sont des pratiques saines.",
+    "options": [
+     [
+      "Une consigne longue et contradictoire à force d'ajouts",
+      true
+     ],
+     [
+      "Un jeu d'évaluation qui ne reflète plus les usages",
+      true
+     ],
+     [
+      "Un drapeau temporaire jamais retiré",
+      true
+     ],
+     [
+      "Un jeu d'évaluation versionné et relu régulièrement",
+      false
+     ],
+     [
+      "Une journalisation qui permet de reconstituer chaque réponse",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi rapporter le coût à la tâche réussie plutôt qu'à la requête ?",
+    "feedback": "Le coût par tâche réussie intègre la qualité ; il reflète mieux la valeur obtenue pour chaque euro dépensé.",
+    "options": [
+     [
+      "Parce qu'un système moins cher par appel mais qui échoue plus souvent peut coûter davantage par résultat utile",
+      true
+     ],
+     [
+      "Parce que le coût par requête est impossible à mesurer",
+      false
+     ],
+     [
+      "Parce que le coût n'intéresse que la finance",
+      false
+     ],
+     [
+      "Parce que la tâche réussie ne dépend pas de la qualité",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi suivre le délai par percentile plutôt que par moyenne ?",
+    "feedback": "Un percentile élevé (par exemple le P95) montre ce que vivent les requêtes les plus lentes, ce que la moyenne dilue.",
+    "options": [
+     [
+      "La moyenne masque les cas lents qui dégradent l'expérience d'une partie des utilisateurs",
+      true
+     ],
+     [
+      "Parce que le percentile est toujours plus bas que la moyenne",
+      false
+     ],
+     [
+      "Parce que la moyenne est interdite",
+      false
+     ],
+     [
+      "Parce que le percentile se calcule sans données",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Une règle de mise en production dit « fidélité strictement supérieure à un seuil ». Une version a exactement la valeur du seuil. Que se passe-t-il ?",
+    "feedback": "Le choix entre « > » et « >= » est une décision de produit à écrire à l'avance, pas un détail laissé à l'interprétation.",
+    "options": [
+     [
+      "Elle ne passe pas : il faut écrire « supérieur ou égal » si le métier veut l'inclure",
+      true
+     ],
+     [
+      "Elle passe automatiquement",
+      false
+     ],
+     [
+      "Elle passe si le coût est faible",
+      false
+     ],
+     [
+      "On relance l'évaluation jusqu'à dépasser le seuil",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles décisions doivent avoir un propriétaire explicite dans l'équipe ?",
+    "feedback": "Les décisions qui bloquent ou protègent le delivery doivent être attribuées, y compris hors des heures de bureau.",
+    "options": [
+     [
+      "La validation du jeu d'évaluation",
+      true
+     ],
+     [
+      "Le go/no-go de mise en production",
+      true
+     ],
+     [
+      "Le déclenchement du plan de repli",
+      true
+     ],
+     [
+      "Le tri des retours utilisateurs",
+      true
+     ],
+     [
+      "La couleur de la présentation de sprint",
+      false
+     ],
+     [
+      "Le choix du jour des rétrospectives uniquement",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Votre équipe a une démonstration convaincante d'un assistant IA et un commanditaire qui veut lancer la semaine suivante. Quelles preuves demandez-vous avant d'accepter un lancement, et quel déploiement proposez-vous ?",
+    "feedback": "Réponse attendue : jeu d'évaluation versionné avec résultats par zone et comparaison avec la version en service ; critères bloquants écrits à l'avance (qualité, zone critique, sécurité, délai, coût) ; versions identifiées ; journalisation et protection des données ; plan de repli testé et propriétaire ; déploiement progressif avec conditions d'arrêt. Une démonstration ne prouve pas la fiabilité.",
+    "options": []
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Décrivez en quelques lignes comment vous feriez passer un retour utilisateur négatif récurrent jusqu'à une amélioration vérifiée, en citant au moins trois étapes de la boucle d'itération.",
+    "feedback": "Réponse attendue : collecter et regrouper, qualifier (erreur réelle, limite connue, attente), prioriser selon fréquence et gravité, transformer en élément de backlog et en cas d'évaluation, tester sur le jeu puis en déploiement progressif, vérifier l'absence de régression et consigner le résultat.",
+    "options": []
+   }
+  ]
+ },
+ "assignment": {
+  "title": "Livrable pratique : plan de delivery et checklist de mise en production",
+  "instructions_md": "\n## Objectif\n\nDémontrer que vous savez **planifier le delivery d'un produit IA**, définir ses **critères de mise en production** et organiser sa **boucle d'itération**. Vous travaillez sur un cas fictif de votre choix (par exemple un assistant de recherche documentaire, un outil de résumé de comptes rendus ou un classifieur de demandes de support). Aucune donnée confidentielle n'est nécessaire : inventez vos données. Vous pouvez saisir votre backlog dans l'outil de gestion de backlog de votre choix, ou dans un simple document.\n\n## Consignes\n\n1. **Cadrage** : décrivez le produit, l'utilisateur, la tâche réussie et les erreurs qui doivent bloquer le service.\n2. **Cycle et plan de delivery** : proposez au moins **quatre jalons de décision** (incluant au moins un spike), avec pour chacun la question, la durée maximale, le livrable et la personne qui décide. Précisez ce qui est prototype jetable et ce qui sera durci.\n3. **Backlog** : rédigez au moins **huit éléments** (au moins deux stories avec critères d'acceptation mesurables, deux spikes ou expériences, deux fondations comme évaluation, journalisation ou repli) et une **Definition of Ready** et une **Definition of Done** adaptées à l'IA (cinq critères chacune).\n4. **Rôles et responsabilités** : une matrice courte indiquant qui réalise, décide, est consulté, informé pour cinq décisions clés (validation du jeu, go/no-go, repli, tri des retours, propriété après lancement).\n5. **Évaluation** : décrivez votre jeu d'évaluation (version, au moins **huit cas** répartis entre habituels, limites et critiques) et votre règle de modification. Expliquez comment vous testerez la non-régression des consignes et gérerez les versions de modèle et de consigne.\n6. **Critères de mise en production** : au moins **cinq critères bloquants** (qualité, zone critique, sécurité, latence, coût par tâche réussie), avec seuils fictifs, périmètre, nombre minimal de cas et choix justifié entre « > » et « >= ». Ajoutez la comparaison avec la version en service.\n7. **Déploiement, repli et exploitation** : paliers, drapeau, conditions d'arrêt, runbook d'une page, ce que vous journalisez et ce que vous ne conservez pas.\n8. **Boucle d'itération** : rythme (quotidien, sprint, trimestre), traitement d'un retour utilisateur fictif jusqu'au nouveau cas d'évaluation, gestion de la dette technique.\n9. **Checklist go/no-go** : remplissez la grille en huit blocs de l'atelier (statut, preuve, réserves) et concluez par une décision argumentée.\n10. **Option technique** : adaptez la porte de qualité Python de l'atelier à vos cas et joignez le code et sa sortie.\n\n## Grille d'évaluation\n\n- Plan de delivery et jalons de décision, gestion de l'incertitude (**20 %**).\n- Backlog, Definition of Ready et Definition of Done adaptées à l'IA (**15 %**).\n- Évaluation, versions et non-régression (**20 %**).\n- Critères de mise en production : seuils, périmètres, cohérence logique, coût et latence (**20 %**).\n- Déploiement progressif, repli, exploitation et protection des données (**15 %**).\n- Boucle d'itération, rôles et checklist go/no-go (**10 %**).\n\n## Rendu\n\nDocument texte, PDF ou archive, avec le code éventuel en annexe. Précisez que tous les chiffres et données sont fictifs.\n"
+ }
+}

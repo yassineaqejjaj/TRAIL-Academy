@@ -1,0 +1,790 @@
+{
+ "course": "M3",
+ "slug": "ia-generative",
+ "source": "Contenu conçu à partir du programme du module 3 (IA générative), sans slides source. Pas de vidéo : à ajouter depuis l'administration.",
+ "chapters": [
+  {
+   "title": "Les modèles génératifs",
+   "lessons": [
+    {
+     "title": "Qu'est-ce qu'un modèle génératif ?",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDéfinir un modèle génératif, le situer par rapport aux modèles du module 1 (Machine Learning) et comprendre ce qui change pour un produit.\n\n## Définition\n\nUn **modèle génératif** apprend la manière dont des données sont structurées (textes, images, sons, code) et sait ensuite **produire de nouveaux exemples** qui leur ressemblent. Il ne retrouve pas une réponse dans une base : il **fabrique** un contenu, élément par élément, à partir de ce qu'il a appris.\n\nDans le module 1, la plupart des modèles étudiés étaient **prédictifs** : ils associaient une entrée à une étiquette (survivant ou non, spam ou non). Ici, la sortie n'est plus une étiquette parmi quelques-unes, mais un **contenu ouvert** : un paragraphe, une image, un extrait de code.\n\n## Ce que cela change pour un produit\n\n- **La sortie est variable** : deux demandes identiques peuvent donner deux réponses différentes (nous verrons pourquoi avec la température).\n- **La qualité est difficile à mesurer** : il n'existe pas une seule bonne réponse, comme pour une classification.\n- **Le modèle est généraliste** : un même modèle peut résumer, traduire, reformuler, classer ou écrire du code, sans être ré-entraîné pour chaque tâche.\n- **L'erreur est plausible** : une réponse fausse est souvent bien écrite, donc difficile à repérer.\n\n## Place dans les poupées russes\n\nRappelez-vous l'emboîtement vu au module 1 : IA, Machine Learning, Deep Learning, puis IA générative. Les modèles génératifs modernes reposent sur le Deep Learning (module 2) : de très grands réseaux de neurones, entraînés sur de très grandes quantités de données.\n\n## Les grandes familles\n\nOn distingue les modèles selon le contenu produit : **langage** (texte et code), **image**, **audio** (parole, musique) et **vidéo**. Côté technique, les modèles de langage sont **autorégressifs** (ils produisent une séquence élément par élément), tandis que beaucoup de modèles d'image sont des **modèles de diffusion** : ils partent d'un bruit aléatoire et le transforment progressivement en image cohérente. Les GAN, évoqués au module 2, en sont une autre famille. Ce module se concentre sur les modèles de langage.\n\n## À retenir\n\n- Un modèle génératif **produit** du contenu nouveau ; un modèle prédictif **choisit** une étiquette.\n- Le contenu est **plausible**, pas garanti exact.\n- Cette souplesse apporte de la valeur, mais déplace le risque : il faut vérifier, pas seulement déployer.\n\n## Pour réfléchir\n\nCitez une tâche de votre quotidien où une sortie « plausible mais à vérifier » est acceptable, et une autre où elle ne l'est pas."
+    },
+    {
+     "title": "L'architecture Transformer et l'attention",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre, en termes généraux, pourquoi l'architecture Transformer a rendu possibles les grands modèles de langage.\n\n## Le point de départ\n\nAu module 2, vous avez vu que les réseaux récurrents (RNN, LSTM) lisent un texte **mot après mot**, en gardant une mémoire qui s'estompe sur les longues phrases. Ils sont aussi lents à entraîner, car chaque étape dépend de la précédente.\n\n## L'idée du Transformer\n\nL'architecture **Transformer**, présentée en 2017, repose sur un mécanisme d'**attention**. Pour chaque élément d'un texte, le modèle calcule **à quels autres éléments il doit prêter attention** pour en comprendre le sens.\n\nExemple : dans « Le client a rappelé le support parce qu'**il** n'avait pas reçu son colis », l'attention aide à relier « il » à « client » plutôt qu'à « support ».\n\n## Pourquoi c'est un tournant\n\n- Tous les éléments d'un texte peuvent être traités **en parallèle** pendant l'entraînement : les calculs s'exécutent bien sur du matériel spécialisé, ce qui permet d'entraîner de très grands modèles.\n- Les liens entre éléments **éloignés** dans un texte sont mieux capturés.\n- La même architecture s'adapte à d'autres données que le texte : images, audio, code.\n\n## Une limite à garder en tête\n\nLe mécanisme d'attention compare les éléments entre eux. Plus le texte traité est long, plus le calcul est lourd. C'est l'une des raisons pour lesquelles la **taille de la fenêtre de contexte** est limitée et coûteuse, un sujet que nous traiterons plus loin.\n\n## À retenir\n\n- Le **Transformer** repose sur l'**attention** : pondérer l'importance des autres éléments pour chaque élément.\n- Il se parallélise bien, ce qui a permis le passage à l'échelle.\n- Ce n'est pas de la « compréhension » humaine : ce sont des calculs sur des représentations numériques.\n\n## Pour réfléchir\n\nPourquoi un modèle qui traite tout un texte en parallèle est-il plus adapté à un entraînement sur de très grands volumes de données qu'un modèle qui lit mot après mot ?"
+    },
+    {
+     "title": "Multimodalité : au-delà du texte",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDéfinir la multimodalité, repérer des cas d'usage et connaître les points de vigilance associés.\n\n## Définition\n\nUne **modalité** est un type de donnée : texte, image, audio, vidéo. Un modèle est dit **multimodal** lorsqu'il peut recevoir et/ou produire plusieurs modalités. Par exemple, on lui envoie une photo et une question, il répond par du texte ; ou on lui dicte une demande à voix haute et il répond en parole.\n\n## Comment cela fonctionne, en gros\n\nLes différentes modalités sont converties en **représentations numériques** compatibles : le modèle manipule des suites d'éléments numériques, qu'ils proviennent d'un fragment de texte, d'une zone d'image ou d'un extrait sonore. C'est ce qui lui permet de relier, par exemple, une description à une image.\n\n## Cas d'usage pour un produit\n\n- **Lire un document visuel** : facture, capture d'écran, schéma, tableau scanné.\n- **Décrire une image** pour l'accessibilité ou la recherche.\n- **Interface vocale** : transcrire, comprendre puis répondre à l'oral.\n- **Support client enrichi** : l'utilisateur envoie une photo du problème.\n\n## Points de vigilance\n\n- Les **erreurs** existent aussi sur les images : un modèle peut mal lire un chiffre, ou affirmer voir un élément absent.\n- Les **données visuelles et audio** sont souvent plus sensibles (visages, voix, documents d'identité) : confidentialité et consentement comptent.\n- La multimodalité **augmente le coût** et parfois la latence : une image représente beaucoup d'information à traiter.\n- Toutes les modalités ne sont pas disponibles en entrée **et** en sortie pour tous les modèles : vérifiez ce qui est réellement supporté.\n\n## À retenir\n\n- Multimodal = plusieurs types de données en entrée et/ou en sortie.\n- C'est un critère de choix à part entière dans la grille de sélection du livrable.\n- Les risques de fiabilité et de confidentialité ne disparaissent pas : ils changent de forme.\n\n## Pour réfléchir\n\nDans votre produit, quel document ou quelle entrée utilisateur est aujourd'hui traité à la main alors qu'il s'agit d'une image ou d'un son ?"
+    }
+   ]
+  },
+  {
+   "title": "Fondamentaux des grands modèles de langage (LLM)",
+   "lessons": [
+    {
+     "title": "Un LLM prédit le prochain token",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre le principe central d'un grand modèle de langage (LLM, pour *Large Language Model*) et ses conséquences concrètes.\n\n## Le principe\n\nUn LLM est un modèle de langage de très grande taille. Sa tâche de base est simple à énoncer : **étant donné le début d'un texte, estimer la suite la plus probable**, un petit fragment à la fois. Ces fragments s'appellent des **tokens** (nous les détaillerons dans le chapitre suivant).\n\nPour générer une réponse, le modèle :\n\n1. lit votre demande et le contexte ;\n2. calcule une **probabilité pour chaque token possible** comme suite ;\n3. en choisit un ;\n4. l'ajoute au texte, puis recommence jusqu'à la fin de la réponse.\n\n## Ce que cela implique\n\n- Le modèle **ne cherche pas la vérité** : il produit ce qui est statistiquement plausible compte tenu de son apprentissage et du contexte fourni.\n- Il n'a **pas d'accès automatique à Internet ni à vos données** : sans outil ou document fourni, il ne dispose que de ce qu'il a appris.\n- Une réponse longue est construite **pas à pas** ; une erreur en début de réponse peut influencer la suite.\n- Le **contexte** que vous fournissez change fortement les probabilités : c'est la base du prompt engineering (module 4).\n\n## Une comparaison utile\n\nPensez à la saisie prédictive de votre téléphone, mais entraînée sur une immense quantité de textes, avec une capacité à tenir compte de longs contextes. La comparaison est simplificatrice, mais elle rappelle l'essentiel : le modèle complète, il ne « sait » pas au sens d'une base de connaissances vérifiée.\n\n## À retenir\n\n- Génération = répétition de « prédire le token suivant ».\n- Plausible ne veut pas dire exact.\n- Ce qui n'est pas dans l'entraînement ou dans le contexte n'est pas fiable.\n\n## Pour réfléchir\n\nSi un modèle complète toujours par la suite la plus plausible, que risque-t-il de produire quand vous lui posez une question sur un sujet très spécialisé ou très récent ?"
+    },
+    {
+     "title": "Pré-entraînement, adaptation et alignement",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDistinguer les grandes étapes de fabrication d'un assistant fondé sur un LLM et comprendre d'où viennent ses comportements.\n\n## Étape 1 : le pré-entraînement\n\nLe modèle est entraîné sur de très grandes quantités de textes (et parfois d'autres modalités) pour prédire la suite d'un texte. Il apprend ainsi la grammaire, des connaissances générales, des styles et des schémas de raisonnement. Cette étape est **très coûteuse** en calcul et en énergie. Le résultat est un **modèle de base** : il complète un texte, mais ne se comporte pas encore comme un assistant.\n\n## Étape 2 : l'adaptation aux consignes\n\nLe modèle est ensuite ajusté sur des exemples de **demandes et de bonnes réponses** rédigées ou validées par des humains. Il apprend à suivre des consignes, à répondre dans un format attendu, à tenir une conversation. On parle de *fine-tuning* (spécialisation), notion qui prolonge le transfer learning vu au module 2.\n\n## Étape 3 : l'alignement\n\nL'**alignement** vise à rendre le comportement du modèle plus **utile, honnête et prudent**, selon des critères définis par ses concepteurs. Une méthode répandue s'appuie sur des **préférences humaines** : des évaluateurs comparent plusieurs réponses, et le modèle est ajusté pour favoriser celles qui sont préférées. Cela s'accompagne de règles de sécurité (refus de certaines demandes).\n\n## Ce que cela explique\n\n- Un assistant est **plus poli, plus structuré et plus prudent** qu'un modèle de base.\n- L'alignement **réduit** certains comportements indésirables mais ne les supprime pas : il reste des erreurs, des biais et des contournements possibles.\n- Les connaissances du modèle s'arrêtent à une **date limite** liée à ses données d'entraînement.\n\n## À retenir\n\n- Trois temps : **pré-entraînement**, **adaptation aux consignes**, **alignement**.\n- Les préférences humaines façonnent le style et les refus du modèle.\n- Aucune étape ne garantit l'exactitude des faits.\n\n## Pour réfléchir\n\nQuels risques y a-t-il à supposer qu'un modèle « aligné » est forcément fiable pour votre cas d'usage ?"
+    },
+    {
+     "title": "Température et échantillonnage : régler la créativité",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre comment le modèle choisit le token suivant et à quoi sert le paramètre de température.\n\n## De la probabilité au choix\n\nÀ chaque étape, le modèle obtient une distribution de probabilités sur les tokens possibles. Il peut :\n\n- **toujours prendre le plus probable** : réponse très stable, parfois répétitive ;\n- **tirer au sort** selon les probabilités : réponses plus variées, parfois moins pertinentes.\n\n## La température\n\nLa **température** est un paramètre qui contrôle ce degré de hasard.\n\n- **Température basse** (proche de zéro) : le modèle choisit presque toujours le token le plus probable. Réponses plus **déterministes et cohérentes**, adaptées à l'extraction d'information, à la classification, aux réponses factuelles.\n- **Température élevée** : les tokens moins probables ont plus de chances d'être choisis. Réponses plus **variées et créatives**, avec davantage de risques d'écarts.\n\nPrécision utile : même à température très basse, **deux exécutions peuvent différer** dans certains systèmes (calculs en parallèle, mises à jour du modèle). Ne promettez jamais une reproductibilité parfaite sans l'avoir testée.\n\n## D'autres réglages d'échantillonnage\n\nCertains outils proposent aussi de limiter le tirage aux tokens les plus probables (par rang ou par masse de probabilité cumulée). Le principe est le même : **arbitrer entre régularité et diversité**.\n\n## Pourquoi un chef de produit doit le savoir\n\n- Un assistant de génération d'idées gagne à être plus créatif.\n- Un assistant qui extrait des montants d'une facture doit être stable.\n- La variabilité doit être **testée** : une démonstration réussie une fois ne prouve rien.\n\n## À retenir\n\n- Température basse = stabilité ; élevée = diversité.\n- La température ne rend **pas** le modèle plus exact ou plus intelligent.\n- Choisissez le réglage selon le risque d'erreur toléré."
+    },
+    {
+     "title": "Exercice : visualiser l'effet de la température",
+     "kind": "exercise",
+     "body_md": "## Mission\n\nObserver, avec un petit script, comment la température modifie la répartition des probabilités. Les scores sont **fictifs** : ils servent uniquement à illustrer le principe.\n\n## Le code\n\nLe script transforme des scores en probabilités avec la fonction softmax, en divisant d'abord par la température :\n\n```python\nimport math\n\ndef probabilites(scores, temperature):\n    exps = [math.exp(s / temperature) for s in scores]\n    total = sum(exps)\n    return [e / total for e in exps]\n\nmots = [\"café\", \"thé\", \"eau\", \"vin\"]\nscores = [2.0, 1.0, 0.5, -1.0]   # scores fictifs\nfor t in (0.2, 1.0, 2.0):\n    p = probabilites(scores, t)\n    print(f\"T={t}: \" + \", \".join(f\"{m} {x:.0%}\" for m, x in zip(mots, p)))\n```\n\nVous devez avoir Python installé ; aucune bibliothèque supplémentaire n'est nécessaire.\n\n## Résultat attendu\n\n```\nT=0.2: café 99%, thé 1%, eau 0%, vin 0%\nT=1.0: café 61%, thé 22%, eau 14%, vin 3%\nT=2.0: café 43%, thé 26%, eau 21%, vin 10%\n```\n\n## À observer\n\n1. À **température basse**, le premier mot concentre presque toute la probabilité : le modèle répondra presque toujours la même chose.\n2. À **température élevée**, la distribution s'aplatit : des options moins probables deviennent possibles.\n3. Le classement des mots **ne change pas** : seule la répartition évolue.\n\n## À vous de jouer\n\n- Testez T = 0.5 et T = 5. Que se passe-t-il à très haute température ?\n- Modifiez les scores pour qu'un mot domine très nettement. La température change-t-elle encore beaucoup le résultat ?\n- Rédigez deux cas d'usage de votre produit : un où vous choisiriez une température basse, un où vous accepteriez une température plus élevée. Justifiez par le risque d'une mauvaise réponse.\n\n## Limite de l'exercice\n\nUn vrai modèle manipule des dizaines de milliers de tokens possibles à chaque étape, pas quatre. Le mécanisme reste identique."
+    },
+    {
+     "title": "Hallucinations : quand le modèle invente",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDéfinir une hallucination, comprendre pourquoi elle se produit et savoir en réduire l'impact. Le module 4 en donne une première approche côté prompts ; nous la reprenons ici côté modèle.\n\n## Définition\n\nUne **hallucination** est une sortie **fausse ou non fondée**, présentée avec assurance et de manière plausible : une référence inexistante, un chiffre inventé, une fonctionnalité qui n'existe pas, une citation déformée.\n\n## Pourquoi cela arrive\n\n- Le modèle optimise la **plausibilité** de la suite, pas la **vérité**.\n- Sur un sujet **absent ou rare** dans ses données, il comble les vides avec des schémas habituels.\n- Un **contexte ambigu ou incomplet** l'incite à deviner.\n- Les connaissances ont une **date limite** : il peut présenter comme actuel ce qui ne l'est plus.\n- Le ton assuré est un effet de style appris, pas un indicateur de fiabilité.\n\n## Où le risque est le plus fort\n\nRéférences et citations, chiffres précis, noms propres peu connus, textes juridiques ou médicaux, résultats de calcul, et tout sujet qui dépend de données internes que le modèle n'a pas vues.\n\n## Réduire le risque\n\n1. **Fournir les sources** dans le contexte et demander de répondre uniquement à partir d'elles (principe approfondi dans le module RAG).\n2. **Autoriser l'abstention** : « Si l'information manque, dites-le. »\n3. **Faire vérifier** les éléments critiques par un humain ou un outil (calcul, recherche, base de données).\n4. **Demander les sources** puis les contrôler : une source citée n'est pas une source vérifiée.\n5. **Limiter le périmètre** de l'assistant aux tâches où l'erreur est peu coûteuse.\n\n## À retenir\n\n- Une hallucination est **normale** dans le fonctionnement d'un LLM, pas un bug rare.\n- Elle se **réduit**, ne s'élimine pas.\n- Le niveau de contrôle doit être proportionné au **coût d'une erreur**.\n\n## Pour réfléchir\n\nQuelle information produite par un assistant dans votre produit serait la plus dangereuse si elle était inventée ?"
+    }
+   ]
+  },
+  {
+   "title": "Tokens et fenêtres de contexte",
+   "lessons": [
+    {
+     "title": "Qu'est-ce qu'un token ?",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nExpliquer ce qu'est un token, comment un texte est découpé, et pourquoi cette unité compte pour la qualité, le coût et les limites.\n\n## Définition\n\nUn modèle ne lit pas des lettres ni des mots entiers, mais des **tokens** : des fragments de texte (un mot courant, un morceau de mot, un signe de ponctuation, un espace, parfois un seul caractère). La **tokenisation** est l'opération qui découpe un texte en tokens avant de le donner au modèle ; chaque token correspond à un numéro dans un vocabulaire de taille fixe.\n\n## Comment est construit le vocabulaire\n\nLe vocabulaire est établi à partir de grands corpus de textes, en retenant les fragments les plus fréquents. Les mots courants deviennent un seul token ; les mots rares ou longs sont **découpés en plusieurs morceaux**. Une méthode répandue s'appelle le *byte pair encoding*, mais le principe suffit : fréquent = court, rare = fragmenté.\n\n## Conséquences pratiques\n\n- **Le nombre de tokens n'est pas le nombre de mots.** Il est généralement supérieur au nombre de mots.\n- **Selon la langue**, le nombre de tokens pour un même sens varie : une langue moins présente dans les données d'entraînement est souvent découpée en davantage de fragments, donc plus coûteuse.\n- **Le code, les nombres, les URL et les textes techniques** produisent beaucoup de tokens.\n- **Chaque modèle a son propre tokeniseur** : le même texte donne un nombre de tokens différent d'un modèle à l'autre.\n- Les erreurs sur des tâches de lettres (compter les lettres d'un mot, inverser un mot) s'expliquent en partie par le fait que le modèle voit des fragments et non des lettres.\n\n## Règle empirique (approximative)\n\nPour un texte courant, on retient souvent un ordre de grandeur d'**environ trois à quatre caractères par token**, ou un peu plus d'un token par mot. C'est une **approximation** : utilisez-la pour estimer, jamais pour facturer. Pour un chiffre exact, utilisez l'outil de comptage fourni par le fournisseur du modèle.\n\n## À retenir\n\n- Le token est l'unité de lecture, de génération, de limite et de facturation.\n- Le nombre de tokens dépend du texte, de la langue et du modèle.\n- Une estimation suffit pour dimensionner, un comptage exact pour budgéter précisément."
+    },
+    {
+     "title": "Exercice : estimer un nombre de tokens",
+     "kind": "exercise",
+     "body_md": "## Mission\n\nConstruire un estimateur simple de tokens et comprendre ses limites. Le ratio utilisé (3,5 caractères par token) est une **règle empirique approximative**, pas une valeur universelle.\n\n## Le code\n\n```python\nimport math\n\ndef estimer_tokens(texte, car_par_token=3.5):\n    \"\"\"Estimation grossière : nombre de caractères / caractères par token.\"\"\"\n    return math.ceil(len(texte) / car_par_token)\n\ntextes = {\n    \"salutation\": \"Bonjour, pourriez-vous résumer ce document en trois points ?\",\n    \"code\": \"def total(prix, quantite):\\n    return prix * quantite\",\n    \"mot rare\": \"anticonstitutionnellement\",\n}\nfor nom, t in textes.items():\n    print(f\"{nom:12s} {len(t):3d} caractères -> environ {estimer_tokens(t)} tokens\")\n```\n\n## Résultat obtenu\n\n```\nsalutation    60 caractères -> environ 18 tokens\ncode          53 caractères -> environ 16 tokens\nmot rare      25 caractères -> environ 8 tokens\n```\n\n## Ce que montre (et ne montre pas) cet exercice\n\n- L'estimation donne un **ordre de grandeur** pour un texte courant.\n- Elle est **trompeuse pour un mot rare** : un long mot rare peut être découpé en plus de morceaux que ce que le ratio prédit.\n- Elle est **trompeuse pour du code, des nombres ou une autre langue** : le vrai nombre peut être nettement plus élevé.\n- Aucun ratio ne remplace le tokeniseur du modèle choisi.\n\n## À vous de jouer\n\n1. Remplacez les textes par un paragraphe réel (fictif ou public) de votre métier. Combien de tokens estimez-vous ?\n2. Comparez avec l'outil de comptage proposé par un fournisseur de votre choix, si vous y avez accès gratuitement. L'écart est-il important ? Dans quel sens ?\n3. Ajoutez une marge de sécurité de 30 % à votre estimation. Pourquoi est-ce une bonne pratique quand on dimensionne un budget ou une limite ?\n\n## Pour réfléchir\n\nVotre application devra traiter des documents de 20 pages. Comment utiliseriez-vous cette estimation pour décider si un document tient dans la limite d'un modèle, avant de l'envoyer ?"
+    },
+    {
+     "title": "La fenêtre de contexte : la mémoire de travail du modèle",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDéfinir la fenêtre de contexte, ce qu'elle contient, et en tirer des conséquences de conception.\n\n## Définition\n\nLa **fenêtre de contexte** est la quantité maximale de tokens que le modèle peut prendre en compte **en une seule fois**. Elle est exprimée en tokens et se partage entre :\n\n- les **instructions** (consigne système, règles, format attendu) ;\n- l'**historique** de la conversation ;\n- les **documents ou données** que vous ajoutez ;\n- la **réponse générée**, qui consomme aussi de la place.\n\nAu-delà de la limite, le texte ne peut pas être traité : soit la demande est refusée, soit les éléments les plus anciens sont tronqués selon l'application.\n\n## Une mémoire de travail, pas une mémoire durable\n\nLe modèle **ne retient rien d'une conversation à l'autre** de lui-même. Ce qui donne l'impression de mémoire est l'application qui renvoie l'historique, ou un résumé, à chaque nouvel échange. Si cet historique sort de la fenêtre, le modèle l'« oublie ».\n\n## Plus grand n'est pas toujours mieux\n\n- Une fenêtre plus grande autorise de plus longs documents, mais **chaque token envoyé est facturé et ralentit** la réponse.\n- Sur de très longs contextes, l'**attention portée à chaque information peut se diluer** : les éléments au milieu d'un long texte sont parfois moins bien exploités que ceux du début ou de la fin. L'effet varie selon les modèles : mesurez-le sur vos propres cas.\n- Un contexte rempli de contenus inutiles ou contradictoires **dégrade** la réponse.\n\n## Stratégies courantes\n\n- **Résumer** l'historique ancien.\n- **Sélectionner** les passages pertinents plutôt qu'envoyer tout un document (principe du RAG, module 11).\n- **Découper** un long document en parties traitées séparément puis synthétisées.\n- **Réserver** une marge pour la réponse.\n\nLa conception de ce qu'on met dans la fenêtre est un sujet à part entière : le module 5 (context engineering) l'approfondit.\n\n## À retenir\n\n- Fenêtre de contexte = budget de tokens partagé entre entrée **et** sortie.\n- Elle n'est ni une mémoire permanente, ni une garantie que tout sera bien exploité.\n- Mieux vaut un contexte **court et pertinent** qu'un contexte exhaustif."
+    },
+    {
+     "title": "Exercice : établir un budget de contexte",
+     "kind": "exercise",
+     "body_md": "## Mission\n\nVérifier qu'un cas d'usage tient dans la fenêtre d'un modèle, en répartissant les tokens entre instructions, documents, historique et réponse. Les valeurs numériques sont **fictives**.\n\n## Scénario fictif\n\nVous concevez un assistant qui répond aux questions des équipes à partir de comptes rendus de réunion. Le modèle envisagé a une fenêtre de **16 000 tokens** (valeur d'exercice, pas celle d'un modèle réel).\n\n## Étape 1 : poser le budget\n\nComplétez ce tableau sous forme de liste, avec vos estimations :\n\n- Instructions du système : 800 tokens\n- Historique de conversation : 2 000 tokens\n- Documents ajoutés : à calculer\n- Réponse : 1 000 tokens maximum\n- **Marge de sécurité** : 10 % de la fenêtre\n\n## Étape 2 : calculer la place disponible\n\nMarge : 10 % de 16 000 = 1 600 tokens. Place disponible pour les documents : 16 000 - 800 - 2 000 - 1 000 - 1 600 = **10 600 tokens**.\n\n## Étape 3 : convertir en volume de texte\n\nAvec la règle approximative de 3,5 caractères par token, 10 600 tokens correspondent à environ 37 000 caractères, soit grossièrement une quinzaine de pages de texte courant. C'est un **ordre de grandeur** à valider avec le vrai tokeniseur.\n\n## Étape 4 : décider\n\nUn compte rendu fait 12 000 mots. Tient-il ? Raisonnez avec la règle empirique (plus d'un token par mot) : il dépasse très probablement le budget. Quelles options avez-vous ?\n\n- **résumer** le compte rendu avant de l'envoyer ;\n- le **découper** et ne transmettre que les parties pertinentes à la question ;\n- choisir un modèle à plus grande fenêtre, en mesurant l'impact sur le coût et la latence.\n\n## À rendre pour vous-même\n\nNotez la solution que vous retiendriez et le critère qui a guidé votre choix (qualité, coût, simplicité). Cette trace vous servira dans le livrable du module."
+    }
+   ]
+  },
+  {
+   "title": "Choisir un modèle",
+   "lessons": [
+    {
+     "title": "Les critères de choix d'un modèle",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDisposer d'une liste de critères explicites pour comparer des modèles, au lieu de choisir sur une réputation ou un effet de mode.\n\n## Partir du besoin, pas du modèle\n\nAvant de comparer, formulez : quelle **tâche**, pour quels **utilisateurs**, avec quel **niveau de risque** d'erreur, quel **volume**, quel **délai de réponse** acceptable, quelles **données** manipulées. Un modèle n'est pas « meilleur » dans l'absolu : il est **adapté ou non** à un usage.\n\n## Les critères principaux\n\n- **Qualité sur votre tâche** : mesurée sur vos propres exemples, pas seulement sur des tests publics.\n- **Coût** : prix par token en entrée et en sortie, multiplié par vos volumes.\n- **Latence** : délai avant la première réponse et vitesse de génération.\n- **Fenêtre de contexte** : suffisante pour vos documents, avec marge.\n- **Modalités** : texte seul, images, audio, vidéo, en entrée et/ou en sortie.\n- **Confidentialité et conformité** : où sont traitées les données, conservées ou réutilisées, quelles garanties contractuelles, quelles obligations réglementaires.\n- **Contrôle et personnalisation** : possibilité de spécialiser le modèle, de contrôler le format de sortie, d'appeler des outils.\n- **Fiabilité du service** : disponibilité, limites d'usage, évolution des versions.\n- **Dépendance** : possibilité de changer de fournisseur sans tout réécrire.\n\n## Critères éliminatoires et critères pondérés\n\nDistinguez les **critères bloquants** (par exemple : les données ne doivent pas quitter un périmètre donné) des **critères de comparaison** (qualité, coût, latence). Un modèle qui échoue sur un critère bloquant est écarté, quelles que soient ses autres qualités.\n\n## À retenir\n\n- Choisir un modèle, c'est arbitrer entre plusieurs critères **explicites et pondérés**.\n- Les critères bloquants passent avant les notes.\n- Les performances annoncées en général ne remplacent pas un test sur vos cas.\n\n## Pour réfléchir\n\nPour votre cas d'usage, quels sont les deux critères bloquants et les trois critères les plus importants dans l'ordre ?"
+    },
+    {
+     "title": "Modèles ouverts et modèles fermés",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre la différence entre modèles à poids ouverts et modèles accessibles uniquement par un service, et en déduire les arbitrages.\n\n## Deux grandes approches\n\n- **Modèle fermé** (accessible par service) : vous envoyez vos demandes à un fournisseur via une interface ou une API et recevez la réponse. Vous ne détenez pas le modèle.\n- **Modèle ouvert** (à poids ouverts) : les paramètres du modèle sont publiés selon une licence ; vous pouvez le **télécharger et l'exécuter** sur votre propre infrastructure, ou le faire héberger par un prestataire.\n\nAttention aux mots : « ouvert » ne veut pas toujours dire « libre de tout usage ». Les **licences varient** : certaines restreignent l'usage commercial ou imposent des conditions. Lisez-les. Les données d'entraînement sont rarement publiées intégralement.\n\n## Arbitrages typiques\n\nPour un modèle **fermé** :\n\n- mise en route rapide, pas d'infrastructure à gérer ;\n- coût proportionnel à l'usage ;\n- mais dépendance au fournisseur, aux évolutions de version et à ses conditions sur les données.\n\nPour un modèle **ouvert** :\n\n- plus de **maîtrise des données** et de la configuration ; possibilité de spécialiser le modèle ;\n- coûts fixes d'infrastructure et compétences à mobiliser (exploitation, mises à jour, sécurité) ;\n- en contrepartie, la **responsabilité** de l'exploitation vous revient.\n\n## Pas de réponse universelle\n\nLe bon choix dépend du volume, de la sensibilité des données, des compétences disponibles et du délai. Beaucoup d'équipes commencent avec un service pour **prototyper**, puis réévaluent quand le volume ou les contraintes l'exigent. Concevez l'application pour pouvoir **changer de modèle** sans tout réécrire.\n\n## À retenir\n\n- Ouvert ne signifie pas gratuit ni sans licence.\n- Fermé ne signifie pas non confidentiel : tout dépend des garanties contractuelles et techniques.\n- L'enjeu est un arbitrage entre simplicité, maîtrise et coût total."
+    },
+    {
+     "title": "Évaluer sur ses propres cas, pas sur des classements",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nMettre en place une évaluation simple et reproductible pour comparer des modèles sur un usage réel.\n\n## Pourquoi se méfier des tests publics\n\nIl existe des jeux de tests publics (*benchmarks*) qui mesurent des capacités générales. Ils sont utiles pour se repérer, mais présentent des limites :\n\n- ils ne reflètent pas **votre tâche**, votre langue, votre vocabulaire métier ;\n- les modèles peuvent avoir été **optimisés pour ces tests**, voire en avoir vu des éléments pendant l'entraînement ;\n- ils mesurent des moyennes, alors que vous vous intéressez à vos cas **difficiles**.\n\n## Construire un jeu de test maison\n\n1. Rassemblez **20 à 50 cas** représentatifs, fictifs ou anonymisés : cas typiques, cas limites, cas pièges (information manquante, demande hors périmètre).\n2. Pour chaque cas, notez la **réponse attendue** ou, à défaut, des critères de réussite.\n3. Définissez une **échelle de notation simple** (par exemple 0 à 2) sur quelques critères : exactitude, respect du format, ton, absence d'invention.\n4. Soumettez **les mêmes cas, avec le même prompt**, à chaque modèle candidat.\n5. Faites noter à l'aveugle, si possible par plusieurs personnes.\n6. **Répétez** quelques cas : à température non nulle, la variabilité peut changer la note.\n\n## Au-delà de la qualité\n\nMesurez aussi la **latence** (sur vos tailles de requêtes) et estimez le **coût** par requête. Une différence de qualité marginale ne justifie pas toujours un coût dix fois supérieur.\n\n## Garder la trace\n\nConservez le jeu de test, les prompts et les notes : lorsque le fournisseur met à jour un modèle, ou qu'un nouveau candidat apparaît, vous pourrez **rejouer le test** en quelques minutes. Le module 17 approfondit l'évaluation et l'observabilité en production.\n\n## À retenir\n\n- Un classement général ne remplace pas un test sur vos cas.\n- Comparez avec **le même protocole** pour chaque modèle.\n- Un petit jeu de test bien construit vaut mieux qu'une impression."
+    },
+    {
+     "title": "Exercice : une grille de sélection pondérée",
+     "kind": "exercise",
+     "body_md": "## Mission\n\nTransformer vos critères en grille chiffrée, calculer un score pondéré et lire le résultat avec esprit critique. Les candidats et les notes ci-dessous sont **fictifs**.\n\n## Étape 1 : choisir les critères et les poids\n\nPour l'exemple, un assistant interne qui manipule des documents sensibles :\n\n- qualité : 40 % ;\n- confidentialité : 25 % ;\n- coût : 20 % ;\n- latence : 15 %.\n\nLes poids doivent totaliser 100 %. Ils reflètent **vos priorités**, pas une vérité générale : un autre usage aurait d'autres poids.\n\n## Étape 2 : noter chaque candidat de 0 à 5\n\nLes notes proviennent idéalement de votre jeu de test et de la documentation du fournisseur.\n\n## Étape 3 : calculer\n\n```python\ncriteres = {\"qualité\": 0.4, \"coût\": 0.2, \"latence\": 0.15, \"confidentialité\": 0.25}\nassert abs(sum(criteres.values()) - 1) < 1e-9\n\nnotes = {  # notes fictives de 0 à 5\n    \"candidat_1\": {\"qualité\": 5, \"coût\": 2, \"latence\": 3, \"confidentialité\": 2},\n    \"candidat_2\": {\"qualité\": 4, \"coût\": 4, \"latence\": 4, \"confidentialité\": 4},\n    \"candidat_3\": {\"qualité\": 3, \"coût\": 5, \"latence\": 5, \"confidentialité\": 5},\n}\nfor nom, n in notes.items():\n    score = sum(criteres[c] * n[c] for c in criteres)\n    print(f\"{nom}: {score:.2f} / 5\")\n```\n\nRésultat :\n\n```\ncandidat_1: 3.35 / 5\ncandidat_2: 4.00 / 5\ncandidat_3: 4.20 / 5\n```\n\n## Étape 4 : lire le résultat\n\n- Le candidat 1 a la meilleure qualité mais il est pénalisé par la confidentialité et le coût.\n- Le candidat 3 passe en tête grâce à ses notes élevées sur les trois autres critères, alors qu'il a la moins bonne qualité. Est-ce acceptable pour votre usage ?\n- **Testez la sensibilité** : passez la qualité à 60 % (et réduisez les autres proportionnellement). Le classement change-t-il ? Si oui, votre décision dépend fortement des poids : discutez-les avec les parties prenantes.\n- Ajoutez un **critère bloquant** : si la confidentialité est inférieure à 3, le candidat est éliminé. Quels candidats restent-ils ?\n\n## À retenir\n\n- Une grille rend la décision **explicite et discutable**.\n- Un score n'est pas une vérité : il dépend de poids et de notes qui se justifient.\n- Les critères bloquants s'appliquent **avant** le calcul du score."
+    }
+   ]
+  },
+  {
+   "title": "Limites, coûts et risques",
+   "lessons": [
+    {
+     "title": "Comprendre et estimer les coûts",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nSavoir de quoi se compose le coût d'un usage de LLM et en faire une estimation simple. Le module 15 approfondit l'économie de l'IA et le FinOps.\n\n## Le principe : le coût suit les tokens\n\nLes services de modèles fermés facturent généralement **à l'usage, proportionnellement au nombre de tokens traités**, avec souvent un tarif distinct pour les **tokens d'entrée** (votre demande, le contexte) et les **tokens de sortie** (la réponse). Les tarifs réels varient selon les fournisseurs et évoluent : vérifiez-les toujours à la date de votre étude.\n\n## Les facteurs qui font monter la facture\n\n- **Un contexte long** renvoyé à chaque échange (historique, documents).\n- **Des réponses longues** quand elles ne sont pas nécessaires.\n- Le **nombre d'appels** : un traitement qui enchaîne plusieurs appels multiplie le coût.\n- L'**usage d'un modèle plus puissant** que nécessaire.\n- Les **réessais** et les erreurs.\n\n## Les leviers pour la réduire\n\n- Choisir un modèle **adapté à la difficulté** de la tâche (un petit modèle suffit souvent pour classer ou extraire).\n- **Réduire le contexte** : ne transmettre que l'utile.\n- **Limiter la longueur** des réponses.\n- Réutiliser des résultats déjà calculés quand c'est possible.\n\n## Exemple avec des prix fictifs\n\nCi-dessous, les prix sont **entièrement inventés** pour l'exercice : ils ne correspondent à aucun fournisseur. Ils sont exprimés en euros par million de tokens.\n\n- Modèle A : 1 € en entrée, 4 € en sortie.\n- Modèle B : 10 € en entrée, 40 € en sortie.\n\nUne requête de 3 000 tokens en entrée et 500 en sortie coûte, avec le modèle A : (3 000 x 1 + 500 x 4) / 1 000 000 = 0,005 €. Avec le modèle B, dix fois plus : 0,05 €. À 50 000 requêtes par mois, cela fait 250 € contre 2 500 €.\n\n## À retenir\n\n- Coût = tokens (entrée + sortie) x tarif, multiplié par le volume.\n- L'entrée est souvent le poste dominant quand on envoie beaucoup de contexte.\n- Un écart de tarif unitaire devient un écart budgétaire important à grand volume."
+    },
+    {
+     "title": "Exercice : simuler un budget mensuel",
+     "kind": "exercise",
+     "body_md": "## Mission\n\nÉcrire une petite simulation de coût et tester l'effet de deux décisions de conception. Les prix sont **fictifs** (euros par million de tokens) : remplacez-les par les tarifs réels à la date de votre étude pour un projet réel.\n\n## Le code\n\n```python\n# PRIX FICTIFS, en euros fictifs par million de tokens. À remplacer par les tarifs réels.\nPRIX = {\n    \"modele_A\": {\"entree\": 1.0, \"sortie\": 4.0},\n    \"modele_B\": {\"entree\": 10.0, \"sortie\": 40.0},\n}\n\ndef cout_requete(modele, tokens_entree, tokens_sortie):\n    p = PRIX[modele]\n    return (tokens_entree * p[\"entree\"] + tokens_sortie * p[\"sortie\"]) / 1_000_000\n\nrequetes_par_mois = 50_000\nentree, sortie = 3_000, 500\nfor m in PRIX:\n    unitaire = cout_requete(m, entree, sortie)\n    print(f\"{m}: {unitaire:.4f} € par requête, {unitaire * requetes_par_mois:,.0f} € par mois\".replace(\",\", \" \"))\n```\n\nRésultat :\n\n```\nmodele_A: 0.0050 € par requête  250 € par mois\nmodele_B: 0.0500 € par requête  2 500 € par mois\n```\n\n(La virgule des milliers est remplacée par une espace dans l'affichage.)\n\n## Expériences à mener\n\n1. **Réduire le contexte.** Passez `entree` de 3 000 à 1 000 tokens grâce à une sélection de passages plus fine. Quelle économie mensuelle obtenez-vous pour chaque modèle ?\n2. **Limiter la sortie.** Passez `sortie` de 500 à 200 tokens. Quel poste pèse le plus : l'entrée ou la sortie ?\n3. **Doubler l'usage.** Passez à 100 000 requêtes par mois. Le budget croît-il proportionnellement ?\n4. **Ajouter un appel.** Si chaque demande déclenche deux appels au lieu d'un, que devient le coût ?\n\n## Pour aller plus loin\n\nModifiez le script pour que le coût inclue un taux de **réessais** de 5 % (5 % des requêtes sont envoyées deux fois). Cette hypothèse est fictive : elle sert à montrer qu'un budget se bâtit avec des **hypothèses explicites** que l'on documente et que l'on révise avec les mesures réelles.\n\n## Pour réfléchir\n\nDans quelle situation accepteriez-vous le modèle dix fois plus cher ? Quelle perte (erreur, temps humain, risque) devrait-il éviter pour que ce soit rentable ?"
+    },
+    {
+     "title": "Latence, disponibilité et confidentialité",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nComprendre trois contraintes de production qui pèsent autant que la qualité de la réponse.\n\n## La latence\n\nLa **latence** est le délai que perçoit l'utilisateur. Deux mesures comptent :\n\n- le **délai avant le premier token** reçu ;\n- la **vitesse de génération** des tokens suivants.\n\nElle augmente avec la **taille du contexte**, la **longueur de la réponse** et la taille du modèle. Des réponses affichées au fil de l'eau (en flux) améliorent beaucoup la perception, même si la durée totale reste la même. Un traitement en tâche de fond (résumé nocturne) tolère une latence que n'accepte pas une conversation en direct. Voir aussi le module 14 sur l'expérience utilisateur de l'IA.\n\n## La disponibilité et les limites d'usage\n\nUn service externe peut avoir des **pannes**, des **limites de débit** (nombre de requêtes ou de tokens par minute) et des **changements de version** qui modifient les réponses. Prévoyez des délais d'attente, des reprises, un mode dégradé et, si l'enjeu le justifie, un modèle de secours.\n\n## La confidentialité\n\nLorsque vous envoyez un texte à un service, vous le **transmettez à un tiers**. Posez-vous :\n\n- Les données sont-elles **conservées** ? Pendant combien de temps ?\n- Peuvent-elles servir à **améliorer** les modèles du fournisseur ?\n- **Où** sont-elles traitées (pays, région) ?\n- Quelles **garanties contractuelles** existent ? Qui peut y accéder ?\n- Contiennent-elles des **données personnelles** soumises à des obligations légales ?\n\nBonnes pratiques de base : **minimiser** les données envoyées, **anonymiser** quand c'est possible, **classer** les données selon leur sensibilité et réserver les plus sensibles aux solutions maîtrisées. Les versions grand public et professionnelles d'un même outil peuvent avoir des **conditions différentes** : vérifiez celles qui s'appliquent à vous.\n\n## À retenir\n\n- Une réponse parfaite mais trop lente ou indisponible ne sert pas l'utilisateur.\n- Tout envoi de texte à un service externe est une **décision de confidentialité**.\n- Ces critères sont souvent **bloquants** dans la grille de sélection."
+    },
+    {
+     "title": "Limites et risques d'un usage donné",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\nDisposer d'un cadre pour identifier les limites et risques d'un usage précis, avant de l'engager. Les modules 10 (IA responsable) et 13 (sécurité des LLM) approfondissent plusieurs de ces points.\n\n## Les limites techniques\n\n- **Hallucinations** : informations fausses mais plausibles.\n- **Connaissances datées** : le modèle ignore ce qui s'est passé après la date limite de son entraînement.\n- **Raisonnement et calcul fragiles** : erreurs possibles sur la logique à plusieurs étapes, les calculs exacts, le comptage.\n- **Variabilité** : réponses différentes d'un appel à l'autre.\n- **Sensibilité à la formulation** : un changement de consigne peut changer le résultat.\n- **Contexte limité** : tout ne tient pas dans la fenêtre.\n\n## Les risques d'usage\n\n- **Biais** : le modèle reflète les déséquilibres de ses données et peut produire des réponses stéréotypées.\n- **Fuite de données** : saisie d'informations confidentielles dans un outil inadapté.\n- **Propriété intellectuelle** : questions sur les droits des contenus d'entraînement et des contenus générés ; les règles varient selon les pays et évoluent, faites-les valider par un juriste.\n- **Sécurité** : injection de consignes malveillantes dans un document ou une page (module 13).\n- **Sur-confiance** : l'utilisateur ne vérifie plus. On parle de biais d'automatisation.\n- **Responsabilité** : qui répond d'une décision prise à partir d'une réponse erronée ?\n\n## Une méthode en quatre questions\n\n1. **Quelle erreur est possible ?** (fausse information, omission, ton inapproprié)\n2. **Quel serait son impact ?** (gêne, perte financière, atteinte à une personne, risque légal)\n3. **Comment la détecter ?** (relecture humaine, règle automatique, citation de sources)\n4. **Que fait-on si elle survient ?** (correction, excuse, retour arrière, escalade)\n\nUn usage à **fort impact et faible détectabilité** (décision médicale, juridique, de recrutement) demande des garde-fous élevés, voire une exclusion de l'automatisation.\n\n## À retenir\n\n- Le risque dépend de l'**usage**, pas seulement du modèle.\n- L'humain dans la boucle est un dispositif à concevoir, pas une formule.\n- Documenter les limites fait partie du produit."
+    },
+    {
+     "title": "Exercice : cartographier les risques d'un cas d'usage",
+     "kind": "exercise",
+     "body_md": "## Mission\n\nAppliquer la méthode en quatre questions à un cas d'usage fictif, puis décider du niveau d'automatisation acceptable.\n\n## Scénario fictif\n\nUne équipe produit veut déployer un assistant qui **rédige automatiquement des réponses aux demandes des clients** d'un service d'abonnement et les envoie sans relecture, à partir de l'historique du compte du client.\n\n## Étape 1 : lister les erreurs possibles\n\nAu minimum, pensez à : promesse commerciale inventée, mauvais montant de remboursement, ton inadapté face à un client mécontent, divulgation d'informations d'un autre compte, réponse sur un sujet hors périmètre.\n\n## Étape 2 : noter impact et détectabilité\n\nPour chaque erreur, attribuez une note de 1 à 3 à l'**impact** et une note de 1 à 3 à la **difficulté de détection** (3 = très difficile à détecter avant l'envoi). Multipliez les deux. Les erreurs au score le plus élevé sont vos priorités.\n\n## Étape 3 : choisir un garde-fou par risque\n\nAssociez à chaque risque prioritaire une mesure : relecture humaine avant envoi pour certaines catégories, limitation de l'assistant aux questions les plus simples, utilisation exclusive d'une base de réponses validée, interdiction d'évoquer montants et engagements, journalisation des échanges.\n\n## Étape 4 : proposer un schéma d'autonomie\n\nDistinguez trois niveaux :\n\n- **suggestion** : l'assistant propose, l'humain valide ;\n- **automatisation partielle** : envoi automatique pour les cas simples et à faible risque ;\n- **automatisation totale** : réservée aux cas où l'erreur est bénigne et détectable.\n\n## Ce que doit contenir votre réponse\n\nUne liste d'au moins cinq risques classés, les garde-fous associés, le niveau d'autonomie retenu et ce que vous mesureriez après le lancement (taux de corrections humaines, plaintes, erreurs relevées).\n\n## Pour réfléchir\n\nQu'est-ce qui vous ferait revenir en arrière et réduire l'autonomie de l'assistant ?"
+    },
+    {
+     "title": "Récapitulatif du module",
+     "kind": "reading",
+     "body_md": "## Ce que vous devez retenir\n\n- Un **modèle génératif** produit un contenu nouveau (texte, image, audio, vidéo) ; sa sortie est plausible, variable et à vérifier. Les modèles de langage s'appuient sur l'**architecture Transformer** et le mécanisme d'**attention**.\n- Un **LLM** génère en **prédisant le token suivant**. Il est fabriqué par **pré-entraînement**, adaptation aux consignes puis **alignement**.\n- La **température** règle l'équilibre entre stabilité et diversité, sans améliorer l'exactitude.\n- Les **hallucinations** sont inhérentes au fonctionnement ; on les réduit par des sources fournies, l'abstention autorisée et la vérification.\n- Un **token** est un fragment de texte ; son nombre dépend du texte, de la langue et du modèle. Estimer : environ trois à quatre caractères par token, avec prudence.\n- La **fenêtre de contexte** est un budget de tokens partagé entre instructions, historique, documents et réponse. Elle n'est pas une mémoire durable.\n- Choisir un modèle, c'est comparer selon des **critères explicites** : qualité sur vos cas, coût, latence, fenêtre, modalités, confidentialité, contrôle, dépendance. Les critères bloquants passent avant les scores.\n- **Modèles ouverts ou fermés** : arbitrage entre simplicité, maîtrise des données et coût d'exploitation.\n- Le **coût** suit les tokens traités (entrée et sortie) et le volume ; **latence**, **disponibilité** et **confidentialité** sont des critères à part entière.\n- Les **risques** se jugent par usage : erreur possible, impact, détectabilité, réaction.\n\n## Où poursuivre\n\n- Module 4 : formuler de bons prompts.\n- Module 5 : concevoir le contexte donné au modèle.\n- Module 11 : ancrer les réponses dans vos documents (RAG).\n- Module 13 : sécurité des LLM.\n- Module 15 : économie de l'IA et FinOps.\n\n## Avant le quiz\n\nRelisez vos notes d'exercices : budget de contexte, grille pondérée, simulation de coût. Elles alimenteront directement le livrable : une grille de sélection de modèle pour un usage professionnel."
+    }
+   ]
+  }
+ ],
+ "quiz": {
+  "title": "Quiz du module",
+  "pass_percent": 70,
+  "max_attempts": null,
+  "questions": [
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle est la différence essentielle entre un modèle génératif et un modèle prédictif comme ceux du module 1 ?",
+    "feedback": "Un modèle prédictif associe une entrée à une étiquette ou à une valeur ; un modèle génératif produit un contenu nouveau et ouvert (texte, image, code).",
+    "options": [
+     [
+      "Le modèle génératif produit un contenu nouveau, là où le modèle prédictif choisit une étiquette ou une valeur",
+      true
+     ],
+     [
+      "Le modèle génératif n'utilise aucune donnée d'entraînement",
+      false
+     ],
+     [
+      "Le modèle prédictif est toujours plus précis",
+      false
+     ],
+     [
+      "Le modèle génératif fonctionne uniquement avec des images",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle technique est très utilisée pour générer des images en partant d'un bruit aléatoire transformé progressivement ?",
+    "feedback": "Les modèles de diffusion partent d'un bruit et le raffinent par étapes jusqu'à obtenir une image cohérente.",
+    "options": [
+     [
+      "Les modèles de diffusion",
+      true
+     ],
+     [
+      "La régression linéaire",
+      false
+     ],
+     [
+      "L'arbre de décision",
+      false
+     ],
+     [
+      "Le clustering k-means",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel mécanisme est au cœur de l'architecture Transformer ?",
+    "feedback": "L'attention permet de pondérer, pour chaque élément d'un texte, l'importance des autres éléments, y compris éloignés.",
+    "options": [
+     [
+      "L'attention, qui pondère l'importance des autres éléments pour chaque élément",
+      true
+     ],
+     [
+      "La lecture strictement mot après mot avec une mémoire qui s'estompe",
+      false
+     ],
+     [
+      "Un arbre de règles écrites à la main",
+      false
+     ],
+     [
+      "Un moteur de recherche interne à mots-clés",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Pourquoi l'architecture Transformer a-t-elle facilité le passage à l'échelle ?",
+    "feedback": "Le traitement en parallèle et la meilleure capture des liens éloignés ont permis d'entraîner de très grands modèles. Elle ne supprime ni le coût de calcul ni les erreurs.",
+    "options": [
+     [
+      "Elle permet de traiter les éléments d'un texte en parallèle à l'entraînement",
+      true
+     ],
+     [
+      "Elle capture mieux les liens entre éléments éloignés",
+      true
+     ],
+     [
+      "Elle supprime tout risque d'hallucination",
+      false
+     ],
+     [
+      "Elle rend le coût de calcul indépendant de la longueur du texte",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'appelle-t-on un modèle multimodal ?",
+    "feedback": "Un modèle multimodal reçoit et/ou produit plusieurs types de données, comme du texte et des images.",
+    "options": [
+     [
+      "Un modèle capable de traiter ou produire plusieurs types de données (texte, image, audio...)",
+      true
+     ],
+     [
+      "Un modèle qui comporte plusieurs langues d'interface",
+      false
+     ],
+     [
+      "Un modèle entraîné plusieurs fois de suite",
+      false
+     ],
+     [
+      "Un modèle qui fonctionne sur plusieurs ordinateurs à la fois",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle tâche de base permet à un LLM de générer du texte ?",
+    "feedback": "Le modèle estime la suite la plus probable d'un texte, un token à la fois, puis recommence avec le token ajouté.",
+    "options": [
+     [
+      "Prédire le token suivant à partir du contexte, de façon répétée",
+      true
+     ],
+     [
+      "Rechercher la réponse exacte dans une base de faits vérifiés",
+      false
+     ],
+     [
+      "Traduire d'abord la demande en règles logiques",
+      false
+     ],
+     [
+      "Copier un passage de ses données d'entraînement",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Dans quel ordre se déroule généralement la fabrication d'un assistant fondé sur un LLM ?",
+    "feedback": "Le pré-entraînement donne le modèle de base, l'adaptation aux consignes le rend utilisable en conversation, et l'alignement oriente son comportement.",
+    "options": [
+     [
+      "Pré-entraînement, adaptation aux consignes, alignement",
+      true
+     ],
+     [
+      "Alignement, pré-entraînement, adaptation aux consignes",
+      false
+     ],
+     [
+      "Adaptation aux consignes, alignement, pré-entraînement",
+      false
+     ],
+     [
+      "Alignement seul, sans entraînement préalable",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "À quoi sert l'alignement d'un modèle ?",
+    "feedback": "L'alignement oriente le comportement vers plus d'utilité, d'honnêteté et de prudence, souvent à partir de préférences humaines. Il réduit certains comportements indésirables sans les supprimer.",
+    "options": [
+     [
+      "À orienter le comportement du modèle vers des réponses plus utiles et plus prudentes, sans garantir l'exactitude",
+      true
+     ],
+     [
+      "À garantir que toutes les réponses sont exactes",
+      false
+     ],
+     [
+      "À augmenter la fenêtre de contexte",
+      false
+     ],
+     [
+      "À supprimer la nécessité de relire les réponses",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que provoque une température très basse ?",
+    "feedback": "Le modèle choisit presque toujours les tokens les plus probables : les réponses sont plus stables, mais pas plus exactes.",
+    "options": [
+     [
+      "Des réponses plus stables et plus régulières, car les tokens les plus probables sont presque toujours choisis",
+      true
+     ],
+     [
+      "Des réponses systématiquement plus exactes",
+      false
+     ],
+     [
+      "Des réponses plus créatives",
+      false
+     ],
+     [
+      "Une fenêtre de contexte plus grande",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Pour quels usages une température basse est-elle généralement préférable ?",
+    "feedback": "L'extraction et la classification demandent de la stabilité. La génération d'idées et l'écriture créative profitent plus d'une température plus élevée.",
+    "options": [
+     [
+      "Extraire un montant d'une facture",
+      true
+     ],
+     [
+      "Classer des demandes de support",
+      true
+     ],
+     [
+      "Générer de nombreuses idées de noms de produit",
+      false
+     ],
+     [
+      "Écrire plusieurs variantes d'un texte d'accroche",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'est-ce qu'une hallucination d'un LLM ?",
+    "feedback": "C'est une sortie fausse ou non fondée, présentée de façon plausible et assurée : référence inventée, chiffre faux, fonctionnalité inexistante.",
+    "options": [
+     [
+      "Une sortie fausse ou non fondée présentée avec assurance",
+      true
+     ],
+     [
+      "Une erreur de syntaxe dans le code du modèle",
+      false
+     ],
+     [
+      "Un message de refus de répondre",
+      false
+     ],
+     [
+      "Un temps de réponse anormalement long",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles mesures réduisent le risque d'hallucination dans un usage professionnel ?",
+    "feedback": "Fournir des sources, autoriser le modèle à dire qu'il ne sait pas et faire vérifier les éléments critiques réduisent le risque. Un ton assuré n'est pas un indicateur de fiabilité.",
+    "options": [
+     [
+      "Fournir les sources dans le contexte et demander de s'y limiter",
+      true
+     ],
+     [
+      "Autoriser explicitement le modèle à indiquer qu'il manque d'information",
+      true
+     ],
+     [
+      "Faire vérifier les éléments critiques par un humain ou un outil",
+      true
+     ],
+     [
+      "Se fier à l'assurance du ton de la réponse",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi un modèle peut-il se tromper sur le nombre de lettres d'un mot ?",
+    "feedback": "Le modèle voit des tokens (fragments), pas des lettres. Les tâches qui portent sur les lettres sont donc moins naturelles pour lui.",
+    "options": [
+     [
+      "Parce qu'il lit des fragments (tokens) et non des lettres individuelles",
+      true
+     ],
+     [
+      "Parce qu'il ne connaît pas l'alphabet",
+      false
+     ],
+     [
+      "Parce que la température était trop basse",
+      false
+     ],
+     [
+      "Parce que la fenêtre de contexte était vide",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Comment varie généralement le nombre de tokens pour un même texte ?",
+    "feedback": "Le nombre de tokens dépend du texte, de la langue et du tokeniseur propre à chaque modèle. Il n'est pas égal au nombre de mots.",
+    "options": [
+     [
+      "Il dépend du texte, de la langue et du tokeniseur du modèle",
+      true
+     ],
+     [
+      "Il est toujours égal au nombre de mots",
+      false
+     ],
+     [
+      "Il est identique pour tous les modèles",
+      false
+     ],
+     [
+      "Il ne dépend que du nombre de lettres majuscules",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle règle empirique peut-on utiliser, avec prudence, pour estimer un nombre de tokens ?",
+    "feedback": "Un ordre de grandeur d'environ trois à quatre caractères par token (un peu plus d'un token par mot) sert à estimer. Pour un chiffre exact, il faut le tokeniseur du modèle.",
+    "options": [
+     [
+      "Environ trois à quatre caractères par token, à valider avec l'outil de comptage du modèle",
+      true
+     ],
+     [
+      "Exactement un token par mot",
+      false
+     ],
+     [
+      "Exactement un token par lettre",
+      false
+     ],
+     [
+      "Un token par page",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels éléments consomment de la place dans la fenêtre de contexte ?",
+    "feedback": "La fenêtre est partagée entre les instructions, l'historique, les documents ajoutés et la réponse générée.",
+    "options": [
+     [
+      "Les instructions du système",
+      true
+     ],
+     [
+      "L'historique de la conversation",
+      true
+     ],
+     [
+      "Les documents ajoutés",
+      true
+     ],
+     [
+      "La réponse générée",
+      true
+     ],
+     [
+      "Les données d'entraînement du modèle",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un utilisateur reprend une conversation dans une nouvelle session sans que l'application ne renvoie l'historique. Que se passe-t-il ?",
+    "feedback": "Le modèle n'a pas de mémoire durable propre : sans historique renvoyé dans le contexte, il ne se souvient de rien.",
+    "options": [
+     [
+      "Le modèle ne connaît pas la conversation précédente",
+      true
+     ],
+     [
+      "Le modèle la retrouve automatiquement dans ses paramètres",
+      false
+     ],
+     [
+      "Le modèle la reconstitue grâce à la température",
+      false
+     ],
+     [
+      "Le modèle l'a ajoutée à sa fenêtre de contexte de façon permanente",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi une très grande fenêtre de contexte n'est-elle pas toujours la meilleure option ?",
+    "feedback": "Chaque token envoyé est facturé et ralentit la réponse, et un contexte rempli d'éléments inutiles peut dégrader la réponse. Mieux vaut un contexte court et pertinent.",
+    "options": [
+     [
+      "Elle augmente le coût et la latence, et un contexte trop chargé peut dégrader la réponse",
+      true
+     ],
+     [
+      "Elle supprime la capacité de résumer",
+      false
+     ],
+     [
+      "Elle interdit l'envoi d'images",
+      false
+     ],
+     [
+      "Elle rend le modèle moins aligné",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle est la bonne démarche pour comparer plusieurs modèles pour votre produit ?",
+    "feedback": "On part du besoin, on identifie les critères bloquants, puis on compare les candidats sur un jeu de test construit à partir de vos cas, avec le même protocole.",
+    "options": [
+     [
+      "Partir du besoin, fixer des critères explicites, puis tester chaque modèle sur vos propres cas avec le même protocole",
+      true
+     ],
+     [
+      "Choisir le modèle le plus cité dans la presse",
+      false
+     ],
+     [
+      "Retenir le modèle dont la fenêtre est la plus grande",
+      false
+     ],
+     [
+      "Utiliser le modèle le moins cher sans test",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Parmi ces critères, lesquels peuvent être bloquants dans un choix de modèle ?",
+    "feedback": "Un traitement des données hors périmètre autorisé, une modalité indispensable absente ou un contexte insuffisant peuvent éliminer un modèle, quelle que soit sa note sur les autres critères. Une préférence esthétique n'est pas un critère de choix.",
+    "options": [
+     [
+      "Les données ne doivent pas être traitées hors d'un périmètre donné",
+      true
+     ],
+     [
+      "Une modalité indispensable (par exemple l'image) n'est pas prise en charge",
+      true
+     ],
+     [
+      "Les documents à traiter ne tiennent pas dans la fenêtre de contexte",
+      true
+     ],
+     [
+      "Le nom du modèle plaît à l'équipe",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que signifie « modèle à poids ouverts » ?",
+    "feedback": "Les paramètres sont publiés selon une licence, ce qui permet de l'exécuter sur sa propre infrastructure. Les licences varient et les données d'entraînement ne sont pas forcément publiées.",
+    "options": [
+     [
+      "Les paramètres du modèle sont publiés selon une licence et peuvent être exécutés sur sa propre infrastructure",
+      true
+     ],
+     [
+      "Le modèle est gratuit et sans aucune restriction d'usage",
+      false
+     ],
+     [
+      "Le modèle est exécuté uniquement chez le fournisseur",
+      false
+     ],
+     [
+      "Les données d'entraînement sont toujours publiées en intégralité",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels sont des arbitrages typiques en faveur d'un modèle ouvert hébergé par vos soins ?",
+    "feedback": "Plus de maîtrise des données et de la configuration, mais des coûts d'infrastructure et la responsabilité d'exploitation. La mise en route rapide et l'absence d'infrastructure caractérisent plutôt un service fermé.",
+    "options": [
+     [
+      "Plus de maîtrise de l'endroit où sont traitées les données",
+      true
+     ],
+     [
+      "Possibilité de spécialiser le modèle",
+      true
+     ],
+     [
+      "Aucune infrastructure à gérer",
+      false
+     ],
+     [
+      "Aucune responsabilité d'exploitation ni de mise à jour",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi un classement public de modèles ne suffit-il pas pour choisir ?",
+    "feedback": "Les tests publics mesurent des capacités générales ; ils ne reflètent pas votre tâche, votre langue ni vos cas difficiles, et les modèles peuvent y être optimisés.",
+    "options": [
+     [
+      "Il ne reflète pas votre tâche, votre langue ni vos cas difficiles",
+      true
+     ],
+     [
+      "Parce que les classements sont toujours faux",
+      false
+     ],
+     [
+      "Parce qu'un modèle ne peut pas être évalué",
+      false
+     ],
+     [
+      "Parce que seul le coût compte",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Le modèle A coûte 2 € (fictifs) par million de tokens d'entrée. Une requête envoie 5 000 tokens d'entrée (la sortie est ignorée ici). Quel est le coût d'entrée de 1 000 requêtes ?",
+    "feedback": "5 000 tokens x 1 000 requêtes = 5 000 000 tokens, soit 5 millions de tokens à 2 € le million : 10 €. Prix fictifs, à remplacer par les tarifs réels.",
+    "options": [
+     [
+      "10 €",
+      true
+     ],
+     [
+      "1 €",
+      false
+     ],
+     [
+      "100 €",
+      false
+     ],
+     [
+      "0,01 €",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels leviers réduisent le coût d'un usage de LLM facturé aux tokens ?",
+    "feedback": "Réduire le contexte transmis, limiter la longueur des réponses et choisir un modèle adapté à la difficulté de la tâche diminuent la facture. Un historique complet renvoyé à chaque appel l'augmente.",
+    "options": [
+     [
+      "Ne transmettre que les passages utiles",
+      true
+     ],
+     [
+      "Limiter la longueur des réponses",
+      true
+     ],
+     [
+      "Utiliser un modèle plus petit pour une tâche simple",
+      true
+     ],
+     [
+      "Renvoyer tout l'historique à chaque appel",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle mesure de latence améliore beaucoup la perception de rapidité sans changer la durée totale de génération ?",
+    "feedback": "Afficher la réponse au fil de l'eau (en flux) réduit l'attente perçue avant la première lecture, même si la durée totale reste la même.",
+    "options": [
+     [
+      "Afficher la réponse au fil de sa génération",
+      true
+     ],
+     [
+      "Augmenter la température",
+      false
+     ],
+     [
+      "Ajouter davantage de documents au contexte",
+      false
+     ],
+     [
+      "Demander des réponses plus longues",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel risque de confidentialité doit-on évaluer en priorité avant d'envoyer des données à un service externe ?",
+    "feedback": "On vérifie notamment la conservation des données, leur réutilisation éventuelle pour améliorer les modèles, le lieu de traitement et les garanties contractuelles.",
+    "options": [
+     [
+      "La conservation, la réutilisation éventuelle, le lieu de traitement et les garanties contractuelles applicables à vos données",
+      true
+     ],
+     [
+      "Uniquement la couleur de l'interface",
+      false
+     ],
+     [
+      "Uniquement le nombre de tokens",
+      false
+     ],
+     [
+      "Aucun, car le service est externe",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Choisissez un cas d'usage professionnel et décrivez quel modèle (ouvert ou fermé, avec quelles modalités) vous retiendriez. Citez au moins quatre critères de votre grille, dont un critère bloquant, et expliquez comment vous testeriez les candidats.",
+    "feedback": "Question relue par le formateur. Une bonne réponse part du besoin, distingue critères bloquants et pondérés, précise un protocole de test sur cas réels (typiques, limites, pièges) et mentionne coût, latence et confidentialité.",
+    "options": []
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Pour un usage de votre choix, identifiez deux risques (par exemple hallucination, fuite de données, biais) et expliquez, pour chacun, l'impact possible, comment le détecter et quelle mesure vous mettriez en place.",
+    "feedback": "Question relue par le formateur. Une bonne réponse relie chaque risque à un impact concret, propose une détection réaliste (relecture, sources, règle automatique) et une mesure proportionnée, avec un niveau d'autonomie justifié.",
+    "options": []
+   }
+  ]
+ },
+ "assignment": {
+  "title": "Livrable pratique : une grille de sélection de modèle pour un usage professionnel",
+  "instructions_md": "## Objectif\n\nDémontrer que vous savez comparer des modèles selon des critères explicites, estimer coûts et limites, et recommander un choix argumenté pour un usage professionnel.\n\n## Consignes\n\n1. **Choisissez un usage professionnel** de votre métier (assistant de synthèse de retours utilisateurs, aide à la rédaction de spécifications, classification de demandes, lecture de documents...). Utilisez uniquement des **données fictives ou publiques**.\n2. **Cadrez l'usage** : tâche, utilisateurs, volume mensuel estimé, délai de réponse acceptable, type de données, niveau de risque d'une erreur.\n3. **Construisez votre grille de sélection** avec au moins **six critères** parmi : qualité sur votre tâche, coût, latence, fenêtre de contexte, modalités, confidentialité et conformité, contrôle et personnalisation, fiabilité du service, dépendance. Précisez les **critères bloquants** et attribuez des **poids** qui totalisent 100 %, avec une justification.\n4. **Comparez au moins trois profils de modèles** sans nommer de produit (par exemple : un grand modèle fermé, un modèle plus petit fermé, un modèle ouvert hébergé par vos soins). Notez chaque profil de 0 à 5 par critère, à partir de vos hypothèses et de la documentation publique de votre choix, en justifiant les notes.\n5. **Estimez le coût mensuel** de chaque profil avec des **prix fictifs ou des tarifs publics datés** (précisez-le), à partir d'un nombre de tokens par requête que vous justifiez, et mentionnez la marge d'incertitude.\n6. **Vérifiez le budget de contexte** : la fenêtre nécessaire (instructions, documents, historique, réponse) tient-elle ? Sinon, quelle stratégie ?\n7. **Décrivez votre protocole de test** : au moins cinq cas (typiques, limite, piège), critères de notation, mêmes consignes pour chaque modèle.\n8. **Cartographiez trois risques** : pour chacun, impact, détection, mesure et niveau d'autonomie accordé à l'IA.\n9. **Concluez** par une recommandation (choix, conditions de validité, éléments à réévaluer dans le temps).\n\nFormat : un document de deux à quatre pages, avec les listes de critères, notes et calculs. Vous pouvez joindre un script ou un tableur.\n\n## Grille d'évaluation\n\n- Qualité de la grille : critères pertinents, poids justifiés, critères bloquants identifiés (**25 %**).\n- Rigueur de la comparaison et des estimations : notes argumentées, coûts et tokens calculés correctement, hypothèses explicites, budget de contexte (**25 %**).\n- Protocole de test et lecture critique : cas variés, mêmes consignes, limites des notes reconnues (**20 %**).\n- Analyse des limites et risques : hallucinations, confidentialité, biais, autonomie et garde-fous (**20 %**).\n- Clarté de la recommandation et de la présentation (**10 %**).\n\n## Rendu\n\nTexte dans le champ de réponse et/ou fichier PDF ou document. Ne transmettez aucune donnée confidentielle. Ne citez aucun classement de modèles ni tarif sans en indiquer la source et la date."
+ }
+}

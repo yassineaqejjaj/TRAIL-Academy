@@ -45,4 +45,4 @@ Chargement **en brouillon** (rien n'est visible tant que vous ne publiez pas) :
 DATABASE_URL=… DATABASE_SSL=require npm run content:load -- --all --blog
 ```
 
-Un module qui a déjà des chapitres est ignoré (`--replace` le recrée, sauf si des apprenants ont de l'activité). Chaque texte est un **complément** à vos vidéos, réécrit à partir de vos slides : relisez-le, ajoutez vos vidéos, puis publiez leçon par leçon (Administration → Cours) et les articles (Contenu du site). Les modules M3 (IA générative), M9 (AI Product Delivery) et M18 (AI-Powered Discovery) n'ont pas encore de slides fournis.
+Un module qui a déjà des chapitres est ignoré (`--replace` le recrée, sauf si des apprenants ont de l'activité). Chaque texte est un **complément** à vos vidéos, réécrit à partir de vos slides : relisez-le, ajoutez vos vidéos, puis publiez leçon par leçon (Administration → Cours) et les articles (Contenu du site). Le module M18 (AI-Powered Discovery) n'a pas encore de contenu : les slides sont attendus. M3 et M9 ont été conçus à partir du programme du catalogue, sans slides : relisez-les avec une attention particulière.
