@@ -24,6 +24,7 @@ export default async function PricingPage() {
             <p className="text-sm text-muted">{o.title}</p>
             <p className="mt-2 text-3xl font-semibold">{formatEuro(o.amountCents!)}<span className="ml-1 text-xs font-normal text-muted">TTC</span></p>
             <p className="mt-1 text-sm text-muted">Accès {o.accessMonths} mois</p>
+            {o.note && <p className="mt-1 text-xs text-muted">{o.note}</p>}
           </Card>
         ))}
       </div>
@@ -34,7 +35,7 @@ export default async function PricingPage() {
         {b2b.map((o) => (
           <Card key={o.slug}>
             <p className="text-sm text-muted">{o.title}</p>
-            <p className="mt-2 text-2xl font-semibold">{o.amountCents == null ? "Sur devis" : <>{o.slug === "ateliers-prives" && <span className="mr-1 text-sm font-normal text-muted">dès</span>}{formatEuro(o.amountCents)}<span className="ml-1 text-xs font-normal text-muted">HT</span></>}</p>
+            <p className="mt-2 text-2xl font-semibold">{o.amountCents == null ? "Sur devis" : <>{o.priceFrom && <span className="mr-1 text-sm font-normal text-muted">dès</span>}{formatEuro(o.amountCents)}<span className="ml-1 text-xs font-normal text-muted">HT</span></>}</p>
             {o.note && <p className="mt-1 text-sm text-muted">{o.note}</p>}
           </Card>
         ))}

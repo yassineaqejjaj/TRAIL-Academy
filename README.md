@@ -26,18 +26,25 @@ Plateforme de formation professionnelle à l'intelligence artificielle, pensée 
 
 ### 1.1 Offre
 
-| Offre | Contenu | Prix (données modifiables en admin) | Accès |
+| Offre | Contenu | Prix | Accès |
 |---|---|---|---|
-| Module individuel | 1 module (parmi 18) | 149 € TTC | 12 mois |
-| Product Manager Augmenté | 9 modules : M3, M4, M5, M6, M7, M9, M14, M16, M18 | 549 € TTC | 18 mois |
-| AI Product Manager | 13 modules : M1, M2, M3, M8, M10–M18 | 749 € TTC | 18 mois |
-| AI Mastery | les 18 modules et les deux parcours | 990 € TTC | 18 mois |
-| Entreprises | Team 5 (3 490 € HT), Team 20 (11 900 € HT), sur devis, ateliers dès 1 500 € HT | — | — |
+| Module Standard | 1 module (14 modules concernés) | 199 € TTC | 12 mois |
+| Module Avancé | Vibe Coding (M6), RAG (M11), Agentic AI (M12), AI Evaluation & Observability (M17) | 299 € TTC | 12 mois |
+| Product Manager Augmenté | 9 modules : M3, M4, M5, M6, M7, M9, M14, M16, M18 | 990 € TTC | 18 mois |
+| AI Product Manager | 13 modules : M1, M2, M3, M8, M10–M18 | 1 490 € TTC | 18 mois |
+| AI Mastery | les 18 modules et les deux parcours | 1 990 € TTC | 18 mois |
+| AI Mastery Mentored | 18 modules + accompagnement (offre fermée tant que l'accompagnement n'est pas défini) | 2 990 € TTC | 18 mois |
+| Team 5 | 5 licences AI Mastery | 7 500 € HT | 12 mois |
+| Team 20 | 20 licences AI Mastery | 24 000 € HT | 12 mois |
+| Private Workshop | journée de formation privée | de 2 500 à 3 500 € HT | — |
+| Enterprise Custom | programme personnalisé | sur devis | — |
+
+Les prix sont des **données** modifiables dans l'administration (historique conservé). Les **prix fondateurs** de lancement (149 / 229 / 790 / 1 190 / 1 590 / 2 490 €) sont des propositions à tester, uniquement sur des offres réellement disponibles et pour une période définie : ils ne sont pas appliqués automatiquement (voir [`PRODUCT.md`](PRODUCT.md)).
 
 **Règles métier clés**
 - Les 18 modules sont visibles publiquement, mais **seuls les modules publiés et validés peuvent être achetés**. Les autres affichent « Bientôt disponible ».
 - Un contenu déjà acquis **n'est jamais refacturé** : acheter un parcours qui contient un module déjà détenu prolonge l'accès, sans doublon.
-- Les prix sont des **données** (table `prices`, historique conservé) ; Stripe reste la source de vérité du paiement, des taxes et des factures.
+- Stripe reste la source de vérité du paiement, des taxes et des factures.
 - Les attestations sont **privées et vérifiables** ; elles ne sont **ni une certification d'État ni une qualification RNCP**.
 - Aucun témoignage, avis, chiffre ou logo n'est inventé : un témoignage ne se publie qu'avec une référence de consentement.
 
@@ -272,7 +279,7 @@ Liste exhaustive et à jour : [`TESTING.md`](TESTING.md) et [`TASKS.md`](TASKS.m
 
 **À faire en priorité** : exécuter tout le parcours contre un projet Supabase et un compte Stripe de test ; appliquer le design aux écrans restants ; interface entreprise ; éditeur des règles du conseiller ; file de relecture des réponses libres ; téléversement vidéo direct ; consentement cookies et analytics ; suppression/export de compte.
 
-**Interface** : le design fourni (palette crème/marine/teal, Sora + Inter) est appliqué à l'en-tête, l'accueil, le catalogue, la fiche formation, le lecteur, le tableau de bord et l'administration. Là où ses textes et prix diffèrent du cahier des charges, **le cahier des charges prévaut** (voir [`PRODUCT.md`](PRODUCT.md)).
+**Interface** : le design fourni (palette crème/marine/teal, Sora + Inter) est appliqué à l'en-tête, l'accueil, le catalogue, la fiche formation, le lecteur, le tableau de bord et l'administration. Les prix suivent la grille tarifaire fournie ensuite par le formateur (voir [`PRODUCT.md`](PRODUCT.md)).
 
 ---
 

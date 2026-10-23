@@ -16,7 +16,7 @@ const rows: CatalogRows = {
     { slug: "module-un", kind: "course", title: "M1", active: true, access_months: 12, seats: null, course_id: "c1", prices: [{ amount_cents: 9900, tax_inclusive: true, active: false }, { amount_cents: 12900, tax_inclusive: true, active: true }] },
     { slug: "module-deux", kind: "course", title: "M2", active: true, access_months: 12, seats: null, course_id: "c2", prices: [{ amount_cents: 15900, tax_inclusive: true, active: true }] },
     { slug: "parcours", kind: "path", title: "P", active: true, access_months: 18, seats: null, course_id: null, prices: [{ amount_cents: 30000, tax_inclusive: true, active: true }] },
-    { slug: "team-5", kind: "enterprise_pack", title: "Team 5", active: false, access_months: null, seats: 5, course_id: null, prices: [{ amount_cents: 349000, tax_inclusive: false, active: true }] },
+    { slug: "team-5", kind: "enterprise_pack", title: "Team 5", active: false, access_months: 12, seats: 5, course_id: null, prices: [{ amount_cents: 349000, tax_inclusive: false, active: true }] },
     { slug: "sur-mesure", kind: "enterprise_pack", title: "Sur mesure", active: false, access_months: null, seats: null, course_id: null, prices: [{ amount_cents: null, tax_inclusive: false, active: true }] },
   ],
 };
@@ -34,10 +34,12 @@ describe("mapCatalog", () => {
   });
   it("uses only the active price, and derives the module price from the cheapest course product", () => {
     expect(c.coursePrices).toEqual({ un: 12900, deux: 15900 });
-    expect(c.offers.find((o) => o.slug === "module-individuel")!.amountCents).toBe(12900);
+    expect(c.offers.find((o) => o.slug === "module-standard")!.amountCents).toBe(12900);
+    expect(c.offers.find((o) => o.slug === "module-avance")!.amountCents).toBe(15900);
   });
   it("maps enterprise offers with HT pricing, seats and quotations", () => {
     expect(c.offers.find((o) => o.slug === "team-5")).toMatchObject({ kind: "enterprise", amountCents: 349000, taxMode: "ht", note: "5 licences" });
+    expect(c.offers.find((o) => o.slug === "sur-mesure")!.priceFrom).toBeUndefined();
     expect(c.offers.find((o) => o.slug === "sur-mesure")!.amountCents).toBeNull();
     expect(c.offers.some((o) => o.slug === "module-un")).toBe(false);
   });

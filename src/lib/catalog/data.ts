@@ -142,13 +142,18 @@ export const learningPaths: LearningPath[] = [
     courseCodes: seeds.map((s) => s.code) },
 ];
 
+/** Modules sold at the "Avancé" price. Everything else is "Standard". */
+export const advancedModuleCodes = ["M6", "M11", "M12", "M17"];
+
 export const offers: Offer[] = [
-  { slug: "module-individuel", kind: "course", title: "Module individuel", amountCents: 14900, taxMode: "ttc", accessMonths: 12 },
-  { slug: "product-manager-augmente", kind: "path", title: "Parcours Product Manager Augmenté", amountCents: 54900, taxMode: "ttc", accessMonths: 18 },
-  { slug: "ai-product-manager", kind: "path", title: "Parcours AI Product Manager", amountCents: 74900, taxMode: "ttc", accessMonths: 18 },
-  { slug: "ai-mastery", kind: "bundle", title: "AI Mastery", amountCents: 99000, taxMode: "ttc", accessMonths: 18 },
-  { slug: "team-5", kind: "enterprise", title: "Team 5", amountCents: 349000, taxMode: "ht", accessMonths: null, note: "5 licences" },
-  { slug: "team-20", kind: "enterprise", title: "Team 20", amountCents: 1190000, taxMode: "ht", accessMonths: null, note: "20 licences" },
-  { slug: "formation-sur-mesure", kind: "enterprise", title: "Formation entreprise sur mesure", amountCents: null, taxMode: "ht", accessMonths: null, note: "Sur devis" },
-  { slug: "ateliers-prives", kind: "enterprise", title: "Ateliers privés", amountCents: 150000, taxMode: "ht", accessMonths: null, note: "À partir de" },
+  { slug: "module-standard", kind: "course", title: "Module Standard", amountCents: 19900, taxMode: "ttc", accessMonths: 12 },
+  { slug: "module-avance", kind: "course", title: "Module Avancé", amountCents: 29900, taxMode: "ttc", accessMonths: 12, note: "Vibe Coding, RAG, Agentic AI, AI Evaluation & Observability" },
+  { slug: "product-manager-augmente", kind: "path", title: "Product Manager Augmenté", amountCents: 99000, taxMode: "ttc", accessMonths: 18, note: "9 modules" },
+  { slug: "ai-product-manager", kind: "path", title: "AI Product Manager", amountCents: 149000, taxMode: "ttc", accessMonths: 18, note: "13 modules" },
+  { slug: "ai-mastery", kind: "bundle", title: "AI Mastery", amountCents: 199000, taxMode: "ttc", accessMonths: 18, note: "18 modules" },
+  { slug: "ai-mastery-mentored", kind: "bundle", title: "AI Mastery Mentored", amountCents: 299000, taxMode: "ttc", accessMonths: 18, note: "18 modules + accompagnement · ouverture prochaine" },
+  { slug: "team-5", kind: "enterprise", title: "Team 5", amountCents: 750000, taxMode: "ht", accessMonths: 12, note: "5 licences AI Mastery · accès 12 mois" },
+  { slug: "team-20", kind: "enterprise", title: "Team 20", amountCents: 2400000, taxMode: "ht", accessMonths: 12, note: "20 licences AI Mastery · accès 12 mois" },
+  { slug: "private-workshop", kind: "enterprise", title: "Private Workshop", amountCents: 250000, taxMode: "ht", accessMonths: null, priceFrom: true, note: "De 2 500 à 3 500 € HT par journée de formation privée" },
+  { slug: "enterprise-custom", kind: "enterprise", title: "Enterprise Custom", amountCents: null, taxMode: "ht", accessMonths: null, note: "Programme personnalisé, sur devis" },
 ];

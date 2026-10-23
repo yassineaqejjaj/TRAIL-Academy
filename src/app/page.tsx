@@ -132,7 +132,7 @@ export default async function Home() {
       <Section title="Tarifs">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {priced.map((o) => (
-            <div key={o.slug} className="flex flex-col gap-2 rounded-2xl border border-border bg-surface p-7"><span className="font-semibold">{o.title}</span><span className="font-display text-3xl font-bold">{formatEuro(o.amountCents!)}</span><span className="text-sm text-muted">TTC{o.accessMonths ? ` · accès ${o.accessMonths} mois` : ""}</span></div>
+            <div key={o.slug} className="flex flex-col gap-2 rounded-2xl border border-border bg-surface p-7"><span className="font-semibold">{o.title}</span><span className="font-display text-3xl font-bold">{formatEuro(o.amountCents!)}</span><span className="text-sm text-muted">TTC{o.accessMonths ? ` · accès ${o.accessMonths} mois` : ""}{o.note && !o.note.includes("ouverture") ? ` · ${o.note}` : ""}</span>{o.note?.includes("ouverture") && <span className="text-sm text-warn">Ouverture prochaine</span>}</div>
           ))}
         </div>
         <p className="mt-6 text-sm text-muted">Le paiement en ligne n'est ouvert que pour les formations publiées. Offres entreprise sur la page <Link href="/entreprise" className="font-semibold text-accent hover:underline">Entreprises</Link>.</p>

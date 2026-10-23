@@ -1,8 +1,8 @@
-import { courses, learningPaths, offers, phases } from "./data";
+import { advancedModuleCodes, courses, learningPaths, offers, phases } from "./data";
 import type { Catalog, Course, Difficulty, LearningPath } from "./types";
 
 export * from "./types";
-export { courses, learningPaths, offers, phases };
+export { advancedModuleCodes, courses, learningPaths, offers, phases };
 
 /** Seed data: used when no database is configured, and as a fallback if it cannot be read. */
 export const staticCatalog: Catalog = {
@@ -10,7 +10,7 @@ export const staticCatalog: Catalog = {
   courses,
   learningPaths,
   offers,
-  coursePrices: Object.fromEntries(courses.map((c) => [c.slug, offers.find((o) => o.slug === "module-individuel")!.amountCents!])),
+  coursePrices: Object.fromEntries(courses.map((c) => [c.slug, offers.find((o) => o.slug === (advancedModuleCodes.includes(c.code) ? "module-avance" : "module-standard"))!.amountCents!])),
 };
 
 export const getCourse = (slug: string, c: Catalog = staticCatalog): Course | undefined => c.courses.find((x) => x.slug === slug);

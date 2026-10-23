@@ -87,61 +87,61 @@ insert into learning_path_courses select lp.id, c.id, 17 from learning_paths lp,
 insert into learning_path_courses select lp.id, c.id, 18 from learning_paths lp, courses c where lp.slug = 'ai-mastery' and c.code = 'M17';
 
 with p as (insert into products (slug, kind, title, course_id, access_months, active) select 'module-machine-learning', 'course', 'M1 — Machine Learning', id, 12, false from courses where code = 'M1' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 14900, true from p;
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 19900, true from p;
 insert into product_course_access select p.id, c.id from products p, courses c where p.slug = 'module-machine-learning' and c.code = 'M1';
 with p as (insert into products (slug, kind, title, course_id, access_months, active) select 'module-deep-learning', 'course', 'M2 — Deep Learning', id, 12, false from courses where code = 'M2' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 14900, true from p;
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 19900, true from p;
 insert into product_course_access select p.id, c.id from products p, courses c where p.slug = 'module-deep-learning' and c.code = 'M2';
 with p as (insert into products (slug, kind, title, course_id, access_months, active) select 'module-ia-generative', 'course', 'M3 — IA générative', id, 12, false from courses where code = 'M3' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 14900, true from p;
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 19900, true from p;
 insert into product_course_access select p.id, c.id from products p, courses c where p.slug = 'module-ia-generative' and c.code = 'M3';
 with p as (insert into products (slug, kind, title, course_id, access_months, active) select 'module-prompt-engineering', 'course', 'M4 — Prompt Engineering', id, 12, false from courses where code = 'M4' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 14900, true from p;
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 19900, true from p;
 insert into product_course_access select p.id, c.id from products p, courses c where p.slug = 'module-prompt-engineering' and c.code = 'M4';
 with p as (insert into products (slug, kind, title, course_id, access_months, active) select 'module-context-engineering', 'course', 'M5 — Context Engineering', id, 12, false from courses where code = 'M5' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 14900, true from p;
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 19900, true from p;
 insert into product_course_access select p.id, c.id from products p, courses c where p.slug = 'module-context-engineering' and c.code = 'M5';
 with p as (insert into products (slug, kind, title, course_id, access_months, active) select 'module-vibe-coding', 'course', 'M6 — Vibe Coding', id, 12, false from courses where code = 'M6' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 14900, true from p;
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 29900, true from p;
 insert into product_course_access select p.id, c.id from products p, courses c where p.slug = 'module-vibe-coding' and c.code = 'M6';
 with p as (insert into products (slug, kind, title, course_id, access_months, active) select 'module-bmad-framework', 'course', 'M7 — BMAD Framework', id, 12, false from courses where code = 'M7' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 14900, true from p;
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 19900, true from p;
 insert into product_course_access select p.id, c.id from products p, courses c where p.slug = 'module-bmad-framework' and c.code = 'M7';
 with p as (insert into products (slug, kind, title, course_id, access_months, active) select 'module-ai-ux', 'course', 'M14 — AI UX & Interaction Humain-IA', id, 12, false from courses where code = 'M14' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 14900, true from p;
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 19900, true from p;
 insert into product_course_access select p.id, c.id from products p, courses c where p.slug = 'module-ai-ux' and c.code = 'M14';
 with p as (insert into products (slug, kind, title, course_id, access_months, active) select 'module-ai-powered-discovery', 'course', 'M18 — AI-Powered Discovery', id, 12, false from courses where code = 'M18' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 14900, true from p;
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 19900, true from p;
 insert into product_course_access select p.id, c.id from products p, courses c where p.slug = 'module-ai-powered-discovery' and c.code = 'M18';
 with p as (insert into products (slug, kind, title, course_id, access_months, active) select 'module-ai-product-strategy', 'course', 'M8 — AI Product Strategy', id, 12, false from courses where code = 'M8' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 14900, true from p;
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 19900, true from p;
 insert into product_course_access select p.id, c.id from products p, courses c where p.slug = 'module-ai-product-strategy' and c.code = 'M8';
 with p as (insert into products (slug, kind, title, course_id, access_months, active) select 'module-ai-product-delivery', 'course', 'M9 — AI Product Delivery', id, 12, false from courses where code = 'M9' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 14900, true from p;
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 19900, true from p;
 insert into product_course_access select p.id, c.id from products p, courses c where p.slug = 'module-ai-product-delivery' and c.code = 'M9';
 with p as (insert into products (slug, kind, title, course_id, access_months, active) select 'module-responsible-ai', 'course', 'M10 — Responsible AI', id, 12, false from courses where code = 'M10' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 14900, true from p;
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 19900, true from p;
 insert into product_course_access select p.id, c.id from products p, courses c where p.slug = 'module-responsible-ai' and c.code = 'M10';
 with p as (insert into products (slug, kind, title, course_id, access_months, active) select 'module-ai-economics-finops', 'course', 'M15 — AI Economics & FinOps', id, 12, false from courses where code = 'M15' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 14900, true from p;
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 19900, true from p;
 insert into product_course_access select p.id, c.id from products p, courses c where p.slug = 'module-ai-economics-finops' and c.code = 'M15';
 with p as (insert into products (slug, kind, title, course_id, access_months, active) select 'module-ai-adoption-change', 'course', 'M16 — AI Adoption & Change Management', id, 12, false from courses where code = 'M16' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 14900, true from p;
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 19900, true from p;
 insert into product_course_access select p.id, c.id from products p, courses c where p.slug = 'module-ai-adoption-change' and c.code = 'M16';
 with p as (insert into products (slug, kind, title, course_id, access_months, active) select 'module-rag', 'course', 'M11 — Retrieval-Augmented Generation', id, 12, false from courses where code = 'M11' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 14900, true from p;
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 29900, true from p;
 insert into product_course_access select p.id, c.id from products p, courses c where p.slug = 'module-rag' and c.code = 'M11';
 with p as (insert into products (slug, kind, title, course_id, access_months, active) select 'module-agentic-ai', 'course', 'M12 — Agentic AI', id, 12, false from courses where code = 'M12' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 14900, true from p;
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 29900, true from p;
 insert into product_course_access select p.id, c.id from products p, courses c where p.slug = 'module-agentic-ai' and c.code = 'M12';
 with p as (insert into products (slug, kind, title, course_id, access_months, active) select 'module-llm-safety-security', 'course', 'M13 — LLM Safety & Security', id, 12, false from courses where code = 'M13' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 14900, true from p;
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 19900, true from p;
 insert into product_course_access select p.id, c.id from products p, courses c where p.slug = 'module-llm-safety-security' and c.code = 'M13';
 with p as (insert into products (slug, kind, title, course_id, access_months, active) select 'module-ai-evaluation-observability', 'course', 'M17 — AI Evaluation & Observability', id, 12, false from courses where code = 'M17' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 14900, true from p;
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 29900, true from p;
 insert into product_course_access select p.id, c.id from products p, courses c where p.slug = 'module-ai-evaluation-observability' and c.code = 'M17';
-with p as (insert into products (slug, kind, title, path_id, access_months, active) select 'product-manager-augmente', 'path'::product_kind, 'Product Manager Augmenté', id, 18, false from learning_paths where slug = 'product-manager-augmente' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 54900, true from p;
+with p as (insert into products (slug, kind, title, path_id, access_months, note, active) select 'product-manager-augmente', 'path'::product_kind, 'Product Manager Augmenté', id, 18, '9 modules', false from learning_paths where slug = 'product-manager-augmente' returning id)
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 99000, true from p;
 insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M3';
 insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M4';
 insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M5';
@@ -151,8 +151,8 @@ insert into product_course_access select pr.id, c.id from products pr, courses c
 insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M14';
 insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M16';
 insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M18';
-with p as (insert into products (slug, kind, title, path_id, access_months, active) select 'ai-product-manager', 'path'::product_kind, 'AI Product Manager', id, 18, false from learning_paths where slug = 'ai-product-manager' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 74900, true from p;
+with p as (insert into products (slug, kind, title, path_id, access_months, note, active) select 'ai-product-manager', 'path'::product_kind, 'AI Product Manager', id, 18, '13 modules', false from learning_paths where slug = 'ai-product-manager' returning id)
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 149000, true from p;
 insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M1';
 insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M2';
 insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M3';
@@ -166,8 +166,8 @@ insert into product_course_access select pr.id, c.id from products pr, courses c
 insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M16';
 insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M17';
 insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M18';
-with p as (insert into products (slug, kind, title, path_id, access_months, active) select 'ai-mastery', 'bundle'::product_kind, 'AI Mastery', id, 18, false from learning_paths where slug = 'ai-mastery' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 99000, true from p;
+with p as (insert into products (slug, kind, title, path_id, access_months, note, active) select 'ai-mastery', 'bundle'::product_kind, 'AI Mastery', id, 18, '18 modules', false from learning_paths where slug = 'ai-mastery' returning id)
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 199000, true from p;
 insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M1';
 insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M2';
 insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M3';
@@ -186,13 +186,33 @@ insert into product_course_access select pr.id, c.id from products pr, courses c
 insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M12';
 insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M13';
 insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M17';
-with p as (insert into products (slug, kind, title, seats, active) values ('team-5', 'enterprise_pack', 'Team 5', 5, false) returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 349000, false from p;
-with p as (insert into products (slug, kind, title, seats, active) values ('team-20', 'enterprise_pack', 'Team 20', 20, false) returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 1190000, false from p;
-with p as (insert into products (slug, kind, title, seats, active) values ('formation-sur-mesure', 'enterprise_pack', 'Formation entreprise sur mesure', null, false) returning id)
+with p as (insert into products (slug, kind, title, path_id, access_months, note, active) select 'ai-mastery-mentored', 'bundle'::product_kind, 'AI Mastery Mentored', id, 18, '18 modules + accompagnement · ouverture prochaine', false from learning_paths where slug = 'ai-mastery' returning id)
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 299000, true from p;
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery-mentored' and c.code = 'M1';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery-mentored' and c.code = 'M2';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery-mentored' and c.code = 'M3';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery-mentored' and c.code = 'M4';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery-mentored' and c.code = 'M5';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery-mentored' and c.code = 'M6';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery-mentored' and c.code = 'M7';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery-mentored' and c.code = 'M14';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery-mentored' and c.code = 'M18';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery-mentored' and c.code = 'M8';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery-mentored' and c.code = 'M9';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery-mentored' and c.code = 'M10';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery-mentored' and c.code = 'M15';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery-mentored' and c.code = 'M16';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery-mentored' and c.code = 'M11';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery-mentored' and c.code = 'M12';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery-mentored' and c.code = 'M13';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery-mentored' and c.code = 'M17';
+with p as (insert into products (slug, kind, title, seats, access_months, note, price_from, active) values ('team-5', 'enterprise_pack', 'Team 5', 5, 12, '5 licences AI Mastery · accès 12 mois', false, false) returning id)
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 750000, false from p;
+with p as (insert into products (slug, kind, title, seats, access_months, note, price_from, active) values ('team-20', 'enterprise_pack', 'Team 20', 20, 12, '20 licences AI Mastery · accès 12 mois', false, false) returning id)
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 2400000, false from p;
+with p as (insert into products (slug, kind, title, seats, access_months, note, price_from, active) values ('private-workshop', 'enterprise_pack', 'Private Workshop', null, null, 'De 2 500 à 3 500 € HT par journée de formation privée', true, false) returning id)
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 250000, false from p;
+with p as (insert into products (slug, kind, title, seats, access_months, note, price_from, active) values ('enterprise-custom', 'enterprise_pack', 'Enterprise Custom', null, null, 'Programme personnalisé, sur devis', false, false) returning id)
 insert into prices (product_id, amount_cents, tax_inclusive) select id, null, false from p;
-with p as (insert into products (slug, kind, title, seats, active) values ('ateliers-prives', 'enterprise_pack', 'Ateliers privés', null, false) returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 150000, false from p;
 
 insert into system_settings (key, value) values ('legal_review_completed', 'false'::jsonb), ('live_checkout_enabled', 'false'::jsonb);

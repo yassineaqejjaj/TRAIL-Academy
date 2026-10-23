@@ -156,6 +156,8 @@ create table products (
   path_id uuid references learning_paths(id),
   access_months smallint check (access_months > 0),
   seats smallint check (seats > 0),
+  note text,                                 -- display detail, e.g. "5 licences AI Mastery"
+  price_from boolean not null default false, -- show "à partir de" before the price
   active boolean not null default true,
   stripe_product_id text unique,
   created_at timestamptz not null default now(),

@@ -19,7 +19,7 @@ export async function getCatalog(): Promise<Catalog> {
       db.from("course_prerequisites").select("course_id, prerequisite_id"),
       db.from("learning_paths").select("id, slug, title, tagline, audience, is_bundle, access_months"),
       db.from("learning_path_courses").select("path_id, course_id, position"),
-      db.from("products").select("slug, kind, title, active, access_months, seats, course_id, prices(amount_cents, tax_inclusive, active)"),
+      db.from("products").select("slug, kind, title, note, price_from, active, access_months, seats, course_id, prices(amount_cents, tax_inclusive, active)"),
     ]);
     const failed = [phases, courses, prerequisites, paths, pathCourses, products].find((r) => r.error);
     if (failed?.error) throw failed.error;

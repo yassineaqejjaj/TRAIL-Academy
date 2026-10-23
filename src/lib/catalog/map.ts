@@ -6,7 +6,7 @@ export interface CatalogRows {
   prerequisites: { course_id: string; prerequisite_id: string }[];
   paths: { id: string; slug: string; title: string; tagline: string | null; audience: string | null; is_bundle: boolean; access_months: number }[];
   pathCourses: { path_id: string; course_id: string; position: number }[];
-  products: { slug: string; kind: "course" | "path" | "bundle" | "enterprise_pack"; title: string; active: boolean; access_months: number | null; seats: number | null; course_id: string | null; prices: { amount_cents: number | null; tax_inclusive: boolean; active: boolean }[] }[];
+  products: { note?: string | null; price_from?: boolean; slug: string; kind: "course" | "path" | "bundle" | "enterprise_pack"; title: string; active: boolean; access_months: number | null; seats: number | null; course_id: string | null; prices: { amount_cents: number | null; tax_inclusive: boolean; active: boolean }[] }[];
 }
 
 const kindMap = { course: "course", path: "path", bundle: "bundle", enterprise_pack: "enterprise" } as const;
@@ -39,14 +39,19 @@ export function mapCatalog(rows: CatalogRows): Catalog {
   }
 
   const offers: Offer[] = [];
+  // Module offers are derived from what the course products actually cost: cheapest = Standard, dearest = Avancé.
   const modulePrices = Object.values(coursePrices);
-  if (modulePrices.length) offers.push({ slug: "module-individuel", kind: "course", title: "Module individuel", amountCents: Math.min(...modulePrices), taxMode: "ttc", accessMonths: 12 });
+  if (modulePrices.length) {
+    const min = Math.min(...modulePrices), max = Math.max(...modulePrices);
+    offers.push({ slug: "module-standard", kind: "course", title: "Module Standard", amountCents: min, taxMode: "ttc", accessMonths: 12 });
+    if (max > min) offers.push({ slug: "module-avance", kind: "course", title: "Module Avancé", amountCents: max, taxMode: "ttc", accessMonths: 12 });
+  }
   for (const p of rows.products) {
     if (p.kind === "course") continue;
     const price = activePrice(p);
     offers.push({
       slug: p.slug, kind: kindMap[p.kind], title: p.title, amountCents: price?.amount_cents ?? null, taxMode: price?.tax_inclusive === false ? "ht" : "ttc",
-      accessMonths: p.access_months, note: p.seats ? `${p.seats} licences` : undefined,
+      accessMonths: p.access_months, note: p.note ?? (p.seats ? `${p.seats} licences` : undefined), priceFrom: p.price_from || undefined,
     });
   }
   return { phases, courses, learningPaths, offers, coursePrices };

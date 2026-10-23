@@ -47,7 +47,10 @@
 - [ ] **Run everything against a real Supabase project** (admin screens, uploads, signed downloads)
 - [ ] Remaining screens not individually matched to the design (paths, pricing, enterprise, advisor result, auth, legal, checkout pages, quiz, assignment, attestation, admin editors)
 - [ ] Enterprise admin, advisor-rules editor, settings/compliance screen, direct video upload, free-text answer review queue, account deletion/export workflows, analytics + consent banner
-- [ ] Decide copy/prices where the design differs from the brief (see PRODUCT.md)
+- [x] Prices aligned with the supplied price grid (Standard/Avancé, paths, Mentored, Team packs, workshop)
+- [ ] Founder/launch pricing with start and end dates (currently manual via admin)
+- [ ] Define what AI Mastery Mentored delivers (coaching) before opening it; upgrade path from AI Mastery
+- [ ] Decide the hero title (brief vs design; editable in CMS)
 
 ## Phase E — enterprise (not started) · Phase F — hardening (not started)
 

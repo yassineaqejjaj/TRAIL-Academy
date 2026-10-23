@@ -52,6 +52,8 @@ export interface Offer {
   taxMode: "ttc" | "ht";
   accessMonths: number | null;
   note?: string;
+  /** Show "à partir de" before the amount. */
+  priceFrom?: boolean;
 }
 
 /** Everything the public site needs, from the database or from the static seed data. */

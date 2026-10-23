@@ -74,6 +74,9 @@ export async function setPrice(productId: string, fd: FormData) {
   if (raw !== "" && cents === null) flash("/admin/produits", "error", "Montant invalide (ex. 149 ou 149,50).");
   const { error } = await db.rpc("set_product_price", { p_product: productId, p_amount_cents: cents, p_tax_inclusive: fd.get("tax") !== "ht" });
   if (error) flash("/admin/produits", "error", dbMessage(error));
+  // Display details live on the product, not the price, so they survive price changes.
+  const note = String(fd.get("note") ?? "").trim().slice(0, 200);
+  await db.from("products").update({ note: note || null, price_from: fd.get("priceFrom") === "on" }).eq("id", productId);
   revalidatePublic();
   flash("/admin/produits", "ok", "Prix enregistré (l'historique est conservé ; les commandes passées ne changent pas).");
 }

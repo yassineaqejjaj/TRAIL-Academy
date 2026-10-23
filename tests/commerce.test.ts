@@ -59,9 +59,9 @@ describe("checkout order creation rules", () => {
   });
   it("refuses unknown products, quotations and enterprise packs", async () => {
     await expect(create(U1, "nope")).rejects.toThrow(/product_unavailable/);
-    await db.exec(`update products set active = true where slug in ('team-5', 'formation-sur-mesure')`);
+    await db.exec(`update products set active = true where slug in ('team-5', 'enterprise-custom')`);
     await expect(create(U1, "team-5")).rejects.toThrow(/not_purchasable_online/);
-    await expect(create(U1, "formation-sur-mesure")).rejects.toThrow(/not_purchasable_online/);
+    await expect(create(U1, "enterprise-custom")).rejects.toThrow(/not_purchasable_online/);
   });
   it("is not callable by learners", async () => {
     await expect(asUser(U1, () => db.query(`select create_checkout_order('${U1}', 'module-prompt-engineering')`))).rejects.toThrow();
@@ -69,9 +69,9 @@ describe("checkout order creation rules", () => {
   it("creates a pending order with a price snapshot once published", async () => {
     await db.exec(`update courses set status = 'published' where code = 'M4'`);
     const o = await newOrder(U1, "module-prompt-engineering");
-    expect(o.amount).toBe(14900);
+    expect(o.amount).toBe(19900); // M4 is a Standard module
     expect(await orderStatus(o.orderId)).toBe("pending");
-    expect((await one<{ access_months: number; unit_amount_cents: number }>(`select * from order_items where order_id='${o.orderId}'`))).toMatchObject({ access_months: 12, unit_amount_cents: 14900 });
+    expect((await one<{ access_months: number; unit_amount_cents: number }>(`select * from order_items where order_id='${o.orderId}'`))).toMatchObject({ access_months: 12, unit_amount_cents: 19900 });
     expect(await ents(U1)).toBe(0); // creating an order never grants access
   });
 });
@@ -175,6 +175,17 @@ describe("refunds and disputes", () => {
     await db.exec(`update courses set status = 'published' where code in ('M7','M9','M14','M16','M18'); update products set active = true where slug = 'product-manager-augmente'`);
     o = await newOrder(U2, "product-manager-augmente"); // all 9 courses published now (M3,M4,M5,M6 done above)
     await event("checkout.session.completed", completed(o));
+  });
+  it("an Avancé module costs 299 €, and Mentored grants the same 18 modules as AI Mastery", async () => {
+    const adv = await one<{ amount_cents: number }>(`select pr.amount_cents from prices pr join products p on p.id = pr.product_id join courses c on c.id = p.course_id where c.code = 'M11' and pr.active`);
+    expect(adv.amount_cents).toBe(29900);
+    const n = (slug: string) => count(`select 1 from product_course_access a join products p on p.id = a.product_id where p.slug = '${slug}'`);
+    expect(await n("ai-mastery-mentored")).toBe(18);
+    expect(await n("ai-mastery")).toBe(18);
+    expect(await count(`select 1 from products where slug = 'ai-mastery-mentored' and active`)).toBe(0); // closed until the coaching is defined
+  });
+  it("team packs are 12-month, seat-based and not sold online", async () => {
+    expect(await one(`select seats, access_months from products where slug = 'team-20'`)).toMatchObject({ seats: 20, access_months: 12 });
   });
   it("a path purchase grants every included course once, with 18 months of access", async () => {
     expect(await count(`select 1 from entitlements where order_item_id = (select id from order_items where order_id='${o.orderId}')`)).toBeGreaterThanOrEqual(1);

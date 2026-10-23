@@ -13,7 +13,7 @@ const kindLabel = { course: "Module", path: "Parcours", bundle: "Accès complet"
 export default async function AdminProducts({ searchParams }: { searchParams: Promise<{ ok?: string; error?: string }> }) {
   const sp = await searchParams;
   const { db } = await adminDb();
-  const { data: products } = await db.from("products").select("id, slug, kind, title, active, prices(amount_cents, tax_inclusive, active, created_at)").order("kind").order("title");
+  const { data: products } = await db.from("products").select("id, slug, kind, title, active, note, price_from, prices(amount_cents, tax_inclusive, active, created_at)").order("kind").order("title");
 
   return (
     <>
@@ -29,7 +29,7 @@ export default async function AdminProducts({ searchParams }: { searchParams: Pr
             <tr key={p.id} className="align-top">
               <td className="p-3 font-medium">{p.title}</td><td className="p-3">{kindLabel[p.kind as keyof typeof kindLabel]}</td>
               <td className="p-3">{price?.amount_cents == null ? "Sur devis" : <>{formatEuro(price.amount_cents)} <span className="text-muted">{price.tax_inclusive ? "TTC" : "HT"}</span></>}</td>
-              <td className="p-3"><form action={setPrice.bind(null, p.id)} className="flex flex-wrap gap-2"><Input name="amount" aria-label={`Nouveau prix ${p.title}`} placeholder={online ? "149" : "vide = sur devis"} className="!mt-0 w-28" /><Select name="tax" defaultValue={price?.tax_inclusive === false ? "ht" : "ttc"} aria-label="Taxes" className="!mt-0 w-24"><option value="ttc">TTC</option><option value="ht">HT</option></Select><Button type="submit" variant="secondary" className="px-3 py-1.5">Changer</Button></form></td>
+              <td className="p-3"><form action={setPrice.bind(null, p.id)} className="flex flex-wrap gap-2"><Input name="amount" aria-label={`Nouveau prix ${p.title}`} placeholder={online ? "149" : "vide = sur devis"} className="!mt-0 w-28" /><Select name="tax" defaultValue={price?.tax_inclusive === false ? "ht" : "ttc"} aria-label="Taxes" className="!mt-0 w-24"><option value="ttc">TTC</option><option value="ht">HT</option></Select><Input name="note" defaultValue={p.note ?? ""} aria-label={`Précision d'affichage ${p.title}`} placeholder="Précision affichée (facultatif)" className="!mt-0 w-64" /><label className="flex items-center gap-1 text-xs"><input type="checkbox" name="priceFrom" defaultChecked={p.price_from} /> « dès »</label><Button type="submit" variant="secondary" className="px-3 py-1.5">Enregistrer</Button></form></td>
               <td className="p-3">{online ? (<form action={setProductActive.bind(null, p.id, !p.active)} className="flex items-center gap-2"><Badge tone={p.active ? "accent" : "neutral"}>{p.active ? "Ouverte" : "Fermée"}</Badge><Button type="submit" variant="ghost" className="px-2 py-1">{p.active ? "Fermer" : "Ouvrir à l'achat"}</Button></form>) : <Badge>Hors ligne (devis)</Badge>}</td>
             </tr>);
         })}

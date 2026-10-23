@@ -1,6 +1,6 @@
 // Generates supabase/seed.sql from the structured catalog so TS data and SQL never drift.
 import { writeFileSync } from "node:fs";
-import { courses, learningPaths, offers, phases } from "../src/lib/catalog/data";
+import { advancedModuleCodes, courses, learningPaths, offers, phases } from "../src/lib/catalog/data";
 
 const q = (s: string) => `'${s.replace(/'/g, "''")}'`;
 const arr = (a: string[]) => (a.length ? `array[${a.map(q).join(", ")}]::text[]` : "'{}'::text[]");
@@ -27,23 +27,28 @@ for (const p of learningPaths) {
   );
 }
 out.push("");
-// Products: one per module + paths/bundle + enterprise packs. Prices are editable in admin; Stripe stays the payment source of truth.
-const modulePrice = offers.find((o) => o.slug === "module-individuel")!;
+// Products: one per module + paths/bundles + enterprise packs. Prices are editable in admin; Stripe stays the payment source of truth.
+// Everything starts closed (active = false): an offer opens only once its modules are published and priced.
+const offer = (slug: string) => offers.find((o) => o.slug === slug)!;
 for (const c of courses) {
-  out.push(`with p as (insert into products (slug, kind, title, course_id, access_months, active) select ${q("module-" + c.slug)}, 'course', ${q(c.code + " — " + c.title)}, id, ${modulePrice.accessMonths}, ${c.status === "published"} from courses where code = ${q(c.code)} returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, ${modulePrice.amountCents}, true from p;`);
+  const o = offer(advancedModuleCodes.includes(c.code) ? "module-avance" : "module-standard");
+  out.push(`with p as (insert into products (slug, kind, title, course_id, access_months, active) select ${q("module-" + c.slug)}, 'course', ${q(c.code + " — " + c.title)}, id, ${o.accessMonths}, false from courses where code = ${q(c.code)} returning id)
+insert into prices (product_id, amount_cents, tax_inclusive) select id, ${o.amountCents}, true from p;`);
   out.push(`insert into product_course_access select p.id, c.id from products p, courses c where p.slug = ${q("module-" + c.slug)} and c.code = ${q(c.code)};`);
 }
-for (const p of learningPaths) {
-  const o = offers.find((x) => x.slug === p.slug)!;
-  out.push(`with p as (insert into products (slug, kind, title, path_id, access_months, active) select ${q(p.slug)}, ${q(p.kind)}::product_kind, ${q(p.title)}, id, ${p.accessMonths}, false from learning_paths where slug = ${q(p.slug)} returning id)
+const sellable = [...learningPaths.map((p) => ({ slug: p.slug, pathSlug: p.slug, kind: p.kind, title: p.title, months: p.accessMonths, codes: p.courseCodes, note: offer(p.slug).note })),
+  // AI Mastery Mentored = the same 18 modules as AI Mastery plus coaching delivered outside the platform.
+  { slug: "ai-mastery-mentored", pathSlug: "ai-mastery", kind: "bundle" as const, title: offer("ai-mastery-mentored").title, months: 18, codes: courses.map((c) => c.code), note: offer("ai-mastery-mentored").note }];
+for (const p of sellable) {
+  const o = offer(p.slug);
+  out.push(`with p as (insert into products (slug, kind, title, path_id, access_months, note, active) select ${q(p.slug)}, ${q(p.kind)}::product_kind, ${q(p.title)}, id, ${p.months}, ${p.note ? q(p.note) : "null"}, false from learning_paths where slug = ${q(p.pathSlug)} returning id)
 insert into prices (product_id, amount_cents, tax_inclusive) select id, ${o.amountCents}, true from p;`);
-  for (const code of p.courseCodes)
+  for (const code of p.codes)
     out.push(`insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = ${q(p.slug)} and c.code = ${q(code)};`);
 }
 for (const o of offers.filter((x) => x.kind === "enterprise")) {
   const seats = o.slug === "team-5" ? 5 : o.slug === "team-20" ? 20 : null;
-  out.push(`with p as (insert into products (slug, kind, title, seats, active) values (${q(o.slug)}, 'enterprise_pack', ${q(o.title)}, ${seats ?? "null"}, false) returning id)
+  out.push(`with p as (insert into products (slug, kind, title, seats, access_months, note, price_from, active) values (${q(o.slug)}, 'enterprise_pack', ${q(o.title)}, ${seats ?? "null"}, ${o.accessMonths ?? "null"}, ${o.note ? q(o.note) : "null"}, ${Boolean(o.priceFrom)}, false) returning id)
 insert into prices (product_id, amount_cents, tax_inclusive) select id, ${o.amountCents ?? "null"}, false from p;`);
 }
 out.push("", "insert into system_settings (key, value) values ('legal_review_completed', 'false'::jsonb), ('live_checkout_enabled', 'false'::jsonb);");

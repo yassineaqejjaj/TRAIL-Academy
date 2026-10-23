@@ -26,7 +26,7 @@ export default async function EnterprisePage() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {packs.map((o) => (
             <Card key={o.slug}><p className="text-sm text-muted">{o.title}</p>
-              <p className="mt-2 text-2xl font-semibold">{o.amountCents == null ? "Sur devis" : <>{formatEuro(o.amountCents)}<span className="ml-1 text-xs font-normal text-muted">HT</span></>}</p>
+              <p className="mt-2 text-2xl font-semibold">{o.amountCents == null ? "Sur devis" : <>{o.priceFrom && <span className="mr-1 text-sm font-normal text-muted">dès</span>}{formatEuro(o.amountCents)}<span className="ml-1 text-xs font-normal text-muted">HT</span></>}</p>
               {o.note && <p className="mt-1 text-sm text-muted">{o.note}</p>}</Card>
           ))}
         </div>
