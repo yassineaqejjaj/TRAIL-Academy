@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 // Applies the saved theme before first paint to avoid a flash. Static string, no user input.
 const themeInit = `try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className={`${inter.variable} ${sora.variable} antialiased`} suppressHydrationWarning>
       <head>
