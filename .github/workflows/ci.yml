@@ -11,6 +11,7 @@ jobs:
   quality:
     name: Types, lint, unit + database tests, build
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -29,6 +30,7 @@ jobs:
   e2e:
     name: End-to-end (Playwright + production build)
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     needs: quality
     env:
       DATABASE_URL: postgres://postgres:postgres@127.0.0.1:54329/postgres
