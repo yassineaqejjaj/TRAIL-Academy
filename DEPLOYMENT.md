@@ -59,6 +59,8 @@ S'inscrire sur le site, confirmer l'e-mail, puis : `DATABASE_URL=<url publique> 
 
 ## 5. Stripe (mode test d'abord)
 
+Guide complet : [`docs/STRIPE.md`](docs/STRIPE.md). La commande `npm run stripe:setup` enregistre le webhook et le portail client automatiquement.
+
 Webhook vers `https://votre-domaine/api/stripe/webhook` avec : `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `checkout.session.async_payment_failed`, `checkout.session.expired`, `payment_intent.payment_failed`, `charge.refunded`, `charge.dispute.created`, `charge.dispute.closed`. Copier le secret de signature dans `STRIPE_WEBHOOK_SECRET`. Localement : `stripe listen --forward-to localhost:3000/api/stripe/webhook`. Tester avec les cartes de test (succès, 3-D Secure, refus), les remboursements et litiges depuis le tableau de bord, et le « renvoi » d'un événement pour confirmer l'idempotence. Les prix sont transmis en `price_data` depuis la base : aucune synchronisation de catalogue Stripe n'est nécessaire.
 
 ## 6. Vidéo

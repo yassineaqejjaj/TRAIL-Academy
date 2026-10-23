@@ -33,13 +33,14 @@ export async function startCheckout(formData: FormData) {
   }
   const order = o!;
 
+  // A returning customer keeps one Stripe customer (one history, one set of saved details); a first purchase creates it.
+  const known = await asUser(user.id, (q) => q.one<{ stripe_customer_id: string | null }>("select stripe_customer_id from profiles where id = $1", [user.id]));
   let url: string | null = null;
   try {
     const session = await getStripe().checkout.sessions.create({
       mode: "payment",
       client_reference_id: order.order_id,
-      customer_email: user.email,
-      customer_creation: "always",
+      ...(known?.stripe_customer_id ? { customer: known.stripe_customer_id } : { customer_email: user.email, customer_creation: "always" as const }),
       line_items: [{ quantity: 1, price_data: { currency: order.currency.toLowerCase(), unit_amount: order.amount_cents, tax_behavior: order.tax_inclusive ? "inclusive" : "exclusive", product_data: { name: order.title } } }],
       allow_promotion_codes: true,
       invoice_creation: { enabled: true },

@@ -2,6 +2,8 @@ import "server-only";
 import { asService } from "@/lib/db";
 import { EXPECTED_MIGRATION, type Check } from "@/lib/readiness";
 import { storageHealth } from "@/lib/storage";
+import { stripeMode } from "@/lib/stripe/guard";
+import { checkStripe, type StripeLike } from "@/lib/stripe/setup";
 
 async function timed<T>(fn: () => Promise<T>, ms = 4000): Promise<T> {
   return await Promise.race([fn(), new Promise<never>((_, rej) => setTimeout(() => rej(new Error("timeout")), ms))]);
@@ -38,6 +40,13 @@ export async function liveChecks(): Promise<Check[]> {
   else {
     const ok = await timed(async () => (await fetch(new URL("/healthz", gw), { cache: "no-store" })).ok).catch(() => false);
     add("gateway", "Passerelle de streaming", ok ? "ok" : "fail", ok ? "/healthz répond." : "/healthz ne répond pas.");
+  }
+
+  if (stripeMode(process.env).ok) {
+    try {
+      const { getStripe } = await import("@/lib/stripe/client");
+      for (const c of await timed(() => checkStripe(getStripe() as unknown as StripeLike, process.env.NEXT_PUBLIC_SITE_URL ?? ""), 8000)) add(c.id, c.label, c.status, c.detail);
+    } catch { add("stripe_api", "API Stripe", "fail", "Vérification impossible."); }
   }
   return out;
 }

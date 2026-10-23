@@ -1,5 +1,11 @@
 import type Stripe from "stripe";
 
+/** The events the webhook acts on; the endpoint registered at Stripe must subscribe to exactly these. */
+export const WEBHOOK_EVENTS = [
+  "checkout.session.completed", "checkout.session.async_payment_succeeded", "checkout.session.async_payment_failed", "checkout.session.expired",
+  "payment_intent.payment_failed", "charge.refunded", "charge.dispute.created", "charge.dispute.closed",
+] as const;
+
 export interface NormalizedEvent { type: string; data: Record<string, unknown> }
 
 const idOf = (v: unknown): string | null => (typeof v === "string" ? v : v && typeof v === "object" && "id" in v ? String((v as { id: unknown }).id) : null);

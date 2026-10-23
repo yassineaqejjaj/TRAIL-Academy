@@ -17,7 +17,7 @@ Une plateforme de formation professionnelle à l'intelligence artificielle, con�
 
 ![Accueil de TRAIL Academy](docs/screenshots/01-accueil.png)
 
-> **État honnête du projet.** Les phases A à D (fondations, apprentissage, commerce, administration) sont construites et testées : 368 tests automatisés et 20 parcours de bout en bout dans un vrai navigateur, contre PostgreSQL, sur un build de production, le tout vérifié aussi par la CI GitHub. Les phases E (entreprises) et F (durcissement) ne sont pas commencées. **Rien n'a encore tourné contre Stripe, un stockage S3, un serveur SMTP ou un déploiement Vercel/Railway réels** : voir [ce qui est vérifié et ce qui ne l'est pas](#9-ce-qui-est-vérifié-et-ce-qui-ne-lest-pas). Les paiements réels sont bloqués par conception tant qu'une revue juridique n'a pas eu lieu.
+> **État honnête du projet.** Les phases A à D (fondations, apprentissage, commerce, administration) sont construites et testées : 375 tests automatisés et 20 parcours de bout en bout dans un vrai navigateur, contre PostgreSQL, sur un build de production, le tout vérifié aussi par la CI GitHub. Les phases E (entreprises) et F (durcissement) ne sont pas commencées. **Rien n'a encore tourné contre Stripe, un stockage S3, un serveur SMTP ou un déploiement Vercel/Railway réels** : voir [ce qui est vérifié et ce qui ne l'est pas](#9-ce-qui-est-vérifié-et-ce-qui-ne-lest-pas). Les paiements réels sont bloqués par conception tant qu'une revue juridique n'a pas eu lieu.
 
 ## Sommaire
 
@@ -301,7 +301,7 @@ Doublons, rejeux, sessions falsifiées, mauvaise devise, paiements différés ou
 | **Défaut sûr** | Offre fermée tant que non explicitement ouverte ; clés Stripe *live* refusées sans deux drapeaux explicites ; absence de configuration = message clair, jamais une fausse réussite |
 | **Validation aux frontières** | Zod sur chaque formulaire et route ; types MIME **et** extensions vérifiés ; taille plafonnée par le bucket lui-même (POST pré-signé) |
 | **Traçabilité** | Journal d'audit en écriture seule (acteur, avant/après) sur contenu, prix, commandes, paiements, accès ; toute action manuelle sensible exige un motif |
-| **Tests proportionnés au risque** | 368 tests dont migrations + RLS sur PostgreSQL ; **tests par mutation manuelle** des règles critiques (casser la règle doit faire échouer un test) ; 20 parcours de bout en bout |
+| **Tests proportionnés au risque** | 375 tests dont migrations + RLS sur PostgreSQL ; **tests par mutation manuelle** des règles critiques (casser la règle doit faire échouer un test) ; 20 parcours de bout en bout |
 | **Environnements reproductibles** | Migrations versionnées et rejouables (`npm run db:migrate`), seed généré depuis le code, base locale sans Docker (`npm run db:dev`), `docker-compose.yml` production-like |
 | **CI** | `.github/workflows/ci.yml` : types, lint, tests, audit des dépendances, build, puis e2e Playwright sur le build de production |
 | **Dépendances** | 0 vulnérabilité sur les dépendances de production (`npm audit --omit=dev`) ; bibliothèques établies pour l'authentification et le chiffrement, rien de fait maison côté cryptographie |
@@ -372,7 +372,7 @@ docker compose up -d     # PostgreSQL 17, MinIO (S3), Mailpit (boîte mail sur :
 | Commande | Rôle |
 |---|---|
 | `npm run dev` / `build` / `start` | Next.js |
-| `npm test` | 368 tests (unitaires, base de données, intégration) |
+| `npm test` | 375 tests (unitaires, base de données, intégration) |
 | `npm run typecheck` / `lint` | TypeScript / ESLint |
 | `npm run db:dev` | PostgreSQL local embarqué |
 | `npm run db:migrate [-- --seed] [-- --fixture]` | Applique les migrations (rejouable) |
@@ -381,6 +381,7 @@ docker compose up -d     # PostgreSQL 17, MinIO (S3), Mailpit (boîte mail sur :
 | `npx playwright test` | Parcours de bout en bout (`E2E_CHANNEL=chrome` réutilise Chrome installé) |
 | `npm run screenshots` | Régénère `docs/screenshots` depuis l'application qui tourne |
 | `scripts/encode-hls.sh` | Encode une vidéo en HLS adaptatif et l'envoie dans le bucket (manuel ; l'admin passe par `services/video-worker`) |
+| `npm run stripe:setup` | Enregistre le webhook Stripe et le portail client (clé de test d'abord) : voir [`docs/STRIPE.md`](docs/STRIPE.md) |
 | `npm run check:env -- --env-file=<fichier>` | Vérifie la configuration de production (0 = aucun point bloquant) |
 | `scripts/backup.sh` | Sauvegarde logique `pg_dump` (+ copie S3 facultative) |
 
@@ -408,7 +409,7 @@ Toutes les variables sont dans [`.env.example`](.env.example), regroupées par s
 
 | Élément | État |
 |---|---|
-| Schéma, migrations, RLS, règles d'apprentissage, de commerce et d'administration | ✅ 368 tests sur PostgreSQL embarqué ; migrations rejouées de bout en bout sur une base en TCP |
+| Schéma, migrations, RLS, règles d'apprentissage, de commerce et d'administration | ✅ 375 tests sur PostgreSQL embarqué ; migrations rejouées de bout en bout sur une base en TCP |
 | Couche d'accès (rôle par transaction, aucune fuite de privilèges entre requêtes, tables d'auth fermées) | ✅ testée sur une vraie connexion TCP |
 | Authentification : inscription, vérification obligatoire, session HttpOnly, réinitialisation qui révoque les sessions, Argon2id | ✅ testée de bout en bout (bibliothèque + base) |
 | Application complète en navigateur : visiteur, inscription, progression persistante, quiz, livrable, relecture, attestation, publication d'un module, contrôles d'accès | ✅ 20 parcours Playwright dans Chrome, sur build de production |
@@ -420,7 +421,7 @@ Toutes les variables sont dans [`.env.example`](.env.example), regroupées par s
 | **Stripe** (Checkout, portail, factures, taxes, codes promo, remboursements, litiges de bout en bout) | ⚠️ jamais exécuté |
 | **MinIO/S3 réel** (envoi, téléchargement, CORS) et **lecture vidéo HLS** par `hls.js` via la passerelle | ⚠️ jamais exécuté |
 | **SMTP réel**, **Google OAuth**, **déploiement Vercel/Railway**, **`docker-compose.yml`** | ⚠️ jamais exécutés |
-| **CI GitHub Actions** (types, lint, 368 tests, audit, build, puis 20 parcours Playwright sur Chromium/Ubuntu) | ✅ exécutée avec succès sur GitHub (commit `6ac17d7`) |
+| **CI GitHub Actions** (types, lint, 375 tests, audit, build, puis 20 parcours Playwright sur Chromium/Ubuntu) | ✅ exécutée avec succès sur GitHub (commit `6ac17d7`) |
 | Accessibilité (audit automatisé), Lighthouse, Core Web Vitals | ❌ non mesurés |
 
 Détails et protocole : [`TESTING.md`](TESTING.md).

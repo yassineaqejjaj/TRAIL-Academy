@@ -47,7 +47,7 @@ Sans SMTP, personne ne peut confirmer son e-mail, donc **aucun compte ne peut se
 6. **Premier administrateur** : `npm run admin:create` (en pointant `DATABASE_URL` vers la base de production).
 7. **Sauvegardes** : planifier `scripts/backup.sh` (+ copie du bucket avec `mc mirror` vers un autre fournisseur). Faire **un essai de restauration** avant d'en dépendre. Le script n'a été vérifié que sur sa syntaxe.
 
-### C. Paiement
+### C. Paiement (pas à pas dans `docs/STRIPE.md`)
 1. Compte Stripe activé, informations de l'entreprise, TVA / Stripe Tax selon votre cas.
 2. Essai complet **en mode test** : achat avec la carte `4242 4242 4242 4242`, réception du webhook, accès ouvert, facture, remboursement. Rien de cela n'a été exécuté contre Stripe.
 3. Déclarer le webhook `https://<votre-domaine>/api/stripe/webhook` et renseigner `STRIPE_WEBHOOK_SECRET`.

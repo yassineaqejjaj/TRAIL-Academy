@@ -19,6 +19,7 @@
     "screenshots": "tsx --env-file-if-exists=.env.local scripts/capture-screenshots.mts",
     "storage:setup": "tsx scripts/setup-storage.mts",
     "content:load": "tsx scripts/load-content.mts",
+    "stripe:setup": "tsx scripts/stripe-setup.mts",
     "check:env": "tsx scripts/check-env.mts",
     "demo": "tsx --env-file-if-exists=.env.local scripts/demo.mts"
   },
