@@ -12,6 +12,7 @@ export const nav = [
   { href: "/parcours", label: "Parcours" },
   { href: "/tarifs", label: "Tarifs" },
   { href: "/entreprise", label: "Entreprises" },
+  { href: "/sessions", label: "Sessions" },
   { href: "/ressources", label: "Ressources" },
   { href: "/formateur", label: "Formateur" },
 ];

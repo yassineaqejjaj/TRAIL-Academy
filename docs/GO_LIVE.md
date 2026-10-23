@@ -66,6 +66,10 @@ Sans SMTP, personne ne peut confirmer son e-mail, donc **aucun compte ne peut se
 3. Un achat réel de test (module le moins cher) sur votre propre carte, puis remboursement, avant l'ouverture au public.
 4. Audit d'accessibilité manuel (clavier + lecteur d'écran) et Lighthouse sur la page d'accueil et une leçon.
 
+## 2bis. Spécifique aux sessions et au conseiller
+- Sessions : le service Jitsi public est gratuit mais sans garantie ; décidez si vous auto-hébergez. Informez les participants avant tout enregistrement. Les e-mails de confirmation exigent le SMTP.
+- Conseiller : la synthèse par modèle de langage est **désactivée** tant que `ADVISOR_LLM_URL` et `ADVISOR_LLM_MODEL` ne sont pas définis. Si vous l'activez, le texte saisi est envoyé à ce modèle (mentionnez-le dans la politique de confidentialité) et il faut tester la qualité des synthèses : seule l'intégration avec un faux serveur a été testée.
+
 ## 3. Ce qui n'a jamais été exécuté (à dire clairement)
 
 Stripe (test ou live) · PostgreSQL « serveur » (les tests utilisent PGlite) · MinIO/S3 réels (envoi, CORS) · lecture HLS dans un navigateur via la passerelle · SMTP réel · Google OAuth · déploiements Vercel et Railway · `docker-compose.yml` · `scripts/backup.sh` · performance sous charge.

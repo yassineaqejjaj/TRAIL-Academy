@@ -21,8 +21,18 @@ test("visitor browses the catalogue and cannot buy an unpublished module", async
   await expect(page.getByRole("button", { name: "Me prévenir" })).toBeVisible();
 });
 
-test("the advisor recommends a path with reasons", async ({ page }) => {
+test("the advisor understands a free-text description and recommends a path with reasons", async ({ page }) => {
   await page.goto("/conseiller");
+  await page.getByLabel(/Décrivez votre métier/).fill("Je suis UX designer, je débute avec l'IA et je veux concevoir l'expérience utilisateur d'un assistant. J'ai 4h par semaine.");
+  await page.getByRole("button", { name: "Me proposer un parcours" }).click();
+  await expect(page.getByText("Ce que j'ai compris")).toBeVisible();
+  await expect(page.getByText(/Commencez par/)).toBeVisible();
+  await expect(page.getByText("Pourquoi cette recommandation")).toBeVisible();
+  await expect(page.getByText(/M14 · AI UX/).first()).toBeVisible();
+});
+
+test("the six-question advisor still recommends a path with reasons", async ({ page }) => {
+  await page.goto("/conseiller?mode=questionnaire");
   await page.getByRole("button", { name: "Obtenir ma recommandation" }).click();
   await expect(page.getByText("Parcours recommandé")).toBeVisible();
   await expect(page.getByText("Pourquoi ce parcours")).toBeVisible();

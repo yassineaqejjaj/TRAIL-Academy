@@ -5,7 +5,7 @@ import { site } from "@/lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [{ courses }, posts] = await Promise.all([getCatalog(), getPosts()]);
-  const staticPaths = ["", "/formations", "/parcours", "/tarifs", "/entreprise", "/formateur", "/ressources", "/conseiller"];
+  const staticPaths = ["", "/formations", "/parcours", "/tarifs", "/entreprise", "/formateur", "/ressources", "/conseiller", "/sessions"];
   return [
     ...staticPaths.map((p) => ({ url: `${site.url}${p}` })),
     ...courses.map((c) => ({ url: `${site.url}/formations/${c.slug}` })),

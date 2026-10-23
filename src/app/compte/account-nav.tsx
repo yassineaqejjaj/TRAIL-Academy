@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const items = [["/compte", "Mon espace"], ["/formations", "Catalogue"], ["/compte/commandes", "Mes commandes"], ["/compte/donnees", "Mes données"]] as const;
+const items = [["/compte", "Mon espace"], ["/formations", "Catalogue"], ["/compte/commandes", "Mes commandes"], ["/compte/sessions", "Mes sessions"], ["/compte/donnees", "Mes données"]] as const;
 
 export function AccountNav() {
   const pathname = usePathname();

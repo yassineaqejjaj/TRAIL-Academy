@@ -343,3 +343,89 @@ describe("real reviews: private invitations, consent, verification", () => {
     await expect(as(ADMIN, () => db.query(`select admin_approve_review('${id}', 'second time')`))).rejects.toThrow(/not_pending/);
   });
 });
+
+describe("live sessions: calendar, booking, waiting list, private link", () => {
+  const U4 = "00000000-0000-0000-0000-000000000004";
+  const U5 = "00000000-0000-0000-0000-000000000005";
+  let open: string, learners: string, courseId: string;
+  const save = (title: string, startsInHours: number, capacity: number, audience: "open" | "learners", status = "published", course: string | null = null) =>
+    as(ADMIN, () => db.query<{ id: string }>(`select admin_save_session(null, '${title}', 'Atelier de test', ${course ? `'${course}'` : "null"}, (now() at time zone 'Europe/Paris') + interval '${startsInHours} hours', 60, ${capacity}, '${audience}', null, '${status}') as id`)).then((r) => r.rows[0].id);
+  const book = (uid: string, id: string) => as(uid, () => db.query<{ s: string }>(`select book_session('${id}') as s`)).then((r) => r.rows[0].s);
+  const status = async (uid: string, id: string) => (await db.query<{ status: string }>(`select status from session_bookings where session_id = '${id}' and user_id = '${uid}'`)).rows[0]?.status;
+
+  beforeAll(async () => {
+    await addUsers(db, [[U4, "u4@test.local"], [U5, "u5@test.local"]]);
+    courseId = (await db.query<{ id: string }>(`select id from courses where code = 'M3'`)).rows[0].id;
+    open = await save("Atelier ouvert", 48, 2, "open");
+    learners = await save("Atelier du module", 72, 5, "learners", "published", courseId);
+  });
+
+  it("only administrators create sessions; a default private Jitsi room is generated", async () => {
+    await expect(as(U1, () => db.query(`select admin_save_session(null, 'x y z', '', null, now()::timestamp, 60, 5, 'open', null, 'published')`))).rejects.toThrow();
+    const url = (await as(ADMIN, () => db.query<{ u: string }>(`select session_meeting_url('${open}') as u`))).rows[0].u;
+    expect(url).toMatch(/^https:\/\/meet\.jit\.si\/TRAIL-[0-9a-f]{24}$/);
+  });
+  it("hides drafts and the meeting link from the public, and the table never exposes the link", async () => {
+    const draft = await save("Brouillon", 24, 5, "open", "draft");
+    const list = (await as(null, () => db.query<{ l: { id: string }[] }>(`select list_sessions(now(), now() + interval '30 days') as l`))).rows[0].l;
+    expect(list.map((s) => s.id)).toContain(open);
+    expect(list.map((s) => s.id)).not.toContain(draft);
+    expect(JSON.stringify(list)).not.toContain("meet.jit.si");
+    await expect(as(null, () => db.query(`select meeting_url from live_sessions`))).rejects.toThrow();
+    await expect(as(U1, () => db.query(`select meeting_url from live_sessions`))).rejects.toThrow();
+    expect((await as(U1, () => db.query<{ u: string | null }>(`select session_meeting_url('${open}') as u`))).rows[0].u).toBeNull();
+  });
+  it("requires an account, and for a module session an active access to it", async () => {
+    await expect(as(null, () => db.query(`select book_session('${open}')`))).rejects.toThrow();
+    await expect(book(U4, learners)).rejects.toThrow(/access_required/);
+    await db.exec(`insert into entitlements (user_id, course_id, expires_at) values ('${U4}', '${courseId}', now() + interval '1 month')`);
+    expect(await book(U4, learners)).toBe("booked");
+  });
+  it("seats people while there is room, then uses a waiting list, and the link opens only for confirmed bookings", async () => {
+    expect(await book(U1, open)).toBe("booked");
+    expect(await book(U2, open)).toBe("booked");
+    expect(await book(U5, open)).toBe("waitlist");
+    expect(await book(U1, open)).toBe("booked"); // idempotent
+    expect((await as(U1, () => db.query<{ u: string | null }>(`select session_meeting_url('${open}') as u`))).rows[0].u).toMatch(/^https:/);
+    expect((await as(U5, () => db.query<{ u: string | null }>(`select session_meeting_url('${open}') as u`))).rows[0].u).toBeNull();
+    const l = (await as(null, () => db.query<{ l: { id: string; booked: number; waitlist: number }[] }>(`select list_sessions(now(), now() + interval '30 days') as l`))).rows[0].l.find((s) => s.id === open)!;
+    expect([l.booked, l.waitlist]).toEqual([2, 1]);
+  });
+  it("promotes the first person on the waiting list when a seat is freed, and shows people only their own bookings", async () => {
+    const promoted = (await as(U1, () => db.query<{ p: string | null }>(`select cancel_booking('${open}') as p`))).rows[0].p;
+    expect(promoted).toBe(U5);
+    expect(await status(U5, open)).toBe("booked");
+    expect(await status(U1, open)).toBe("canceled");
+    expect(await as(U2, () => count("select 1 from session_bookings"))).toBe(1);
+    expect((await as(U1, () => db.query<{ p: string | null }>(`select cancel_booking('${open}') as p`))).rows[0].p).toBeNull(); // already canceled: nothing happens
+  });
+  it("enlarging the capacity seats the waiting list; canceled and past sessions cannot be booked", async () => {
+    const full = await save("Petit atelier", 30, 1, "open");
+    expect(await book(U1, full)).toBe("booked");
+    expect(await book(U2, full)).toBe("waitlist");
+    await as(ADMIN, () => db.query(`select admin_save_session('${full}', 'Petit atelier', 'Atelier de test', null, (now() at time zone 'Europe/Paris') + interval '30 hours', 60, 2, 'open', null, 'published')`));
+    expect(await status(U2, full)).toBe("booked");
+    await as(ADMIN, () => db.query(`select admin_cancel_session('${full}')`));
+    await expect(book(U5, full)).rejects.toThrow(/session_unavailable/);
+    const past = await save("Passé", -3, 5, "open");
+    await expect(book(U5, past)).rejects.toThrow(/session_started/);
+  });
+  it("lets only administrators see attendees, and refuses to delete a session that has bookings", async () => {
+    await expect(as(U1, () => db.query(`select * from admin_session_attendees('${open}')`))).rejects.toThrow();
+    const names = (await as(ADMIN, () => db.query<{ email: string }>(`select email from admin_session_attendees('${open}')`))).rows.map((r) => r.email);
+    expect(names).toEqual(expect.arrayContaining(["u2@test.local", "u5@test.local"]));
+    await expect(as(ADMIN, () => db.query(`select admin_delete_session('${open}')`))).rejects.toThrow(/has_bookings/);
+  });
+  it("gives contact details only to the service role", async () => {
+    await expect(as(U1, () => db.query(`select * from user_contact('${U5}')`))).rejects.toThrow();
+    await db.exec("set role service_role;");
+    try { expect((await db.query<{ email: string }>(`select email from user_contact('${U5}')`)).rows[0].email).toBe("u5@test.local"); } finally { await db.exec("reset role;"); }
+  });
+  it("includes bookings in the personal data export and removes them on erasure", async () => {
+    const mine = (await as(U2, () => db.query<{ d: { sessions: unknown[] } }>(`select export_my_data() as d`))).rows[0].d;
+    expect(mine.sessions.length).toBeGreaterThan(0);
+    await db.exec("set role service_role;");
+    try { await db.query(`select anonymize_user('${U2}')`); } finally { await db.exec("reset role;"); }
+    expect(await count(`select 1 from session_bookings where user_id = '${U2}'`)).toBe(0);
+  });
+});

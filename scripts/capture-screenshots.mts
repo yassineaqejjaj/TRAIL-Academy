@@ -51,10 +51,15 @@ const grant = (role: keyof typeof emails) => db.query("insert into entitlements 
   await page.goto("/tarifs"); await shot(page, "05-tarifs", { full: true });
   await page.goto("/formateur"); await shot(page, "23-formateur");
   await page.goto("/conseiller");
+  await page.getByLabel(/Décrivez votre métier/).fill("Je suis Product Owner dans une banque, je débute avec l'IA et je veux l'intégrer à mes fonctionnalités. J'ai 3h par semaine.");
+  await page.getByRole("button", { name: "Me proposer un parcours" }).click();
+  await page.getByText("Ce que j'ai compris").waitFor();
+  await shot(page, "06-conseiller");
+  await page.goto("/conseiller?mode=questionnaire");
   await page.getByLabel("Votre rôle actuel").selectOption("product");
   await page.getByRole("button", { name: "Obtenir ma recommandation" }).click();
   await page.getByText("Parcours recommandé").waitFor();
-  await shot(page, "06-conseiller");
+  await shot(page, "06b-questionnaire");
   await page.goto("/connexion"); await shot(page, "07-connexion");
   await c.close();
 }
@@ -87,6 +92,13 @@ await learner.getByText("Livrable envoyé").waitFor();
 await shot(learner, "11-livrable");
 await learner.goto("/compte"); await learner.getByText("Reprendre où vous en étiez").waitFor(); await shot(learner, "08-tableau-de-bord");
 await learner.goto("/compte/donnees"); await shot(learner, "25-compte-donnees");
+// A live session for the demo (the app itself only creates sessions through the administration).
+const sessionId = (await db.query("insert into live_sessions (title, description, course_id, starts_at, duration_minutes, capacity, audience, meeting_url, status) select 'Atelier : écrire un prompt de référence', 'Atelier pratique en direct : nous construisons ensemble un prompt structuré, nous le testons sur vos cas et nous en discutons les limites. Prérequis : avoir parcouru les deux premières leçons du module.', id, date_trunc('day', now() + interval '5 days') + interval '17 hours', 90, 12, 'learners', 'https://meet.jit.si/TRAIL-demo-room', 'published' from courses where code = 'M4' returning id")).rows[0].id;
+await learner.goto("/sessions"); await shot(learner, "27-sessions", { full: true });
+await learner.goto(`/sessions/${sessionId}`);
+await learner.getByRole("button", { name: "Réserver ma place" }).click();
+await learner.getByText("Place réservée").waitFor();
+await shot(learner, "28-session-reservee");
 // dark theme and a phone-sized view of the same screens
 {
   const dark = await ctx({ colorScheme: "dark" }); const p = await dark.newPage();
@@ -132,6 +144,7 @@ const courseId = (await db.query("select id from courses where code = 'M4'")).ro
 await admin.goto(`/admin/cours/${courseId}`); await shot(admin, "14-admin-module");
 await admin.goto(`/admin/cours/${courseId}/contenu`); await shot(admin, "15-admin-contenu");
 await admin.goto("/admin/produits"); await shot(admin, "20-admin-produits");
+await admin.goto("/admin/sessions"); await shot(admin, "29-admin-sessions");
 await admin.goto("/admin/cms"); await shot(admin, "21-admin-cms");
 await admin.goto("/admin/production"); await admin.getByRole("heading", { name: "Vérifications en direct" }).waitFor(); await shot(admin, "24-admin-production", { full: true });
 const lessonId = (await db.query("select id from lessons where course_id = $1 order by position limit 1", [courseId])).rows[0].id;
