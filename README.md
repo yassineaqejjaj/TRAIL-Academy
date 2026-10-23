@@ -17,7 +17,7 @@ Une plateforme de formation professionnelle à l'intelligence artificielle, con�
 
 ![Accueil de TRAIL Academy](docs/screenshots/01-accueil.png)
 
-> **État honnête du projet.** Les phases A à D (fondations, apprentissage, commerce, administration) sont construites et testées : 185 tests automatisés et 9 parcours de bout en bout dans un vrai navigateur, contre PostgreSQL, sur un build de production. Les phases E (entreprises) et F (durcissement) ne sont pas commencées. **Rien n'a encore tourné contre Stripe, un stockage S3, un serveur SMTP ou un déploiement Vercel/Railway réels** : voir [ce qui est vérifié et ce qui ne l'est pas](#9-ce-qui-est-vérifié-et-ce-qui-ne-lest-pas). Les paiements réels sont bloqués par conception tant qu'une revue juridique n'a pas eu lieu.
+> **État honnête du projet.** Les phases A à D (fondations, apprentissage, commerce, administration) sont construites et testées : 185 tests automatisés et 9 parcours de bout en bout dans un vrai navigateur, contre PostgreSQL, sur un build de production, le tout vérifié aussi par la CI GitHub. Les phases E (entreprises) et F (durcissement) ne sont pas commencées. **Rien n'a encore tourné contre Stripe, un stockage S3, un serveur SMTP ou un déploiement Vercel/Railway réels** : voir [ce qui est vérifié et ce qui ne l'est pas](#9-ce-qui-est-vérifié-et-ce-qui-ne-lest-pas). Les paiements réels sont bloqués par conception tant qu'une revue juridique n'a pas eu lieu.
 
 ## Sommaire
 
@@ -396,7 +396,8 @@ Toutes les variables sont dans [`.env.example`](.env.example), regroupées par s
 | **PostgreSQL serveur réel** (Railway, Docker) | ⚠️ non exécuté (PGlite est un vrai PostgreSQL compilé en WASM, mais ce n'est pas un serveur de production) |
 | **Stripe** (Checkout, portail, factures, taxes, codes promo, remboursements, litiges de bout en bout) | ⚠️ jamais exécuté |
 | **MinIO/S3 réel** (envoi, téléchargement, CORS) et **lecture vidéo HLS** par `hls.js` via la passerelle | ⚠️ jamais exécuté |
-| **SMTP réel**, **Google OAuth**, **déploiement Vercel/Railway**, **exécution de la CI sur GitHub**, **`docker-compose.yml`** | ⚠️ jamais exécutés |
+| **SMTP réel**, **Google OAuth**, **déploiement Vercel/Railway**, **`docker-compose.yml`** | ⚠️ jamais exécutés |
+| **CI GitHub Actions** (types, lint, 185 tests, audit, build, puis 9 parcours Playwright sur Chromium/Ubuntu) | ✅ exécutée avec succès sur GitHub (commit `6ac17d7`) |
 | Accessibilité (audit automatisé), Lighthouse, Core Web Vitals | ❌ non mesurés |
 
 Détails et protocole : [`TESTING.md`](TESTING.md).

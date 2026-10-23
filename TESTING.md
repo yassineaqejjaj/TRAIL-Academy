@@ -2,6 +2,8 @@
 
 ## Ce qui tourne
 
+La CI GitHub Actions (`.github/workflows/ci.yml`) exécute types, lint, les 185 tests, l'audit des dépendances, le build, puis les 9 parcours Playwright sur Chromium (base embarquée, build de production) : **succès constaté sur GitHub** pour le commit `6ac17d7`.
+
 | Niveau | Commande | Contenu |
 |---|---|---|
 | Types, lint | `npm run typecheck` / `npm run lint` | propres |
@@ -38,7 +40,7 @@ L'e-mail de confirmation est marqué vérifié par SQL dans ces tests (le lien l
 
 ## Ce qui n'est pas testé
 
-Stripe réel ; PostgreSQL de production ; MinIO/S3 réel (envoi, CORS, téléchargement) et lecture HLS par `hls.js` via la passerelle ; SMTP réel ; Google OAuth ; déploiement Vercel/Railway ; exécution de la CI sur GitHub ; `docker-compose.yml` (pas de démon Docker à la création) ; accessibilité (audit automatisé) ; performance (Lighthouse, Core Web Vitals) ; charge.
+Stripe réel ; PostgreSQL de production ; MinIO/S3 réel (envoi, CORS, téléchargement) et lecture HLS par `hls.js` via la passerelle ; SMTP réel ; Google OAuth ; déploiement Vercel/Railway ; `docker-compose.yml` (pas de démon Docker à la création) ; accessibilité (audit automatisé) ; performance (Lighthouse, Core Web Vitals) ; charge.
 
 ## Pièges rencontrés (utiles à savoir)
 

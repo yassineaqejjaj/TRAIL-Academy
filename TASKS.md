@@ -24,7 +24,8 @@ Tableau de bord, modules (création, contenu, publication conditionnée), parcou
 
 ## Migration pile open source ✅
 PostgreSQL + RLS (rôle par transaction), Better Auth, S3 (MinIO), HLS auto-hébergé, SMTP, 9 parcours e2e, 185 tests.
-- 🟡 PostgreSQL serveur réel · 🟡 `docker-compose.yml` · 🟡 workflows GitHub exécutés sur GitHub · 🟡 Google OAuth
+- ✅ CI GitHub (types, lint, tests, audit, build, e2e) exécutée avec succès
+- 🟡 PostgreSQL serveur réel · 🟡 `docker-compose.yml` · 🟡 workflow de migration manuel · 🟡 Google OAuth
 
 ## Entreprises (phase E) ⬜
 Organisations, licences (Team 5/20), attribution de sièges, invitations, rapports. Modèle de données et politiques déjà en place ; interface à construire.
