@@ -1,5 +1,14 @@
 # TRAIL Academy
 
+<!-- portfolio-summary:start -->
+
+> **Professional AI learning platform** | **Status:** En développement : intégrations externes et paiements réels non validés.
+>
+> [Architecture](ARCHITECTURE.md) · [Demo / verification](TESTING.md) · [Source code](https://github.com/yassineaqejjaj/TRAIL-Academy)
+
+<!-- portfolio-summary:end -->
+
+
 **T**raining **R**oadmap for **A**pplied **I**ntelligence & **L**eadership — *Learn AI. Apply AI. Lead with AI.*
 
 Plateforme de formation professionnelle à l'intelligence artificielle, pensée pour **un formateur unique** qui l'exploite sans développeur : catalogue de 18 modules, parcours, lecteur de cours, quiz, livrables relus, attestations vérifiables, paiement Stripe, espace d'administration et CMS. Interface en français, architecture prête pour l'anglais.
