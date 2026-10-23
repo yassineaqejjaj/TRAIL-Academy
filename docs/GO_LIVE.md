@@ -4,6 +4,19 @@ Ce document sépare **ce que le code garantit et que les tests vérifient** de *
 
 L'écran **Administration → Mise en production** (et `npm run check:env`) lit la configuration et interroge la base, le stockage et la passerelle vidéo. Il vous dit ce qui manque ; il ne prouve pas qu'un paiement ou un e-mail réel fonctionne.
 
+## 0. État du déploiement (23 octobre 2026)
+
+| Élément | État |
+|---|---|
+| Vercel — site | En ligne : https://trail-academy.vercel.app (projet `trail-academy`, relié au dépôt GitHub : chaque push sur `main` redéploie) |
+| Railway — projet `trail-academy` | PostgreSQL 18, `storage` (MinIO construit depuis les sources, volume `/data`), `stream-gateway`, `video-worker` : en ligne |
+| Migrations 0000→0008 + catalogue | Appliquées sur le vrai PostgreSQL de Railway |
+| Bucket `trail` | Créé |
+| Variables Vercel | Posées, **sauf** : SMTP (`SMTP_URL`, `EMAIL_FROM`), `LEADS_TO_EMAIL`, `NEXT_PUBLIC_CONTACT_EMAIL`, Stripe (`STRIPE_*`) |
+| Premier administrateur, vidéos, pages légales, Stripe | **À faire** (sections 2.A, 2.C, 2.D) |
+
+Sans SMTP, personne ne peut confirmer son e-mail, donc **aucun compte ne peut se connecter** : c'est le premier point à régler.
+
 ## 1. Ce qui est prêt dans le code (vérifié par les tests)
 
 | Domaine | État |

@@ -28,6 +28,12 @@ DATABASE_URL="<url publique>" DATABASE_SSL=require npm run db:migrate -- --seed 
 
 ou le workflow GitHub **Apply database migrations** (déclenchement manuel, secrets `DATABASE_URL` et `DATABASE_SSL`, environnement `production` à protéger par des relecteurs). L'exécuteur est rejouable et transactionnel (un fichier = une transaction).
 
+### Notes issues du déploiement réel
+
+- `railway up services/<nom> --path-as-root -s <nom>` : sans `--path-as-root`, la CLI envoie **tout le dépôt** (le service construit alors l'application Next.js au lieu du service voulu).
+- MinIO n'est plus publié sur Docker Hub ni Quay : `services/storage/Dockerfile` le compile depuis les sources. CORS : variable `MINIO_API_CORS_ALLOW_ORIGIN` = adresse du site. Bucket : `npm run storage:setup`.
+- Vercel ne joint la base que par une adresse publique : `railway tcp-proxy create --port 5432 -s Postgres` (mot de passe + SSL ; restreindre l'accès si votre offre le permet). Le worker utilise l'adresse interne `${{Postgres.DATABASE_URL}}`.
+
 ## 3. Vercel
 
 Importer le dépôt (framework détecté, `vercel.json` déclare la tâche planifiée). Variables (voir `.env.example`) :
