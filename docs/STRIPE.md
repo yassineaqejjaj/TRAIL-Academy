@@ -8,6 +8,10 @@ TRAIL Academy encaisse avec **Stripe Checkout** (page de paiement hébergée par
 - **Espace client** : liste des commandes, facture Stripe, portail « moyen de paiement ».
 - **Garde-fous** : une clé *live* est refusée tant que `ALLOW_LIVE_PAYMENTS=true` **et** `LEGAL_REVIEW_COMPLETED=true` ne sont pas tous deux posés.
 
+## Compte avec « Managed Payments » (important)
+Certains comptes Stripe ont **Managed Payments** activé par défaut : Stripe devient alors le *vendeur officiel* (merchant of record), gère la TVA et les factures, et refuse plusieurs options de ce code (données de facture personnalisées, textes personnalisés, `automatic_tax` désactivé…) et exige des codes fiscaux produit. C'est un **autre modèle économique et juridique** (frais, vendeur sur les factures, CGV) qui n'est pas implémenté ici.
+Le site fonctionne donc **en tant que vendeur** : `STRIPE_MANAGED_PAYMENTS=off` désactive Managed Payments pour chaque session de paiement (et, si la variable est absente, le site réessaie automatiquement sans Managed Payments quand Stripe le refuse). Vérifié contre l'API Stripe en mode test. Si vous préférez que Stripe soit le vendeur officiel, dites-le : il faudra adapter les produits (codes fiscaux), les factures et les conditions de vente.
+
 ## Mise en route en mode test (≈ 15 minutes)
 1. **Créez ou ouvrez votre compte Stripe** (stripe.com) et restez en **mode test** (bascule en haut à droite). Le mode test ne déplace aucun argent.
 2. **Clé secrète de test** : *Développeurs → Clés API* → copiez `sk_test_…` (ou créez une clé restreinte `rk_test_…` avec écriture sur Checkout Sessions, Customers, Billing Portal, Webhook Endpoints, Invoices et lecture sur Balance).

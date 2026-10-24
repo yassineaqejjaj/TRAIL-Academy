@@ -6,6 +6,7 @@ import { asService, asUser } from "@/lib/db";
 import { rateLimit } from "@/lib/rate-limit";
 import { site } from "@/lib/site";
 import { getStripe } from "@/lib/stripe/client";
+import { buildCheckoutParams, isManagedPaymentsConflict, withoutManagedPayments } from "@/lib/stripe/checkout";
 import { stripeMode } from "@/lib/stripe/guard";
 
 const ERRORS: Record<string, string> = {
@@ -37,21 +38,20 @@ export async function startCheckout(formData: FormData) {
   const known = await asUser(user.id, (q) => q.one<{ stripe_customer_id: string | null }>("select stripe_customer_id from profiles where id = $1", [user.id]));
   let url: string | null = null;
   try {
-    const session = await getStripe().checkout.sessions.create({
-      mode: "payment",
-      client_reference_id: order.order_id,
-      ...(known?.stripe_customer_id ? { customer: known.stripe_customer_id } : { customer_email: user.email, customer_creation: "always" as const }),
-      line_items: [{ quantity: 1, price_data: { currency: order.currency.toLowerCase(), unit_amount: order.amount_cents, tax_behavior: order.tax_inclusive ? "inclusive" : "exclusive", product_data: { name: order.title } } }],
-      allow_promotion_codes: true,
-      invoice_creation: { enabled: true },
-      // Tax is computed by Stripe Tax when enabled; rates are never hard-coded here.
-      automatic_tax: { enabled: process.env.STRIPE_AUTOMATIC_TAX === "true" },
-      metadata: { order_id: order.order_id, user_id: user.id },
-      payment_intent_data: { metadata: { order_id: order.order_id, user_id: user.id } },
-      locale: "fr",
-      success_url: `${site.url}/achat/succes?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${site.url}/achat/${slug.data}?canceled=1`,
-    }, { idempotencyKey: `checkout-${order.order_id}` });
+    const params = buildCheckoutParams(
+      { orderId: order.order_id, title: order.title, amountCents: order.amount_cents, currency: order.currency, taxInclusive: order.tax_inclusive },
+      { userId: user.id, email: user.email, stripeCustomerId: known?.stripe_customer_id ?? null },
+      { siteUrl: site.url, slug: slug.data, automaticTax: process.env.STRIPE_AUTOMATIC_TAX === "true" },
+    );
+    const stripe = getStripe();
+    let session;
+    try {
+      session = await stripe.checkout.sessions.create(process.env.STRIPE_MANAGED_PAYMENTS === "off" ? withoutManagedPayments(params) : params, { idempotencyKey: `checkout-${order.order_id}` });
+    } catch (e) {
+      // Accounts with Stripe's Managed Payments on by default refuse some options: retry once as the seller of record.
+      if (!isManagedPaymentsConflict(e)) throw e;
+      session = await stripe.checkout.sessions.create(withoutManagedPayments(params), { idempotencyKey: `checkout-${order.order_id}-seller` });
+    }
     await asService((q) => q("select attach_checkout_session($1, $2)", [order.order_id, session.id]));
     url = session.url;
   } catch { /* fall through to the error redirect */ }
