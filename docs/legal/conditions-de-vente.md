@@ -3,7 +3,7 @@
 > **BROUILLON — À COMPLÉTER ET À FAIRE VALIDER PAR UN JURISTE avant publication.** Ce texte décrit ce que la plateforme fait réellement ; il ne constitue pas un avis juridique. Chaque mention `[À COMPLÉTER : …]` est une information que seul l’éditeur peut fournir.
 
 ## 1. Vendeur
-[À COMPLÉTER : identité complète de l’éditeur — voir mentions légales].
+[À COMPLÉTER ET FAIRE VALIDER : les ventes en ligne sont réalisées via **Stripe Managed Payments**, dans lequel Stripe agit en tant que vendeur officiel (« merchant of record ») pour le paiement, les taxes, la facturation, les litiges et le support relatif au paiement. Indiquer précisément qui est le vendeur au sens des CGV, l'identité de l'éditeur du contenu (voir mentions légales) et les conditions de Stripe applicables à l'acheteur.]
 
 ## 2. Objet
 Vente en ligne de formations numériques (vidéos, exercices, quiz, ressources, livrable relu par le formateur, attestation de réussite) accessibles depuis un compte personnel.
@@ -17,7 +17,7 @@ Une offre n’est vendue que lorsque les contenus correspondants sont publiés. 
 Pour les entreprises : proposition sur devis.
 
 ## 4. Commande et paiement
-Le paiement s’effectue par carte via Stripe. La commande est confirmée après validation du paiement ; l’accès est ouvert automatiquement. Une facture est disponible dans « Mes commandes ». [À COMPLÉTER : conditions de facturation]
+Le paiement s’effectue via Stripe (carte et autres moyens affichés lors du paiement) ; Stripe émet le reçu et la facture. Les taxes applicables sont calculées par Stripe selon le pays de l'acheteur. La commande est confirmée après validation du paiement ; l’accès est ouvert automatiquement. Une facture est disponible dans « Mes commandes ». [À COMPLÉTER : conditions de facturation]
 
 ## 5. Droit de rétractation
 [À COMPLÉTER ET FAIRE VALIDER : délai de 14 jours pour un consommateur ; modalités ; exception éventuelle pour les contenus numériques dont l’exécution commence avant la fin du délai avec accord exprès du client. Ce mécanisme n’est PAS implémenté dans la plateforme à ce jour.]

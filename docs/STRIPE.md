@@ -3,14 +3,25 @@
 TRAIL Academy encaisse avec **Stripe Checkout** (page de paiement hébergée par Stripe : les cartes ne transitent jamais par nos serveurs). Le code est complet et testé ; ce qui reste dépend de **votre compte Stripe**.
 
 ## Ce que fait le code
-- **Achat** : la commande est créée en base (règles : module publié, offre active, rien d'acheté en double), puis une session Checkout est ouverte. Client Stripe réutilisé aux achats suivants ; code promo possible ; facture générée par Stripe ; TVA par **Stripe Tax** si `STRIPE_AUTOMATIC_TAX=true`.
+- **Achat** : la commande est créée en base (règles : module publié, offre active, rien d'acheté en double), puis une session Checkout est ouverte. Client Stripe réutilisé aux achats suivants ; code promo possible ; numéro de TVA pour les professionnels ; reçu et facture par Stripe ; taxes calculées par Stripe Tax.
 - **Accès** : donné **uniquement** par le webhook signé (jamais par la page de retour), de façon idempotente (un événement rejoué ne double rien). Remboursement total = accès retiré ; partiel = accès conservé ; litige = suivi.
 - **Espace client** : liste des commandes, facture Stripe, portail « moyen de paiement ».
 - **Garde-fous** : une clé *live* est refusée tant que `ALLOW_LIVE_PAYMENTS=true` **et** `LEGAL_REVIEW_COMPLETED=true` ne sont pas tous deux posés.
 
-## Compte avec « Managed Payments » (important)
-Certains comptes Stripe ont **Managed Payments** activé par défaut : Stripe devient alors le *vendeur officiel* (merchant of record), gère la TVA et les factures, et refuse plusieurs options de ce code (données de facture personnalisées, textes personnalisés, `automatic_tax` désactivé…) et exige des codes fiscaux produit. C'est un **autre modèle économique et juridique** (frais, vendeur sur les factures, CGV) qui n'est pas implémenté ici.
-Le site fonctionne donc **en tant que vendeur** : `STRIPE_MANAGED_PAYMENTS=off` désactive Managed Payments pour chaque session de paiement (et, si la variable est absente, le site réessaie automatiquement sans Managed Payments quand Stripe le refuse). Vérifié contre l'API Stripe en mode test. Si vous préférez que Stripe soit le vendeur officiel, dites-le : il faudra adapter les produits (codes fiscaux), les factures et les conditions de vente.
+## Modèle de vente : Managed Payments (choisi)
+Le site vend via **Stripe Managed Payments** : **Stripe est le vendeur officiel** (*merchant of record*). Stripe calcule et reverse la **TVA et les taxes** dans les pays concernés, prend en charge la **prévention de la fraude**, les **litiges** et le **support acheteur**, et émet les reçus et factures. Vous restez l'éditeur et le créateur du contenu.
+
+Ce que cela change dans le code (vérifié contre l'API Stripe en mode test) :
+- **Stripe Tax est toujours actif** et chaque offre porte un **code fiscal produit** : `txcd_20060158` (cours en ligne à la demande, contenu audiovisuel diffusé en continu). Stripe l'exige. Faites confirmer ce code par votre comptable (le contenu uniquement écrit a le code `txcd_20060358`).
+- Stripe refuse les données de facture personnalisées et les textes personnalisés sur la page de paiement : ils ne sont pas envoyés.
+- Les prix restent affichés **TTC** (la taxe est incluse dans 199 / 990 / 1 990 €) ; ce que vous recevez est le montant **net** des taxes et des frais Stripe.
+
+À faire de votre côté :
+- Vérifier dans Stripe (*Paramètres → Managed Payments*) l'**éligibilité** du compte et accepter les conditions, ainsi que les **pays** et les **types de produits** couverts : Managed Payments ne vend que des produits numériques éligibles.
+- Mettre à jour vos **textes légaux** : le vendeur sur les reçus et factures n'est plus vous. Les brouillons (`docs/legal/`) contiennent des passages à adapter avec un juriste (CGV, rétractation, mentions, confidentialité : Stripe devient aussi destinataire des données de paiement).
+- Comprendre le **calendrier de versement** et les **frais** de Managed Payments (différents du paiement standard) avant de fixer vos prix.
+
+Pour vendre en votre nom propre plutôt que via Managed Payments : `STRIPE_MANAGED_PAYMENTS=off` (le code bascule sur l'autre modèle : TVA via Stripe Tax si `STRIPE_AUTOMATIC_TAX=true`, factures personnalisées, texte d'acceptation des CGV).
 
 ## Mise en route en mode test (≈ 15 minutes)
 1. **Créez ou ouvrez votre compte Stripe** (stripe.com) et restez en **mode test** (bascule en haut à droite). Le mode test ne déplace aucun argent.
@@ -29,8 +40,8 @@ Le site fonctionne donc **en tant que vendeur** : `STRIPE_MANAGED_PAYMENTS=off` 
 
 ## Avant le mode live (rien de cela n'est fait pour vous)
 - Compte Stripe **activé** : informations de l'entreprise, compte bancaire, vérification d'identité.
-- **Réglages de facturation** dans Stripe : raison sociale, adresse, numéro de TVA et mentions obligatoires sur les factures. Les factures Stripe ne remplacent pas votre obligation de mentions légales françaises : faites-les valider.
-- **TVA** : décidez de votre régime (franchise en base ou TVA) ; si TVA, activez Stripe Tax et `STRIPE_AUTOMATIC_TAX=true`.
+- **Managed Payments** : éligibilité, conditions acceptées, pays et produits couverts (voir plus haut).
+- **TVA et factures** : prises en charge par Stripe en tant que vendeur officiel ; vérifiez toutefois vos propres obligations de déclaration de revenus et le traitement comptable des versements nets avec votre comptable.
 - **Textes légaux validés** (CGV, rétractation) : voir `docs/legal/`. La renonciation au droit de rétractation n'est **pas** implémentée.
 - Paiements d'un autre pays, SEPA, Apple Pay : à activer dans Stripe (*Paramètres → Moyens de paiement*) ; Checkout les propose alors automatiquement.
 - Clé `sk_live_…`, **nouveau** webhook en mode live (relancez `npm run stripe:setup` avec `--live`), puis `ALLOW_LIVE_PAYMENTS=true` et `LEGAL_REVIEW_COMPLETED=true`.
