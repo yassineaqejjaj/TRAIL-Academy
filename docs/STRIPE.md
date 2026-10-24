@@ -47,5 +47,8 @@ Pour vendre en votre nom propre plutôt que via Managed Payments : `STRIPE_MANAG
 - Clé `sk_live_…`, **nouveau** webhook en mode live (relancez `npm run stripe:setup` avec `--live`), puis `ALLOW_LIVE_PAYMENTS=true` et `LEGAL_REVIEW_COMPLETED=true`.
 - Premier achat réel sur votre propre carte, puis remboursement.
 
+## Vérification déjà faite (sans carte)
+`scripts/verify-stripe-local.mts` rejoue le parcours en local contre **Stripe en mode test** : inscription, clic sur « acheter », **vraie session Checkout** créée et page Stripe atteinte, commande en attente liée à la session (199,00 €, Stripe Tax actif), puis événements **signés** construits à partir de cette session réelle : signature invalide refusée, paiement confirmé → accès ouvert, rejeu sans doublon, remboursement total → accès retiré. Tout passe. Ce script ne remplit jamais le formulaire de carte.
+
 ## Ce qui n'a jamais été exécuté
-Aucun paiement n'a été réalisé contre Stripe (ni en test) : le code est vérifié par des tests avec des événements signés simulés et un faux client Stripe, pas contre le service réel. Votre achat de test (étape 8) est la vraie validation.
+Aucune carte n'a été saisie sur la page de Stripe : l'événement « paiement réussi » est simulé (signé avec un secret local). Reste à valider avec une vraie carte de test sur la page Stripe (étape 8) : la livraison réelle du webhook de production, le reçu Stripe et la carte `4242…`.
