@@ -20,7 +20,7 @@ export default async function InstructorPage() {
         <div className="max-w-2xl">
           <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-accent">Votre formateur</p>
           <h1 className="text-4xl font-bold sm:text-5xl">{profile?.title ?? instructor.name}</h1>
-          <p className="mt-4 text-muted [text-wrap:pretty]">{profile?.subtitle ?? "TRAIL Academy est animée par un formateur unique, spécialiste de l'IA produit, de l'ingénierie IA, de l'IA agentique et de la transformation en entreprise."}</p>
+          <p className="mt-4 text-muted [text-wrap:pretty]">{profile?.subtitle ?? "Head of AI | Expert en IA générative & Agentic AI | Formateur"}</p>
           <h2 className="mb-3 mt-8 text-lg font-semibold">Domaines d'expertise</h2>
           <ExpertiseTags />
           {profile?.body_md && <div className="mt-8"><Markdown>{profile.body_md}</Markdown></div>}

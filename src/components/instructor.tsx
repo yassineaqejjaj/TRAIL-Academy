@@ -3,7 +3,7 @@ import Image from "next/image";
 export const instructor = {
   name: "Yassine Aqejjaj",
   linkedin: "https://www.linkedin.com/in/yassine-aqejjaj/",
-  expertise: ["AI Product Management", "Ingénierie IA", "IA agentique", "Stratégie IA", "Transformation en entreprise"],
+  expertise: ["IA générative", "IA agentique (Agentic AI)", "AI Product Management", "Plateformes multi-agents", "Mise en production de solutions IA"],
 } as const;
 
 export function InstructorPhoto({ size = 240, priority = false }: { size?: number; priority?: boolean }) {
