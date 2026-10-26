@@ -24,8 +24,8 @@ export const instructorProfile = {
 
 export const organizationLd = (): Json => clean({
   "@type": "EducationalOrganization", "@id": ids.org(), name: site.name, alternateName: site.fullName, url: abs(), slogan: site.tagline,
-  logo: { "@type": "ImageObject", url: abs("/opengraph-image") },
-  description: "Formations en ligne à l'intelligence artificielle pour les professionnels du produit et de la tech : 18 modules, 2 parcours, livrables relus par le formateur.",
+  logo: { "@type": "ImageObject", url: abs("/brand/logo-light.png"), width: 720, height: 292 },
+  description: "Formations en ligne à l'intelligence artificielle pour les professionnels du produit, de la tech et des fonctions métier (marketing, RH, juridique, finance) : 30 modules, 6 parcours, livrables relus par le formateur.",
   founder: { "@id": ids.person() }, areaServed: "FR", knowsLanguage: "fr",
   email: site.contactEmail || undefined, sameAs: [instructorProfile.linkedin],
 });

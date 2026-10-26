@@ -1,0 +1,827 @@
+{
+  "course": "M29",
+  "slug": "ia-comptabilite-tresorerie-audit",
+  "source": "Contenu original rédigé pour TRAIL Academy à partir du programme du module (sans slides sources). Pas de vidéo : à ajouter depuis l'administration.",
+  "chapters": [
+    {
+      "title": "Extraction de documents comptables",
+      "lessons": [
+        {
+          "title": "Extraire des données d'une facture : ce que l'IA fait bien, ce qu'elle rate",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Décrire une chaîne d'extraction de documents, de la pièce reçue à l'écriture proposée.\n- Identifier les erreurs typiques d'une extraction assistée par IA.\n\n## Le principe\n\nExtraire, c'est transformer un document (facture, relevé, note de frais) en **champs structurés** : fournisseur, numéro, date, montants, taux de TVA, échéance. Un assistant IA lit le texte du document (ou l'image, après reconnaissance de caractères) et remplit une grille que vous avez définie. Vous gagnez du temps de saisie ; vous ne gagnez pas la **responsabilité** de l'exactitude.\n\n```mermaid\nflowchart LR\n  accTitle: Chaîne d'extraction de documents comptables\n  accDescr: Un document reçu est lu, ses champs sont extraits par l'assistant, validés par des règles automatiques, puis les cas douteux passent en revue humaine avant la proposition d'écriture.\n  D[\"Document reçu\"] --> L[\"Lecture (texte ou image)\"]\n  L --> E[\"Extraction des champs par l'IA\"]\n  E --> V[\"Validation par règles\"]\n  V -->|\"Cohérent\"| P[\"Proposition d'écriture\"]\n  V -->|\"Douteux\"| H[\"Revue humaine\"]\n  H --> P\n  P --> J[\"Journal de traçabilité\"]\n```\n*Figure 1 : chaîne d'extraction ; les règles de validation et la revue humaine encadrent la sortie de l'IA.*\n\n## Ce que l'IA fait plutôt bien\n\n- Repérer un fournisseur, un numéro et une date dans des mises en page très variées.\n- Normaliser des formats : « 5 mars 2026 », « 05/03/26 » et « 2026-03-05 » deviennent une même date.\n- Proposer un premier classement (nature de charge) que vous validez.\n\n## Où elle se trompe\n\n- **Les calculs** : un modèle de langage ne calcule pas comme un tableur ; il peut recopier un total faux ou en produire un incohérent.\n- **La lecture** : un 1 lu comme un 7, une virgule décimale perdue, une colonne décalée dans un tableau de lignes.\n- **L'ambiguïté** : jour et mois inversés, plusieurs montants (acompte, TTC, net à payer), avoir présenté comme une facture.\n- **L'invention** : face à un champ illisible, certains outils « complètent » plutôt que de signaler l'absence.\n\n## Principe de conduite\n\nTraitez la sortie de l'IA comme la saisie d'un **stagiaire rapide** : utile, mais contrôlée en proportion du risque. Dans les leçons suivantes, vous apprendrez à définir les champs, à valider par des règles et à **mesurer** la fiabilité sur un échantillon plutôt que de la supposer.\n\n## Question de réflexion\n\nDans votre activité, quel champ d'une facture serait le plus coûteux s'il était faux sans que personne ne le voie ?"
+        },
+        {
+          "title": "Définir les champs et les consignes d'extraction",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Concevoir une grille de champs précise et testable.\n- Rédiger une consigne d'extraction qui limite les inventions.\n\n## Commencer par la grille, pas par l'outil\n\nAvant tout essai, listez les champs dont vous avez réellement besoin et, pour chacun, son **format attendu** et sa **règle en cas d'absence**. Exemple fictif pour une facture fournisseur :\n\n- **fournisseur** : texte, tel qu'écrit sur la pièce ;\n- **numero_facture** : texte, sans reformatage ;\n- **date_facture** : format AAAA-MM-JJ ;\n- **montant_ht**, **montant_tva**, **montant_ttc** : nombres avec deux décimales, sans symbole monétaire ;\n- **taux_tva** : pourcentage tel qu'imprimé ;\n- **echeance** : date, ou la valeur « absent ».\n\nPlus la grille est courte et précise, plus l'extraction est fiable et vérifiable. Ne demandez pas vingt champs si cinq suffisent à votre contrôle.\n\n## Une consigne qui protège\n\nUne consigne efficace contient des **interdits explicites** :\n\n- « Recopie les valeurs telles qu'elles figurent sur le document. »\n- « Si un champ est absent ou illisible, écris ABSENT. N'estime jamais une valeur. »\n- « Ne calcule pas : recopie le total imprimé ; les contrôles de cohérence sont faits ailleurs. »\n- « Réponds uniquement avec la grille, une ligne par document. »\n\nDemandez aussi, pour chaque champ sensible, **l'extrait de texte** d'où provient la valeur : il facilite la vérification humaine.\n\n## Confidentialité\n\nUne facture réelle contient des données d'entreprises et parfois de personnes. Avant d'utiliser un assistant en ligne, vérifiez ce que votre organisation autorise, les paramètres de conservation des données et les alternatives hébergées en interne. Pour vous entraîner, utilisez uniquement des **documents fictifs ou anonymisés**, comme dans les ateliers.\n\n## Mise en pratique\n\nRédigez la grille de champs de votre document le plus fréquent (facture, relevé, note de frais) avec format et règle d'absence pour chaque champ. Ajoutez trois interdits dans la consigne."
+        },
+        {
+          "title": "Valider l'extraction : règles de cohérence et échantillonnage",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Mettre en place des contrôles automatiques simples sur les champs extraits.\n- Mesurer un taux d'erreur par champ sur un échantillon.\n\n## Les règles de cohérence, votre premier filet\n\nUn tableur peut contrôler ce que l'IA ne garantit pas. Exemples de règles :\n\n- **HT + TVA = TTC**, avec une tolérance d'un centime pour les arrondis ;\n- **TVA = HT × taux** affiché, à l'arrondi près ;\n- **date plausible** : ni dans un futur lointain, ni avant la création du fournisseur dans votre base ;\n- **numéro de facture** jamais déjà vu pour ce fournisseur (détection de doublon) ;\n- **fournisseur connu** dans votre référentiel, ou signalé comme nouveau.\n\nUne ligne qui échoue à une règle part en **revue humaine**. Une ligne qui les réussit n'est pas pour autant « juste » : deux erreurs peuvent se compenser, et les règles ne voient pas un fournisseur mal lu mais plausible.\n\n## Mesurer sur un échantillon\n\nPour connaître la fiabilité réelle :\n\n1. Prenez un **échantillon** de documents représentatif (types de fournisseurs, mises en page, qualité de scan).\n2. Saisissez ou vérifiez les valeurs **de référence** à la main.\n3. Comparez champ par champ avec la sortie de l'IA.\n4. Calculez, **par champ**, le taux d'erreur : erreurs divisées par nombre de documents examinés.\n\nUn taux global masque les différences : une date fiable à presque tout coup et un montant fragile ne se pilotent pas pareil. Attention aussi à la **taille** : sur dix documents, une seule erreur change fortement le pourcentage. Ces chiffres décrivent votre échantillon, pas une vérité générale.\n\n```mermaid\npie showData\n  accTitle: Répartition fictive des erreurs d'extraction par type\n  accDescr: Exemple illustratif et fictif de vingt erreurs relevées sur un échantillon, réparties entre montants mal lus, dates ambiguës, fournisseurs mal orthographiés et champs inventés.\n  title Erreurs relevées (données fictives)\n  \"Montants mal lus\" : 8\n  \"Dates ambiguës\" : 5\n  \"Fournisseur mal orthographié\" : 4\n  \"Champ inventé\" : 3\n```\n*Figure 2 : répartition fictive des erreurs d'un échantillon, à titre d'illustration ; la vôtre sera différente et guidera vos contrôles.*\n\n## Décider à partir de la mesure\n\n- Si les erreurs se concentrent sur un type de document, traitez-le à part (saisie manuelle ou contrôle renforcé).\n- Si une erreur est **coûteuse**, la tolérance est quasi nulle : contrôle de chaque ligne.\n- Refaites la mesure après tout changement de modèle, de consigne ou de format de documents.\n\n## Question de réflexion\n\nQuel taux d'erreur seriez-vous prêt à accepter sur la date, et lequel sur le montant TTC ? Pourquoi ne sont-ils pas identiques ?"
+        },
+        {
+          "title": "Relevés bancaires, notes de frais et documents dégradés",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Adapter la méthode aux relevés, notes de frais et scans de mauvaise qualité.\n- Savoir quand renoncer à l'extraction automatique.\n\n## Les relevés bancaires\n\nUn relevé est un tableau de lignes : date, libellé, débit, crédit, solde. Les risques propres à ce format :\n\n- **Colonnes décalées** : un débit lu comme un crédit inverse le signe d'une opération.\n- **Libellés tronqués** : la référence utile est coupée, ce qui gêne le rapprochement.\n- **Report de solde** : le solde final doit égaler le solde initial plus les crédits moins les débits ; ce **contrôle d'ensemble** détecte à lui seul de nombreuses erreurs d'extraction. Si vous disposez d'un export de fichier fourni par votre banque, préférez-le à la lecture d'un PDF.\n\n## Les notes de frais\n\n- Beaucoup de justificatifs sont des tickets : texte petit, photo penchée, plusieurs taux de TVA.\n- Vérifiez la **cohérence entre le montant saisi par l'employé et celui du justificatif**, et signalez les doublons de justificatif.\n- Une politique de frais reste la référence : l'IA ne décide pas de ce qui est remboursable.\n\n## Les documents dégradés\n\nUn scan flou, un fax, un manuscrit ou un document protégé produisent des erreurs plus fréquentes. Pratiques utiles :\n\n- améliorer la source (nouvelle numérisation, contraste, orientation) avant l'extraction ;\n- demander à l'outil un **indice de confiance** quand il en fournit un, sans le prendre pour une probabilité d'exactitude ;\n- fixer un **seuil de renoncement** : en dessous d'une certaine qualité, saisie manuelle.\n\n## Vision d'ensemble\n\n```text\nPlus le document est standardisé et le risque faible : plus on automatise.\nPlus le document est dégradé ou le risque élevé : plus on contrôle.\n```\n\n## Mise en pratique\n\nChoisissez un type de document de votre activité et notez : un contrôle d'ensemble possible (solde, total de lot), deux erreurs probables, et le seuil à partir duquel vous refuseriez l'extraction automatique."
+        }
+      ]
+    },
+    {
+      "title": "Rapprochements et détection d'anomalies",
+      "lessons": [
+        {
+          "title": "Rapprocher par règles : exact, tolérant, puis probable",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Concevoir une cascade de règles de rapprochement.\n- Distinguer rapprochement certain, probable et non rapproché.\n\n## Rapprocher, c'est apparier\n\nUn rapprochement apparie deux ensembles : lignes de relevé bancaire et écritures comptables, factures et paiements, commandes et réceptions. Les règles s'appliquent **de la plus stricte à la plus souple**, ce qui laisse peu de cas à la main.\n\n```mermaid\nflowchart TD\n  accTitle: Cascade de règles de rapprochement\n  accDescr: Chaque ligne est d'abord testée par une règle exacte, puis tolérante, puis probable. Ce qui n'est pas rapproché part en revue humaine, et chaque décision est tracée.\n  S[\"Lignes à rapprocher\"] --> R1{\"Règle 1 : montant et référence identiques ?\"}\n  R1 -->|\"Oui\"| A[\"Rapproché, certain\"]\n  R1 -->|\"Non\"| R2{\"Règle 2 : montant identique, date proche ?\"}\n  R2 -->|\"Oui\"| B[\"Rapproché, à confirmer\"]\n  R2 -->|\"Non\"| R3{\"Règle 3 : libellé proche, écart faible ?\"}\n  R3 -->|\"Oui\"| C[\"Proposition de l'IA, à valider\"]\n  R3 -->|\"Non\"| D[\"Non rapproché, revue humaine\"]\n  A --> T[\"Journal de décisions\"]\n  B --> T\n  C --> T\n  D --> T\n```\n*Figure 3 : cascade de règles ; seul le premier niveau est considéré comme certain, les suivants appellent une confirmation.*\n\n## Les trois niveaux\n\n- **Exact** : même montant et même référence (numéro de facture dans le libellé). Peu de risque ; automatisable.\n- **Tolérant** : même montant, date dans une fenêtre que vous fixez, ou écart de quelques centimes dû à un arrondi ou à des frais. À confirmer par échantillon.\n- **Probable** : libellé proche mais écrit autrement, paiement groupé, ou règlement partiel. Ici l'IA aide, car elle compare des libellés comme le ferait un lecteur ; sa proposition est une **suggestion**, jamais une validation.\n\n## Ce que l'IA apporte, et ses limites\n\nL'IA est utile pour rapprocher des libellés non standardisés (« VIR ORME TRANSPORT » et « Transports Orme »). Elle peut en revanche apparier à tort deux montants voisins ou deux fournisseurs aux noms proches. C'est pourquoi les règles déterministes passent **avant** : elles sont prévisibles, expliquables et reproductibles.\n\n## Mise en pratique\n\nÉcrivez trois règles pour un rapprochement bancaire de votre contexte, avec pour chacune sa fenêtre de date et sa tolérance de montant. Dites laquelle vous confierez à l'automatisation sans contrôle individuel, et pourquoi."
+        },
+        {
+          "title": "Détecter des anomalies : règles, seuils et signaux",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Définir des règles de détection adaptées à la comptabilité et à la trésorerie.\n- Choisir des seuils de façon argumentée.\n\n## Qu'est-ce qu'une anomalie ?\n\nUne anomalie est une opération qui **s'écarte de ce qui est attendu**. Elle n'est pas forcément une erreur ni une fraude : un achat exceptionnel est inhabituel et légitime. Le détecteur **signale** ; l'humain **qualifie**.\n\n## Des signaux simples et efficaces\n\n- **Doublons** : même fournisseur, même montant, dates proches, numéros différents ou identiques.\n- **Montants ronds** ou juste sous un seuil d'approbation (par exemple, factures répétées légèrement sous le plafond de validation d'un responsable).\n- **Opérations atypiques** : jour inhabituel, fournisseur nouveau, montant très éloigné de l'historique du même fournisseur.\n- **Ruptures de séquence** : numéros de factures manquants ou dans le désordre.\n- **Écritures manuelles** passées en fin de période ou sans pièce justificative.\n- **Écarts de cohérence** : TVA incompatible avec la nature de l'achat dans votre référentiel.\n\n## Les seuils : une décision, pas un réglage technique\n\nUn seuil traduit une **tolérance au risque**. Exemple fictif : signaler tout paiement supérieur à trois fois le montant habituel du fournisseur. Trop bas, vous noyez l'équipe ; trop haut, vous manquez des cas. Fixez-le avec le métier, **testez-le sur des données passées** dont vous connaissez les anomalies, puis réajustez périodiquement.\n\n## Où l'IA intervient\n\n- Pour **lire du texte libre** (libellés, commentaires d'écritures) et en tirer des signaux.\n- Pour **expliquer** en langage clair pourquoi une ligne a été signalée.\n- Pour **proposer** de nouvelles règles que vous testez avant de les adopter.\n\nMais la détection de base reste, autant que possible, dans des règles de tableur ou d'outil dont le comportement est stable. Une règle écrite se relit, se justifie et s'audite ; une réponse libre d'un assistant, moins.\n\n## Question de réflexion\n\nCitez une anomalie légitime fréquente dans votre activité qui déclencherait à tort une alerte. Comment l'excluez-vous sans créer d'angle mort ?"
+        },
+        {
+          "title": "Faux positifs, faux négatifs et traitement des alertes",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Comprendre le compromis entre faux positifs et faux négatifs.\n- Organiser le cycle de vie d'une alerte.\n\n## Deux erreurs, deux coûts\n\n- **Faux positif** : une alerte sur une opération normale. Coût : du temps perdu et, à la longue, de la **lassitude** : les alertes ne sont plus lues.\n- **Faux négatif** : une anomalie réelle non signalée. Coût : un risque non vu, parfois le plus grave, et une fausse impression de sécurité.\n\nOn ne supprime pas l'un sans augmenter l'autre : abaisser un seuil réduit les faux négatifs et augmente les faux positifs. Le bon réglage dépend du **risque** : sur un paiement de grande valeur, mieux vaut trop d'alertes ; sur de petites notes de frais, on accepte de laisser passer certains cas.\n\n## Mesurer sans inventer de chiffres\n\nSur un historique où vous connaissez les anomalies réelles, comptez : alertes justifiées, alertes inutiles, anomalies manquées. Ces trois nombres, propres à votre jeu de données, permettent de comparer deux réglages. Un taux calculé sur très peu de cas reste fragile : dites-le.\n\n## Le cycle de vie d'une alerte\n\n```mermaid\nstateDiagram-v2\n  accTitle: Cycle de vie d'une alerte d'anomalie\n  accDescr: Une alerte est créée, prise en charge par un analyste, puis qualifiée comme justifiée, corrigée ou classée sans suite. Les décisions justifiées par un responsable sont conservées dans le journal.\n  [*] --> Signalee\n  Signalee --> EnAnalyse : Prise en charge\n  EnAnalyse --> Corrigee : Erreur confirmee\n  EnAnalyse --> Justifiee : Operation legitime\n  EnAnalyse --> Escaladee : Doute persistant\n  Escaladee --> Corrigee : Decision du responsable\n  Escaladee --> Justifiee : Decision du responsable\n  Corrigee --> [*]\n  Justifiee --> [*]\n```\n*Figure 4 : cycle de vie d'une alerte ; chaque sortie est motivée et conservée, y compris le classement « justifiée ».*\n\n## Bonnes pratiques\n\n- Indiquez pour chaque alerte le **motif** (quelle règle) et la **pièce** concernée.\n- Exigez une **justification écrite** à la clôture, même brève.\n- Réexaminez périodiquement les règles qui produisent presque uniquement des faux positifs, et celles qui n'ont jamais rien trouvé.\n- Évitez qu'une même personne crée, qualifie et clôture seule une alerte sensible.\n\n## Mise en pratique\n\nPour une règle de votre choix, décrivez une situation où un faux positif est acceptable et une situation où un faux négatif ne l'est pas."
+        }
+      ]
+    },
+    {
+      "title": "Prévision de trésorerie",
+      "lessons": [
+        {
+          "title": "Une prévision de trésorerie simple : encaissements, décaissements, solde",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Construire la structure d'une prévision de trésorerie à 13 semaines ou sur l'horizon de votre choix.\n- Distinguer hypothèses, données et calculs.\n\n## La mécanique de base\n\nUne prévision de trésorerie simple suit une logique d'**entrées et de sorties de cash**, période par période (semaine ou mois) :\n\n- **Solde d'ouverture** de la période ;\n- plus les **encaissements** attendus (règlements clients, subventions, apports) ;\n- moins les **décaissements** prévus (fournisseurs, salaires, loyers, impôts, remboursements d'emprunt) ;\n- égale **solde de clôture**, qui devient l'ouverture suivante.\n\n```mermaid\nflowchart LR\n  accTitle: Structure d'une prévision de trésorerie\n  accDescr: Les données réelles et les hypothèses alimentent les encaissements et décaissements prévus. Un tableur calcule les soldes, puis un scénario et des alertes sont produits pour la décision.\n  D[\"Données réelles (banque, factures)\"] --> E[\"Encaissements prévus\"]\n  D --> S[\"Décaissements prévus\"]\n  H[\"Hypothèses écrites\"] --> E\n  H --> S\n  E --> C[\"Calcul des soldes (tableur)\"]\n  S --> C\n  C --> SC[\"Scénarios\"]\n  SC --> AL[\"Alertes de seuil\"]\n  AL --> DEC[\"Décision humaine\"]\n```\n*Figure 5 : de la donnée à la décision ; les hypothèses sont écrites et séparées des calculs.*\n\n## Où l'IA aide, où elle ne doit pas calculer\n\nL'assistant est utile pour :\n\n- **structurer** le modèle (proposer les lignes, les périodes, les contrôles) ;\n- **rédiger les formules** que vous relisez, ou expliquer une formule existante ;\n- **transformer** des échéanciers (factures ouvertes) en lignes datées.\n\nLe **calcul** se fait dans le tableur, pas dans la réponse de l'IA : elle peut se tromper en arithmétique. Si l'assistant vous donne un total, recalculez-le dans le tableur.\n\n## Exemple fictif\n\nEntreprise fictive « Atelier Brume » : solde d'ouverture 10 000 € ; encaissements attendus 6 000 € ; décaissements 9 000 € sur la période. Solde de clôture : 10 000 + 6 000 - 9 000 = 7 000 €. Tous les montants de cette leçon sont inventés.\n\n## Mise en pratique\n\nDessinez, sur papier, les lignes de la prévision d'une activité que vous connaissez : cinq lignes d'encaissements, cinq de décaissements, et une ligne de contrôle (solde de clôture rapproché du solde bancaire réel à la fin de chaque période passée)."
+        },
+        {
+          "title": "Hypothèses, délais de paiement et scénarios",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Formuler des hypothèses explicites et révisables.\n- Construire trois scénarios cohérents.\n\n## Écrire les hypothèses, ne pas les cacher\n\nUne prévision n'est pas un fait : c'est un **jeu d'hypothèses** traduit en chiffres. Les plus sensibles :\n\n- **délai de paiement des clients** : une facture émise le jour J est encaissée en moyenne à J + n jours, avec des retardataires ;\n- **délai de paiement des fournisseurs** et dates de prélèvements ;\n- **saisonnalité** : mois forts et mois faibles ;\n- **événements ponctuels** : investissement, impôt, versement de dividendes, renouvellement d'assurance.\n\nPlacez chaque hypothèse dans une **cellule dédiée**, nommée, datée et rattachée à son auteur. Le reste du modèle y fait référence : changer l'hypothèse met à jour toute la prévision.\n\n## Utiliser l'historique avec prudence\n\nL'IA peut aider à analyser vos factures passées pour estimer un délai de règlement par client, par exemple en regroupant par type de client. Rappelez-vous :\n\n- un historique court ou irrégulier donne une estimation fragile ;\n- un gros client qui change de pratique faussera la moyenne ;\n- l'assistant peut se tromper dans les moyennes : vérifiez-les dans le tableur.\n\n## Trois scénarios\n\n- **Central** : les hypothèses les plus probables selon vous.\n- **Prudent** : paiements clients retardés, ventes plus faibles, dépenses inchangées.\n- **Favorable** : paiements à l'heure, ventes plus fortes.\n\nChaque scénario change **quelques hypothèses clés**, pas toutes à la fois, et le dit clairement. Comparez les scénarios sur une grandeur de décision : **solde minimal** et **date à laquelle il survient**.\n\n## Exemple fictif\n\nDans le scénario prudent d'« Atelier Brume », le retard moyen de paiement des clients passe de 30 à 45 jours (valeurs illustratives). On observe l'effet sur le solde minimal, puis on prépare des leviers : relance anticipée, étalement de dépenses, ligne de financement à discuter avec le banquier.\n\n## Question de réflexion\n\nQuelle hypothèse de votre prévision, si elle était fausse de 15 jours, changerait le plus votre conclusion ?"
+        },
+        {
+          "title": "Alertes de seuil, suivi des écarts et limites de la prévision",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Définir des alertes de trésorerie utiles.\n- Suivre les écarts entre prévu et réalisé pour s'améliorer.\n\n## Des alertes liées à des décisions\n\nUne alerte n'a de sens que si elle déclenche une **action** prévue à l'avance. Exemples :\n\n- **Seuil de solde minimal** (fixé par la direction) : si la prévision passe sous le seuil dans les n prochaines semaines, on prépare des mesures.\n- **Concentration** : un client représente une part importante des encaissements attendus ; son retard menace le plan.\n- **Échéance critique** : paiement important (paie, échéance d'emprunt) couvert avec une marge faible.\n\nPour chaque alerte, décrivez : le seuil, qui est prévenu, quelle action, et sous quel délai.\n\n## Suivre les écarts\n\nChaque période, comparez **prévu et réalisé** ligne par ligne. Trois questions :\n\n- L'écart vient-il d'un **mauvais calendrier** (le paiement a eu lieu, mais plus tard) ou d'un **mauvais montant** ?\n- L'écart est-il ponctuel ou **répété** (hypothèse à corriger) ?\n- Que change-t-on dans le modèle ?\n\nTenez un petit **journal des écarts** : ce sont vos meilleures données pour fiabiliser le modèle. L'IA peut rédiger un commentaire d'écart à partir de vos chiffres ; vérifiez qu'il ne raconte pas une cause que vous ne connaissez pas.\n\n## Les limites à dire\n\n- Une prévision porte sur l'**avenir** : elle est incertaine, et d'autant plus que l'horizon s'éloigne.\n- Elle dépend de la qualité des données de départ : factures non enregistrées, paiements non lettrés, soldes bancaires mal rapprochés.\n- L'IA n'a pas accès à ce qui n'est pas dans vos données (négociation en cours, litige, décision de la direction).\n\nPrésentez donc la prévision comme un **outil d'anticipation avec hypothèses**, pas comme une promesse. Ce module ne remplace pas l'avis d'un professionnel pour vos décisions de financement.\n\n## Mise en pratique\n\nRédigez deux alertes (seuil, destinataire, action, délai) pour une trésorerie fictive de votre choix."
+        }
+      ]
+    },
+    {
+      "title": "Contrôle interne et audit",
+      "lessons": [
+        {
+          "title": "Contrôle interne et séparation des tâches avec l'IA dans la boucle",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Rappeler les principes de séparation des tâches et les appliquer à un flux assisté par IA.\n- Identifier les nouveaux risques introduits par l'IA.\n\n## Un rappel de principes\n\nLe contrôle interne vise à rendre les processus **fiables** : opérations autorisées, enregistrées complètement et correctement, actifs protégés. Un principe central est la **séparation des tâches** : la personne qui prépare, celle qui approuve et celle qui paie ne sont pas la même. Le principe reste valable quand une IA intervient.\n\n## Où l'IA se place dans la séparation\n\nL'IA n'est pas une personne et ne porte pas de responsabilité. Traitez-la comme un **outil de préparation** :\n\n- elle peut **préparer** (extraire, proposer une imputation, signaler une anomalie) ;\n- elle ne doit pas **approuver** ni **exécuter un paiement** seule ;\n- la personne qui **configure** l'outil (règles, consignes, seuils) ne doit pas être la seule à en **valider** les résultats ni à approuver les opérations qu'il traite.\n\n```mermaid\nsequenceDiagram\n  accTitle: Flux assisté par IA avec séparation des tâches\n  accDescr: Le préparateur lance l'extraction par l'assistant, qui renvoie une proposition. Le préparateur la vérifie, un approbateur distinct valide, puis le paiement est exécuté par une troisième personne. Chaque étape est consignée.\n  participant P as Préparateur\n  participant IA as Assistant IA\n  participant A as Approbateur\n  participant T as Trésorier\n  P->>IA: Document et consigne\n  IA-->>P: Proposition d'écriture\n  P->>P: Vérifie et corrige\n  P->>A: Dossier avec preuves\n  A->>A: Contrôle et approuve\n  A->>T: Ordre de paiement\n  T->>T: Exécute et consigne\n```\n*Figure 6 : séparation des tâches maintenue ; l'assistant prépare, deux personnes distinctes approuvent et exécutent.*\n\n## Nouveaux risques à traiter\n\n- **Confiance excessive** : on valide sans regarder parce que l'outil « se trompe rarement ».\n- **Modification silencieuse** : une mise à jour de l'outil ou de la consigne change le comportement sans que personne ne s'en aperçoive.\n- **Accès** : des données financières saisies dans un service externe sans cadre.\n- **Dépendance** : plus personne ne sait faire le contrôle à la main.\n- **Fausse preuve** : un texte produit par l'IA présenté comme une pièce justificative.\n\n## Mise en pratique\n\nPrenez un flux de votre activité (achat à paiement) et notez qui prépare, qui approuve, qui exécute. Marquez ensuite l'étape où l'IA interviendrait et la règle qui l'empêche d'approuver seule."
+        },
+        {
+          "title": "Proportionner le contrôle humain au risque",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Classer des tâches selon risque et volume.\n- Choisir un niveau de contrôle humain proportionné.\n\n## Deux questions pour chaque tâche\n\n1. **Que se passe-t-il si l'IA se trompe sans que personne ne le voie ?** (gravité)\n2. **Combien d'opérations passent par là ?** (volume)\n\nLa gravité et le volume guident l'effort de contrôle. Les valeurs ci-dessous sont des exemples fictifs de positionnement, à adapter.\n\n```mermaid\nquadrantChart\n  accTitle: Matrice risque et volume pour doser le contrôle humain\n  accDescr: Quatre zones selon le risque et le volume. Un risque faible et un volume élevé justifient un contrôle par échantillon. Un risque élevé exige un contrôle individuel. Les positions sont fictives et illustratives.\n  title Dosage du contrôle (positions fictives)\n  x-axis \"Risque faible\" --> \"Risque élevé\"\n  y-axis \"Volume faible\" --> \"Volume élevé\"\n  quadrant-1 \"Automatiser avec règles et échantillon renforcé\"\n  quadrant-2 \"Automatiser avec échantillon\"\n  quadrant-3 \"Contrôle allégé\"\n  quadrant-4 \"Contrôle individuel\"\n  \"Notes de frais courantes\": [0.2, 0.8]\n  \"Factures récurrentes\": [0.35, 0.7]\n  \"Paiements exceptionnels\": [0.9, 0.15]\n  \"Écritures d'inventaire\": [0.75, 0.3]\n```\n*Figure 7 : matrice illustrative ; les positions sont fictives et doivent être réévaluées pour votre contexte.*\n\n## Des niveaux de contrôle\n\n- **Individuel** : chaque opération est relue par un humain. Pour les montants élevés, les opérations irréversibles, les nouveaux fournisseurs, les coordonnées bancaires.\n- **Par échantillon** : un pourcentage d'opérations relu, plus toutes celles qui échouent aux règles. Le pourcentage et la méthode de tirage sont **décidés et écrits**.\n- **Par exception** : seules les alertes sont relues. Réservé aux risques faibles et aux outils dont la fiabilité a été mesurée.\n- **Supervision périodique** : contrôle global de cohérence (totaux, soldes) et revue des journaux.\n\n## Éviter les pièges\n\n- L'échantillon doit être **tiré sans biais** : si c'est l'opérateur qui choisit les lignes, il choisit les plus faciles.\n- Quand le taux d'erreur mesuré augmente, on **renforce** le contrôle ; quand il reste faible sur une longue période, on peut l'alléger, en le documentant.\n- Un contrôle qui n'a jamais rien détecté peut être inutile... ou excellent : examinez les deux hypothèses.\n\n## Question de réflexion\n\nPlacez trois tâches de votre quotidien sur la matrice. Laquelle exige, selon vous, un contrôle individuel, et laquelle pourrait passer en contrôle par échantillon ?"
+        },
+        {
+          "title": "Ce que l'IA change au travail d'audit : preuves, échantillons, esprit critique",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Comprendre comment l'IA peut assister les travaux d'audit sans remplacer le jugement.\n- Savoir apprécier la valeur d'une preuve issue d'un traitement assisté.\n\n## Ce que l'IA peut apporter\n\n- **Analyse de populations entières** plutôt que d'échantillons seuls : recherche de doublons, de ruptures de séquence, d'opérations atypiques dans l'ensemble des écritures.\n- **Aide à la lecture** de contrats ou de pièces nombreuses : extraction de clauses ou de montants pour préparer des tests.\n- **Préparation** de programmes de travail, de questionnaires, de projets de synthèse.\n- **Rapprochement** automatisé de sources (commandes, livraisons, factures).\n\n## Ce qui ne change pas\n\n- L'**esprit critique** et le jugement professionnel appartiennent à l'auditeur.\n- Une **conclusion** s'appuie sur des éléments probants, vérifiables et conservés ; une réponse d'assistant n'est pas un élément probant en soi.\n- L'indépendance, la confidentialité et les règles de votre profession s'appliquent, tout comme le référentiel de votre organisation, que ce module ne remplace pas.\n\n## Apprécier une preuve issue d'un traitement assisté\n\nPosez-vous ces questions :\n\n- **Quelles données** étaient en entrée, d'où viennent-elles, sont-elles complètes ?\n- **Quelle méthode** a été appliquée : règle déterministe, consigne à l'assistant, version de l'outil ?\n- **Peut-on la refaire** et obtenir le même résultat, ou au moins comprendre l'écart ?\n- **Qui a vérifié** le résultat, et comment (relecture d'un échantillon, recalcul indépendant) ?\n\nSi l'une de ces réponses manque, la preuve est fragile.\n\n## L'IA dans l'entité auditée\n\nQuand l'entité utilise l'IA pour produire des chiffres ou des contrôles, l'auditeur s'intéresse aussi à la **gouvernance** de ces outils : qui les configure, comment ils sont testés, comment les modifications sont maîtrisées. Une documentation claire du contrôle assisté facilite ce dialogue.\n\n## Mise en pratique\n\nPour un test d'audit fictif de votre choix (par exemple, recherche de doublons de factures sur toute une année), listez : les données nécessaires, la règle, la vérification humaine, et la trace conservée."
+        }
+      ]
+    },
+    {
+      "title": "Piste d'audit, conservation et documentation du contrôle assisté",
+      "lessons": [
+        {
+          "title": "La piste d'audit d'un contrôle assisté : que tracer ?",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Définir une piste d'audit pour un traitement assisté par IA.\n- Choisir les éléments à consigner à chaque étape.\n\n## À quoi sert la piste d'audit\n\nLa piste d'audit permet de **reconstituer** comment un chiffre ou une décision est né : de la pièce d'origine à l'écriture, avec chaque transformation et chaque intervenant. Avec l'IA, elle doit en plus tracer ce qui est **propre à l'outil** : version, consigne, sortie brute et correction humaine.\n\n## Les éléments à consigner\n\nPour chaque lot ou opération traitée, conservez :\n\n- **identifiant de la pièce** source et empreinte ou référence de son stockage ;\n- **date et heure** du traitement, et **qui** l'a lancé ;\n- **outil et version** (ou date d'utilisation), et **identifiant de la consigne** utilisée ;\n- **sortie brute** de l'IA, avant correction ;\n- **résultat des règles de validation** (réussi, échoué, lesquelles) ;\n- **décision humaine** : acceptée, corrigée (avant/après), rejetée, avec le nom du relecteur et un motif pour les corrections ;\n- **écriture ou action finale** et son approbateur.\n\n## Un journal simple suffit\n\nUn tableur ou une base d'un outil no-code peut tenir ce journal : une ligne par opération, avec ces colonnes, **protégé en modification** pour les anciennes lignes. L'essentiel est qu'il soit **complet, daté et difficile à altérer** sans laisser de trace.\n\n## Ce qu'il ne faut pas faire\n\n- Consigner uniquement le résultat final : l'écart entre sortie brute et correction est précisément ce qui montre la fiabilité du contrôle.\n- Stocker des données personnelles inutiles dans le journal.\n- Laisser le même compte lancer, corriger et approuver.\n- Garder des copies de travail sans règle de nommage, impossibles à relier aux pièces.\n\n## Exemple fictif\n\nLigne de journal : lot « 2026-03-A » ; pièce « F-2033 » ; outil « assistant X, consigne v3 » ; sortie brute « TTC 786,00 » ; règle HT + TVA = TTC : échec ; correction par le relecteur : « 768,00 » ; motif : chiffres inversés ; approbation : un second agent. Toutes ces valeurs sont inventées.\n\n## Mise en pratique\n\nDessinez les colonnes du journal de piste d'audit pour un traitement de votre activité. Marquez celles que vous jugez indispensables et celles qui seraient excessives."
+        },
+        {
+          "title": "Conservation, accès et confidentialité des traces",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Identifier les questions à traiter pour la conservation des traces.\n- Mettre en place des règles d'accès et de protection simples.\n\n## Conserver : la durée n'est pas la vôtre à inventer\n\nLes durées de conservation des documents comptables et des traces de contrôle dépendent des **obligations qui s'appliquent à votre organisation** (réglementation, contrat, politique interne). Ce module n'en donne aucune : demandez-les à votre direction financière, à votre juriste ou à votre expert, et reprenez-les telles quelles dans votre procédure. Pensez aussi aux **exigences de suppression** qui peuvent s'appliquer aux données personnelles : conserver ne veut pas dire tout conserver sans limite.\n\n## Les questions à poser\n\n- **Où** sont stockés les pièces, les sorties brutes et le journal ? Le service est-il conforme à votre cadre de sécurité ?\n- **Qui** peut lire, écrire, supprimer ? Les droits sont-ils distincts pour le préparateur, l'approbateur et l'administrateur du journal ?\n- **Combien de temps** et **qui** décide de la suppression ?\n- **Que devient la trace** si l'outil change ou si le prestataire disparaît ? Prévoyez un export dans un format lisible.\n- **L'historique des consignes** est-il conservé, avec leurs versions ?\n\n## Intégrité\n\nPour montrer qu'une trace n'a pas été modifiée après coup :\n\n- limiter l'écriture aux ajouts, et horodater ;\n- conserver un **historique des versions** du journal ;\n- faire valider périodiquement le journal par une personne indépendante de celle qui le tient.\n\n## Confidentialité\n\n- Minimisez ce que vous envoyez à un outil externe et ce que vous conservez dans le journal.\n- Évitez de copier des pièces entières dans des conversations d'assistant non encadrées.\n- Pseudonymisez pour les formations et les tests.\n\n## Question de réflexion\n\nSi un tiers vous demandait demain de reconstituer le traitement d'une facture il y a un an, que pourriez-vous lui montrer aujourd'hui, et que vous manquerait-il ?"
+        },
+        {
+          "title": "Documenter la procédure de contrôle assisté",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Structurer une procédure de contrôle assisté par IA.\n- Prévoir la revue périodique et la gestion des changements.\n\n## Pourquoi une procédure écrite\n\nUne procédure rend le contrôle **reproductible**, **transmissible** et **auditable**. Elle protège aussi l'organisation quand une personne change de poste. Elle tient en quelques pages si elle est précise.\n\n## Plan type\n\n- **Objet et périmètre** : quel flux, quels documents, quelles entités.\n- **Rôles** : préparateur, relecteur, approbateur, propriétaire de l'outil, personne indépendante.\n- **Outil et version** : service utilisé, version ou date, consigne de référence, accès.\n- **Données et confidentialité** : ce qui peut être envoyé à l'outil, ce qui est exclu, règles d'anonymisation.\n- **Étapes du contrôle** : extraction ou analyse, règles de validation, seuils, cas à revue humaine.\n- **Niveau de contrôle humain** : individuel, échantillon (taille, méthode de tirage), exception.\n- **Mesure de fiabilité** : indicateurs suivis (taux d'erreur par champ, alertes justifiées), fréquence.\n- **Piste d'audit** : journal, éléments consignés, conservation, accès.\n- **Incidents** : que faire si l'outil se trompe, est indisponible, ou si une fuite est suspectée.\n- **Changements** : qui valide une modification de consigne, de seuil ou de version, et quels tests refaire.\n- **Revue** : fréquence et responsable.\n\n```mermaid\nflowchart TD\n  accTitle: Boucle de maintien d'une procédure de contrôle assisté\n  accDescr: La procédure est écrite, appliquée, mesurée par échantillon, révisée en cas d'écart ou de changement d'outil, puis réapprouvée par le responsable.\n  A[\"Rédiger la procédure\"] --> B[\"Appliquer et tracer\"]\n  B --> C[\"Mesurer la fiabilité\"]\n  C --> D{\"Écart ou changement d'outil ?\"}\n  D -->|\"Oui\"| E[\"Réviser consigne, seuils, contrôle\"]\n  D -->|\"Non\"| F[\"Poursuivre, revue périodique\"]\n  E --> G[\"Réapprobation\"]\n  G --> B\n  F --> B\n```\n*Figure 8 : une procédure vit ; toute dérive mesurée ou tout changement d'outil déclenche une révision et une réapprobation.*\n\n## Rédiger pour être appliqué\n\n- Phrases courtes, verbes d'action, un responsable par étape.\n- Exemples concrets en annexe (une ligne de journal, une alerte traitée).\n- Un **tableau de suivi des versions** de la procédure (sous forme de liste, date et motif).\n\n## Mise en pratique\n\nRédigez en dix lignes le périmètre, les rôles et le niveau de contrôle humain d'une procédure fictive de votre choix."
+        }
+      ]
+    },
+    {
+      "title": "Ateliers no-code et low-code",
+      "lessons": [
+        {
+          "title": "Atelier 1 : mesurer la fiabilité d'une extraction de factures fictives",
+          "kind": "exercise",
+          "body_md": "## Objectif et durée\n\n**Objectif** : mesurer, par champ, le taux d'erreur d'un assistant IA qui extrait des données de six factures fictives. **Durée estimée** : 45 à 60 minutes.\n\n## Plateformes\n\n- Un **assistant IA** généraliste (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : un assistant hébergé en interne ou tout autre assistant autorisé par votre organisation.\n- Un **tableur** (no-code) : Google Sheets ou un tableur libre ; offre gratuite ou version libre à la date de rédaction, à vérifier.\n\n## Données fictives (texte brut des factures)\n\nToutes ces entreprises, factures et montants sont inventés. Le taux de TVA de 5,5 % de la facture 6 est illustratif.\n\n- **Facture 1** : « FACTURE N° F-2031 - Atelier Brume (fictif) - date 04/03/2026 - HT 1 200,00 EUR - TVA 20 % 240,00 EUR - TTC 1 440,00 EUR »\n- **Facture 2** : « Papeterie Lierre (fictive), facture 2032 du 5 mars 2026. Total HT : 85,50 EUR ; TVA : 17,10 EUR ; Net à payer : 102,60 EUR »\n- **Facture 3** : « Transports Orme (fictif) / Inv. F-2033 / 09-03-26 / Montant HT 640.00 / TVA 128.00 / TTC 768.00 »\n- **Facture 4** : « Cabinet Sorbier (fictif) - Note d'honoraires H-77 - 11/03/2026 - Honoraires 900,00 - TVA 20 % 180,00 - Total à régler 1 080,00 EUR »\n- **Facture 5** : « Garage Tilleul (fictif) FACTURE F-0415 18/03/2026 Pièces 212,40 Main d'oeuvre 120,00 Total HT 332,40 TVA 66,48 TTC 398,88 »\n- **Facture 6** : « Énergie Aubépine (fictive), facture E-5589, 21/03/2026, HT 410,00 EUR, TVA à taux réduit 5,5 % : 22,55 EUR, TTC 432,55 EUR »\n\n## Étapes\n\n1. Dans le tableur, créez un onglet **Référence** : une ligne par facture, colonnes fournisseur, numéro, date (AAAA-MM-JJ), HT, TVA, TTC. Saisissez vous-même les valeurs à partir des textes ci-dessus : c'est votre vérité de référence.\n2. Rédigez la **consigne** de l'assistant : grille de champs identique, format des dates, nombres à deux décimales, « ABSENT si illisible », « ne calcule pas, recopie ». Collez les six textes, demandez un résultat en une ligne par facture.\n3. Collez la sortie dans un onglet **Extraction**, avec les mêmes colonnes.\n4. Créez un onglet **Comparaison** : pour chaque cellule, une formule d'égalité entre Référence et Extraction qui renvoie 0 (identique) ou 1 (différent). Ajoutez une ligne de total par colonne.\n5. Ajoutez une colonne de **règle de cohérence** : HT + TVA = TTC, à un centime près.\n6. Calculez le **taux d'erreur par champ** : nombre de différences divisé par six. Notez le type de chaque erreur (montant, date, fournisseur, invention).\n7. Rédigez trois lignes de conclusion : quel champ est fragile, quel contrôle vous mettriez en place, quelle taille d'échantillon vous voudriez en situation réelle.\n\n## Résultat attendu\n\nUn classeur à trois onglets (Référence, Extraction, Comparaison) et une conclusion sur la fiabilité mesurée, avec les limites d'un échantillon de six factures.\n\n## Critères de réussite\n\n- [ ] Les valeurs de référence sont saisies par vous et non par l'assistant.\n- [ ] Le taux d'erreur est donné **par champ**.\n- [ ] Les erreurs sont typées et chaque règle de cohérence est testée.\n- [ ] La conclusion dit clairement que six factures ne suffisent pas à généraliser.\n\n## Pièges\n\n- Demander à l'assistant de calculer le taux d'erreur : faites-le dans le tableur.\n- Confondre format différent (date écrite autrement) et valeur différente : normalisez avant de comparer, et notez-le.\n- Utiliser de vraies factures : restez sur ces données fictives.\n\n## Pour aller plus loin\n\nRefaites l'essai avec une consigne différente (par exemple, sans l'interdit « ne calcule pas ») et comparez les taux d'erreur."
+        },
+        {
+          "title": "Atelier 2 : bâtir un rapprochement avec règles et signalement d'anomalies",
+          "kind": "exercise",
+          "body_md": "## Objectif et durée\n\n**Objectif** : construire dans un tableur un rapprochement bancaire par règles, avec signalement des anomalies. **Durée estimée** : 60 à 90 minutes.\n\n## Plateformes\n\n- Un **tableur** (no-code) : Google Sheets ou un tableur libre ; offre gratuite ou version libre à la date de rédaction, à vérifier.\n- Facultatif : un **assistant IA** pour expliquer ou proposer des formules, que vous relisez ; alternative : l'aide intégrée de votre tableur.\n- Pour aller plus loin : un outil d'automatisation no-code (par exemple n8n en version libre ou Make, offre gratuite à vérifier à la date de rédaction).\n\n## Données fictives\n\n**Relevé bancaire (banque fictive)** :\n\n- B1 : 03/03, VIR BRUME F-2031, -1 440,00\n- B2 : 06/03, CB PAPETERIE LIERRE, -102,60\n- B3 : 12/03, VIR ORME TRANSPORT, -768,00\n- B4 : 14/03, PRLV ASSURANCE FICTIVE, -310,00\n- B5 : 15/03, VIR DELTA FACT C-118, +2 400,00\n- B6 : 18/03, VIR DELTA FACT C-118, +2 400,00\n- B7 : 20/03, VIR OMEGA, +1 150,00\n- B8 : 28/03, VIR ORME TRANSPORT, -768,00\n- B9 : 30/03, FRAIS BANCAIRES, -24,90\n\n**Écritures de la comptabilité (société fictive)** :\n\n- L1 : F-2031 Atelier Brume, -1 440,00\n- L2 : Papeterie Lierre, -102,60\n- L3 : F-2033 Transports Orme, -768,00\n- L4 : Assurance fictive, -310,00\n- L5 : C-118 Delta, +2 400,00\n- L6 : C-121 Omega, +1 150,00\n- L7 : Loyer prévu le 25/03, -1 800,00\n\n## Étapes\n\n1. Créez deux onglets, **Banque** et **Compta**, et saisissez les lignes ci-dessus avec une colonne identifiant, date, libellé, montant.\n2. Dans **Banque**, ajoutez une colonne **Règle 1** : une formule de recherche qui cherche dans **Compta** un montant identique ; si trouvé et si la référence (numéro de facture) apparaît aussi, écrivez « Certain ».\n3. Ajoutez une colonne **Règle 2** : montant identique sans référence concordante, écrire « À confirmer ».\n4. Ajoutez une colonne **Occurrence** : rang de la ligne parmi celles qui ont le même libellé et le même montant (1 pour la première, 2 pour la suivante). À partir de 2, écrire « Doublon possible ».\n5. Ajoutez une colonne **Statut final** qui combine les règles, avec cette priorité : Doublon possible, puis Certain, puis À confirmer, sinon Non rapproché.\n6. Dans **Compta**, ajoutez la colonne symétrique : écritures non retrouvées en banque.\n7. Créez un onglet **Anomalies** : liste des lignes dont le statut n'est pas « Certain », avec colonnes motif, analyste, décision (justifiée, corrigée, escaladée), justification.\n8. Facultatif : demandez à un assistant d'expliquer vos formules ou de proposer une règle de libellé proche ; testez-la avant de l'adopter.\n\n## Résultat attendu\n\nCinq lignes certaines, une ligne à confirmer (B7), deux lignes à examiner pour doublon possible (B6 et B8), une ligne bancaire sans écriture (B9) et une écriture sans mouvement bancaire (L7).\n\n## Critères de réussite\n\n- [ ] Les règles sont écrites dans des colonnes distinctes et lisibles.\n- [ ] Les anomalies prévues sont toutes signalées.\n- [ ] Chaque ligne de l'onglet Anomalies porte un motif et une justification de décision.\n- [ ] Vous pouvez dire quelle règle produirait un faux positif et laquelle un faux négatif.\n\n## Pièges\n\n- Un doublon de montant n'est pas forcément un doublon de paiement : c'est un signalement, pas une conclusion.\n- Les règles de tolérance (date, centimes) doivent être écrites dans des cellules de paramètres et non dans les formules.\n- N'utilisez pas de données réelles.\n\n## Pour aller plus loin\n\nAjoutez une tolérance de date en paramètre et une règle sur les montants juste sous un seuil d'approbation fictif."
+        },
+        {
+          "title": "Atelier 3 : rédiger la procédure de contrôle assisté avec piste d'audit",
+          "kind": "exercise",
+          "body_md": "## Objectif et durée\n\n**Objectif** : rédiger la procédure d'un contrôle assisté par IA et créer son journal de piste d'audit. **Durée estimée** : 60 à 90 minutes.\n\n## Plateformes\n\n- Un **éditeur de documents** (no-code) : Google Docs, Notion ou un éditeur libre ; offre gratuite ou version libre à la date de rédaction, à vérifier.\n- Un **tableur** ou une **base no-code** (Airtable, NocoDB ou Google Sheets ; offre gratuite ou version libre à la date de rédaction, à vérifier) pour le journal.\n- Facultatif : un assistant IA pour reformuler et relire ; alternative : une relecture par un collègue.\n\n## Cas de départ (fictif)\n\nLa société fictive « Atelier Brume » souhaite faire extraire les données de ses factures fournisseurs par un assistant, puis les faire valider avant comptabilisation. Vous réutilisez les résultats de l'atelier 1 et les règles de l'atelier 2.\n\n## Étapes\n\n1. Dans l'éditeur, créez les rubriques de la procédure : objet et périmètre, rôles, outil et version, données et confidentialité, étapes du contrôle, niveau de contrôle humain, mesure de fiabilité, piste d'audit, incidents, changements, revue.\n2. Remplissez chaque rubrique en phrases courtes, avec un responsable par étape. Indiquez le niveau de contrôle humain pour trois situations : facture récurrente de faible montant, facture d'un nouveau fournisseur, modification de coordonnées bancaires.\n3. Rédigez la **consigne de référence** de l'assistant dans une annexe, avec son numéro de version.\n4. Créez le **journal** dans le tableur ou la base : colonnes identifiant de pièce, date, opérateur, outil et version, consigne, sortie brute, résultat des règles, décision humaine, valeur corrigée, motif, approbateur.\n5. Saisissez **trois lignes d'exemple** à partir des factures de l'atelier 1 : une acceptée, une corrigée, une rejetée.\n6. Définissez les **droits d'accès** : qui peut ajouter, qui peut lire, qui administre. Indiquez le principe de protection des anciennes lignes.\n7. Écrivez la section **revue** : fréquence, indicateurs suivis (taux d'erreur par champ, alertes justifiées) et condition de réapprobation après un changement.\n8. Faites relire par une autre personne, ou demandez à un assistant un regard critique que vous évaluez.\n\n## Résultat attendu\n\nUne procédure de deux à quatre pages et un journal de piste d'audit comportant trois exemples.\n\n## Critères de réussite\n\n- [ ] Les rôles respectent la séparation des tâches : l'IA prépare, deux personnes distinctes approuvent et exécutent.\n- [ ] Le niveau de contrôle humain est justifié selon le risque.\n- [ ] Le journal contient la sortie brute et la correction humaine.\n- [ ] La procédure prévoit incident, changement et revue.\n- [ ] Aucune durée de conservation n'est inventée : elle renvoie à la politique de l'organisation.\n\n## Pièges\n\n- Écrire une procédure idéale, mais inapplicable : testez-la sur les trois lignes d'exemple.\n- Oublier que le même compte ne doit pas préparer et approuver.\n- Garder des données personnelles dans le journal sans nécessité.\n\n## Pour aller plus loin\n\nAjoutez une annexe de plan de test : cinq factures fictives à rejouer après toute modification de la consigne."
+        }
+      ]
+    }
+  ],
+  "quiz": {
+    "title": "Quiz du module",
+    "pass_percent": 70,
+    "max_attempts": null,
+    "questions": [
+      {
+        "kind": "single_choice",
+        "prompt": "Comment faut-il traiter la sortie d'un assistant qui extrait les champs d'une facture ?",
+        "feedback": "L'IA accélère la saisie mais peut mal lire ou mal calculer. La responsabilité de l'exactitude reste humaine, avec un contrôle proportionné au risque.",
+        "options": [
+          [
+            "Comme une donnée fiable tant qu'aucune plainte n'arrive",
+            false
+          ],
+          [
+            "Comme une preuve suffisante pour approuver le paiement",
+            false
+          ],
+          [
+            "Comme une écriture définitive, car l'outil est rapide",
+            false
+          ],
+          [
+            "Comme une proposition rapide à contrôler en proportion du risque",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi demander à l'assistant de recopier le total imprimé plutôt que de le calculer ?",
+        "feedback": "Un assistant n'est pas un tableur. On recopie la valeur imprimée, puis on contrôle la cohérence HT + TVA = TTC par une règle de tableur. Les totaux imprimés peuvent eux-mêmes contenir une erreur.",
+        "options": [
+          [
+            "Parce que cela évite d'avoir à valider les champs",
+            false
+          ],
+          [
+            "Parce que les totaux imprimés sont toujours exacts",
+            false
+          ],
+          [
+            "Parce que les assistants ne savent pas lire les nombres",
+            false
+          ],
+          [
+            "Parce qu'un modèle de langage peut se tromper en arithmétique et que le calcul se contrôle ailleurs",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles consignes réduisent le risque d'invention lors d'une extraction ?",
+        "feedback": "Les trois premières pratiques limitent les inventions et facilitent la vérification. Laisser l'outil compléter ou corriger incite précisément à inventer.",
+        "options": [
+          [
+            "Interdire d'estimer une valeur",
+            true
+          ],
+          [
+            "Demander l'extrait de texte source des champs sensibles",
+            true
+          ],
+          [
+            "Écrire ABSENT si un champ est illisible",
+            true
+          ],
+          [
+            "Autoriser l'assistant à corriger les montants qu'il juge faux",
+            false
+          ],
+          [
+            "Demander à l'assistant de compléter les champs manquants au mieux",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que mesure un taux d'erreur par champ sur un échantillon ?",
+        "feedback": "Le taux décrit votre échantillon, champ par champ. Il ne se généralise pas sans précaution, d'autant plus que l'échantillon est petit ou peu représentatif.",
+        "options": [
+          [
+            "Le taux d'erreur de tous les assistants du marché",
+            false
+          ],
+          [
+            "La fiabilité de l'outil quelle que soit la qualité des documents",
+            false
+          ],
+          [
+            "La probabilité que le prochain document soit juste, garantie",
+            false
+          ],
+          [
+            "La proportion de documents examinés dont ce champ est erroné",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Sur un échantillon de dix factures, une seule erreur change fortement le pourcentage. Quelle conclusion en tirer ?",
+        "feedback": "Sur de petits effectifs, un seul cas déplace beaucoup le taux. On le signale, on garde un contrôle prudent et on augmente l'échantillon avant de relâcher le contrôle.",
+        "options": [
+          [
+            "Il faut supprimer l'erreur pour obtenir un taux plus représentatif",
+            false
+          ],
+          [
+            "Le pourcentage est exact et peut être appliqué à toutes les factures",
+            false
+          ],
+          [
+            "Le résultat est fragile : il faut le dire et élargir l'échantillon pour décider",
+            true
+          ],
+          [
+            "L'échantillon est suffisant dès que le taux est faible",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles règles de cohérence peut-on automatiser dans un tableur après extraction ?",
+        "feedback": "Les règles de cohérence se testent mécaniquement. Elles ne garantissent pas l'absence d'erreur : deux erreurs peuvent se compenser, et un fournisseur mal lu mais plausible passe.",
+        "options": [
+          [
+            "Détection d'un numéro de facture déjà vu pour le même fournisseur",
+            true
+          ],
+          [
+            "HT + TVA = TTC, à l'arrondi près",
+            true
+          ],
+          [
+            "Garantie qu'aucune erreur ne subsiste dès que les règles sont réussies",
+            false
+          ],
+          [
+            "Vérification que l'assistant a bien compris le contexte de l'entreprise",
+            false
+          ],
+          [
+            "Signalement d'une date incompatible avec la période traitée",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pour un relevé bancaire, quel contrôle d'ensemble détecte de nombreuses erreurs d'extraction ?",
+        "feedback": "Le report de solde est un contrôle global : un signe inversé ou une ligne manquante le fait échouer. Il se complète par un contrôle ligne à ligne.",
+        "options": [
+          [
+            "Le nombre de lignes doit être pair",
+            false
+          ],
+          [
+            "Toutes les dates doivent tomber un jour ouvré",
+            false
+          ],
+          [
+            "Solde initial plus crédits moins débits égale solde final",
+            true
+          ],
+          [
+            "Les libellés doivent tous être différents",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Un scan très flou donne des extractions peu fiables. Quelle est la meilleure réponse ?",
+        "feedback": "On améliore la source ou on renonce à l'automatisation pour les documents dégradés, selon un seuil fixé à l'avance. Deviner revient à inventer.",
+        "options": [
+          [
+            "Demander à l'assistant de deviner les chiffres illisibles",
+            false
+          ],
+          [
+            "Améliorer la source ou saisir manuellement sous un seuil de qualité défini",
+            true
+          ],
+          [
+            "Accepter la sortie, puisque l'outil donne une réponse",
+            false
+          ],
+          [
+            "Supprimer le document du lot",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Dans une cascade de rapprochement, pourquoi placer les règles exactes avant la proposition de l'IA ?",
+        "feedback": "Les règles déterministes donnent des résultats stables et justifiables. L'IA intervient ensuite sur les cas non standardisés, avec une validation humaine.",
+        "options": [
+          [
+            "Elles sont prévisibles, expliquables et reproductibles",
+            true
+          ],
+          [
+            "L'IA ne sait pas comparer des libellés",
+            false
+          ],
+          [
+            "Elles sont plus rapides à écrire que toute règle",
+            false
+          ],
+          [
+            "Elles évitent d'avoir une revue humaine",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels sont des rapprochements de niveau « probable » appelant une confirmation ?",
+        "feedback": "Les cas de libellé proche, de paiement groupé ou partiel relèvent du probable. Montant et référence identiques relèvent du certain ; l'absence de point commun relève du non rapproché.",
+        "options": [
+          [
+            "Un libellé écrit autrement mais proche",
+            true
+          ],
+          [
+            "Un règlement partiel d'une facture",
+            true
+          ],
+          [
+            "Deux lignes de même montant et de même numéro de facture",
+            false
+          ],
+          [
+            "Un paiement groupé couvrant plusieurs factures",
+            true
+          ],
+          [
+            "Une ligne sans aucun point commun avec une écriture",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle est la différence entre une anomalie et une erreur ?",
+        "feedback": "Un achat exceptionnel peut être atypique et légitime. Le détecteur signale ; l'humain qualifie.",
+        "options": [
+          [
+            "Une anomalie est un écart à l'attendu, légitime ou non, à qualifier",
+            true
+          ],
+          [
+            "Une anomalie est toujours une erreur de saisie",
+            false
+          ],
+          [
+            "Il n'y a aucune différence, les deux se corrigent automatiquement",
+            false
+          ],
+          [
+            "Une anomalie est toujours une fraude",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que traduit le choix d'un seuil d'alerte ?",
+        "feedback": "Le seuil arbitre entre alertes inutiles et anomalies manquées. Il se fixe avec le métier, se teste sur l'historique et se réexamine périodiquement.",
+        "options": [
+          [
+            "Une valeur imposée par l'outil",
+            false
+          ],
+          [
+            "Une tolérance au risque à décider avec le métier et à tester sur des données passées",
+            true
+          ],
+          [
+            "Un réglage purement technique sans conséquence",
+            false
+          ],
+          [
+            "Une règle qui n'a jamais besoin d'être revue",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels effets peut avoir un seuil d'alerte trop bas ?",
+        "feedback": "Abaisser le seuil augmente les alertes inutiles et la lassitude. Il tend à réduire les faux négatifs, mais sans les supprimer.",
+        "options": [
+          [
+            "Une suppression définitive des faux négatifs sans aucun coût",
+            false
+          ],
+          [
+            "Beaucoup de faux positifs",
+            true
+          ],
+          [
+            "Davantage d'anomalies réelles non signalées",
+            false
+          ],
+          [
+            "Une lassitude des équipes face aux alertes",
+            true
+          ],
+          [
+            "Un temps d'analyse mobilisé sur des opérations normales",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Qu'est-ce qu'un faux négatif en détection d'anomalies ?",
+        "feedback": "Le faux négatif est le risque non vu, souvent le plus grave et le plus trompeur car il donne une impression de sécurité.",
+        "options": [
+          [
+            "Une règle mal orthographiée",
+            false
+          ],
+          [
+            "Une alerte sur une opération normale",
+            false
+          ],
+          [
+            "Une anomalie réelle qui n'a pas été signalée",
+            true
+          ],
+          [
+            "Une alerte confirmée par l'analyste",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi exiger une justification écrite à la clôture d'une alerte ?",
+        "feedback": "La justification rend la décision auditable et alimente la revue des règles. Une clôture sans motif ne prouve rien.",
+        "options": [
+          [
+            "Pour garder une trace motivée, y compris quand l'alerte est classée justifiée",
+            true
+          ],
+          [
+            "Pour que l'IA puisse clôturer seule",
+            false
+          ],
+          [
+            "Pour supprimer les faux positifs",
+            false
+          ],
+          [
+            "Pour ralentir volontairement le traitement",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Dans une prévision de trésorerie simple, à quoi sert le tableur par rapport à l'assistant ?",
+        "feedback": "Les calculs doivent être faits dans un outil déterministe. L'assistant structure, propose des formules et explique, vous relisez.",
+        "options": [
+          [
+            "Il sert uniquement à mettre en forme les couleurs",
+            false
+          ],
+          [
+            "Il réalise les calculs, tandis que l'assistant aide à structurer et à écrire les formules à relire",
+            true
+          ],
+          [
+            "Il remplace toute hypothèse",
+            false
+          ],
+          [
+            "Il vérifie que l'assistant a toujours raison",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi placer les hypothèses dans des cellules dédiées et nommées ?",
+        "feedback": "Des hypothèses isolées se discutent, se datent et se modifient en un seul endroit, ce qui rend les scénarios cohérents.",
+        "options": [
+          [
+            "Pour masquer les raisons des chiffres",
+            false
+          ],
+          [
+            "Pour les rendre visibles, révisables et propagées à tout le modèle",
+            true
+          ],
+          [
+            "Pour supprimer l'incertitude de la prévision",
+            false
+          ],
+          [
+            "Pour éviter tout scénario alternatif",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles hypothèses influencent fortement une prévision de trésorerie ?",
+        "feedback": "Délais, calendrier des sorties et saisonnalité déterminent le profil des soldes. Les éléments de présentation n'ont aucun effet sur les flux.",
+        "options": [
+          [
+            "Le nom de l'assistant utilisé",
+            false
+          ],
+          [
+            "Les dates de décaissements importants",
+            true
+          ],
+          [
+            "La couleur du tableur",
+            false
+          ],
+          [
+            "Le délai de paiement des clients",
+            true
+          ],
+          [
+            "La saisonnalité de l'activité",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que compare-t-on utilement entre scénarios de trésorerie ?",
+        "feedback": "Le risque de trésorerie se lit au point bas, pas seulement en fin de période. La date du solde minimal laisse un temps de réaction.",
+        "options": [
+          [
+            "Uniquement le solde final de la dernière période",
+            false
+          ],
+          [
+            "Le solde minimal et la date à laquelle il survient",
+            true
+          ],
+          [
+            "Le nombre de lignes du tableur",
+            false
+          ],
+          [
+            "Le nom des clients",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle est la bonne définition d'une alerte de trésorerie utile ?",
+        "feedback": "Une alerte sans action associée est du bruit. Elle précise seuil, destinataire, action et délai.",
+        "options": [
+          [
+            "Une couleur dans le tableur",
+            false
+          ],
+          [
+            "Un message envoyé à tous sans suite prévue",
+            false
+          ],
+          [
+            "Un seuil lié à une action prévue, un destinataire et un délai",
+            true
+          ],
+          [
+            "Une prévision certaine d'un problème",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Dans un flux assisté par IA, quel rôle ne doit pas être confié seul à l'assistant ?",
+        "feedback": "L'IA prépare ; elle ne porte pas de responsabilité. L'approbation et le paiement relèvent de personnes distinctes.",
+        "options": [
+          [
+            "La proposition d'une imputation comptable",
+            false
+          ],
+          [
+            "Le signalement d'une anomalie",
+            false
+          ],
+          [
+            "La mise en forme d'un tableau",
+            false
+          ],
+          [
+            "L'approbation et l'exécution du paiement",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels sont des risques nouveaux liés à l'usage de l'IA dans un processus de contrôle ?",
+        "feedback": "La confiance excessive, les mises à jour non maîtrisées et les fuites de données sont des risques réels. L'IA ne supprime pas les erreurs et ne dispense pas de la séparation des tâches.",
+        "options": [
+          [
+            "Une modification silencieuse du comportement de l'outil après une mise à jour",
+            true
+          ],
+          [
+            "L'inutilité de la séparation des tâches",
+            false
+          ],
+          [
+            "La disparition de toute erreur humaine",
+            false
+          ],
+          [
+            "Une confiance excessive qui réduit la vigilance",
+            true
+          ],
+          [
+            "Des données financières envoyées à un service sans cadre",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Selon la matrice risque et volume, quel contrôle convient à une opération à risque élevé et irréversible ?",
+        "feedback": "Plus la gravité est forte, plus le contrôle est individuel. L'échantillon et l'exception sont réservés aux risques faibles et aux outils dont la fiabilité est mesurée.",
+        "options": [
+          [
+            "Un contrôle par exception uniquement",
+            false
+          ],
+          [
+            "Un échantillon de quelques lignes",
+            false
+          ],
+          [
+            "Aucun contrôle si l'outil est récent",
+            false
+          ],
+          [
+            "Un contrôle individuel de chaque opération",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi l'échantillon de contrôle doit-il être tiré sans biais ?",
+        "feedback": "La méthode de tirage et la taille se décident et s'écrivent à l'avance, afin que l'échantillon représente réellement le flux.",
+        "options": [
+          [
+            "Parce que l'IA le préfère",
+            false
+          ],
+          [
+            "Parce que cela évite d'écrire la méthode",
+            false
+          ],
+          [
+            "Si l'opérateur choisit les lignes, il choisira les plus faciles",
+            true
+          ],
+          [
+            "Parce que l'échantillon doit toujours contenir exactement dix lignes",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Un résultat d'assistant peut-il constituer à lui seul un élément probant d'audit ?",
+        "feedback": "Une preuve se fonde sur des données identifiées, une méthode reproductible et une vérification indépendante. La formulation d'un assistant n'y ajoute rien.",
+        "options": [
+          [
+            "Oui, s'il est rédigé avec assurance",
+            false
+          ],
+          [
+            "Oui, dès qu'il est confirmé par un second assistant",
+            false
+          ],
+          [
+            "Non : il faut des données d'entrée, une méthode, une possibilité de la refaire et une vérification",
+            true
+          ],
+          [
+            "Oui, s'il cite un numéro de page",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels éléments d'une piste d'audit sont propres à un traitement assisté par IA ?",
+        "feedback": "Version, consigne et sortie brute permettent de reconstituer le traitement. Le seul résultat final empêche de mesurer l'écart avec la correction humaine.",
+        "options": [
+          [
+            "Le seul résultat final sans historique",
+            false
+          ],
+          [
+            "La sortie brute avant correction humaine",
+            true
+          ],
+          [
+            "Le nom préféré de l'assistant",
+            false
+          ],
+          [
+            "L'identifiant de la consigne utilisée",
+            true
+          ],
+          [
+            "La version ou la date de l'outil",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle règle appliquer aux durées de conservation des traces ?",
+        "feedback": "Les durées dépendent des obligations de votre organisation. Ce module n'en fixe aucune, et la conservation doit aussi tenir compte des exigences de suppression de certaines données.",
+        "options": [
+          [
+            "Les décider soi-même d'après ce module",
+            false
+          ],
+          [
+            "Conserver ces traces toujours indéfiniment",
+            false
+          ],
+          [
+            "Les supprimer dès la validation",
+            false
+          ],
+          [
+            "Reprendre celles qui s'appliquent à votre organisation, à demander à la direction financière ou au juriste",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que doit déclencher un changement de consigne, de seuil ou de version d'outil ?",
+        "feedback": "Un changement peut modifier la fiabilité. On rejoue des cas de test, on mesure à nouveau et on fait réapprouver la procédure.",
+        "options": [
+          [
+            "Rien, tant que l'outil fonctionne",
+            false
+          ],
+          [
+            "Un abandon automatique du contrôle",
+            false
+          ],
+          [
+            "Une suppression du journal",
+            false
+          ],
+          [
+            "Une révision de la procédure, de nouveaux tests et une réapprobation",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Vous devez automatiser l'extraction des factures fournisseurs de votre structure fictive. Décrivez comment vous mesureriez la fiabilité de l'extraction et quel niveau de contrôle humain vous mettriez en place.",
+        "feedback": "Une bonne réponse prévoit un échantillon représentatif avec valeurs de référence saisies à la main, un taux d'erreur par champ, des règles de cohérence automatiques, un contrôle individuel pour les cas à risque (nouveaux fournisseurs, coordonnées bancaires, montants élevés), un échantillon pour le reste, la mention des limites d'un petit échantillon, et un nouveau test à chaque changement d'outil.",
+        "options": []
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Rédigez les rubriques essentielles d'une procédure de contrôle assisté par IA pour un rapprochement bancaire, en précisant ce que contient la piste d'audit.",
+        "feedback": "Une bonne réponse couvre périmètre, rôles distincts (préparation, approbation, exécution), outil et version, confidentialité, règles et seuils, niveau de contrôle humain, journal avec sortie brute, décision et motif de correction, incidents, changements et revue périodique, et renvoie les durées de conservation à la politique de l'organisation.",
+        "options": []
+      }
+    ]
+  },
+  "assignment": {
+    "title": "Livrable pratique : procédure de contrôle assisté par IA avec piste d'audit",
+    "instructions_md": "## Objectif\n\nDémontrer que vous savez **concevoir un contrôle assisté par IA avec piste d'audit** et en **mesurer la fiabilité**. Vous travaillez sur un cas fictif de votre choix (ou la société fictive « Atelier Brume » des ateliers). Toutes les données sont inventées : aucune donnée confidentielle n'est nécessaire, et aucun conseil comptable, fiscal ou d'audit personnalisé n'est attendu.\n\n## Consignes\n\nCe livrable se réalise **sans code**, avec les outils no-code et low-code des trois ateliers du dernier chapitre : tableur, assistant IA, éditeur de documents et base no-code. Le rendu peut être un lien, un export PDF ou un document.\n\n1. **Cadrage** : le flux contrôlé (par exemple factures fournisseurs ou rapprochement bancaire), les rôles et le risque principal (au moins cinq lignes).\n2. **Mesure de fiabilité** : résultats d'une extraction sur au moins **six documents fictifs** avec taux d'erreur par champ, typologie des erreurs et limites de l'échantillon (atelier 1).\n3. **Règles et anomalies** : au moins trois règles de rapprochement ou de détection avec leurs seuils justifiés, et le traitement d'au moins trois alertes avec motif et décision (atelier 2).\n4. **Niveau de contrôle humain** : justification, selon risque et volume, du contrôle individuel, par échantillon ou par exception pour au moins trois situations.\n5. **Prévision de trésorerie (facultatif mais recommandé)** : une prévision simple à quelques périodes, avec hypothèses écrites, deux scénarios et une alerte de seuil.\n6. **Procédure de contrôle assisté** : document de deux à quatre pages couvrant périmètre, rôles, outil et version, confidentialité, étapes, mesure de fiabilité, incidents, changements et revue (atelier 3).\n7. **Piste d'audit** : journal avec au moins trois lignes d'exemple (acceptée, corrigée, rejetée), sortie brute, décision humaine et approbateur ; règles d'accès ; mention des durées de conservation à reprendre de la politique de l'organisation, sans les inventer.\n8. **Limites et précautions** : un paragraphe sur les erreurs possibles de l'IA (calcul, lecture), la confidentialité et ce que votre démonstration ne prouve pas.\n9. **Variante pour profils avancés (facultative)** : comparez deux consignes ou deux outils sur le même échantillon.\n\n## Grille d'évaluation\n\n- Mesure de fiabilité : référence saisie par vos soins, taux par champ, limites explicitées (**20 %**).\n- Règles, seuils et traitement des anomalies : cohérence, justification, compréhension des faux positifs et faux négatifs (**20 %**).\n- Niveau de contrôle humain proportionné au risque et séparation des tâches (**20 %**).\n- Procédure : complète, claire, applicable, avec incidents, changements et revue (**20 %**).\n- Piste d'audit : éléments consignés, accès, intégrité, conservation renvoyée à la politique de l'organisation (**15 %**).\n- Lucidité sur les limites de l'IA et confidentialité (**5 %**).\n\n## Rendu\n\nTexte dans le champ de réponse et/ou fichier PDF ou document, avec liens ou captures des outils utilisés."
+  }
+}

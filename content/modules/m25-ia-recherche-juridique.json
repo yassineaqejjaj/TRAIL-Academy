@@ -1,0 +1,775 @@
+{
+  "course": "M25",
+  "slug": "ia-recherche-juridique",
+  "source": "Contenu original rédigé pour TRAIL Academy à partir du programme du module (sans slides sources). Pas de vidéo : à ajouter depuis l'administration.",
+  "chapters": [
+    {
+      "title": "Recherche assistée et protocole de vérification des sources",
+      "lessons": [
+        {
+          "title": "Recherche juridique assistée : ce que l'IA change et ce qu'elle ne change pas",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Situer ce qu'un assistant IA peut apporter à une recherche juridique, et ce qu'il ne peut pas garantir.\n- Comprendre pourquoi la vérification dans les sources officielles reste une étape obligatoire.\n\n*Avertissement : ce module est un contenu de formation. Il ne constitue pas un avis juridique. Tous les textes, décisions et organisations cités en exemple sont **fictifs** ; seules les sources officielles font foi.*\n\n## Ce que l'IA apporte\n\nUn assistant peut vous aider à **explorer** un sujet : proposer des angles d'analyse, des mots-clés et des synonymes, reformuler une question floue, lister des points à vérifier, ou structurer un plan de note. Gagner du temps sur ces étapes de défrichage est réel.\n\n## Ce qu'elle ne change pas\n\nUn modèle de langage produit un texte **plausible**, pas un texte **vérifié**. Il peut écrire une référence qui a la bonne forme (juridiction, date, numéro) sans qu'elle existe, ou citer un texte réel en lui faisant dire autre chose. Même un outil branché sur une base documentaire réduit ce risque sans l'annuler : il peut mal sélectionner un passage ou le résumer de travers.\n\nVotre responsabilité de juriste ne change donc pas : **vous répondez de ce que vous signez**, quel que soit l'outil qui a aidé à le rédiger.\n\n```mermaid\nflowchart LR\n  accTitle: Place de l'assistant IA dans une recherche juridique\n  accDescr: La question du juriste passe par l'assistant qui propose des pistes. Ces pistes sont vérifiées dans les sources officielles, puis analysées par le juriste, qui produit une note et un journal de recherche.\n  Q[\"Question du juriste\"] --> A[\"Assistant IA : pistes et mots-clés\"]\n  A --> V[\"Vérification dans les sources officielles\"]\n  V --> J[\"Analyse et jugement du juriste\"]\n  J --> N[\"Note + journal de recherche\"]\n  A -. \"jamais directement\" .-> N\n```\n*Figure 1 : l'assistant propose des pistes ; rien ne va dans la note sans passer par la vérification et le jugement du juriste.*\n\n## Un principe de travail\n\nTraitez toute sortie de l'IA comme **l'avis d'un stagiaire brillant mais qui ne dit jamais « je ne sais pas »** : utile pour avancer, jamais publiable sans relecture.\n\n## Pour réfléchir\n\nDans votre activité, quelles tâches de recherche sont du **défrichage** (l'IA peut aider) et lesquelles sont de la **preuve** (seule la source officielle compte) ?"
+        },
+        {
+          "title": "Formuler une question de recherche juridique exploitable",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Poser une question qui limite les réponses vagues ou inventées.\n- Fournir à l'assistant le contexte utile sans données confidentielles.\n\n## Une bonne question a cinq composantes\n\n1. **Le contexte factuel, anonymisé** : « une société de logistique fictive reçoit une demande d'accès d'un ancien salarié ».\n2. **Le cadre** : juridiction, domaine du droit, branche ou secteur.\n3. **La période** : date des faits, date à laquelle le droit doit être apprécié.\n4. **Le type de sources voulu** : textes, décisions, doctrine, lignes directrices d'autorités.\n5. **La consigne d'honnêteté** : autoriser explicitement « je ne sais pas » et « source non identifiée ».\n\n## Exemple de consigne (texte à adapter)\n\n*« Tu m'aides à préparer une recherche, pas à rendre un avis. Cadre : droit français, domaine : protection des données, faits fictifs ci-dessous. Propose : (a) les questions juridiques à se poser, (b) les mots-clés et notions à rechercher dans une base officielle, (c) les types de sources à consulter. Ne cite aucune décision ni aucun numéro d'article de mémoire : si tu n'es pas certain, écris « à vérifier ». »*\n\n## Pourquoi interdire les citations de mémoire\n\nDemander à l'assistant de **ne pas citer de références précises** transforme son rôle : il devient un guide de recherche, pas une base de données. Les références, vous les ramenez vous-même depuis la base officielle, ce qui supprime à la racine le risque de citation inventée à ce stade.\n\n## Les erreurs courantes\n\n- Une question trop large (« que dit la loi sur les données ? »).\n- Des faits réels collés tels quels, avec noms de clients ou de salariés.\n- Une question suggestive (« confirme que le contrat est nul »), qui pousse l'outil à aller dans votre sens.\n\n## Mise en pratique\n\nChoisissez une question que vous avez traitée récemment. Réécrivez-la selon les cinq composantes, en remplaçant les noms et chiffres sensibles par des éléments fictifs."
+        },
+        {
+          "title": "Le protocole de vérification en cinq contrôles",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Appliquer à toute référence issue d'une IA cinq contrôles successifs.\n- Décider quoi faire d'une référence qui échoue à un contrôle.\n\n## Les cinq contrôles\n\n1. **Existence** : la référence est-elle retrouvée dans une source officielle, par son identifiant ou par son intitulé exact ?\n2. **Exactitude** : le passage cité figure-t-il mot pour mot dans le texte ? Une paraphrase de l'IA n'est pas une citation.\n3. **Version et date** : le texte était-il en vigueur à la date pertinente ? A-t-il été modifié, abrogé, annulé ou réformé depuis ?\n4. **Portée** : le texte ou la décision s'applique-t-il à votre situation (juridiction, domaine, faits, niveau de la source) ? Que dit-il exactement, et que ne dit-il pas ?\n5. **Cohérence** : la conclusion de la note découle-t-elle bien de ce que les sources disent, sans extrapolation ?\n\n```mermaid\nflowchart TD\n  accTitle: Protocole de vérification d'une référence en cinq contrôles\n  accDescr: Une référence proposée par l'IA subit cinq contrôles successifs : existence, exactitude, version, portée, cohérence. Un échec à un contrôle mène à retirer la référence ou à la corriger, jamais à la garder telle quelle.\n  R[\"Référence proposée par l'IA\"] --> C1{\"1. Existe dans une source officielle ?\"}\n  C1 -- \"non\" --> X[\"Retirer ou signaler « non vérifiée »\"]\n  C1 -- \"oui\" --> C2{\"2. Passage cité exact ?\"}\n  C2 -- \"non\" --> F[\"Corriger avec le texte officiel\"]\n  C2 -- \"oui\" --> C3{\"3. Version en vigueur à la bonne date ?\"}\n  C3 -- \"non\" --> F\n  C3 -- \"oui\" --> C4{\"4. Portée applicable au cas ?\"}\n  C4 -- \"non\" --> X\n  C4 -- \"oui\" --> C5{\"5. Conclusion cohérente ?\"}\n  C5 -- \"non\" --> F\n  C5 -- \"oui\" --> OK[\"Référence retenue + noter la source\"]\n```\n*Figure 1 : les cinq contrôles ; une référence n'entre dans la note que si elle franchit les cinq.*\n\n## Règle d'or\n\nUne référence **non vérifiée** n'est ni « probablement bonne » ni « à peu près juste » : elle est **non utilisable**. Si le temps manque, écrivez dans la note « référence non vérifiée » plutôt que de laisser croire qu'elle l'est.\n\n## Garder la preuve\n\nPour chaque référence retenue, notez : l'identifiant officiel, la source consultée, la date de consultation et la version. C'est ce qui vous permettra de justifier votre travail plus tard.\n\n## Mise en pratique\n\nPrenez trois références d'une ancienne note de votre équipe et passez-les par les cinq contrôles. Combien de temps prend chaque contrôle ? Lequel est le plus souvent oublié ?"
+        },
+        {
+          "title": "Hiérarchie des sources et sources faisant foi",
+          "kind": "exercise",
+          "body_md": "## Objectifs\n\n- Distinguer les sources qui **font foi** des sources qui **aident à comprendre**.\n- Savoir où remonter quand l'IA ne cite qu'une source secondaire.\n\n## Trois niveaux de fiabilité\n\n- **Sources officielles et primaires** : textes publiés par les journaux ou bases officielles, décisions publiées par les juridictions ou leurs bases officielles. Elles font foi.\n- **Sources éditoriales** : bases juridiques professionnelles, revues, commentaires. Elles sont précieuses et en général fiables, mais elles interprètent : on remonte au texte ou à la décision pour citer.\n- **Sources non maîtrisées** : résumés générés, pages web sans auteur identifiable, forums, réponses d'un assistant sans source. Elles servent de piste, jamais de preuve.\n\n## Pourquoi cela compte avec l'IA\n\nUn assistant peut mélanger les niveaux : présenter un commentaire comme s'il s'agissait du texte, ou attribuer à une décision ce qu'un auteur en a dit. Demandez-lui toujours « quelle est la **source primaire** de cette affirmation ? », puis allez la lire.\n\n## Exercice\n\nVoici six sources **fictives** relatives à un sujet inventé (les « badges d'accès connectés » de la société fictive Aurélia Mobilité). Classez-les en niveau 1, 2 ou 3 et dites ce que vous feriez pour chacune.\n\n1. Le texte publié au journal officiel fictif de la Loi fictive Aurore 2099-17.\n2. Un article de blog anonyme qui résume la Loi fictive Aurore 2099-17.\n3. Une réponse d'un assistant IA qui indique « selon la jurisprudence constante » sans référence.\n4. La décision publiée sur la base officielle fictive de la Cour d'appel de Valmont (fictive).\n5. Un commentaire de doctrine signé, dans une revue fictive, sur cette décision.\n6. Un résumé généré automatiquement par un outil de veille, sans lien vers le texte.\n\n## Corrigé indicatif\n\nNiveau 1 : 1 et 4. Niveau 2 : 5 (on cite le texte, pas le commentaire). Niveau 3 : 2, 3 et 6 (pistes à vérifier : retrouver la source primaire). Si votre classement diffère, justifiez-le : l'essentiel est de savoir **pourquoi** une source fait foi ou non.\n\n## Pour votre équipe\n\nRédigez en une phrase la règle : « Toute citation dans une note renvoie à une source de niveau 1, avec son identifiant et sa date de consultation. »"
+        }
+      ]
+    },
+    {
+      "title": "Hallucinations, citations inventées et détection",
+      "lessons": [
+        {
+          "title": "Pourquoi un modèle invente une référence",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Comprendre le mécanisme qui produit des citations inventées.\n- Reconnaître les situations qui augmentent le risque.\n\n## Un modèle écrit du plausible\n\nUn modèle de langage a appris à produire la suite de mots la plus vraisemblable. Quand on lui demande une décision « sur tel sujet », il sait à quoi ressemble une référence : un nom de juridiction, une date, un numéro, quelques mots de motivation. Il peut donc en **fabriquer une qui a toutes les apparences du vrai**, sans la consulter nulle part. On parle d'**hallucination**.\n\n```mermaid\nsequenceDiagram\n  accTitle: Origine d'une citation inventée\n  accDescr: Le juriste demande des décisions sur un sujet. Le modèle, qui ne consulte pas de base, compose une référence plausible. Le juriste qui ne vérifie pas la reprend dans sa note, tandis que celui qui vérifie ne la retrouve pas dans la source officielle et la retire.\n  participant J as Juriste\n  participant M as Modèle\n  participant S as Source officielle\n  J->>M: Donne-moi des décisions sur ce sujet\n  M-->>J: Référence plausible (forme exacte, contenu inventé)\n  alt sans vérification\n    J->>J: Reprend la référence dans la note\n  else avec vérification\n    J->>S: Recherche la référence\n    S-->>J: Aucun résultat\n    J->>J: Retire la référence\n  end\n```\n*Figure 1 : la référence inventée est détectée uniquement si le juriste interroge la source officielle.*\n\n## Les situations à risque\n\n- **Demande d'une référence précise** (numéro, date, formation) sans outil connecté à une base.\n- **Sujet pointu, récent ou local**, mal représenté dans les données d'apprentissage.\n- **Question suggestive** qui présuppose qu'une décision existe.\n- **Pression du format** : « donne-moi cinq arrêts » incite à en fournir cinq.\n- **Longue conversation** où l'assistant s'appuie sur ses propres affirmations antérieures.\n\n## Les outils connectés à des bases : une réduction, pas une garantie\n\nUn outil qui recherche dans une base documentaire avant de répondre réduit les inventions, mais il peut sélectionner le mauvais passage, résumer à tort ou mélanger deux documents. Les contrôles restent nécessaires.\n\n## Pour réfléchir\n\nAvez-vous déjà reçu d'un collaborateur une référence « qui sonnait juste » ? Quel réflexe vous a permis, ou aurait dû vous permettre, de la contrôler ?"
+        },
+        {
+          "title": "Les familles d'erreurs : fausse référence, fausse portée, texte dépassé",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Reconnaître les différentes formes d'erreur, pas seulement la « fausse décision ».\n- Associer à chaque famille le contrôle du protocole qui la détecte.\n\n## Cinq familles d'erreurs\n\n1. **Référence inexistante** : la décision ou le texte n'existe pas. Détectée par le contrôle 1 (existence).\n2. **Référence réelle, passage inventé** : la source existe mais la citation n'y figure pas ou a été reformulée. Contrôle 2 (exactitude).\n3. **Texte dépassé** : un texte abrogé, modifié ou une décision réformée présentés comme actuels. Contrôle 3 (version).\n4. **Fausse portée** : la source existe et dit bien cela, mais dans un autre contexte (autre juridiction, autre domaine, obiter dictum présenté comme principe, décision d'espèce présentée comme règle générale). Contrôle 4 (portée).\n5. **Extrapolation** : les sources sont correctes mais la conclusion va plus loin qu'elles. Contrôle 5 (cohérence).\n\n## Pourquoi les familles 3 à 5 sont les plus dangereuses\n\nUne fausse référence se détecte en une recherche. Une vraie référence **mal utilisée** passe les premières vérifications et peut tromper même un relecteur attentif. C'est pourquoi le protocole ne s'arrête pas à « le lien s'ouvre ».\n\n## Exemple fictif\n\nUne note fictive indique : « Selon la Cour d'appel de Valmont (fictive), toute société doit conserver les journaux de badge pendant cinq ans. » Après vérification dans la base officielle fictive, la décision existe, mais elle concerne **une seule société du secteur bancaire fictif**, et la durée de cinq ans est celle de **ce dossier**, pas une règle générale. Famille 4 : fausse portée.\n\n## Mise en pratique\n\nPour chacune des cinq familles, imaginez une phrase fictive d'une note qui en serait un exemple, puis indiquez en une ligne comment vous la détecteriez.\n\n*Rappel : les exemples sont fictifs ; en pratique, seule la source officielle fait foi.*"
+        },
+        {
+          "title": "Exercice : détecter les erreurs dans un extrait fictif",
+          "kind": "exercise",
+          "body_md": "## Objectif\n\nS'entraîner à repérer des erreurs de plusieurs familles dans un court extrait, avec un corpus de référence fictif fourni.\n\n## Corpus officiel fictif (seule source de vérité de l'exercice)\n\n- **Loi fictive Aurore 2099-17, article 4** : « Le responsable d'un badge d'accès connecté informe les personnes concernées de la durée de conservation des journaux, qui ne peut excéder douze mois, sauf obligation légale contraire. »\n- **Loi fictive Aurore 2099-17, article 9** : abrogé à compter du 1er janvier 2100 (date fictive).\n- **Décision fictive de la Cour d'appel de Valmont, 14 mars 2099 (fictive), Société Aurélia Mobilité** : la cour juge que, dans l'espèce, une conservation de dix-huit mois n'était pas justifiée faute d'information préalable.\n\n## Extrait à contrôler (généré par un assistant fictif)\n\n*« L'article 4 de la Loi Aurore 2099-17 impose une conservation de **six mois maximum**. La Cour d'appel de Valmont a posé, le 14 mars 2099, le principe général selon lequel toute conservation supérieure à douze mois est **illicite**. L'article 9 permet en outre une dérogation sectorielle. Enfin, la Cour de cassation fictive de Brémeroy, dans un arrêt du 2 mai 2099, aurait confirmé cette règle. »*\n\n## Travail demandé\n\n1. Appliquez les cinq contrôles à chaque phrase, avec le corpus ci-dessus.\n2. Notez pour chaque erreur sa **famille** (inexistante, passage inventé, dépassée, fausse portée, extrapolation).\n3. Proposez une version corrigée de l'extrait, avec la mention « non vérifié » pour ce qui ne peut pas l'être.\n\n## Corrigé indicatif\n\n- « Six mois maximum » : passage inexact (le texte dit douze mois). Famille 2.\n- « Principe général… illicite » : la décision est une décision d'espèce, liée au défaut d'information. Famille 4.\n- Article 9 : abrogé à la date pertinente. Famille 3.\n- Arrêt de la Cour de cassation fictive de Brémeroy : absent du corpus. Famille 1, à retirer ou à marquer « non vérifié ».\n\n## Pour aller plus loin\n\nRedemandez à l'assistant de **corriger** l'extrait sans lui fournir le corpus, puis comparez : a-t-il réparé les erreurs ou en a-t-il ajouté de nouvelles ?"
+        }
+      ]
+    },
+    {
+      "title": "Synthèse de textes, de décisions et de dossiers",
+      "lessons": [
+        {
+          "title": "Méthode de synthèse : du document source à la fiche vérifiable",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Demander une synthèse qui reste rattachée au texte source.\n- Distinguer ce que dit le document de ce que l'on en déduit.\n\n## Le principe : documents fournis, réponses ancrées\n\nPour synthétiser une décision, un contrat ou un rapport, **fournissez le texte** à l'assistant (si la confidentialité le permet, voir le chapitre 5) et exigez que chaque affirmation soit rattachée à un passage : numéro de paragraphe, page ou extrait entre guillemets. Vous évitez ainsi qu'il complète de mémoire.\n\n```mermaid\nflowchart LR\n  accTitle: Méthode de synthèse ancrée dans le document source\n  accDescr: Le document est fourni, une consigne exige des extraits, l'assistant produit une fiche. Le juriste relit chaque extrait dans l'original, corrige, puis valide la fiche.\n  D[\"Document source (fourni)\"] --> C[\"Consigne : extraits + « non trouvé » autorisé\"]\n  C --> F[\"Fiche produite par l'assistant\"]\n  F --> R[\"Relecture : chaque extrait retrouvé dans l'original\"]\n  R --> K[\"Corrections et ajouts du juriste\"]\n  K --> V[\"Fiche validée et datée\"]\n```\n*Figure 1 : la fiche n'est validée qu'après retour au document original.*\n\n## Consigne type pour une décision (à adapter)\n\n*« À partir du seul texte ci-dessous, produis : (1) les faits en cinq lignes, (2) la question posée, (3) la solution retenue, avec l'extrait exact qui la fonde, (4) ce que la décision ne dit pas, (5) les points sur lesquels tu n'es pas certain. N'utilise aucune connaissance extérieure au texte. Si un élément manque, écris « non trouvé ». »*\n\n## Séparer l'observation de l'interprétation\n\nUne bonne fiche distingue :\n- ce que le texte **dit** (avec extrait) ;\n- ce que l'assistant **en déduit** (à marquer comme tel) ;\n- ce que **vous** en concluez pour votre dossier (ce qui engage votre jugement).\n\n## Mise en pratique\n\nPrenez la décision fictive de l'exercice précédent (Cour d'appel de Valmont) et rédigez la consigne qui obligerait l'assistant à indiquer le paragraphe de chaque affirmation."
+        },
+        {
+          "title": "Synthétiser un dossier : chronologie, pièces et traçabilité",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Construire une chronologie de dossier à partir de pièces, avec renvoi aux pièces.\n- Repérer les contradictions entre documents au lieu de les lisser.\n\n## Le dossier est un ensemble de pièces\n\nPour un litige ou un contrôle, la synthèse utile est souvent une **chronologie** : qui a fait quoi, quand, sur la base de quelle pièce. Donnez à chaque pièce un identifiant (P1, P2…) et exigez que chaque événement cite sa pièce.\n\n```mermaid\ntimeline\n  accTitle: Chronologie fictive d'un litige de livraison\n  accDescr: Chronologie fictive : commande, retard constaté, mise en demeure, réponse du fournisseur, assignation. Chaque événement renvoie à une pièce numérotée.\n  section 2099\n    Mars : Commande passée (P1)\n    Avril : Retard constaté (P2)\n    Mai : Mise en demeure (P3)\n    Juin : Réponse du fournisseur (P4)\n    Juillet : Assignation (P5)\n```\n*Figure 1 : chronologie fictive ; chaque ligne renvoie à une pièce que le juriste peut ouvrir et contrôler.*\n\n## Ce qu'il faut demander à l'assistant\n\n- Une chronologie **avec renvoi à la pièce** pour chaque date.\n- La liste des **contradictions** entre pièces (dates, montants, signataires).\n- La liste des **informations manquantes** ou non datées.\n- Un indicateur de **confiance par ligne**, à utiliser comme signal d'alerte, pas comme preuve.\n\n## Les erreurs typiques\n\n- **Dates mal lues** (format jour/mois inversé, année manquante).\n- **Fusion de deux événements** distincts en un seul.\n- **Attribution à la mauvaise partie**.\n- **Lissage** : une contradiction entre deux pièces est résolue silencieusement en faveur de l'une.\n\n## Mise en pratique\n\nRédigez cinq pièces fictives de deux lignes chacune, dont deux avec des dates incohérentes. Demandez une chronologie à un assistant, puis contrôlez chaque ligne dans vos pièces. Qu'a-t-il lissé ?"
+        },
+        {
+          "title": "Limites de la synthèse : lissage, omissions et perte de nuance",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Connaître les limites propres à la synthèse de textes juridiques.\n- Savoir ce qu'il ne faut jamais déléguer à une synthèse automatique.\n\n## Ce que la synthèse fait perdre\n\n- **Les réserves et conditions** : « sauf si », « à condition que », « dans la mesure où » disparaissent facilement et changent le sens.\n- **Les distinctions de portée** : motif principal, motif surabondant, simple considération.\n- **Les exceptions** et régimes particuliers.\n- **Les opinions séparées ou réserves** quand elles existent.\n- **La hiérarchie** : un texte de niveau inférieur résumé avec la même autorité qu'un texte supérieur.\n\n## Les biais de la machine\n\n- **Lissage** : le résumé gomme les tensions pour produire un récit cohérent.\n- **Complétude apparente** : un résumé fluide paraît exhaustif même quand des pans entiers manquent.\n- **Complaisance** : si votre question laisse deviner la réponse attendue, l'outil peut s'y conformer.\n\n## Points qu'une synthèse ne doit pas décider seule\n\n- La **qualification juridique** d'une situation.\n- L'**évaluation d'un risque** et la recommandation.\n- La **stratégie** de défense ou de négociation.\n- Tout ce qui sera **signé, déposé ou communiqué** à un tiers.\n\n## Une technique utile : le contrôle croisé\n\nAprès la synthèse, posez deux questions distinctes à l'assistant : « Qu'est-ce qui n'est pas dans ce résumé et qui pourrait changer la conclusion ? » puis « Quelles conditions ou exceptions du texte ont été omises ? ». Comparez avec votre lecture de l'original. L'outil peut parfois signaler une omission, mais **l'absence de réponse n'est pas une garantie**.\n\n## Pour réfléchir\n\nPour quels types de documents un résumé suffit-il à décider de la suite (tri, priorisation), et pour lesquels la lecture intégrale reste indispensable ?"
+        }
+      ]
+    },
+    {
+      "title": "Veille réglementaire assistée et alertes",
+      "lessons": [
+        {
+          "title": "Concevoir une veille : périmètre, sources et fréquence",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Définir ce que la veille doit couvrir, et ce qu'elle ne couvre pas.\n- Choisir des sources officielles, des fréquences et des responsables.\n\n## Une veille se décide avant de s'outiller\n\nAvant tout outil, répondez à cinq questions :\n\n1. **Pour qui ?** (direction, équipe contrats, DPO, conformité).\n2. **Sur quels sujets ?** Formulez 5 à 10 thèmes précis plutôt qu'un domaine entier.\n3. **Sur quels textes ?** textes, projets, lignes directrices d'autorités, décisions publiées.\n4. **À quelle fréquence ?** quotidienne pour les alertes critiques, hebdomadaire ou mensuelle pour le reste.\n5. **Qui valide avant diffusion ?** nommez une personne, pas « l'équipe ».\n\n## Choisir les sources\n\nPrivilégiez les **sources officielles** ou institutionnelles qui proposent des flux ou des alertes. Complétez avec des sources éditoriales pour l'interprétation. Écartez les sources dont vous ne pouvez pas identifier l'auteur.\n\n## Ce que l'IA peut faire dans une veille\n\n- **Trier** les nouveautés selon vos thèmes.\n- **Résumer** un texte public en quelques lignes.\n- **Rédiger** un brouillon de bulletin.\n\n## Ce qu'elle ne doit pas faire seule\n\n- **Décider** qu'un texte est sans impact.\n- **Qualifier** l'impact sur votre organisation.\n- **Diffuser** sans relecture.\n\nIl faut aussi assumer un risque : un texte pertinent **non détecté** (faux négatif) est plus coûteux qu'un texte inutile signalé (faux positif). Réglez les filtres larges et acceptez de trier un peu plus.\n\n## Mise en pratique\n\nÉcrivez la fiche d'identité de la veille de votre équipe : public, cinq thèmes, sources officielles envisagées, fréquence, responsable de la validation."
+        },
+        {
+          "title": "Alertes, filtres et résumé automatique : la chaîne no-code",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Comprendre la chaîne technique d'une veille sans code.\n- Savoir où placer la relecture humaine.\n\n## Les blocs d'une chaîne de veille\n\nUne veille no-code repose sur des **blocs** que des plateformes d'automatisation proposent sous des noms variables :\n\n- un bloc de **déclenchement** : lecture d'un flux d'actualités (type RSS) ou réception d'une alerte e-mail ;\n- un bloc de **filtre** : conserve les éléments qui contiennent vos mots-clés ;\n- un bloc **assistant IA** : produit un résumé de deux lignes à partir du titre et du résumé public ;\n- un bloc de **stockage** : ajoute une ligne dans un tableur ou une base ;\n- un bloc de **notification** : prévient la personne qui doit relire.\n\n```mermaid\nstateDiagram-v2\n  accTitle: Cycle de vie d'une alerte de veille\n  accDescr: Une alerte détectée est filtrée, résumée par l'assistant, puis en attente de relecture. Le juriste la qualifie, la diffuse ou l'écarte. Un archivage garde la trace de la décision.\n  [*] --> Detectee\n  Detectee --> Filtree: mots-clés\n  Filtree --> Resumee: assistant\n  Resumee --> ARelire\n  ARelire --> Diffusee: validée par le juriste\n  ARelire --> Ecartee: sans impact\n  Diffusee --> Archivee\n  Ecartee --> Archivee\n  Archivee --> [*]\n```\n*Figure 1 : états d'une alerte ; aucune alerte n'est diffusée sans passer par l'état « à relire ».*\n\n## Règles de conception\n\n- Ne confiez à l'assistant que des **informations publiques** (titre, résumé, lien).\n- Conservez toujours le **lien vers la source officielle** dans la ligne stockée.\n- Ajoutez les colonnes « date de détection », « relu par », « statut », « décision ».\n- Prévoyez une **vérification périodique** : un flux peut changer d'adresse ou cesser d'émettre sans prévenir.\n\n## Pièges\n\n- Des mots-clés trop étroits qui font manquer des textes.\n- Un résumé automatique pris pour l'analyse.\n- Une alerte « silencieuse » : si rien n'arrive, est-ce qu'il n'y a rien, ou que la chaîne est cassée ?\n\n## Mise en pratique\n\nDessinez sur papier la chaîne de votre future veille (les cinq blocs) et marquez en rouge l'endroit de la relecture humaine."
+        },
+        {
+          "title": "Relire, qualifier et diffuser : responsabilité de la veille",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Structurer la relecture d'une alerte avant diffusion.\n- Mesurer la qualité de la veille dans le temps.\n\n## La relecture en quatre questions\n\nPour chaque alerte résumée, le relecteur répond :\n\n1. **Le résumé est-il fidèle** au texte officiel (ouvrir le lien) ?\n2. **Le texte est-il applicable** à notre organisation (activité, juridiction, date d'entrée en vigueur) ?\n3. **Quel impact** : information, action à prévoir, action urgente ?\n4. **Qui doit être prévenu**, avec quel niveau de détail ?\n\n## Un format de bulletin utile\n\nPour chaque item diffusé : titre, **lien officiel**, résumé en deux lignes marqué « relu le… par… », niveau d'impact, action proposée, échéance. Ajoutez une mention permanente : « Information de veille, ne constitue pas un avis juridique. Se reporter au texte officiel. »\n\n## Mesurer et améliorer\n\nTenez trois indicateurs simples, sans chiffres imposés :\n\n- les **textes pertinents manqués** (découverts par un autre canal) ;\n- les **alertes inutiles** qui font perdre du temps ;\n- les **résumés corrigés** par le relecteur.\n\nSi vous découvrez un texte manqué, ajustez les mots-clés ou les sources, et notez la modification dans le journal de la veille.\n\n## Responsabilité\n\nLe fait qu'un outil ait détecté, filtré ou résumé ne déplace pas la responsabilité : la personne qui **diffuse** engage le service juridique. Écrivez noir sur blanc qui relit et qui diffuse.\n\n## Pour réfléchir\n\nQue se passerait-il si une alerte importante restait dans l'état « à relire » pendant trois semaines ? Quel mécanisme de relance prévoiriez-vous ?"
+        }
+      ]
+    },
+    {
+      "title": "Confidentialité, secret professionnel, choix des outils et traçabilité",
+      "lessons": [
+        {
+          "title": "Que peut-on envoyer à un outil externe ? Une grille de décision",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Classer des informations selon leur sensibilité.\n- Décider si elles peuvent aller vers un outil externe, un outil interne ou nulle part.\n\n*Ce contenu est général et ne constitue pas un avis juridique. Le régime exact du secret professionnel ou de la confidentialité dépend de votre statut, de votre juridiction et de vos engagements : confirmez-le avec votre ordre, votre direction juridique ou votre DPO.*\n\n## Deux axes pour décider\n\n1. **Sensibilité de l'information** : public, interne, confidentiel, couvert par le secret professionnel ou contenant des données personnelles sensibles.\n2. **Niveau de maîtrise de l'outil** : outil grand public, outil professionnel avec accord contractuel, outil interne ou hébergé sous votre contrôle.\n\n```mermaid\nquadrantChart\n  accTitle: Sensibilité de l'information et maîtrise de l'outil\n  accDescr: Les informations publiques peuvent aller vers tout outil. Les informations confidentielles ou couvertes par le secret exigent un outil maîtrisé, avec accord contractuel ou interne. Les données très sensibles sont réservées aux outils internes. Positions illustratives.\n  x-axis \"Outil peu maîtrisé\" --> \"Outil très maîtrisé\"\n  y-axis \"Information peu sensible\" --> \"Information très sensible\"\n  quadrant-1 \"Possible, avec accord et règles\"\n  quadrant-2 \"Ne pas envoyer\"\n  quadrant-3 \"Possible, avec prudence\"\n  quadrant-4 \"Zone de confort\"\n  \"Texte de loi publié\": [0.2, 0.1]\n  \"Question anonymisée\": [0.3, 0.3]\n  \"Note interne non sensible\": [0.7, 0.35]\n  \"Pièces d'un litige\": [0.8, 0.8]\n  \"Consultation d'un client\": [0.2, 0.9]\n```\n*Figure 1 : positions illustratives et fictives ; la zone en haut à gauche (information sensible, outil peu maîtrisé) est à proscrire.*\n\n## Règles de bon sens\n\n- **Public** (texte publié, décision publique) : envoyable, sous réserve des conditions d'usage de l'outil.\n- **Interne non sensible** : outil professionnel avec accord contractuel, ou interne.\n- **Confidentiel ou secret** : outil interne ou accord contractuel validé par la direction juridique et le DPO, ou ne rien envoyer.\n- **Données personnelles** : appliquer la minimisation ; vérifier le contrat de sous-traitance et le lieu de traitement.\n\n## Questions à se poser avant d'envoyer\n\n- Cette information permettrait-elle d'identifier une personne ou un client ?\n- Suis-je tenu à un devoir de confidentialité envers le client ou un tiers ?\n- Que devient ce texte chez le fournisseur : conservé, journalisé, utilisé pour entraîner ?\n- Existe-t-il un accord signé par mon organisation ?\n\nEn cas de doute : **ne pas envoyer** et demander.\n\n## Mise en pratique\n\nClassez cinq éléments d'un dossier fictif de votre choix selon les deux axes et décidez : outil externe, outil interne, ou rien."
+        },
+        {
+          "title": "Choisir un outil : questions à poser au fournisseur et à son propre DPO",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Disposer d'une liste de critères pour évaluer un outil d'IA.\n- Savoir quelles réponses sont indispensables avant un usage sur des documents sensibles.\n\n## Questions sur les données\n\n- Les contenus saisis sont-ils **conservés** ? Combien de temps ? Qui y a accès chez le fournisseur ?\n- Sont-ils **utilisés pour entraîner** ou améliorer les modèles ? Peut-on l'exclure par contrat ?\n- Où sont-ils **hébergés et traités** ? Quels sous-traitants ultérieurs ?\n- Peut-on **supprimer** les contenus et les historiques, et comment le prouve-t-on ?\n\n## Questions contractuelles\n\n- Existe-t-il un **contrat** (et, le cas échéant, un accord de traitement de données) signé par l'organisation ?\n- Quelles **clauses de confidentialité** et de sécurité ? Quelles garanties en cas d'incident ?\n- Le fournisseur décrit-il les **limites** de son outil (risque d'erreur, absence de garantie de résultat) ? Une absence de limites annoncées est un signal d'alerte.\n\n## Questions sur la fiabilité et la traçabilité\n\n- L'outil **cite-t-il ses sources** de manière cliquable et vérifiable ?\n- Peut-on **exporter l'historique** des requêtes et des réponses pour la traçabilité ?\n- Quels **contrôles d'accès** et profils d'utilisateurs ?\n\n## Offre gratuite ou version payante\n\nUne offre gratuite ou grand public a souvent des conditions différentes d'une offre professionnelle. Ne présumez rien : lisez les conditions à la date de votre décision et gardez une copie. Les conditions changent, donc **réévaluez périodiquement**.\n\n## Proposer une alternative\n\nSi l'outil souhaité ne passe pas la grille, prévoyez une alternative : un outil interne, un outil disposant d'un accord adapté, ou un usage limité aux informations publiques et anonymisées.\n\n## Mise en pratique\n\nRédigez la liste de dix questions que vous poseriez à un fournisseur d'assistant IA, puis marquez les trois qui sont éliminatoires pour votre organisation."
+        },
+        {
+          "title": "Minimiser et anonymiser : préparer une question sans trahir un dossier",
+          "kind": "exercise",
+          "body_md": "## Objectifs\n\n- Transformer une situation réelle en question utilisable avec un outil, sans révéler d'élément identifiant.\n- Mesurer les limites de l'anonymisation.\n\n## Trois techniques\n\n1. **Généraliser** : « un client » plutôt que le nom, « un montant significatif » plutôt que le chiffre, « une région » plutôt que la ville.\n2. **Retirer** : supprimer ce qui n'est pas nécessaire à la question juridique (dates précises, noms de salariés, coordonnées).\n3. **Remplacer** par des pseudonymes cohérents : « Société A », « Salarié 1 », en conservant à part la table de correspondance.\n\n## Attention : l'anonymisation est difficile\n\nUn récit peut rester **identifiant** par recoupement : un secteur rare, un événement connu, une combinaison de dates et de lieux. Une pseudonymisation n'équivaut pas à une anonymisation. Posez-vous : « Un tiers pourrait-il reconnaître le dossier ? » Si oui, ne l'envoyez pas à l'outil externe.\n\n## Exercice\n\nVoici un énoncé **fictif** :\n\n*« La société Hélios Transports (fictive), dirigée par Mme Dorval (fictive), a licencié le 12 avril 2099 M. Ferrand, chauffeur à Valmont, après que celui-ci a refusé un nouveau badge géolocalisé. Il réclame 38 000 euros. Notre avocate interne, Maître Lerond, envisage une transaction. »*\n\n1. Listez les éléments identifiants.\n2. Réécrivez la question en la rendant utilisable : quelles notions juridiques, quel cadre, quels faits indispensables ?\n3. Dites ce qui reste identifiant malgré tout, et ce que vous feriez (outil interne, accord, ou aucune soumission).\n\n## Corrigé indicatif\n\nÉléments identifiants : noms de société et de personnes, ville, date exacte, montant, mention de l'avocate. Question possible : « Un salarié refuse un dispositif de géolocalisation du véhicule professionnel ; quelles questions juridiques se posent (information, proportionnalité, sanction) et quelles sources officielles consulter ? » Le résidu identifiant (secteur et circonstances) reste faible ici, mais pour un cas rare ou médiatisé il faudrait un outil interne.\n\n## Règle pratique\n\nCe qui n'est pas nécessaire pour poser la question **ne doit pas y figurer**."
+        },
+        {
+          "title": "Traçabilité et responsabilité : le journal de recherche et la note signée",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Tenir un journal de recherche qui permet de justifier une note assistée par IA.\n- Clarifier qui répond de quoi.\n\n## Pourquoi tracer\n\nSi une note est contestée (par un client, un supérieur, un contrôleur), vous devez pouvoir montrer **comment vous êtes arrivé à cette conclusion** : quels outils, quelles consignes, quelles sources, quelles vérifications. La traçabilité protège aussi les collègues qui reprendront le dossier.\n\n```mermaid\nsequenceDiagram\n  accTitle: Traçabilité d'une note assistée par IA\n  accDescr: Le juriste interroge l'assistant, consigne la requête dans le journal, vérifie les sources officielles, annote le journal avec le résultat, rédige la note, puis un relecteur contrôle le journal avant validation.\n  participant J as Juriste\n  participant A as Assistant\n  participant S as Sources officielles\n  participant L as Journal\n  participant R as Relecteur\n  J->>A: Requête anonymisée\n  J->>L: Consigne la requête\n  A-->>J: Pistes\n  J->>S: Vérifie chaque référence\n  J->>L: Résultat des vérifications\n  J->>J: Rédige la note\n  R->>L: Contrôle le journal\n  R->>J: Valide ou demande des corrections\n```\n*Figure 1 : chaque étape laisse une trace dans le journal ; le relecteur peut contrôler le chemin et pas seulement le résultat.*\n\n## Que consigner\n\n- Date, outil et version, **requête** (anonymisée) et date de la réponse.\n- Pour chaque référence : identifiant officiel, source consultée, date de consultation, **résultat des cinq contrôles**.\n- Ce qui a été **retiré** (références non vérifiées) et pourquoi.\n- Le nom de la personne qui a vérifié et celle qui a validé.\n\n## Mention dans la note\n\nUne note peut indiquer en bas de page : « Recherche réalisée avec l'assistance d'un outil d'IA ; toutes les références ont été vérifiées dans les sources officielles le… ». Cette transparence est une bonne pratique, à adapter aux règles de votre organisation et aux attentes de vos destinataires.\n\n## Qui répond de quoi\n\n- L'**auteur** de la note répond de son contenu.\n- Le **relecteur** répond de la qualité de la relecture.\n- Le **responsable de l'équipe** répond du protocole et de la formation.\n- L'**outil** ne répond de rien : ne le présentez jamais comme une excuse.\n\n## Mise en pratique\n\nOuvrez un tableur et créez les colonnes de votre journal de recherche. Remplissez une ligne fictive pour la recherche de l'exercice sur le badge connecté."
+        }
+      ]
+    },
+    {
+      "title": "Ateliers no-code et low-code",
+      "lessons": [
+        {
+          "title": "Atelier 1 : construire une grille de vérification de sources et l'appliquer à une note fictive",
+          "kind": "exercise",
+          "body_md": "## Objectif et durée\n\n**Objectif** : construire une grille de vérification de sources dans un tableur, puis l'appliquer à une note fictive contenant des erreurs volontaires. **Durée estimée** : 75 minutes.\n\n## Plateformes\n\n- **Google Sheets** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternatives : **un tableur libre** (LibreOffice Calc en ligne ou en local), **Airtable**, **NocoDB** ou **Notion**.\n- **Un assistant IA conversationnel** (no-code), facultatif : offre gratuite ou version libre à la date de rédaction, à vérifier.\n\n## Matériel fictif\n\n**Corpus officiel fictif** (seule source de vérité) :\n\n- **Loi fictive Aurore 2099-17, article 4** : « Le responsable d'un badge d'accès connecté informe les personnes concernées de la durée de conservation des journaux, qui ne peut excéder douze mois, sauf obligation légale contraire. »\n- **Loi fictive Aurore 2099-17, article 6** : « Les journaux de badge ne sont consultés qu'en cas d'incident de sécurité ou de demande de la personne concernée. »\n- **Loi fictive Aurore 2099-17, article 9** : abrogé à compter du 1er janvier 2100 (date fictive).\n- **Décision fictive de la Cour d'appel de Valmont, 14 mars 2099, Société Aurélia Mobilité** : dans cette espèce, une conservation de dix-huit mois n'est pas justifiée faute d'information préalable des personnes concernées.\n\n**Note fictive à contrôler** (rédigée avec l'aide d'un assistant fictif) :\n\n*« La Loi Aurore 2099-17 limite à **six mois** la conservation des journaux de badge (art. 4). Elle autorise leur consultation à tout moment par l'employeur (art. 6). L'article 9 prévoit une dérogation pour les sites sensibles. Par un arrêt du 14 mars 2099, la Cour d'appel de Valmont a jugé que toute conservation supérieure à douze mois est **illicite en toutes circonstances**. La Cour de cassation fictive de Brémeroy l'a confirmé le 2 mai 2099 (arrêt Brémeroy c. Lumen Habitat). Il en résulte que notre société n'a aucun risque en conservant les journaux neuf mois. »*\n\n## Étapes\n\n1. Créez une feuille « Grille » avec les colonnes : référence citée, source officielle consultée, existe (oui/non), passage exact (oui/non), version en vigueur (oui/non), portée applicable (oui/non), conclusion cohérente (oui/non), famille d'erreur, correction proposée.\n2. Découpez la note en affirmations et saisissez-en une par ligne (au moins six).\n3. Pour chaque ligne, cherchez la référence dans le corpus fictif ci-dessus et remplissez les cinq contrôles.\n4. Choisissez une famille d'erreur parmi : inexistante, passage inexact, texte dépassé, fausse portée, extrapolation.\n5. Ajoutez une feuille « Note corrigée » : réécrivez la note en conservant ce qui est vérifié et en marquant « non vérifié » le reste.\n6. Facultatif : demandez à un assistant de contrôler la note sans lui fournir le corpus, puis comparez avec votre grille.\n\n## Résultat attendu\n\nUne grille réutilisable, remplie pour la note fictive, et une version corrigée de la note.\n\n## Critères de réussite\n\n- [ ] Les cinq contrôles sont renseignés pour chaque affirmation.\n- [ ] Les erreurs sont repérées : durée de six mois, consultation « à tout moment », article abrogé, portée de la décision d'espèce, arrêt inexistant, conclusion excessive.\n- [ ] Chaque erreur est rattachée à une famille.\n- [ ] La note corrigée distingue clairement le vérifié du non vérifié.\n- [ ] Aucune donnée réelle n'a été utilisée.\n\n## Pièges\n\nCocher « oui » parce que le texte « semble juste » ; oublier de contrôler la **date** ; corriger de mémoire au lieu de revenir au texte. **Données** : uniquement fictives ; jamais de dossier réel ni de document confidentiel de votre employeur.\n\n## Pour aller plus loin\n\nAjoutez une colonne « temps passé » : quel contrôle consomme le plus de temps, et comment l'équipe pourrait-elle le faciliter ?"
+        },
+        {
+          "title": "Atelier 2 : mettre en place une veille réglementaire avec un outil no-code",
+          "kind": "exercise",
+          "body_md": "## Objectif et durée\n\n**Objectif** : monter une chaîne de veille (flux, filtre, résumé, relecture) qui alimente un tableur et prévoit une validation humaine. **Durée estimée** : 90 minutes.\n\n## Plateformes\n\n- **n8n** (low-code, version libre à la date de rédaction, à vérifier), ou **Make** ou **Zapier** (no-code, offre gratuite ou version libre à la date de rédaction, à vérifier) pour l'automatisation. Alternative sans automatisation : un **lecteur de flux** et un copier-coller manuel dans le tableur.\n- **Google Sheets** ou **Airtable** (no-code) pour le stockage ; alternatives : **NocoDB**, **Notion**.\n- **Un assistant IA** intégrable à l'automatisation, ou utilisé à la main : offre gratuite ou version libre à la date de rédaction, à vérifier.\n\n## Données\n\nChoisissez **une source officielle publique** qui propose un flux d'actualités (type RSS), sur un thème sans lien avec un dossier confidentiel. Vérifiez ses conditions de réutilisation. Si vous n'en trouvez pas, créez un **flux fictif** : une feuille de six lignes inventées (titre, résumé, lien fictif, date). Le résumé IA ne porte **que sur des informations publiques**.\n\n## Étapes\n\n1. Rédigez la fiche d'identité de votre veille : public, cinq thèmes, source, fréquence, responsable de la relecture.\n2. Créez la table « Veille » avec les colonnes : date de détection, titre, lien officiel, résumé IA, impact proposé, relu par, statut (à relire, diffusé, écarté), décision.\n3. Dans l'outil d'automatisation, ajoutez un bloc de **déclenchement** lisant le flux à fréquence régulière.\n4. Ajoutez un bloc de **filtre** sur vos mots-clés, volontairement larges.\n5. Ajoutez un bloc **assistant IA** avec cette consigne : « À partir du titre et du résumé fournis uniquement, écris deux lignes neutres. N'ajoute aucune information. Si le texte est insuffisant, écris : résumé impossible. »\n6. Ajoutez un bloc de **stockage** qui crée la ligne avec le statut « à relire », puis un bloc de **notification** vers le relecteur.\n7. Faites passer au moins cinq éléments, ouvrez chaque lien officiel, comparez le résumé au texte et corrigez.\n8. Notez les erreurs et ajustez les mots-clés.\n\n## Résultat attendu\n\nUne chaîne qui alimente la table, avec relecture obligatoire avant diffusion, et une note sur les ajustements.\n\n## Critères de réussite\n\n- [ ] Le lien officiel est conservé dans chaque ligne.\n- [ ] Aucun élément n'est diffusé avant le statut « relu ».\n- [ ] Au moins cinq éléments ont été relus et comparés à la source.\n- [ ] Les erreurs de résumé sont consignées.\n- [ ] Un risque de faux négatif est discuté (mots-clés, source unique, flux inactif).\n\n## Pièges\n\nEnvoyer au modèle autre chose que des informations publiques ; laisser la chaîne tourner sans vérifier qu'elle est toujours active ; diffuser le résumé automatique comme un avis. **Données** : publiques ou fictives uniquement.\n\n## Pour aller plus loin\n\nAjoutez une seconde source et un bloc qui détecte les doublons."
+        },
+        {
+          "title": "Atelier 3 : rédiger le protocole de recherche assistée de l'équipe",
+          "kind": "exercise",
+          "body_md": "## Objectif et durée\n\n**Objectif** : rédiger le protocole de recherche juridique assistée de votre équipe, avec règles de confidentialité et journal de recherche. **Durée estimée** : 90 minutes.\n\n## Plateformes\n\n- **Google Docs**, **Notion** ou **un éditeur de texte collaboratif** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : **un traitement de texte libre** en local.\n- **Google Sheets** ou **Airtable** (no-code) pour le journal de recherche ; alternatives : **NocoDB**.\n- **Un assistant IA**, facultatif, pour demander des remarques sur votre brouillon, sans lui transmettre de contenu confidentiel.\n\n## Étapes\n\n1. Créez le document avec les sections : objet et périmètre, rôles, outils autorisés, règles de confidentialité, protocole de vérification, journal et traçabilité, mention dans les notes, formation, révision.\n2. Rédigez la section « **Outils autorisés** » : pour chaque outil (réel ou imaginé), précisez à quelle catégorie d'information il est autorisé (publique, interne, confidentielle).\n3. Rédigez la section « **Règles de confidentialité** » avec une liste de ce qui ne doit jamais être saisi dans un outil externe, la procédure d'anonymisation et la personne à consulter en cas de doute.\n4. Reprenez le protocole en **cinq contrôles** du chapitre 1 et adaptez-le : qui vérifie, dans quelles sources officielles, avec quelles preuves.\n5. Créez le tableur « **Journal de recherche** » : date, auteur, outil, requête anonymisée, références, résultat des cinq contrôles, relecteur, validation.\n6. Rédigez un **modèle de mention** pour les notes assistées.\n7. Appliquez le protocole à un cas fictif (par exemple le badge connecté) et remplissez une ligne du journal.\n8. Faites relire par une personne, qui doit essayer de trouver un cas non couvert.\n\n## Résultat attendu\n\nUn protocole de deux à quatre pages, un journal prêt à l'emploi, et un cas fictif rempli.\n\n## Critères de réussite\n\n- [ ] Les rôles (auteur, relecteur, responsable) sont nommés.\n- [ ] La règle « ce qu'on peut envoyer ou non » est claire et utilisable.\n- [ ] Le protocole impose la vérification dans les sources officielles.\n- [ ] Le journal permet de reconstituer un raisonnement.\n- [ ] Une mention de limites rappelle que le document ne constitue pas un avis juridique et doit être validé par votre direction juridique et votre DPO.\n\n## Pièges\n\nUn protocole trop long que personne n'applique ; des règles vagues (« être prudent ») ; l'absence de mécanisme de révision. **Données** : jamais de dossier réel ni de document confidentiel ; cas fictifs uniquement.\n\n## Pour aller plus loin\n\nAjoutez un « test de recette » : trois cas fictifs que l'équipe rejoue chaque trimestre pour vérifier que le protocole est compris."
+        }
+      ]
+    }
+  ],
+  "quiz": {
+    "title": "Quiz du module",
+    "pass_percent": 70,
+    "max_attempts": null,
+    "questions": [
+      {
+        "kind": "single_choice",
+        "prompt": "Quel est le rôle le plus adapté d'un assistant IA dans une recherche juridique ?",
+        "feedback": "L'assistant aide à défricher. La preuve vient des sources officielles et la responsabilité de la note reste à celui qui la signe.",
+        "options": [
+          [
+            "Fournir la liste définitive des décisions applicables au dossier",
+            false
+          ],
+          [
+            "Remplacer la consultation des bases officielles",
+            false
+          ],
+          [
+            "Proposer des pistes, des mots-clés et une structure, que le juriste vérifie dans les sources officielles",
+            true
+          ],
+          [
+            "Valider la conclusion d'une note avant signature",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi un modèle de langage peut-il produire une référence jurisprudentielle inexistante ?",
+        "feedback": "Le modèle prédit la suite de texte la plus vraisemblable : une référence peut en avoir toutes les apparences sans exister.",
+        "options": [
+          [
+            "Il génère un texte plausible, avec la forme d'une référence, sans la consulter dans une base",
+            true
+          ],
+          [
+            "Il copie volontairement une décision qu'il a lue mais en change la date",
+            false
+          ],
+          [
+            "Il ne sait écrire que des références qui existent, mais se trompe de page",
+            false
+          ],
+          [
+            "Il est programmé pour inventer lorsque l'utilisateur est inattentif",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Un outil connecté à une base documentaire est utilisé. Quelle affirmation est la plus juste ?",
+        "feedback": "La connexion à une base réduit les inventions sans les supprimer. Le protocole de vérification s'applique toujours.",
+        "options": [
+          [
+            "Le risque d'hallucination est supprimé, la vérification devient inutile",
+            false
+          ],
+          [
+            "Le risque d'erreur diminue mais subsiste : mauvais passage, résumé inexact, mélange de documents",
+            true
+          ],
+          [
+            "Seules les références sont à vérifier, jamais les résumés",
+            false
+          ],
+          [
+            "Les erreurs ne concernent que les outils gratuits",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Dans le protocole, que vérifie le contrôle « exactitude » ?",
+        "feedback": "L'existence, l'exactitude, la version, la portée et la cohérence sont cinq contrôles distincts. Une paraphrase de l'IA n'est pas une citation.",
+        "options": [
+          [
+            "Que la référence existe dans une base quelconque",
+            false
+          ],
+          [
+            "Que la décision est favorable à la thèse défendue",
+            false
+          ],
+          [
+            "Que le texte est en vigueur à la date des faits",
+            false
+          ],
+          [
+            "Que le passage cité figure mot pour mot dans le texte officiel",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Une référence proposée par l'IA n'a pas pu être vérifiée faute de temps. Que faire ?",
+        "feedback": "Une référence non vérifiée est inutilisable. La signaler honnêtement est préférable à laisser croire qu'elle est contrôlée.",
+        "options": [
+          [
+            "La garder, car elle est probablement exacte",
+            false
+          ],
+          [
+            "La garder en retirant le numéro pour ne pas risquer une erreur",
+            false
+          ],
+          [
+            "La retirer ou la signaler explicitement comme « non vérifiée »",
+            true
+          ],
+          [
+            "La reformuler pour que son origine n'apparaisse plus",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle source fait foi pour citer un texte de loi dans une note ?",
+        "feedback": "Les sources officielles font foi. Les commentaires et résumés aident à comprendre mais on remonte au texte pour citer.",
+        "options": [
+          [
+            "La publication officielle du texte",
+            true
+          ],
+          [
+            "Le résumé d'un assistant IA qui cite l'article",
+            false
+          ],
+          [
+            "Un blog juridique très consulté",
+            false
+          ],
+          [
+            "Un commentaire de doctrine, même signé",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle erreur est la plus difficile à détecter avec une simple recherche de la référence ?",
+        "feedback": "Une référence réelle mal utilisée passe le contrôle d'existence. Les contrôles de version, de portée et de cohérence sont indispensables.",
+        "options": [
+          [
+            "Une décision qui n'existe pas",
+            false
+          ],
+          [
+            "Une vraie décision présentée avec une portée plus large que celle qu'elle a",
+            true
+          ],
+          [
+            "Un numéro d'article inexistant",
+            false
+          ],
+          [
+            "Une juridiction qui n'existe pas",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Dans la consigne d'une recherche assistée, quelle formulation limite le mieux le risque de citation inventée ?",
+        "feedback": "Demander des pistes plutôt que des références évite que l'outil fabrique. Les références, vous les rapportez des bases officielles.",
+        "options": [
+          [
+            "Donne-moi cinq arrêts récents sur le sujet",
+            false
+          ],
+          [
+            "Confirme que ma position est correcte et cite les arrêts",
+            false
+          ],
+          [
+            "Réponds avec assurance, sans mention d'incertitude",
+            false
+          ],
+          [
+            "Ne cite aucune décision de mémoire ; si tu n'es pas certain, écris « à vérifier »",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel danger spécifique présente une synthèse automatique de décision ?",
+        "feedback": "Le lissage fait disparaître les « sauf si », les motifs secondaires et les nuances. La relecture dans l'original reste nécessaire.",
+        "options": [
+          [
+            "Elle rallonge toujours le texte original",
+            false
+          ],
+          [
+            "Elle interdit de retrouver les paragraphes cités",
+            false
+          ],
+          [
+            "Elle peut supprimer des conditions, réserves ou distinctions de portée qui changent le sens",
+            true
+          ],
+          [
+            "Elle remplace automatiquement la décision par la doctrine",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pour une chronologie de dossier assistée par IA, quelle bonne pratique s'impose ?",
+        "feedback": "La traçabilité par pièce permet de contrôler. Les contradictions doivent être exposées et non lissées.",
+        "options": [
+          [
+            "Exiger pour chaque événement le renvoi à la pièce, et demander la liste des contradictions",
+            true
+          ],
+          [
+            "Laisser l'outil réconcilier seul les dates incohérentes",
+            false
+          ],
+          [
+            "Ne fournir que des extraits sans identifiant de pièce",
+            false
+          ],
+          [
+            "Accepter l'indicateur de confiance comme preuve",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Dans une veille réglementaire, quel risque est généralement le plus coûteux ?",
+        "feedback": "Mieux vaut trier quelques alertes inutiles que manquer un texte important. Les filtres doivent être réglés assez larges.",
+        "options": [
+          [
+            "Une alerte inutile (faux positif)",
+            false
+          ],
+          [
+            "Un texte pertinent non détecté (faux négatif)",
+            true
+          ],
+          [
+            "Un résumé trop court",
+            false
+          ],
+          [
+            "Un flux qui ajoute trop de liens",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle information peut sans difficulté particulière être soumise au bloc « assistant IA » d'une chaîne de veille ?",
+        "feedback": "La chaîne de veille ne doit traiter que des informations publiques. Les contenus confidentiels relèvent d'autres règles, voir la grille de décision.",
+        "options": [
+          [
+            "La note interne de la direction sur l'impact du texte",
+            false
+          ],
+          [
+            "La consultation d'un client sur le sujet",
+            false
+          ],
+          [
+            "Le titre et le résumé publics d'un texte publié",
+            true
+          ],
+          [
+            "Des extraits de contrats en cours de négociation",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Qui répond d'une note rédigée avec l'aide d'un assistant IA ?",
+        "feedback": "L'outil ne répond de rien. L'auteur reste responsable de son contenu, et l'organisation du protocole et de la relecture.",
+        "options": [
+          [
+            "L'auteur qui la signe, même si l'outil a participé",
+            true
+          ],
+          [
+            "L'éditeur de l'outil, dès lors qu'il est payant",
+            false
+          ],
+          [
+            "Personne en particulier, l'outil étant automatique",
+            false
+          ],
+          [
+            "Le relecteur uniquement",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Vous hésitez à envoyer un document à un outil externe, sans savoir s'il est couvert par la confidentialité. Que faites-vous ?",
+        "feedback": "En cas de doute, ne pas envoyer. Supprimer un nom ne garantit pas l'anonymat, et la suppression a posteriori n'efface pas ce qui a été transmis.",
+        "options": [
+          [
+            "Vous l'envoyez, en supprimant seulement le nom du client",
+            false
+          ],
+          [
+            "Vous l'envoyez avec un outil gratuit puisque l'accès est limité",
+            false
+          ],
+          [
+            "Vous l'envoyez et supprimez l'historique ensuite",
+            false
+          ],
+          [
+            "Vous ne l'envoyez pas et vous demandez à la direction juridique ou au DPO",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Qu'est-ce qui distingue une pseudonymisation d'une anonymisation ?",
+        "feedback": "Remplacer un nom par un code ne rend pas le dossier non identifiant. Le contexte peut suffire à reconnaître la situation.",
+        "options": [
+          [
+            "La pseudonymisation supprime toute possibilité de réidentification",
+            false
+          ],
+          [
+            "Avec la pseudonymisation, la personne reste identifiable par recoupement ou grâce à une table de correspondance",
+            true
+          ],
+          [
+            "L'anonymisation consiste à remplacer le nom par une initiale",
+            false
+          ],
+          [
+            "Il n'y a aucune différence pratique",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels contrôles font partie du protocole de vérification d'une référence ?",
+        "feedback": "Les contrôles sont : existence, exactitude, version, portée, cohérence. La popularité d'une référence sur le web ne prouve rien.",
+        "options": [
+          [
+            "Existence dans une source officielle",
+            true
+          ],
+          [
+            "Version en vigueur à la bonne date",
+            true
+          ],
+          [
+            "Nombre de fois où la référence apparaît sur le web",
+            false
+          ],
+          [
+            "Exactitude du passage cité",
+            true
+          ],
+          [
+            "Portée applicable au cas",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Parmi ces situations, lesquelles augmentent le risque d'hallucination ?",
+        "feedback": "Les demandes de références de mémoire, les questions suggestives et les sujets pointus augmentent le risque. Fournir le texte et autoriser « non trouvé » le réduisent.",
+        "options": [
+          [
+            "Demander une référence précise sans outil connecté à une base",
+            true
+          ],
+          [
+            "Traiter un sujet très récent ou local",
+            true
+          ],
+          [
+            "Autoriser explicitement la réponse « non trouvé »",
+            false
+          ],
+          [
+            "Poser une question suggestive qui suppose l'existence d'une décision",
+            true
+          ],
+          [
+            "Fournir le texte source et exiger des extraits",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles sources font foi ou doivent être citées comme telles ?",
+        "feedback": "Les sources officielles font foi. Les résumés, blogs et réponses non sourcées sont des pistes à vérifier.",
+        "options": [
+          [
+            "Le texte publié dans la source officielle",
+            true
+          ],
+          [
+            "Un résumé généré par un outil de veille",
+            false
+          ],
+          [
+            "La réponse d'un assistant sans source",
+            false
+          ],
+          [
+            "La décision publiée par la juridiction ou sa base officielle",
+            true
+          ],
+          [
+            "Un article de blog anonyme",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles omissions sont typiques d'une synthèse automatique de décision ?",
+        "feedback": "Ce sont les nuances qui disparaissent, et ce sont elles qui changent le sens juridique.",
+        "options": [
+          [
+            "Les conditions et réserves (« sauf si »)",
+            true
+          ],
+          [
+            "Les exceptions et régimes particuliers",
+            true
+          ],
+          [
+            "La numérotation des pages du document",
+            false
+          ],
+          [
+            "La distinction entre motif principal et considération accessoire",
+            true
+          ],
+          [
+            "Le titre de la décision",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles colonnes sont utiles dans le tableau d'une veille réglementaire assistée ?",
+        "feedback": "On trace la source, le statut, le relecteur et la date. L'outil ne produit pas d'avis définitif.",
+        "options": [
+          [
+            "Lien vers la source officielle",
+            true
+          ],
+          [
+            "Relu par",
+            true
+          ],
+          [
+            "Avis juridique définitif généré par l'outil",
+            false
+          ],
+          [
+            "Statut (à relire, diffusé, écarté)",
+            true
+          ],
+          [
+            "Date de détection",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles questions poser à un fournisseur d'outil d'IA avant de lui confier des contenus sensibles ?",
+        "feedback": "Conservation, réutilisation pour l'entraînement, localisation et cadre contractuel sont décisifs.",
+        "options": [
+          [
+            "Les contenus sont-ils conservés, et combien de temps ?",
+            true
+          ],
+          [
+            "Où sont-ils hébergés et traités ?",
+            true
+          ],
+          [
+            "Quelle est la couleur de l'interface ?",
+            false
+          ],
+          [
+            "Sont-ils utilisés pour entraîner les modèles ?",
+            true
+          ],
+          [
+            "Quel contrat engage le fournisseur ?",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Que doit contenir le journal d'une recherche assistée ?",
+        "feedback": "Le journal doit permettre de reconstituer le raisonnement sans lui-même exposer des données sensibles.",
+        "options": [
+          [
+            "La requête (anonymisée) et l'outil utilisé",
+            true
+          ],
+          [
+            "Le nom de la personne qui a vérifié",
+            true
+          ],
+          [
+            "Seulement la conclusion finale",
+            false
+          ],
+          [
+            "Le résultat des vérifications de chaque référence",
+            true
+          ],
+          [
+            "Les données personnelles complètes du client",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles pratiques réduisent le risque d'identification lors de l'envoi d'une question à un outil externe ?",
+        "feedback": "Minimiser et vérifier le risque de recoupement sont les bons réflexes. Un surnom ne suffit pas.",
+        "options": [
+          [
+            "Généraliser les montants, lieux et dates",
+            true
+          ],
+          [
+            "Vérifier qu'un tiers ne pourrait pas reconnaître le dossier",
+            true
+          ],
+          [
+            "Ajouter des détails réels pour aider l'outil",
+            false
+          ],
+          [
+            "Retirer les éléments inutiles à la question juridique",
+            true
+          ],
+          [
+            "Remplacer un nom par un surnom en gardant tous les détails",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Dans quels cas la lecture intégrale du document reste-t-elle indispensable, malgré une synthèse ?",
+        "feedback": "Plus l'enjeu est important, plus la lecture intégrale s'impose. Un indicateur de confiance n'est pas une preuve.",
+        "options": [
+          [
+            "Lorsque la note sera signée ou communiquée à un tiers",
+            true
+          ],
+          [
+            "Lorsque le risque de la décision est élevé",
+            true
+          ],
+          [
+            "Lorsque l'outil a indiqué un niveau de confiance élevé",
+            false
+          ],
+          [
+            "Lorsque la qualification juridique dépend d'une nuance du texte",
+            true
+          ],
+          [
+            "Lorsque le document est très court et déjà résumé par l'outil",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Parmi ces affirmations sur la responsabilité, lesquelles sont exactes ?",
+        "feedback": "Les rôles sont distincts. L'outil n'est pas un responsable et la relecture ne remplace pas la vérification de l'auteur.",
+        "options": [
+          [
+            "L'auteur de la note répond de son contenu",
+            true
+          ],
+          [
+            "Citer l'outil n'exonère pas l'auteur",
+            true
+          ],
+          [
+            "La relecture dispense l'auteur de vérifier",
+            false
+          ],
+          [
+            "Le responsable d'équipe répond du protocole et de la formation",
+            true
+          ],
+          [
+            "L'outil répond des erreurs de ses sorties",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Votre responsable vous demande une note sur une question de conformité et vous propose d'utiliser un assistant IA. Décrivez votre méthode de travail, de la préparation de la question jusqu'à la signature : ce que vous soumettez à l'outil, comment vous vérifiez les références et ce que vous consignez.",
+        "feedback": "Une bonne réponse mentionne : l'anonymisation de la question, l'interdiction de citer de mémoire, la vérification des références dans les sources officielles (existence, exactitude, version, portée, cohérence), le retrait des références non vérifiées, le journal de recherche et la responsabilité de l'auteur.",
+        "options": []
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Un collègue colle dans un assistant grand public le texte intégral d'un contrat client pour obtenir une synthèse. Expliquez pourquoi c'est problématique, quelles questions vous poseriez et quelle alternative vous proposeriez.",
+        "feedback": "Une bonne réponse évoque la confidentialité et le secret éventuel, l'absence de cadre contractuel, la conservation et la réutilisation possibles, les données personnelles, et propose un outil interne ou contractuellement encadré, ou la minimisation et l'anonymisation, ainsi que la consultation du DPO ou de la direction juridique.",
+        "options": []
+      }
+    ]
+  },
+  "assignment": {
+    "title": "Livrable pratique : protocole de recherche juridique assistée avec contrôle des sources",
+    "instructions_md": "## Objectif\n\nRédiger le **protocole de recherche juridique assistée** de votre équipe (réelle ou imaginaire), avec contrôle des sources, règles de confidentialité et traçabilité, et démontrer son application sur un cas fictif. Toutes les données sont inventées : aucun dossier réel, aucune donnée personnelle ni confidentielle ne doit apparaître.\n\n*Ce livrable est un exercice de formation : il ne constitue pas un avis juridique et doit être validé par votre direction juridique et votre DPO avant tout usage réel.*\n\n## Consignes\n\nLe livrable se réalise **sans code**, avec les outils no-code et low-code des trois ateliers du dernier chapitre : un tableur (grille et journal), un outil d'automatisation et un tableur (veille), un document collaboratif (protocole). Le rendu peut être un document, un PDF ou des liens.\n\n1. **Périmètre et rôles** : à quels travaux le protocole s'applique, qui est auteur, relecteur et responsable (une demi-page).\n2. **Protocole de vérification** : les cinq contrôles adaptés à votre équipe, avec les sources officielles utilisées et les preuves à conserver.\n3. **Grille appliquée** : la grille de l'atelier 1, remplie pour une note fictive de votre choix contenant **au moins quatre erreurs volontaires** de familles différentes, avec la note corrigée.\n4. **Règles de confidentialité** : une grille de décision (information, outil autorisé, condition), la procédure d'anonymisation, les cas où l'on ne soumet rien, et la personne à consulter en cas de doute.\n5. **Choix des outils** : dix questions posées à un fournisseur et leur cotation pour un outil de votre choix (réel ou imaginaire), avec une alternative.\n6. **Synthèse et limites** : la consigne type de synthèse ancrée dans le document, et les points qu'une synthèse automatique ne peut jamais décider seule.\n7. **Veille** : la fiche d'identité de la veille et la chaîne no-code (captures ou description des blocs), avec le point de relecture humaine.\n8. **Traçabilité** : le journal de recherche, une ligne remplie sur un cas fictif, et le modèle de mention dans une note.\n9. **Limites et révision** : ce que le protocole ne couvre pas, la fréquence de révision, l'indicateur de suivi (sans chiffre imposé).\n10. **Variante pour profils avancés (facultative)** : comparez la détection des erreurs de votre note par deux assistants différents, sans leur donner de contenu confidentiel.\n\n## Grille d'évaluation\n\n- Protocole de vérification clair, applicable et centré sur les sources officielles (**25 %**).\n- Application sur une note fictive : erreurs repérées, familles correctes, note corrigée honnête (**20 %**).\n- Règles de confidentialité : grille de décision, anonymisation, cas de non-soumission (**20 %**).\n- Choix des outils et alternatives justifiés (**10 %**).\n- Veille et synthèse : chaîne avec relecture humaine, limites identifiées (**10 %**).\n- Traçabilité, responsabilités et mention de limites (**15 %**).\n\n## Rendu\n\nTexte dans le champ de réponse et/ou fichier PDF ou document, avec liens ou captures des outils utilisés. N'utilisez que des exemples fictifs ; ne reproduisez aucune décision ou aucun article réel : seules les sources officielles font foi."
+  }
+}

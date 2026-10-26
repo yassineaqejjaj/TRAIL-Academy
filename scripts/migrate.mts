@@ -43,7 +43,7 @@ try {
   }
   if (files.every((f) => applied.has(f))) console.log("database is up to date");
 
-  const empty = (await client.query<{ n: number }>("select count(*)::int as n from courses")).rows[0].n === 0;
+  const empty = (await client.query<{ n: number }>("select count(*)::int as n from courses where phase_id < 5")).rows[0].n === 0;
   if (process.argv.includes("--seed") && empty) { await client.query(readFileSync("db/seed.sql", "utf8")); console.log("seed loaded"); }
   if (process.argv.includes("--fixture")) {
     if (process.env.NODE_ENV === "production") throw new Error("refusing to load the development fixture in production");

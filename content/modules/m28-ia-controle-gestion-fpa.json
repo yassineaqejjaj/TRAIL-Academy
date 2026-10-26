@@ -1,0 +1,780 @@
+{
+  "course": "M28",
+  "slug": "ia-controle-gestion-fpa",
+  "source": "Contenu original rédigé pour TRAIL Academy à partir du programme du module (sans slides sources). Pas de vidéo : à ajouter depuis l'administration.",
+  "chapters": [
+    {
+      "title": "Reporting et tableaux de bord assistés",
+      "lessons": [
+        {
+          "title": "Qui calcule, qui rédige : le partage des rôles",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Distinguer ce qui se **calcule** (tableur, outil de BI) de ce qui se **rédige** (assistant IA).\n- Poser la règle de base du module : l'IA n'est jamais la source d'un chiffre.\n\n## Le fil rouge du module\n\nNous suivons **Atelier Boréal**, une PME **fictive** de fabrication de mobilier, avec trois unités (Nord, Sud, Ouest). Tous les chiffres du module sont **inventés et illustratifs** : ils servent à s'exercer, pas à décrire une réalité.\n\n## Pourquoi cette règle\n\nUn assistant IA est un modèle de langage : il produit un texte vraisemblable, pas un calcul garanti. Il peut additionner de travers, mélanger des périodes, arrondir sans le dire ou « compléter » un chiffre manquant avec une valeur plausible. En finance, un chiffre plausible mais faux est plus dangereux qu'une cellule vide, car personne ne le remet en cause.\n\nLa règle de partage est donc simple :\n\n- **Le tableur calcule** : sommes, écarts, taux, cumuls, conversions. Chaque résultat est une formule que l'on peut auditer.\n- **L'humain valide** : il contrôle la cohérence, choisit ce qui est significatif, assume le message.\n- **L'IA rédige et assiste** : brouillon de commentaire, reformulation, idées d'hypothèses à vérifier, relecture de clarté, génération de listes de contrôles.\n\n```mermaid\nflowchart LR\n  accTitle: Partage des rôles entre tableur, IA et humain\n  accDescr: Les données sources alimentent le tableur qui calcule les chiffres. Les chiffres validés sont transmis à l'assistant IA qui rédige un brouillon. L'humain contrôle les chiffres et le texte avant diffusion.\n  D[\"Données sources (export, ERP)\"] --> T[\"Tableur : calcule les chiffres\"]\n  T --> C[\"Contrôles de cohérence\"]\n  C --> H[\"Humain : valide les chiffres\"]\n  H --> A[\"Assistant IA : rédige un brouillon\"]\n  A --> R[\"Humain : relit et corrige le texte\"]\n  R --> P[\"Publication\"]\n  A -. \"ne calcule jamais\" .-> T\n```\n*Figure 1 : le tableur calcule, l'IA rédige à partir de chiffres déjà validés, l'humain contrôle aux deux extrémités.*\n\n## Ce que l'IA fait bien dans un service financier\n\n- Résumer en trois phrases un tableau de chiffres **qu'on lui fournit**.\n- Proposer une structure de commentaire ou de note de synthèse.\n- Expliquer une formule de tableur, suggérer une formule à tester (que vous vérifiez sur un cas connu).\n- Reformuler pour un public non financier.\n\n## Ce qu'elle fait mal ou dangereusement\n\n- Calculer de tête des sommes, des pourcentages, des moyennes pondérées.\n- Retrouver « de mémoire » des chiffres qui ne figurent pas dans la consigne.\n- Garder la cohérence sur un long tableau ou plusieurs périodes.\n\n## Mise en pratique\n\nPrenez un reporting que vous produisez déjà. Listez ses étapes et notez pour chacune : « calcul », « contrôle », « rédaction » ou « décision ». Entourez uniquement celles qui relèvent de la rédaction : c'est là que l'IA peut vous faire gagner du temps sans toucher à la fiabilité des chiffres.\n"
+        },
+        {
+          "title": "Concevoir un reporting mensuel : définitions et contrôles de cohérence",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Structurer un reporting mensuel : périmètre, définitions, calculs, contrôles.\n- Mettre en place des contrôles de cohérence avant toute rédaction.\n\n## Un reporting commence par des définitions\n\nAvant la première formule, écrivez sur une feuille « Lisez-moi » :\n\n- le **périmètre** (quelles entités, quelle devise) ;\n- la **période** et la date d'extraction des données ;\n- la **définition de chaque indicateur** (par exemple : « marge brute = chiffre d'affaires moins coûts directs, hors frais de structure ») ;\n- la **source** de chaque colonne (export comptable, fichier de ventes, saisie manuelle).\n\nSans ces définitions, deux personnes calculent deux « marges » différentes et l'IA ne peut qu'en choisir une au hasard.\n\n## L'architecture d'un classeur fiable\n\n- **Une feuille de données brutes** : l'export, intact, jamais modifié à la main.\n- **Une feuille de calculs** : toutes les formules, qui lisent les données brutes.\n- **Une feuille de contrôles** : des tests qui doivent tous afficher « OK ».\n- **Une feuille de restitution** : le tableau de bord ou le reporting lu par les destinataires.\n\n```mermaid\nflowchart TD\n  accTitle: Chaîne de production d'un reporting mensuel contrôlé\n  accDescr: L'export brut alimente la feuille de calculs, puis la feuille de contrôles. Si un contrôle échoue, on corrige à la source. Sinon la restitution est produite et le commentaire est rédigé.\n  B[\"Données brutes (export intact)\"] --> K[\"Calculs par formules\"]\n  K --> V[\"Contrôles de cohérence\"]\n  V -->|\"Un contrôle échoue\"| F[\"Corriger à la source et recalculer\"]\n  F --> K\n  V -->|\"Tous les contrôles OK\"| S[\"Restitution (tableau de bord)\"]\n  S --> N[\"Commentaire rédigé avec l'IA\"]\n  N --> R[\"Relecture humaine\"]\n```\n*Figure 1 : le commentaire n'est produit qu'une fois les contrôles au vert.*\n\n## Les contrôles de cohérence à prévoir\n\nExemple fictif, mois de mars, chiffre d'affaires par unité :\n\n- Unité Nord : 210 000\n- Unité Sud : 150 000\n- Unité Ouest : 120 000\n- Total des unités : 480 000\n- Total du reporting consolidé : 480 000\n\nContrôles possibles :\n\n- **Somme des parties = total** : 210 000 + 150 000 + 120 000 = 480 000, écart attendu 0.\n- **Réconciliation avec la source** : le total du reporting égale le total de l'export comptable.\n- **Cumul** : cumul à fin mars = cumul à fin février + mars.\n- **Signe et ordre de grandeur** : aucun chiffre d'affaires négatif, aucun écart de plus de dix fois la normale sans explication.\n- **Doublons et lignes vides** dans l'export.\n\nChaque contrôle est une formule qui renvoie « OK » ou « ERREUR » ; une cellule de synthèse indique « Tous contrôles OK » ou le nombre d'échecs.\n\n## Mise en pratique\n\nDans un tableur, saisissez les trois unités ci-dessus et construisez les deux premiers contrôles. Modifiez volontairement un chiffre pour vérifier que le contrôle passe bien en erreur : un contrôle qui ne peut jamais échouer ne contrôle rien.\n"
+        },
+        {
+          "title": "Tableaux de bord : choisir les indicateurs et se faire assister",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Choisir un petit nombre d'indicateurs utiles pour un tableau de bord.\n- Utiliser l'assistant pour la conception et la relecture, pas pour les valeurs.\n\n## Moins d'indicateurs, mieux définis\n\nUn tableau de bord n'est pas un inventaire. Pour chaque destinataire, posez trois questions : quelle décision doit-il prendre ? quel indicateur l'éclaire ? à quel seuil agit-il ? Quatre à huit indicateurs suffisent en général pour une page ; au-delà, personne ne lit.\n\nExemple fictif pour Atelier Boréal, direction générale :\n\n- Chiffre d'affaires du mois, comparé au budget et au même mois de l'an passé.\n- Taux de marge brute.\n- Charges de personnel rapportées au chiffre d'affaires.\n- Trésorerie de fin de mois.\n- Délai moyen de paiement des clients.\n\n## Chaque indicateur a une fiche\n\n- **Nom** et **formule** écrite en toutes lettres.\n- **Source** et fréquence de mise à jour.\n- **Propriétaire** : la personne qui répond si le chiffre est contesté.\n- **Seuil d'alerte** décidé à l'avance (par exemple : « écart défavorable supérieur au seuil de matérialité du service »).\n\nL'assistant peut vous aider à **rédiger ces fiches** et à repérer les définitions ambiguës. Donnez-lui la liste des indicateurs sans chiffres, et demandez-lui : « Quelles définitions sont ambiguës ? Quelles questions un lecteur pourrait-il poser ? »\n\n## Un exemple de consigne utile\n\n```text\nRôle : assistant de relecture pour un contrôleur de gestion.\nContexte : tableau de bord mensuel fictif d'une PME de mobilier.\nDonnées : la liste des indicateurs ci-dessous, sans valeurs.\nTâche : pour chaque indicateur, signale les ambiguïtés de définition\net propose une phrase de définition claire.\nRègles : n'invente aucune valeur chiffrée ; si une information manque,\nécris « à préciser ».\n```\n\n## Outils de visualisation\n\nUn tableur ou un outil de tableau de bord gratuit (par exemple Looker Studio, offre gratuite ou version libre à la date de rédaction, à vérifier ; alternative : un simple classeur avec graphiques) se connecte à votre feuille de restitution. Décrivez les **blocs** : une rangée de chiffres clés, un graphique d'évolution, un tableau d'écarts. Les interfaces changent, les rôles de blocs restent.\n\n## Règles de lisibilité\n\n- Un graphique, un message : le titre dit ce qu'il faut voir.\n- Même échelle et même couleur pour la même chose d'une page à l'autre.\n- Les montants indiquent l'unité (milliers d'euros ou euros) et la période.\n\n## Mise en pratique\n\nChoisissez cinq indicateurs pour un destinataire de votre choix, rédigez leur fiche, puis demandez à l'assistant de relire les définitions. Notez ce qu'il a repéré que vous aviez omis, et ce qu'il a suggéré à tort.\n"
+        }
+      ]
+    },
+    {
+      "title": "Analyse d'écarts",
+      "lessons": [
+        {
+          "title": "La méthode budget/réel : calculer et décomposer les écarts",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Décrire la méthode budget/réel et les écarts de volume, de prix et de coût.\n- Calculer un écart par formule et le décomposer avant de l'expliquer.\n\n## Budget contre réel : le principe\n\nUn **écart** est la différence entre ce qui était prévu (budget, prévision, année précédente) et ce qui est constaté. On le présente avec une convention de signe **écrite** : par exemple, « écart favorable positif sur les produits, favorable négatif sur les charges ». Choisissez une convention, notez-la en haut du reporting, ne la changez pas.\n\nExemple fictif, mois de mars, Atelier Boréal :\n\n- Chiffre d'affaires : budget 500 000, réel 480 000, écart -20 000\n- Coûts matières : budget 150 000, réel 152 000, écart +2 000 (défavorable)\n- Frais de personnel : budget 200 000, réel 205 000, écart +5 000 (défavorable)\n- Autres charges : budget 60 000, réel 55 000, écart -5 000 (favorable)\n- Résultat opérationnel : budget 90 000, réel 68 000, écart -22 000\n\nVérification par le tableur : -20 000 - 2 000 - 5 000 + 5 000 = -22 000. Si l'IA vous annonce un autre total, c'est elle qui a tort : recalculez.\n\n## Décomposer avant d'expliquer\n\nUn écart de chiffre d'affaires se décompose en effets distincts :\n\n- **Effet volume** = (volume réel - volume budget) × prix budget.\n- **Effet prix** = (prix réel - prix budget) × volume réel.\n\nExemple fictif, gamme B : budget 8 000 unités à 40, soit 320 000 ; réel 8 400 unités à 38, soit 319 200. Écart total : -800.\n\n- Effet volume : (8 400 - 8 000) × 40 = +16 000.\n- Effet prix : (38 - 40) × 8 400 = -16 800.\n- Somme : +16 000 - 16 800 = -800, ce qui boucle avec l'écart total.\n\nUn écart total quasi nul cachait donc deux mouvements importants et opposés. Une analyse qui s'arrête au total passe à côté de l'essentiel.\n\n```mermaid\nflowchart TD\n  accTitle: Décomposition d'un écart de chiffre d'affaires\n  accDescr: L'écart total sur une gamme se décompose en un effet volume et un effet prix. On contrôle que la somme des deux effets égale l'écart total avant de chercher des explications.\n  E[\"Écart total : -800 (illustratif)\"] --> V[\"Effet volume : +16 000\"]\n  E --> P[\"Effet prix : -16 800\"]\n  V --> K{\"Somme des effets = écart total ?\"}\n  P --> K\n  K -->|\"Oui\"| X[\"Chercher les causes de chaque effet\"]\n  K -->|\"Non\"| Y[\"Revoir les formules et les données\"]\n```\n*Figure 1 : on vérifie que les effets bouclent avec l'écart avant de chercher des causes (chiffres fictifs).*\n\n## Fixer un seuil de matérialité\n\nOn n'explique pas tous les écarts : on explique ceux qui dépassent un **seuil** défini à l'avance (en montant et en pourcentage), fixé par le service. Écrire ce seuil évite de laisser l'IA, ou l'humeur du jour, décider de ce qui compte.\n\n## Mise en pratique\n\nReprenez les cinq lignes ci-dessus dans un tableur, calculez les écarts par formule, puis la décomposition volume/prix de la gamme B. Vérifiez que la somme des effets égale l'écart total.\n"
+        },
+        {
+          "title": "Hypothèses explicatives : proposer avec l'IA, vérifier avec les sources",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Distinguer un **fait** (un écart calculé) d'une **hypothèse** (une cause possible).\n- Utiliser l'assistant pour générer des hypothèses, puis les confronter aux sources.\n\n## Le piège de l'explication plausible\n\nFace à un écart, un assistant produit volontiers une explication bien tournée : « la baisse s'explique par un ralentissement de la demande ». Elle sonne juste, mais il n'a vu ni vos commandes, ni vos contrats, ni votre calendrier. Ce qu'il produit est une **hypothèse**, jamais une cause établie.\n\n## Un cycle en quatre temps\n\n1. **Constater** : le tableur calcule et décompose l'écart.\n2. **Formuler des hypothèses** : vous et l'assistant listez des causes possibles. Demandez-lui explicitement de proposer **plusieurs** hypothèses, y compris des causes non commerciales (erreur de découpage de période, décalage de facturation, changement de méthode).\n3. **Vérifier** : pour chaque hypothèse, quelle donnée la confirmerait ou l'infirmerait ? Qui la détient ?\n4. **Conclure** : on retient ce qui est confirmé, on marque le reste « non confirmé ».\n\n```mermaid\nsequenceDiagram\n  accTitle: Échange entre analyste, assistant IA et sources pour expliquer un écart\n  accDescr: L'analyste fournit les écarts calculés à l'assistant, qui propose des hypothèses. L'analyste les confronte aux sources et aux responsables métier, puis rédige une conclusion distinguant confirmé et non confirmé.\n  participant A as Analyste\n  participant I as Assistant IA\n  participant S as Sources et responsables\n  A->>I: Écarts calculés et règles de la consigne\n  I-->>A: Liste d'hypothèses à vérifier\n  A->>S: Demande des pièces et des explications\n  S-->>A: Faits confirmés ou infirmés\n  A->>I: Faits confirmés pour rédaction\n  I-->>A: Brouillon d'explication\n  A->>A: Relecture : confirmé ou non confirmé\n```\n*Figure 1 : l'assistant propose et rédige, mais seules les sources confirment.*\n\n## Exemple fictif\n\nÉcart : chiffre d'affaires de l'unité Sud, -15 000 par rapport au budget. Hypothèses possibles :\n\n- Un gros client a décalé une livraison au mois suivant (vérifiable : bons de livraison).\n- Une remise commerciale plus forte que prévu (vérifiable : factures et grille de remises).\n- Un jour ouvré de moins dans le mois (vérifiable : calendrier).\n- Une erreur de rattachement d'une facture à une autre unité (vérifiable : écritures comptables).\n\nAucune n'est vraie tant qu'une pièce ne l'a pas établi. Le commentaire final peut dire : « confirmé : décalage de livraison pour 9 000 ; non confirmé : le solde de 6 000 reste à expliquer ».\n\n## Consigne type\n\n```text\nVoici trois écarts calculés (fictifs). Pour chacun, propose cinq hypothèses\nexplicatives, dont au moins une non commerciale. Pour chaque hypothèse,\nindique quelle donnée la confirmerait et quel service la détient.\nN'affirme aucune cause comme certaine.\n```\n\n## Mise en pratique\n\nPrenez un écart de votre propre contexte (ou fictif) et listez dix hypothèses avec l'assistant. Classez-les par facilité de vérification. Commencez par les plus faciles à vérifier : elles éliminent vite les fausses pistes.\n"
+        },
+        {
+          "title": "Traçabilité : le journal d'analyse",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Mettre en place un journal d'analyse qui rend chaque affirmation vérifiable.\n- Savoir quoi consigner pour qu'un tiers puisse refaire le raisonnement.\n\n## Pourquoi tracer\n\nDans six mois, quelqu'un demandera : « d'où vient cette explication ? ». Si la réponse est « l'assistant l'a dit », l'analyse ne vaut rien. Si la réponse est « bon de livraison numéro tant, vérifié par X le tant », elle tient.\n\n## Le journal d'analyse\n\nUne feuille, une ligne par affirmation du commentaire. Colonnes à prévoir :\n\n- **Identifiant** de l'affirmation (A01, A02…).\n- **Énoncé** exact tel qu'il apparaît dans le commentaire.\n- **Type** : chiffre calculé, fait vérifié, hypothèse non confirmée.\n- **Source** : feuille et cellule du tableur, ou référence de la pièce.\n- **Vérificateur** et **date**.\n- **Statut** : confirmé, infirmé, à confirmer.\n\nExemple fictif :\n\n- A01 : « Le chiffre d'affaires est inférieur de 20 000 au budget » ; chiffre calculé ; feuille Écarts, cellule de la ligne chiffre d'affaires ; statut confirmé.\n- A02 : « L'unité Sud a décalé une livraison de 9 000 » ; fait vérifié ; bon de livraison référencé ; statut confirmé.\n- A03 : « La demande ralentit » ; hypothèse ; aucune source ; statut à confirmer, donc **à retirer du commentaire** ou à reformuler en « une hypothèse à vérifier ».\n\n## Documenter l'usage de l'assistant\n\nNotez aussi, une fois pour le reporting :\n\n- l'outil utilisé et la date, sans copier de données confidentielles dans le journal ;\n- la consigne employée (versionnée comme un modèle) ;\n- ce que l'assistant a produit et ce qui a été modifié par l'humain.\n\nCela permet de refaire le travail le mois suivant avec la même rigueur, et de répondre à un auditeur.\n\n## Règle d'or : citer ou taire\n\nDans la consigne, exigez que chaque phrase du brouillon renvoie à un identifiant de ligne ou de cellule fournie. Une phrase qui ne renvoie à aucun élément fourni est suspecte : retirez-la ou vérifiez-la.\n\n## Mise en pratique\n\nConstruisez le journal pour les trois affirmations ci-dessus. Ajoutez deux affirmations de votre invention : une vérifiable, une non. Observez que la seconde ne peut pas recevoir de source : c'est précisément le signal qu'il fallait.\n"
+        }
+      ]
+    },
+    {
+      "title": "Prévisions et scénarios",
+      "lessons": [
+        {
+          "title": "Prévoir simplement : moyenne mobile, saisonnalité, rolling forecast",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Connaître quelques approches de prévision simples et leurs limites.\n- Savoir ce que l'IA peut apporter à une prévision, et ce qu'elle ne doit pas faire.\n\n## Commencer simple\n\nUne prévision n'a pas besoin d'un modèle sophistiqué pour être utile. Les méthodes simples sont explicables, vérifiables dans un tableur et souvent suffisantes.\n\n- **Reconduction (run-rate)** : on prolonge le niveau récent. Utile pour des charges stables.\n- **Moyenne mobile** : on moyenne les derniers mois pour lisser le bruit. Exemple fictif : ventes de 410, 430 et 420 (en milliers) sur trois mois, moyenne = (410 + 430 + 420) / 3 = 420.\n- **Saisonnalité** : on applique un coefficient par mois, estimé sur l'historique, quand l'activité est saisonnière.\n- **Rolling forecast** : on garde un horizon constant (par exemple douze mois) en remplaçant chaque mois écoulé par son réel et en ajoutant un mois à la fin.\n- **Driver-based** : le résultat dépend de quelques moteurs explicites (volume, prix, taux de marge, effectifs) que l'on peut faire varier.\n\n## Limites à dire\n\n- Une moyenne mobile ne voit pas un changement de tendance.\n- Une saisonnalité estimée sur peu d'années est fragile.\n- Un modèle n'anticipe ni un nouveau contrat, ni une rupture de marché : ces éléments se saisissent comme **hypothèses explicites**.\n\n## Où l'IA peut aider\n\n- **Structurer** : proposer la liste des moteurs d'un modèle driver-based pour une activité donnée.\n- **Expliquer** : détailler pourquoi une méthode convient ou non à une série.\n- **Interroger** : lister des facteurs que vous n'aviez pas envisagés (à vérifier).\n- **Rédiger** : décrire la méthode et ses limites pour la documentation.\n\n## Où elle ne doit pas intervenir\n\n- **Produire les valeurs de la prévision** : le calcul reste dans le tableur, avec ses formules.\n- **Remplacer votre jugement** sur une hypothèse (le niveau de croissance, par exemple) : elle peut en proposer un éventail, pas en garantir la justesse.\n- Si un outil de prévision statistique intégré à un tableur ou à un logiciel est utilisé, traitez sa sortie comme **n'importe quel calcul** : on la compare à une méthode simple et on la questionne.\n\n## Mise en pratique\n\nConstruisez dans un tableur une moyenne mobile sur trois mois pour une série fictive de douze mois, puis comparez-la à la reconduction du dernier mois. Quelle méthode aurait le mieux « prévu » le mois suivant sur chaque date ? Notez que la meilleure méthode change selon les mois : c'est normal, et c'est pourquoi on évite de n'afficher qu'un seul chiffre.\n"
+        },
+        {
+          "title": "Hypothèses explicites et scénarios comparables",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Écrire des hypothèses explicites, datées et attribuées.\n- Construire trois scénarios comparables sur un même modèle.\n\n## Une hypothèse est une phrase, pas une cellule cachée\n\nDans un bon modèle, chaque hypothèse figure sur une **feuille dédiée** : valeur, unité, source ou justification, auteur, date. On ne trouve jamais de « 5 % » codé en dur au milieu d'une formule.\n\nExemple fictif, Atelier Boréal, prévision annuelle. Chiffre d'affaires de l'an passé : 5 000 000. Charges fixes : 1 800 000. Taux de marge brute : 40 % dans les trois cas, pour isoler l'effet de la croissance.\n\nTrois scénarios, un seul modèle, une seule variable qui change :\n\n- Prudent : croissance de 2 %, chiffre d'affaires 5 100 000, marge brute 2 040 000, résultat 240 000.\n- Central : croissance de 5 %, chiffre d'affaires 5 250 000, marge brute 2 100 000, résultat 300 000.\n- Ambitieux : croissance de 8 %, chiffre d'affaires 5 400 000, marge brute 2 160 000, résultat 360 000.\n\nContrôle : 5 000 000 × 1,05 = 5 250 000 ; 5 250 000 × 40 % = 2 100 000 ; 2 100 000 - 1 800 000 = 300 000. Ces chiffres sont illustratifs.\n\n## Des scénarios comparables\n\n- **Même structure** : les trois scénarios passent par les mêmes formules, seules les hypothèses changent.\n- **Même périmètre et mêmes dates.**\n- **Un écart lisible** entre chaque scénario, avec la liste de ce qui change.\n- **Pas de scénario « pour faire joli »** : chaque scénario doit pouvoir arriver.\n\n```mermaid\nquadrantChart\n  accTitle: Positionner des hypothèses selon leur incertitude et leur impact\n  accDescr: Matrice deux par deux. Les hypothèses à fort impact et forte incertitude sont celles à documenter et à faire varier en priorité dans les scénarios. Les positions sont illustratives.\n  title Hypothèses d'un modèle (positions illustratives)\n  x-axis Incertitude faible --> Incertitude forte\n  y-axis Impact faible --> Impact fort\n  quadrant-1 A faire varier en priorite\n  quadrant-2 A surveiller\n  quadrant-3 A fixer\n  quadrant-4 A documenter\n  Croissance des ventes: [0.8, 0.85]\n  Taux de marge: [0.45, 0.8]\n  Cout des matieres: [0.7, 0.6]\n  Taux de TVA: [0.1, 0.2]\n  Delai de paiement: [0.6, 0.3]\n```\n*Figure 1 : les hypothèses à la fois très incertaines et à fort impact sont celles que l'on fait varier d'un scénario à l'autre (positions fictives).*\n\n## Rôle de l'assistant\n\n- Challenger la liste d'hypothèses : « qu'ai-je oublié ? ».\n- Rédiger la description de chaque scénario à partir du tableau d'hypothèses que **vous** lui fournissez.\n- Repérer les incohérences entre hypothèses (une forte croissance des ventes avec un effectif constant, par exemple) : à vérifier, jamais à accepter sans examen.\n\n## Mise en pratique\n\nReproduisez les trois scénarios dans un tableur avec une feuille d'hypothèses. Changez la marge dans le scénario prudent à 39 % et observez l'effet sur le résultat : 5 100 000 × 39 % = 1 989 000, moins 1 800 000, soit 189 000. Le résultat est très sensible à la marge, c'est une information majeure pour le commentaire.\n"
+        },
+        {
+          "title": "Des plages plutôt que des points : dire l'incertitude",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Préférer une plage à un point et expliquer pourquoi.\n- Communiquer l'incertitude sans noyer le lecteur.\n\n## Un chiffre unique donne une fausse précision\n\nUne prévision à « 300 000 » laisse croire à une certitude qui n'existe pas. Avec les trois scénarios fictifs précédents, la bonne information est : « le résultat se situerait entre 240 000 et 360 000 selon la croissance, avec 300 000 pour le scénario central ». La plage rend l'incertitude visible, le point central donne un repère.\n\n## Comment présenter une plage\n\n- **Une fourchette et un cas central**, clairement nommés.\n- **Les hypothèses qui expliquent la fourchette** (ici : croissance de 2 % à 8 %).\n- **Les sensibilités** : quel effet sur le résultat d'un point de croissance ou d'un point de marge. Calculez-les dans le tableur en faisant varier une hypothèse à la fois.\n- **Ce qui n'est pas dans la plage** : les risques non modélisés (perte d'un client majeur, changement réglementaire) sont listés, pas absorbés dans un chiffre.\n\n## Sensibilité fictive à calculer\n\nSur le modèle précédent (chiffre d'affaires de base 5 000 000, charges fixes 1 800 000) :\n\n- Un point de croissance supplémentaire à marge constante de 40 % : 50 000 × 40 % = 20 000 de résultat.\n- Un point de marge supplémentaire au chiffre d'affaires central de 5 250 000 : 5 250 000 × 1 % = 52 500 de résultat.\n\nConclusion : dans cet exemple, la marge pèse davantage que la croissance. Ce type de lecture est précieux pour décider où porter l'attention.\n\n## Les pièges de la communication\n\n- **Les moyennes de scénarios** : une moyenne pondérée de scénarios exige des probabilités que l'on n'a généralement pas. Mieux vaut ne pas en inventer.\n- **L'ancrage** : le premier chiffre vu pèse beaucoup. Présentez la fourchette avant le point central.\n- **La complexité inutile** : trois scénarios suffisent la plupart du temps.\n\n## Faire relire par l'IA\n\nL'assistant est utile pour **tester la clarté** : « Résume ce passage en deux phrases pour un lecteur non financier. Quelle question poserait-il ? ». Il ne dit pas si la fourchette est bonne : cela dépend des hypothèses, que seuls vous et vos interlocuteurs métier pouvez juger.\n\n## Mise en pratique\n\nCalculez dans votre tableur les deux sensibilités ci-dessus. Rédigez deux phrases de commentaire : une qui présente la plage et son cas central, une qui explique ce qui fait varier le résultat. Faites-les relire par l'assistant en lui demandant ce qui reste ambigu, sans lui laisser modifier un chiffre.\n"
+        }
+      ]
+    },
+    {
+      "title": "Narratifs de gestion",
+      "lessons": [
+        {
+          "title": "Le commentaire de performance : structure et brouillon assisté",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Décrire la structure d'un commentaire de performance.\n- Rédiger un brouillon avec l'assistant à partir de chiffres validés.\n\n## À quoi sert un commentaire de gestion\n\nLe chiffre dit **combien**, le commentaire dit **pourquoi** et **ce qu'on en fait**. Un bon commentaire est court, daté, étayé et orienté vers la décision.\n\n## Une structure simple\n\n1. **Message principal** : une phrase (résultat par rapport au budget, avec le chiffre).\n2. **Les trois écarts qui comptent**, chacun avec : montant, cause confirmée ou hypothèse annoncée comme telle, source.\n3. **Ce qui est confirmé et ce qui ne l'est pas.**\n4. **Perspectives** : effet attendu sur la prévision, avec la plage.\n5. **Actions et décisions demandées**, avec un responsable.\n\n## Exemple fictif\n\n« En mars, le résultat opérationnel s'établit à 68 000, soit 22 000 sous le budget de 90 000. Trois éléments l'expliquent : un chiffre d'affaires inférieur de 20 000, dont 9 000 liés à une livraison décalée au mois suivant (confirmé par les bons de livraison) ; des frais de personnel supérieurs de 5 000 (hypothèse : heures supplémentaires, à confirmer avec les ressources humaines) ; des autres charges inférieures de 5 000. Nous suivons le décalage de livraison, dont l'effet devrait se retrouver en avril. »\n\nChaque chiffre vient du tableur ; ce qui n'est pas établi est signalé.\n\n## La consigne qui donne un bon brouillon\n\n```text\nRôle : assistant de rédaction pour un contrôleur de gestion.\nDonnées : le tableau d'écarts ci-dessous (fictif) et le journal d'analyse.\nTâche : rédige un commentaire de 120 mots maximum, structuré en message\nprincipal, trois écarts, perspectives.\nRègles :\n- Utilise uniquement les chiffres fournis, recopiés tels quels.\n- Ne calcule rien : si un chiffre manque, écris « non fourni ».\n- Distingue « confirmé » et « hypothèse ».\n- Ton factuel, sans superlatif.\n```\n\n## Vérifier le brouillon\n\nReprenez chaque nombre du brouillon et retrouvez-le dans le tableur. Un nombre qui n'y figure pas, même plausible, est une erreur à corriger. Contrôlez aussi les signes (« supérieur » ou « inférieur »), les périodes et les unités.\n\n## Mise en pratique\n\nRédigez le commentaire du mois fictif ci-dessus avec l'assistant, puis passez-le au crible : combien de chiffres ont été modifiés par l'assistant ? Combien d'affirmations n'ont pas de source ?\n"
+        },
+        {
+          "title": "Ton, relecture et revue à quatre yeux",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Adapter le ton au destinataire et à la nature du message.\n- Organiser une relecture et une revue à quatre yeux.\n\n## Le ton d'un commentaire financier\n\n- **Factuel** : les verbes sont précis (« augmente de 5 000 », pas « explose »).\n- **Mesuré** : pas de superlatif, pas de dramatisation, pas d'optimisme de principe.\n- **Honnête sur l'incertitude** : « nous estimons », « à confirmer », « hypothèse ».\n- **Adapté** : une direction générale veut les messages et les décisions ; un responsable d'unité veut le détail de son périmètre.\n\nL'assistant est utile pour **réécrire dans plusieurs registres** à partir d'un même texte validé : version courte pour la direction, version détaillée pour l'unité. Les chiffres doivent rester identiques dans les deux versions : comparez-les.\n\n## La relecture en quatre temps\n\n1. **Chiffres** : chaque nombre retrouvé dans le tableur.\n2. **Faits** : chaque affirmation reliée à une ligne du journal d'analyse.\n3. **Cohérence** : le texte ne contredit ni le tableau, ni la prévision.\n4. **Style** : ton, longueur, clarté, absence de jargon inutile.\n\n## La revue à quatre yeux\n\nLe principe : **une seconde personne**, qui n'a pas rédigé le commentaire, le contrôle avec ses propres sources. Elle ne se contente pas de relire le texte, elle **refait deux ou trois calculs**. L'IA ne tient pas ce rôle : elle n'engage aucune responsabilité et reproduit parfois les mêmes erreurs que le rédacteur.\n\n```mermaid\nstateDiagram-v2\n  accTitle: Cycle de validation d'un commentaire de gestion\n  accDescr: Le commentaire passe du brouillon à la relecture du rédacteur, puis à la revue à quatre yeux. En cas de remarques il retourne en correction. Une fois validé il est publié et archivé avec son journal d'analyse.\n  [*] --> Brouillon\n  Brouillon --> Relecture\n  Relecture --> Revue4Yeux\n  Revue4Yeux --> Correction : Remarques\n  Correction --> Relecture\n  Revue4Yeux --> Valide : Aucune remarque\n  Valide --> Publie\n  Publie --> Archive\n  Archive --> [*]\n```\n*Figure 1 : le commentaire n'est publié qu'après revue par une seconde personne ; l'archivage conserve la version et son journal.*\n\n## Ce que le relecteur contrôle en priorité\n\n- Les trois chiffres les plus importants, recalculés.\n- Les phrases de causalité (« parce que », « grâce à ») : source ou hypothèse ?\n- Les omissions : un écart défavorable important passé sous silence.\n- Les promesses : « le mois prochain, tout rentrera dans l'ordre » n'est pas une affirmation que l'on peut tenir.\n\n## Mise en pratique\n\nFaites écrire deux versions (direction et unité) du commentaire fictif de mars. Comparez les chiffres : sont-ils strictement identiques ? Notez toute dérive, même d'arrondi.\n"
+        },
+        {
+          "title": "Éviter la sur-interprétation",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Reconnaître les formes de sur-interprétation courantes dans un commentaire.\n- Les corriger par une formulation prudente.\n\n## Pourquoi l'IA y est exposée\n\nUn modèle de langage est entraîné à produire des textes cohérents et convaincants. Il a donc tendance à **lier** les faits par une causalité fluide, à **généraliser** à partir d'un exemple et à **conclure** avec assurance. Un commentaire de gestion est précisément le lieu où ces défauts sont coûteux.\n\n## Les cinq pièges\n\n- **Corrélation prise pour cause** : « les ventes baissent car la concurrence s'intensifie » alors que seule la baisse est constatée.\n- **Extrapolation abusive** : un mois favorable devient « une tendance durable ».\n- **Précision illusoire** : « 3,47 % de croissance » alors que la méthode ne justifie pas deux décimales.\n- **Silence sur le défavorable** : le texte met en avant ce qui va bien.\n- **Vocabulaire non qualifié** : « significatif », « important », « fort » sans seuil défini.\n\n## Reformuler avec prudence\n\n- Au lieu de « les ventes baissent à cause de la concurrence », écrire : « les ventes baissent de 20 000 ; la concurrence est une hypothèse que nous n'avons pas vérifiée ».\n- Au lieu de « tendance durable », écrire : « un mois favorable, à confirmer sur les prochains mois ».\n- Au lieu de « écart significatif », écrire : « écart supérieur au seuil de 10 000 défini par le service ».\n\n## Demander à l'assistant de relire contre ces pièges\n\n```text\nRelis ce commentaire fictif. Pour chaque phrase, indique :\n- s'il s'agit d'un fait, d'un calcul ou d'une hypothèse ;\n- si une causalité est affirmée sans source ;\n- s'il existe une généralisation à partir d'un seul cas.\nNe modifie aucun chiffre. Propose des reformulations prudentes.\n```\n\nCe rôle de **relecteur critique** est l'un des meilleurs usages de l'IA : elle détecte souvent ce qu'un rédacteur pressé ne voit plus. Mais ses remarques sont elles aussi à examiner : elle peut signaler à tort une phrase correcte, ou en laisser passer une fautive.\n\n## Exemple à corriger\n\n« Le succès de la nouvelle gamme a fait exploser les ventes, ce qui garantit un excellent trimestre. » Repérez : superlatif (exploser), causalité non établie (succès de la gamme), garantie sur le futur. Réécrivez en une phrase factuelle avec un chiffre fictif de votre choix.\n\n## Mise en pratique\n\nConstruisez une liste de dix phrases « à risque » issues de commentaires que vous avez lus, remplacez chacune par une formulation prudente. Vous obtenez un petit guide de style réutilisable.\n"
+        }
+      ]
+    },
+    {
+      "title": "Qualité, sécurité et confidentialité des données financières",
+      "lessons": [
+        {
+          "title": "Classer les données et choisir l'outil adapté",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Classer les données financières selon leur sensibilité.\n- Décider, pour chaque classe, quels outils d'IA sont admissibles.\n\n## Rappel de prudence\n\nCette leçon donne une méthode générale, pas un avis juridique ni une consigne de sécurité propre à votre entreprise. **Appliquez en priorité la politique de votre organisation** et consultez les responsables de la sécurité de l'information, de la protection des données et du juridique.\n\n## Une classification simple\n\nBeaucoup d'organisations utilisent des niveaux du type public, interne, confidentiel, secret, avec une nomenclature qui leur est propre. Appliquez celle de votre structure. Pour raisonner, voici un exemple générique :\n\n- **Public** : informations déjà publiées (communiqués, comptes publiés).\n- **Interne** : informations de travail sans enjeu majeur (organisation, procédures générales).\n- **Confidentiel** : résultats mensuels non publiés, budgets, prévisions, données de clients et de salariés.\n- **Secret** : informations dont la divulgation causerait un dommage grave (opérations stratégiques, informations privilégiées).\n\n## Quels outils pour quelles données\n\n```mermaid\nflowchart TD\n  accTitle: Choisir un outil d'IA selon la classification des données\n  accDescr: Les données publiques ou fictives peuvent utiliser un assistant grand public. Les données internes demandent un outil approuvé. Les données confidentielles demandent un outil validé avec garanties contractuelles et accord préalable. Les données secrètes ne sont jamais transmises à un outil externe.\n  Q[\"Classe de la donnée\"] --> P[\"Public ou fictive\"]\n  Q --> I[\"Interne\"]\n  Q --> C[\"Confidentielle\"]\n  Q --> S[\"Secrète\"]\n  P --> P1[\"Assistant grand public admis\"]\n  I --> I1[\"Outil approuvé par l'organisation\"]\n  C --> C1[\"Outil validé et accord préalable\"]\n  S --> S1[\"Aucun outil d'IA externe\"]\n```\n*Figure 1 : plus la donnée est sensible, plus l'outil doit être encadré ; à adapter à la politique de votre organisation.*\n\n## Les techniques pour réduire le risque\n\n- **Anonymiser ou pseudonymiser** : noms de clients remplacés par des codes (« Client A »), montants arrondis ou rapportés à un indice, dates décalées, sans casser la logique de l'analyse.\n- **Travailler sur des extraits** : fournir seulement les colonnes nécessaires.\n- **Garder le calcul en local** : le tableur reste l'endroit où se trouvent les vraies valeurs ; l'assistant ne reçoit que des chiffres déjà masqués ou fictifs.\n- **Vérifier les paramètres** : réglages de conservation et de réutilisation des conversations, offre professionnelle ou grand public, hébergement. Ils changent : lisez les conditions à la date où vous les utilisez.\n\n## Les erreurs fréquentes\n\n- Coller un export complet pour « gagner du temps ».\n- Utiliser un compte personnel pour des données de travail.\n- Croire qu'une donnée « anonymisée » ne permet pas de réidentifier une entité : un chiffre rare ou une date précise suffisent parfois.\n\n## Mise en pratique\n\nPour trois documents de votre activité (désignés par leur type, sans les ouvrir), indiquez la classe et l'outil admissible. Pour chacun, listez ce que vous pourriez transformer pour le rendre utilisable en toute sécurité dans un atelier d'entraînement.\n"
+        },
+        {
+          "title": "Qualité des données et fiabilité des calculs",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Identifier les sources d'erreur : données, calculs, modèle de langage.\n- Mettre en place des garde-fous concrets.\n\n## Trois couches d'erreur\n\n- **La donnée** : export incomplet, doublons, période erronée, changement de plan de comptes, devise mélangée.\n- **Le calcul** : formule recopiée à moitié, plage décalée, arrondi cumulé, signe inversé.\n- **La rédaction** : le modèle invente, déforme ou généralise.\n\nL'IA n'est responsable que de la troisième couche, mais elle peut **amplifier** les deux autres en leur donnant une apparence soignée.\n\n## L'IA se trompe en calcul\n\nElle ne calcule pas, elle prédit du texte. Une somme de vingt nombres, un taux composé, un pourcentage de pourcentage peuvent être faux sans signe visible. Même les outils qui exécutent du code en arrière-plan peuvent mal interpréter la consigne ou les données. Règles :\n\n- **Le calcul se fait dans le tableur**, par formule.\n- Si un outil produit un calcul, **refaites-le** par une méthode indépendante (ordre de grandeur, total de contrôle, second outil).\n- Ne demandez jamais à l'assistant de « corriger » vos chiffres pour qu'ils tombent juste.\n\n## Les garde-fous opérationnels\n\n- **Total de contrôle** : la somme des lignes citées dans le commentaire égale le total annoncé.\n- **Test sur cas connu** : avant de faire confiance à une formule ou à une consigne, essayez-la sur un exemple dont vous connaissez le résultat.\n- **Ordre de grandeur** : le résultat est-il du même ordre que le mois précédent ? Sinon, pourquoi ?\n- **Variation de la consigne** : demandez deux fois, comparez ; un chiffre qui change entre deux réponses n'est pas fiable.\n- **Séparation des pouvoirs** : celui qui prépare le calcul n'est pas le seul à le valider.\n\n## Exemple fictif\n\nUn brouillon annonce : « les charges de personnel représentent 42 % du chiffre d'affaires ». Données fournies : charges 205 000, chiffre d'affaires 480 000. Calcul : 205 000 / 480 000 = 0,427, soit 42,7 %. Le brouillon a tronqué sans le dire ; pour un commentaire précis, on écrit « 42,7 % ». Petit écart, mais révélateur : la règle d'arrondi doit être fixée et appliquée par le tableur, pas par le texte.\n\n## Mise en pratique\n\nPrenez trois chiffres d'un brouillon produit avec un assistant (fictif), recalculez-les et notez : exact, arrondi différent, faux. Gardez ce petit relevé : il constitue votre propre mesure de fiabilité, bien plus parlante qu'un discours général.\n"
+        },
+        {
+          "title": "Pistes de contrôle et politique d'usage",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Construire une piste de contrôle pour un reporting assisté par IA.\n- Définir une politique d'usage claire et proportionnée.\n\n## Qu'est-ce qu'une piste de contrôle\n\nC'est l'ensemble des éléments qui permettent à un tiers de **reconstituer** comment un chiffre ou un commentaire a été produit : sources, transformations, contrôles, validations, versions. Elle sert à l'auditeur, mais d'abord à vous, quand il faut expliquer ou corriger.\n\n## Les éléments d'une piste pour un reporting assisté\n\n- **Version des données** : date et origine de l'export.\n- **Classeur versionné** : chaque mois, une copie figée.\n- **Contrôles réalisés** : feuille de contrôles archivée avec le résultat.\n- **Journal d'analyse** : affirmations, sources, statuts.\n- **Consigne et sortie brute de l'assistant**, sans donnée confidentielle, avec la version finale corrigée.\n- **Validation** : nom du relecteur et date.\n\n```mermaid\nflowchart LR\n  accTitle: Piste de contrôle d'un reporting assisté par IA\n  accDescr: De l'export de données jusqu'à l'archivage, chaque étape laisse une trace : version des données, feuille de contrôles, journal d'analyse, consigne et sortie de l'assistant, validation par un second relecteur.\n  A[\"Export de données (version datée)\"] --> B[\"Calculs et contrôles (feuille archivée)\"]\n  B --> C[\"Analyse des écarts (journal)\"]\n  C --> D[\"Brouillon assisté (consigne et sortie)\"]\n  D --> E[\"Revue à quatre yeux (validation)\"]\n  E --> F[\"Publication et archivage\"]\n```\n*Figure 1 : chaque étape laisse une trace ; sans trace, le chiffre ne peut ni être expliqué ni être défendu.*\n\n## Une politique d'usage proportionnée\n\nRédigez une page qui répond à :\n\n- Quels **usages** sont autorisés (brouillon de commentaire, relecture), lesquels sont interdits (calcul des chiffres publiés, transmission de données confidentielles non approuvées) ?\n- Quels **outils** sont admis, selon la classification ?\n- Quelles **vérifications** sont obligatoires avant diffusion ?\n- Qui **valide**, qui **répond** en cas d'incident ?\n- Comment **signaler** une erreur, et comment la corriger rétroactivement ?\n\n## Responsabilité\n\nLe fait d'avoir utilisé un assistant ne déplace pas la responsabilité : les chiffres diffusés sont ceux de la fonction finance. Les exigences réglementaires et comptables applicables à votre entreprise relèvent de vos responsables et de vos conseils : ce module n'en donne aucun avis personnalisé.\n\n## Mise en pratique\n\nRédigez la page de politique en dix lignes pour une équipe fictive de trois personnes, puis demandez à un collègue, ou à un assistant en tant que relecteur critique, quelles situations réelles elle ne couvre pas. Complétez-la.\n"
+        }
+      ]
+    },
+    {
+      "title": "Ateliers no-code et low-code",
+      "lessons": [
+        {
+          "title": "Atelier 1 : monter un reporting mensuel fictif avec contrôles",
+          "kind": "exercise",
+          "body_md": "## Objectif\n\nMonter un reporting mensuel fictif de bout en bout, avec une feuille de contrôles de cohérence, puis préparer sa restitution visuelle.\n\n**Durée estimée** : 60 à 90 minutes.\n\n## Plateformes\n\n- **Google Sheets** (tableur, no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : tout tableur de bureau.\n- **Looker Studio** (tableau de bord, no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : les graphiques intégrés du tableur.\n\n## Données\n\nExclusivement fictives. Vous inventez trois unités (Nord, Sud, Ouest), quatre postes (chiffre d'affaires, coûts matières, personnel, autres charges), un budget et un réel pour deux mois. Rien de réel, aucune donnée de votre employeur.\n\n## Étapes\n\n1. Créez un classeur avec quatre feuilles : « Lisez-moi », « Données brutes », « Calculs », « Contrôles », puis « Restitution ».\n2. Dans « Lisez-moi », écrivez le périmètre, la période, les définitions des indicateurs et la convention de signe des écarts.\n3. Dans « Données brutes », saisissez une table à plat : mois, unité, poste, budget, réel. Ne la modifiez plus ensuite.\n4. Dans « Calculs », calculez par formule les écarts en montant et en pourcentage, les totaux par unité et le résultat opérationnel.\n5. Dans « Contrôles », créez au moins quatre tests qui renvoient OK ou ERREUR : somme des unités égale au total, cumul cohérent, absence de cellule vide, absence de chiffre d'affaires négatif. Ajoutez une cellule de synthèse « Tous contrôles OK ».\n6. Provoquez volontairement une erreur dans les données brutes et vérifiez que les contrôles la détectent, puis corrigez.\n7. Dans « Restitution », placez des blocs : une rangée de chiffres clés, un tableau d'écarts, un graphique d'évolution. Ajoutez en bandeau l'état des contrôles.\n8. Connectez la feuille de restitution à un outil de tableau de bord (un bloc de type « source de données », puis des blocs de type « graphique » et « tableau ») ou, à défaut, conservez les graphiques du tableur.\n\n## Résultat attendu\n\nUn classeur dont chaque chiffre vient d'une formule, avec un contrôle visible, et une page de restitution lisible.\n\n## Critères de réussite\n\n- [ ] Les définitions et la convention de signe sont écrites.\n- [ ] Les données brutes ne sont jamais modifiées à la main après saisie.\n- [ ] Au moins quatre contrôles fonctionnent et ont été testés par une erreur volontaire.\n- [ ] La restitution affiche l'état des contrôles.\n- [ ] Aucun chiffre n'est écrit en dur dans une formule.\n\n## Pièges\n\n- Saisir des totaux à la main au lieu de les calculer.\n- Écrire des contrôles qui ne peuvent jamais échouer.\n- Mélanger milliers et unités sans l'indiquer.\n\n## Pour aller plus loin\n\nAjoutez un troisième mois et un contrôle de cumul, puis un filtre par unité dans la restitution.\n"
+        },
+        {
+          "title": "Atelier 2 : expliquer des écarts fictifs et vérifier chaque affirmation",
+          "kind": "exercise",
+          "body_md": "## Objectif\n\nExpliquer des écarts fictifs avec un assistant IA, puis vérifier chaque affirmation et tenir un journal d'analyse.\n\n**Durée estimée** : 60 à 75 minutes.\n\n## Plateformes\n\n- **Un assistant IA conversationnel** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : un autre assistant, ou un assistant libre auto-hébergé si votre organisation en propose.\n- **Google Sheets** (tableur, no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : un tableur de bureau.\n\n## Données fictives à utiliser\n\n- Chiffre d'affaires : budget 500 000, réel 480 000.\n- Coûts matières : budget 150 000, réel 152 000.\n- Frais de personnel : budget 200 000, réel 205 000.\n- Autres charges : budget 60 000, réel 55 000.\n- Gamme B : budget 8 000 unités à 40, réel 8 400 unités à 38.\n\nN'ajoutez aucune donnée réelle.\n\n## Étapes\n\n1. Dans le tableur, calculez par formule les écarts, le résultat opérationnel budget et réel, puis la décomposition volume et prix de la gamme B. Vérifiez que la somme des effets égale l'écart total.\n2. Rédigez une consigne pour l'assistant : rôle, données copiées en lecture seule, règles (« n'invente aucune cause », « ne calcule rien », « cinq hypothèses par écart dont une non commerciale », « indique la donnée qui confirmerait chaque hypothèse »).\n3. Collez la consigne et les chiffres calculés. Demandez les hypothèses.\n4. Dans un second onglet du tableur, créez le journal d'analyse : identifiant, énoncé, type, source, vérificateur, statut.\n5. Pour chaque affirmation de l'assistant, classez-la : chiffre calculé (retrouvez-le dans le tableur), fait vérifiable (notez la pièce qui le confirmerait) ou hypothèse. Simulez la vérification en inventant la pièce uniquement si l'énoncé de l'exercice vous la donne ; sinon laissez « à confirmer ».\n6. Relancez avec : « Quelles affirmations de ta réponse ne s'appuient sur aucune donnée fournie ? ». Comparez avec votre classement.\n7. Rédigez en deux phrases ce qui est confirmé et ce qui ne l'est pas.\n\n## Résultat attendu\n\nUn journal d'analyse complet, où chaque affirmation a un statut et une source ou la mention « à confirmer ».\n\n## Critères de réussite\n\n- [ ] Tous les chiffres de l'analyse viennent du tableur.\n- [ ] Au moins une erreur ou une affirmation sans source de l'assistant a été repérée et consignée.\n- [ ] Le journal distingue clairement faits et hypothèses.\n- [ ] La décomposition volume et prix boucle avec l'écart total.\n\n## Pièges\n\n- Laisser l'assistant recalculer les écarts.\n- Prendre une explication plausible pour une cause établie.\n- Oublier de consigner les hypothèses rejetées.\n\n## Pour aller plus loin\n\nRefaites la même demande dans un second assistant et comparez les hypothèses proposées et les erreurs commises.\n"
+        },
+        {
+          "title": "Atelier 3 : trois scénarios, commentaire de gestion et revue à quatre yeux",
+          "kind": "exercise",
+          "body_md": "## Objectif\n\nConstruire trois scénarios sur un même modèle, rédiger le commentaire de gestion associé et le soumettre à une revue à quatre yeux.\n\n**Durée estimée** : 75 à 90 minutes, en binôme si possible (le relecteur peut être un proche ou un collègue, avec des données fictives uniquement).\n\n## Plateformes\n\n- **Google Sheets** (tableur, no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : un tableur de bureau.\n- **Un assistant IA conversationnel** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : un autre assistant.\n- **Un document partagé** (traitement de texte en ligne, no-code) pour la revue, avec les commentaires intégrés.\n\n## Données fictives\n\nAtelier Boréal : chiffre d'affaires de base 5 000 000, charges fixes 1 800 000, taux de marge brute 40 %. Vous pouvez changer ces chiffres, à condition de les garder fictifs.\n\n## Étapes\n\n1. Créez une feuille « Hypothèses » : croissance, taux de marge, charges fixes, avec valeur, unité, justification, auteur, date.\n2. Créez une feuille « Scénarios » avec trois colonnes (prudent, central, ambitieux) alimentées par les mêmes formules. Seule la croissance change : 2 %, 5 %, 8 %.\n3. Ajoutez une feuille « Sensibilités » : effet d'un point de croissance et d'un point de marge sur le résultat.\n4. Ajoutez un contrôle : le résultat du scénario central recalculé à la main sur une calculatrice ou une autre cellule correspond.\n5. Demandez à l'assistant de rédiger un commentaire de 150 mots maximum à partir de la feuille « Scénarios » collée en lecture seule. Imposez : plage et cas central, hypothèses explicites, limites, aucun calcul.\n6. Contrôlez chaque chiffre du brouillon. Corrigez et notez les erreurs dans un journal.\n7. Transmettez le tableur et le commentaire au relecteur. Il refait au moins deux calculs, vérifie les phrases de causalité, signale les omissions et inscrit ses commentaires.\n8. Prenez en compte les remarques, produisez la version finale, indiquez le nom du relecteur et la date de validation.\n\n## Résultat attendu\n\nUn classeur de trois scénarios, un commentaire de gestion final et une trace de revue à quatre yeux.\n\n## Critères de réussite\n\n- [ ] Les trois scénarios partagent les mêmes formules et diffèrent seulement par les hypothèses.\n- [ ] Le commentaire présente une plage et un cas central, et liste les hypothèses.\n- [ ] Chaque chiffre du commentaire a été recoupé avec le tableur.\n- [ ] Le relecteur a refait au moins deux calculs de façon indépendante.\n- [ ] Les remarques de revue et leur traitement sont consignés.\n\n## Pièges\n\n- Faire varier plusieurs hypothèses à la fois sans le dire.\n- Donner un seul chiffre sans plage.\n- Valider soi-même son propre travail.\n\n## Pour aller plus loin\n\nAjoutez un scénario de risque (perte d'un client, hausse du coût des matières) en précisant clairement qu'il ne s'agit pas d'une prévision.\n"
+        }
+      ]
+    }
+  ],
+  "quiz": {
+    "title": "Quiz du module",
+    "pass_percent": 70,
+    "max_attempts": null,
+    "questions": [
+      {
+        "kind": "single_choice",
+        "prompt": "Quel partage des rôles recommande ce module pour un reporting mensuel ?",
+        "feedback": "Un modèle de langage produit du texte vraisemblable, pas un calcul garanti. Les chiffres viennent de formules auditables ; l'IA rédige ; l'humain valide et reste responsable.",
+        "options": [
+          [
+            "L'IA calcule les écarts et le tableur ne sert qu'à l'affichage",
+            false
+          ],
+          [
+            "Le tableur rédige et l'IA vérifie seule les chiffres",
+            false
+          ],
+          [
+            "L'IA calcule et rédige, l'humain n'intervient qu'en cas d'anomalie visible",
+            false
+          ],
+          [
+            "Le tableur calcule, l'IA aide à rédiger à partir de chiffres validés, l'humain contrôle et assume",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi un chiffre faux produit par un assistant est-il particulièrement risqué ?",
+        "feedback": "La plausibilité et la belle présentation retirent le réflexe de vérification. C'est pourquoi chaque chiffre doit être recalculé ou rapproché de la source.",
+        "options": [
+          [
+            "Il est détecté automatiquement par le tableur",
+            false
+          ],
+          [
+            "Il apparaît systématiquement en rouge dans les outils",
+            false
+          ],
+          [
+            "Il est plausible et bien présenté, donc personne ne pense à le remettre en cause",
+            true
+          ],
+          [
+            "Il est toujours très éloigné de la réalité",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "À quoi sert une feuille de contrôles dans un classeur de reporting ?",
+        "feedback": "Les contrôles (somme des parties, réconciliation avec la source, cumul, signes) détectent les erreurs avant qu'elles ne soient commentées. Ils doivent pouvoir échouer.",
+        "options": [
+          [
+            "À remplacer la feuille de données brutes",
+            false
+          ],
+          [
+            "À afficher des tests de cohérence qui doivent tous être OK avant toute rédaction",
+            true
+          ],
+          [
+            "À stocker les brouillons de commentaires",
+            false
+          ],
+          [
+            "À masquer les formules aux lecteurs",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Les unités Nord (210 000), Sud (150 000) et Ouest (120 000) sont consolidées. Quel total doit afficher le reporting consolidé pour que le contrôle « somme des parties = total » soit OK ?",
+        "feedback": "210 000 + 150 000 + 120 000 = 480 000. Tout autre total doit déclencher une recherche d'erreur avant de rédiger.",
+        "options": [
+          [
+            "490 000",
+            false
+          ],
+          [
+            "450 000",
+            false
+          ],
+          [
+            "480 000",
+            true
+          ],
+          [
+            "470 000",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que doit contenir en priorité la feuille « données brutes » d'un classeur ?",
+        "feedback": "Garder l'export intact permet de rejouer les calculs et de prouver l'origine des chiffres. Les retraitements se font par formules, dans une feuille de calculs.",
+        "options": [
+          [
+            "Les graphiques du tableau de bord",
+            false
+          ],
+          [
+            "Les commentaires de gestion",
+            false
+          ],
+          [
+            "L'export intact, jamais modifié à la main",
+            true
+          ],
+          [
+            "Les résultats retraités manuellement pour qu'ils soient plus lisibles",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que doit faire un tableau de bord avant tout ?",
+        "feedback": "Chaque indicateur répond à une décision, a une définition, une source, un propriétaire et un seuil d'alerte. Au-delà de quelques indicateurs, la lecture s'effondre.",
+        "options": [
+          [
+            "Remplacer le commentaire de gestion",
+            false
+          ],
+          [
+            "Utiliser le plus de graphiques possible",
+            false
+          ],
+          [
+            "Éclairer des décisions avec un petit nombre d'indicateurs bien définis",
+            true
+          ],
+          [
+            "Afficher le maximum d'indicateurs disponibles",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Dans l'exemple fictif de la gamme B (budget 8 000 unités à 40, réel 8 400 unités à 38), quel est l'effet volume ?",
+        "feedback": "(8 400 - 8 000) × 40 = +16 000. L'effet prix vaut (38 - 40) × 8 400 = -16 800 ; la somme (-800) boucle avec l'écart total.",
+        "options": [
+          [
+            "+15 200",
+            false
+          ],
+          [
+            "-800",
+            false
+          ],
+          [
+            "+16 000",
+            true
+          ],
+          [
+            "-16 800",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi décomposer un écart avant de l'expliquer ?",
+        "feedback": "Dans l'exemple, un écart de -800 masque +16 000 et -16 800. Sans décomposition, l'analyse passe à côté de l'essentiel.",
+        "options": [
+          [
+            "Parce que l'IA l'exige",
+            false
+          ],
+          [
+            "Un écart total faible peut cacher des effets importants qui se compensent",
+            true
+          ],
+          [
+            "Pour allonger le commentaire",
+            false
+          ],
+          [
+            "Pour éviter d'utiliser un tableur",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Comment faut-il traiter une explication d'écart proposée par un assistant ?",
+        "feedback": "L'assistant n'a pas accès à vos pièces. Seules les sources (livraisons, factures, calendrier) confirment ou infirment une hypothèse.",
+        "options": [
+          [
+            "Comme une hypothèse à confronter aux sources, jamais comme une cause établie",
+            true
+          ],
+          [
+            "Comme une information à publier directement",
+            false
+          ],
+          [
+            "Comme un fait si elle est donnée avec assurance",
+            false
+          ],
+          [
+            "Comme une cause établie si elle est bien rédigée",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel est l'intérêt d'un seuil de matérialité pour l'analyse d'écarts ?",
+        "feedback": "Un seuil écrit, en montant et en pourcentage, évite que l'humeur du jour ou l'assistant décide de ce qui compte.",
+        "options": [
+          [
+            "Décider à l'avance quels écarts méritent une explication",
+            true
+          ],
+          [
+            "Supprimer les écarts favorables du reporting",
+            false
+          ],
+          [
+            "Permettre à l'IA de choisir seule ce qui compte",
+            false
+          ],
+          [
+            "Éviter de calculer les petits écarts",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle méthode de prévision simple lisse le bruit en moyennant les derniers mois ?",
+        "feedback": "Une moyenne mobile (par exemple 410, 430 et 420 donnent 420) lisse les variations ; elle ne détecte toutefois pas un changement de tendance.",
+        "options": [
+          [
+            "Le driver-based",
+            false
+          ],
+          [
+            "La saisonnalité par coefficient",
+            false
+          ],
+          [
+            "La moyenne mobile",
+            true
+          ],
+          [
+            "Le rolling forecast à horizon fixe",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Qu'est-ce qui distingue un rolling forecast ?",
+        "feedback": "Le rolling forecast garde un horizon glissant (par exemple douze mois) et se met à jour chaque mois avec le réel.",
+        "options": [
+          [
+            "L'horizon est constant : chaque mois écoulé est remplacé par son réel et un mois est ajouté à la fin",
+            true
+          ],
+          [
+            "Il ne repose que sur le budget initial",
+            false
+          ],
+          [
+            "Il prévoit un seul chiffre sans plage",
+            false
+          ],
+          [
+            "Il est calculé par l'assistant sans hypothèse",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Dans le modèle fictif (base 5 000 000, charges fixes 1 800 000, marge brute 40 %), quel résultat donne le scénario central à +5 % de croissance ?",
+        "feedback": "5 000 000 × 1,05 = 5 250 000 ; × 40 % = 2 100 000 ; moins 1 800 000 = 300 000. Les scénarios prudent et ambitieux donnent 240 000 et 360 000.",
+        "options": [
+          [
+            "210 000",
+            false
+          ],
+          [
+            "240 000",
+            false
+          ],
+          [
+            "360 000",
+            false
+          ],
+          [
+            "300 000",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi présenter une plage plutôt qu'un chiffre unique ?",
+        "feedback": "La plage rend l'incertitude visible, accompagnée d'un cas central et des hypothèses qui l'expliquent.",
+        "options": [
+          [
+            "Parce que l'IA ne sait produire que des plages",
+            false
+          ],
+          [
+            "Parce qu'une plage est plus facile à calculer",
+            false
+          ],
+          [
+            "Parce que les plages dispensent d'écrire les hypothèses",
+            false
+          ],
+          [
+            "Un point unique suggère une précision que la prévision n'a pas",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle formulation d'un commentaire est la plus appropriée ?",
+        "feedback": "On sépare le fait chiffré de l'hypothèse. Les superlatifs, les causalités non établies et les garanties sur l'avenir sont des sur-interprétations.",
+        "options": [
+          [
+            "« La baisse est durable et ne se reproduira pas »",
+            false
+          ],
+          [
+            "« L'écart est important » sans seuil ni chiffre",
+            false
+          ],
+          [
+            "« Les ventes baissent de 20 000 ; la concurrence est une hypothèse non vérifiée »",
+            true
+          ],
+          [
+            "« La concurrence a fait exploser nos pertes de ventes »",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi l'IA n'est-elle pas un substitut à la revue à quatre yeux ?",
+        "feedback": "La revue est un contrôle indépendant par une personne responsable qui refait des calculs avec ses propres sources.",
+        "options": [
+          [
+            "Parce qu'elle refuse de relire des chiffres",
+            false
+          ],
+          [
+            "Parce qu'elle est trop lente",
+            false
+          ],
+          [
+            "Parce que la revue à quatre yeux est interdite avec l'IA",
+            false
+          ],
+          [
+            "Elle n'engage aucune responsabilité et peut reproduire les erreurs du rédacteur",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle donnée peut-elle, par défaut, être soumise sans précaution particulière à un assistant grand public ?",
+        "feedback": "Les données fictives ou publiques sont sans risque. Les données confidentielles requièrent un outil approuvé et la politique de l'organisation.",
+        "options": [
+          [
+            "Un export de paie nominatif",
+            false
+          ],
+          [
+            "Un jeu de chiffres entièrement fictif",
+            true
+          ],
+          [
+            "Le budget non publié de l'an prochain",
+            false
+          ],
+          [
+            "Une liste de clients avec leurs créances",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Qu'est-ce qui est faux dans « les charges de personnel représentent 42 % du chiffre d'affaires » pour 205 000 sur 480 000 ?",
+        "feedback": "205 000 / 480 000 vaut environ 0,427. Un texte qui tronque sans le dire est un petit écart révélateur : les arrondis relèvent du tableur.",
+        "options": [
+          [
+            "Le résultat arrondi est 42,7 % : l'arrondi doit être maîtrisé par le tableur",
+            true
+          ],
+          [
+            "Le taux est de 24,2 %",
+            false
+          ],
+          [
+            "Rien, 42 % est le résultat exact",
+            false
+          ],
+          [
+            "Le calcul doit être fait par l'assistant",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Parmi ces tâches, lesquelles peuvent être confiées à un assistant IA avec vérification ?",
+        "feedback": "L'IA assiste la rédaction, l'idéation et la relecture. Calculs publiés et validation restent au tableur et à l'humain.",
+        "options": [
+          [
+            "Calculer seul les écarts publiés",
+            false
+          ],
+          [
+            "Relire un texte à la recherche de formulations suggestives",
+            true
+          ],
+          [
+            "Rédiger un brouillon de commentaire à partir de chiffres validés",
+            true
+          ],
+          [
+            "Proposer des hypothèses explicatives à vérifier",
+            true
+          ],
+          [
+            "Valider à la place du relecteur",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels contrôles de cohérence sont adaptés à un reporting mensuel ?",
+        "feedback": "Les bons contrôles portent sur la cohérence arithmétique et la réconciliation avec la source.",
+        "options": [
+          [
+            "Somme des unités égale au total consolidé",
+            true
+          ],
+          [
+            "Nombre de graphiques de la restitution",
+            false
+          ],
+          [
+            "Longueur du commentaire en mots",
+            false
+          ],
+          [
+            "Total du reporting égal au total de l'export comptable",
+            true
+          ],
+          [
+            "Cumul à fin de mois égal au cumul précédent plus le mois",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Que contient un journal d'analyse ?",
+        "feedback": "Le journal rend chaque affirmation vérifiable : énoncé, type, source, vérificateur, date, statut.",
+        "options": [
+          [
+            "Les mots de passe des outils",
+            false
+          ],
+          [
+            "Le vérificateur, la date et le statut",
+            true
+          ],
+          [
+            "Uniquement les chiffres arrondis",
+            false
+          ],
+          [
+            "La source de chaque affirmation (cellule ou pièce)",
+            true
+          ],
+          [
+            "L'énoncé de chaque affirmation du commentaire",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Que doit-on pouvoir lire dans une feuille d'hypothèses ?",
+        "feedback": "Des hypothèses explicites, justifiées et datées évitent les valeurs cachées dans les formules et permettent la comparaison des scénarios.",
+        "options": [
+          [
+            "La valeur et l'unité",
+            true
+          ],
+          [
+            "La justification ou la source",
+            true
+          ],
+          [
+            "Uniquement le résultat final",
+            false
+          ],
+          [
+            "Rien : les hypothèses restent dans les formules",
+            false
+          ],
+          [
+            "L'auteur et la date",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels sont des pièges de sur-interprétation dans un commentaire de gestion ?",
+        "feedback": "Causalité non établie, extrapolation et vocabulaire non qualifié sont des défauts classiques ; distinguer faits et hypothèses et citer les sources sont des remèdes.",
+        "options": [
+          [
+            "Utiliser « significatif » sans seuil défini",
+            true
+          ],
+          [
+            "Extrapoler un mois favorable en tendance durable",
+            true
+          ],
+          [
+            "Citer la source de chaque chiffre",
+            false
+          ],
+          [
+            "Distinguer fait et hypothèse",
+            false
+          ],
+          [
+            "Prendre une corrélation pour une cause",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles techniques réduisent le risque lorsque l'on utilise un assistant avec des données financières ?",
+        "feedback": "Minimiser, masquer et vérifier les paramètres sont des pratiques saines. Coller un export complet ou utiliser un compte personnel sont des erreurs fréquentes.",
+        "options": [
+          [
+            "Remplacer les noms de clients par des codes",
+            true
+          ],
+          [
+            "Coller l'export complet pour gagner du temps",
+            false
+          ],
+          [
+            "Vérifier les paramètres de conservation et de réutilisation des conversations",
+            true
+          ],
+          [
+            "Ne fournir que les colonnes nécessaires",
+            true
+          ],
+          [
+            "Utiliser un compte personnel pour des données de travail",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels éléments forment une piste de contrôle d'un reporting assisté ?",
+        "feedback": "La piste permet de reconstituer comment un chiffre ou un commentaire a été produit. Elle ne repose jamais sur la seule mémoire d'un outil.",
+        "options": [
+          [
+            "Consigne employée et validation par un second relecteur",
+            true
+          ],
+          [
+            "Journal d'analyse",
+            true
+          ],
+          [
+            "Version datée des données et feuille de contrôles archivée",
+            true
+          ],
+          [
+            "Une mémoire de l'assistant jugée suffisante",
+            false
+          ],
+          [
+            "Un commentaire sans date ni auteur",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles garanties permettent de détecter une erreur de calcul introduite par une rédaction assistée ?",
+        "feedback": "Les garde-fous sont indépendants du modèle. Le ton assuré et l'absence de remarque ne prouvent rien.",
+        "options": [
+          [
+            "Un total de contrôle entre le commentaire et le tableur",
+            true
+          ],
+          [
+            "Une comparaison de deux réponses à la même consigne",
+            true
+          ],
+          [
+            "L'absence de remarques de l'assistant",
+            false
+          ],
+          [
+            "La confiance dans le ton assuré du texte",
+            false
+          ],
+          [
+            "Un test sur cas connu",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Décrivez en quelques lignes comment vous organiseriez, dans votre contexte, le partage entre ce que le tableur calcule, ce que l'IA rédige et ce que l'humain contrôle pour un reporting mensuel. Citez au moins deux contrôles concrets.",
+        "feedback": "Réponse attendue : calculs par formules dans le tableur ; rédaction de brouillons par l'IA à partir de chiffres validés ; contrôles humains (somme des parties, réconciliation avec la source, revue à quatre yeux) ; chaque chiffre recoupé avec le tableur.",
+        "options": []
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Un assistant explique un écart défavorable de ventes par « un ralentissement de la demande ». Que faites-vous avant de reprendre cette phrase dans un commentaire ?",
+        "feedback": "On traite la phrase comme une hypothèse : on décompose l'écart (volume, prix), on cherche la donnée qui la confirmerait (commandes, livraisons, calendrier), on consigne le résultat dans le journal d'analyse, et on écrit « non confirmé » si aucune pièce ne l'établit.",
+        "options": []
+      }
+    ]
+  },
+  "assignment": {
+    "title": "Livrable pratique : pack de reporting mensuel assisté par IA avec explication d'écarts",
+    "instructions_md": "## Objectif\n\nDémontrer que vous savez produire un **reporting mensuel assisté par l'IA** dont les chiffres sont calculés et contrôlés, expliquer des **écarts avec traçabilité**, et présenter des **scénarios comparables** avec un commentaire relu. Vous travaillez sur une entreprise **fictive** de votre choix (ou Atelier Boréal) : aucune donnée réelle ni confidentielle n'est nécessaire.\n\n## Consignes\n\nCe livrable se réalise **sans code**, avec les outils no-code et low-code des trois ateliers du dernier chapitre : tableur et tableau de bord (atelier 1), assistant IA et journal d'analyse (atelier 2), scénarios, commentaire et revue à quatre yeux (atelier 3). Le rendu peut être un lien, des exports PDF ou un document.\n\n1. **Cadrage** : entreprise fictive, périmètre, période, définitions des indicateurs, convention de signe des écarts (au moins six lignes).\n2. **Reporting mensuel** : classeur avec données brutes fictives, calculs par formules, au moins **quatre contrôles de cohérence** testés (avec la preuve d'une erreur volontaire détectée) et une page de restitution.\n3. **Analyse d'écarts** : au moins **cinq postes** en budget/réel, une décomposition volume et prix sur une ligne, seuil de matérialité, et **journal d'analyse** d'au moins huit affirmations avec source et statut.\n4. **Usage de l'assistant** : la consigne utilisée, les hypothèses proposées, et un paragraphe sur les erreurs ou affirmations sans source repérées.\n5. **Scénarios** : feuille d'hypothèses et **trois scénarios** comparables, avec sensibilités et présentation en plage.\n6. **Commentaire de gestion** : 150 à 250 mots, distinguant confirmé et hypothèse, avec la trace de la **revue à quatre yeux** (relecteur, remarques, corrections).\n7. **Qualité et confidentialité** : une page de politique d'usage (classification des données, outils admis, contrôles obligatoires) et la description de la piste de contrôle du pack.\n8. **Limites** : ce que le pack ne permet pas de conclure, et ce que vous refaites autrement la prochaine fois.\n9. **Variante pour profils avancés (facultative)** : comparez les sorties de deux assistants sur le même brouillon.\n\nRappel : les chiffres sont calculés par le tableur, pas par l'assistant, et sont vérifiés. Ce livrable est un exercice pédagogique et ne constitue ni un conseil comptable, ni un conseil fiscal, ni un conseil en investissement.\n\n## Grille d'évaluation\n\n- Reporting : formules, définitions, contrôles testés, restitution lisible (**25 %**).\n- Analyse d'écarts : décomposition correcte, seuil, journal d'analyse tracé, distinction fait et hypothèse (**25 %**).\n- Scénarios : hypothèses explicites, comparabilité, sensibilités, plage (**20 %**).\n- Commentaire et revue à quatre yeux : ton factuel, absence de sur-interprétation, trace de la revue (**15 %**).\n- Qualité, confidentialité et piste de contrôle : classification, outils admis, lucidité sur les erreurs de l'IA (**15 %**).\n\n## Rendu\n\nTexte dans le champ de réponse et/ou fichier PDF ou document, avec liens ou exports des outils utilisés.\n"
+  }
+}

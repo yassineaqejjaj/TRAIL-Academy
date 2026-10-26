@@ -1,0 +1,748 @@
+{
+  "course": "M21",
+  "slug": "ia-reputation-communication-responsable",
+  "source": "Contenu original rédigé pour TRAIL Academy à partir du programme du module (sans slides sources). Pas de vidéo : à ajouter depuis l'administration.",
+  "chapters": [
+    {
+      "title": "Veille et analyse de sentiment assistées",
+      "lessons": [
+        {
+          "title": "La veille de réputation : objectifs, périmètre et rôle de l'IA",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Définir ce qu'une veille de réputation cherche à savoir, avant de choisir un outil.\n- Situer ce que l'IA apporte à chaque étape, et ce qu'elle ne fait pas.\n\n## Une veille répond à des questions\n\nUne veille n'est pas un tableau de bord de plus : c'est un dispositif pour **détecter tôt** ce qui peut toucher la réputation d'une organisation et **décider quoi en faire**. Exemple fictif : la biscuiterie Clairval veut savoir (1) si sa marque est mentionnée avec un problème (qualité, prix, éthique), (2) si un sujet monte vite, (3) ce que disent ses clients de son nouveau coffret de fin d'année.\n\nAvant tout outil, écrivez :\n\n- le **périmètre** : marque, produits, dirigeants, concurrents, sujets de société associés ;\n- les **langues et pays** couverts ;\n- les **seuils d'alerte** : qui est prévenu, quand, par quel canal ;\n- le **propriétaire** de la veille (une personne nommée, pas « l'équipe »).\n\n```mermaid\nflowchart LR\n  accTitle: Boucle d'une veille de réputation assistée par l'IA\n  accDescr: Des sources sont collectées, filtrées et classées, l'IA propose des regroupements et des résumés, une personne qualifie les alertes, puis décide d'une action. Les angles morts mesurés alimentent un réglage des sources.\n  S[\"Sources choisies\"] --> C[\"Collecte\"]\n  C --> F[\"Filtrage et classement\"]\n  F --> R[\"Résumés et regroupements par l'IA\"]\n  R --> Q[\"Qualification par une personne\"]\n  Q --> A[\"Action ou simple suivi\"]\n  A --> M[\"Mesure des angles morts\"]\n  M --> S\n```\n*Figure 1 : boucle de veille ; l'IA intervient au milieu de la chaîne, le choix des sources et la qualification restent humains.*\n\n## Ce que l'IA apporte\n\n- **Volume** : regrouper des centaines de mentions en quelques sujets.\n- **Rapidité** : repérer un mot ou un thème qui revient plus souvent que d'habitude.\n- **Mise en forme** : résumé quotidien lisible par une direction.\n\n## Ce qu'elle ne fait pas\n\n- Elle ne voit que ce qui a été **collecté** : ce qui n'est pas dans les sources n'existe pas pour elle.\n- Elle ne juge pas de la **gravité** réelle d'un sujet pour votre organisation.\n- Elle ne remplace pas la **connaissance du terrain** (un service client qui entend déjà le problème au téléphone).\n\n## Mise en pratique\n\nRédigez trois questions auxquelles votre veille doit répondre et, pour chacune, la décision qu'elle déclencherait. Si une question ne déclenche aucune décision, retirez-la."
+        },
+        {
+          "title": "Sources, biais de collecte et angles morts",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Choisir des sources en connaissant ce qu'elles couvrent et ce qu'elles manquent.\n- Mesurer ses angles morts au lieu de les supposer inexistants.\n\n## Aucune source n'est neutre\n\nChaque canal a un public, des règles d'accès et des formats propres :\n\n- **Presse et médias en ligne** : texte accessible, mais vision éditorialisée.\n- **Réseaux sociaux publics** : réactivité, mais accès partiel selon les plateformes et leurs conditions d'usage, qui changent.\n- **Avis clients et sites de notation** : utiles pour un produit, avec des biais de motivation (les mécontents s'expriment plus volontiers).\n- **Forums, groupes fermés, messageries** : souvent inaccessibles à un outil, et leur exploitation pose des questions de vie privée.\n- **Vidéo et audio** : peu couverts par des outils orientés texte, sauf transcription.\n\nUne veille qui ne voit que le texte public en une langue **sous-estime** ce qui se dit ailleurs. L'absence d'alerte n'est donc pas une preuve d'absence de problème.\n\n## Les principaux biais\n\n- **Biais de couverture** : des canaux entiers sont absents.\n- **Biais de langue** : des mots-clés en français ratent l'argot, les fautes volontaires, les autres langues.\n- **Biais de requête** : si vous cherchez le nom exact de la marque, vous ratez les surnoms, abréviations et mots-dièses détournés.\n- **Biais de volume** : un petit groupe très actif paraît représenter l'opinion générale.\n\n```mermaid\npie showData\n  accTitle: Répartition fictive de 40 mentions connues par canal de détection\n  accDescr: Sur 40 mentions connues de l'équipe, 22 ont été captées par la veille, 8 par le service client seulement, 6 sont passées par des groupes fermés et 4 par des vidéos non transcrites. Données inventées pour illustrer les angles morts.\n  \"Captées par la veille\" : 22\n  \"Connues du service client seulement\" : 8\n  \"Groupes fermés\" : 6\n  \"Vidéos non transcrites\" : 4\n```\n*Figure 1 : répartition fictive de 40 mentions connues ; seule une part est captée, d'où l'intérêt de mesurer ses angles morts.*\n\n## Mesurer ses angles morts\n\nMéthode simple, faisable avec un tableur :\n\n1. Constituez une **liste de référence** de mentions connues par d'autres voies (service client, équipes terrain, relations presse).\n2. Vérifiez lesquelles sont **présentes dans votre veille**.\n3. Calculez la part captée (captées divisées par connues) et listez ce qui manque, avec la cause probable.\n\nCette part n'est qu'un **indicateur partiel** : la liste de référence est elle-même incomplète.\n\n## Point d'attention\n\nRespectez les conditions d'utilisation des plateformes et la vie privée : collecter des contenus publics à grande échelle ou profiler des individus soulève des questions de données personnelles, à examiner avec le service juridique.\n\n## Mise en pratique\n\nListez cinq canaux où parle votre public et notez, pour chacun, si votre veille actuelle le couvre : oui, en partie, non."
+        },
+        {
+          "title": "Analyse de sentiment : ce qu'elle mesure et ses limites",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Comprendre ce qu'un score de sentiment représente réellement.\n- Évaluer un classement automatique sur un échantillon avant de s'y fier.\n\n## Un score n'est pas une opinion\n\nL'analyse de sentiment classe un texte en positif, neutre ou négatif, parfois avec un score. C'est une **estimation statistique** sur du texte, pas une lecture de ce que pense la personne. Les erreurs les plus courantes :\n\n- **Ironie et second degré** : « Bravo, encore un coffret arrivé cassé » peut être classé positif.\n- **Négation et nuance** : « pas mauvais du tout ».\n- **Vocabulaire métier** : « bluffant » peut être un compliment ou un reproche selon le contexte.\n- **Textes courts, emojis, argot**, mélange de langues.\n- **Sujet confondu avec sentiment** : un texte négatif sur un concurrent n'est pas négatif pour vous.\n\nDistinguez aussi **sentiment** (ton du message) et **sujet** (de quoi on parle) : savoir que 30 % des mentions sont négatives ne dit rien sur le problème tant qu'on ne sait pas lequel.\n\n## Évaluer avant de croire\n\n1. Tirez au hasard un échantillon de mentions (quelques dizaines).\n2. **Étiquetez-les à la main**, sans voir la réponse de l'outil.\n3. Comparez, et notez les types d'erreurs (ironie, nuance, hors-sujet).\n4. Ajustez les consignes, définissez des règles pour les cas ambigus, recommencez.\n\nLe principe d'évaluation sur échantillon est détaillé dans le module M17.\n\n## Lire un indicateur honnêtement\n\n- Nommez toujours le **dénominateur** (mentions collectées, pas « le public »).\n- Un changement de **règles de collecte** peut faire varier le score sans que l'opinion change.\n- Gardez un **seuil de volume** : un pourcentage calculé sur douze mentions ne dit pas grand-chose.\n- Séparez les **comptes évidemment automatisés** ou les campagnes coordonnées des voix individuelles, quand c'est possible, et dites que le tri est imparfait.\n\n## Piège fréquent\n\nPrésenter à la direction une courbe de sentiment sans cas concrets. Accompagnez toujours le chiffre de **trois mentions représentatives** et d'un cas contraire.\n\n## Mise en pratique\n\nRédigez cinq mentions fictives difficiles (ironie, négation, argot, nuance, hors-sujet) et demandez à un assistant de les classer en justifiant. Notez celles qu'il classe mal et la raison probable."
+        }
+      ]
+    },
+    {
+      "title": "Gestion de crise : préparer, valider, répondre",
+      "lessons": [
+        {
+          "title": "Reconnaître une crise : niveaux de gravité et rôles",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Distinguer un bruit passager d'un incident grave.\n- Définir à l'avance qui décide quoi.\n\n## Tout buzz n'est pas une crise\n\nUne critique isolée se traite par une réponse ordinaire. Une crise commence quand plusieurs éléments se cumulent : **vitesse de propagation**, **reprise par des médias ou des personnalités**, **atteinte possible à des personnes, à la loi ou à la confiance**, **incertitude sur les faits**. Fixer des niveaux évite de sur-réagir comme de sous-réagir.\n\nExemple de grille (à adapter, les seuils sont les vôtres) :\n\n- **Niveau 1 : suivi.** Mention isolée, ton critique, faits simples. Réponse du community manager selon les modèles.\n- **Niveau 2 : vigilance.** Sujet qui progresse ou reprise par un relais influent. Le responsable communication est prévenu, les réponses sont préparées.\n- **Niveau 3 : crise.** Atteinte potentielle à la santé, à la sécurité, à la loi ou à la direction. Une cellule de crise se réunit, le juridique et la direction sont dans la boucle.\n\n```mermaid\nstateDiagram-v2\n  accTitle: Niveaux d'escalade d'un sujet de réputation\n  accDescr: Un sujet détecté est d'abord suivi, puis passe en vigilance s'il progresse, puis en crise s'il touche la sécurité, la loi ou la direction. Il peut redescendre quand les faits sont établis et le rythme baisse. La clôture donne lieu à un retour d'expérience.\n  [*] --> Suivi: \"Mention détectée\"\n  Suivi --> Vigilance: \"Progression ou relais influent\"\n  Vigilance --> Crise: \"Risque pour des personnes, la loi ou la direction\"\n  Suivi --> Cloture: \"Sujet éteint\"\n  Vigilance --> Suivi: \"Rythme en baisse\"\n  Crise --> Vigilance: \"Faits établis et situation stabilisée\"\n  Cloture --> [*]: \"Retour d'expérience\"\n```\n*Figure 1 : niveaux d'escalade ; les critères de passage sont à définir par chaque organisation et à tester.*\n\n## Les rôles à nommer avant la crise\n\n- **Décideur** (direction ou délégué) : tranche, y compris quand les faits sont incomplets.\n- **Porte-parole** : une voix identifiée.\n- **Référent juridique** et, selon le cas, **référent métier** (qualité, sécurité, RH).\n- **Responsable de la veille** : qualifie les signaux et tient une chronologie.\n- **Suppléants** pour chacun : une crise survient aussi un dimanche.\n\n## Rôle de l'IA à ce stade\n\nAider à **tenir la chronologie**, regrouper les mentions, résumer l'état de la conversation pour la cellule de crise. Elle ne fixe pas le niveau de gravité : c'est une décision humaine, tracée.\n\n## Mise en pratique\n\nÉcrivez, pour votre organisation (ou pour Clairval), un critère concret par niveau et le nom du rôle qui est prévenu à chaque passage."
+        },
+        {
+          "title": "Préparer un kit de réponse : faits, ton et éléments de langage",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Construire un kit de réponse utilisable en quelques minutes.\n- Utiliser l'IA pour produire des variantes sans lui confier les faits.\n\n## Les faits d'abord\n\nUne réponse de crise tient sur une base de faits. Séparez, dans un document partagé :\n\n- **Établi** : confirmé par une source interne identifiée.\n- **En cours de vérification** : on cherche, on dit qu'on cherche.\n- **Non établi / rumeur** : on ne le reprend pas à son compte.\n- **Inconnu** : on l'assume.\n\nExemple fictif : Clairval apprend qu'une internaute montre une étiquette de coffret dont un ingrédient serait importé, alors que la marque met en avant le local. Établi : le coffret et le texte de l'emballage existent. En cours : l'origine réelle de l'ingrédient. Non établi : l'intention de tromper.\n\n## Un kit minimal\n\n- une **déclaration courte** (3 à 5 phrases) : reconnaissance, ce qu'on sait, ce qu'on fait, prochain point d'information ;\n- des **réponses types** aux commentaires, adaptées à chaque plateforme ;\n- une **FAQ interne** pour le service client et les équipes en magasin ;\n- une liste de **ce qu'on ne dit pas** (spéculation, reproche à la personne qui critique, promesse non tenable).\n\n## Le ton\n\nTon factuel, sobre, humain. À éviter : l'humour, la défensive, le jargon juridique, les formules creuses (« nous prenons cela très au sérieux ») sans action derrière. Une excuse n'a de valeur que si elle est précise et tenable.\n\n## Faire travailler l'IA\n\nDonnez-lui le **bloc de faits validé** et demandez :\n\n- trois variantes de ton (plus factuel, plus chaleureux, plus bref) ;\n- une relecture qui **repère les affirmations non étayées** par le bloc de faits ;\n- une adaptation par canal (communiqué, post, réponse individuelle).\n\nInterdisez-lui d'ajouter un fait, un chiffre ou une cause. Comparez systématiquement le texte à votre bloc de faits.\n\n## Point d'attention\n\nNe collez pas dans un assistant des informations confidentielles ou des données personnelles de clients : travaillez sur un résumé neutralisé, selon les règles de votre organisation.\n\n## Mise en pratique\n\nRédigez une déclaration de quatre phrases pour le scénario Clairval, en ne vous appuyant que sur les faits établis, puis demandez à un assistant de repérer tout mot qui dépasse ces faits."
+        },
+        {
+          "title": "Rôle de l'humain et circuit de validation",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Définir qui valide quoi, dans quel délai, avec quelle trace.\n- Empêcher qu'un texte généré parte sans relecture humaine.\n\n## Pourquoi un circuit\n\nEn crise, la pression pousse à publier vite. Un circuit prévu à l'avance **accélère** (on sait à qui envoyer) et **protège** (rien ne part sans regard compétent). L'IA peut préparer, jamais publier seule.\n\n## Une matrice de validation\n\nPour chaque type de message, précisez :\n\n- **Qui rédige** (l'IA peut produire un premier jet) ;\n- **Qui relit** (exactitude des faits) ;\n- **Qui valide** (juridique, direction, qualité…) ;\n- **Délai cible** et **délai maximal** ;\n- **Qui publie** et comment la publication est consignée.\n\nExemples de règles : une réponse type niveau 1 peut être publiée par le community manager ; tout message évoquant la santé, la sécurité, une personne nommée ou un engagement financier passe par le juridique et la direction.\n\n```mermaid\nsequenceDiagram\n  accTitle: Circuit de validation d'une réponse de crise\n  accDescr: Le responsable de la veille alerte, l'assistant IA produit un brouillon à partir du bloc de faits, le rédacteur relit les faits, le juridique et la direction valident, puis le community manager publie et consigne la décision.\n  participant V as Veille\n  participant R as Rédacteur\n  participant I as Assistant IA\n  participant J as Juridique\n  participant D as Direction\n  participant P as Community manager\n  V->>R: \"Alerte et bloc de faits\"\n  R->>I: \"Faits validés et consigne de ton\"\n  I-->>R: \"Brouillon et variantes\"\n  R->>J: \"Version relue, faits contrôlés\"\n  J->>D: \"Avis et réserves\"\n  D->>P: \"Validation de publication\"\n  P->>P: \"Publication et trace consignée\"\n```\n*Figure 1 : circuit de validation ; l'IA intervient une seule fois, entre le bloc de faits et la relecture humaine.*\n\n## Les risques propres à l'IA\n\n- **Ajout de faits** plausibles mais inventés.\n- **Ton inadapté** à une situation de deuil ou de danger.\n- **Excuses ou promesses** engageant l'organisation sans accord.\n- **Relecture bâclée** parce que le texte est bien écrit : un texte fluide n'est pas un texte exact.\n\n## Garde-fous pratiques\n\n- Un champ « faits utilisés » à cocher par le rédacteur.\n- Un **journal de décision** : heure, version, valideurs.\n- Un **arrêt d'urgence** : qui peut retirer un message, et comment.\n- Un **entraînement** : simuler une crise fictive une à deux fois par an, avec les suppléants.\n\n## Mise en pratique\n\nDessinez votre matrice pour trois types de messages (réponse type, déclaration publique, message interne) et testez-la mentalement un samedi soir : qui répond ?"
+        }
+      ]
+    },
+    {
+      "title": "Contenus synthétiques, deepfakes et authenticité de la marque",
+      "lessons": [
+        {
+          "title": "Contenus synthétiques en communication : usages et risques",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Nommer les types de contenus synthétiques utilisés en marketing et communication.\n- Identifier les risques propres à chacun.\n\n## De quoi parle-t-on ?\n\nUn **contenu synthétique** est un texte, une image, une voix ou une vidéo produit ou fortement modifié par un modèle d'IA. En communication, on en rencontre de plus en plus :\n\n- **Texte** : posts, newsletters, fiches produit, réponses au public.\n- **Image** : visuels de campagne, illustrations, retouches.\n- **Voix** : voix off, traduction de messages, assistants vocaux.\n- **Vidéo et avatars** : présentateurs virtuels, doublage, montages.\n\n## Des gains réels, des risques précis\n\nGains : rapidité, déclinaisons par canal, variantes testables. Risques :\n\n- **Erreur factuelle** présentée avec aplomb.\n- **Ressemblance** avec une personne réelle, une œuvre ou une marque : l'outil peut produire quelque chose qui évoque un contenu existant sans que vous le sachiez.\n- **Droits** : conditions d'usage de l'outil, droits sur les éléments fournis en entrée, droits sur le résultat. Cadres à vérifier avec le juridique.\n- **Tromperie du public** : un visuel qui montre un produit ou un résultat que la réalité ne permet pas d'obtenir.\n- **Fuite d'informations** : coller des données confidentielles ou personnelles dans un outil non maîtrisé.\n- **Uniformisation** : des contenus interchangeables qui diluent la voix de la marque.\n\n## Une règle simple de tri\n\nPlus un contenu **représente le réel** (une personne, un résultat, un témoignage, un fait), plus il demande de contrôle et, souvent, de transparence. Plus il est **ornemental** (un fond abstrait, une reformulation), plus la marge est large.\n\n## Exemple fictif\n\nLa biscuiterie Clairval génère l'image d'un « artisan » en train de façonner des biscuits pour une page « Notre savoir-faire ». Si l'artisan n'existe pas et que la page laisse croire à une photo réelle de l'atelier, le public peut se sentir trompé. Deux options : une vraie photo, ou un visuel assumé comme illustration.\n\n## Mise en pratique\n\nListez cinq contenus que votre équipe produit et classez-les : ornemental, représentation du réel, ou affirmation factuelle. Pour chacun, décidez du niveau de contrôle."
+        },
+        {
+          "title": "Deepfakes et usurpation d'identité de marque : prévenir et réagir",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Comprendre les scénarios d'usurpation visant une marque ou ses dirigeants.\n- Disposer d'un réflexe de vérification et d'un plan de réaction.\n\n## Les scénarios\n\n- **Fausse déclaration** attribuée à un dirigeant, par texte, voix ou vidéo trafiquée.\n- **Faux compte** ou fausse page imitant la marque pour diffuser une offre frauduleuse.\n- **Fausse publicité** utilisant l'identité visuelle de la marque.\n- **Fausse demande interne** : un message imitant la voix ou le style d'un responsable pour obtenir un paiement ou une information.\n\nCes scénarios existent aussi sans IA ; l'IA **abaisse le coût** de fabrication et rend l'imitation plus convaincante. Les outils de détection automatique sont utiles mais **non fiables à 100 %** : un contenu authentique peut être jugé faux, et inversement.\n\n## Prévenir\n\n- **Canaux officiels listés** : une page publique indiquant où la marque s'exprime.\n- **Procédure de confirmation hors bande** : toute demande inhabituelle (paiement, communiqué, accès) est vérifiée par un second canal connu.\n- **Mots de passe et comptes** protégés par les pratiques de sécurité de votre organisation.\n- **Sensibilisation** des équipes, avec des exemples fictifs.\n- **Provenance** : lorsque c'est possible, des mécanismes de signature ou d'étiquetage des contenus officiels ; leur disponibilité varie, à vérifier.\n\n## Réagir\n\n```mermaid\nflowchart TD\n  accTitle: Réaction à un contenu suspecté d'être un deepfake\n  accDescr: Un contenu suspect est conservé en preuve, vérifié auprès de la source présumée, puis soit classé comme authentique, soit traité comme faux : signalement à la plateforme, information interne, éventuelle communication publique et saisine du juridique.\n  A[\"Contenu suspect signalé\"] --> B[\"Conserver la preuve (copie, lien, heure)\"]\n  B --> C[\"Vérifier auprès de la source présumée\"]\n  C --> D{\"Authentique ?\"}\n  D -- \"Oui\" --> E[\"Traiter comme un contenu réel\"]\n  D -- \"Non ou incertain\" --> F[\"Signaler à la plateforme\"]\n  F --> G[\"Informer la cellule de crise et le juridique\"]\n  G --> H[\"Décider d'une communication publique\"]\n  H --> I[\"Suivre la diffusion et consigner\"]\n```\n*Figure 1 : réaction à un contenu suspect ; la vérification auprès de la source présumée vient avant toute accusation publique.*\n\n## Points d'attention\n\n- **Ne partagez pas** le faux en le commentant : vous amplifiez sa diffusion.\n- Évitez d'affirmer « c'est un faux » tant que la vérification n'est pas faite ; dites « nous vérifions ».\n- Conservez les preuves, car des recours peuvent exister selon les cas : le juridique décidera.\n\n## Mise en pratique\n\nRédigez une procédure de confirmation hors bande en cinq lignes : qui appelle qui, par quel canal, avec quelle question de vérification, pour une demande de communiqué arrivant un soir par message."
+        },
+        {
+          "title": "Authenticité de la marque : où l'IA aide, où elle abîme",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Définir ce qui, dans votre communication, doit rester incarné.\n- Positionner chaque usage de l'IA selon son risque pour la confiance.\n\n## L'authenticité, un capital\n\nLa confiance se construit sur la **cohérence** entre ce que la marque dit et ce qu'elle est. Un contenu généré peut être correct et pourtant sonner faux : ton générique, témoignages impersonnels, promesses que personne n'a vérifiées. Une marque a intérêt à décider ce qui doit rester **humain et vécu**.\n\nSont généralement sensibles :\n\n- les **témoignages** et avis (ils doivent venir de personnes réelles) ;\n- les **prises de parole de dirigeants** sur des sujets de société ;\n- les **excuses** et annonces difficiles ;\n- les **visuels de preuve** (avant et après, résultat, origine d'un produit).\n\n## Une matrice à deux axes\n\n```mermaid\nquadrantChart\n  accTitle: Usages de l'IA selon le risque pour la confiance et le besoin de contrôle\n  accDescr: Les usages à faible risque et fort gain, comme la reformulation ou le brouillon de plan, sont en haut à gauche. Les usages à fort risque, comme un faux témoignage ou une voix de dirigeant clonée sans accord, sont à éviter. Positions fictives.\n  x-axis \"Risque faible pour la confiance\" --> \"Risque fort pour la confiance\"\n  y-axis \"Gain faible\" --> \"Gain fort\"\n  quadrant-1 \"À encadrer strictement\"\n  quadrant-2 \"À privilégier\"\n  quadrant-3 \"Sans intérêt\"\n  quadrant-4 \"À éviter\"\n  \"Reformulation\": [0.15, 0.7]\n  \"Brouillon de plan\": [0.2, 0.85]\n  \"Visuel illustratif\": [0.35, 0.65]\n  \"Traduction\": [0.45, 0.75]\n  \"Avatar presenter\": [0.7, 0.6]\n  \"Faux temoignage\": [0.95, 0.4]\n  \"Voix clonee sans accord\": [0.9, 0.2]\n```\n*Figure 1 : positions fictives de sept usages selon le gain et le risque pour la confiance ; à adapter à votre contexte et à votre public.*\n\n## Préserver la voix de la marque\n\n- Un **guide de ton** concret (exemples de phrases acceptées et refusées) fourni à l'assistant.\n- Une **relecture éditoriale humaine** qui retire les tournures génériques.\n- Des **contenus signature** (enquête, coulisses, parole de terrain) produits par des personnes.\n- Un regard sur l'**accessibilité** : textes alternatifs, lisibilité.\n\n## Question à se poser\n\nSi le public découvrait la façon dont ce contenu a été fabriqué, serait-il surpris et déçu ? Si oui, changez la méthode ou dites-le clairement (voir le chapitre suivant).\n\n## Mise en pratique\n\nPlacez dix usages réels de votre équipe sur la matrice, puis décidez, pour les deux plus risqués, d'une règle : interdit, ou autorisé sous conditions."
+        }
+      ]
+    },
+    {
+      "title": "Transparence sur l'usage de l'IA et charte interne",
+      "lessons": [
+        {
+          "title": "Quand et comment dire qu'on a utilisé l'IA",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Décider, au cas par cas, d'une mention de transparence.\n- Rédiger des mentions claires, proportionnées, sans effet de mode.\n\n## Pourquoi la transparence\n\nElle protège la **confiance** du public, des clients et des équipes, et prépare à d'éventuelles obligations. Certains textes, dont le règlement européen sur l'IA, prévoient des obligations de transparence pour certains contenus générés ou manipulés (par exemple ceux qui imitent des personnes réelles). Leur périmètre exact et leur calendrier d'application sont **à vérifier auprès du service juridique à la date de lecture** ; ce cours n'est pas un avis juridique.\n\n## Un arbre de décision pratique\n\n```mermaid\nflowchart TD\n  accTitle: Décider d'une mention de transparence sur un contenu assisté par l'IA\n  accDescr: Si le contenu imite une personne réelle ou un événement réel, la mention est indispensable et le juridique est consulté. S'il peut tromper sur la nature du support ou de la source, une mention est nécessaire. Si l'IA n'a servi qu'à une aide de forme, une mention n'est pas nécessaire mais l'usage est documenté en interne.\n  A[\"Contenu à publier\"] --> B{\"Imite une personne ou un événement réel ?\"}\n  B -- \"Oui\" --> C[\"Mention claire et avis du juridique\"]\n  B -- \"Non\" --> D{\"Le public pourrait-il se tromper sur la nature ou la source ?\"}\n  D -- \"Oui\" --> E[\"Mention visible, adaptée au support\"]\n  D -- \"Non\" --> F{\"L'IA a-t-elle produit le contenu lui-même ?\"}\n  F -- \"Oui\" --> G[\"Mention recommandée selon la charte\"]\n  F -- \"Non (aide de forme)\" --> H[\"Pas de mention, usage consigné en interne\"]\n```\n*Figure 1 : arbre de décision simplifié ; la charte de chaque organisation fixe ses propres seuils.*\n\n## Rédiger la mention\n\n- **Précise** : « Visuel généré par IA » vaut mieux que « créé avec amour et technologie ».\n- **Visible** : près du contenu, pas dans une page de mentions légales lointaine.\n- **Proportionnée** : inutile de signaler une correction orthographique assistée.\n- **Cohérente** : le même vocabulaire partout.\n\n## Les pièges\n\n- **Sur-déclarer** partout, jusqu'à banaliser l'information.\n- **Sous-déclarer** et être découvert : l'effet sur la confiance est plus fort que la mention n'aurait été.\n- **Utiliser la mention comme alibi** : elle ne dispense ni de vérifier les faits, ni de respecter les droits.\n- Se dire « 100 % humain » sans pouvoir le prouver.\n\n## En interne aussi\n\nLes équipes, les prestataires et les partenaires doivent savoir **ce qui est permis et déclaré**. Une agence qui utilise l'IA sur vos contenus doit le dire et respecter votre charte ; cela se prévoit dans le contrat, avec le juridique.\n\n## Mise en pratique\n\nPrenez trois contenus récents de votre organisation et décidez, avec l'arbre, de la mention : aucune, recommandée, obligatoire selon votre charte."
+        },
+        {
+          "title": "Construire la charte d'usage de l'IA en communication",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Structurer une charte courte, lisible et applicable.\n- Distinguer interdits, usages conditionnés et usages libres.\n\n## À quoi sert une charte\n\nElle transforme des intentions en **règles partagées** : ce qu'on peut faire, ce qu'on évite, qui décide en cas de doute. Une charte utile tient en quelques pages, se lit en dix minutes et s'applique le lundi matin.\n\n## Les sections d'une charte\n\n1. **Champ et définitions** : qui est concerné (équipes, prestataires), quels outils.\n2. **Principes** : exactitude, respect des personnes, transparence, responsabilité humaine.\n3. **Outils autorisés** : liste maintenue, avec conditions d'usage (compte professionnel, réglages de confidentialité) ; un outil non listé n'est pas autorisé.\n4. **Données** : ce qu'on ne saisit jamais (données personnelles de clients, informations confidentielles, secrets d'affaires), ce qu'on peut saisir après neutralisation.\n5. **Usages classés** : libres, conditionnés (relecture, validation), interdits.\n6. **Validation et traçabilité** : qui relit, qui valide, comment on garde la trace de l'usage.\n7. **Transparence** : quand on mentionne l'IA (voir la leçon précédente).\n8. **Droits et conformité** : images, voix, textes de tiers, consultation du juridique.\n9. **Incident** : comment signaler et qui réagit (voir la leçon suivante).\n10. **Formation, révision** : qui est formé, à quel rythme la charte est revue.\n\n## Un exemple de classement fictif\n\n- **Libre** : reformuler un texte déjà validé, proposer des titres, résumer une réunion non confidentielle.\n- **Conditionné** : rédiger un communiqué (faits fournis et validés, relecture), créer un visuel (vérification de ressemblance et de droits), traduire (relecture par un locuteur).\n- **Interdit** : cloner la voix ou l'image d'une personne sans accord écrit, générer de faux témoignages ou de faux avis, saisir des données personnelles dans un outil non autorisé, publier sans relecture humaine.\n\n## Faire vivre la charte\n\n- **Responsable nommé** et circuit de demande d'exception.\n- **Cas pratiques** commentés plutôt qu'un document seulement abstrait.\n- **Retour d'expérience** à chaque incident, qui nourrit la révision.\n- **Ton clair et non culpabilisant** : on veut des signalements, pas des dissimulations.\n\n## Point d'attention\n\nUne charte ne remplace pas la loi ni le contrat de travail ; sa valeur juridique et son articulation avec le règlement intérieur ou les représentants du personnel sont à vérifier avec les services compétents. Ce cours n'est pas un avis juridique.\n\n## Mise en pratique\n\nRédigez en une page les sections 3, 4 et 5 pour une équipe fictive de cinq personnes et faites-les relire par un collègue qui cherche un cas non couvert."
+        },
+        {
+          "title": "Plan de réponse à un incident lié à l'IA",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Définir ce qu'est un incident lié à l'IA en communication.\n- Écrire un plan simple : détecter, contenir, informer, corriger, apprendre.\n\n## Exemples d'incidents\n\n- Une publication contient une **information fausse** produite par un assistant.\n- Une image générée **ressemble à une personne ou à une œuvre** existante.\n- Un salarié a saisi des **données personnelles ou confidentielles** dans un outil non autorisé.\n- Une **voix ou un visage** a été utilisé sans accord.\n- Un prestataire a **livré du contenu généré** non déclaré.\n- Un **deepfake** ou une fausse page vise la marque.\n\n## Les phases d'un plan\n\n```mermaid\ntimeline\n  accTitle: Phases d'un plan de réponse à un incident lié à l'IA\n  accDescr: De la détection à l'apprentissage, cinq phases se succèdent : détecter et signaler, contenir, qualifier et informer, corriger et communiquer, puis tirer les leçons et mettre à jour la charte.\n  title Chronologie type d'un incident, durées à définir par chaque organisation\n  Détecter : Signalement par un collègue, la veille ou le public\n  Contenir : Retrait ou suspension du contenu : Blocage de l'outil si besoin\n  Qualifier : Gravité et personnes concernées : Information du juridique et de la direction\n  Corriger : Correctif publié : Message aux personnes concernées si nécessaire\n  Apprendre : Retour d'expérience : Mise à jour de la charte et de la formation\n```\n*Figure 1 : phases d'un plan de réponse à incident ; les délais cibles sont à fixer par chaque organisation avec le juridique.*\n\n## Ce que le plan doit préciser\n\n- **Qui reçoit** le signalement (une adresse ou un canal connu de tous).\n- **Qui peut retirer** un contenu, y compris hors horaires.\n- **Qui qualifie** la gravité et la présence de données personnelles.\n- **Qui décide d'informer** les personnes concernées ou une autorité : cette décision relève du juridique et, selon le cas, du délégué à la protection des données ; des délais légaux peuvent exister, à vérifier.\n- **Qui communique** et avec quel gabarit de message.\n- **Comment on consigne** : chronologie, décisions, preuves.\n\n## Culture du signalement\n\nUn incident signalé tôt coûte moins cher qu'un incident caché. Prévoyez que **signaler de bonne foi n'est pas sanctionné**, et que l'on célèbre les presque-incidents repérés.\n\n## Mise en pratique\n\nRédigez le plan en une page pour l'incident fictif suivant : une newsletter de Clairval annonce, à tort, une promotion inventée par un assistant. Qui retire, qui corrige, qui parle aux clients déjà informés ?"
+        }
+      ]
+    },
+    {
+      "title": "Repères juridiques généraux et escalade",
+      "lessons": [
+        {
+          "title": "Publicité et loyauté : ce que l'IA ne change pas",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Rappeler les principes généraux du droit de la publicité applicables aux contenus assistés par IA.\n- Repérer les situations qui demandent l'avis du juridique.\n\n*Contenu pédagogique : il ne constitue pas un avis juridique. Les textes et leur application évoluent : vérifiez auprès du service juridique de votre organisation, à la date de lecture.*\n\n## Les principes qui restent\n\nQuel que soit l'outil, une communication commerciale doit rester **loyale** et **non trompeuse**. En termes généraux :\n\n- Les **allégations** (« 100 % local », « le meilleur », « sans… ») doivent pouvoir être **justifiées** par des éléments détenus avant la publication.\n- Une **publicité doit être identifiable** comme telle, y compris lorsqu'elle passe par un partenaire ou un créateur de contenus.\n- Les **comparaisons** avec des concurrents sont encadrées.\n- Les **avis et témoignages** doivent être authentiques ; fabriquer de faux avis est un risque majeur.\n- Certains **secteurs** (santé, finance, alimentation, jeux, produits réglementés) ont des règles propres.\n- Les **professionnels de la publicité** s'appuient aussi sur des règles d'autodiscipline publiées par des instances du secteur ; consultez-les.\n\n## Ce que l'IA ajoute comme risque\n\n- Le modèle **invente des qualités** ou des chiffres de produit et les formule avec aplomb.\n- Il imite des **styles de promesses** courantes (« garanti », « prouvé ») sans lien avec vos preuves.\n- Un visuel généré peut **enjoliver un résultat** au-delà de la réalité.\n\nResponsabilité : l'organisation qui publie reste responsable du contenu, même si une machine l'a rédigé. « C'est l'IA qui l'a écrit » n'est pas une défense à compter sur.\n\n## Réflexe de vérification\n\nPour chaque allégation d'un texte généré, demandez : **où est la preuve, qui la détient, de quand date-t-elle ?** Si personne ne peut répondre, on retire ou on reformule.\n\n## Exemple fictif\n\nUn assistant propose « Les biscuits Clairval, 100 % locaux et sans conservateur ». Le dossier produit montre une matière première importée. L'allégation « 100 % locaux » est supprimée ; « fabriqués dans notre atelier à Valmont » (vrai et prouvé) est conservé, après validation.\n\n## Mise en pratique\n\nPrenez un texte promotionnel généré par un assistant et soulignez chaque allégation. Pour chacune, écrivez la preuve disponible ou « aucune »."
+        },
+        {
+          "title": "Droit à l'image, données personnelles et droits d'auteur : repères",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Connaître les grands sujets juridiques à examiner pour des contenus assistés par IA.\n- Savoir quelles questions poser au juridique.\n\n*Contenu pédagogique : il ne constitue pas un avis juridique. Les textes et leur application évoluent : vérifiez auprès du service juridique de votre organisation, à la date de lecture.*\n\n## Droit à l'image et à la voix\n\nEn termes généraux, une personne a des droits sur son **image** et peut avoir des droits sur sa **voix** et sa **ressemblance**. Utiliser l'image d'un salarié, d'un client, d'un ambassadeur ou d'un inconnu, même retouchée ou générée « à la manière de », demande en principe un **accord clair** et un cadre écrit. Générer une ressemblance avec une personne réelle sans son accord est un risque sérieux. Le cas des **contrats** avec des comédiens, voix off et créateurs qui prévoient (ou excluent) l'usage de l'IA est à examiner.\n\n## Données personnelles\n\nDès qu'un contenu ou un outil traite des **données de personnes identifiables** (clients, abonnés, auteurs de commentaires, salariés), le cadre de protection des données (en Europe, le RGPD) est en jeu. Questions typiques :\n\n- À quoi servent ces données, et le public concerné en a-t-il été informé ?\n- Le fournisseur de l'outil est-il un **sous-traitant** encadré par un contrat ?\n- Où sont stockées les données et par qui sont-elles réutilisées ?\n- Ma veille **profile-t-elle des individus** (analyse de commentaires nominatifs, ciblage) ?\n\nRègle pratique de la charte : ne saisissez pas de données personnelles dans un outil non validé.\n\n## Droits d'auteur\n\n- Les **œuvres de tiers** (photos, textes, musiques, logos) ne sont pas libres parce qu'elles sont en ligne.\n- Un contenu généré peut **ressembler** à une œuvre existante ; la protection éventuelle d'un contenu généré dépend de critères juridiques (apport humain, droit applicable) qui évoluent. Ne présumez pas que vous en détenez les droits exclusifs.\n- Les **conditions d'usage** de l'outil précisent ce que vous pouvez faire des résultats, notamment à titre commercial. Conservez-les.\n- Les **contrats** avec les agences et créateurs doivent préciser qui fournit quoi, qui garantit quoi.\n\n## Pièges fréquents\n\n- Penser qu'un visuel « généré » est automatiquement libre de droits.\n- Utiliser un prénom, une photo ou une voix « inspirés » d'une vraie personne.\n- Oublier que les commentaires sous un post sont des données personnelles.\n\n## Mise en pratique\n\nPour trois contenus d'une campagne fictive (un portrait généré, une musique d'ambiance, une newsletter nominative), écrivez la question à poser au juridique avant publication."
+        },
+        {
+          "title": "Quand escalader au juridique : critères, délais et préparation du dossier",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Définir des déclencheurs clairs d'escalade vers le juridique.\n- Préparer un dossier qui permet une réponse rapide.\n\n*Contenu pédagogique : il ne constitue pas un avis juridique. Les textes et leur application évoluent : vérifiez auprès du service juridique de votre organisation, à la date de lecture.*\n\n## Pourquoi des déclencheurs écrits\n\nSans règle, deux erreurs apparaissent : **tout** envoyer au juridique (saturation, contournement) ou **rien** (risque non vu). Des déclencheurs écrits répartissent l'effort.\n\n## Exemples de déclencheurs\n\n- Contenu représentant ou évoquant une **personne réelle identifiable**.\n- Allégation **chiffrée, comparative ou de santé / environnement**.\n- **Données personnelles** impliquées, ou outil nouveau qui en traite.\n- **Concours, offres, partenariats rémunérés**.\n- **Œuvre de tiers** reconnaissable, ou doute sur les droits.\n- **Incident** : fuite, faux, plainte, mise en demeure, demande d'une autorité.\n- Sujets **sensibles** (santé, politique, enfants, discrimination).\n\n```mermaid\nflowchart TD\n  accTitle: Décider d'escalader un contenu vers le juridique\n  accDescr: Un contenu passe des contrôles successifs. S'il touche une personne identifiable, des données personnelles, une allégation sensible, une œuvre de tiers ou un incident, il est escaladé en urgence ou en circuit normal selon la date de publication, sinon il suit le circuit ordinaire.\n  A[\"Contenu prêt à relire\"] --> B{\"Personne identifiable ?\"}\n  B -- \"Oui\" --> X[\"Escalade juridique\"]\n  B -- \"Non\" --> C{\"Données personnelles ?\"}\n  C -- \"Oui\" --> X\n  C -- \"Non\" --> D{\"Allégation chiffrée, comparative ou sensible ?\"}\n  D -- \"Oui\" --> X\n  D -- \"Non\" --> E{\"Œuvre de tiers ou doute sur les droits ?\"}\n  E -- \"Oui\" --> X\n  E -- \"Non\" --> F[\"Circuit de validation ordinaire\"]\n  X --> G{\"Publication urgente ?\"}\n  G -- \"Oui\" --> H[\"Canal d'urgence avec dossier court\"]\n  G -- \"Non\" --> I[\"Circuit juridique normal\"]\n```\n*Figure 1 : arbre d'escalade simplifié ; les déclencheurs réels sont à définir avec votre service juridique.*\n\n## Préparer un dossier utile\n\nUn juriste répond vite quand le dossier contient :\n\n- le **contenu exact** (texte, visuel, version) et le **canal** de diffusion ;\n- le **contexte** : cible, date, durée, pays ;\n- l'**usage de l'IA** : outil, rôle, éléments fournis en entrée ;\n- les **preuves** disponibles (allégations, accords, licences) ;\n- la **question précise** et la date limite.\n\n## Bonnes pratiques\n\n- Convenez d'un **délai de réponse** par niveau d'urgence.\n- Gardez une **trace** de l'avis reçu et de la décision.\n- Faites un **retour** au juridique sur ce qui s'est passé : il affinera les déclencheurs.\n- Ne présentez pas un **avis de l'assistant** comme un avis juridique : un assistant peut résumer des notions générales, il ne remplace ni un juriste ni la lecture des textes à jour.\n\n## Mise en pratique\n\nÉcrivez cinq déclencheurs d'escalade pour votre équipe et le contenu minimal d'un dossier d'urgence tenant en dix lignes."
+        }
+      ]
+    },
+    {
+      "title": "Ateliers no-code et low-code",
+      "lessons": [
+        {
+          "title": "Atelier 1 : mettre en place une veille no-code et mesurer ses angles morts",
+          "kind": "exercise",
+          "body_md": "## Objectif et durée\n\n**Objectif** : construire une mini-veille dans un tableur avec un outil d'automatisation no-code (ou une collecte manuelle), puis mesurer ce qu'elle rate. **Durée estimée** : 75 minutes.\n\n## Plateformes\n\n- **Google Sheets** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternatives : **Airtable**, **NocoDB** ou **Notion**.\n- **Make**, **n8n** ou **Zapier** (no-code ou low-code, selon l'usage) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative sans automatisation : coller à la main les mentions du jeu de données ci-dessous.\n- **Un assistant conversationnel** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier.\n\n## Données fictives fournies\n\nVeille de la biscuiterie fictive Clairval. Chaque ligne : identifiant, canal, texte.\n\n- M01, avis en ligne : « Coffret superbe, mais la boîte est arrivée écrasée. »\n- M02, réseau social : « Bravo Clairval, encore un colis livré avec dix jours de retard. »\n- M03, presse en ligne : « Clairval ouvre un second atelier à Valmont. »\n- M04, forum : « Quelqu'un a testé les sablés au citron ? Un peu trop sucrés pour moi. »\n- M05, réseau social : « Le coffret \"100 % local\" contient du cacao d'ailleurs, non ? »\n- M06, avis en ligne : « Service client très réactif, remplacement sous trois jours. »\n- M07, réseau social : « #ClairvalGate c'est quoi cette histoire d'étiquette ? »\n- M08, presse en ligne : « Les ventes de coffrets de fin d'année s'annoncent soutenues. »\n- M09, réseau social : « Pas mauvais du tout, mais cher pour ce que c'est. »\n- M10, forum : « Ma grand-mère adore, merci pour la version sans noisettes. »\n\nMentions connues du service client, hors veille : K1 (appel : colis écrasé), K2 (courriel : étiquette ambiguë), K3 (message vidéo privé d'un client : retard de livraison), K4 (groupe fermé d'amateurs de biscuits : prix jugé élevé).\n\n## Étapes\n\n1. Créez un tableur avec les colonnes : identifiant, canal, texte, sujet, sentiment (positif, neutre, négatif), gravité (1 à 3), validé par un humain (oui ou non).\n2. Saisissez les dix mentions (ou alimentez-les avec un scénario d'automatisation : un bloc de déclencheur depuis une source de votre choix, un bloc d'ajout de ligne dans le tableur).\n3. Demandez à un assistant de proposer sujet et sentiment pour chaque ligne, en justifiant en une phrase. Collez ses réponses dans des colonnes distinctes de vos propres étiquettes.\n4. Étiquetez vous-même les dix lignes **avant** de lire l'assistant, puis comparez et notez les écarts (ironie, nuance).\n5. Créez une seconde feuille « Angles morts » : listez les mentions connues (K1 à K4) et indiquez pour chacune si un équivalent figure dans la veille (oui, non), ainsi que la cause probable.\n6. Calculez la part captée : mentions équivalentes retrouvées divisées par mentions connues. Notez que cette part est partielle.\n7. Ajoutez un onglet « Décisions » : trois actions concrètes (nouveau canal, nouveau mot-clé, alerte).\n\n## Résultat attendu\n\nUn tableur à deux feuilles (veille, angles morts) avec étiquettes humaines et automatiques comparées, une part captée calculée et trois décisions.\n\n## Critères de réussite\n\n- [ ] Dix mentions étiquetées par vous et par l'assistant, écarts notés.\n- [ ] Au moins deux erreurs de l'assistant identifiées et expliquées.\n- [ ] Les quatre mentions connues ont chacune une cause d'angle mort.\n- [ ] La part captée est calculée et nommée « indicateur partiel ».\n- [ ] Aucune donnée réelle ni personnelle n'a été utilisée.\n\n## Pièges\n\nFaire confiance au score de l'assistant sans étiquetage humain ; oublier de séparer sujet et sentiment ; utiliser de vraies mentions de clients. **Données** : uniquement fictives, jamais de données personnelles ni confidentielles de votre employeur.\n\n## Pour aller plus loin\n\nAjoutez une colonne « mots-clés manquants » (surnoms, hashtags détournés comme celui de M07) et recalculez la part captée après élargissement."
+        },
+        {
+          "title": "Atelier 2 : préparer un kit de réponse de crise et sa matrice de validation",
+          "kind": "exercise",
+          "body_md": "## Objectif et durée\n\n**Objectif** : produire, sur un scénario fictif, un bloc de faits, une déclaration, des réponses types et une matrice de validation. **Durée estimée** : 90 minutes.\n\n## Plateformes\n\n- **Google Docs** ou **Notion** pour le kit (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : un traitement de texte libre.\n- **Google Sheets** ou **Airtable** pour la matrice (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier.\n- **Un assistant conversationnel** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier.\n\n## Scénario fictif\n\nLa biscuiterie Clairval vend un coffret de fin d'année avec la mention « 100 % local ». Une internaute fictive publie la photo d'une étiquette indiquant qu'un ingrédient (le cacao) est importé. Le post est repris plusieurs fois en quelques heures et un hashtag apparaît. Informations internes disponibles :\n\n- Le coffret et son texte d'emballage sont réels et validés par le marketing.\n- La liste d'ingrédients mentionne un cacao dont l'origine n'est pas locale, comme tout cacao.\n- La mention « 100 % local » visait la fabrication à l'atelier de Valmont, mais la formulation ne le dit pas.\n- Une vérification des documents fournisseurs est en cours ; résultat attendu demain.\n- Le service client a reçu un courriel d'un client perplexe.\n- Aucune plainte de santé ou de sécurité.\n\n## Étapes\n\n1. Créez le **bloc de faits** en quatre rubriques : établi, en cours de vérification, non établi, inconnu. Classez chaque information du scénario.\n2. Définissez le **niveau de gravité** (suivi, vigilance, crise) avec un critère écrit, et nommez les rôles.\n3. Demandez à l'assistant trois variantes d'une **déclaration** de quatre phrases, en lui fournissant uniquement le bloc de faits et l'interdiction d'ajouter un fait.\n4. Relisez : barrez toute phrase qui dépasse le bloc de faits (excuse excessive, promesse de remboursement non décidée, cause supposée).\n5. Rédigez deux **réponses types** aux commentaires (une aux questions, une aux accusations) et une courte **FAQ interne**.\n6. Construisez la **matrice de validation** : lignes = types de message (réponse type, déclaration, message interne, communiqué presse), colonnes = qui rédige, relit, valide, délai cible, qui publie.\n7. Faites un **test à blanc** : un collègue joue la direction et vous donne une consigne contradictoire ; notez si la matrice tient.\n\n## Résultat attendu\n\nUn kit d'une à deux pages et une matrice de validation, avec une déclaration finale relue.\n\n## Critères de réussite\n\n- [ ] Le bloc de faits sépare clairement établi, en cours, non établi, inconnu.\n- [ ] La déclaration ne contient aucun fait absent du bloc.\n- [ ] Le ton est factuel, sans défensive ni humour.\n- [ ] Chaque ligne de la matrice a un valideur nommé par rôle et un délai.\n- [ ] La publication est consignée (qui, quand, quelle version).\n\n## Pièges\n\nLaisser l'assistant « combler » un inconnu ; s'excuser pour un fait non établi ; oublier les suppléants. **Données** : le scénario est inventé ; ne le remplacez pas par une vraie affaire.\n\n## Pour aller plus loin\n\nRédigez la version destinée aux équipes en magasin et un message de suivi pour le lendemain, quand la vérification fournisseur sera disponible, en deux variantes selon le résultat."
+        },
+        {
+          "title": "Atelier 3 : rédiger la charte d'usage de l'IA et le plan de réponse à incident",
+          "kind": "exercise",
+          "body_md": "## Objectif et durée\n\n**Objectif** : produire une charte d'usage de l'IA en communication d'une à deux pages et un plan de réponse à incident, sur un cas fictif. **Durée estimée** : 90 minutes.\n\n## Plateformes\n\n- **Google Docs** ou **Notion** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : un traitement de texte libre.\n- **Miro**, **FigJam** ou un tableur (no-code) pour le schéma du plan : offre gratuite ou version libre à la date de rédaction, à vérifier.\n- **Un assistant conversationnel** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier.\n\n## Contexte fictif\n\nL'agence interne de communication de Clairval compte six personnes et travaille avec deux prestataires (une agence de création et un studio vidéo). Elle utilise des assistants pour rédiger, traduire et générer des visuels. Elle veut une charte et un plan d'incident à présenter à la direction.\n\n## Étapes\n\n1. Listez les **usages réels** de l'équipe (au moins huit) : brouillons de posts, traduction, visuels, voix off, réponses aux commentaires, résumés de veille, etc.\n2. Classez chaque usage en **libre**, **conditionné** ou **interdit**, avec la condition ou la raison en une phrase.\n3. Rédigez les sections de la charte : champ, principes, outils autorisés, données, usages classés, validation, transparence, droits, incident, formation et révision.\n4. Demandez à l'assistant de **chercher les cas non couverts** et les formulations ambiguës de votre charte ; retenez ce qui est pertinent et notez ce que vous écartez.\n5. Écrivez le **plan de réponse à incident** : trois scénarios (information fausse publiée, ressemblance non voulue avec une personne, données saisies dans un outil non autorisé), chacun avec détection, contention, qualification, correction, apprentissage et rôles.\n6. Ajoutez la **règle d'escalade** vers le juridique (cinq déclencheurs) et un paragraphe précisant que le document ne constitue pas un avis juridique et qu'une validation par les services compétents est nécessaire.\n7. Dessinez un schéma de circuit d'incident sur un tableau blanc ou dans un document, puis relisez le tout avec un pair qui joue l'avocat du diable.\n\n## Résultat attendu\n\nUne charte et un plan de réponse, relus, avec une liste de questions pour le juridique.\n\n## Critères de réussite\n\n- [ ] Au moins huit usages classés avec leurs conditions.\n- [ ] Les données interdites de saisie sont énumérées.\n- [ ] Les trois scénarios d'incident ont chacun un responsable pour chaque phase.\n- [ ] La règle de transparence est expliquée par un exemple.\n- [ ] Le document précise qu'il ne constitue pas un avis juridique.\n\n## Pièges\n\nRédiger une charte uniquement d'interdits que personne n'appliquera ; viser la perfection au lieu d'une première version révisable ; oublier les prestataires. **Données** : cas fictif, aucun texte interne réel.\n\n## Pour aller plus loin\n\nPréparez un court quiz de cinq questions pour valider la compréhension de la charte par l'équipe, avec la bonne réponse et son explication."
+        }
+      ]
+    }
+  ],
+  "quiz": {
+    "title": "Quiz du module",
+    "pass_percent": 70,
+    "max_attempts": null,
+    "questions": [
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle est la première étape pour mettre en place une veille de réputation ?",
+        "feedback": "Une veille sert à décider. Sans question ni décision associée, on accumule des données. L'outil se choisit ensuite, et le périmètre reste une décision humaine.",
+        "options": [
+          [
+            "Choisir l'outil qui propose le plus de tableaux de bord",
+            false
+          ],
+          [
+            "Définir les questions auxquelles la veille doit répondre et les décisions qui en découlent",
+            true
+          ],
+          [
+            "Collecter tout ce qui contient le nom de la marque",
+            false
+          ],
+          [
+            "Demander à l'IA de définir le périmètre",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Une veille ne remonte aucune alerte pendant un mois. Quelle conclusion est la plus prudente ?",
+        "feedback": "L'absence d'alerte n'est pas une preuve d'absence de problème : des canaux, des langues ou des surnoms peuvent échapper à la collecte.",
+        "options": [
+          [
+            "Les sources ou mots-clés sont peut-être incomplets : il faut mesurer les angles morts",
+            true
+          ],
+          [
+            "L'outil est cassé et doit être remplacé",
+            false
+          ],
+          [
+            "Le sentiment public est forcément positif",
+            false
+          ],
+          [
+            "Il n'y a aucun problème de réputation",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles sont des sources d'angles morts fréquents d'une veille ?",
+        "feedback": "Groupes fermés, vidéos et requêtes trop étroites échappent souvent à la collecte. La presse en ligne publique est en général accessible, même si elle n'est pas exhaustive.",
+        "options": [
+          [
+            "Les groupes fermés et messageries",
+            true
+          ],
+          [
+            "Les vidéos non transcrites",
+            true
+          ],
+          [
+            "Les mots-clés limités au nom exact de la marque",
+            true
+          ],
+          [
+            "Les articles de presse en ligne publics",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Comment calculer une estimation simple de la part captée par la veille ?",
+        "feedback": "On part d'une liste de référence (service client, terrain, presse) et on vérifie ce que la veille a vu. C'est un indicateur partiel car la liste de référence est elle-même incomplète.",
+        "options": [
+          [
+            "Score de sentiment moyen",
+            false
+          ],
+          [
+            "Nombre de mentions captées divisé par le nombre total de mentions de l'internet",
+            false
+          ],
+          [
+            "Nombre de mentions connues par d'autres voies retrouvées dans la veille, divisé par le nombre de mentions connues",
+            true
+          ],
+          [
+            "Nombre d'alertes divisé par le nombre de salariés",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Un message dit : « Bravo, encore un colis livré avec dix jours de retard ». Quel risque pour l'analyse de sentiment ?",
+        "feedback": "L'ironie est un cas classique d'erreur : les mots positifs trompent la classification. D'où l'évaluation sur un échantillon étiqueté à la main.",
+        "options": [
+          [
+            "Le message sera ignoré faute de mots-clés",
+            false
+          ],
+          [
+            "Il peut être classé positif à cause de l'ironie",
+            true
+          ],
+          [
+            "Il sera toujours classé neutre",
+            false
+          ],
+          [
+            "Il sera automatiquement supprimé",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Comment évaluer correctement un classement de sentiment automatique ?",
+        "feedback": "L'évaluation se fait contre un étiquetage humain indépendant. Demander « es-tu sûr ? » n'est pas un contrôle : l'outil peut confirmer une erreur avec le même aplomb.",
+        "options": [
+          [
+            "Tirer un échantillon au hasard",
+            true
+          ],
+          [
+            "L'étiqueter à la main sans voir la réponse de l'outil",
+            true
+          ],
+          [
+            "Comparer et analyser les types d'erreurs",
+            true
+          ],
+          [
+            "Demander à l'outil s'il est sûr de lui",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Un rapport indique 30 % de mentions négatives sur 12 mentions collectées. Que faut-il en dire ?",
+        "feedback": "Un pourcentage sur un faible volume est fragile. On nomme le dénominateur (mentions collectées) et on accompagne le chiffre de cas concrets.",
+        "options": [
+          [
+            "Il faut multiplier par dix pour estimer le public",
+            false
+          ],
+          [
+            "Le chiffre est faux dans tous les cas",
+            false
+          ],
+          [
+            "C'est un résultat fiable à communiquer à la direction",
+            false
+          ],
+          [
+            "Le volume est trop faible pour conclure, et le dénominateur doit être nommé",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel critère distingue le mieux une crise d'un simple buzz ?",
+        "feedback": "Une crise cumule plusieurs facteurs : propagation, reprise, enjeu pour des personnes ou la loi, incertitude. Les seuils précis se définissent à l'avance par organisation.",
+        "options": [
+          [
+            "Le fait que la marque soit citée en majuscules",
+            false
+          ],
+          [
+            "Le nombre de hashtags utilisés",
+            false
+          ],
+          [
+            "La combinaison de vitesse, de relais influents et d'atteinte possible à des personnes, à la loi ou à la confiance",
+            true
+          ],
+          [
+            "Le jour de la semaine",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Dans un bloc de faits de crise, comment traiter une information non confirmée ?",
+        "feedback": "On sépare établi, en cours, non établi et inconnu. Une rumeur n'est pas reprise comme un fait, et l'IA ne confirme pas un fait.",
+        "options": [
+          [
+            "La publier avec un ton prudent",
+            false
+          ],
+          [
+            "La classer en « en cours de vérification » ou « non établi » et ne pas la reprendre à son compte",
+            true
+          ],
+          [
+            "La supprimer du document interne",
+            false
+          ],
+          [
+            "La faire valider par l'assistant IA",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Que doit-on interdire à l'assistant IA quand il rédige une déclaration de crise ?",
+        "feedback": "Les variantes de ton sont un bon usage. Les faits, les engagements et les causes viennent des humains, via le bloc de faits validé.",
+        "options": [
+          [
+            "D'ajouter un fait ou un chiffre absent du bloc de faits",
+            true
+          ],
+          [
+            "De proposer des excuses ou des promesses non décidées",
+            true
+          ],
+          [
+            "De proposer des variantes de ton",
+            false
+          ],
+          [
+            "D'attribuer une cause non établie",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi un texte généré très bien écrit est-il dangereux en relecture de crise ?",
+        "feedback": "La qualité de forme n'est pas un indice d'exactitude. La relecture porte sur les faits, un par un, contre le bloc de faits.",
+        "options": [
+          [
+            "Parce que le texte devient illisible",
+            false
+          ],
+          [
+            "Parce que les moteurs de recherche pénalisent ces textes",
+            false
+          ],
+          [
+            "Parce que les assistants écrivent toujours trop long",
+            false
+          ],
+          [
+            "Parce que la fluidité donne une fausse impression d'exactitude et peut faire bâcler la relecture",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Dans une matrice de validation, que décide-t-on pour les messages mentionnant la santé, une personne nommée ou un engagement financier ?",
+        "feedback": "Ces messages comportent un risque élevé et exigent des valideurs compétents avant publication, avec une trace de la décision.",
+        "options": [
+          [
+            "Ils sont publiés puis relus après coup",
+            false
+          ],
+          [
+            "Le community manager peut les publier seul",
+            false
+          ],
+          [
+            "Ils passent par le juridique et la direction",
+            true
+          ],
+          [
+            "L'assistant IA les valide",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel est le rôle de l'IA dans le circuit de validation d'une réponse de crise ?",
+        "feedback": "L'IA prépare, l'humain relit, valide et publie. Le niveau de gravité est une décision humaine tracée.",
+        "options": [
+          [
+            "Valider et publier si le ton est correct",
+            false
+          ],
+          [
+            "Préparer un brouillon et des variantes, sans publier ni valider seule",
+            true
+          ],
+          [
+            "Décider du niveau de gravité",
+            false
+          ],
+          [
+            "Contacter les médias",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Une image générée montre un « artisan » inexistant dans la page « Notre atelier », présentée comme une photo réelle. Quel est le problème principal ?",
+        "feedback": "Un contenu qui représente le réel demande plus de contrôle et, souvent, de transparence. Une vraie photo ou une illustration assumée évite la tromperie.",
+        "options": [
+          [
+            "Le public peut être trompé sur la nature réelle du visuel",
+            true
+          ],
+          [
+            "Le style graphique",
+            false
+          ],
+          [
+            "Le poids du fichier",
+            false
+          ],
+          [
+            "La résolution de l'image",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles mesures réduisent le risque d'usurpation d'identité de la marque ?",
+        "feedback": "Les outils de détection sont utiles mais non fiables à 100 %. Les mesures reposent sur des canaux connus, une confirmation hors bande et la sensibilisation.",
+        "options": [
+          [
+            "Lister publiquement les canaux officiels",
+            true
+          ],
+          [
+            "Vérifier toute demande inhabituelle par un second canal connu",
+            true
+          ],
+          [
+            "Sensibiliser les équipes avec des exemples fictifs",
+            true
+          ],
+          [
+            "Se fier à un outil de détection comme preuve absolue",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Vous suspectez une fausse vidéo d'un dirigeant. Quel premier réflexe est approprié ?",
+        "feedback": "Reprendre le faux l'amplifie, et une accusation précipitée peut se révéler erronée. On conserve la preuve et on vérifie, puis on escalade.",
+        "options": [
+          [
+            "La supprimer de tous vos appareils",
+            false
+          ],
+          [
+            "La republier en commentant que c'est un faux",
+            false
+          ],
+          [
+            "Conserver la preuve et vérifier auprès de la source présumée avant d'accuser",
+            true
+          ],
+          [
+            "L'ignorer",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Dans le tri des usages de l'IA, lequel est typiquement le plus sensible pour la confiance ?",
+        "feedback": "Un faux témoignage trompe le public sur le réel et peut contrevenir aux règles de la publicité. Les autres usages relèvent de l'aide de forme.",
+        "options": [
+          [
+            "Reformuler un texte déjà validé",
+            false
+          ],
+          [
+            "Proposer un plan de présentation",
+            false
+          ],
+          [
+            "Générer de faux témoignages de clients",
+            true
+          ],
+          [
+            "Corriger l'orthographe",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Un contenu imite une personne ou un événement réel. Que recommande l'arbre de décision de transparence du cours ?",
+        "feedback": "Les contenus qui imitent le réel présentent les risques les plus élevés ; la mention doit être visible et le juridique consulté.",
+        "options": [
+          [
+            "Une mention claire et l'avis du juridique",
+            true
+          ],
+          [
+            "Une mention dans les mentions légales seulement",
+            false
+          ],
+          [
+            "Une mention uniquement en interne",
+            false
+          ],
+          [
+            "Aucune mention",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles pratiques rendent une mention de transparence utile ?",
+        "feedback": "La transparence doit être précise, visible, proportionnée et cohérente. Tout signaler, jusqu'à la correction orthographique, banalise l'information.",
+        "options": [
+          [
+            "Un libellé précis (« visuel généré par IA »)",
+            true
+          ],
+          [
+            "Une position visible, près du contenu",
+            true
+          ],
+          [
+            "L'application systématique à toute correction orthographique",
+            false
+          ],
+          [
+            "Une cohérence de vocabulaire d'un canal à l'autre",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel élément est le plus indispensable dans une charte d'usage de l'IA ?",
+        "feedback": "Une charte utile rend les règles applicables : outils, données, usages classés, validation, incident. Une interdiction totale ou un slogan ne guident pas les équipes.",
+        "options": [
+          [
+            "Une clause interdisant tout usage de l'IA",
+            false
+          ],
+          [
+            "Une liste d'outils autorisés avec leurs conditions, et des usages classés (libres, conditionnés, interdits)",
+            true
+          ],
+          [
+            "Un slogan sur l'innovation",
+            false
+          ],
+          [
+            "La liste des modèles les plus performants",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel comportement une bonne charte encourage-t-elle en cas d'incident ?",
+        "feedback": "Un incident signalé tôt coûte moins cher qu'un incident caché. Le retour d'expérience nourrit la révision de la charte.",
+        "options": [
+          [
+            "Corriger discrètement sans prévenir",
+            false
+          ],
+          [
+            "Signaler tôt, de bonne foi, sans sanction pour le signalement",
+            true
+          ],
+          [
+            "Attendre la décision de l'agence",
+            false
+          ],
+          [
+            "Supprimer les traces",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Dans un plan de réponse à incident, quelle étape suit la détection ?",
+        "feedback": "On limite d'abord la diffusion et l'impact (retrait, suspension), puis on qualifie, on informe, on corrige et on apprend.",
+        "options": [
+          [
+            "La contention : retrait ou suspension du contenu ou de l'outil",
+            true
+          ],
+          [
+            "L'archivage du dossier",
+            false
+          ],
+          [
+            "La mise à jour de la charte",
+            false
+          ],
+          [
+            "La communication publique immédiate",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Un assistant propose « 100 % local et sans conservateur » pour un produit. Que faites-vous ?",
+        "feedback": "L'organisation qui publie reste responsable. Les allégations doivent être justifiables ; un assistant peut aussi produire de fausses sources.",
+        "options": [
+          [
+            "Vous ajoutez « selon nos tests »",
+            false
+          ],
+          [
+            "Vous demandez à l'assistant d'ajouter une source",
+            false
+          ],
+          [
+            "Vous publiez, l'IA est responsable du texte",
+            false
+          ],
+          [
+            "Vous cherchez la preuve de chaque allégation et retirez ou reformulez celles qui ne sont pas justifiées",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels sont des déclencheurs raisonnables d'escalade vers le juridique ?",
+        "feedback": "Personnes identifiables, allégations sensibles et données personnelles justifient un avis. Une reformulation sans changement de sens n'en demande pas.",
+        "options": [
+          [
+            "Un contenu représentant une personne identifiable",
+            true
+          ],
+          [
+            "Une allégation chiffrée ou comparative",
+            true
+          ],
+          [
+            "Un outil nouveau traitant des données personnelles",
+            true
+          ],
+          [
+            "Une reformulation d'un titre déjà validé",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que peut-on dire d'un visuel généré par IA en matière de droits d'auteur ?",
+        "feedback": "Aucune de ces affirmations absolues n'est fiable. Le cadre évolue : conditions d'usage de l'outil, apport humain, risque de ressemblance. Le juridique tranche à la date de lecture.",
+        "options": [
+          [
+            "Il est automatiquement libre de droits et sans risque",
+            false
+          ],
+          [
+            "Il peut ressembler à une œuvre existante et les droits sur le résultat dépendent des conditions d'usage et du droit applicable : à vérifier avec le juridique",
+            true
+          ],
+          [
+            "Il appartient toujours à l'éditeur de l'outil",
+            false
+          ],
+          [
+            "Il ne peut jamais être utilisé commercialement",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Un assistant IA résume une notion juridique et conclut « aucun risque ». Comment l'utiliser ?",
+        "feedback": "Un assistant peut aider à comprendre des notions générales, mais il ne remplace pas un juriste ni la lecture des textes à jour.",
+        "options": [
+          [
+            "Comme une aide à formuler des questions, à faire valider par le juridique",
+            true
+          ],
+          [
+            "Comme une preuve de conformité",
+            false
+          ],
+          [
+            "Comme un substitut au contrat",
+            false
+          ],
+          [
+            "Comme un avis juridique suffisant",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Décrivez en quelques lignes comment vous mesureriez les angles morts de votre veille de réputation et quelles décisions vous en tireriez.",
+        "feedback": "Une bonne réponse mentionne : une liste de référence de mentions connues par d'autres voies, la vérification de leur présence dans la veille, la part captée comme indicateur partiel, l'analyse des causes (canal, langue, mots-clés) et des décisions concrètes (nouveaux canaux, mots-clés, alertes).",
+        "options": []
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Pour un scénario de crise de votre choix, expliquez qui rédige, relit, valide et publie une déclaration publique, et quel rôle précis tient l'assistant IA.",
+        "feedback": "Une bonne réponse nomme des rôles (rédacteur, juridique, direction, community manager), évoque un bloc de faits validé, une trace de publication, et limite l'IA à la préparation de brouillons et de variantes, sans publication ni validation autonome.",
+        "options": []
+      }
+    ]
+  },
+  "assignment": {
+    "title": "Livrable pratique : charte d'usage de l'IA en communication et plan de réponse à incident",
+    "instructions_md": "## Objectif\n\nDémontrer que vous savez **mettre en place une veille avec ses limites**, **préparer une réponse de crise validée par des humains** et **rédiger une charte d'usage de l'IA en communication avec un plan de réponse à incident**. Vous travaillez sur une organisation fictive de votre choix (ou la biscuiterie fictive Clairval des ateliers). Toutes les données sont inventées ; aucune donnée personnelle ni confidentielle n'est nécessaire.\n\n*Le livrable ne constitue pas un avis juridique ; il doit le préciser et recommander une validation par le service juridique.*\n\n## Consignes\n\nCe livrable se réalise **sans code**, avec les outils no-code et low-code des trois ateliers : tableur et assistant (atelier 1), document et matrice (atelier 2), document, tableau blanc et assistant (atelier 3). Le rendu peut être un lien, un export PDF ou un document.\n\n1. **Veille** : périmètre, canaux, questions et décisions associées, au moins dix mentions fictives étiquetées à la main et par un assistant, avec les écarts analysés, une liste d'au moins quatre mentions connues hors veille et la part captée (indiquée comme indicateur partiel), puis trois décisions d'amélioration.\n2. **Kit de crise** : niveaux de gravité avec critères, rôles nommés, bloc de faits (établi, en cours, non établi, inconnu), déclaration de quatre phrases, deux réponses types, FAQ interne courte.\n3. **Matrice de validation** : au moins quatre types de messages avec rédacteur, relecteur, valideur, délai, publication et traçabilité, et un paragraphe sur le rôle de l'humain face à l'IA.\n4. **Contenus synthétiques et authenticité** : au moins six usages de l'IA de l'organisation placés selon le risque pour la confiance, avec une règle pour les deux plus risqués, et une procédure de confirmation hors bande contre l'usurpation.\n5. **Charte d'usage** : une à deux pages avec champ, principes, outils autorisés, données interdites de saisie, usages libres, conditionnés et interdits (au moins huit), validation, transparence illustrée par un exemple, droits, formation et révision.\n6. **Plan de réponse à incident** : trois scénarios avec détection, contention, qualification, correction et apprentissage, responsables nommés et règle d'escalade vers le juridique (au moins cinq déclencheurs).\n7. **Questions pour le juridique** : une liste d'au moins cinq questions précises (publicité, droit à l'image, données personnelles, droits d'auteur, transparence) et la mention que le contenu n'est pas un avis juridique.\n8. **Limites** : ce que votre dispositif ne couvre pas et ce qui devra être vérifié à la date de mise en œuvre.\n9. **Variante pour profils avancés (facultative)** : ajoutez un scénario d'automatisation de la collecte vers le tableur et décrivez ses points de contrôle humain.\n\n## Grille d'évaluation\n\n- Veille : questions, sources, étiquetage humain, mesure des angles morts et décisions (**20 %**).\n- Kit de crise : bloc de faits rigoureux, ton, absence d'ajout de faits par l'IA (**20 %**).\n- Matrice de validation et rôle de l'humain : rôles, délais, traçabilité (**15 %**).\n- Contenus synthétiques, authenticité et prévention de l'usurpation (**10 %**).\n- Charte : complétude, classement des usages, applicabilité, transparence (**20 %**).\n- Plan d'incident et escalade juridique : scénarios, responsables, déclencheurs, questions au juridique, mention de non-avis juridique (**15 %**).\n\n## Rendu\n\nTexte dans le champ de réponse et/ou fichier PDF ou document, avec liens ou captures des outils utilisés."
+  }
+}

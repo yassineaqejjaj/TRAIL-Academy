@@ -162,10 +162,10 @@ describe("refunds and disputes", () => {
     o = await newOrder(U2, "product-manager-augmente"); // all 9 courses published now (M3,M4,M5,M6 done above)
     await event("checkout.session.completed", completed(o));
   });
-  it("every module costs 199 € and AI Mastery grants all 18 modules", async () => {
+  it("every module costs 199 € and AI Mastery grants all 30 modules", async () => {
     expect(await count(`select 1 from prices pr join products p on p.id = pr.product_id where p.kind = 'course' and pr.active and pr.amount_cents <> 19900`)).toBe(0);
     const n = (slug: string) => count(`select 1 from product_course_access a join products p on p.id = a.product_id where p.slug = '${slug}'`);
-    expect(await n("ai-mastery")).toBe(18);
+    expect(await n("ai-mastery")).toBe(30);
     expect(await count(`select 1 from products where kind = 'enterprise_pack'`)).toBe(1); // only the test pack inserted above: none is seeded
   });
   it("a path purchase grants every included course once, with 18 months of access", async () => {

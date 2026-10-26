@@ -1,0 +1,772 @@
+{
+  "course": "M26",
+  "slug": "ia-contrats-conformite",
+  "source": "Contenu original rédigé pour TRAIL Academy à partir du programme du module (sans slides sources). Pas de vidéo : à ajouter depuis l'administration.",
+  "chapters": [
+    {
+      "title": "Revue de contrats assistée",
+      "lessons": [
+        {
+          "title": "Revue de contrats assistée : ce qui est fiable, ce qui ne l'est pas",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Distinguer les tâches de revue où un assistant IA aide réellement de celles où il induit en erreur.\n- Situer le rôle de l'IA par rapport à celui du juriste.\n\n## Ce que peut faire un assistant en revue de contrat\n\nUn assistant IA généraliste est un outil de **lecture et de rédaction rapides**. En revue de contrat, il rend en général de bons services pour :\n\n- **résumer** un contrat long et en extraire la structure (parties, objet, durée, prix, résiliation) ;\n- **repérer** les clauses présentes, par exemple confidentialité, responsabilité, propriété intellectuelle, sous-traitance ;\n- **comparer** une clause avec une position écrite à l'avance (voir le chapitre suivant) ;\n- **proposer** une reformulation à discuter, que vous relisez ensuite.\n\n## Ce qui reste fragile\n\n- **Les omissions** : l'assistant peut ne pas signaler une clause problématique, surtout dans un document long ou mal numérisé. Une absence de signalement n'est jamais une preuve d'absence de risque.\n- **Les faux positifs** : il peut signaler comme risquée une clause banale, ce qui coûte du temps.\n- **Les affirmations juridiques sûres d'elles** : il peut énoncer une règle de droit de façon péremptoire alors qu'elle dépend de la juridiction, de la date ou du contexte. Traitez toute affirmation de ce type comme une piste à vérifier.\n- **Les renvois internes** : définitions, annexes et avenants sont parfois mal rapprochés des clauses qui les utilisent.\n- **La confidentialité** : coller un contrat dans un outil grand public peut être interdit par vos règles internes ou par le contrat lui-même. Vérifiez avant.\n\n## Une règle de départ\n\nConsidérez l'assistant comme un **collaborateur junior très rapide mais inégal** : utile pour une première passe, jamais pour la dernière. L'analyse, l'arbitrage et la responsabilité restent au juriste.\n\n## Mise en pratique\n\nListez cinq tâches de votre quotidien (résumé, repérage de clause, comparaison, rédaction, qualification juridique). Pour chacune, notez : « l'IA peut faire la première passe » ou « le juriste seul ». Justifiez en une phrase."
+        },
+        {
+          "title": "Cartographier les tâches : où l'IA aide, où le juriste décide",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Découper une revue de contrat en tâches distinctes.\n- Attribuer à chaque tâche un niveau d'autonomie de l'IA.\n\n## Une revue n'est pas une seule tâche\n\n« Réviser un contrat » recouvre des activités très différentes. Les séparer permet de décider où l'assistant est utile.\n\n- **Extraire** des informations factuelles (dates, montants, parties) : tâche assez mécanique, vérifiable par comparaison au texte.\n- **Repérer** des clauses : tâche de lecture, avec un risque d'omission.\n- **Comparer** à une position de référence : tâche réalisable si la référence est écrite clairement.\n- **Qualifier** un risque : tâche de jugement, qui dépend du contexte commercial et de l'appétence au risque.\n- **Négocier** et **arbitrer** : tâche humaine par nature.\n\n## Trois niveaux d'autonomie\n\n- **Niveau 1, l'IA prépare** : elle extrait et signale, le juriste lit le contrat entier.\n- **Niveau 2, l'IA propose** : elle compare et suggère des reformulations, le juriste valide chaque point.\n- **Niveau 3, l'IA filtre** : elle écarte les contrats sans signal, le juriste ne lit que les contrats signalés. Ce niveau exige une mesure de fiabilité préalable (atelier 3).\n\nPlus le niveau monte, plus le risque d'omission non détectée pèse. On monte d'un niveau seulement lorsque des tests montrent que le taux de clauses manquées est acceptable pour le type de contrat concerné.\n\n```mermaid\nflowchart TD\n  accTitle: Répartition des tâches de revue entre l'IA et le juriste\n  accDescr: Les tâches d'extraction et de repérage sont préparées par l'IA puis vérifiées. La comparaison est proposée par l'IA et validée. La qualification du risque, la négociation et l'arbitrage restent au juriste.\n  A[\"Extraire les faits\"] --> V1[\"Vérification par sondage\"]\n  B[\"Repérer les clauses\"] --> V2[\"Relecture ciblée\"]\n  C[\"Comparer au playbook\"] --> V3[\"Validation point par point\"]\n  D[\"Qualifier le risque\"] --> J[\"Décision du juriste\"]\n  E[\"Négocier et arbitrer\"] --> J\n  V1 --> J\n  V2 --> J\n  V3 --> J\n```\n*Figure 1 : les tâches amont sont assistées puis vérifiées ; la qualification, la négociation et l'arbitrage reviennent au juriste.*\n\n## Mise en pratique\n\nPrenez un contrat type de votre activité (fictif ou public). Découpez sa revue en cinq tâches et attribuez un niveau d'autonomie à chacune. Justifiez le niveau le plus élevé que vous accordez."
+        },
+        {
+          "title": "Formuler des consignes de revue précises",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Rédiger une consigne qui limite les inventions et les omissions.\n- Exiger des sorties exploitables et vérifiables.\n\n## Les ingrédients d'une bonne consigne\n\nUne consigne de revue vague (« dis-moi si ce contrat est risqué ») produit une réponse vague. Structurez-la :\n\n- **Rôle et cadre** : « Vous assistez un juriste d'entreprise pour une première revue. Vous ne donnez pas d'avis juridique. »\n- **Périmètre** : « Analysez uniquement le texte fourni ; ne vous appuyez sur aucune règle externe. »\n- **Position de référence** : collez la règle à appliquer (voir chapitre 2) plutôt que de demander « ce qui est habituel ».\n- **Preuve exigée** : pour chaque constat, citation exacte de la clause et son numéro.\n- **Droit au « non trouvé »** : « Si la clause n'existe pas, répondez \"non trouvé\" ; n'inventez rien. »\n- **Format** : sortie structurée, un constat par ligne, avec un niveau de confiance et un champ « à vérifier par le juriste ».\n\n## Exemple de consigne (fictif)\n\n```\nVous assistez un juriste d'entreprise pour une première revue.\nVous n'émettez aucun avis juridique.\nAnalysez uniquement le contrat fourni ci-dessous.\nPour la clause de limitation de responsabilité :\n1. Citez-la exactement, avec son numéro.\n2. Indiquez si elle est présente, absente ou ambiguë.\n3. Comparez-la à la position suivante : [position du playbook].\n4. Si le texte ne permet pas de répondre, écrivez \"non trouvé\".\n5. Terminez par un champ \"À vérifier par le juriste\".\n```\n\n## Points d'attention\n\n- **Une question par consigne** donne de meilleurs résultats qu'une liste de vingt demandes mêlées.\n- **Ne demandez pas « êtes-vous sûr ? »** : l'assistant n'a pas d'accès fiable à sa propre fiabilité. Vérifiez par la citation.\n- **Anonymisez** les parties et les montants si vos règles l'exigent.\n\n## Mise en pratique\n\nRéécrivez cette consigne faible : « Regarde ce contrat et dis-moi ce qui ne va pas. » Appliquez les six ingrédients ci-dessus."
+        },
+        {
+          "title": "Vérifier une revue assistée : citations, omissions et affirmations juridiques",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Mettre en place des contrôles simples après une revue assistée.\n- Savoir détecter une citation inventée et une clause oubliée.\n\n## Trois contrôles de base\n\n1. **Contrôle des citations** : recherchez chaque citation de l'assistant dans le contrat avec la fonction de recherche de votre lecteur. Une citation qui ne se retrouve pas mot pour mot est suspecte, même si elle « sonne juste ».\n2. **Contrôle des omissions** : établissez, avant la revue, la liste des clauses attendues pour ce type de contrat (checklist). Vérifiez ensuite, par recherche de mots-clés, qu'aucune n'a été manquée.\n3. **Contrôle des affirmations juridiques** : toute phrase du type « cette clause est nulle » ou « la loi impose » doit être vérifiée dans une source juridique fiable avant d'être reprise. L'assistant n'est pas une source.\n\n## Extrait fictif pour s'exercer\n\n*Extrait fictif, contrat de prestation entre Norvalia SAS (le Client) et Brimeo SARL (le Prestataire) :*\n\n> **Article 9 - Responsabilité.** Le Prestataire est responsable des dommages directs causés au Client dans le cadre de l'exécution du contrat. La responsabilité totale du Prestataire est plafonnée au montant des sommes versées au titre des trois derniers mois. Ce plafond ne s'applique pas en cas de faute lourde.\n\nUn assistant répond : « Le plafond est de 12 mois de redevances. » Il y a ici une **erreur de lecture** (trois mois, pas douze). Le contrôle de citation la révèle immédiatement. Autre point à examiner : le texte ne parle pas de la perte de données ni des dommages indirects. L'assistant a-t-il signalé cette absence ?\n\n## Tenir un journal d'erreurs\n\nNotez chaque erreur constatée : type (citation, omission, faux positif, affirmation juridique), gravité, clause concernée. Ce journal alimente la mesure de fiabilité de l'atelier 3 et vous dit pour quels contrats augmenter le contrôle.\n\n## Mise en pratique\n\nRédigez cinq contrôles à appliquer systématiquement après toute revue assistée, dans l'ordre où vous les feriez, et indiquez qui les effectue."
+        }
+      ]
+    },
+    {
+      "title": "Playbooks et clausiers",
+      "lessons": [
+        {
+          "title": "Playbooks et clausiers : qu'est-ce que c'est et à quoi servent-ils",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Définir un playbook et un clausier.\n- Comprendre leur rôle dans une revue assistée.\n\n## Définitions\n\n- Un **clausier** est une bibliothèque de clauses types approuvées, avec leurs variantes.\n- Un **playbook** est un guide de négociation : pour chaque clause, il indique la **position standard**, les **positions de repli** acceptables et les **positions inacceptables**, ainsi que qui peut décider d'accorder une exception.\n\nLe clausier dit **quoi proposer**. Le playbook dit **jusqu'où reculer et qui décide**.\n\n## Pourquoi c'est la clé de la revue assistée\n\nSans référence écrite, demander à l'assistant ce qui est « acceptable » revient à lui demander de deviner votre politique. Il se rabattra sur une moyenne plausible, qui n'est pas la vôtre. Avec un playbook explicite, vous lui donnez un **barème**, et vous pouvez mesurer ses écarts par rapport à ce barème.\n\nLe playbook sert donc trois publics à la fois : les juristes (cohérence), les commerciaux (savoir ce qu'ils peuvent accorder seuls) et l'IA (critères de comparaison).\n\n## Les trois niveaux de position\n\n- **Standard** : la formulation que vous proposez par défaut.\n- **Repli** : des variantes acceptables, souvent avec une condition (par exemple « si le montant du contrat est inférieur à un seuil interne »).\n- **Inacceptable** : ce qui déclenche un refus ou une escalade systématique.\n\n## Exemple fictif d'une ligne de playbook\n\n*Fictif. Clause : durée de conservation des données du Client.* Standard : suppression dans un délai court après la fin du contrat. Repli : délai plus long si une obligation légale le justifie, avec accord du délégué à la protection des données. Inacceptable : conservation illimitée ou réutilisation pour les besoins propres du fournisseur.\n\n## Mise en pratique\n\nChoisissez une clause (confidentialité, par exemple). Écrivez en trois phrases ses positions standard, de repli et inacceptable, puis dites qui peut accorder une exception."
+        },
+        {
+          "title": "Construire un playbook exploitable : positions, repli, escalade",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Structurer une fiche de clause complète.\n- Définir clairement les points d'escalade vers un juriste.\n\n## Une fiche par clause\n\nChaque fiche contient les mêmes champs, ce qui permet de les copier telles quelles dans une consigne :\n\n- **Clause** et **objectif** : ce que la clause protège.\n- **Position standard** : texte ou description.\n- **Replis autorisés** : liste numérotée, avec leurs conditions.\n- **Position inacceptable** : formulation reconnaissable.\n- **Mots-clés d'alerte** : expressions qui doivent déclencher l'attention (par exemple « illimitée », « à titre exclusif », « de plein droit »).\n- **Escalade** : à qui s'adresser, sous quel délai, avec quelles informations.\n- **Exemples** : un cas conforme, un cas hors cadre (fictifs).\n\n## Les niveaux d'escalade\n\n- **Vert** : conforme au standard, pas d'action.\n- **Orange** : repli autorisé ; le juriste valide.\n- **Rouge** : position inacceptable ou ambiguë ; le juriste décide, et au besoin la direction juridique.\n\nL'ambiguïté va **toujours vers le niveau supérieur** : en cas de doute, l'assistant ne tranche pas.\n\n```mermaid\nstateDiagram-v2\n  accTitle: Niveaux d'escalade d'une clause\n  accDescr: Une clause analysée est classée verte, orange ou rouge. Verte, elle est acceptée. Orange, elle est validée par un juriste. Rouge ou ambiguë, elle est décidée par le juriste ou la direction juridique.\n  [*] --> Analyse\n  Analyse --> Vert : conforme au standard\n  Analyse --> Orange : repli autorisé\n  Analyse --> Rouge : inacceptable ou ambigu\n  Vert --> Accepte\n  Orange --> ValidationJuriste\n  Rouge --> DecisionJuriste\n  Accepte --> [*]\n  ValidationJuriste --> [*]\n  DecisionJuriste --> [*]\n```\n*Figure 1 : classement d'une clause en trois niveaux ; l'ambiguïté renvoie au niveau rouge.*\n\n## Qualité du playbook\n\nUn bon playbook est **court, daté, relu par les métiers** et mis à jour quand une négociation révèle un cas non prévu. Il est **versionné** : on doit savoir quelle version a servi à une revue donnée.\n\n## Mise en pratique\n\nRédigez la fiche complète d'une clause de votre choix avec tous les champs ci-dessus, et attribuez un niveau d'escalade à trois variantes fictives."
+        },
+        {
+          "title": "Transformer un playbook en consignes vérifiables",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Convertir une fiche de playbook en consigne pour un assistant.\n- Rendre chaque règle vérifiable par un humain.\n\n## Du texte du playbook à la règle testable\n\nUne règle vérifiable est formulée de façon à ce qu'un relecteur puisse répondre **oui ou non** en regardant le contrat. Comparez :\n\n- Faible : « La responsabilité doit être raisonnable. »\n- Vérifiable : « La clause plafonne la responsabilité du prestataire. Le plafond est-il au moins égal à [valeur du playbook] ? Les cas d'exclusion du plafond (faute lourde, dol) sont-ils prévus ? »\n\n## Une règle, un test\n\nPour chaque règle, écrivez :\n\n1. la **question** posée à l'assistant ;\n2. la **preuve attendue** (citation exacte) ;\n3. le **résultat possible** : conforme, repli, inacceptable, non trouvé ;\n4. le **niveau d'escalade** correspondant.\n\n## Gabarit de consigne (fictif)\n\n```\nRègle R4 - Durée de conservation des données.\nQuestion : le contrat prévoit-il une suppression ou restitution des données à la fin du contrat ?\nPreuve : citez la phrase exacte et l'article.\nClassement : \"conforme\" si suppression sous délai défini ; \"repli\" si délai plus long avec justification ; \"inacceptable\" si conservation illimitée ; \"non trouvé\" si le contrat est muet.\nSi doute : classez \"inacceptable\" et expliquez le doute.\n```\n\n## Tester les consignes\n\nAvant usage, passez la consigne sur **dix clauses fictives** dont vous connaissez la réponse : quelques conformes, des replis, des clauses piégées. Mesurez les écarts et corrigez la formulation. Un playbook transformé en consignes **se teste comme un programme**, même sans code.\n\n## Mise en pratique\n\nPrenez une règle de votre playbook, rédigez question, preuve attendue, résultats possibles et niveau d'escalade, puis imaginez trois clauses fictives pour la tester."
+        }
+      ]
+    },
+    {
+      "title": "Due diligence et revue de volumes de documents",
+      "lessons": [
+        {
+          "title": "Due diligence : principes et risques de l'automatisation",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Décrire les étapes d'une due diligence et où l'IA aide.\n- Identifier les risques propres au traitement de volumes.\n\n## Rappel du contexte\n\nLors d'une opération (acquisition, financement, partenariat), les juristes examinent un grand nombre de documents réunis dans une **salle de données** : contrats, statuts, baux, litiges, politiques internes. L'objectif est d'identifier des risques et de les restituer dans un rapport.\n\n## Où l'IA aide\n\n- **Classer** les documents par type (contrat client, bail, assurance).\n- **Extraire** des champs récurrents : parties, date, durée, changement de contrôle, clause de non-concurrence, exclusivité.\n- **Résumer** les documents longs et signaler les écarts à une grille.\n- **Préparer** le tableau de synthèse.\n\n## Les risques de l'échelle\n\n- **Erreurs rares mais répétées** : une faiblesse mineure sur une clause devient significative sur des centaines de contrats.\n- **Qualité des documents** : scans de mauvaise qualité, documents manuscrits, langues multiples, annexes absentes.\n- **Confidentialité** : les documents contiennent des informations sensibles de tiers. Les règles du contrat de confidentialité de l'opération s'appliquent aux outils utilisés. Vérifiez avant tout envoi à un service externe.\n- **Fausse assurance** : un tableau propre donne une impression de complétude, alors que des documents n'ont pas été lus.\n\n## Principe directeur\n\nLa due diligence assistée ne cherche pas à **supprimer** la lecture humaine mais à **la concentrer** là où elle apporte le plus : les documents critiques et les points signalés. Le périmètre de ce qui a été lu par un humain, par l'IA seule ou pas du tout doit être **écrit** dans le rapport.\n\n## Mise en pratique\n\nPour une opération fictive d'acquisition d'une petite société de services, listez cinq types de documents et les champs que vous feriez extraire à l'assistant."
+        },
+        {
+          "title": "Échantillonner et contrôler : une méthode pour de gros volumes",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Construire un plan d'échantillonnage simple.\n- Décider du niveau de contrôle selon le résultat.\n\n## Pourquoi échantillonner\n\nRelire chaque extraction n'a pas de sens si l'on gagne du temps grâce à l'IA. Mais ne rien relire est dangereux. L'**échantillonnage** consiste à relire une partie des résultats pour estimer la fiabilité de l'ensemble.\n\n## Méthode en cinq étapes\n\n1. **Stratifier** : séparez les documents par type et par criticité (contrats majeurs, contrats courants, documents accessoires).\n2. **Tout relire** pour les documents critiques ; l'IA ne fait ici que préparer.\n3. **Tirer un échantillon** au hasard dans les autres strates, en veillant à inclure des documents difficiles (scans, langues, avenants).\n4. **Comparer** l'extraction de l'IA à la lecture humaine de l'échantillon et compter les écarts par type : champ manqué, champ faux, fausse alerte.\n5. **Décider** : si les écarts dépassent le seuil que vous avez fixé **avant** le test, on élargit l'échantillon, on corrige la consigne, ou on relit toute la strate.\n\n## Un seuil fixé à l'avance\n\nLe seuil dépend de la gravité : on tolère davantage d'écarts sur une date de renouvellement mineure que sur une clause de changement de contrôle. Fixer le seuil avant de regarder les résultats évite de le justifier après coup.\n\n## Sur les statistiques\n\nUn petit échantillon donne une estimation grossière : un résultat sans erreur sur dix documents ne prouve pas que le taux d'erreur est nul. Soyez prudent dans vos conclusions et notez la taille de l'échantillon dans le rapport. Si vous avez besoin d'un niveau de confiance formel, faites-vous aider par une personne compétente en statistique.\n\n```mermaid\nflowchart TD\n  accTitle: Plan d'échantillonnage pour la due diligence assistée\n  accDescr: Les documents sont répartis en strates. Les documents critiques sont tous relus. Dans les autres strates, un échantillon aléatoire est relu et comparé à l'extraction de l'IA. Si les écarts dépassent le seuil, on corrige ou on relit toute la strate.\n  D[\"Salle de données\"] --> S[\"Classement par strates\"]\n  S --> C[\"Documents critiques\"]\n  S --> O[\"Autres documents\"]\n  C --> R1[\"Relecture complète\"]\n  O --> E[\"Échantillon aléatoire\"]\n  E --> R2[\"Comparaison à l'extraction\"]\n  R2 --> T{\"Écarts sous le seuil ?\"}\n  T -- \"oui\" --> OK[\"Strate acceptée\"]\n  T -- \"non\" --> K[\"Corriger la consigne ou relire la strate\"]\n```\n*Figure 1 : plan d'échantillonnage ; le seuil est fixé avant la comparaison.*\n\n## Mise en pratique\n\nPour 200 contrats fictifs répartis en trois strates, proposez la règle de relecture de chaque strate et un seuil d'écarts par type de champ."
+        },
+        {
+          "title": "Restituer une due diligence : tableau de risques et traçabilité",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Construire un tableau de synthèse traçable.\n- Rendre explicite ce qui a été vérifié par un humain.\n\n## Le tableau de synthèse\n\nChaque ligne du tableau représente un constat. Colonnes recommandées :\n\n- identifiant du constat et **document source** ;\n- **référence précise** (article, page) et **citation exacte** ;\n- **catégorie** (changement de contrôle, exclusivité, litige, propriété intellectuelle...) ;\n- **niveau de risque** proposé et **justification** ;\n- **origine** : extraction IA, lecture humaine, ou les deux ;\n- **statut de vérification** : non vérifié, vérifié par échantillon, vérifié par un juriste ;\n- **action recommandée** et **responsable**.\n\n## Séparer constat et appréciation\n\nUn constat est un fait lisible dans le document (« le contrat prévoit un droit de résiliation en cas de changement de contrôle »). Une appréciation est un jugement (« ce risque est élevé pour l'opération »). Le tableau les distingue : l'IA peut proposer un constat, l'appréciation relève du juriste, qui connaît l'opération.\n\n## Ce que le rapport doit dire de sa méthode\n\n- périmètre : documents reçus, documents manquants ;\n- ce qui a été **intégralement relu par un humain** ;\n- ce qui a été traité par l'IA puis **vérifié par échantillon**, avec la taille de l'échantillon et les écarts constatés ;\n- les limites connues (scans illisibles, langues, annexes absentes).\n\nCes mentions protègent l'équipe : elles montrent que la confiance accordée à chaque résultat est proportionnée à ce qui a été contrôlé.\n\n## Mise en pratique\n\nDessinez les colonnes de votre tableau et remplissez trois lignes fictives : un constat vérifié, un constat non vérifié, un constat pour lequel le document source est illisible."
+        }
+      ]
+    },
+    {
+      "title": "Legal ops et automatisation sans code",
+      "lessons": [
+        {
+          "title": "Legal ops : cartographier les flux de contrats",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Décrire le cycle de vie d'un contrat.\n- Repérer les tâches répétitives à automatiser.\n\n## Le cycle de vie\n\nUn contrat suit des étapes : **demande** (un métier exprime un besoin), **rédaction ou sélection** d'un modèle, **revue**, **négociation**, **validation interne**, **signature**, **suivi** (échéances, renouvellement, obligations) et **archivage**.\n\nLe travail de **legal ops** consiste à fluidifier ce cycle : standardiser, mesurer, outiller. L'IA n'est qu'un des outils, souvent moins déterminant qu'un bon formulaire de demande ou un registre à jour.\n\n## Repérer ce qui s'automatise bien\n\nUne tâche est une bonne candidate si elle est :\n\n- **répétitive** et fréquente ;\n- **bien définie** (entrées et sorties claires) ;\n- **à faible enjeu individuel** ou aisément contrôlable ;\n- **mesurable** (délais, volumes).\n\nExemples : accusé de réception d'une demande, tri par type de contrat, rappel d'échéance, relance de signature, mise à jour d'un tableau de suivi. À l'inverse, la qualification juridique d'un cas inhabituel n'a rien d'automatisable.\n\n```mermaid\nflowchart LR\n  accTitle: Cycle de vie d'un contrat et points d'automatisation\n  accDescr: Du formulaire de demande à l'archivage, le contrat passe par la revue, la négociation, la validation et la signature. Les rappels d'échéance et les relances sont automatisés ; la validation reste humaine.\n  A[\"Demande (formulaire)\"] --> B[\"Tri et affectation\"]\n  B --> C[\"Revue assistée\"]\n  C --> D[\"Négociation\"]\n  D --> E[\"Validation humaine\"]\n  E --> F[\"Signature\"]\n  F --> G[\"Registre des contrats\"]\n  G --> H[\"Rappel d'échéance\"]\n  H --> I[\"Renouvellement ou fin\"]\n```\n*Figure 1 : cycle de vie d'un contrat ; formulaire, tri, registre et rappels s'automatisent, la validation reste humaine.*\n\n## Mise en pratique\n\nDécrivez en huit étapes le cycle d'un contrat de votre organisation (ou d'un contrat fictif) et entourez trois tâches candidates à l'automatisation, avec le critère qui les justifie."
+        },
+        {
+          "title": "Automatiser sans code : registre, rappels d'échéance et formulaires",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Comprendre les composants d'une automatisation no-code.\n- Concevoir un registre de contrats avec rappels.\n\n## Les trois briques\n\nUne automatisation sans code assemble des blocs :\n\n1. un **déclencheur** (un événement : une ligne ajoutée, une date atteinte, un formulaire soumis) ;\n2. des **conditions** (filtrer : seulement si le statut est « actif », seulement si l'échéance est dans moins de 60 jours) ;\n3. des **actions** (envoyer un message, créer une tâche, modifier un champ).\n\nLes outils les plus courants sont les bases de données en ligne (tableurs, bases relationnelles simples) et les plateformes d'automatisation visuelles. Certains proposent une offre gratuite ou une version libre à la date de rédaction, à vérifier. Les noms des blocs changent d'un outil à l'autre, les principes non.\n\n## Le registre des contrats\n\nColonnes minimales : identifiant, partie cocontractante, objet, type, date de signature, date de début, date de fin, **préavis de non-renouvellement (en jours)**, **date limite d'action** (calculée), responsable, statut, lien vers le document, dernière revue.\n\nLa **date limite d'action** est la plus utile : c'est la date de fin moins le préavis, c'est elle qui déclenche les rappels. Une formule de tableur suffit à la calculer.\n\n## Les rappels\n\n- Un rappel à 90, 60 et 30 jours de la date limite, adressé au responsable puis à son suppléant.\n- Un rappel **sans réponse** après quelques jours est escaladé au responsable juridique.\n- Chaque rappel indique : contrat, date limite, action possible (renouveler, renégocier, résilier), lien vers la fiche.\n\n## Points de vigilance\n\n- **Données personnelles** : un registre de contrats contient des noms de contacts. Limitez-les au nécessaire et appliquez vos règles de protection des données.\n- **Fiabilité des dates** : une automatisation est aussi bonne que ses données. Prévoyez une relecture périodique.\n- **Pas de décision automatique** : le rappel prévient, il ne résilie ni ne renouvelle rien.\n\n## Mise en pratique\n\nDessinez sur papier les colonnes de votre registre et écrivez les trois règles de rappel avec les destinataires."
+        },
+        {
+          "title": "Circuits de validation, tableaux de suivi et indicateurs",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Concevoir un circuit de validation avec seuils.\n- Choisir des indicateurs utiles aux legal ops.\n\n## Un circuit de validation lisible\n\nUn circuit de validation répond à la question : **qui doit approuver quoi, dans quel ordre, sous quel délai ?** Les règles courantes :\n\n- selon le **montant** (seuils internes) ;\n- selon le **type de contrat** et le **niveau de risque** (vert, orange, rouge, voir le chapitre 2) ;\n- selon la **présence d'un écart au playbook**.\n\nLe circuit s'écrit sous forme de règles : « Si écart rouge, alors validation du responsable juridique avant signature. » Une automatisation peut **acheminer** la demande et **relancer** ; elle n'approuve jamais à la place de la personne désignée.\n\n```mermaid\nsequenceDiagram\n  accTitle: Circuit de validation d'un contrat\n  accDescr: Un métier soumet une demande, l'automatisation l'enregistre, l'assistant fait une revue préliminaire, le juriste valide ou escalade, puis la signature est autorisée.\n  participant M as Métier\n  participant A as Automatisation\n  participant I as Assistant IA\n  participant J as Juriste\n  M->>A: Demande et contrat\n  A->>I: Consigne de revue\n  I-->>A: Constats et niveaux\n  A->>J: Dossier à valider\n  J-->>A: Validation ou escalade\n  A-->>M: Décision et suite\n```\n*Figure 1 : circuit de validation ; l'assistant propose des constats, la décision appartient au juriste.*\n\n## Indicateurs utiles\n\n- **Délai moyen** entre demande et signature, par type de contrat.\n- **Nombre de demandes en attente** par étape.\n- **Part de contrats conformes au standard** sans écart.\n- **Échéances traitées à temps** et échéances manquées.\n- **Taux de clauses manquées** et de **faux positifs** de la revue assistée (voir atelier 3).\n\nÉvitez les indicateurs qui incitent à de mauvais comportements : mesurer uniquement la vitesse pousse à valider trop vite.\n\n## Mise en pratique\n\nChoisissez trois indicateurs pour un service juridique fictif, et indiquez pour chacun la décision qu'il éclaire et le comportement indésirable qu'il pourrait provoquer."
+        }
+      ]
+    },
+    {
+      "title": "Risques et conformité",
+      "lessons": [
+        {
+          "title": "Cartographier les risques de conformité d'un usage de l'IA",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Construire une cartographie simple des risques d'un cas d'usage.\n- Évaluer probabilité et gravité de façon cohérente.\n\n## Les familles de risques\n\nPour un usage de l'IA en contrats et conformité, les risques se rangent en familles :\n\n- **Fiabilité** : omission, faux positif, erreur de lecture.\n- **Confidentialité** : fuite d'informations contractuelles ou personnelles vers un service tiers.\n- **Données personnelles** : traitement non prévu de données, absence d'information des personnes.\n- **Propriété intellectuelle** : usage de contenus protégés ou de clauses tierces.\n- **Dépendance** : fournisseur unique, changement de service, perte de savoir-faire interne.\n- **Responsabilité** : décision attribuée à tort à l'outil, absence de preuve de contrôle.\n- **Réglementaire** : obligations propres à votre secteur ou à l'usage (à qualifier avec les experts compétents).\n\nCe module ne détaille pas ces cadres ; il vous apprend à **les organiser dans un registre de risques**. L'analyse juridique de chaque cadre appartient au module sur le droit de l'IA et à vos conseils.\n\n## Évaluer sans fausse précision\n\nUtilisez des échelles simples à trois ou quatre niveaux, **définies par écrit** : par exemple gravité « faible, moyenne, élevée, critique » avec un exemple de conséquence par niveau. Évaluez la probabilité en tenant compte des contrôles existants. Les notes sont des **jugements argumentés**, pas des mesures.\n\n```mermaid\nquadrantChart\n  accTitle: Matrice de risques fictive d'un usage de l'IA en revue de contrats\n  accDescr: Les risques sont placés selon leur probabilité et leur gravité. Les risques de fuite de confidentialité et d'omission de clause critique sont en haut, à traiter en priorité. Données fictives.\n  x-axis \"Probabilité faible\" --> \"Probabilité forte\"\n  y-axis \"Gravité faible\" --> \"Gravité forte\"\n  quadrant-1 \"Traiter en priorité\"\n  quadrant-2 \"Surveiller de près\"\n  quadrant-3 \"Accepter et suivre\"\n  quadrant-4 \"Réduire par des contrôles\"\n  \"Fuite de confidentialité\": [0.30, 0.90]\n  \"Omission de clause critique\": [0.60, 0.85]\n  \"Faux positifs\": [0.80, 0.25]\n  \"Dépendance fournisseur\": [0.40, 0.45]\n  \"Erreur de date\": [0.55, 0.60]\n```\n*Figure 1 : matrice de risques illustrative ; les positions sont inventées pour l'exemple.*\n\n## Mise en pratique\n\nListez cinq risques d'un cas d'usage fictif (revue assistée des contrats fournisseurs), placez-les sur une matrice et indiquez une mesure par risque."
+        },
+        {
+          "title": "Suivre les risques : registre, indicateurs et revues périodiques",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Tenir un registre de risques vivant.\n- Définir des indicateurs d'alerte et un rythme de revue.\n\n## Le registre de risques\n\nChaque risque a une ligne : description, famille, probabilité, gravité, **mesures de maîtrise**, **responsable**, **indicateur de suivi**, date de dernière revue, statut (ouvert, en traitement, accepté, clos). Le responsable est une **personne nommée**, pas un service.\n\n## Indicateurs d'alerte\n\nUn indicateur d'alerte signale qu'un risque se matérialise. Exemples pour la revue assistée :\n\n- hausse du **taux de clauses manquées** constaté en contrôle d'échantillon ;\n- hausse des **corrections** apportées par les juristes aux propositions de l'assistant ;\n- utilisation d'un outil **non autorisé** détectée ;\n- changement de fournisseur ou de version de l'outil, qui impose de refaire les tests.\n\nFixez pour chacun un **seuil** et une **action** : « au-dessus du seuil, repasser au niveau d'autonomie inférieur et rouvrir la revue du playbook ».\n\n## Revue périodique\n\nPlanifiez une revue à rythme défini (par exemple chaque trimestre, à adapter) : le registre est relu, les mesures confirmées, les incidents analysés, les tests de fiabilité rejoués. Les changements importants (nouvel outil, nouveau type de contrat, évolution réglementaire) déclenchent une revue **hors cycle**.\n\n## Incidents\n\nQuand un incident survient (clause critique manquée, document confidentiel envoyé au mauvais endroit), consignez : ce qui s'est passé, la cause, la correction, l'enseignement. Un incident documenté est un apprentissage ; un incident caché se reproduit.\n\n## Mise en pratique\n\nRédigez une ligne complète de registre pour le risque « omission d'une clause de changement de contrôle » : mesures, indicateur, seuil et action associée."
+        },
+        {
+          "title": "Prouver le contrôle humain : traçabilité et documentation",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Définir ce qu'est une preuve de contrôle humain.\n- Mettre en place une piste d'audit proportionnée.\n\n## Pourquoi garder des preuves\n\nSi une clause critique est manquée, on voudra savoir : quelle consigne a été utilisée, quelle version du playbook, qui a relu, qu'a-t-il vérifié, quelle décision a été prise. Sans trace, la réponse est « on pense que ». Avec une trace, vous démontrez que le contrôle était réel et proportionné.\n\n## Ce qu'on conserve\n\n- **Version du playbook** et **consigne** utilisées.\n- **Outil et date** de la revue (et version du service si elle est connue).\n- **Sortie de l'assistant** (constats avec citations).\n- **Revue humaine** : nom du relecteur, date, points vérifiés, corrections apportées, décision.\n- **Écarts d'escalade** : qui a validé quel écart rouge ou orange.\n- **Résultats des tests de fiabilité** et du dernier contrôle par échantillon.\n\n## Proportionner\n\nConserver tout pour chaque contrat serait lourd. On module : fiche légère pour les contrats courants, dossier complet pour les contrats à forts enjeux. Définissez la règle une fois et appliquez-la.\n\n## Éviter le contrôle de façade\n\nUn contrôle humain n'a de valeur que s'il est **effectif**. Prenez garde à :\n\n- la **validation automatique par habitude** (le juriste clique sans lire) ;\n- l'**ancrage** sur la proposition de l'assistant ;\n- le **manque de temps** qui rend la relecture symbolique.\n\nContre ces dérives : demander une **justification écrite** pour les points orange et rouge, faire relire à l'aveugle un contrat sur dix, et mesurer le temps de relecture.\n\nPensez aussi à la durée de conservation des traces : elles aussi peuvent contenir des données sensibles.\n\n```mermaid\njourney\n  accTitle: Parcours de preuve du contrôle humain\n  accDescr: De la revue assistée à l'archivage, chaque étape laisse une trace : consigne, sortie, relecture humaine, décision. Les scores illustrent l'effort perçu, données fictives.\n  title Parcours de la preuve d'un contrôle\n  section Préparation\n    Choisir la version du playbook: 4: Juriste\n    Lancer la revue assistée: 5: Assistant\n  section Contrôle\n    Relire les constats: 3: Juriste\n    Corriger et justifier: 3: Juriste\n  section Clôture\n    Décider et consigner: 4: Juriste\n    Archiver le dossier: 5: Legal ops\n```\n*Figure 1 : parcours de la preuve de contrôle ; les scores d'effort sont fictifs.*\n\n## Mise en pratique\n\nConcevez une fiche de contrôle d'une page pour un contrat courant : quels champs conserver, qui la signe, combien de temps elle est gardée (à décider avec votre service)."
+        }
+      ]
+    },
+    {
+      "title": "Ateliers no-code et low-code",
+      "lessons": [
+        {
+          "title": "Atelier 1 : construire un playbook fictif et le tester sur un contrat piégé",
+          "kind": "exercise",
+          "body_md": "## Objectif et durée\n\n**Objectif** : rédiger un playbook de quatre clauses, le transformer en consignes, puis le tester sur un contrat fictif contenant des clauses piégées. **Durée estimée** : 80 minutes.\n\n## Plateformes\n\n- **Un assistant conversationnel** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : un autre assistant du même type.\n- **Google Sheets** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternatives : **Airtable**, **NocoDB** ou **Notion**.\n\n## Le contrat fictif à tester\n\n*Extrait entièrement inventé, entre Norvalia SAS (le Client) et Brimeo SARL (le Prestataire) :*\n\n> **Article 4 - Données.** Le Prestataire peut conserver les données du Client aussi longtemps qu'il le juge utile et les utiliser pour améliorer ses services.\n> **Article 7 - Responsabilité.** La responsabilité du Prestataire est plafonnée aux sommes versées au titre du dernier mois. Ce plafond s'applique en toutes circonstances.\n> **Article 9 - Reconduction.** Le contrat se renouvelle tacitement pour douze mois, sauf résiliation notifiée au plus tard cent vingt jours avant l'échéance.\n> **Article 11 - Confidentialité.** Chaque partie garde confidentielles les informations de l'autre. *(Aucune durée n'est précisée.)*\n\nLes pièges : conservation illimitée avec réutilisation, plafond dérisoire sans exception, préavis très long, confidentialité sans durée.\n\n## Étapes\n\n1. Dans le tableur, créez une feuille « Playbook » avec les colonnes : clause, position standard, repli, inacceptable, mots-clés d'alerte, escalade.\n2. Remplissez quatre lignes : données, responsabilité, reconduction, confidentialité. Écrivez des positions de votre invention, courtes et précises.\n3. Créez une feuille « Consignes » : pour chaque clause, la question, la preuve attendue, les résultats possibles (conforme, repli, inacceptable, non trouvé) et la règle « en cas de doute, niveau rouge ».\n4. Collez dans l'assistant la consigne d'une clause puis l'extrait fictif. Répétez pour les quatre clauses.\n5. Créez une feuille « Résultats » : clause, réponse de l'assistant, citation donnée, citation exacte retrouvée (oui/non), classement attendu, classement obtenu, écart.\n6. Corrigez les consignes qui ont produit un écart, puis relancez.\n7. Ajoutez à votre contrat une clause « neutre » (conforme) pour vérifier que l'assistant ne signale pas tout.\n\n## Résultat attendu\n\nUn playbook de quatre clauses, des consignes testées et un tableau de résultats avec les écarts avant et après correction.\n\n## Critères de réussite\n\n- [ ] Chaque clause du playbook a standard, repli, inacceptable et escalade.\n- [ ] Chaque consigne exige une citation et autorise « non trouvé ».\n- [ ] Les quatre pièges sont détectés, ou les échecs sont documentés.\n- [ ] Au moins une consigne a été améliorée après un écart.\n- [ ] La clause conforme n'est pas signalée à tort (ou le faux positif est noté).\n\n## Pièges\n\nÉcrire un playbook trop long ; oublier la règle de doute ; accepter une citation approximative. **Données** : uniquement fictives, aucun contrat réel ni aucune donnée confidentielle.\n\n## Pour aller plus loin\n\nAjoutez une cinquième clause et un contrat où elle est absente, pour tester la réponse « non trouvé »."
+        },
+        {
+          "title": "Atelier 2 : mettre en place un registre des contrats avec rappels d'échéance",
+          "kind": "exercise",
+          "body_md": "## Objectif et durée\n\n**Objectif** : créer un registre de contrats fictifs avec une date limite d'action calculée et des rappels automatiques. **Durée estimée** : 75 minutes.\n\n## Plateformes\n\n- **Une base ou un tableur en ligne** (no-code) : Airtable, Notion ou Google Sheets ; offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative libre : NocoDB.\n- **Une plateforme d'automatisation visuelle** (no-code) : Make, Zapier ou n8n ; offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : les notifications ou rappels intégrés à votre base, sans plateforme tierce.\n\n## Étapes\n\n1. Créez la table « Contrats » avec les champs : identifiant, cocontractant (fictif), objet, type, date de début, date de fin, préavis en jours, date limite d'action, responsable, statut, lien du document (fictif), dernière revue.\n2. Saisissez au moins huit contrats fictifs, dont trois ayant une date limite d'action dans les 90 prochains jours, un déjà dépassée, un sans responsable.\n3. Définissez un champ calculé « date limite d'action » égal à la date de fin moins le préavis (un champ de type formule de votre outil).\n4. Créez une vue filtrée « À traiter sous 90 jours », triée par date limite, et une vue « Données incomplètes » (responsable ou date manquante).\n5. Dans l'outil d'automatisation, créez un scénario : un bloc déclencheur planifié (une fois par jour) qui lit la table, un bloc de filtre (date limite dans moins de 60 jours, statut « actif »), puis un bloc d'action qui envoie un message ou un courriel de test à votre propre adresse.\n6. Le message contient : contrat, date limite, action possible, lien de la fiche, mention « rappel automatique, aucune décision n'est prise ».\n7. Ajoutez une seconde règle d'escalade : si la date limite est dans moins de 15 jours, notifier aussi un second destinataire fictif ou vous-même.\n8. Testez avec les contrats fictifs, puis changez une date pour vérifier le déclenchement.\n\n## Résultat attendu\n\nUn registre fonctionnel, deux vues de contrôle et au moins un rappel testé.\n\n## Critères de réussite\n\n- [ ] La date limite d'action se calcule seule et est correcte sur trois contrats vérifiés à la main.\n- [ ] Les contrats sans responsable apparaissent dans la vue « Données incomplètes ».\n- [ ] Un rappel de test est reçu avec les bonnes informations.\n- [ ] Aucune action irréversible (résiliation, envoi à un tiers) n'est automatisée.\n\n## Pièges\n\nFuseaux horaires et formats de dates ; rappels envoyés chaque jour sans fin ; envoyer des messages à de vraies personnes. **Données** : uniquement fictives, adresses de test à vous.\n\n## Pour aller plus loin\n\nAjoutez un formulaire de demande de contrat qui crée une ligne et affecte un responsable selon le type."
+        },
+        {
+          "title": "Atelier 3 : évaluer la fiabilité d'une revue assistée et décider du niveau de contrôle",
+          "kind": "exercise",
+          "body_md": "## Objectif et durée\n\n**Objectif** : mesurer le taux de clauses manquées et de faux positifs d'une revue assistée sur un jeu de clauses fictives, puis choisir le niveau de contrôle humain. **Durée estimée** : 90 minutes.\n\n## Plateformes\n\n- **Un assistant conversationnel** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : un second assistant, pour comparer.\n- **Google Sheets** ou **Airtable** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : Notion ou NocoDB.\n\n## Étapes\n\n1. Rédigez ou faites rédiger **vingt clauses fictives** d'une dizaine de lignes chacune. Parmi elles, décidez à l'avance de **dix clauses problématiques** (par exemple responsabilité illimitée, cession sans accord, exclusivité cachée) et **dix clauses conformes**. Notez la vérité dans une colonne « Attendu », sans la montrer à l'assistant.\n2. Créez la table « Évaluation » : numéro, texte, attendu (problématique ou conforme), réponse de l'assistant, écart, type d'écart, gravité.\n3. Soumettez chaque clause avec la consigne de l'atelier 1 et notez la réponse.\n4. Comptez : **clauses manquées** (problématiques non signalées), **faux positifs** (conformes signalées), signalements corrects.\n5. Calculez avec des formules simples : taux de clauses manquées = manquées divisées par problématiques ; taux de faux positifs = faux positifs divisés par conformes.\n6. Rejouez la même série avec une consigne améliorée ou un second assistant, et comparez.\n7. Écrivez une courte **note de décision** : niveau d'autonomie retenu (1 prépare, 2 propose, 3 filtre), seuils d'acceptation fixés **avant** le test, contrôles par échantillon, conditions de retour à un niveau plus prudent.\n\n## Résultat attendu\n\nUn tableau d'évaluation, deux taux calculés et une note de décision.\n\n## Critères de réussite\n\n- [ ] Vérité fixée avant le test, sans ajustement ensuite.\n- [ ] Taux calculés correctement et leur faible effectif reconnu (vingt clauses ne prouvent pas grand-chose).\n- [ ] Les clauses manquées sont analysées par type et par gravité.\n- [ ] La note de décision relie le niveau de contrôle aux résultats, avec un seuil écrit.\n\n## Pièges\n\nAjuster le seuil après avoir vu les résultats ; conclure sur un échantillon minuscule ; ne compter que les succès. **Données** : clauses entièrement inventées.\n\n## Pour aller plus loin\n\nAjoutez dix clauses plus difficiles (rédaction ambiguë, renvois à une annexe) et observez l'évolution des taux."
+        }
+      ]
+    }
+  ],
+  "quiz": {
+    "title": "Quiz du module",
+    "pass_percent": 70,
+    "max_attempts": null,
+    "questions": [
+      {
+        "kind": "single_choice",
+        "prompt": "Quel est le rôle le plus adapté d'un assistant IA dans une revue de contrat ?",
+        "feedback": "L'assistant accélère la préparation. Une absence de signalement ne prouve pas l'absence de risque et la décision finale reste au juriste.",
+        "options": [
+          [
+            "Garantir l'absence de risque lorsqu'il ne signale rien",
+            false
+          ],
+          [
+            "Réaliser une première passe rapide que le juriste relit, valide et dont il assume la décision",
+            true
+          ],
+          [
+            "Remplacer la relecture humaine pour tous les contrats courants",
+            false
+          ],
+          [
+            "Rendre l'avis juridique final dès que la confiance affichée est élevée",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Un assistant ne signale aucune clause de changement de contrôle dans un contrat long. Que faut-il conclure ?",
+        "feedback": "Une omission peut passer inaperçue, surtout sur un document long. Le silence de l'outil n'est jamais une preuve ; un contrôle par mots-clés ou relecture ciblée s'impose.",
+        "options": [
+          [
+            "Que le contrat n'en contient pas",
+            false
+          ],
+          [
+            "Rien de certain : il faut vérifier par recherche dans le texte, car une omission est possible",
+            true
+          ],
+          [
+            "Que la clause est conforme au playbook",
+            false
+          ],
+          [
+            "Que le contrat peut être signé sans autre contrôle",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que désigne un faux positif en revue assistée ?",
+        "feedback": "Le faux positif fait perdre du temps ; la clause manquée est un faux négatif, bien plus grave. Les deux se mesurent séparément.",
+        "options": [
+          [
+            "Une clause correctement signalée mais mal citée",
+            false
+          ],
+          [
+            "Une clause conforme signalée à tort comme problématique",
+            true
+          ],
+          [
+            "Un contrat refusé par la partie adverse",
+            false
+          ],
+          [
+            "Une clause problématique que l'assistant n'a pas signalée",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi demander à l'assistant de citer exactement la clause concernée ?",
+        "feedback": "La citation permet un contrôle mécanique : si elle ne se retrouve pas mot pour mot, la réponse est suspecte.",
+        "options": [
+          [
+            "Pour pouvoir retrouver la citation dans le contrat et détecter une invention ou une erreur de lecture",
+            true
+          ],
+          [
+            "Pour éviter d'avoir à ouvrir le contrat",
+            false
+          ],
+          [
+            "Pour que l'assistant soit certain de sa réponse",
+            false
+          ],
+          [
+            "Pour rendre la réponse plus longue",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle consigne est la mieux formulée ?",
+        "feedback": "Une bonne consigne limite le périmètre, impose une preuve, fournit une référence et autorise l'absence de réponse.",
+        "options": [
+          [
+            "« Analysez uniquement le texte fourni, citez la clause, comparez-la à la position ci-dessous, répondez \"non trouvé\" si elle est absente. »",
+            true
+          ],
+          [
+            "« Donne ton avis juridique définitif sur ce contrat. »",
+            false
+          ],
+          [
+            "« Corrige tout ce qui te semble inhabituel dans le contrat. »",
+            false
+          ],
+          [
+            "« Dis-moi si ce contrat est risqué. »",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle est la différence entre un clausier et un playbook ?",
+        "feedback": "Le clausier dit quoi proposer, le playbook dit jusqu'où reculer et qui décide.",
+        "options": [
+          [
+            "Il n'y a aucune différence, ce sont deux noms pour le même document",
+            false
+          ],
+          [
+            "Le clausier propose des clauses types ; le playbook précise positions standard, de repli, inacceptables et décideurs",
+            true
+          ],
+          [
+            "Le playbook contient uniquement des clauses interdites",
+            false
+          ],
+          [
+            "Le clausier est destiné à l'IA, le playbook aux commerciaux",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Une clause est ambiguë au regard du playbook. Que doit prévoir le circuit d'escalade ?",
+        "feedback": "En cas de doute, on monte d'un niveau : ni l'assistant ni le circuit automatique ne tranchent une ambiguïté.",
+        "options": [
+          [
+            "L'ignorer si elle ne figure pas dans le résumé",
+            false
+          ],
+          [
+            "La laisser trancher par l'assistant en fonction du contexte",
+            false
+          ],
+          [
+            "La remonter au niveau supérieur et la faire décider par le juriste",
+            true
+          ],
+          [
+            "La classer verte par défaut pour ne pas bloquer le dossier",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle règle de playbook est vérifiable ?",
+        "feedback": "Une règle vérifiable pose une question à laquelle on répond par oui ou non en regardant le texte.",
+        "options": [
+          [
+            "« Le plafond de responsabilité couvre-t-il au moins la valeur indiquée dans le playbook, avec exceptions pour faute lourde et dol ? »",
+            true
+          ],
+          [
+            "« La clause doit convenir à tout le monde. »",
+            false
+          ],
+          [
+            "« Le contrat doit être équilibré. »",
+            false
+          ],
+          [
+            "« La responsabilité doit rester raisonnable. »",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi tester des consignes sur des clauses dont on connaît la réponse ?",
+        "feedback": "Tester sur des cas connus révèle les omissions et faux positifs, comme on testerait un programme.",
+        "options": [
+          [
+            "Pour éviter d'avoir à les relire ensuite",
+            false
+          ],
+          [
+            "Pour mesurer les écarts et corriger la formulation avant de les utiliser sur de vrais dossiers",
+            true
+          ],
+          [
+            "Pour entraîner l'assistant de façon permanente",
+            false
+          ],
+          [
+            "Pour prouver que l'assistant ne peut pas se tromper",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Dans une due diligence, quel traitement convient aux documents critiques ?",
+        "feedback": "On concentre la lecture humaine sur les documents critiques et on échantillonne le reste.",
+        "options": [
+          [
+            "Une extraction automatique sans relecture",
+            false
+          ],
+          [
+            "Un simple échantillon aléatoire",
+            false
+          ],
+          [
+            "Un traitement uniquement par l'assistant",
+            false
+          ],
+          [
+            "Une relecture humaine complète, l'IA ne faisant que préparer",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi fixer le seuil d'écarts acceptable avant de regarder les résultats ?",
+        "feedback": "Un seuil fixé a posteriori n'est plus un critère mais une justification.",
+        "options": [
+          [
+            "Pour rendre le test plus long",
+            false
+          ],
+          [
+            "Pour éviter de documenter le contrôle",
+            false
+          ],
+          [
+            "Parce que les seuils sont imposés par les outils",
+            false
+          ],
+          [
+            "Pour éviter de l'ajuster après coup afin de justifier le résultat obtenu",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Dix contrats relus sans aucune erreur permettent-ils de conclure que l'outil ne se trompe jamais ?",
+        "feedback": "Un petit effectif ne permet pas de conclure à une fiabilité parfaite ; il faut le dire et élargir si l'enjeu l'exige.",
+        "options": [
+          [
+            "Oui, à condition que l'assistant ait cité les clauses",
+            false
+          ],
+          [
+            "Oui, si les contrats sont de même type",
+            false
+          ],
+          [
+            "Oui, car aucun écart n'a été observé",
+            false
+          ],
+          [
+            "Non : un petit échantillon donne une estimation grossière et ne prouve pas l'absence d'erreur",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Dans un registre de contrats, quelle date est la plus utile pour déclencher des rappels ?",
+        "feedback": "C'est la date limite d'action qui permet de décider à temps de renouveler, renégocier ou résilier.",
+        "options": [
+          [
+            "La date limite d'action : date de fin moins le préavis de non-renouvellement",
+            true
+          ],
+          [
+            "La date de signature",
+            false
+          ],
+          [
+            "La date de création de la ligne",
+            false
+          ],
+          [
+            "La date de dernière revue",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que peut décider seule une automatisation de circuit de validation ?",
+        "feedback": "L'automatisation prévient et achemine ; l'approbation reste humaine.",
+        "options": [
+          [
+            "Approuver un écart rouge si le délai est dépassé",
+            false
+          ],
+          [
+            "Acheminer la demande et envoyer des relances, sans approuver à la place de la personne désignée",
+            true
+          ],
+          [
+            "Résilier un contrat dont l'échéance approche",
+            false
+          ],
+          [
+            "Renouveler automatiquement tous les contrats actifs",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi indiquer un responsable nommé sur chaque ligne d'un registre de risques ?",
+        "feedback": "Un risque sans personne nommée est rarement suivi ; la responsabilité claire est une condition de maîtrise.",
+        "options": [
+          [
+            "Parce que l'IA l'exige",
+            false
+          ],
+          [
+            "Pour remplacer l'indicateur de suivi",
+            false
+          ],
+          [
+            "Pour pouvoir lui imputer toute erreur",
+            false
+          ],
+          [
+            "Pour que quelqu'un soit effectivement chargé du suivi, plutôt qu'un service anonyme",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles tâches de revue relèvent plutôt du juriste que de l'assistant ?",
+        "feedback": "Qualification, arbitrage et décision supposent jugement et responsabilité. L'extraction de faits simples peut être préparée par l'assistant puis vérifiée.",
+        "options": [
+          [
+            "Décider d'accepter un écart rouge",
+            true
+          ],
+          [
+            "Qualifier un risque selon le contexte commercial",
+            true
+          ],
+          [
+            "Arbitrer une concession en négociation",
+            true
+          ],
+          [
+            "Retrouver la date de signature dans le texte",
+            false
+          ],
+          [
+            "Lister les parties du contrat",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels contrôles appliquer après une revue assistée ?",
+        "feedback": "Les contrôles reposent sur des preuves extérieures. La confiance exprimée par l'assistant n'est pas un indicateur fiable.",
+        "options": [
+          [
+            "Comparer à une checklist de clauses attendues",
+            true
+          ],
+          [
+            "Vérifier dans une source juridique fiable toute affirmation de droit",
+            true
+          ],
+          [
+            "Demander à l'assistant s'il est sûr de lui",
+            false
+          ],
+          [
+            "Se fier au ton assuré de la réponse",
+            false
+          ],
+          [
+            "Retrouver chaque citation dans le contrat",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels champs doit contenir une fiche de clause de playbook ?",
+        "feedback": "La fiche réunit ce qui permet de comparer, de décider et d'escalader ; le nom de l'outil ou un tarif n'en font pas partie.",
+        "options": [
+          [
+            "Une position inacceptable",
+            true
+          ],
+          [
+            "Des replis autorisés avec leurs conditions",
+            true
+          ],
+          [
+            "Une règle d'escalade",
+            true
+          ],
+          [
+            "Une position standard",
+            true
+          ],
+          [
+            "Le tarif du contrat habituel",
+            false
+          ],
+          [
+            "Le nom de l'assistant utilisé",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles bonnes pratiques de confidentialité appliquer avant de soumettre un contrat à un assistant ?",
+        "feedback": "La confidentialité s'apprécie avant l'envoi, en regard des règles internes et contractuelles.",
+        "options": [
+          [
+            "Coller le contrat entier sans se poser de question",
+            false
+          ],
+          [
+            "Vérifier les règles internes sur les outils autorisés",
+            true
+          ],
+          [
+            "Utiliser n'importe quel outil gratuit pour gagner du temps",
+            false
+          ],
+          [
+            "Anonymiser ou minimiser les informations si nécessaire",
+            true
+          ],
+          [
+            "Vérifier les clauses de confidentialité du contrat concerné",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels éléments un rapport de due diligence assistée doit-il préciser sur sa méthode ?",
+        "feedback": "Le rapport décrit le périmètre réel et les limites ; cela proportionne la confiance au contrôle effectué.",
+        "options": [
+          [
+            "Le nom de chaque relecteur en gras uniquement",
+            false
+          ],
+          [
+            "La taille de l'échantillon vérifié et les écarts constatés",
+            true
+          ],
+          [
+            "Ce qui a été relu intégralement par un humain",
+            true
+          ],
+          [
+            "Les documents manquants ou illisibles",
+            true
+          ],
+          [
+            "Que l'IA a remplacé toute lecture humaine",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles tâches sont de bonnes candidates à l'automatisation sans code ?",
+        "feedback": "On automatise le répétitif, bien défini et contrôlable ; le jugement reste humain.",
+        "options": [
+          [
+            "La décision de résilier un contrat stratégique",
+            false
+          ],
+          [
+            "Un accusé de réception de demande de contrat",
+            true
+          ],
+          [
+            "Une relance de signature en attente",
+            true
+          ],
+          [
+            "La qualification juridique d'un cas inhabituel",
+            false
+          ],
+          [
+            "Un rappel d'échéance",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels indicateurs peuvent signaler qu'il faut revoir le niveau d'autonomie de l'IA ?",
+        "feedback": "Les indicateurs d'alerte traduisent une dégradation de la fiabilité ou un changement du contexte technique.",
+        "options": [
+          [
+            "Changement de fournisseur ou de version de l'outil",
+            true
+          ],
+          [
+            "Hausse des corrections apportées par les juristes",
+            true
+          ],
+          [
+            "Baisse du nombre de demandes de contrat",
+            false
+          ],
+          [
+            "Hausse du taux de clauses manquées en échantillon",
+            true
+          ],
+          [
+            "Changement de couleur du tableau de bord",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels risques menacent la valeur du contrôle humain ?",
+        "feedback": "Les deux dernières options sont des remèdes. Les trois premières transforment le contrôle en simple formalité.",
+        "options": [
+          [
+            "Conservation d'une fiche de contrôle",
+            false
+          ],
+          [
+            "Manque de temps rendant la relecture symbolique",
+            true
+          ],
+          [
+            "Relecture à l'aveugle d'un contrat sur dix",
+            false
+          ],
+          [
+            "Ancrage sur la proposition de l'assistant",
+            true
+          ],
+          [
+            "Validation machinale sans lecture",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Décrivez comment vous transformeriez la règle « la durée de conservation des données doit être raisonnable » en consigne vérifiable pour un assistant : question, preuve attendue, résultats possibles et niveau d'escalade.",
+        "feedback": "Une bonne réponse remplace « raisonnable » par un critère observable (délai de suppression ou de restitution défini), exige une citation exacte, prévoit les résultats conforme, repli, inacceptable et non trouvé, et renvoie l'ambiguïté au juriste.",
+        "options": []
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Une équipe veut passer de « l'IA prépare, le juriste relit tout » à « l'IA filtre, le juriste ne lit que les contrats signalés ». Quelles preuves et quelles conditions exigeriez-vous avant d'accepter ce changement ?",
+        "feedback": "Une bonne réponse demande une mesure du taux de clauses manquées et de faux positifs sur un jeu de test représentatif, un seuil fixé à l'avance, un périmètre limité aux contrats à faible enjeu, un contrôle par échantillon continu, des indicateurs d'alerte et une règle de retour au niveau prudent. La décision finale reste humaine.",
+        "options": []
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Décrivez en quelques lignes la piste de preuve que vous conserveriez pour démontrer qu'un contrôle humain a eu lieu sur un contrat à fort enjeu revu avec un assistant.",
+        "feedback": "Une bonne réponse mentionne la version du playbook et de la consigne, la sortie de l'assistant, le nom du relecteur, la date, les points vérifiés, les corrections, la validation des écarts et la décision, avec une durée de conservation définie et une attention aux données sensibles contenues dans les traces.",
+        "options": []
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Parmi ces dispositifs, lequel limite le mieux le risque de contrôle de façade ?",
+        "feedback": "La justification écrite et la relecture à l'aveugle rendent le contrôle observable et résistent à l'habitude.",
+        "options": [
+          [
+            "Exiger une justification écrite pour les points orange et rouge et relire à l'aveugle un échantillon",
+            true
+          ],
+          [
+            "Interdire toute correction de la proposition de l'assistant",
+            false
+          ],
+          [
+            "Ajouter une case à cocher « relu » en fin de dossier",
+            false
+          ],
+          [
+            "Mesurer uniquement la rapidité de traitement",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que doit faire un juriste d'une affirmation de l'assistant du type « cette clause est nulle » ?",
+        "feedback": "Un assistant n'est pas une source juridique, et un second assistant peut se tromper de la même façon.",
+        "options": [
+          [
+            "La traiter comme une piste et la vérifier dans une source juridique fiable avant de la reprendre",
+            true
+          ],
+          [
+            "La reprendre telle quelle si l'assistant cite la clause",
+            false
+          ],
+          [
+            "La reprendre si un second assistant la confirme",
+            false
+          ],
+          [
+            "La reprendre si elle est formulée avec assurance",
+            false
+          ]
+        ]
+      }
+    ]
+  },
+  "assignment": {
+    "title": "Livrable pratique : playbook de revue de contrat assistée par IA",
+    "instructions_md": "## Objectif\n\nDémontrer que vous savez construire un **playbook de revue de contrat exploitable par une IA**, le transformer en consignes vérifiables, **mesurer sa fiabilité** et définir les **points d'escalade vers un juriste**, ainsi qu'un suivi automatisé des échéances. Tout se fait sur des données **fictives** : aucun contrat réel ni donnée confidentielle. Ce livrable ne constitue pas un avis juridique ; la décision finale revient toujours au juriste.\n\n## Consignes\n\nLe livrable se réalise **sans code**, avec les outils no-code et low-code des trois ateliers du dernier chapitre : tableur ou base, assistant conversationnel, outil d'automatisation. Le rendu peut être un document, un export PDF ou des liens.\n\n1. **Périmètre** : type de contrat fictif choisi, objectif du playbook, public (juristes, commerciaux), niveau d'autonomie visé pour l'IA.\n2. **Playbook** : au moins **six clauses**, chacune avec objectif, position standard, replis avec conditions, position inacceptable, mots-clés d'alerte et règle d'escalade. Précisez la version et la date.\n3. **Consignes vérifiables** : pour chaque clause, question, preuve attendue (citation), résultats possibles (conforme, repli, inacceptable, non trouvé) et règle de doute.\n4. **Points d'escalade** : niveaux vert, orange, rouge, décideurs et délais.\n5. **Test de fiabilité** : au moins **vingt clauses fictives** dont dix problématiques, vérité fixée avant le test, taux de clauses manquées et de faux positifs, analyse des écarts et corrections apportées.\n6. **Décision de contrôle humain** : niveau d'autonomie retenu, seuils fixés à l'avance, contrôle par échantillon, conditions de retour à un niveau plus prudent.\n7. **Registre et rappels** : copie ou description du registre de contrats fictifs, date limite d'action calculée, règle de rappel testée.\n8. **Registre de risques et preuve** : au moins cinq risques de l'usage (fiabilité, confidentialité, données personnelles, dépendance, contrôle de façade), avec mesures, responsable, indicateur et fiche de preuve du contrôle humain.\n9. **Limites** : ce que votre test ne démontre pas ; précautions de confidentialité.\n10. **Variante pour profils avancés (facultative)** : comparez deux assistants sur le même jeu de clauses.\n\n## Grille d'évaluation\n\n- Qualité et exploitabilité du playbook : clauses complètes, positions claires, escalade définie (**25 %**).\n- Consignes vérifiables : preuve exigée, résultats prévus, règle de doute (**20 %**).\n- Test de fiabilité : jeu de test, vérité préalable, taux corrects, analyse des écarts (**20 %**).\n- Décision de contrôle humain : seuils, échantillonnage, justification (**15 %**).\n- Registre, rappels et suivi des risques : fonctionnels et proportionnés (**10 %**).\n- Lucidité sur les limites, confidentialité et respect du caractère fictif des données (**10 %**).\n\n## Rendu\n\nTexte dans le champ de réponse et/or fichier PDF ou document, avec liens ou captures des outils utilisés."
+  }
+}

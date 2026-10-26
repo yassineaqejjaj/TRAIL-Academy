@@ -58,8 +58,12 @@ Un module qui a déjà des chapitres est ignoré (`--replace` le recrée, sauf s
 
 ## Ateliers no-code et low-code
 
-Chaque module (M1 à M18) se termine par le chapitre **« Ateliers no-code et low-code »** : 3 exercices pratiques réalisables **sans écrire ni lancer de code**, sur des plateformes no-code ou low-code, de préférence libres ou gratuites (Orange Data Mining, Teachable Machine, TensorFlow Playground, n8n, Flowise/Langflow/Dify, NotebookLM, Google Sheets, Airtable/NocoDB/Notion, Figma/Penpot, Miro, Tally, Looker Studio, Lovable/Bolt…). Les livrables peuvent tous être produits sans code ; les anciens exercices en Python restent, marqués **facultatifs pour profils techniques**. Règles et vérifications automatiques : `content/FORMAT.md` et `tests/content.test.ts`.
+Chaque module (M1 à M30) se termine par le chapitre **« Ateliers no-code et low-code »** : 3 exercices pratiques réalisables **sans écrire ni lancer de code**, sur des plateformes no-code ou low-code, de préférence libres ou gratuites (Orange Data Mining, Teachable Machine, TensorFlow Playground, n8n, Flowise/Langflow/Dify, NotebookLM, Google Sheets, Airtable/NocoDB/Notion, Figma/Penpot, Miro, Tally, Looker Studio, Lovable/Bolt…). Les livrables peuvent tous être produits sans code ; les anciens exercices en Python restent, marqués **facultatifs pour profils techniques**. Règles et vérifications automatiques : `content/FORMAT.md` et `tests/content.test.ts`.
 
 **À vérifier avant de promouvoir un atelier** : les interfaces et les offres gratuites changent vite. Les ateliers décrivent des blocs génériques (« un bloc de type… ») et disent « offre gratuite ou version libre à la date de rédaction, à vérifier » ; refaites chaque atelier une fois vous-même pour confirmer qu'il est faisable gratuitement et ajustez les noms. M18 n'a pas encore de contenu.
 
 Mise à jour en ligne sans toucher aux progressions : `npm run content:load -- --all --sync` (ajoute aussi les nouveaux chapitres et leçons, publiés si le module l'est).
+
+## Modules par métier (M19 à M30)
+
+M19–M21 marketing et communication, M22–M24 RH, M25–M27 juridique, M28–M30 finance. Ils sont écrits sans slides sources, avec des données fictives. **Les modules juridique, RH et finance touchent à des domaines réglementés** : faites-les relire par un professionnel du domaine avant de les publier (l'AI Act, le RGPD, le droit du travail et les exigences sectorielles y sont traités en termes généraux, sans article ni date, et chaque module précise qu'il ne constitue pas un avis juridique). Chargement : `npm run content:load -- --module M19` (brouillon), puis publication depuis l'administration quand le contenu est validé.

@@ -50,7 +50,7 @@ export function OfferCards({ catalog }: { catalog: Catalog }) {
         <section className={`${card} border border-border`} aria-label="Parcours">
           <p className={`${kickerCls} text-muted`}>Une trajectoire métier</p>
           <h3 className="text-2xl font-bold">Un parcours</h3>
-          <p className="text-muted">Les modules dans l'ordre recommandé pour votre métier. Deux parcours au choix, au même prix.</p>
+          <p className="text-muted">Les modules dans l'ordre recommandé pour votre métier. {paths.length} parcours au choix, au même prix : produit et IA, marketing et communication, RH, juridique, finance.</p>
           {price(pathPrice, pathFrom)}
           <p className="-mt-2 text-sm text-muted">Accès {paths[0]?.accessMonths ?? 18} mois</p>
           <ul className="flex flex-col gap-3 rounded-xl bg-bg p-4 text-[15px]">
@@ -58,7 +58,7 @@ export function OfferCards({ catalog }: { catalog: Catalog }) {
               const n = coursesOfPath(path, catalog).length, total = unitTotal(path, catalog);
               return (
                 <li key={path.slug}>
-                  <Link href="/parcours" className="font-semibold text-accent hover:underline">{path.title}</Link>
+                  <Link href={`/parcours/${path.slug}`} className="font-semibold text-accent hover:underline">{path.title}</Link>
                   <span className="block text-muted">{n} modules{total > 0 ? ` · au lieu de ${formatEuro(total)} à l'unité` : ""}</span>
                   {!open(path.slug) && <span className="mt-1 inline-block"><Badge tone="warn">Bientôt disponible</Badge></span>}
                 </li>
@@ -74,10 +74,10 @@ export function OfferCards({ catalog }: { catalog: Catalog }) {
         <section className={`${card} border-2 border-accent`} aria-label="AI Mastery">
           <span className="self-start rounded-full bg-accent px-3 py-1 text-[13px] font-semibold text-white dark:text-[#06201f]">L'accès complet</span>
           <h3 className="text-2xl font-bold">AI Mastery</h3>
-          <p className="text-muted">Les {catalog.courses.length} modules et les deux parcours : de la stratégie aux systèmes en production.</p>
+          <p className="text-muted">Les {catalog.courses.length} modules et les {paths.length} parcours : de la stratégie aux systèmes en production, et toutes les fonctions métier.</p>
           {price(masteryOffer.amountCents)}
           <p className="-mt-2 text-sm text-muted">Accès {mastery.accessMonths} mois · au lieu de {formatEuro(catalog.courses.reduce((s, c) => s + (catalog.coursePrices[c.slug] ?? 0), 0))} à l'unité</p>
-          <Includes extra={`${catalog.courses.length} modules et les deux parcours`} />
+          <Includes extra={`${catalog.courses.length} modules et les ${paths.length} parcours`} />
           <div className="mt-auto pt-2">
             {isPathPurchasable(mastery, catalog) ? <ButtonLink href={`/achat/${mastery.slug}`} className="w-full">Acheter AI Mastery</ButtonLink>
               : <><Badge tone="warn">Bientôt disponible</Badge><p className="mt-2 text-sm text-muted">L'achat s'ouvre quand les modules sont publiés et validés.</p></>}

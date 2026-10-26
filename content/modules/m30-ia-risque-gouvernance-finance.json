@@ -1,0 +1,769 @@
+{
+  "course": "M30",
+  "slug": "ia-risque-gouvernance-finance",
+  "source": "Contenu original rédigé pour TRAIL Academy à partir du programme du module (sans slides sources). Pas de vidéo : à ajouter depuis l'administration.",
+  "chapters": [
+    {
+      "title": "Risque de modèle : inventaire, validation et surveillance",
+      "lessons": [
+        {
+          "title": "Le risque de modèle à l'ère de l'IA",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Définir le risque de modèle et expliquer pourquoi l'IA l'amplifie.\n- Situer les trois rôles : développement, validation indépendante, utilisation.\n\n*Contenu pédagogique : il ne constitue ni un avis juridique, ni un conseil en investissement. Vérifiez l'état du droit et les exigences de votre régulateur à la date de lecture.*\n\n## Qu'est-ce qu'un risque de modèle ?\n\nUn **modèle** est une méthode qui transforme des données en estimation ou en décision : score de crédit, prévision de trésorerie, détection d'opérations suspectes, classification de documents. Le **risque de modèle** est le risque de conséquences négatives (pertes, mauvaises décisions, sanctions, atteinte à la réputation) causées par un modèle erroné, mal conçu, mal utilisé ou devenu inadapté.\n\nEn substance, les exigences de gestion du risque de modèle de la plupart des superviseurs reposent sur les mêmes idées : savoir quels modèles existent, les valider de façon indépendante, les surveiller dans le temps, documenter et garder une gouvernance claire. Consultez les textes et orientations de votre autorité de supervision pour le détail applicable à votre établissement.\n\n## Ce que l'IA change\n\n- **Opacité** : un modèle d'apprentissage automatique complexe est plus difficile à expliquer qu'une régression simple.\n- **Dérive** : le modèle apprend sur le passé ; quand les comportements ou le contexte changent, il se dégrade parfois sans signal visible.\n- **Dépendance aux données** : une donnée mal collectée ou biaisée se retrouve dans les décisions.\n- **Modèles de fournisseurs** : on utilise un modèle que l'on n'a ni entraîné ni vu (voir le chapitre 5).\n- **IA générative** : les sorties sont variables et peuvent être inventées (hallucinations) ; la notion même de « bonne réponse » est plus difficile à mesurer.\n\n## Trois rôles à séparer\n\n```mermaid\nflowchart LR\n  accTitle: Les trois rôles autour d'un modèle\n  accDescr: Le développeur conçoit le modèle, la validation indépendante le challenge, l'utilisateur métier l'exploite et remonte les anomalies. La gouvernance arbitre et suit les décisions.\n  D[\"Développement (conception, tests)\"] --> V[\"Validation indépendante (challenge)\"]\n  V --> U[\"Utilisation métier (décisions)\"]\n  U -->|\"anomalies, retours\"| D\n  U -->|\"résultats observés\"| V\n  G[\"Gouvernance (comité, politique)\"] -.-> D\n  G -.-> V\n  G -.-> U\n```\n*Figure 1 : la validation est indépendante de l'équipe qui développe ; la gouvernance arbitre et garde la trace des décisions.*\n\nLe principe clé : **celui qui construit un modèle ne le valide pas seul**. Dans une petite structure, cette indépendance peut être obtenue par un second regard extérieur à l'équipe, proportionné aux enjeux.\n\n## Fil rouge du module\n\nNous suivrons des établissements **fictifs** : la banque « Banque Aubrac », l'assureur « Mutuelle Cévennes » et la société de gestion « Gestion Vallée ». Tous les modèles, volumes et résultats cités sont inventés.\n\n## Question de réflexion\n\nCitez un modèle de votre organisation (ou un modèle imaginaire) : qui l'a construit, qui l'a validé, qui l'utilise, et qui serait alerté s'il se dégradait ?"
+        },
+        {
+          "title": "Inventaire des modèles et classification par criticité",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Construire un inventaire utile des modèles et cas d'usage IA.\n- Classer par criticité pour proportionner les contrôles.\n\n## Pourquoi commencer par l'inventaire\n\nOn ne gère pas ce que l'on ne connaît pas. L'inventaire révèle aussi l'**IA de l'ombre** : outils grand public utilisés par des équipes, macros de tableur à base de modèles, fonctions d'IA activées par défaut dans un logiciel. Un inventaire n'est pas un fichier figé : il se met à jour à chaque projet et à chaque changement de version.\n\n## Les champs d'un inventaire\n\n- **Identifiant et nom** du modèle ou du cas d'usage.\n- **Finalité** et décision soutenue (qui décide, avec quelle marge de manœuvre).\n- **Propriétaire métier** et propriétaire technique.\n- **Origine** : développé en interne, fourni par un prestataire, modèle tiers ou générique.\n- **Données utilisées**, dont données personnelles ou sensibles.\n- **Population concernée** : clients, salariés, tiers.\n- **Niveau de criticité** et date de dernière validation.\n- **Surveillance** : indicateurs, fréquence, seuils d'alerte.\n- **Statut** : idée, test, validé, en production, suspendu, retiré.\n\n## Classer par criticité\n\nDeux questions simples permettent un premier classement : **quel est l'impact d'une erreur ?** et **quelle est l'autonomie du modèle ?** Un modèle qui décide seul d'un refus de crédit n'appelle pas le même niveau de contrôle qu'un outil qui résume des notes internes pour un analyste qui relit.\n\n```mermaid\nquadrantChart\n  accTitle: Matrice de criticité des cas d'usage fictifs\n  accDescr: Placement indicatif de quatre cas fictifs selon l'impact d'une erreur et l'autonomie du modèle. Le scoring de crédit automatique est le plus critique.\n  title Criticité (positions illustratives)\n  x-axis \"Autonomie faible\" --> \"Autonomie forte\"\n  y-axis \"Impact faible\" --> \"Impact fort\"\n  quadrant-1 \"Contrôle renforcé\"\n  quadrant-2 \"Revue humaine systématique\"\n  quadrant-3 \"Suivi léger\"\n  quadrant-4 \"Surveillance automatisée\"\n  \"Scoring de crédit auto\": [0.85, 0.9]\n  \"Alertes fraude\": [0.5, 0.75]\n  \"Résumé de notes\": [0.2, 0.25]\n  \"Tri de courriels\": [0.7, 0.2]\n```\n*Figure 1 : exemple fictif de classement ; les positions sont illustratives et à décider avec vos propres critères.*\n\n## Proportionnalité\n\nLe niveau de criticité détermine l'intensité de la validation, la fréquence de surveillance et le niveau d'approbation. Écrivez la règle : « criticité haute : validation indépendante complète avant mise en production et revue annuelle au minimum » est un exemple de formulation, à adapter à votre politique.\n\n## À faire\n\nListez cinq modèles ou usages d'IA de votre environnement (ou fictifs), remplissez les neuf champs ci-dessus pour chacun et classez-les. Notez ceux pour lesquels vous ne savez pas répondre : ce sont vos premiers risques."
+        },
+        {
+          "title": "Validation indépendante, performance, dérive et documentation",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Décrire ce que couvre une validation indépendante.\n- Choisir des indicateurs de performance et détecter la dérive.\n- Lister les éléments d'une documentation exploitable.\n\n## Ce que la validation examine\n\n- **Conception** : le choix de la méthode est-il justifié ? Les hypothèses sont-elles explicites ?\n- **Données** : qualité, représentativité, absence de fuite d'information du futur vers le passé, traitement des valeurs manquantes.\n- **Performance** : mesurée sur des données **non utilisées pour l'entraînement**, avec des indicateurs adaptés au risque.\n- **Robustesse** : comportement sur des cas rares, extrêmes ou mal formés.\n- **Limites d'usage** : où le modèle ne doit pas être utilisé.\n- **Mise en œuvre** : les calculs en production correspondent-ils à ceux validés ?\n\n## Choisir les indicateurs\n\nUn seul chiffre global (« 95 % de bonnes réponses ») masque souvent l'essentiel. Si la fraude est rare, un modèle qui ne détecte rien peut paraître « exact ». Regardez les **faux positifs** (alertes à tort), les **faux négatifs** (cas manqués), leur coût respectif et leur répartition par segments de clientèle. Les seuils de performance acceptables se décident avant les tests, pas après.\n\n## La dérive\n\nLa **dérive des données** : les entrées changent (nouveaux produits, nouveaux canaux, comportement des clients). La **dérive du concept** : la relation entre entrées et résultat évolue (par exemple un contexte économique différent). Signaux : distribution des variables qui se déplace, taux d'alertes qui varie, performance observée qui baisse quand les résultats réels sont connus (souvent avec retard).\n\n## Le cycle de vie\n\n```mermaid\nstateDiagram-v2\n  accTitle: Cycle de vie d'un modèle\n  accDescr: Un modèle passe de la conception à la validation, puis à la production sous surveillance. Une dérive conduit à une révision ou à un retrait.\n  [*] --> Conception\n  Conception --> Validation\n  Validation --> Conception : réserves bloquantes\n  Validation --> Production : approbation\n  Production --> Surveillance\n  Surveillance --> Production : indicateurs conformes\n  Surveillance --> Revision : dérive ou incident\n  Revision --> Validation\n  Surveillance --> Retrait : fin d'usage\n  Retrait --> [*]\n```\n*Figure 1 : un modèle approuvé reste sous surveillance ; une dérive renvoie vers une nouvelle validation.*\n\n## Documenter pour qu'un tiers comprenne\n\nUne documentation exploitable comprend : finalité, périmètre et exclusions, données, méthode, résultats des tests, limites connues, **réserves de la validation et plan de suites**, procédure de surveillance, version et historique des changements. Un auditeur doit pouvoir reconstituer pourquoi le modèle a été approuvé à une date donnée.\n\n## Question de réflexion\n\nPour un modèle de détection d'opérations suspectes, quels seuils d'alerte de dérive fixeriez-vous, et qui décide de suspendre le modèle ?"
+        }
+      ]
+    },
+    {
+      "title": "Explicabilité et équité",
+      "lessons": [
+        {
+          "title": "Quelle explicabilité pour quel usage ?",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Distinguer transparence, explicabilité et interprétabilité.\n- Définir des exigences proportionnées à l'usage et au destinataire.\n\n*Contenu pédagogique : il ne constitue ni un avis juridique, ni un conseil en investissement. Vérifiez l'état du droit et les exigences de votre régulateur à la date de lecture.*\n\n## Trois mots à ne pas confondre\n\n- **Transparence** : informer qu'un système automatisé est utilisé et ce qu'il fait.\n- **Interprétabilité** : comprendre directement le fonctionnement du modèle (une règle simple, un arbre court).\n- **Explicabilité** : produire une explication, parfois a posteriori, d'une décision ou du comportement d'un modèle complexe.\n\n## L'explication dépend de qui demande\n\n- **Le client** : une explication claire des principaux facteurs de la décision et de ses recours, sans jargon.\n- **Le conseiller ou l'analyste** : de quoi comprendre et contester une recommandation du modèle.\n- **Le validateur et l'auditeur** : le fonctionnement global, les tests, les limites.\n- **Le régulateur** : en substance, la capacité à démontrer que le modèle est maîtrisé et que les décisions sont justifiables. Vérifiez ce que votre autorité attend pour votre cas d'usage.\n\n## Proportionner l'exigence\n\n```mermaid\nflowchart TD\n  accTitle: Exigence d'explicabilité selon l'usage\n  accDescr: Selon que la décision est automatique ou assistée, et selon son impact sur la personne, l'exigence d'explicabilité va d'une documentation générale à une explication individuelle contestable.\n  A[\"Cas d'usage\"] --> B{\"Décision sur une personne ?\"}\n  B -->|\"Non\"| C[\"Documentation globale et tests\"]\n  B -->|\"Oui\"| D{\"Décision automatique ?\"}\n  D -->|\"Non, humain décide\"| E[\"Explication pour l'agent et trace de la décision\"]\n  D -->|\"Oui\"| F[\"Explication individuelle, recours humain, droit de contester\"]\n```\n*Figure 1 : plus la décision touche une personne et plus elle est automatique, plus l'exigence monte.*\n\nCe schéma est un outil de réflexion, pas une qualification juridique. Les règles de protection des données encadrent en particulier les décisions entièrement automatisées ayant des effets significatifs sur les personnes : en substance, informations, intervention humaine et possibilité de contester. Voir le chapitre 4.\n\n## Le compromis performance et interprétabilité\n\nUn modèle plus simple est parfois un peu moins performant mais bien plus défendable. Posez la question au moment du choix, pas après : « le gain de performance justifie-t-il la perte d'explicabilité pour cet usage ? » La réponse peut différer entre un tri de documents et un refus de crédit.\n\n## À faire\n\nPour trois cas fictifs (tri de courriels, scoring de crédit, résumé de dossier), indiquez le destinataire de l'explication et l'exigence minimale que vous retiendriez."
+        },
+        {
+          "title": "Méthodes d'explication et équité, en termes simples",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Comprendre, sans mathématiques, les grandes familles de méthodes d'explication.\n- Identifier les sources de biais et des pistes de mesure de l'équité.\n\n## Explication globale et locale\n\n- **Globale** : quelles variables comptent le plus en moyenne ? Utile au validateur.\n- **Locale** : pourquoi cette décision pour ce dossier ? Utile au client et à l'agent.\n\n## Méthodes courantes, en une phrase chacune\n\n- **Modèle intrinsèquement simple** : règles, scorecard, arbre peu profond ; on lit directement la logique.\n- **Importance des variables** : classe les variables selon leur effet sur les résultats.\n- **Contribution locale** : attribue à chaque variable une part du résultat pour un dossier donné.\n- **Explication contrefactuelle** : « si votre revenu déclaré avait été supérieur à tel niveau, la décision aurait été différente ». Parlante pour un client, mais elle doit rester réaliste et exacte.\n- **Modèle de substitution** : un modèle simple qui imite un modèle complexe pour en donner une vue approchée.\n\n## Limites à connaître\n\nUne explication est une **approximation**. Elle peut être instable (changer pour deux dossiers presque identiques), séduisante mais fausse, ou ignorer des interactions entre variables. Validez les explications comme vous validez le modèle, et ne les présentez pas comme des preuves de causalité.\n\n## D'où vient le biais ?\n\n- **Données historiques** qui reflètent des pratiques passées inégales.\n- **Variables proxy** : une variable apparemment neutre (code postal, type d'emploi) qui reproduit une caractéristique que l'on ne doit pas utiliser.\n- **Échantillon non représentatif** : certains groupes sont peu présents dans les données.\n- **Objectif mal choisi** : optimiser un indicateur qui n'est pas celui qui compte.\n\n## Mesurer l'équité\n\nIl n'existe pas une seule définition de l'équité, et certaines sont incompatibles entre elles. Des pistes : comparer les taux d'acceptation, les taux d'erreur (faux refus, fausses alertes) entre groupes pertinents, et rechercher des proxys. Les groupes à examiner et les caractéristiques utilisables dépendent du cadre juridique ; faites-le valider par la conformité et le juridique. Le module M10 pose les principes généraux : ici, on les intègre au dossier de validation.\n\n```text\nQuestion de contrôle : pour ce modèle, avons-nous comparé les taux de faux refus\net de fausses alertes entre les groupes pertinents, et documenté l'écart accepté\navec sa justification ?\n```\n\n## Point d'attention\n\nNe pas collecter de données sensibles pour « tester l'équité » sans base légale ni cadre : la mesure elle-même est un traitement de données. Discutez-en avec le délégué à la protection des données."
+        },
+        {
+          "title": "Communiquer aux clients et aux contrôleurs",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Rédiger une explication claire pour un client.\n- Préparer un dossier de preuve pour un contrôleur ou un auditeur.\n\n## Parler au client\n\nUne bonne explication client est **courte, exacte, actionnable** et ne promet rien que le modèle ne garantit pas.\n\n- Indiquez que la décision s'appuie sur un traitement automatisé, le cas échéant.\n- Citez les **principaux facteurs** en langage courant.\n- Indiquez comment **fournir des informations complémentaires** et **demander un réexamen humain**.\n- Évitez le jargon (« score », « seuil », « variable ») et les formulations qui feraient croire à un jugement personnel.\n\nExemple fictif de formulation : « Votre demande n'a pas pu être acceptée en l'état. Les éléments qui ont pesé le plus sont la stabilité de vos revenus déclarés et le niveau de vos engagements en cours. Vous pouvez nous transmettre des informations complémentaires et demander l'examen de votre dossier par un conseiller. »\n\n## Le parcours d'une contestation\n\n```mermaid\nsequenceDiagram\n  accTitle: Contestation d'une décision assistée par un modèle\n  accDescr: Le client reçoit une décision, la conteste, un agent habilité réexamine le dossier avec l'explication du modèle, puis la réponse et la trace sont enregistrées.\n  participant C as Client\n  participant A as Agent habilité\n  participant M as Modèle\n  participant J as Journal de traçabilité\n  C->>A: Contestation de la décision\n  A->>M: Demande d'explication du dossier\n  M-->>A: Facteurs principaux\n  A->>A: Réexamen humain avec pièces nouvelles\n  A->>J: Enregistre décision et justification\n  A-->>C: Réponse motivée\n```\n*Figure 1 : la contestation passe par un humain habilité, qui dispose de l'explication et laisse une trace.*\n\n## Parler au contrôleur ou à l'auditeur\n\nPréparez un **dossier de preuve** qui répond à cinq questions : que fait le modèle, pourquoi est-il approuvé, comment est-il surveillé, qui est responsable, que s'est-il passé quand il a dérapé. Pièces typiques : inventaire, fiche de validation, résultats des tests, rapports de surveillance, procès-verbaux des comités, registre des incidents, journal de décisions.\n\nSoyez honnête sur les **limites** : un dossier qui présente les réserves de validation et les plans d'action est plus crédible qu'un dossier sans défaut.\n\n## Les erreurs fréquentes\n\n- Une explication produite par un outil, jamais relue ni testée.\n- Un message client qui laisse entendre qu'aucun humain ne peut intervenir.\n- Des preuves dispersées dans des boîtes de messagerie.\n\n## Exercice court\n\nRéécrivez en trois phrases une explication de refus rédigée de façon technique (« score inférieur au seuil de 0,62 ») pour qu'un client la comprenne et sache quoi faire ensuite."
+        }
+      ]
+    },
+    {
+      "title": "Fraude, conformité et supervision humaine",
+      "lessons": [
+        {
+          "title": "Détection assistée par l'IA et faux positifs",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Décrire les usages de l'IA en détection de fraude et en conformité.\n- Raisonner sur l'arbitrage entre faux positifs et faux négatifs.\n\n*Contenu pédagogique : il ne constitue ni un avis juridique, ni un conseil en investissement. Vérifiez l'état du droit et les exigences de votre régulateur à la date de lecture.*\n\n## Où l'IA intervient\n\n- **Fraude aux paiements et à l'assurance** : repérer des opérations ou des déclarations atypiques.\n- **Lutte contre le blanchiment et le financement du terrorisme** : prioriser des alertes de surveillance des opérations, aider à l'analyse des dossiers, détecter des réseaux de comptes liés. En substance, les obligations de vigilance et de déclaration restent celles de l'établissement, que l'outil soit automatisé ou non ; consultez vos textes et autorités.\n- **Surveillance des communications et de la conformité** : repérer des comportements à examiner.\n- **Aide à l'analyste** : résumer un dossier, rapprocher des sources, rédiger un projet de compte rendu.\n\n## Le dilemme des faux positifs\n\nUn **faux positif** est une alerte sur une opération légitime : il coûte du temps d'analyse, dégrade l'expérience du client, et peut conduire à bloquer à tort. Un **faux négatif** est un cas manqué : il peut coûter une perte, un manquement réglementaire, un risque d'image. Baisser le seuil réduit les faux négatifs mais gonfle la file d'alertes ; le relever fait l'inverse. Le bon réglage est une **décision de gestion du risque**, documentée et revue, pas un réglage technique laissé à l'équipe de données.\n\n## Un exemple fictif, chiffré de façon illustrative\n\nLa Banque Aubrac reçoit une file d'alertes. Si 100 alertes sont générées et que l'analyse en confirme 5, le taux de précision est de 5 %. L'équipe peut chercher à le faire monter, mais elle doit vérifier que les cas confirmés restent détectés : améliorer la précision au prix de cas manqués serait un mauvais arbitrage. Ces chiffres sont inventés pour l'exemple.\n\n## Questions à poser avant déploiement\n\n- Quelle est la capacité réelle d'analyse humaine ? Une file que personne ne traite protège moins qu'un seuil plus sélectif.\n- Que fait-on d'une alerte non traitée dans les délais ?\n- Comment mesure-t-on les faux négatifs, qu'on ne voit pas par construction ? (Revues par échantillonnage, scénarios de test, retours externes.)\n- Les modèles de fraude sont attaqués par des adversaires qui adaptent leur comportement : prévoyez une révision régulière.\n\n## Point d'attention\n\nUne alerte n'est pas une preuve. Aucune décision défavorable à une personne ne doit reposer sur le seul score, sans examen adapté et sans respect de la procédure interne."
+        },
+        {
+          "title": "Supervision humaine et circuit de traitement des alertes",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Concevoir une supervision humaine réelle, pas décorative.\n- Dessiner un circuit d'alerte avec escalade et boucle d'apprentissage.\n\n## La supervision humaine n'est pas un tampon\n\nMettre un humain « dans la boucle » ne suffit pas s'il valide à la chaîne sans temps, sans information ou sans pouvoir de s'écarter du modèle. Pour qu'elle ait un sens :\n\n- l'agent est **formé** et connaît les limites du modèle ;\n- il dispose des **éléments utiles** (explication, pièces, historique) ;\n- il a le **temps et l'autorité** de s'écarter de la recommandation ;\n- ses écarts sont **mesurés** : un taux d'accord de 100 % avec le modèle est un signal d'alerte, non une réussite ;\n- il existe un chemin d'**escalade** vers un niveau supérieur.\n\n## Circuit type\n\n```mermaid\nflowchart TD\n  accTitle: Circuit de traitement d'une alerte assistée par IA\n  accDescr: Une alerte est priorisée par le modèle, analysée par un agent, classée, escaladée si besoin, puis son issue alimente le suivi du modèle.\n  A[\"Alerte générée par le modèle\"] --> P[\"Priorisation par niveau de risque\"]\n  P --> H[\"Analyse par un agent habilité\"]\n  H --> Q{\"Doute ou risque élevé ?\"}\n  Q -->|\"Oui\"| E[\"Escalade vers le responsable\"]\n  Q -->|\"Non\"| C[\"Classement motivé\"]\n  E --> D[\"Décision et traçabilité\"]\n  C --> D\n  D --> F[\"Retour d'issue vers le suivi du modèle\"]\n  F -.-> A\n```\n*Figure 1 : l'issue de chaque alerte est conservée et sert à mesurer la performance du modèle.*\n\n## Indicateurs de la supervision\n\n- Taux d'alertes traitées dans les délais.\n- Taux de confirmation par niveau de priorité.\n- Taux d'écart entre agent et modèle, avec revue d'un échantillon.\n- Délai moyen de traitement et charge par agent.\n- Nombre d'escalades et de modifications de seuil, avec leur justification.\n\n## Risque de biais d'automatisation\n\nOn a tendance à faire confiance à une recommandation chiffrée. Contre-mesures : échantillons de cas où l'agent décide **sans** voir le score, formations avec des cas où le modèle se trompe, et revues croisées.\n\n## Question de réflexion\n\nDans votre organisation (ou dans la Banque Aubrac fictive), quel pourcentage d'alertes un agent peut-il réellement analyser par jour avec le soin attendu ? Que se passe-t-il au-delà ?"
+        },
+        {
+          "title": "Traçabilité, journalisation et IA générative en conformité",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Définir ce qu'il faut tracer pour reconstituer une décision.\n- Encadrer l'usage de l'IA générative dans les tâches de conformité.\n\n## Que tracer ?\n\nPour qu'une décision soit reconstituable des mois plus tard :\n\n- **version du modèle** et des paramètres au moment de la décision ;\n- **données d'entrée** utilisées (ou une référence exacte à celles-ci) ;\n- **sortie du modèle** (score, explication, texte généré) ;\n- **action humaine** : qui, quand, quelle décision, quelle justification, quel écart avec la recommandation ;\n- **modifications** de seuil, de règle ou de version, avec leur approbation.\n\nLa conservation doit rester compatible avec les règles de protection des données : durées justifiées, accès restreints, pas de copie dans des outils non maîtrisés. Vérifiez les durées exigées par vos textes sectoriels.\n\n## IA générative : usages possibles\n\n- Résumer un dossier long ou une réglementation interne pour un premier tri.\n- Rédiger un **projet** de compte rendu d'analyse que l'agent relit et signe.\n- Aider à rechercher dans une base documentaire validée (avec citations des sources internes).\n\n## Garde-fous\n\n- **Pas de données clients ou confidentielles dans un outil grand public** : uniquement des outils approuvés, avec des conditions contractuelles examinées par la conformité et la sécurité.\n- **Sorties vérifiées** : un texte généré peut citer une règle inexistante ou déformer un fait. Toute affirmation réglementaire est vérifiée à la source officielle.\n- **Responsabilité humaine** : l'agent signe, pas l'outil.\n- **Journalisation** des requêtes et des sorties utilisées dans un dossier.\n- **Test préalable** sur des cas fictifs, avec critères de réussite.\n\n## Consigne type pour un résumé de dossier fictif\n\n```text\nRésume uniquement le texte fourni ci-dessous en cinq points. Cite pour chaque\npoint la phrase source. Si une information n'est pas présente, écris « non trouvé ».\nN'ajoute aucune règle, aucune date et aucun montant qui ne figurent pas dans le texte.\n```\n\n## À faire\n\nListez trois tâches de conformité où l'IA générative aiderait, et pour chacune le contrôle humain qui rend l'usage acceptable. Si vous ne trouvez pas de contrôle, la tâche n'est pas prête."
+        }
+      ]
+    },
+    {
+      "title": "Cadre réglementaire général : qualifier un cas d'usage",
+      "lessons": [
+        {
+          "title": "Une méthode en cinq questions pour qualifier un cas d'usage",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Appliquer une démarche reproductible pour qualifier un cas d'usage IA.\n- Savoir quand et qui solliciter.\n\n*Contenu pédagogique : il ne constitue ni un avis juridique, ni un conseil en investissement. Vérifiez l'état du droit et les exigences de votre régulateur à la date de lecture.*\n\n## Pourquoi une méthode plutôt qu'une liste de textes\n\nLes textes évoluent, les calendriers d'application aussi, et leur interprétation relève des juristes et des autorités. Ce module ne cite donc ni article, ni date, ni seuil. Il vous donne une **méthode** pour réunir les faits dont les juristes ont besoin, et qui reste valable quand les textes changent.\n\n## Le cadre, en substance\n\n- **Règlement européen sur l'IA (AI Act)** : approche par les risques. En substance, certaines pratiques sont interdites, des systèmes dits « à haut risque » sont soumis à des exigences renforcées, certains systèmes ont des obligations de transparence, et le reste est peu encadré par ce texte. En termes généraux, les systèmes servant à évaluer la solvabilité ou à établir une note de crédit de personnes physiques figurent parmi les usages traités comme à haut risque, tout comme certains usages liés à l'assurance, selon la définition précise des textes : à faire confirmer par vos juristes. Les obligations dépendent aussi de votre rôle : fournisseur, déployeur, importateur, distributeur.\n- **Protection des données personnelles** : base légale, finalité, minimisation, durées, droits des personnes, analyse d'impact quand le risque est élevé, encadrement des décisions automatisées.\n- **Exigences sectorielles** : gestion du risque de modèle, gouvernance interne, externalisation, résilience opérationnelle, lutte contre le blanchiment, protection de la clientèle.\n\n## La démarche en cinq questions\n\n```mermaid\nflowchart TD\n  accTitle: Qualification d'un cas d'usage en cinq questions\n  accDescr: On décrit le cas d'usage, identifie le rôle de l'organisation, évalue l'impact sur les personnes, recense les données, puis liste les cadres applicables avant de décider avec les juristes.\n  Q1[\"1. Que fait le système et qui décide ?\"] --> Q2[\"2. Quel est notre rôle (développeur, déployeur, utilisateur) ?\"]\n  Q2 --> Q3[\"3. Quel impact sur des personnes ou des marchés ?\"]\n  Q3 --> Q4[\"4. Quelles données, dont personnelles ?\"]\n  Q4 --> Q5[\"5. Quels cadres sectoriels touchés ?\"]\n  Q5 --> R[\"Fiche de qualification validée par conformité et juridique\"]\n```\n*Figure 1 : la fiche de qualification réunit les faits ; la conclusion juridique revient aux juristes.*\n\n## Ce que la fiche contient\n\nDescription du cas d'usage, acteurs et rôles, population concernée, nature de la décision, niveau d'automatisation, données, fournisseurs, hypothèses de risque, cadres potentiellement applicables avec **un point d'interrogation quand vous n'êtes pas sûr**, personnes consultées, date et version.\n\n## À faire\n\nQualifiez le cas fictif « Banque Aubrac utilise un modèle d'un éditeur pour proposer une limite de découvert » en répondant aux cinq questions. Marquez les points à confirmer par un juriste."
+        },
+        {
+          "title": "Protection des données et IA générative",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Appliquer les principes de protection des données à un cas d'usage IA.\n- Cadrer l'usage d'outils génératifs avec des données financières.\n\n## Principes, en substance\n\n- **Finalité** : le traitement a un but précis et légitime, annoncé.\n- **Base légale** : une justification juridique du traitement, à identifier avec le DPO.\n- **Minimisation** : on n'utilise que les données nécessaires ; pas de « au cas où ».\n- **Exactitude et durées** : données à jour, conservées pas plus que nécessaire.\n- **Sécurité** : accès, chiffrement, séparation des environnements.\n- **Droits des personnes** : information, accès, rectification, opposition selon les cas, et garanties sur les décisions entièrement automatisées ayant des effets significatifs.\n- **Analyse d'impact** : en substance, requise lorsque le traitement présente un risque élevé pour les personnes ; votre DPO et votre autorité de protection des données précisent quand.\n\n## Les questions propres à l'IA\n\n- **Entraînement** : les données clients peuvent-elles servir à entraîner ou ajuster un modèle ? Sous quelle base et avec quelle information ?\n- **Prestataire** : traite-t-il les données pour son propre compte (amélioration de ses modèles) ou uniquement pour le nôtre ? Où sont-elles hébergées et conservées ?\n- **Transferts hors de l'Union** : à examiner avec le juridique selon le prestataire.\n- **Mémorisation et fuite** : un modèle peut restituer des informations vues à l'entraînement ; évitez d'y placer des données confidentielles sans garanties.\n- **Secret professionnel et confidentialité** : des obligations propres au secteur s'ajoutent aux règles générales.\n\n## Cadre d'usage d'un outil génératif\n\n1. **Classer les données** : publiques, internes, confidentielles, personnelles, sensibles.\n2. **Associer à chaque classe** les outils autorisés (une liste courte).\n3. **Interdire par défaut** les données personnelles et confidentielles dans les outils non approuvés.\n4. **Anonymiser ou pseudonymiser** quand c'est possible, en sachant que le recoupement peut ré-identifier.\n5. **Former et contrôler** : charte d'usage, sensibilisation, détection des usages non autorisés.\n\n## Question de réflexion\n\nUne équipe veut coller des relevés de comptes clients dans un assistant en ligne pour les résumer. Quelles questions lui posez-vous, dans quel ordre, avant de répondre oui ou non ?"
+        },
+        {
+          "title": "Exigences sectorielles et veille réglementaire",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Cartographier les familles d'exigences sectorielles touchées par l'IA.\n- Organiser une veille et un calendrier de mise en conformité.\n\n## Les familles d'exigences\n\nEn substance, l'IA touche à plusieurs corpus existants, indépendamment du règlement sur l'IA :\n\n- **Gestion du risque de modèle et gouvernance** : inventaire, validation, responsabilités de la direction.\n- **Externalisation et sous-traitance critique** : contrôle des prestataires, droits d'audit, plan de sortie (chapitre 5).\n- **Résilience opérationnelle numérique** : gestion des risques liés aux technologies de l'information et de la communication, tests, gestion et notification des incidents, risque lié aux prestataires tiers.\n- **Lutte contre le blanchiment et le financement du terrorisme** : vigilance, surveillance, déclaration.\n- **Protection de la clientèle et traitement équitable** : information, conseil adapté, absence de pratiques trompeuses.\n- **Protection des données** : voir la leçon précédente.\n\nPour chacune, le texte exact, son champ d'application à votre entité et son calendrier sont à confirmer auprès de votre direction juridique et de votre superviseur.\n\n## Une veille qui fonctionne\n\n- **Sources officielles** : publications du législateur européen et national, de votre autorité de supervision, de l'autorité de protection des données, des autorités européennes de supervision. Privilégiez le texte officiel aux commentaires.\n- **Responsable nommé** et rythme régulier (par exemple mensuel).\n- **Registre des évolutions** : ce qui a changé, ce que cela implique, qui agit, avant quand.\n- **Date de dernière vérification** sur chaque fiche de qualification.\n\n## Feuille de route de mise en conformité (illustration)\n\n```mermaid\ntimeline\n  accTitle: Feuille de route de gouvernance de l'IA en quatre étapes\n  accDescr: Une organisation fictive progresse de l'inventaire à la validation, puis à la surveillance et à la revue périodique de sa gouvernance.\n  title Feuille de route fictive\n  Étape 1 : Inventaire des modèles : Classement par criticité\n  Étape 2 : Qualification des cas d'usage : Fiches validées par le juridique\n  Étape 3 : Validation et surveillance : Indicateurs et seuils d'alerte\n  Étape 4 : Revue périodique : Mise à jour selon la veille\n```\n*Figure 1 : feuille de route illustrative ; l'ordre et le rythme se décident selon vos risques et vos échéances réglementaires.*\n\n## Attention au faux sentiment de sécurité\n\nUn fournisseur qui annonce que son produit est « conforme » ne vous décharge pas : en substance, votre organisation reste responsable de ses usages, de ses contrôles et de ses décisions. Demandez des preuves, pas des assurances.\n\n## À faire\n\nChoisissez deux familles d'exigences ci-dessus, nommez le service interne qui en répond chez vous, et la première question à lui poser sur un cas d'usage d'IA."
+        }
+      ]
+    },
+    {
+      "title": "Résilience et sous-traitance : dépendance aux fournisseurs d'IA",
+      "lessons": [
+        {
+          "title": "Dépendance et concentration : cartographier ses fournisseurs d'IA",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Identifier les formes de dépendance à un fournisseur d'IA.\n- Cartographier la chaîne de sous-traitance, y compris les sous-traitants du prestataire.\n\n*Contenu pédagogique : il ne constitue ni un avis juridique, ni un conseil en investissement. Vérifiez l'état du droit et les exigences de votre régulateur à la date de lecture.*\n\n## Les formes de dépendance\n\n- **Dépendance technique** : le processus s'arrête sans le service (API de modèle, outil en ligne).\n- **Dépendance aux données** : vos données ou configurations sont dans un format ou un environnement difficile à récupérer.\n- **Dépendance de savoir-faire** : seule une personne ou une équipe de l'extérieur comprend le paramétrage.\n- **Dépendance en chaîne** : votre fournisseur s'appuie lui-même sur un autre fournisseur de modèle ou d'hébergement ; une défaillance en amont vous atteint.\n- **Concentration** : plusieurs de vos cas d'usage reposent sur le même fournisseur, avec un risque systémique pour votre organisation.\n\n## Cartographier\n\n```mermaid\nflowchart LR\n  accTitle: Chaîne de dépendance d'un cas d'usage\n  accDescr: Un processus métier dépend d'une application, qui appelle un fournisseur d'IA, lui-même dépendant d'un fournisseur de modèle et d'un hébergeur. Un plan de repli existe pour chaque maillon.\n  P[\"Processus métier\"] --> A[\"Application interne\"]\n  A --> F[\"Fournisseur d'IA\"]\n  F --> M[\"Modèle tiers\"]\n  F --> H[\"Hébergeur cloud\"]\n  P -.-> R[\"Mode dégradé manuel\"]\n  A -.-> R\n  F -.-> S[\"Fournisseur de secours\"]\n```\n*Figure 1 : la dépendance se lit de bout en bout ; chaque maillon critique appelle un repli.*\n\n## Questions de cartographie\n\n- Quel processus s'arrête, et à quel rythme les conséquences apparaissent-elles ?\n- Combien de temps l'activité peut-elle fonctionner sans l'IA, et à quel niveau de service ?\n- Le fournisseur recourt-il à des sous-traitants, lesquels, et dans quels pays ?\n- Que se passe-t-il si le fournisseur modifie son modèle sans préavis ? (Un modèle « mis à jour » n'est plus le modèle validé.)\n\n## Lien avec le risque de modèle\n\nUn modèle de fournisseur reste soumis à votre dispositif : inventaire, classement par criticité, tests d'acceptation à chaque nouvelle version, surveillance sur vos propres données. Le fournisseur apporte des informations, pas une validation à votre place.\n\n## À faire\n\nCartographiez, pour un cas fictif de résumé de dossiers de crédit, les maillons de la chaîne, le temps d'interruption tolérable et le mode dégradé."
+        },
+        {
+          "title": "Évaluer un fournisseur d'IA : questions et clauses essentielles",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Mener une évaluation structurée d'un fournisseur d'IA.\n- Identifier les clauses à faire examiner par les juristes.\n\n## Axes d'évaluation\n\n- **Gouvernance et conformité** : le fournisseur peut-il décrire son dispositif de gestion des risques, ses rôles au regard des textes applicables, ses certifications éventuelles (à vérifier à la source) ?\n- **Documentation du modèle** : finalité, données d'entraînement (description générale), performances, limites connues, évaluations internes.\n- **Sécurité et confidentialité** : hébergement, accès, chiffrement, séparation des clients, usage de vos données (entraînement ou non), conservation et suppression.\n- **Résilience** : engagements de disponibilité, plan de continuité, gestion des incidents et délais de notification.\n- **Changements** : préavis de changement de version, possibilité de figer une version, journal des modifications.\n- **Sous-traitance** : liste et information sur les sous-traitants, flux de données.\n- **Audit** : possibilité d'audit ou d'obtention de rapports indépendants.\n- **Réversibilité** : récupération des données et des configurations, formats, assistance à la sortie.\n\n## Clauses à faire examiner\n\nEn substance, les exigences sectorielles sur l'externalisation conduisent à prévoir des clauses sur : description des services, localisation et traitement des données, droits d'accès et d'audit pour l'entité et ses superviseurs, notification des incidents, continuité, sous-traitance en chaîne, résiliation et assistance à la sortie. Le détail exact applicable à votre entité est à confirmer par vos juristes et votre superviseur.\n\n## Noter le fournisseur\n\nUtilisez une grille simple : pour chaque axe, un niveau (satisfaisant, à compléter, insuffisant) accompagné de la **preuve** obtenue (document, réponse écrite, rapport) et de la date. Un axe sans preuve est « à compléter », jamais « satisfaisant ».\n\n## Pièges\n\n- Se contenter d'une plaquette commerciale.\n- Oublier l'évaluation lors d'un renouvellement ou d'un changement majeur du produit.\n- Choisir sur la démonstration d'un cas facile.\n\n## Mise en situation\n\nLe fournisseur fictif « Lumen Analytics » affirme que son modèle est « conforme à toutes les réglementations ». Listez cinq questions écrites que vous lui adressez et les preuves que vous attendez."
+        },
+        {
+          "title": "Plan de sortie, tests de résilience et gestion des incidents",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Construire un plan de sortie réaliste.\n- Prévoir des tests et une gestion d'incident adaptés aux systèmes d'IA.\n\n## Le plan de sortie\n\nUn **plan de sortie** décrit comment cesser d'utiliser un fournisseur sans interrompre un service critique. Il comprend : les déclencheurs (défaillance, perte de conformité, hausse de risque, fin de contrat), les alternatives (autre fournisseur, solution interne, retour à une méthode manuelle ou à des règles simples), les étapes de migration, les données et configurations à récupérer, les rôles, un délai estimé et les coûts à prévoir. Un plan non testé reste une hypothèse.\n\n## Les tests\n\n- **Test de repli** : basculer en mode dégradé et vérifier que l'équipe sait travailler sans le modèle.\n- **Test de non-régression à chaque nouvelle version** du modèle du fournisseur, sur un jeu de cas fixes.\n- **Scénarios de crise** : indisponibilité longue, réponses aberrantes, fuite de données chez le fournisseur.\n- **Test de restauration** : les données et configurations récupérées sont-elles réellement exploitables ?\n\nLa fréquence et la profondeur dépendent de la criticité. En substance, les cadres de résilience opérationnelle attendent de l'entité qu'elle teste ses dispositifs et ses dépendances critiques ; vérifiez les exigences de votre régulateur.\n\n## Incidents propres à l'IA\n\n- Sorties erronées en masse, biais découvert après coup, dérive soudaine.\n- Fuite ou mauvais usage de données via un outil génératif.\n- Changement de modèle du fournisseur sans prévenir.\n- Attaque visant le modèle (manipulation d'entrées, par exemple).\n\n```mermaid\nsequenceDiagram\n  accTitle: Gestion d'un incident lié à un fournisseur d'IA\n  accDescr: Le suivi détecte une anomalie, le responsable du modèle déclenche le mode dégradé, informe la gestion de crise et le fournisseur, puis une analyse des causes alimente l'inventaire et la validation.\n  participant S as Surveillance\n  participant R as Responsable du modèle\n  participant G as Cellule de crise\n  participant F as Fournisseur\n  S->>R: Alerte sur anomalie\n  R->>G: Qualification et escalade\n  R->>R: Bascule en mode dégradé\n  G->>F: Demande d'information et de correction\n  F-->>G: Éléments sur la cause\n  G->>R: Décision de reprise ou de retrait\n  R->>S: Mise à jour du suivi et du registre\n```\n*Figure 1 : l'incident suit une chaîne claire ; les obligations de notification éventuelles à une autorité sont à vérifier avec la conformité.*\n\n## Après l'incident\n\nRédigez une analyse sans recherche de coupable : cause, détection, délai, impact, correctifs, et mise à jour de l'inventaire, de la validation et du plan de sortie. Conservez la trace dans un registre des incidents.\n\n## Question de réflexion\n\nSi votre fournisseur retirait demain la version du modèle que vous utilisez, en combien de temps votre activité serait-elle affectée, et qui déciderait de la marche à suivre ?"
+        }
+      ]
+    },
+    {
+      "title": "Ateliers no-code et low-code",
+      "lessons": [
+        {
+          "title": "Atelier 1 : inventaire des modèles et registre des risques sur trois cas fictifs",
+          "kind": "exercise",
+          "body_md": "## Objectif\n\nConstituer, sans code, un inventaire de modèles et un registre des risques pour trois cas d'usage fictifs. *Contenu pédagogique, sans valeur d'avis juridique ; données uniquement fictives.*\n\n**Durée estimée** : 60 à 90 minutes.\n\n## Plateformes\n\n- **Airtable** (no-code), offre gratuite ou version libre à la date de rédaction, à vérifier.\n- **Alternatives** : Notion (no-code), Google Sheets ou NocoDB (no-code, version libre), selon ce que votre organisation autorise pour des données fictives.\n\n## Les trois cas fictifs\n\n1. Banque Aubrac : modèle de scoring de crédit à la consommation fourni par un éditeur.\n2. Mutuelle Cévennes : outil de tri des déclarations de sinistre par priorité.\n3. Gestion Vallée : assistant génératif qui résume des comptes rendus de réunion internes.\n\n## Étapes\n\n1. Créez une base avec deux tables : **Modèles** et **Risques**.\n2. Dans **Modèles**, créez les champs de la leçon sur l'inventaire : identifiant, nom, finalité, décision soutenue, propriétaire métier, origine, données, population, criticité (liste à choix), validation, surveillance, statut.\n3. Saisissez les trois cas avec des valeurs plausibles et inventées. Marquez « à confirmer » ce que vous ne pouvez pas savoir.\n4. Dans **Risques**, créez un champ **Modèle lié** (lien vers la table Modèles), puis : description du risque, catégorie (modèle, données, équité, fraude, protection des données, sous-traitance, résilience), probabilité (1 à 3), impact (1 à 3), score (champ calculé ou à la main), mesure de maîtrise, responsable, échéance, statut.\n5. Ajoutez au moins **quatre risques par cas**, dont un lié à la dérive et un lié au fournisseur ou à la dépendance.\n6. Créez une **vue filtrée** « criticité haute » et une vue « risques sans responsable ».\n7. Facultatif : demandez à un assistant de suggérer des risques oubliés pour l'un des cas, puis retenez ou écartez chaque suggestion avec une justification.\n\n## Résultat attendu\n\nUne base avec trois modèles, douze risques ou plus, deux vues utiles, un export ou lien de partage.\n\n## Critères de réussite\n\n- Chaque modèle a un propriétaire, une criticité justifiée et un statut.\n- Chaque risque est relié à un modèle et a une mesure, un responsable et une échéance.\n- Les inconnues sont signalées comme telles et non inventées.\n- Les vues permettent de repérer immédiatement les trous.\n\n## Pièges\n\n- Des champs trop nombreux, jamais remplis : gardez l'essentiel.\n- Des scores sans échelle écrite : définissez ce que signifient 1, 2, 3.\n- Des données réelles : n'utilisez que des données inventées.\n\n## Pour aller plus loin\n\nAjoutez une vue calendrier des revues de validation à échéance et un formulaire d'ajout d'un nouveau cas d'usage destiné aux équipes métier."
+        },
+        {
+          "title": "Atelier 2 : fiche de validation de modèle et plan de surveillance",
+          "kind": "exercise",
+          "body_md": "## Objectif\n\nConcevoir une fiche de validation de modèle et un plan de surveillance pour l'un des trois cas fictifs de l'atelier 1. *Contenu pédagogique, sans valeur d'avis juridique ; données fictives.*\n\n**Durée estimée** : 60 à 90 minutes.\n\n## Plateformes\n\n- **Notion** ou **Google Docs et Google Sheets** (no-code), offre gratuite ou version libre à la date de rédaction, à vérifier.\n- **Alternative** : Airtable (no-code) avec un formulaire pour la fiche, ou Tally (no-code) pour le formulaire de validation.\n- Facultatif : **Looker Studio** (no-code) pour un tableau de bord de surveillance sur données fictives.\n\n## Étapes\n\n1. Choisissez un cas et reprenez sa ligne d'inventaire.\n2. Créez la **fiche de validation** avec les rubriques : finalité et périmètre, exclusions d'usage, données, méthode, tests de performance (indicateurs, seuils décidés avant les tests), robustesse, explicabilité, équité, limites, **réserves** (bloquante, majeure, mineure) avec plan d'action, avis (approuvé, approuvé sous conditions, refusé), validateur indépendant, date et version.\n3. Remplissez-la avec des résultats **fictifs** et clairement signalés comme tels (par exemple : « résultat fictif : 92 % de détection sur l'échantillon de test »).\n4. Créez dans un tableur le **plan de surveillance** : un indicateur par ligne (performance, taux d'alertes, faux positifs, dérive des entrées, plaintes ou contestations, disponibilité), source des données, fréquence, seuil d'attention, seuil d'alerte, responsable, action déclenchée.\n5. Ajoutez un onglet **Journal** où l'on note les dépassements, les décisions et les dates. Ajoutez une mise en forme conditionnelle qui colore une cellule au-dessus du seuil.\n6. Rédigez en dix lignes la règle de **déclenchement d'une revalidation** : dérive, changement de version, incident, évolution du périmètre.\n7. Faites relire la fiche par une autre personne ou un assistant, avec la consigne de chercher les points non vérifiables.\n\n## Résultat attendu\n\nUne fiche de validation complète, un tableau de surveillance avec seuils et alertes visuelles, une règle de revalidation.\n\n## Critères de réussite\n\n- Les seuils sont fixés avant les résultats.\n- Au moins un indicateur porte sur les faux positifs ou les faux négatifs, et un sur l'équité ou les contestations.\n- Les réserves ont un responsable et une échéance.\n- Toute valeur fictive est signalée.\n\n## Pièges\n\n- Un indicateur unique de performance globale.\n- Un validateur qui est aussi le développeur.\n- Des seuils d'alerte sans action associée.\n\n## Pour aller plus loin\n\nAjoutez un deuxième modèle et comparez les fiches ; ajoutez une automatisation (Make, Zapier ou n8n, no-code, offre gratuite ou version libre à vérifier) qui envoie un message de test à une adresse fictive quand un seuil est dépassé."
+        },
+        {
+          "title": "Atelier 3 : cadre de gouvernance d'un cas d'usage et évaluation d'un fournisseur d'IA",
+          "kind": "exercise",
+          "body_md": "## Objectif\n\nRédiger le cadre de gouvernance d'un cas d'usage IA fictif et évaluer un fournisseur fictif, en préparant le livrable du module. *Contenu pédagogique, sans valeur d'avis juridique ni conseil en investissement ; vérifiez le droit applicable à la date de lecture.*\n\n**Durée estimée** : 75 à 90 minutes.\n\n## Plateformes\n\n- **Notion** ou **Google Docs** avec **Google Sheets** (no-code), offre gratuite ou version libre à la date de rédaction, à vérifier.\n- **Alternative** : Airtable (no-code) pour la grille fournisseur ; **Miro** ou **FigJam** (no-code) pour le schéma des responsabilités.\n- Facultatif : **NotebookLM** (no-code) pour interroger vos notes, avec des documents fictifs uniquement.\n\n## Étapes\n\n1. Choisissez un cas fictif : par exemple, un assistant génératif qui aide les analystes de la Banque Aubrac à préparer des dossiers de crédit, fourni par le prestataire fictif « Lumen Analytics ».\n2. Rédigez la **fiche de qualification** en cinq questions (leçon du chapitre 4), en marquant « à confirmer par le juridique » ce qui l'exige.\n3. Dans un document, rédigez le **cadre de gouvernance** avec les sections : finalité et périmètre, rôles (propriétaire, validateur, DPO, conformité, risques, sécurité), classification de criticité, exigences d'explicabilité, supervision humaine, traçabilité, protection des données, surveillance et seuils, gestion des incidents, conditions d'arrêt, calendrier de revue.\n4. Dans un tableur ou Airtable, créez la **grille d'évaluation du fournisseur** : un axe par ligne (gouvernance, documentation, sécurité et données, résilience, changements, sous-traitance, audit, réversibilité), niveau, preuve demandée ou reçue, date, décision.\n5. Rédigez un **plan de sortie** en une page : déclencheurs, alternatives, étapes, délai estimé, test prévu.\n6. Dessinez, dans un outil de tableau blanc, un schéma de qui décide quoi et qui est alerté en cas d'incident.\n7. Relisez l'ensemble en vous posant : qu'est-ce qu'un contrôleur me demanderait que je n'ai pas ?\n\n## Résultat attendu\n\nUn dossier d'une dizaine de pages ou d'une base partagée : qualification, cadre de gouvernance, grille fournisseur, plan de sortie, schéma.\n\n## Critères de réussite\n\n- Chaque exigence du cadre a un responsable et un moyen de preuve.\n- La grille ne contient aucun axe « satisfaisant » sans preuve.\n- Le plan de sortie contient un déclencheur et un délai.\n- Aucune référence réglementaire n'est affirmée sans source à vérifier ; les doutes sont signalés.\n\n## Pièges\n\n- Recopier un texte réglementaire de mémoire : renvoyez à la source officielle.\n- Un cadre trop long pour être appliqué : privilégiez l'essentiel.\n- Des données réelles de votre organisation : restez sur le fictif.\n\n## Pour aller plus loin\n\nAppliquez le même cadre à un second cas à criticité différente et décrivez ce qui s'allège ou se renforce."
+        }
+      ]
+    }
+  ],
+  "quiz": {
+    "title": "Quiz du module",
+    "pass_percent": 70,
+    "max_attempts": null,
+    "questions": [
+      {
+        "kind": "single_choice",
+        "prompt": "Qu'est-ce que le risque de modèle ?",
+        "feedback": "Le risque de modèle concerne les décisions et pertes qu'un modèle défaillant peut causer. Les coûts ou la propriété du code sont d'autres sujets.",
+        "options": [
+          [
+            "Le risque de conséquences négatives causées par un modèle erroné, mal conçu, mal utilisé ou devenu inadapté",
+            true
+          ],
+          [
+            "Le risque qu'un fournisseur augmente ses prix",
+            false
+          ],
+          [
+            "Le risque qu'un modèle soit trop coûteux à entraîner",
+            false
+          ],
+          [
+            "Le risque de perdre le code source du modèle",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi la validation d'un modèle doit-elle être indépendante ?",
+        "feedback": "L'indépendance apporte un regard critique. Elle peut être interne, extérieure à l'équipe de développement, et proportionnée aux enjeux ; elle ne remplace pas la surveillance.",
+        "options": [
+          [
+            "Parce que les développeurs ne savent pas tester",
+            false
+          ],
+          [
+            "Parce que celui qui construit un modèle est mal placé pour en challenger seul les hypothèses",
+            true
+          ],
+          [
+            "Parce que la validation doit être confiée à un fournisseur extérieur dans tous les cas",
+            false
+          ],
+          [
+            "Parce qu'un modèle validé n'a plus besoin de surveillance",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels champs trouve-t-on utilement dans un inventaire de modèles ?",
+        "feedback": "L'inventaire sert à gouverner : responsabilité, criticité, données, validation. Les détails cosmétiques ou purement techniques n'aident pas à proportionner les contrôles.",
+        "options": [
+          [
+            "Données utilisées",
+            true
+          ],
+          [
+            "Date de dernière validation",
+            true
+          ],
+          [
+            "Couleur de l'interface",
+            false
+          ],
+          [
+            "Nombre de lignes de code",
+            false
+          ],
+          [
+            "Propriétaire métier",
+            true
+          ],
+          [
+            "Niveau de criticité",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quels deux critères permettent un premier classement de criticité ?",
+        "feedback": "L'impact potentiel et le degré d'autonomie guident l'intensité des contrôles. Les autres critères n'expriment pas le risque de décision.",
+        "options": [
+          [
+            "Le nombre d'utilisateurs et la langue du modèle",
+            false
+          ],
+          [
+            "Le prix de la licence et la date d'achat",
+            false
+          ],
+          [
+            "La taille du fichier du modèle et la vitesse de calcul",
+            false
+          ],
+          [
+            "L'impact d'une erreur et l'autonomie du modèle dans la décision",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Un modèle de détection de fraude annonce 95 % de bonnes réponses alors que la fraude est très rare. Que faut-il en conclure ?",
+        "feedback": "Quand l'événement est rare, l'exactitude globale masque la détection. Les indicateurs doivent refléter les coûts des deux types d'erreur.",
+        "options": [
+          [
+            "Rien de concluant : il faut examiner faux positifs et faux négatifs, car un modèle qui ne détecte rien peut paraître exact",
+            true
+          ],
+          [
+            "Que le modèle est excellent et peut être déployé sans autre test",
+            false
+          ],
+          [
+            "Que la fraude a disparu",
+            false
+          ],
+          [
+            "Que les faux négatifs ne comptent pas",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels signaux peuvent révéler une dérive d'un modèle ?",
+        "feedback": "La dérive se voit dans les entrées, les sorties et la performance observée. L'âge seul n'est pas un signal, même s'il peut déclencher une revue.",
+        "options": [
+          [
+            "Un déplacement de la distribution des variables d'entrée",
+            true
+          ],
+          [
+            "Une variation inhabituelle du taux d'alertes",
+            true
+          ],
+          [
+            "Une baisse de performance mesurée quand les résultats réels sont connus",
+            true
+          ],
+          [
+            "Un changement de couleur du tableau de bord",
+            false
+          ],
+          [
+            "Le fait que le modèle ait plus d'un an",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quand fixer les seuils de performance acceptables d'un modèle ?",
+        "feedback": "Fixer les seuils après coup revient à choisir le critère qui arrange. Ils se décident avant, avec la gouvernance.",
+        "options": [
+          [
+            "Après les tests, selon les résultats obtenus",
+            false
+          ],
+          [
+            "Uniquement lors de la première panne",
+            false
+          ],
+          [
+            "Avant les tests, pour éviter d'ajuster le critère aux résultats",
+            true
+          ],
+          [
+            "Jamais : les seuils sont laissés à la discrétion du développeur",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que doit permettre une documentation de modèle bien tenue ?",
+        "feedback": "La documentation soutient la reconstitution des décisions et la transparence sur les limites ; elle ne remplace ni la surveillance ni la revalidation.",
+        "options": [
+          [
+            "De cacher les limites pour rassurer",
+            false
+          ],
+          [
+            "De remplacer la surveillance continue",
+            false
+          ],
+          [
+            "D'éviter toute revalidation",
+            false
+          ],
+          [
+            "Qu'un tiers comprenne pourquoi le modèle a été approuvé à une date donnée, avec ses limites et ses réserves",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle différence y a-t-il entre transparence et explicabilité ?",
+        "feedback": "Les deux notions sont complémentaires. L'interprétabilité (comprendre directement le modèle) est une troisième notion proche.",
+        "options": [
+          [
+            "La transparence informe qu'un système est utilisé et ce qu'il fait ; l'explicabilité produit une explication d'une décision ou du comportement du modèle",
+            true
+          ],
+          [
+            "Ce sont deux synonymes exacts",
+            false
+          ],
+          [
+            "La transparence concerne seulement le code source ouvert",
+            false
+          ],
+          [
+            "L'explicabilité est réservée aux modèles simples",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "De quoi dépend l'exigence d'explicabilité d'un cas d'usage ?",
+        "feedback": "L'exigence se proportionne à l'usage : impact, autonomie, destinataire. La popularité n'est pas un critère ; le nombre de variables ne suffit pas.",
+        "options": [
+          [
+            "Du nombre de variables du modèle uniquement",
+            false
+          ],
+          [
+            "De l'impact sur les personnes",
+            true
+          ],
+          [
+            "Du niveau d'automatisation de la décision",
+            true
+          ],
+          [
+            "Du destinataire de l'explication",
+            true
+          ],
+          [
+            "De la popularité de l'outil",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Qu'est-ce qu'une explication contrefactuelle ?",
+        "feedback": "Les explications contrefactuelles parlent bien aux clients, à condition de rester réalistes et exactes.",
+        "options": [
+          [
+            "Une explication fausse volontairement",
+            false
+          ],
+          [
+            "Un calcul du coût du modèle",
+            false
+          ],
+          [
+            "Une explication du type « si tel élément avait été différent, la décision aurait changé »",
+            true
+          ],
+          [
+            "Un test de sécurité du réseau",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel est le principal risque d'une explication produite a posteriori pour un modèle complexe ?",
+        "feedback": "Une explication est une approximation à valider, pas une preuve de causalité.",
+        "options": [
+          [
+            "Qu'elle prouve toujours la causalité",
+            false
+          ],
+          [
+            "Qu'elle rende le modèle plus précis automatiquement",
+            false
+          ],
+          [
+            "Qu'elle remplace la validation du modèle",
+            false
+          ],
+          [
+            "Qu'elle soit une approximation instable ou séduisante mais inexacte, si elle n'est pas validée",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles sources peuvent produire un biais dans un modèle de décision ?",
+        "feedback": "Les biais viennent des données, des proxys, de l'échantillon et de l'objectif choisi. Documenter réduit le risque de ne pas le voir.",
+        "options": [
+          [
+            "Un échantillon non représentatif de certains groupes",
+            true
+          ],
+          [
+            "L'utilisation d'un tableur",
+            false
+          ],
+          [
+            "Le fait que la décision soit documentée",
+            false
+          ],
+          [
+            "Des données historiques reflétant des pratiques inégales",
+            true
+          ],
+          [
+            "Des variables proxy",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle formulation de réponse à un client dont la demande est refusée est la plus appropriée ?",
+        "feedback": "Une bonne explication client est courte, exacte, actionnable, et ouvre un recours humain.",
+        "options": [
+          [
+            "« Le système a décidé, aucune suite n'est possible »",
+            false
+          ],
+          [
+            "Une explication courte des facteurs principaux, avec la possibilité de fournir des éléments et de demander un réexamen humain",
+            true
+          ],
+          [
+            "Un score chiffré sans explication",
+            false
+          ],
+          [
+            "Un long texte technique sur le modèle",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi un taux d'accord de 100 % entre l'agent et le modèle est-il un signal d'alerte ?",
+        "feedback": "Une supervision humaine réelle comporte des écarts mesurés. Un accord total peut masquer une absence de contrôle effectif.",
+        "options": [
+          [
+            "Il prouve que le modèle est parfait",
+            false
+          ],
+          [
+            "Il montre que l'agent est très compétent",
+            false
+          ],
+          [
+            "Il peut révéler une validation à la chaîne et un biais d'automatisation plutôt qu'une supervision réelle",
+            true
+          ],
+          [
+            "Il est obligatoire par construction",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Dans la gestion des alertes de fraude, que signifie un faux positif ?",
+        "feedback": "Un faux positif est une fausse alerte, coûteuse en temps et en expérience client. Le cas manqué est un faux négatif.",
+        "options": [
+          [
+            "Un cas de fraude non détecté",
+            false
+          ],
+          [
+            "Une alerte confirmée comme fraude",
+            false
+          ],
+          [
+            "Une panne du système",
+            false
+          ],
+          [
+            "Une alerte déclenchée sur une opération légitime",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Que faut-il tracer pour reconstituer une décision assistée par un modèle ?",
+        "feedback": "La traçabilité couvre modèle, entrées, sortie, action humaine et changements, dans le respect des règles de protection des données.",
+        "options": [
+          [
+            "Les préférences de couleur de l'agent",
+            false
+          ],
+          [
+            "Le fond d'écran du poste",
+            false
+          ],
+          [
+            "La version du modèle",
+            true
+          ],
+          [
+            "Les données d'entrée ou une référence exacte",
+            true
+          ],
+          [
+            "L'action humaine et sa justification",
+            true
+          ],
+          [
+            "Les modifications de seuil et leur approbation",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel est le bon usage d'un assistant génératif dans une tâche de conformité ?",
+        "feedback": "L'outil aide, l'humain vérifie et assume. Les données confidentielles ne vont pas dans des outils non approuvés.",
+        "options": [
+          [
+            "Coller des relevés clients dans un outil grand public pour gagner du temps",
+            false
+          ],
+          [
+            "Produire un projet que l'agent relit, vérifie à la source et signe, avec un outil approuvé",
+            true
+          ],
+          [
+            "Faire confiance aux références réglementaires qu'il cite",
+            false
+          ],
+          [
+            "Lui laisser signer la décision finale",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi ce module ne cite-t-il pas d'article ni de date d'application ?",
+        "feedback": "Une méthode de qualification reste valable quand les textes changent. Les détails se vérifient auprès des juristes et autorités.",
+        "options": [
+          [
+            "Parce que la réglementation ne s'applique pas à l'IA",
+            false
+          ],
+          [
+            "Parce que ces informations sont secrètes",
+            false
+          ],
+          [
+            "Parce que les textes et calendriers évoluent : il enseigne une méthode et renvoie aux sources officielles à vérifier à la date de lecture",
+            true
+          ],
+          [
+            "Parce que les dates n'ont aucune importance",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels éléments figurent dans une fiche de qualification d'un cas d'usage IA ?",
+        "feedback": "La fiche réunit les faits utiles aux juristes. La conclusion juridique leur revient.",
+        "options": [
+          [
+            "La nature de la décision et le niveau d'automatisation",
+            true
+          ],
+          [
+            "Les données utilisées dont personnelles",
+            true
+          ],
+          [
+            "Les points à confirmer par le juridique",
+            true
+          ],
+          [
+            "Le budget marketing",
+            false
+          ],
+          [
+            "Le nom de domaine du site public",
+            false
+          ],
+          [
+            "Le rôle de l'organisation (développeur, déployeur, utilisateur)",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Un fournisseur affirme que son produit est « conforme à toutes les réglementations ». Quelle est la bonne réaction ?",
+        "feedback": "Une affirmation commerciale n'est pas une preuve. En substance, l'organisation reste responsable de ses usages et de ses décisions.",
+        "options": [
+          [
+            "Demander des preuves et conserver la responsabilité de ses propres usages et contrôles",
+            true
+          ],
+          [
+            "Considérer que l'organisation est déchargée",
+            false
+          ],
+          [
+            "Supprimer toute surveillance",
+            false
+          ],
+          [
+            "Ignorer la déclaration",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel principe de protection des données s'applique particulièrement quand on veut coller des données clients dans un outil génératif ?",
+        "feedback": "La minimisation et la finalité restent applicables. Le choix d'outil et les conditions contractuelles se valident avec la conformité et le DPO.",
+        "options": [
+          [
+            "Aucun principe ne s'applique aux outils génératifs",
+            false
+          ],
+          [
+            "Minimisation et finalité, avec un outil et un traitement approuvés par la conformité et le DPO",
+            true
+          ],
+          [
+            "Le principe de la plus grande quantité de données",
+            false
+          ],
+          [
+            "La conservation indéfinie des requêtes",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles formes de dépendance à un fournisseur d'IA faut-il cartographier ?",
+        "feedback": "Ces quatre formes révèlent les risques d'interruption, de sortie et de concentration.",
+        "options": [
+          [
+            "Dépendance à la couleur du logo",
+            false
+          ],
+          [
+            "Dépendance à la langue du site vitrine",
+            false
+          ],
+          [
+            "Dépendance technique",
+            true
+          ],
+          [
+            "Dépendance aux données et configurations",
+            true
+          ],
+          [
+            "Dépendance en chaîne vers les sous-traitants du fournisseur",
+            true
+          ],
+          [
+            "Concentration de plusieurs cas d'usage sur un même fournisseur",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Qu'est-ce qui rend un plan de sortie crédible ?",
+        "feedback": "Un plan non testé reste une hypothèse. Il doit être concret et exercé selon la criticité.",
+        "options": [
+          [
+            "Un paragraphe général dans le contrat",
+            false
+          ],
+          [
+            "Une promesse orale du fournisseur",
+            false
+          ],
+          [
+            "L'absence de plan, car la sortie est improbable",
+            false
+          ],
+          [
+            "Des déclencheurs, des alternatives, des étapes, un délai estimé et un test réel",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que doit-on faire à chaque nouvelle version d'un modèle de fournisseur ?",
+        "feedback": "Un modèle mis à jour n'est plus le modèle validé. Les tests d'acceptation protègent contre les régressions.",
+        "options": [
+          [
+            "Exécuter des tests de non-régression sur un jeu de cas fixes avant de l'adopter pour un usage critique",
+            true
+          ],
+          [
+            "L'adopter automatiquement sans test",
+            false
+          ],
+          [
+            "Supposer que la validation précédente reste valable",
+            false
+          ],
+          [
+            "Retirer le modèle de l'inventaire",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Choisissez un cas d'usage IA fictif en finance (scoring, fraude, assistant interne…). Décrivez en 8 à 12 lignes : sa criticité et pourquoi, l'explication attendue pour le client et pour le contrôleur, la supervision humaine prévue, deux indicateurs de surveillance avec leurs seuils d'alerte, et les points à faire confirmer par un juriste.",
+        "feedback": "Une bonne réponse classe la criticité selon l'impact et l'autonomie, distingue les destinataires de l'explication, prévoit une supervision réelle avec des écarts mesurés, propose des indicateurs incluant faux positifs ou équité avec des seuils fixés à l'avance, et identifie honnêtement ce qui relève du juridique.",
+        "options": []
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Expliquez en quelques lignes pourquoi une organisation reste responsable de ses usages d'IA même lorsque le modèle vient d'un fournisseur, et listez quatre preuves que vous demanderiez avant de contractualiser.",
+        "feedback": "Attendez : la responsabilité des décisions et des contrôles reste à l'entité, et des preuves concrètes comme documentation du modèle, rapport de sécurité ou d'audit, engagements de continuité et de notification d'incident, liste des sous-traitants et conditions de réversibilité.",
+        "options": []
+      }
+    ]
+  },
+  "assignment": {
+    "title": "Livrable pratique : cadre de gouvernance d'un cas d'usage IA en finance",
+    "instructions_md": "## Objectif\n\nProduire le **cadre de gouvernance d'un cas d'usage IA en finance**, sur un cas fictif de votre choix (scoring de crédit, détection de fraude, assistant pour analystes, tri de sinistres…). Le livrable est pédagogique : il ne constitue ni un avis juridique, ni un conseil en investissement. Aucune donnée réelle ou confidentielle n'est nécessaire ; utilisez des établissements et des modèles fictifs.\n\n## Consignes\n\nCe livrable se réalise **sans code**, avec les outils no-code et low-code des trois ateliers du dernier chapitre : base d'inventaire et de risques (atelier 1), fiche de validation et plan de surveillance (atelier 2), cadre de gouvernance et grille fournisseur (atelier 3). Le rendu peut être un lien de partage, un export PDF ou un document.\n\n1. **Description du cas** : finalité, décision soutenue, population concernée, établissement fictif, niveau d'automatisation (au moins cinq lignes).\n2. **Inventaire et classement** : ligne d'inventaire complète du modèle, criticité justifiée par l'impact et l'autonomie.\n3. **Registre des risques** : au moins **huit risques** couvrant au moins quatre catégories (modèle, données, équité, fraude ou conformité, protection des données, sous-traitance, résilience), avec probabilité, impact, mesure, responsable et échéance.\n4. **Validation et surveillance** : fiche de validation avec seuils fixés avant tests, réserves traitées, plan de surveillance d'au moins six indicateurs (dont faux positifs ou faux négatifs et équité ou contestations) et règle de revalidation.\n5. **Explicabilité et supervision humaine** : exigences par destinataire (client, agent, contrôleur), exemple de message client, circuit de traitement et indicateurs de supervision.\n6. **Qualification** : fiche en cinq questions, avec les points à confirmer par les juristes ; **aucun numéro d'article ni date n'est à citer de mémoire** : renvoyez aux sources officielles à vérifier.\n7. **Fournisseur** : grille d'évaluation sur au moins six axes avec preuves attendues, plan de sortie et test de repli.\n8. **Incidents et traçabilité** : ce qui est journalisé, scénario d'incident et analyse type.\n9. **Limites** : ce que votre cadre ne couvre pas, hypothèses, données fictives, et l'avertissement « ne constitue pas un avis juridique ».\n10. **Variante facultative** : appliquez le cadre à un second cas de criticité différente et expliquez les écarts.\n\n## Grille d'évaluation\n\n- Inventaire, classement et registre des risques cohérents et justifiés (**20 %**).\n- Validation, seuils fixés d'avance et plan de surveillance (**20 %**).\n- Explicabilité, équité et supervision humaine réalistes (**20 %**).\n- Qualification du cadre réglementaire : méthode, honnêteté sur les incertitudes, absence de références inventées (**15 %**).\n- Évaluation du fournisseur, plan de sortie et gestion des incidents (**15 %**).\n- Clarté, traçabilité des décisions et respect des règles de données fictives (**10 %**).\n- Pénalité : toute affirmation réglementaire non sourcée présentée comme certaine.\n\n## Rendu\n\nTexte dans le champ de réponse et/ou fichier PDF ou document, avec liens de partage ou captures des outils utilisés."
+  }
+}

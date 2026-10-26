@@ -1,0 +1,797 @@
+{
+  "course": "M19",
+  "slug": "ia-contenu-marketing",
+  "source": "Contenu original rédigé pour TRAIL Academy à partir du programme du module (sans slides sources). Pas de vidéo : à ajouter depuis l'administration.",
+  "chapters": [
+    {
+      "title": "Brief, ligne éditoriale et voix de marque",
+      "lessons": [
+        {
+          "title": "Ce que l'IA change dans la production de contenu de marque",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Situer l'IA générative dans la chaîne de production d'un contenu de marque.\n- Distinguer ce qui s'accélère (brouillon, déclinaison) de ce qui reste une responsabilité humaine (message, vérité, ton, validation).\n\n## Le fil rouge du module\n\nNous suivons une marque **fictive** : **Brindille & Co**, une petite épicerie fine en ligne qui vend des confitures, des tisanes et des coffrets cadeaux. Elle a une personne en marketing, une personne en communication et un prestataire de design à temps partiel. Tous les noms, produits et chiffres du module sont inventés pour les besoins de l'exercice.\n\n## Une chaîne, pas un bouton\n\nProduire un contenu de marque, ce n'est pas seulement « écrire un texte ». C'est une chaîne de décisions : pourquoi ce contenu, pour qui, avec quel message, dans quel ton, sur quel canal, avec quelle preuve, validé par qui. L'IA intervient surtout sur la partie **rédaction et déclinaison**. Les décisions en amont et en aval restent humaines.\n\n```mermaid\nflowchart LR\n  accTitle: Chaîne de production de contenu assisté par IA\n  accDescr: Du brief à la mesure, six étapes se suivent. L'IA assiste surtout la rédaction et la déclinaison, tandis que le brief, la vérification et la validation restent humains.\n  B[\"Brief\"] --> V[\"Voix de marque\"]\n  V --> P[\"Production (brouillons)\"]\n  P --> R[\"Relecture et vérification\"]\n  R --> A[\"Validation et publication\"]\n  A --> M[\"Mesure\"]\n  M --> B\n  IA[\"Assistance IA\"] -.-> P\n  IA -.-> R\n  H[\"Responsabilité humaine\"] -.-> B\n  H -.-> R\n  H -.-> A\n```\n*Figure 1 : la chaîne de production de contenu parcourue dans ce module ; l'IA accélère surtout la production, les humains gardent le brief, la vérification et la validation.*\n\n## Ce que l'IA apporte\n\n- **De la vitesse** sur les premiers jets, les variantes et les adaptations de format.\n- **De la régularité** : à condition d'être bien consignée, la voix de marque peut être appliquée à chaque contenu.\n- **Un partenaire de reformulation** : raccourcir, changer de registre, proposer dix accroches.\n\n## Ce qu'elle ne remplace pas\n\n- **L'intention** : un assistant ne sait pas ce que la marque veut vraiment dire cette semaine.\n- **La vérité** : il produit du texte plausible, pas nécessairement exact.\n- **La responsabilité** : c'est la marque qui publie, donc c'est elle qui répond du contenu.\n\n## Piège fréquent\n\nGagner du temps sur la rédaction et le perdre ensuite en corrections, parce que le brief était flou. Plus le brief est précis, moins la relecture est coûteuse.\n\n## Mise en pratique\n\nNotez trois contenus que votre organisation a publiés récemment. Pour chacun, indiquez : qui a décidé du message, qui a écrit, qui a vérifié, qui a validé. Où la chaîne est-elle floue ?"
+        },
+        {
+          "title": "Le brief de contenu : les éléments qui font la différence",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Rédiger un brief qu'une personne, ou un assistant IA, peut exploiter sans deviner.\n- Repérer les informations manquantes qui provoquent des allers-retours.\n\n## Pourquoi le brief compte davantage avec l'IA\n\nUn assistant IA répond à ce qu'on lui donne. Un brief vague produit un texte générique : correct, lisse, interchangeable avec celui de n'importe quelle marque. Un brief précis donne un brouillon utilisable. Le brief n'est donc pas une formalité : c'est l'endroit où la qualité se joue.\n\n## Les huit éléments d'un brief exploitable\n\n1. **Objectif** : que doit faire le lecteur après ? (s'inscrire, comprendre, commander, se rassurer)\n2. **Cible** : qui lit, ce qu'il sait déjà, ce qui l'intéresse ou l'inquiète.\n3. **Message principal** : une phrase, pas dix.\n4. **Preuves autorisées** : faits, chiffres, témoignages que vous fournissez et qu'on peut citer.\n5. **Format et canal** : article, post, email, script ; longueur ; contraintes de plateforme.\n6. **Ton et voix** : renvoi au guide de voix de marque (leçon suivante).\n7. **À éviter** : sujets sensibles, promesses interdites, mots bannis, concurrents à ne pas citer.\n8. **Appel à l'action et échéance** : ce qu'on demande au lecteur, et pour quand.\n\n## Exemple fictif\n\n*Brief court, insuffisant* : « Écris un post pour les coffrets de Noël. »\n\n*Brief exploitable* : « Objectif : faire consulter la page des coffrets. Cible : clients existants, déjà acheteurs de tisanes. Message : le coffret Veillée réunit trois tisanes et une confiture, prêt à offrir. Preuves autorisées : composition du coffret (ci-dessous), livraison sous cinq jours ouvrés. À éviter : toute promesse de bien-être ou de santé. Format : post de moins de 600 caractères, ton chaleureux. Appel à l'action : voir la page des coffrets avant la fin du mois. »\n\nLe second brief laisse peu de place à l'invention, y compris sur les allégations de santé, que la marque ne doit pas faire.\n\n## Point d'attention\n\nNe mettez dans un brief que ce que vous pouvez montrer à l'extérieur de l'organisation : évitez les données clients, les chiffres internes confidentiels ou les documents non publiés, sauf si votre politique interne autorise l'outil utilisé (voir la leçon sur les données et la confidentialité).\n\n## Mise en pratique\n\nPrenez un contenu récent et réécrivez son brief avec les huit éléments. Repérez ceux que vous ne saviez pas remplir : ce sont les décisions à prendre avant d'écrire."
+        },
+        {
+          "title": "Ligne éditoriale et voix de marque : les encoder dans un guide réutilisable",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Distinguer ligne éditoriale (de quoi on parle) et voix de marque (comment on en parle).\n- Construire un guide de voix exploitable par une équipe et par un assistant IA.\n\n## Deux notions à ne pas confondre\n\n- La **ligne éditoriale** fixe les sujets, les angles, les formats et la fréquence : de quoi la marque parle, et pourquoi.\n- La **voix de marque** fixe la manière : vocabulaire, rythme, niveau de langue, degré d'humour, usage du tutoiement ou du vouvoiement, ce qu'on ne dit jamais.\n\nLes deux alimentent le brief. La première répond à « quoi », la seconde à « comment ».\n\n## Un guide de voix utile est concret\n\nLes adjectifs seuls (« chaleureux, expert, accessible ») ne suffisent pas : un assistant les interprète à sa façon. Un bon guide contient :\n\n- **Trois à cinq traits de voix**, chacun avec un « oui, ça » et un « non, pas ça ».\n- **Des exemples de phrases** valides et invalides.\n- **Un lexique** : mots préférés, mots à éviter.\n- **Des règles de forme** : longueur des phrases, usage des émojis, ponctuation, mentions obligatoires.\n- **Des limites** : sujets où l'on se tait, promesses interdites.\n\n## Exemple fictif pour Brindille & Co\n\nTrait : **chaleureux sans familiarité**.\n- Oui : « Une confiture qui a le goût de l'été, préparée en petites séries. »\n- Non : « Ouiiii, la meilleure confiture du monde, foncez !!! »\n\nTrait : **précis sur la composition**.\n- Oui : « Fraise, sucre de canne, jus de citron. »\n- Non : « Une recette secrète pleine de bienfaits. »\n\nLexique : préférer « petites séries », « préparé à la main » (uniquement si c'est vrai) ; éviter « miracle », « détox », « le meilleur ».\n\n## Du guide aux instructions réutilisables\n\nLe guide devient une **consigne permanente** que l'on colle au début de chaque demande, ou que l'on enregistre dans les fonctions de personnalisation de l'assistant (instructions personnalisées, projet, espace partagé : le nom varie selon l'outil, à vérifier). Le principe est le même : écrire une fois, réutiliser, mettre à jour quand la marque évolue.\n\n## Point d'attention\n\nUn assistant imite un style, il ne le « comprend » pas. Les écarts de ton reviennent, surtout sur les textes longs. Le guide réduit les écarts, la relecture humaine les attrape.\n\n## Mise en pratique\n\nPour votre marque (réelle ou fictive), rédigez trois traits de voix avec un exemple « oui » et un exemple « non » pour chacun."
+        },
+        {
+          "title": "Exercice : transformer un brief flou en consignes réutilisables",
+          "kind": "exercise",
+          "body_md": "## Objectif\n\nPasser d'une demande orale vague à un brief structuré et à un bloc de consignes réutilisable. Durée indicative : 30 minutes.\n\n## Situation fictive\n\nLa responsable de Brindille & Co vous dit : « On lance un coffret de Noël, il faudrait une newsletter, quelques posts et une page produit. On veut un ton chaleureux, mais pas trop. »\n\nDonnées fournies (inventées) :\n- Coffret **Veillée** : trois tisanes (tilleul-menthe, verveine-citron, fleur d'oranger-camomille), un pot de confiture de figues, une carte à écrire.\n- Livraison estimée sous cinq jours ouvrés, retours acceptés selon les conditions de vente du site.\n- Cible : clientes et clients qui ont déjà acheté des tisanes.\n- À éviter : promesses de santé ou de sommeil, comparaison avec d'autres marques.\n\n## Étapes\n\n1. **Listez les questions manquantes** : au moins cinq. Exemples : date limite de commande avant Noël ? Prix à mentionner ? Quelle action doit faire le lecteur ?\n2. **Rédigez le brief** avec les huit éléments de la leçon précédente. Marquez en clair ce qui reste à confirmer plutôt que de l'inventer.\n3. **Rédigez un bloc de consignes réutilisable** en trois parties : rôle de l'assistant, règles de voix (trois traits, oui et non), interdits.\n4. **Testez** : donnez bloc et brief à un assistant IA et demandez un post. Relisez : le ton est-il tenu ? Y a-t-il une promesse interdite ? Un fait inventé ?\n5. **Corrigez le bloc**, pas seulement le texte : si l'assistant fait une erreur répétée, ajoutez la règle qui l'évite.\n\n## Modèle de bloc de consignes (à adapter)\n\n```\nRôle : tu rédiges pour Brindille & Co, épicerie fine en ligne.\nVoix : chaleureuse sans familiarité ; précise sur la composition ; phrases courtes.\nInterdits : aucune allégation de santé ou de bien-être ; aucune comparaison avec d'autres marques ; aucun fait absent du brief.\nSi une information manque : pose la question au lieu de l'inventer.\n```\n\n## Résultat attendu\n\nUn brief complet, un bloc de consignes de moins d'une page et un post de test annoté (conforme ou non, pourquoi).\n\n## Pour réfléchir\n\nQuelle règle du bloc aurait évité le plus d'erreurs dans votre test ? Cette règle manquait-elle dans le brief initial ou dans la voix de marque ?"
+        }
+      ]
+    },
+    {
+      "title": "Production de contenus multi-formats avec l'IA",
+      "lessons": [
+        {
+          "title": "Articles, newsletters et emails : structurer avant de rédiger",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Utiliser l'IA pour structurer un contenu long avant de le rédiger.\n- Décliner un même fond en plusieurs formats sans perdre la cohérence.\n\n## Commencer par le plan, pas par le texte\n\nPour un article ou une newsletter, demandez d'abord **un plan**, puis validez-le, puis faites rédiger section par section. Cette méthode a trois avantages : vous corrigez la structure avant d'investir dans la rédaction, vous gardez la main sur l'argumentaire, et vous repérez plus vite les passages où l'assistant invente.\n\nÉtapes conseillées :\n1. Donner le brief et le guide de voix.\n2. Demander trois plans possibles, avec l'angle de chacun.\n3. Choisir et ajuster le plan.\n4. Rédiger section par section, en fournissant les faits autorisés pour chaque section.\n5. Demander une version courte (résumé, chapô, objet d'email) à partir du texte validé, pas avant.\n\n## Un fond, plusieurs formats\n\nUne bonne pratique consiste à fixer le **noyau** (message, preuves, appel à l'action) puis à le décliner :\n\n- **Article de blog** : développé, structuré, avec exemples.\n- **Newsletter** : un angle, un bénéfice clair, un seul appel à l'action.\n- **Email promotionnel** : objet court, premier paragraphe qui porte le message, bouton explicite.\n- **Post de réseau social** : une idée, un ton adapté à la plateforme.\n\nLes limites de longueur et les usages de chaque plateforme évoluent : vérifiez-les à la date de rédaction plutôt que de vous fier à votre mémoire ou à celle de l'assistant.\n\n## Les objets d'email et les accroches\n\nL'IA est utile pour produire **beaucoup de variantes** d'objets ou d'accroches. Le tri reste humain : écartez les formulations trompeuses (urgence artificielle, promesse non tenue). Un objet qui annonce autre chose que le contenu abîme la confiance, et peut poser des problèmes de conformité (voir la leçon sur le cadre juridique).\n\n## Point d'attention\n\nLa déclinaison automatique répète les erreurs : si un fait faux est dans l'article, il sera dans les cinq posts. Vérifiez le noyau avant de décliner.\n\n## Mise en pratique\n\nPrenez le coffret **Veillée** de la leçon précédente. Demandez trois plans de newsletter, choisissez-en un, puis écrivez en une phrase pourquoi vous avez écarté les deux autres."
+        },
+        {
+          "title": "Réseaux sociaux, scripts vidéo et visuels : usages et limites",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Adapter un message aux codes d'un canal social.\n- Connaître les limites de l'IA pour les scripts et les visuels.\n\n## Réseaux sociaux : l'adaptation, pas la copie\n\nUn même message ne se dit pas pareil partout. Donnez à l'assistant le **canal**, le **public** et une **contrainte de longueur**, et demandez plusieurs angles : informatif, anecdotique, question à la communauté. Gardez une seule idée par post.\n\nPoints de vigilance :\n- Les posts générés tendent à se ressembler : introduisez de la **matière propre** (un détail de fabrication, une réaction client réelle et autorisée).\n- Évitez de laisser l'assistant répondre seul aux commentaires publics : ces échanges engagent la marque en direct (voir le module M21 sur la communication responsable).\n- Les tendances et formats d'une plateforme changent vite : l'assistant peut les ignorer ou les mal décrire.\n\n## Scripts vidéo et audio\n\nL'IA est efficace pour un **premier script** : accroche, séquences, texte à dire, indications de plans. Demandez une structure en colonnes de texte (« ce qu'on voit », « ce qu'on entend ») sous forme de liste. Vérifiez ensuite :\n- le temps de lecture à voix haute ;\n- la faisabilité de tournage avec vos moyens ;\n- les faits cités.\n\n## Visuels générés : ce qu'il faut savoir\n\nLes outils de génération d'images peuvent produire des illustrations, des fonds, des variantes. Leurs limites, à la date de rédaction :\n\n- **Fidélité au produit** : une image générée d'un pot de confiture ne montre pas **votre** pot. Pour un produit réel, utilisez des photographies réelles ; un visuel généré qui donne une fausse idée du produit peut tromper le consommateur.\n- **Texte dans l'image** : les mots intégrés sont souvent déformés ; ajoutez le texte dans un outil de mise en page.\n- **Cohérence** : garder le même style d'une image à l'autre demande de la méthode (descriptions de style réutilisables).\n- **Droits et mentions** : les conditions d'usage commercial varient selon l'outil ; lisez-les.\n- **Personnes** : n'utilisez jamais l'image d'une personne réelle sans accord ; ne générez pas de faux témoignages visuels.\n\n## Transparence\n\nSelon le contexte et le cadre applicable (par exemple l'AI Act pour certains contenus synthétiques), une mention de l'usage de l'IA peut être attendue ou recommandée. Le sujet est approfondi dans le module M21 ; vérifiez la règle en vigueur auprès de votre service juridique. Le présent contenu ne constitue pas un avis juridique.\n\n## Mise en pratique\n\nPour une publication de votre choix, décidez : texte par IA, visuel par photographie réelle ou illustration générée ? Justifiez en deux lignes, en vous appuyant sur le risque de tromper le public."
+        },
+        {
+          "title": "Choisir où l'IA aide : une matrice usage × risque",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Décider, contenu par contenu, quel niveau d'assistance IA est raisonnable.\n- Adapter l'intensité de la relecture au risque.\n\n## Deux axes pour décider\n\nTous les contenus ne se valent pas. Deux questions suffisent pour situer un usage :\n\n1. **Quelle valeur apporte l'IA ?** (gain de temps, de variété, de qualité)\n2. **Quel risque si le contenu est faux, trompeur ou hors-ton ?** (réputation, juridique, sécurité du consommateur)\n\n```mermaid\nquadrantChart\n  accTitle: Matrice d'usage de l'IA selon la valeur et le risque\n  accDescr: Quatre zones selon la valeur apportée par l'IA et le risque du contenu. Les contenus à fort gain et faible risque sont à automatiser largement, ceux à fort risque demandent une relecture renforcée. Positions illustratives.\n  x-axis \"Risque faible\" --> \"Risque fort\"\n  y-axis \"Valeur faible\" --> \"Valeur forte\"\n  quadrant-1 \"Assister avec relecture renforcée\"\n  quadrant-2 \"Déléguer largement\"\n  quadrant-3 \"Optionnel\"\n  quadrant-4 \"Éviter ou réserver aux experts\"\n  \"Variantes d'objets d'email\": [0.2, 0.8]\n  \"Brouillon de newsletter\": [0.35, 0.7]\n  \"Légende de post\": [0.25, 0.55]\n  \"Fiche produit alimentaire\": [0.75, 0.65]\n  \"Communiqué de crise\": [0.9, 0.4]\n  \"Réponse publique à une plainte\": [0.8, 0.25]\n```\n*Figure 2 : matrice illustrative d'usage de l'IA ; les positions sont données à titre d'exemple pour une marque fictive et sont à ajuster à votre contexte.*\n\n## Lire la matrice\n\n- **Valeur forte, risque faible** : déléguez largement, avec un contrôle léger (variantes, brouillons internes).\n- **Valeur forte, risque fort** : l'IA aide, mais la relecture est renforcée et la validation formelle (fiche produit alimentaire : composition, allégations, allergènes).\n- **Valeur faible, risque faible** : optionnel ; n'ajoutez pas d'outil pour rien.\n- **Valeur faible, risque fort** : évitez ou réservez à des personnes expertes (réponse de crise, sujets sensibles).\n\n## Du risque à la règle\n\nÉcrivez pour chaque famille de contenu un **niveau d'assistance** et un **niveau de contrôle** : par exemple « brouillon IA autorisé, relecture par l'auteur » ou « brouillon IA autorisé, relecture par l'auteur puis validation du responsable et du juridique ». Ces règles alimentent le guide de production du livrable.\n\n## Mise en pratique\n\nListez huit types de contenus que produit votre organisation. Placez-les sur la matrice, puis attribuez à chacun un niveau de contrôle."
+        }
+      ]
+    },
+    {
+      "title": "Qualité, vérification des faits, droits et propriété intellectuelle",
+      "lessons": [
+        {
+          "title": "Les erreurs typiques de l'IA : hallucinations, lissage et fausses précisions",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Reconnaître les erreurs que l'IA produit le plus souvent dans un texte de marque.\n- Savoir où concentrer la relecture.\n\n## Pourquoi un texte fluide peut être faux\n\nUn assistant produit le texte **le plus plausible**, pas le texte vérifié. Il peut donc écrire avec aplomb un fait inexact. Dans un contexte de marque, c'est un risque de réputation, voire de conformité.\n\n## Les erreurs à chercher\n\n- **Faits inventés** : une date, un ingrédient, une certification, un prix, un lieu de fabrication qui ne figurent pas dans le brief.\n- **Statistiques et études fantômes** : « selon une étude, 8 consommateurs sur 10… » sans source. Si l'assistant cite une étude, vérifiez qu'elle existe ; sinon, supprimez.\n- **Citations inventées** : propos attribués à un client ou à un expert. Ne publiez jamais une citation que vous ne pouvez pas rattacher à une personne et à un accord.\n- **Superlatifs et promesses** : « le meilleur », « garanti », « sans danger », « naturel » employés sans preuve ; certains termes sont encadrés par la réglementation (à vérifier auprès du juridique).\n- **Lissage** : un texte correct mais générique, sans détail propre à la marque ; le risque est de perdre l'identité.\n- **Fausse actualité** : informations datées ou mélangées, surtout sur les sujets récents ou réglementaires.\n- **Biais et stéréotypes** : clichés sur des publics, exemples non inclusifs.\n\n## Une règle simple\n\n**Tout ce qui est vérifiable doit être vérifié ; tout ce qui n'est pas vérifiable doit être retiré ou reformulé.** Concentrez votre attention sur : noms, chiffres, dates, allégations, citations, mentions légales, liens.\n\n## Réduire les erreurs en amont\n\n- Fournissez les faits autorisés dans le brief et demandez de **n'utiliser que ceux-là**.\n- Demandez à l'assistant de **signaler les passages qu'il a ajoutés** hors brief.\n- Demandez « pose une question si une information manque » plutôt que de le laisser combler.\n\nCes consignes diminuent le risque, sans l'éliminer : elles ne remplacent pas la relecture.\n\n## Mise en pratique\n\nDemandez à un assistant un paragraphe de présentation d'une marque **fictive** sans lui donner de faits. Soulignez chaque affirmation qu'il a inventée. Combien en trouvez-vous ?"
+        },
+        {
+          "title": "Grille de relecture et vérification des faits",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Structurer la relecture avec une grille réutilisable.\n- Organiser la vérification des faits de façon proportionnée.\n\n## Pourquoi une grille\n\nSans grille, chaque relecteur regarde ce qu'il remarque : l'orthographe un jour, le ton un autre. Une grille assure que les **mêmes points** sont contrôlés à chaque fois, et laisse une trace de ce qui a été vérifié.\n\n## Proposition de grille en six blocs\n\n1. **Exactitude** : chaque fait, chiffre, date, nom est rattaché à une source du brief ou à une source fiable consultée.\n2. **Allégations** : aucune promesse non prouvée (santé, performance, garantie) ; mentions obligatoires présentes.\n3. **Voix de marque** : conforme au guide (traits, lexique, interdits).\n4. **Utilité** : le contenu répond à l'objectif et à la cible du brief ; l'appel à l'action est clair.\n5. **Droits** : images, extraits, citations, marques tierces autorisés ; pas de ressemblance gênante avec un contenu existant.\n6. **Transparence et inclusion** : mention de l'usage de l'IA si exigée ; langage inclusif et non stéréotypé.\n\nChaque ligne se note « conforme », « à corriger » ou « sans objet », avec un commentaire.\n\n## Vérifier sans y passer sa vie\n\n- **Triez par risque** : une fiche produit se contrôle ligne à ligne ; une légende de post, en lecture attentive.\n- **Cherchez la source primaire** : site officiel, document du fournisseur, texte réglementaire, plutôt qu'un résumé de plus.\n- **Ne demandez pas à l'IA de se vérifier seule** : elle peut confirmer ses propres erreurs. Elle peut en revanche aider à **lister les affirmations à vérifier**.\n- **Gardez la trace** : qui a vérifié quoi, quand, avec quelle source.\n\n## Exemple fictif\n\nTexte généré : « Nos tisanes sont cultivées sans pesticides depuis 2009. » Faits du brief : « Ingrédients issus d'un fournisseur, certificat non fourni. » Verdict : **à retirer**, tant que le certificat et l'année ne sont pas confirmés par une pièce.\n\n## Mise en pratique\n\nAppliquez la grille à un texte de 150 mots généré par un assistant. Notez au moins trois corrections et la source que vous avez utilisée pour chacune."
+        },
+        {
+          "title": "Droit d'auteur, données personnelles et cadre juridique : repères généraux",
+          "kind": "reading",
+          "body_md": "## Avertissement\n\nCe contenu donne des **repères généraux** à des fins pédagogiques. Il **ne constitue pas un avis juridique**. Les règles évoluent et dépendent de votre situation : vérifiez-les auprès de votre service juridique à la date de lecture.\n\n## Objectifs\n\n- Connaître les grandes familles de questions juridiques liées au contenu assisté par IA.\n- Savoir quand escalader vers le juridique.\n\n## Droit d'auteur et propriété intellectuelle\n\nTrois questions reviennent :\n\n- **Ce que vous donnez à l'outil** : coller un texte protégé (celui d'un tiers, d'un concurrent) dans un assistant pour le « réécrire » peut poser problème. Utilisez des contenus dont vous détenez les droits ou que vous avez le droit d'employer.\n- **Ce que l'outil produit** : la protection d'un contenu généré par IA et le statut des ressemblances avec des œuvres existantes sont des sujets discutés et variables selon les pays et les cas. Gardez une trace de **l'apport humain** (brief, choix, retouches) et évitez de demander explicitement d'imiter le style d'un auteur ou d'un artiste identifié.\n- **Ce que disent les conditions d'usage de l'outil** : usage commercial, propriété des sorties, réutilisation des données saisies. Lisez-les pour les outils que vous utilisez.\n\nLes marques, logos et visuels de tiers restent soumis à autorisation.\n\n## Données personnelles\n\nLe **RGPD** encadre le traitement de données personnelles. En pratique :\n- Ne collez pas de données de clients identifiables (noms, emails, avis nominatifs) dans un outil sans que votre politique interne et l'accord de votre délégué à la protection des données l'autorisent.\n- Anonymisez ou utilisez des données fictives pour vos tests.\n- Pour les témoignages et photographies de personnes, obtenez un accord clair sur l'usage prévu.\n\n## Publicité, allégations et loyauté\n\nLe droit de la publicité et de la consommation encadre notamment la **publicité trompeuse**, les **allégations** (santé, environnement) et l'identification des **contenus sponsorisés** ou des partenariats. Un visuel généré qui montre un produit autre que le vrai produit, ou un faux avis, peut être trompeur. Dans les secteurs réglementés (alimentaire, santé, finance), les exigences sont plus strictes.\n\n## AI Act et transparence\n\nLe règlement européen sur l'IA prévoit, dans certains cas, des obligations de transparence pour des contenus générés ou modifiés par IA (par exemple des contenus synthétiques proches de la réalité). Le champ exact, les dates d'application et les modalités sont à vérifier à la date de lecture.\n\n## Quand escalader\n\nEscaladez vers le juridique ou la direction : allégation de santé ou d'environnement, comparaison avec un concurrent, utilisation d'une personne réelle, concours ou jeu, secteur réglementé, doute sur les droits d'une image ou d'un texte.\n\n## Mise en pratique\n\nRédigez une liste de cinq cas de votre activité qui déclenchent une **escalade obligatoire** vers le juridique."
+        },
+        {
+          "title": "Confidentialité, outils et politique d'usage de l'IA",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Savoir quelles informations ne jamais saisir dans un assistant.\n- Poser les bases d'une politique d'usage claire pour une équipe.\n\n## Un outil, des règles\n\nSelon l'offre, un assistant peut conserver les échanges, les utiliser pour s'améliorer ou les mettre à disposition de l'administrateur. Ces réglages varient selon l'outil et la formule : **vérifiez les conditions et les paramètres à la date de lecture**, et préférez les outils validés par votre organisation.\n\n## Classer les informations\n\nUne approche simple en trois niveaux :\n\n- **Publiques** : déjà publiées (site, communiqués). Saisie possible.\n- **Internes** : plans de lancement, calendriers non annoncés, stratégie. Saisie seulement dans les outils autorisés pour cet usage.\n- **Sensibles ou confidentielles** : données personnelles de clients ou salariés, informations contractuelles, chiffres non publiés, secrets de fabrication. Pas de saisie dans un outil grand public ; passez par un outil approuvé ou anonymisez.\n\nSi votre organisation utilise une classification interne, appliquez-la : un contenu étiqueté confidentiel ou secret ne se colle pas dans un outil non approuvé.\n\n## Les points d'une politique d'usage d'équipe\n\n- Outils autorisés et comptes à utiliser (pas de compte personnel pour le travail, sauf règle contraire).\n- Informations interdites en saisie.\n- Contenus où l'IA est autorisée, limitée ou interdite (voir la matrice usage × risque).\n- Obligation de relecture humaine et de validation.\n- Règle de transparence : quand mentionner l'usage de l'IA.\n- Conservation des traces : brief, version générée, version publiée.\n- Personne à contacter en cas de doute ou d'incident.\n\n## Prestataires et agences\n\nSi un prestataire produit des contenus avec de l'IA, précisez dans le contrat ou le brief : outils utilisés, relecture, propriété des livrables, confidentialité. Ces clauses sont à faire valider par votre juridique.\n\n## Mise en pratique\n\nRédigez une politique d'usage d'une page pour une équipe de trois personnes. Faites-la relire par un collègue : toutes les règles sont-elles applicables un lundi matin ?"
+        }
+      ]
+    },
+    {
+      "title": "Workflow de contenu : rôles, validation humaine et calendrier",
+      "lessons": [
+        {
+          "title": "Rôles et responsabilités : qui fait quoi dans un circuit de contenu",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Définir les rôles d'un circuit de contenu assisté par IA.\n- Éviter les zones où personne ne se sent responsable.\n\n## Les rôles, même dans une petite équipe\n\nUne même personne peut cumuler plusieurs rôles, mais les rôles doivent être **nommés** :\n\n- **Commanditaire** : exprime le besoin, valide le brief.\n- **Rédacteur ou rédactrice** : pilote l'assistant, fait le premier tri, assume le brouillon.\n- **Relecteur ou relectrice** : applique la grille (exactitude, ton, droits).\n- **Responsable éditorial ou de marque** : garant de la ligne éditoriale et de la voix ; valide.\n- **Juridique ou conformité** : consulté sur les contenus à risque (voir la matrice).\n- **Responsable de publication** : programme et publie, archive les traces.\n\nRègle d'or : **la personne qui a produit le brouillon ne peut pas être seule à le valider** pour les contenus à risque.\n\n## Qui répond de quoi\n\nL'assistant n'est pas un rôle : il n'est pas responsable. Si une erreur est publiée, la responsabilité est celle de la marque et des personnes qui ont validé. Écrivez-le dans la politique d'usage pour éviter les « c'est l'IA qui l'a écrit ».\n\n## Trois niveaux de validation\n\n- **Niveau 1** (faible risque) : l'auteur relit avec la grille ; un second regard est facultatif.\n- **Niveau 2** (risque modéré) : relecture par un tiers, puis validation du responsable éditorial.\n- **Niveau 3** (risque élevé) : relecture, validation éditoriale, puis avis du juridique avant publication.\n\nLe niveau découle de la matrice usage × risque de la leçon précédente.\n\n## Piège fréquent\n\nUn circuit trop lourd pour des contenus simples fait contourner les règles. Mieux vaut un circuit **léger et suivi** qu'un circuit parfait ignoré.\n\n## Mise en pratique\n\nPour votre équipe, remplissez le tableau « rôle, nom, remplaçant » sous forme de liste. Combien de rôles reposent sur une seule personne ? Que se passe-t-il pendant ses congés ?"
+        },
+        {
+          "title": "Le circuit de validation humaine et la traçabilité",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Décrire un circuit de validation de bout en bout.\n- Mettre en place une traçabilité minimale sans lourdeur.\n\n## Le circuit, étape par étape\n\n```mermaid\nsequenceDiagram\n  accTitle: Circuit de validation d'un contenu assisté par IA\n  accDescr: Le rédacteur demande un brouillon à l'assistant, relit et corrige, puis transmet au relecteur. Le responsable éditorial valide. Le juridique intervient si le contenu est à risque. Le contenu est ensuite publié et archivé avec ses traces.\n  participant R as Rédacteur\n  participant A as Assistant IA\n  participant L as Relecteur\n  participant E as Responsable éditorial\n  participant J as Juridique\n  R->>A: Brief et voix de marque\n  A-->>R: Brouillon\n  R->>R: Relecture et corrections\n  R->>L: Version à relire\n  L->>E: Grille remplie\n  E->>J: Avis si risque élevé\n  J-->>E: Avis\n  E-->>R: Validation ou retour\n  R->>R: Publication et archivage\n```\n*Figure 3 : circuit de validation d'un contenu assisté par IA ; le juridique n'intervient que pour les contenus à risque.*\n\n## Les états d'un contenu\n\nUn contenu passe par des **états** simples, visibles de tous dans le tableau de suivi : *à briefer*, *brouillon*, *en relecture*, *à corriger*, *validé*, *programmé*, *publié*, *archivé*. Un état = un responsable.\n\n```mermaid\nstateDiagram-v2\n  accTitle: États d'un contenu dans le circuit\n  accDescr: Un contenu passe de brouillon à relecture. Il peut être renvoyé à corriger ou validé. Après validation il est programmé, publié puis archivé.\n  [*] --> Brouillon\n  Brouillon --> EnRelecture\n  EnRelecture --> ACorriger: Corrections demandées\n  ACorriger --> EnRelecture\n  EnRelecture --> Valide\n  Valide --> Programme\n  Programme --> Publie\n  Publie --> Archive\n  Archive --> [*]\n```\n*Figure 4 : états d'un contenu ; la boucle entre relecture et correction se répète jusqu'à validation.*\n\n## Quelle traçabilité garder\n\nSans alourdir, conservez pour chaque contenu :\n- le **brief** utilisé et la version du guide de voix ;\n- l'**outil** employé et la date ;\n- les **faits vérifiés** et leurs sources ;\n- la **grille de relecture** remplie ;\n- le **nom** de la personne qui a validé, et la date ;\n- la **version publiée**.\n\nCette trace sert en cas de litige, de demande d'un partenaire, de contrôle interne, ou simplement pour apprendre de ses erreurs. Si des données personnelles figurent dans ces traces, appliquez la durée de conservation prévue par votre organisation.\n\n## Mise en pratique\n\nDessinez, sous forme de liste, le circuit de votre prochain contenu : qui, dans quel ordre, avec quelle preuve de validation."
+        },
+        {
+          "title": "Calendrier éditorial et automatisation sans code",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Construire un calendrier éditorial réaliste pour une équipe réduite.\n- Identifier les tâches qu'une automatisation no-code peut prendre en charge, et celles à garder humaines.\n\n## Le calendrier comme outil de pilotage\n\nUn calendrier éditorial est une table, pas un tableau décoratif. Colonnes utiles : date de publication, canal, sujet, message, format, auteur, relecteur, niveau de validation, **état**, lien vers le brief, lien vers la version finale.\n\nIl permet de voir d'un coup d'œil : les trous, les surcharges, ce qui est bloqué en relecture.\n\n```mermaid\ngantt\n  accTitle: Planning fictif d'un lot de contenus\n  accDescr: Planning sur deux semaines d'une newsletter de lancement. Le brief précède la production, suivie de la relecture, de la validation et de la publication. Dates fictives.\n  dateFormat YYYY-MM-DD\n  axisFormat %d/%m\n  section Préparation\n  Brief validé :a1, 2026-11-02, 2d\n  section Production\n  Brouillons avec l'IA :a2, after a1, 2d\n  section Contrôle\n  Relecture et faits :a3, after a2, 2d\n  Validation éditoriale :a4, after a3, 1d\n  section Diffusion\n  Programmation et publication :a5, after a4, 1d\n```\n*Figure 5 : planning fictif d'un lot de contenus ; les durées sont illustratives et à adapter à votre équipe.*\n\n## Prévoir la relecture dans le planning\n\nErreur courante : planifier la production, pas le contrôle. Prévoyez du temps pour la relecture, la vérification et la validation, et une **marge** pour les retours. Plus le niveau de validation est élevé, plus il faut de délai.\n\n## Automatiser sans code, avec mesure\n\nDes outils no-code (tableur, base de données collaborative, outil d'automatisation) peuvent, par exemple :\n- envoyer un **rappel** au relecteur quand l'état passe à « en relecture » ;\n- **créer une ligne** dans le calendrier quand un formulaire de demande est rempli ;\n- **notifier** l'équipe à la validation.\n\nÀ **garder humain** : le choix du message, la décision de publier, la réponse à une personne. Une automatisation ne doit pas **publier à votre place** un contenu non validé : placez toujours une étape humaine avant la mise en ligne.\n\nLes offres gratuites et leurs limites changent : vérifiez-les à la date de lecture et prévoyez une alternative (rappels manuels, vue filtrée du tableur).\n\n## Mise en pratique\n\nChoisissez trois tâches répétitives de votre circuit. Pour chacune, indiquez : automatisable sans risque, automatisable avec contrôle, ou à garder humaine."
+        }
+      ]
+    },
+    {
+      "title": "Mesure et amélioration continue",
+      "lessons": [
+        {
+          "title": "Mesurer la qualité perçue et la performance des contenus",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Choisir des indicateurs de qualité et de performance cohérents avec l'objectif du contenu.\n- Éviter les conclusions hâtives sur de petits volumes.\n\n## Mesurer ce qui compte pour l'objectif\n\nChaque contenu avait un objectif dans le brief ; l'indicateur en découle. Exemples :\n- objectif de **notoriété** : portée, vues, abonnements ;\n- objectif d'**engagement** : clics, réponses, partages, temps de lecture ;\n- objectif de **conversion** : visites sur la page cible, inscriptions, commandes ;\n- objectif de **confiance** : retours qualitatifs, réclamations, désabonnements.\n\nUn indicateur flatteur mais sans rapport avec l'objectif est un indicateur de vanité.\n\n## La qualité perçue\n\nAu-delà des chiffres, regardez :\n- les **retours** des lecteurs (commentaires, réponses, questions du service client) ;\n- les **corrections** apportées à posteriori (erreurs repérées après publication) ;\n- la **cohérence de voix** perçue par l'équipe, avec une note sur la grille.\n\nUn indicateur interne utile : **le taux de brouillons conformes du premier coup**, c'est-à-dire la part de textes passés en relecture sans correction majeure. Il mesure la qualité de vos briefs et de vos consignes.\n\n## Comparer avec prudence\n\nPour savoir si l'IA améliore ou dégrade, comparez des contenus **comparables** (même canal, même type de sujet, même période). Avec de petits volumes, une différence peut tenir au hasard ou à la saison. Notez les conditions, ne tirez pas de règle d'un seul cas. La conception de tests et la lecture de résultats sont approfondies dans le module M20.\n\n## Mise en pratique\n\nPour trois contenus récents, associez : objectif, indicateur principal, valeur observée, et ce que vous en concluez **sans exagérer**."
+        },
+        {
+          "title": "Coûts, temps gagné et amélioration continue",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Estimer le coût réel d'un contenu assisté par IA, relecture comprise.\n- Mettre en place une boucle d'amélioration des briefs et des consignes.\n\n## Compter tout le temps\n\nLe gain de temps affiché (« le brouillon prend deux minutes ») oublie le reste : préparation du brief, relecture, vérification, corrections, validation. Pour comparer honnêtement, relevez le temps de **chaque étape** sur quelques contenus, avec et sans assistance.\n\n```mermaid\npie showData\n  accTitle: Répartition illustrative du temps d'un contenu assisté\n  accDescr: Répartition fictive du temps passé sur un contenu assisté par IA, entre brief, génération, relecture et vérification, corrections et validation. Les valeurs sont illustratives et non issues d'une mesure.\n  \"Brief et préparation\" : 25\n  \"Génération du brouillon\" : 5\n  \"Relecture et vérification\" : 40\n  \"Corrections\" : 15\n  \"Validation et publication\" : 15\n```\n*Figure 6 : répartition fictive du temps, donnée à titre d'ordre de grandeur illustratif ; mesurez la vôtre.*\n\n## Les coûts à connaître\n\n- **Abonnements et usages** des outils (selon les offres, à vérifier à la date de lecture).\n- **Temps humain** : brief, relecture, vérification, formation.\n- **Coût du risque** : correction après publication, demande de retrait, atteinte à l'image.\n- **Coût de la bonne qualité** : un contenu à fort enjeu mérite un contrôle plus long ; ne le sacrifiez pas pour afficher un gain.\n\nLe module M15 approfondit l'économie et le pilotage des coûts de l'IA.\n\n## La boucle d'amélioration\n\nChaque mois ou chaque trimestre, en équipe :\n1. **Relevez** les erreurs et corrections récurrentes (par catégorie : faits, ton, allégations, format).\n2. **Cherchez la cause** : brief incomplet ? consigne manquante ? voix mal décrite ?\n3. **Corrigez la source** : mettez à jour le guide de voix, le bloc de consignes, la grille.\n4. **Datez et versionnez** : « guide de voix v1.2, date, changements ».\n5. **Réévaluez** le niveau de validation de chaque famille de contenu.\n\n## Piège fréquent\n\nDocumenter une fois puis ne plus jamais relire. Un guide qui n'évolue pas finit par ne plus refléter la marque.\n\n## Mise en pratique\n\nRelevez les trois erreurs les plus fréquentes de vos derniers brouillons assistés. Pour chacune, écrivez la règle à ajouter au guide."
+        }
+      ]
+    },
+    {
+      "title": "Ateliers no-code et low-code",
+      "lessons": [
+        {
+          "title": "Atelier 1 : transformer un brief en consignes réutilisables et en guide de voix",
+          "kind": "exercise",
+          "body_md": "## Objectif\n\nConstruire, sans écrire de code, un brief type et un guide de voix de marque réutilisable, stockés dans un tableur ou une page collaborative, puis les tester avec un assistant IA.\n\n**Durée estimée** : 60 à 75 minutes.\n\n## Plateformes\n\n- **Un assistant IA** au choix (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : tout autre assistant autorisé par votre organisation.\n- **Un tableur ou une page collaborative** : Google Sheets ou Notion (no-code), offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : un tableur libre ou un simple document partagé.\n\n## Données fictives fournies\n\nMarque : **Atelier Cèdre**, boutique en ligne fictive de bougies artisanales. Produits : bougie « Sous-bois » (notes de mousse et de bois), bougie « Agrume doux », coffret « Trio d'automne ». Public : adultes de 25 à 45 ans, achats cadeaux. Ton souhaité : « chaleureux, simple, jamais exagéré ». Interdits : promesses de santé ou de relaxation garantie, comparaison avec d'autres marques.\n\n## Étapes\n\n1. **Créez une table « Briefs »** avec une colonne par élément du brief : objectif, cible, message, preuves autorisées, format et canal, ton, à éviter, appel à l'action, échéance.\n2. **Remplissez une ligne** pour un post de lancement du coffret « Trio d'automne ». Si une information manque, écrivez « à confirmer » au lieu de l'inventer.\n3. **Créez une table ou une page « Voix de marque »** avec trois traits. Pour chaque trait : une phrase « oui », une phrase « non », et un mot à préférer ou à éviter.\n4. **Rédigez un bloc de consignes** de moins d'une page à partir de la voix : rôle, traits, interdits, règle « pose une question si une information manque ».\n5. **Testez** : collez le bloc et la ligne de brief dans l'assistant et demandez trois variantes de post. Relevez dans une colonne « Écarts » tout ce qui viole la voix ou invente un fait.\n6. **Améliorez le bloc** en ajoutant une règle par écart répété, puis relancez le test. Notez la version (v1, v2).\n\n## Résultat attendu\n\nUne table de briefs, un guide de voix de trois traits, un bloc de consignes versionné et un journal de test avec au moins trois écarts documentés.\n\n## Critères de réussite\n\n- [ ] Le brief contient les huit éléments, avec les manques marqués.\n- [ ] Chaque trait de voix a un exemple « oui » et un exemple « non ».\n- [ ] Le bloc de consignes contient des interdits explicites.\n- [ ] Le journal de test montre au moins une amélioration entre v1 et v2.\n- [ ] Aucun fait inventé n'est resté dans le texte final choisi.\n\n## Pièges fréquents\n\n- Des adjectifs seuls (« sympa, pro ») sans exemple.\n- Un bloc trop long, que personne ne relit.\n- Des données réelles de clients dans le test : utilisez uniquement les données fictives ci-dessus.\n\n## Pour aller plus loin\n\nAjoutez une colonne « canal » dans la table de voix pour adapter le registre selon le réseau ou l'email, et testez la même consigne sur deux canaux."
+        },
+        {
+          "title": "Atelier 2 : produire un lot de contenus multi-formats et le passer à la grille de relecture",
+          "kind": "exercise",
+          "body_md": "## Objectif\n\nProduire un lot de contenus déclinés en plusieurs formats à partir d'un même noyau, puis les contrôler avec une grille de relecture dans un tableur.\n\n**Durée estimée** : 75 à 90 minutes.\n\n## Plateformes\n\n- **Un assistant IA** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : tout autre assistant autorisé par votre organisation.\n- **Google Sheets ou Airtable** (no-code) pour la grille : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : Notion ou un tableur libre.\n\n## Données fictives fournies\n\nRéutilisez l'**Atelier Cèdre** de l'atelier 1. Faits autorisés (uniquement ceux-ci) :\n- Coffret « Trio d'automne » : trois bougies de petit format (Sous-bois, Agrume doux, Épices chaudes).\n- Cire végétale : à confirmer (information non validée, à ne pas affirmer).\n- Livraison : sous cinq jours ouvrés.\n- Offre : un petit carnet offert jusqu'à fin novembre, dans la limite des stocks.\n\n## Étapes\n\n1. **Rédigez le noyau** en quatre lignes : message, preuves autorisées, appel à l'action, interdits.\n2. **Demandez à l'assistant** : un objet d'email avec cinq variantes, un email court, deux posts pour un réseau social, un script de vidéo de 30 secondes sous forme de liste « ce qu'on voit » et « ce qu'on entend », et une description pour la page produit. Précisez : « n'utilise que les faits autorisés ; signale toute information ajoutée ».\n3. **Collez les sorties** dans une feuille « Lot », une ligne par contenu : format, texte, auteur du brouillon.\n4. **Créez une feuille « Grille »** avec les six blocs de la grille (exactitude, allégations, voix, utilité, droits, transparence et inclusion), chacun avec une colonne « conforme, à corriger, sans objet » et une colonne « commentaire ».\n5. **Relisez chaque contenu** avec la grille. Cherchez en particulier la cire végétale, toute mention de bien-être, les superlatifs et les faits ajoutés.\n6. **Corrigez** les contenus, puis ajoutez une colonne « version finale » et un « niveau de validation » (1, 2 ou 3).\n7. **Faites une visite croisée** : demandez à un collègue de relire deux contenus avec la même grille et comparez vos notes.\n\n## Résultat attendu\n\nUn lot de six à huit contenus, une grille remplie pour chacun et une version finale corrigée.\n\n## Critères de réussite\n\n- [ ] Au moins deux fausses informations ou allégations repérées et retirées (ou la preuve que l'assistant n'en a pas ajouté).\n- [ ] Chaque contenu a une grille remplie et un niveau de validation.\n- [ ] Les versions finales respectent la voix et les interdits.\n- [ ] Un second relecteur a donné son avis sur au moins deux contenus.\n\n## Pièges fréquents\n\n- Décliner avant d'avoir validé le noyau.\n- Demander à l'assistant de contrôler son propre texte et le croire sur parole.\n- Passer la grille trop vite : relire d'abord les faits, ensuite le style.\n\n## Pour aller plus loin\n\nAjoutez une colonne « temps passé » pour chaque étape et calculez le temps total du lot, relecture comprise."
+        },
+        {
+          "title": "Atelier 3 : monter un calendrier éditorial et un circuit de validation",
+          "kind": "exercise",
+          "body_md": "## Objectif\n\nMettre en place un calendrier éditorial avec des états et des responsables, un circuit de validation et, en option, une automatisation no-code de rappels.\n\n**Durée estimée** : 60 à 90 minutes.\n\n## Plateformes\n\n- **Airtable, Notion ou Google Sheets** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : NocoDB (libre) ou un tableur libre.\n- **Optionnel : un outil d'automatisation no-code**, comme Make ou Zapier : offre gratuite ou version libre à la date de rédaction, à vérifier, avec des limites qui changent. Alternative : une vue filtrée « à relire cette semaine » et des rappels manuels.\n\n## Données fictives fournies\n\nPour **Atelier Cèdre**, planifiez quatre semaines (dates fictives à adapter) :\n- Semaine 1 : post de teasing, email d'annonce du coffret.\n- Semaine 2 : article « comment choisir une bougie », deux posts.\n- Semaine 3 : email de rappel, script vidéo de fabrication.\n- Semaine 4 : newsletter de fin de mois, post de remerciement.\n\nPersonnes fictives : Camille (rédaction), Noé (relecture), Inès (responsable éditoriale). Le juridique est consulté pour toute allégation.\n\n## Étapes\n\n1. **Créez la table « Calendrier »** avec : date, canal, sujet, format, auteur, relecteur, niveau de validation (1, 2, 3), état, lien vers le brief, lien vers la version finale.\n2. **Définissez la liste d'états** : à briefer, brouillon, en relecture, à corriger, validé, programmé, publié, archivé.\n3. **Saisissez les douze contenus** de la période et attribuez un niveau de validation en vous appuyant sur la matrice usage × risque.\n4. **Créez trois vues** : une par état, une par personne, une par semaine.\n5. **Ajoutez une colonne « preuve de validation »** (nom et date) obligatoire avant de passer à « programmé ».\n6. **Option : automatisez un rappel.** Dans l'outil d'automatisation, créez un scénario avec un bloc de déclenchement (une ligne passe à « en relecture »), puis un bloc d'envoi d'un message ou d'un email au relecteur. N'ajoutez aucun bloc qui publie.\n7. **Simulez** : faites avancer trois lignes dans le circuit, dont une renvoyée « à corriger ».\n\n## Résultat attendu\n\nUn calendrier de quatre semaines, trois vues, une règle de validation avec preuve, et, si vous l'avez fait, un rappel automatique testé.\n\n## Critères de réussite\n\n- [ ] Chaque contenu a un auteur, un relecteur, un niveau et un état.\n- [ ] Aucun contenu ne passe à « programmé » sans preuve de validation.\n- [ ] Le circuit prévoit le renvoi « à corriger ».\n- [ ] Si une automatisation existe, elle ne publie rien.\n- [ ] Un plan B manuel est décrit si l'outil gratuit atteint ses limites.\n\n## Pièges fréquents\n\n- Des états trop nombreux, que personne ne met à jour.\n- Oublier le temps de relecture dans les dates.\n- Utiliser des vraies adresses ou des vrais noms de collègues dans les tests : gardez des données fictives.\n\n## Pour aller plus loin\n\nAjoutez une colonne « indicateur de succès » et une vue « à mesurer » qui liste les contenus publiés depuis plus de sept jours."
+        }
+      ]
+    }
+  ],
+  "quiz": {
+    "title": "Quiz du module",
+    "pass_percent": 70,
+    "max_attempts": null,
+    "questions": [
+      {
+        "kind": "single_choice",
+        "prompt": "Quel rôle l'IA joue-t-elle le plus utilement dans la production de contenu de marque ?",
+        "feedback": "L'IA accélère surtout les brouillons et les déclinaisons. Le message, la vérité des faits et la validation relèvent de la marque, qui reste responsable de ce qu'elle publie.",
+        "options": [
+          [
+            "Accélérer la rédaction et la déclinaison, tandis que brief, vérification et validation restent humains",
+            true
+          ],
+          [
+            "Décider du message de la marque à la place de l'équipe",
+            false
+          ],
+          [
+            "Garantir l'exactitude des faits dans les textes",
+            false
+          ],
+          [
+            "Remplacer la validation éditoriale pour gagner du temps",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi un brief vague produit-il souvent un texte décevant avec un assistant IA ?",
+        "feedback": "Un assistant répond à ce qu'on lui donne et complète le reste par le plus plausible : générique, voire inventé. Un brief précis réduit les corrections.",
+        "options": [
+          [
+            "Parce que l'assistant refuse de répondre sans brief complet",
+            false
+          ],
+          [
+            "Parce que les assistants ne savent écrire qu'en anglais",
+            false
+          ],
+          [
+            "Parce que l'assistant comble les manques avec du texte générique ou inventé",
+            true
+          ],
+          [
+            "Parce qu'un brief court est toujours plus lent à traiter",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels éléments font partie d'un brief de contenu exploitable ?",
+        "feedback": "Un brief précise objectif, cible, message, preuves autorisées, format, ton, interdits, appel à l'action et échéance. Citer un outil à la mode ou inviter à inventer des chiffres n'a pas sa place.",
+        "options": [
+          [
+            "Ce qu'il faut éviter",
+            true
+          ],
+          [
+            "L'appel à l'action et l'échéance",
+            true
+          ],
+          [
+            "Les preuves autorisées",
+            true
+          ],
+          [
+            "Le nom de l'outil le plus récent du marché",
+            false
+          ],
+          [
+            "Une liste de statistiques à inventer si besoin",
+            false
+          ],
+          [
+            "L'objectif et la cible",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle est la différence entre ligne éditoriale et voix de marque ?",
+        "feedback": "La ligne éditoriale traite des sujets, angles, formats et fréquence ; la voix du ton, du vocabulaire et du rythme. Les deux nourrissent le brief.",
+        "options": [
+          [
+            "La ligne éditoriale concerne le visuel, la voix concerne le texte",
+            false
+          ],
+          [
+            "La ligne fixe de quoi et pourquoi on parle ; la voix fixe la manière de le dire",
+            true
+          ],
+          [
+            "Les deux désignent la même chose avec deux noms",
+            false
+          ],
+          [
+            "La voix fixe les sujets, la ligne fixe le vocabulaire",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel guide de voix est le plus exploitable par un assistant IA ?",
+        "feedback": "Les adjectifs seuls sont interprétés librement. Des exemples valides et invalides, un lexique et des interdits réduisent les écarts de ton.",
+        "options": [
+          [
+            "Trois adjectifs : chaleureux, expert, accessible",
+            false
+          ],
+          [
+            "Un paragraphe sur l'histoire de la marque",
+            false
+          ],
+          [
+            "Une liste de dix hashtags à utiliser partout",
+            false
+          ],
+          [
+            "Trois traits, chacun illustré par une phrase « oui » et une phrase « non », avec lexique et interdits",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Une consigne permanente de voix de marque permet notamment de :",
+        "feedback": "Une consigne réutilisable assure la cohérence et se met à jour facilement, mais elle ne supprime ni les erreurs de fait ni le besoin de relecture.",
+        "options": [
+          [
+            "Réutiliser les mêmes règles à chaque demande",
+            true
+          ],
+          [
+            "Mettre à jour la voix à un seul endroit",
+            true
+          ],
+          [
+            "Supprimer toute relecture humaine",
+            false
+          ],
+          [
+            "Réduire les écarts de ton sur les textes courts",
+            true
+          ],
+          [
+            "Garantir qu'aucune erreur de fait ne sera produite",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi demander d'abord un plan avant de rédiger un article avec l'IA ?",
+        "feedback": "Valider le plan permet de garder la main sur l'argumentaire et de corriger tôt. Il ne garantit ni l'exactitude ni la qualité de la rédaction.",
+        "options": [
+          [
+            "Pour corriger la structure et l'angle avant d'investir dans la rédaction",
+            true
+          ],
+          [
+            "Parce que l'assistant ne sait pas rédiger sans plan",
+            false
+          ],
+          [
+            "Pour éviter de fournir un brief",
+            false
+          ],
+          [
+            "Parce que le plan garantit l'exactitude du texte",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Un fait faux figure dans le noyau d'un article. Que se passe-t-il si vous déclinez ensuite l'article en posts et emails sans vérifier ?",
+        "feedback": "La déclinaison reproduit le noyau, erreurs comprises. Il faut vérifier le noyau avant de décliner.",
+        "options": [
+          [
+            "Chaque format corrige automatiquement l'erreur",
+            false
+          ],
+          [
+            "L'erreur se répète dans tous les formats déclinés",
+            true
+          ],
+          [
+            "L'erreur disparaît car les textes sont plus courts",
+            false
+          ],
+          [
+            "Seul l'article est concerné",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles précautions s'appliquent à un visuel généré par IA représentant un produit réel ?",
+        "feedback": "Un visuel trompeur sur le produit peut poser problème au regard de la loyauté commerciale ; les conditions d'usage varient ; l'image d'une personne demande un accord. Le texte intégré est souvent déformé.",
+        "options": [
+          [
+            "Ajouter le texte directement dans l'image générée, car il est toujours fidèle",
+            false
+          ],
+          [
+            "Ne pas laisser croire que l'image est la photographie du produit réel",
+            true
+          ],
+          [
+            "Supposer que tous les outils autorisent le même usage",
+            false
+          ],
+          [
+            "Ne pas représenter une personne réelle sans son accord",
+            true
+          ],
+          [
+            "Vérifier les conditions d'usage commercial de l'outil",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Dans la matrice usage × risque, où placer une réponse publique à une plainte sensible ?",
+        "feedback": "Une réponse publique engage la marque en direct et peut aggraver une situation. L'IA peut aider à préparer, pas à répondre seule.",
+        "options": [
+          [
+            "Risque faible : à automatiser entièrement",
+            false
+          ],
+          [
+            "Valeur forte et risque faible : à déléguer",
+            false
+          ],
+          [
+            "Risque élevé : l'IA peut aider, mais la décision et la rédaction finale restent à des humains expérimentés",
+            true
+          ],
+          [
+            "Hors matrice : aucune règle n'est nécessaire",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que signifie l'axe « risque » de la matrice usage × risque ?",
+        "feedback": "Le risque porte sur les conséquences d'une erreur : réputation, juridique, sécurité du consommateur. Il détermine le niveau de relecture et de validation.",
+        "options": [
+          [
+            "Le coût de l'abonnement à l'outil",
+            false
+          ],
+          [
+            "La longueur du texte à produire",
+            false
+          ],
+          [
+            "Le nombre de personnes qui liront le texte uniquement",
+            false
+          ],
+          [
+            "Les conséquences si le contenu est faux, trompeur ou hors ton",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Parmi ces erreurs, lesquelles sont typiques d'un texte généré par IA ?",
+        "feedback": "Les assistants produisent du plausible : chiffres fantômes, citations inventées, lissage. Ils ne garantissent pas l'exactitude.",
+        "options": [
+          [
+            "Un ton générique sans détail propre à la marque",
+            true
+          ],
+          [
+            "Des statistiques ou études sans source réelle",
+            true
+          ],
+          [
+            "Des citations attribuées à une personne sans accord",
+            true
+          ],
+          [
+            "Une absence totale de fautes de fait garantie par le modèle",
+            false
+          ],
+          [
+            "Un refus systématique de produire des textes de marque",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Un assistant écrit : « Nos tisanes sont sans pesticides depuis 2009 », mais le brief ne le mentionne pas. Que faites-vous ?",
+        "feedback": "Un fait absent du brief doit être prouvé par une source avant publication. L'assistant peut confirmer ses propres erreurs avec aplomb.",
+        "options": [
+          [
+            "Retirer ou reformuler tant qu'une pièce ne confirme pas le fait et la date",
+            true
+          ],
+          [
+            "Garder la phrase car elle est bien écrite",
+            false
+          ],
+          [
+            "Demander à l'assistant s'il est sûr, et le croire",
+            false
+          ],
+          [
+            "La garder en ajoutant « selon nous »",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi ne pas demander à l'assistant de vérifier lui-même ses affirmations ?",
+        "feedback": "Un modèle n'est pas une source. Il peut lister les affirmations à contrôler, mais la vérification se fait auprès de sources fiables.",
+        "options": [
+          [
+            "Parce qu'il ne comprend pas le français",
+            false
+          ],
+          [
+            "Parce qu'il peut confirmer ses propres erreurs ; il peut en revanche aider à lister les points à vérifier",
+            true
+          ],
+          [
+            "Parce que cela coûte trop cher en abonnement",
+            false
+          ],
+          [
+            "Parce que la vérification est interdite par la loi",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles lignes figurent utilement dans une grille de relecture ?",
+        "feedback": "La grille contrôle exactitude, allégations, voix, utilité, droits, transparence et inclusion. La vitesse ou la popularité de l'outil ne mesurent pas la qualité du contenu.",
+        "options": [
+          [
+            "Popularité de l'outil utilisé",
+            false
+          ],
+          [
+            "Conformité à la voix de marque",
+            true
+          ],
+          [
+            "Droits sur les images et les textes",
+            true
+          ],
+          [
+            "Allégations et mentions obligatoires",
+            true
+          ],
+          [
+            "Nombre de mots générés par minute",
+            false
+          ],
+          [
+            "Exactitude des faits",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que dit-on, à titre général, du droit d'auteur sur les contenus générés par IA ?",
+        "feedback": "Le statut juridique des contenus générés est discuté et variable. Il n'existe pas de réponse unique : ce contenu ne constitue pas un avis juridique.",
+        "options": [
+          [
+            "Ils sont toujours libres de droits dans tous les pays",
+            false
+          ],
+          [
+            "Ils sont toujours protégés comme une œuvre humaine",
+            false
+          ],
+          [
+            "Les règles varient et évoluent : conservez la trace de l'apport humain et vérifiez auprès du juridique",
+            true
+          ],
+          [
+            "Le droit d'auteur ne s'applique jamais aux contenus de marque",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle donnée ne devriez-vous pas coller dans un assistant non approuvé ?",
+        "feedback": "Des données personnelles de clients ne se saisissent pas dans un outil non autorisé par votre organisation. Les contenus publics ou fictifs ne posent pas ce problème.",
+        "options": [
+          [
+            "Un communiqué déjà publié sur le site",
+            false
+          ],
+          [
+            "Le texte public d'une page produit",
+            false
+          ],
+          [
+            "Un brief fictif créé pour un exercice",
+            false
+          ],
+          [
+            "Une liste de clients avec leurs noms et emails",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Dans quels cas escaladeriez-vous vers le juridique ou la direction ?",
+        "feedback": "Allégations, comparaisons et personnes réelles relèvent d'un risque juridique. Une variante simple ou une faute de frappe ne justifie pas d'escalade.",
+        "options": [
+          [
+            "Une allégation de santé sur un produit alimentaire",
+            true
+          ],
+          [
+            "L'usage de l'image d'une personne réelle",
+            true
+          ],
+          [
+            "Une comparaison avec un concurrent",
+            true
+          ],
+          [
+            "Une variante d'objet d'email sans enjeu particulier",
+            false
+          ],
+          [
+            "La correction d'une faute de frappe dans un brouillon interne",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Qui est responsable d'une erreur publiée dans un contenu rédigé avec l'IA ?",
+        "feedback": "L'assistant n'est pas un rôle responsable. La marque publie et répond de ses contenus ; la politique d'usage doit le dire.",
+        "options": [
+          [
+            "La marque et les personnes qui ont validé le contenu",
+            true
+          ],
+          [
+            "L'assistant IA, qui l'a produite",
+            false
+          ],
+          [
+            "Le fournisseur de l'outil dans tous les cas",
+            false
+          ],
+          [
+            "Personne, puisque le texte est généré",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "À quoi sert le niveau de validation 3 dans un circuit à trois niveaux ?",
+        "feedback": "Le niveau dépend du risque. Un circuit identique et lourd pour tout contenu pousse l'équipe à le contourner.",
+        "options": [
+          [
+            "À tous les contenus, pour être prudent",
+            false
+          ],
+          [
+            "Aux contenus à risque élevé : relecture, validation éditoriale puis avis juridique",
+            true
+          ],
+          [
+            "Aux brouillons internes uniquement",
+            false
+          ],
+          [
+            "Aux contenus déjà publiés",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Que garder comme traces pour un contenu assisté par IA ?",
+        "feedback": "Les traces utiles documentent le brief, les faits, la validation et la version publiée. Mots de passe et données personnelles superflues n'ont pas à y figurer.",
+        "options": [
+          [
+            "Les mots de passe de l'outil",
+            false
+          ],
+          [
+            "Le brief et la version du guide de voix",
+            true
+          ],
+          [
+            "La version publiée",
+            true
+          ],
+          [
+            "Le nom de la personne qui a validé et la date",
+            true
+          ],
+          [
+            "Les sources des faits vérifiés",
+            true
+          ],
+          [
+            "Les données personnelles de tous les clients de la marque",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi placer une étape humaine avant la publication dans une automatisation no-code ?",
+        "feedback": "L'automatisation peut notifier ou créer des lignes, mais la décision de publier reste humaine.",
+        "options": [
+          [
+            "Parce que les outils no-code ne savent pas publier",
+            false
+          ],
+          [
+            "Parce que cela rend l'automatisation plus rapide",
+            false
+          ],
+          [
+            "Pour qu'un contenu non validé ne soit jamais publié automatiquement",
+            true
+          ],
+          [
+            "Parce que c'est exigé par tous les outils gratuits",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel indicateur mesure directement la qualité de vos briefs et consignes ?",
+        "feedback": "Un brouillon conforme du premier coup montre que le brief et les consignes étaient bons. Les autres indicateurs ne mesurent pas cela.",
+        "options": [
+          [
+            "Le nombre de textes générés par jour",
+            false
+          ],
+          [
+            "Le nombre d'abonnés de la marque",
+            false
+          ],
+          [
+            "La longueur moyenne des textes",
+            false
+          ],
+          [
+            "La part de brouillons passés en relecture sans correction majeure",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi faut-il comparer avec prudence les performances de contenus avec et sans IA ?",
+        "feedback": "Il faut comparer des contenus comparables (même canal, sujet, période) et éviter de conclure d'un seul cas.",
+        "options": [
+          [
+            "Parce que, avec de petits volumes et des conditions différentes, l'écart peut tenir au hasard ou à la saison",
+            true
+          ],
+          [
+            "Parce que l'IA fausse toujours les statistiques",
+            false
+          ],
+          [
+            "Parce que les contenus sans IA performent toujours mieux",
+            false
+          ],
+          [
+            "Parce qu'il est interdit de comparer",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels coûts faut-il inclure pour comparer honnêtement un contenu assisté à un contenu classique ?",
+        "feedback": "Le temps affiché de génération ne reflète qu'une petite partie du travail. Brief, relecture, corrections et risques comptent.",
+        "options": [
+          [
+            "Aucun coût humain, car l'IA travaille seule",
+            false
+          ],
+          [
+            "Le coût des corrections après publication",
+            true
+          ],
+          [
+            "Le temps de brief et de préparation",
+            true
+          ],
+          [
+            "Le temps de relecture et de vérification",
+            true
+          ],
+          [
+            "Uniquement le temps de génération du brouillon",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Décrivez en quelques lignes comment vous passeriez un brouillon généré par IA à la relecture avant publication : ce que vous contrôlez, dans quel ordre, et qui valide.",
+        "feedback": "Une bonne réponse cite la vérification des faits et des sources en priorité, le contrôle des allégations et mentions, la voix de marque, les droits, la grille remplie, le niveau de validation selon le risque, la validation par une personne identifiée et la conservation des traces.",
+        "options": []
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Vous devez écrire une consigne réutilisable pour décliner le même message en email et en post. Indiquez ce que vous y mettriez, et pourquoi chaque élément réduit un risque.",
+        "feedback": "Une bonne réponse mentionne rôle, voix avec exemples oui et non, interdits, faits autorisés uniquement, règle de demande d'information manquante, signalement des ajouts, et précise que la relecture humaine reste nécessaire.",
+        "options": []
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Comment présenter les repères juridiques d'un guide de production destiné à une équipe marketing ?",
+        "feedback": "Une équipe marketing peut connaître les familles de risques sans prétendre donner un avis. Le guide renvoie vers le juridique pour les cas concernés.",
+        "options": [
+          [
+            "Comme un avis juridique définitif applicable partout",
+            false
+          ],
+          [
+            "En termes généraux, avec mention d'une vérification auprès du service juridique à la date de lecture",
+            true
+          ],
+          [
+            "En citant des décisions de justice de mémoire",
+            false
+          ],
+          [
+            "En les omettant car ils relèvent uniquement des juristes",
+            false
+          ]
+        ]
+      }
+    ]
+  },
+  "assignment": {
+    "title": "Livrable pratique : guide de production de contenu assisté par IA pour une marque",
+    "instructions_md": "## Objectif\n\nProduire un **guide de production de contenu assisté par IA** pour une marque, réelle de votre choix ou fictive (par exemple Brindille & Co ou Atelier Cèdre). Il doit permettre à une équipe de produire, relire et valider des contenus de façon cohérente. Toutes les données sont fictives ou publiques : aucune donnée personnelle ni confidentielle n'est nécessaire.\n\n## Consignes\n\nCe livrable se réalise **sans code**, avec les outils no-code des trois ateliers du dernier chapitre : assistant IA, tableur ou page collaborative, et, en option, un outil d'automatisation. Le rendu peut être un document, un export PDF, un lien partagé ou une copie de vos tableaux.\n\n1. **Cadrage de la marque** : présentation en cinq lignes, public, ligne éditoriale (sujets, angles, formats, fréquence).\n2. **Modèle de brief** : les huit éléments, avec un exemple rempli.\n3. **Guide de voix de marque** : au moins trois traits avec exemples « oui » et « non », lexique préféré et à éviter, règles de forme, interdits.\n4. **Bloc de consignes réutilisable** : rôle, voix, interdits, règle pour les informations manquantes, avec au moins deux versions et un journal des écarts constatés.\n5. **Lot de test** : au moins quatre contenus de formats différents (email, post, script, page ou article) produits à partir d'un même noyau.\n6. **Grille de relecture** remplie pour chaque contenu, avec les corrections apportées et les sources utilisées pour les faits.\n7. **Matrice usage × risque** : au moins huit types de contenus, niveau d'assistance autorisé et niveau de validation (1, 2 ou 3).\n8. **Circuit de validation** : rôles, états, preuve de validation, traces conservées, règles d'escalade vers le juridique.\n9. **Politique d'usage** d'une page : informations interdites en saisie, outils autorisés, transparence sur l'usage de l'IA, point de contact.\n10. **Calendrier éditorial** de quatre semaines avec états et responsables.\n11. **Mesure et amélioration** : indicateurs choisis (au moins quatre dont un indicateur de qualité des briefs), estimation du temps par étape, et une règle d'amélioration à réviser.\n12. **Limites et vérifications** : une rubrique indiquant ce qui reste à vérifier auprès du juridique et des outils, à la date de lecture. Ne présentez pas ce guide comme un avis juridique.\n\n## Grille d'évaluation\n\n- **Brief et voix (20 points)** : brief complet, traits de voix concrets avec exemples, interdits explicites.\n- **Production et relecture (25 points)** : lot varié, grille appliquée, corrections et sources documentées, aucun fait inventé conservé.\n- **Droits, confidentialité et risques (20 points)** : matrice cohérente, escalades justifiées, politique d'usage applicable, repères juridiques prudents et non présentés comme un avis.\n- **Circuit et calendrier (20 points)** : rôles, états, validation humaine avant publication, traces, calendrier réaliste intégrant la relecture.\n- **Mesure et amélioration (10 points)** : indicateurs liés aux objectifs, temps complet compté, lecture prudente.\n- **Clarté et utilisabilité (5 points)** : un nouveau membre d'équipe peut appliquer le guide.\n\n**Seuil de réussite : 70 points sur 100.**\n\n## Variante facultative pour profils techniques\n\nVous pouvez automatiser davantage le circuit (rappels, création de lignes) à condition qu'aucune étape ne publie sans validation humaine. Cette variante n'est pas requise pour valider le module."
+  }
+}

@@ -16,7 +16,7 @@ test("visitor browses the catalogue and cannot buy an unpublished module", async
   await page.getByRole("button", { name: "Rechercher" }).click();
   await page.getByRole("link", { name: /Retrieval-Augmented Generation/ }).first().click();
   await expect(page.getByRole("heading", { level: 1, name: /Retrieval/ })).toBeVisible();
-  await expect(page.getByText("Bientôt disponible").first()).toBeVisible();
+  await expect(page.getByText(/En préparation|Aperçu gratuit/).first()).toBeVisible();
   await expect(page.getByRole("link", { name: "Acheter ce module" })).toHaveCount(0);
   await expect(page.getByRole("button", { name: "Me prévenir" })).toBeVisible();
 });

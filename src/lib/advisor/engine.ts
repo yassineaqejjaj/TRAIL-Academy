@@ -12,10 +12,10 @@ export interface Recommendation {
   alternative?: { pathSlug: string; pathTitle: string };
 }
 
-const PATHS = ["product-manager-augmente", "ai-product-manager"] as const;
+const PATHS = ["product-manager-augmente", "ai-product-manager", "marketing-communication-augmentee", "rh-augmentees", "juridique-augmente", "finance-augmentee"] as const;
 
 export function recommend(input: AdvisorInput, catalog: Catalog = staticCatalog): Recommendation {
-  const scores: Record<string, number> = { "product-manager-augmente": 0, "ai-product-manager": 0 };
+  const scores: Record<string, number> = Object.fromEntries(PATHS.map((s) => [s, 0]));
   const reasons: string[] = [];
 
   for (const rule of rules) {
@@ -36,7 +36,7 @@ export function recommend(input: AdvisorInput, catalog: Catalog = staticCatalog)
     (masteryRules.suggestWhenBuilderAndHighTech && input.familiarity === "builder" && input.technical === "high" && input.objective === "build")
   ) {
     slug = "ai-mastery";
-    reasons.push("Vos réponses couvrent les deux parcours : l'accès complet AI Mastery évite de payer deux fois le contenu commun.");
+    reasons.push("Vos réponses couvrent plusieurs parcours : l'accès complet AI Mastery évite de payer deux fois le contenu commun.");
   }
 
   const path = getPath(slug, catalog)!;
@@ -44,7 +44,7 @@ export function recommend(input: AdvisorInput, catalog: Catalog = staticCatalog)
   // Beginners with no prior AI familiarity start with foundations: ensure M3 comes first.
   if (input.familiarity === "none") reasons.push("Vous débutez : la séquence commence par les fondations (IA générative).");
   if (input.familiarity === "builder") {
-    list = list.filter((c) => c.code !== "M3" || path.courseCodes.length === 18);
+    list = list.filter((c) => c.code !== "M3" || path.kind === "bundle");
     reasons.push("Vous avez déjà construit avec l'IA : le module d'introduction à l'IA générative est optionnel.");
   }
 

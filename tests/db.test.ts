@@ -23,10 +23,10 @@ beforeAll(async () => {
 });
 
 describe("seed", () => {
-  it("creates 18 courses, 4 phases, 3 paths", async () => {
-    expect(await count("select 1 from courses")).toBe(18);
-    expect(await count("select 1 from learning_phases")).toBe(4);
-    expect(await count("select 1 from learning_paths")).toBe(3);
+  it("creates 30 courses, 5 phases, 7 paths", async () => {
+    expect(await count("select 1 from courses")).toBe(30);
+    expect(await count("select 1 from learning_phases")).toBe(5);
+    expect(await count("select 1 from learning_paths")).toBe(7);
     expect(await count("select 1 from learning_path_courses lp join learning_paths p on p.id = lp.path_id where p.slug = 'ai-product-manager'")).toBe(13);
   });
   it("seeds no customers, orders or testimonials", async () => {
@@ -427,5 +427,17 @@ describe("live sessions: calendar, booking, waiting list, private link", () => {
     await db.exec("set role service_role;");
     try { await db.query(`select anonymize_user('${U2}')`); } finally { await db.exec("reset role;"); }
     expect(await count(`select 1 from session_bookings where user_id = '${U2}'`)).toBe(0);
+  });
+});
+
+describe("migration 0012 (profession modules) is idempotent and closed for sale", () => {
+  it("re-running it changes nothing and opens nothing", async () => {
+    const { readFileSync } = await import("node:fs");
+    const before = await count("select 1 from courses");
+    await db.exec(readFileSync("db/migrations/0012_business_profiles.sql", "utf8"));
+    expect(await count("select 1 from courses")).toBe(before);
+    expect(await count("select 1 from products where active and (course_id in (select id from courses where phase_id = 5) or slug in ('rh-augmentees','juridique-augmente','finance-augmentee','marketing-communication-augmentee'))")).toBe(0);
+    expect(await count("select 1 from courses where phase_id = 5 and status <> 'coming_soon'")).toBe(0);
+    expect(await count("select 1 from products where slug in ('rh-augmentees','juridique-augmente','finance-augmentee','marketing-communication-augmentee')")).toBe(4);
   });
 });

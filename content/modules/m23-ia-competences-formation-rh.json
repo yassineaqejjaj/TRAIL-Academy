@@ -1,0 +1,834 @@
+{
+  "course": "M23",
+  "slug": "ia-competences-formation-rh",
+  "source": "Contenu original rédigé pour TRAIL Academy à partir du programme du module (sans slides sources). Pas de vidéo : à ajouter depuis l'administration.",
+  "chapters": [
+    {
+      "title": "Référentiels et cartographie des compétences",
+      "lessons": [
+        {
+          "title": "Compétences, postes et référentiels : poser le vocabulaire",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Distinguer compétence, savoir-faire, savoir-être et connaissance.\n- Comprendre à quoi sert un référentiel et ce que l'IA peut y apporter.\n- Fixer le fil rouge du module.\n\n## Le fil rouge\n\nNous suivons une organisation **fictive**, la coopérative « Atelier du Littoral », qui gère des boutiques et une plateforme de vente en ligne. Son équipe « Relation client » compte huit personnes inventées : Awa, Basile, Chloé, Dario, Emma, Farid, Gaëlle et Hugo. Toutes les données du module sont inventées pour les besoins des exercices.\n\n## Quelques définitions de travail\n\n- **Connaissance** : ce que l'on sait (la politique de retour des produits).\n- **Savoir-faire** : ce que l'on sait faire (traiter une réclamation dans l'outil de tickets).\n- **Compétence** : la capacité à **mobiliser** connaissances et savoir-faire, dans un contexte donné, pour obtenir un résultat observable (désamorcer un client mécontent et trouver une solution acceptable).\n- **Référentiel** : un document structuré qui décrit les compétences attendues pour un métier, un poste ou une équipe, souvent avec des **niveaux**.\n\nCes définitions sont des conventions pratiques. Votre organisation en a peut-être d'autres : l'essentiel est que tout le monde utilise les mêmes.\n\n## Pourquoi cartographier\n\nUne **cartographie des compétences** répond à trois questions : de quoi avons-nous besoin, que possédons-nous, que manque-t-il ? Elle sert à planifier la formation, les recrutements, les remplacements et les mobilités. Sans elle, les décisions reposent sur des impressions.\n\n## Ce que l'IA change, et ce qu'elle ne change pas\n\n- Elle **accélère la rédaction** : proposer un premier brouillon de référentiel à partir d'une description de poste, harmoniser des intitulés, reformuler des niveaux.\n- Elle **aide à structurer** : regrouper des compétences voisines, repérer des doublons.\n- Elle **ne connaît pas votre réalité** : ni votre métier précis, ni le niveau réel de vos collaborateurs. Elle peut produire des compétences plausibles mais génériques, voire inventées.\n\nLa règle du module : **l'IA propose, des personnes qui connaissent le métier valident.**\n\n## Mise en pratique\n\nChoisissez une équipe que vous connaissez. Écrivez en une phrase le **résultat** que cette équipe doit produire, puis listez cinq compétences qui y contribuent. Demandez-vous pour chacune : comment la verrait-on à l'œuvre ?"
+        },
+        {
+          "title": "De l'analyse de poste au référentiel avec un assistant IA",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Passer d'une fiche de poste à une liste de compétences observables.\n- Rédiger une consigne qui limite l'invention.\n\n## Partir de l'activité réelle\n\nUne fiche de poste décrit souvent des intentions. Pour une cartographie utile, partez de l'**activité** : quelles tâches, quelles situations difficiles, quels résultats ? Cinq sources simples : la fiche de poste, un entretien avec la personne responsable de l'équipe, des exemples d'incidents ou de réussites, les procédures existantes, des retours de clients internes.\n\n## Un cycle en quatre temps\n\n```mermaid\nflowchart LR\n  accTitle: Du poste au référentiel validé\n  accDescr: Les sources d'activité alimentent un brouillon produit par l'assistant IA, relu par des experts du métier, puis validé et publié. Les écarts relevés retournent à la rédaction.\n  A[\"Activités et situations réelles\"] --> B[\"Brouillon généré par l'assistant\"]\n  B --> C[\"Relecture par des experts du métier\"]\n  C --> D[\"Référentiel validé et daté\"]\n  C -.->|\"Écarts, ajouts, suppressions\"| B\n```\n*Figure 1 : le brouillon de l'assistant n'est jamais publié tel quel ; les experts du métier valident et le référentiel est daté.*\n\n## Un exemple de consigne\n\n« Voici trois descriptions de tâches de l'équipe Relation client (texte ci-dessous). Propose une liste de huit compétences maximum. Pour chacune : un intitulé court, une phrase de définition, trois indicateurs observables. Appuie-toi **uniquement** sur le texte fourni. Si une information manque, écris \"à compléter\" plutôt que de supposer. »\n\nTrois éléments protègent contre l'invention : le **texte source fourni**, la **limite de nombre**, l'**autorisation de dire « à compléter »**.\n\n## Des niveaux utilisables\n\nDécrivez chaque niveau par ce que la personne **fait**, pas par un adjectif. Exemple fictif pour « Traiter une réclamation » :\n\n- **Niveau 1** : applique la procédure avec l'aide d'un guide.\n- **Niveau 2** : traite seule les cas courants.\n- **Niveau 3** : traite les cas complexes et conseille ses collègues.\n- **Niveau 4** : améliore la procédure et forme les autres.\n\nQuatre niveaux ou trois : l'important est de pouvoir les distinguer sans débat.\n\n## Points d'attention\n\n- Évitez les listes de trente compétences : au-delà d'une dizaine par rôle, plus personne ne s'en sert.\n- Évitez les termes vagues (« dynamisme », « esprit d'équipe ») sans comportement observable.\n- Ne copiez pas dans l'assistant de données personnelles : travaillez sur des descriptions de **postes**, pas de personnes.\n\n## Question de réflexion\n\nPour l'une de vos compétences, quels seraient trois indicateurs que vous pourriez constater sans interroger la personne ?"
+        },
+        {
+          "title": "Cartographie assistée et vérification humaine",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Construire une matrice équipe × compétences.\n- Mettre en place une vérification humaine des positionnements.\n- Connaître les limites d'une cartographie.\n\n## La matrice\n\nLa cartographie la plus simple est un **tableau** : en lignes, les personnes ; en colonnes, les compétences du référentiel ; dans les cellules, un niveau (0 = non évalué, puis 1 à 4). On y ajoute deux colonnes précieuses : la **source** du niveau (auto-évaluation, avis du responsable, observation, certification) et la **date**.\n\n## D'où viennent les niveaux ?\n\n- **Auto-évaluation** : rapide, mais sensible à l'assurance de chacun.\n- **Avis du responsable** : proche du terrain, mais subjectif.\n- **Preuves** : projets réalisés, formations suivies, certifications.\n- **Croisement** : le plus fiable, mais plus coûteux.\n\nL'IA peut aider à **mettre en forme** des éléments que la personne a elle-même fournis (par exemple relire un portfolio de réalisations et suggérer les compétences concernées). Elle ne doit pas **deviner** un niveau à partir de messages, de courriels ou d'indices indirects : ce serait peu fiable et disproportionné.\n\n## Le circuit de vérification\n\n```mermaid\nsequenceDiagram\n  accTitle: Circuit de vérification d'un positionnement\n  accDescr: La personne propose son niveau, l'assistant met en forme les preuves, le responsable confirme ou corrige, puis la personne peut contester avant l'enregistrement.\n  participant P as Collaborateur\n  participant A as Assistant IA\n  participant R as Responsable\n  participant T as Tableau de cartographie\n  P->>A: Preuves et auto-évaluation\n  A->>P: Synthèse des preuves par compétence\n  P->>R: Niveau proposé\n  R->>P: Confirmation ou correction motivée\n  P->>R: Réponse ou contestation éventuelle\n  R->>T: Enregistrement du niveau, source et date\n```\n*Figure 1 : l'assistant met en forme, les humains décident ; la personne concernée voit et peut commenter son positionnement.*\n\n## Qualité des données\n\n- Datez chaque niveau : une cartographie vieille de deux ans est trompeuse.\n- Indiquez la **source**, pour savoir à quel point se fier à une cellule.\n- Comparez les équipes avec prudence : les échelles n'ont pas la même signification partout.\n- Prévoyez une **mise à jour régulière**, par exemple à chaque fin de projet ou chaque semestre (rythme à adapter).\n\n## Limites et précautions\n\nUne cartographie reflète un moment et une méthode, pas la valeur d'une personne. Elle ne doit pas servir à classer les individus de façon opaque. Les compétences concernant des personnes identifiées relèvent des données personnelles : voir le chapitre suivant.\n\n## Mise en pratique\n\nDessinez la matrice de votre équipe avec trois personnes et cinq compétences, et décidez pour chaque cellule la **source** acceptée."
+        }
+      ]
+    },
+    {
+      "title": "Parcours de développement personnalisés",
+      "lessons": [
+        {
+          "title": "Analyse d'écarts : de la cartographie aux besoins de développement",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Calculer et lire un écart entre niveau actuel et niveau cible.\n- Distinguer besoin de développement, besoin d'organisation et besoin de recrutement.\n\n## Un écart n'est pas un défaut\n\nL'**écart** est la différence entre le niveau **cible** d'un rôle (ce que l'activité demande) et le niveau **actuel** d'une personne. Exemple fictif : pour « Traiter une réclamation », le rôle demande 3 et Basile est à 2 : écart de 1.\n\nTrois lectures possibles, qu'il faut distinguer :\n\n- **Écart individuel** : une personne doit progresser. C'est un besoin de développement.\n- **Écart collectif** : personne dans l'équipe n'atteint le niveau cible. Le problème est d'organisation, de recrutement ou d'outillage, pas seulement de formation.\n- **Surcapacité** : plusieurs personnes dépassent la cible. Une opportunité de mentorat ou de mobilité.\n\n## Prioriser les écarts\n\nTous les écarts ne méritent pas la même urgence. Deux questions simples :\n\n- **Criticité** : quelle conséquence si la compétence manque (arrêt d'une activité, risque, plainte) ?\n- **Délai** : à quelle échéance la compétence est-elle nécessaire ?\n\n```mermaid\nquadrantChart\n  accTitle: Priorisation des écarts de compétences\n  accDescr: Matrice à deux axes, criticité et urgence, qui classe cinq écarts fictifs d'une équipe. Les écarts critiques et urgents sont à traiter en premier.\n  x-axis \"Peu urgent\" --> \"Urgent\"\n  y-axis \"Peu critique\" --> \"Très critique\"\n  quadrant-1 \"Traiter en premier\"\n  quadrant-2 \"Planifier\"\n  quadrant-3 \"Surveiller\"\n  quadrant-4 \"Traiter vite et simplement\"\n  \"Nouvel outil de tickets\": [0.85, 0.7]\n  \"Gestion des litiges\": [0.35, 0.85]\n  \"Rédaction de réponses\": [0.7, 0.3]\n  \"Reporting d'activité\": [0.2, 0.25]\n  \"Anglais écrit\": [0.4, 0.4]\n```\n*Figure 1 : exemple fictif de priorisation ; les positions sont illustratives et décidées par l'équipe, pas calculées.*\n\n## Ce que l'IA peut faire\n\n- Calculer des écarts à partir d'une table (un tableur le fait aussi, de façon plus sûre).\n- Regrouper les écarts en **thèmes** de développement.\n- Proposer des **hypothèses d'explication** (manque de pratique, de temps, d'outil) à confirmer en entretien.\n\nAttention : demandez le calcul au **tableur** quand c'est possible, et utilisez l'assistant pour interpréter et rédiger. Les assistants se trompent parfois sur l'arithmétique.\n\n## Mise en pratique\n\nAvec trois personnes et trois compétences fictives, calculez les écarts, classez-les, puis dites pour chacun s'il relève de la formation, de l'organisation ou du recrutement."
+        },
+        {
+          "title": "Recommandations de parcours : construire, relire, personnaliser",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Construire un plan de développement à partir d'un écart.\n- Utiliser l'IA pour proposer des pistes sans lui déléguer la décision.\n- Respecter le principe du « 70-20-10 » comme repère, pas comme règle.\n\n## Un plan de développement tient en six éléments\n\n1. La **compétence visée** et le niveau cible.\n2. Le **point de départ** (niveau actuel et preuves).\n3. Les **actions** : pratique sur le terrain, accompagnement par un pair, formation formelle.\n4. Le **temps** réservé et le soutien du responsable.\n5. Les **échéances** et points d'étape.\n6. Les **preuves de progrès** attendues.\n\nLe repère « 70-20-10 » dit que l'essentiel du développement vient de la pratique, une part de l'échange avec les autres, une part moindre de la formation formelle. C'est un ordre d'idée largement cité, pas une loi mesurée : utilisez-le pour **équilibrer** vos plans, sans prétendre à ces proportions exactes.\n\n## Le rôle de l'assistant\n\nUne consigne type : « Voici l'écart, le contexte du poste (texte fourni), les contraintes de temps. Propose trois actions de développement, dont au moins une de pratique et une d'échange avec un pair. Indique pour chacune comment on constate le progrès. Ne cite aucun cours ni organisme précis : je compléterai avec le catalogue de l'organisation. »\n\nCette dernière phrase compte : un assistant peut inventer des formations ou des organismes qui n'existent pas. Les ressources doivent venir de **votre catalogue** vérifié.\n\n## Personnaliser sans enfermer\n\n- **Pour qui ?** Tenez compte des préférences, du temps disponible, de l'accessibilité des formats.\n- **Avec qui ?** Le plan se construit **avec** la personne, pas pour elle.\n- **Vers où ?** Un plan de développement ne doit pas figer quelqu'un dans un rôle ; laissez place aux aspirations.\n\n## Parcours type d'une recommandation\n\n```mermaid\nflowchart TD\n  accTitle: Chaîne de recommandation d'un parcours\n  accDescr: L'écart et le contexte produisent des pistes proposées par l'assistant, qui sont croisées avec le catalogue vérifié, discutées en entretien puis validées dans un plan daté.\n  E[\"Écart et contexte\"] --> P[\"Pistes proposées par l'assistant\"]\n  P --> C[\"Croisement avec le catalogue vérifié\"]\n  C --> D[\"Entretien : choix avec la personne\"]\n  D --> V[\"Plan daté et suivi\"]\n  C -.->|\"Piste absente du catalogue\"| X[\"Écartée ou à vérifier\"]\n```\n*Figure 1 : les pistes de l'assistant passent par le catalogue vérifié et par un entretien avant tout engagement.*\n\n## Question de réflexion\n\nDans votre organisation, qui valide le contenu d'un parcours avant qu'il soit proposé à quelqu'un ?"
+        },
+        {
+          "title": "Limites, consentement et proportionnalité",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Identifier les risques d'un usage de l'IA sur des données de compétences.\n- Appliquer les principes de finalité, minimisation, transparence et proportionnalité.\n\n## Les compétences d'une personne sont des données personnelles\n\nDès qu'une cartographie ou un plan identifie quelqu'un, il s'agit de **données personnelles**, que l'organisation doit traiter avec des garanties. Les principes généraux du RGPD reviennent ici : une **finalité** claire, la **minimisation** (ne collecter que le nécessaire), l'**information** des personnes, une **durée de conservation** limitée, la **sécurité**. S'y ajoutent les règles du droit du travail et de la formation professionnelle, qui encadrent notamment la place des représentants du personnel et l'information des salariés. Ce contenu est une aide à la réflexion et ne constitue pas un avis juridique. Les cadres applicables (RGPD, droit du travail, formation professionnelle, AI Act) évoluent : vérifiez-les auprès de votre service juridique à la date de lecture.\n\n## Consentement ou autre base ?\n\nDans une relation de travail, le **consentement** est délicat : une personne peut craindre de refuser. Beaucoup d'organisations s'appuient plutôt sur d'autres fondements, à confirmer par le juridique. Quel que soit le fondement, la **transparence** reste attendue : dire quelles données, pour quoi faire, qui y accède, combien de temps, comment les corriger.\n\n## Proportionnalité\n\nUne question à se poser avant tout traitement : **le moyen est-il proportionné au but ?** Quelques exemples fictifs :\n\n- Demander à chacun de s'auto-évaluer sur dix compétences métier : proportionné.\n- Faire analyser par une IA les messages internes pour deviner les compétences de chacun : disproportionné et peu fiable.\n- Utiliser une cartographie pour proposer des formations : conforme à la finalité. L'utiliser ensuite, sans l'avoir annoncé, pour décider des promotions : changement de finalité à éviter.\n\n## Décisions automatisées\n\nSi un système prend ou prépare **seul** des décisions importantes pour une personne (accès à une formation, évolution), des règles spécifiques peuvent s'appliquer, et l'AI Act peut classer certains usages liés à l'emploi parmi les systèmes à risque élevé. Dans tous les cas, gardez une **décision humaine** et un droit de recours.\n\n## Biais\n\nUn assistant peut reprendre des stéréotypes (genre, âge, origine) présents dans ses données d'entraînement ou dans vos documents. Ne lui demandez pas de déduire un potentiel ou un profil de personnalité. Relisez les recommandations pour vérifier qu'elles ne diffèrent pas sans raison d'une personne à l'autre.\n\n## Check-list avant de lancer\n\n- La finalité est écrite et communiquée.\n- Les données sont limitées au nécessaire.\n- Les personnes voient leurs données et peuvent les corriger.\n- Les données personnelles ne sont pas envoyées à un outil non validé par l'organisation.\n- Un humain décide, et un recours existe.\n- Le service juridique et le DPO (ou l'équivalent) ont été consultés.\n\n## Mise en pratique\n\nPrenez un usage de l'IA que vous envisagez et notez sa finalité en une phrase, les données nécessaires, et une donnée que vous renonceriez à collecter."
+        }
+      ]
+    },
+    {
+      "title": "Onboarding assisté",
+      "lessons": [
+        {
+          "title": "Concevoir un parcours d'intégration structuré",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Structurer l'intégration d'une personne sur plusieurs semaines.\n- Repérer les moments qui comptent et ce que l'IA peut y automatiser.\n\n## Une intégration est un parcours\n\nL'**onboarding** ne s'arrête pas au premier jour. Un repère courant est le plan **30-60-90 jours** : une première période pour découvrir, une deuxième pour contribuer avec soutien, une troisième pour travailler de façon autonome. Les durées sont une convention, à adapter à votre métier.\n\nIllustration fictive : Inès rejoint l'équipe Relation client de l'Atelier du Littoral.\n\n```mermaid\njourney\n  accTitle: Parcours d'intégration d'une nouvelle recrue\n  accDescr: Parcours fictif en trois phases. L'enthousiasme est élevé à l'accueil, baisse au moment des premiers accès et des premiers cas réels, puis remonte avec l'autonomie. Les scores sont illustratifs.\n  title Intégration d'Inès, valeurs fictives\n  section Avant l'arrivée\n    Recevoir le message d'accueil: 4: Inès\n    Obtenir les accès: 2: Inès, Informatique\n  section 30 premiers jours\n    Rencontrer l'équipe: 5: Inès, Équipe\n    Suivre les formations de base: 3: Inès\n  section 60 jours\n    Traiter des cas avec un binôme: 4: Inès, Binôme\n  section 90 jours\n    Travailler en autonomie: 5: Inès\n```\n*Figure 1 : parcours fictif d'une recrue ; les scores de ressenti sont illustratifs et servent à repérer les points de friction.*\n\n## Les ingrédients d'un bon parcours\n\n- **Avant l'arrivée** : accès, matériel, message d'accueil, programme de la première semaine.\n- **Un parrain ou une marraine**, un binôme identifié.\n- **Des objectifs** clairs à 30, 60 et 90 jours, visibles pour la personne et son responsable.\n- **Des points d'étape** réguliers, courts, avec des questions simples (ce qui va bien, ce qui bloque).\n- **Des ressources** organisées : procédures, glossaire, contacts.\n\n## Où l'IA aide\n\n- Rédiger les **messages de bienvenue**, les ordres du jour de la première semaine, les check-lists.\n- Générer un **glossaire** des sigles internes à partir de documents fournis.\n- **Personnaliser** un parcours selon le poste en partant d'un modèle validé.\n- Préparer des **rappels** et un suivi (voir atelier 2).\n\n## Où l'humain reste indispensable\n\nL'accueil, la confiance, la compréhension de la culture, le retour sur le travail : tout cela passe par des personnes. Un assistant ne remplace pas le binôme.\n\n## Question de réflexion\n\nDans votre organisation, à quel moment une nouvelle recrue est-elle le plus susceptible de se sentir perdue, et qu'est-ce qui pourrait l'éviter ?"
+        },
+        {
+          "title": "Assistants de questions-réponses internes",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Comprendre ce qu'est un assistant de questions-réponses fondé sur des documents internes.\n- Définir son périmètre, ses sources et ses limites.\n\n## À quoi ça sert\n\nLes nouveaux arrivants posent mille questions : comment poser un congé, où trouver tel modèle, qui contacter pour tel sujet. Un **assistant interne de questions-réponses** répond à partir de **documents de l'organisation** (procédures, FAQ, guides). Techniquement, on parle souvent de génération augmentée par la recherche (voir le module M11 pour le principe). Ici, nous nous intéressons à la **conception du service**, sans développement.\n\n## Le principe\n\n```mermaid\nflowchart LR\n  accTitle: Assistant de questions-réponses sur documents internes\n  accDescr: Une question est posée, l'assistant recherche dans les documents validés, formule une réponse avec la source citée, ou oriente vers une personne s'il ne trouve pas.\n  Q[\"Question de la recrue\"] --> R[\"Recherche dans les documents validés\"]\n  R -->|\"Passage trouvé\"| A[\"Réponse avec source citée\"]\n  R -->|\"Rien de fiable\"| H[\"Orientation vers une personne\"]\n  A --> F[\"Retour : utile ou non ?\"]\n  H --> F\n```\n*Figure 1 : l'assistant répond uniquement à partir de documents validés, cite sa source, et sait dire qu'il ne sait pas.*\n\n## Définir le périmètre\n\n- **Sujets couverts** : procédures pratiques, organisation, outils. \n- **Sujets exclus** : questions individuelles sensibles (paie, santé, litiges), décisions, avis juridiques. L'assistant doit renvoyer vers les personnes compétentes.\n- **Sources** : une liste précise de documents, avec un responsable pour chacun.\n\n## Règles de comportement à inscrire dans la consigne\n\n- Répondre **seulement** à partir des documents fournis.\n- **Citer** le document et la section.\n- Dire « je ne trouve pas cette information » quand c'est le cas, et proposer un contact.\n- Ne jamais inventer de règle, de délai ou de montant.\n- Rappeler que la réponse est une aide et que le document fait foi.\n\n## Confidentialité\n\nNe chargez que des documents que l'organisation autorise à partager avec l'outil choisi. Vérifiez où les données sont traitées et si elles servent à entraîner des modèles : ce sont des questions pour le service informatique et le juridique. Pour vos exercices, n'utilisez que des documents fictifs.\n\n## Évaluer l'assistant avant ouverture\n\nPréparez vingt questions réelles de nouveaux arrivants, avec la bonne réponse attendue. Testez, comptez les réponses justes, incomplètes, fausses, et les « je ne sais pas » justifiés. Un taux d'erreur acceptable dépend du sujet : tolérant pour trouver une salle, nul pour des règles de sécurité.\n\n## Mise en pratique\n\nRédigez dix questions qu'une recrue pose souvent, et pour chacune indiquez le document qui contient la réponse. Si vous n'en trouvez pas, vous avez identifié un trou de documentation."
+        },
+        {
+          "title": "Garder le contenu à jour : gouvernance documentaire",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Mettre en place des règles pour que l'assistant ne diffuse pas d'informations périmées.\n- Répartir les responsabilités.\n\n## Le vrai risque : l'obsolescence\n\nUn assistant répond avec ce qu'on lui donne. Si la procédure de remboursement des frais a changé et que l'ancien document traîne, l'assistant répondra faux, avec aplomb. La qualité du service dépend donc davantage de la **gouvernance documentaire** que de l'outil.\n\n## Des règles simples\n\n- **Un propriétaire par document** : une personne nommée, responsable de l'exactitude.\n- **Une date de dernière révision** visible, et une date de **prochaine revue**.\n- **Un statut** : en vigueur, en révision, archivé. Seuls les documents en vigueur sont accessibles à l'assistant.\n- **Une seule version de référence** : pas de copies divergentes.\n- **Un circuit de mise à jour** : quand une règle change, qui prévient qui, et dans quel délai le document est-il corrigé ?\n\n## Cycle de vie d'un document\n\n```mermaid\nstateDiagram-v2\n  accTitle: Cycle de vie d'un document source\n  accDescr: Un document passe de brouillon à validé, puis en vigueur. Il retourne en révision à échéance ou signalement, puis est archivé quand il n'est plus applicable.\n  [*] --> Brouillon\n  Brouillon --> Valide: Relecture du propriétaire\n  Valide --> EnVigueur: Publication\n  EnVigueur --> EnRevision: Échéance ou signalement\n  EnRevision --> EnVigueur: Mise à jour validée\n  EnVigueur --> Archive: Plus applicable\n  Archive --> [*]\n```\n*Figure 1 : seuls les documents « en vigueur » doivent alimenter l'assistant ; un signalement ou une échéance relance la revue.*\n\n## Boucle de signalement\n\nPrévoyez, dans l'interface de l'assistant ou à côté, un bouton ou un formulaire simple : « Cette réponse est fausse ou périmée ». Chaque signalement va au propriétaire du document concerné. Suivez trois choses : le nombre de signalements, le délai de correction, les documents les plus signalés.\n\n## Traçabilité\n\nConservez le journal des questions sans données inutiles (évitez d'y stocker des informations personnelles), pour repérer les sujets mal couverts. Informez les utilisateurs de l'existence de ce journal et de sa finalité.\n\n## Quand ne pas répondre\n\nPour les sujets où une erreur est coûteuse (sécurité, juridique, paie), préférez des réponses **courtes avec lien vers le document** et un rappel de vérifier auprès de la personne compétente. \n\n## Mise en pratique\n\nChoisissez trois documents de votre organisation et notez pour chacun : propriétaire, date de dernière révision, statut. Lequel poserait problème à un assistant ?"
+        }
+      ]
+    },
+    {
+      "title": "Création de supports de formation avec l'IA",
+      "lessons": [
+        {
+          "title": "Des objectifs pédagogiques avant tout",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Formuler des objectifs pédagogiques observables.\n- Utiliser l'IA pour concevoir à partir d'objectifs, pas pour produire du contenu au hasard.\n\n## Le piège du « beau contenu »\n\nAvec un assistant, produire un diaporama de trente pages prend quelques minutes. Mais un joli support qui ne change pas ce que les gens savent faire est une perte de temps pour tout le monde. La conception commence donc par la **question** : après la formation, que doivent savoir faire les participants ?\n\n## Formuler un objectif observable\n\nUn bon objectif commence par un **verbe d'action** et décrit un comportement que l'on peut constater, dans un contexte précis.\n\n- Faible : « Comprendre la politique de retour ».\n- Meilleur : « Appliquer la politique de retour à trois cas types, en choisissant la bonne option et en rédigeant la réponse au client ».\n\nPour varier les niveaux d'exigence, on s'appuie souvent sur une **taxonomie** (mémoriser, comprendre, appliquer, analyser, évaluer, créer). C'est un cadre de réflexion ; n'en faites pas un dogme.\n\n## Du besoin à l'objectif\n\nÀ partir de l'écart de compétence identifié au chapitre précédent, posez quatre questions :\n\n- Qui sont les participants et que savent-ils déjà ?\n- Quelle situation de travail doit changer ?\n- Quel est le **plus petit** ensemble de savoirs nécessaires ?\n- Comment saura-t-on que cela a marché ? (voir chapitre 5)\n\n## Ce que l'IA apporte\n\n- **Reformuler** des objectifs flous en objectifs observables.\n- Proposer un **plan** de séquence à partir de vos objectifs.\n- Générer des **exemples, des cas pratiques, des questions** à critiquer.\n\nUne consigne utile : « Voici mon public, mes objectifs, ma durée de 45 minutes. Propose un déroulé en séquences avec, pour chacune, l'objectif visé et une activité où les participants **font** quelque chose. Je n'ai pas de temps de cours magistral de plus de 10 minutes d'affilée. »\n\n## Alignement\n\nVérifiez que chaque séquence sert **au moins un objectif** et que chaque objectif est **évalué** quelque part. Un tableau à deux colonnes (objectif, activité, évaluation) suffit pour contrôler cet alignement.\n\n## Mise en pratique\n\nRéécrivez un objectif flou de votre catalogue en objectif observable, en précisant le contexte et le critère de réussite."
+        },
+        {
+          "title": "Qualité, exactitude et droits : relire ce que produit l'IA",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Relire un support généré avec une méthode.\n- Connaître les points de vigilance sur le droit d'auteur et les données.\n\n## Les défauts classiques d'un support généré\n\n- **Erreurs factuelles** présentées avec assurance.\n- **Exemples génériques** qui ne ressemblent pas à votre métier.\n- **Références inventées** : ouvrages, études, citations, organismes qui n'existent pas.\n- **Niveau inadapté** : trop dense ou trop superficiel.\n- **Uniformité** : des supports qui se ressemblent tous et lassent.\n\n## Une grille de relecture\n\n```mermaid\nflowchart TD\n  accTitle: Relecture d'un support généré en cinq contrôles\n  accDescr: Le support passe cinq contrôles successifs, objectifs, exactitude, pertinence, droits et accessibilité. Une anomalie renvoie à la correction, sinon le support est publié.\n  S[\"Support généré\"] --> O[\"1. Aligné sur les objectifs ?\"]\n  O --> E[\"2. Faits et chiffres vérifiés ?\"]\n  E --> P[\"3. Exemples pertinents pour le public ?\"]\n  P --> D[\"4. Droits et données en règle ?\"]\n  D --> X[\"5. Accessible ?\"]\n  X --> OK[\"Publication\"]\n  O -.->|\"Non\"| C[\"Correction\"]\n  E -.->|\"Non\"| C\n  P -.->|\"Non\"| C\n  D -.->|\"Non\"| C\n  X -.->|\"Non\"| C\n  C --> S\n```\n*Figure 1 : cinq contrôles avant publication ; toute anomalie renvoie le support en correction.*\n\n## Droits : repères prudents\n\n- **Contenus fournis** : ne soumettez à un assistant que des documents que vous avez le droit d'utiliser de cette façon.\n- **Contenus produits** : la situation juridique des contenus générés (droit d'auteur, conditions d'utilisation des outils) est complexe et évolue ; consultez les conditions de l'outil et votre service juridique.\n- **Images, musiques, extraits** : n'utilisez pas d'éléments dont la provenance est incertaine.\n- **Citations** : vérifiez chaque référence et chaque citation dans la source d'origine.\n- **Données personnelles** : jamais de cas réels de collaborateurs ou de clients dans un support sans accord et anonymisation solide.\n\nCe contenu est une aide à la réflexion et ne constitue pas un avis juridique. Les cadres applicables (RGPD, droit du travail, formation professionnelle, AI Act) évoluent : vérifiez-les auprès de votre service juridique à la date de lecture.\n\n## Transparence\n\nIndiquez, dans votre organisation, quand un support a été préparé avec l'aide de l'IA, selon votre politique interne. Cela aide les relecteurs à calibrer leur vigilance.\n\n## Mise en pratique\n\nFaites générer une page de support sur un sujet que vous maîtrisez. Notez toutes les erreurs ou approximations que vous trouvez. Combien auraient été publiées sans relecture ?"
+        },
+        {
+          "title": "Accessibilité et adaptation des supports",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Rendre un support utilisable par le plus grand nombre.\n- Utiliser l'IA pour adapter formats et niveaux, sans perdre le sens.\n\n## L'accessibilité dès la conception\n\nUn support accessible est plus facile à utiliser pour **tout le monde**. Parmi les pratiques de base :\n\n- **Structure claire** : titres hiérarchisés, listes, paragraphes courts.\n- **Langage simple** : phrases courtes, termes définis, sigles explicités.\n- **Contrastes et lisibilité** : police lisible, taille suffisante, pas d'information portée par la seule couleur.\n- **Alternatives textuelles** : une description pour chaque image utile, une transcription pour chaque audio, des sous-titres pour chaque vidéo.\n- **Navigation au clavier** et compatibilité avec les lecteurs d'écran pour les contenus numériques.\n- **Rythme** : pauses, temps suffisant, possibilité de revenir en arrière.\n\nIl existe des référentiels et des obligations d'accessibilité selon le contexte (secteur, public, pays) : votre organisation sait lesquels s'appliquent, à vérifier à la date de lecture.\n\n## Ce que l'IA peut faire\n\n- Proposer un **texte alternatif** pour une image ou un schéma, à **relire** : elle peut se tromper ou passer à côté de l'essentiel.\n- **Simplifier** un texte pour un autre niveau de langue, ou le traduire.\n- Produire une **transcription** et un **résumé** d'une séance enregistrée, à vérifier.\n- Proposer des **versions** pour des publics différents (nouvelle recrue, responsable).\n\n## Points d'attention\n\n- Une simplification peut **déformer** une règle : faites valider par un expert.\n- Une traduction automatique d'un sujet technique ou juridique doit être relue par une personne qui connaît le domaine.\n- Un enregistrement de personnes demande leur **information** et, selon les cas, leur accord : voir votre politique interne.\n- Ne demandez pas à l'IA de deviner des besoins d'adaptation à partir de données de santé ou de handicap : ces informations sont sensibles et doivent venir de la personne, dans un cadre défini, pas d'une déduction.\n\n## Un test simple\n\nParcourez votre support en désactivant le son, puis les images, puis en n'utilisant que le clavier. Que perd-on ? Ce qui se perd est un défaut d'accessibilité.\n\n## Mise en pratique\n\nChoisissez une image ou un schéma de support. Rédigez un texte alternatif en une ou deux phrases, puis comparez avec la proposition d'un assistant : laquelle dit l'essentiel ?"
+        }
+      ]
+    },
+    {
+      "title": "Mesure de l'efficacité",
+      "lessons": [
+        {
+          "title": "Quels indicateurs pour quelles questions ?",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Relier un indicateur à une question de décision.\n- Distinguer indicateurs de réalisation, d'apprentissage, de comportement et de résultat.\n\n## Quatre niveaux, un modèle pour réfléchir\n\nOn distingue souvent quatre niveaux d'effet d'une formation, popularisés par un modèle d'évaluation classique :\n\n- **Réaction** : les participants ont-ils trouvé la formation utile et claire ?\n- **Apprentissage** : ont-ils acquis les connaissances ou savoir-faire visés ?\n- **Comportement** : appliquent-ils ce qu'ils ont appris au travail ?\n- **Résultats** : l'activité de l'équipe s'est-elle améliorée ?\n\nChaque niveau est plus intéressant et plus **difficile à mesurer** que le précédent.\n\n## Des exemples fictifs\n\nUne formation fictive sur le traitement des réclamations :\n\n- Réaction : note de clarté donnée par les participants.\n- Apprentissage : réussite à un exercice sur trois cas types.\n- Comportement : usage du modèle de réponse dans les tickets traités les deux mois suivants.\n- Résultat : délai moyen de résolution, ou retours des clients sur le traitement de leur demande.\n\nAucun de ces chiffres n'est réel : ils illustrent la nature des indicateurs.\n\n## Des indicateurs de moyens ne sont pas des résultats\n\nLe nombre de personnes formées, d'heures dispensées, de modules terminés mesure l'**activité** du service formation, pas l'effet. Ils sont utiles pour piloter la production, trompeurs pour juger l'utilité.\n\n## Choisir peu d'indicateurs\n\nPour chaque action de formation, trois à cinq indicateurs suffisent, **choisis avant** la formation. Pour chacun, notez :\n\n- La **question de décision** à laquelle il répond (reconduire ? ajuster ? arrêter ?).\n- La **source** et la **méthode de recueil**.\n- La **valeur de départ** (avant formation).\n- Le **seuil** qui déclenche une décision.\n\n## Où l'IA aide\n\n- Proposer des **questions de questionnaire** et les reformuler pour éviter les biais.\n- Aider à **analyser les commentaires libres** et à en tirer des thèmes (à vérifier, voir M18).\n- Mettre en forme des **tableaux de bord**.\n\nL'IA ne remplace ni la définition des indicateurs, ni la décision.\n\n## Mise en pratique\n\nPour une formation que vous connaissez, notez un indicateur par niveau, et la décision que chacun pourrait influencer."
+        },
+        {
+          "title": "Évaluation à chaud et à froid : concevoir le dispositif",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Planifier les moments de mesure avant, pendant et après une formation.\n- Concevoir des questionnaires courts et exploitables.\n\n## À chaud, à froid : deux temporalités\n\n- **À chaud** : en fin de séance. On recueille la réaction et un premier aperçu de l'apprentissage. Rapide, mais influencé par l'ambiance du moment.\n- **À froid** : quelques semaines ou mois plus tard, quand la pratique a eu lieu. On observe l'application et les premiers résultats. Plus informatif, mais plus de non-réponses.\n\nLe bon délai dépend du sujet : le temps nécessaire pour que le comportement ait l'occasion de se produire. Aucun délai n'est universel.\n\n## Planification d'un dispositif\n\n```mermaid\ngantt\n  accTitle: Calendrier d'un dispositif de mesure\n  accDescr: Mesure de départ avant la formation, évaluation à chaud en fin de séance, évaluation des acquis, puis observation du comportement et analyse des résultats à froid. Durées illustratives.\n  dateFormat  YYYY-MM-DD\n  axisFormat  %d/%m\n  section Avant\n  Mesure de départ        :a1, 2030-01-07, 5d\n  section Formation\n  Séance et évaluation à chaud :a2, 2030-01-14, 1d\n  Exercice d'acquis       :a3, 2030-01-14, 1d\n  section Après\n  Observation en situation :a4, 2030-01-15, 35d\n  Évaluation à froid      :a5, 2030-02-19, 7d\n  Analyse et décision     :a6, 2030-02-26, 5d\n```\n*Figure 1 : calendrier fictif d'un dispositif de mesure (dates et durées illustratives).*\n\n## Un bon questionnaire\n\n- **Court** : dix questions suffisent souvent.\n- **Neutre** : évitez « Cette excellente formation vous a-t-elle plu ? ».\n- **Concret** : « Avez-vous utilisé le modèle de réponse cette semaine ? » plutôt que « Appliquez-vous les bonnes pratiques ? »\n- **Une question, une idée** : pas de questions doubles.\n- **Un espace libre** : « Qu'est-ce qui vous aiderait à appliquer cela ? »\n- **Échelles cohérentes** d'une question à l'autre.\n\nL'IA peut vous aider à repérer des questions suggestives ou doubles. Elle ne remplace pas un test auprès de deux ou trois personnes.\n\n## Sources complémentaires\n\n- **Observation** par le responsable avec une grille.\n- **Données de l'activité** déjà existantes (tickets, délais), en respectant leur finalité.\n- **Entretiens courts** avec quelques participants.\n\nCroiser deux sources donne des conclusions plus solides.\n\n## Anonymat et finalité\n\nDites aux participants à quoi servent les réponses. Si le questionnaire est anonyme, ne cherchez pas à ré-identifier ; s'il ne l'est pas, dites-le. Un questionnaire d'évaluation d'une formation ne doit pas devenir un outil d'évaluation individuelle des personnes sans que cela ait été annoncé.\n\n## Mise en pratique\n\nÉcrivez cinq questions à froid pour une formation fictive, puis repérez celles qui sont suggestives ou doubles."
+        },
+        {
+          "title": "Pièges de causalité et lecture honnête des résultats",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Éviter de conclure trop vite que la formation a causé une amélioration.\n- Présenter des résultats avec leurs limites.\n\n## Corrélation n'est pas causalité\n\nImaginons qu'après une formation, le délai de résolution des tickets baisse. La formation a-t-elle **causé** la baisse ? Peut-être. Mais aussi :\n\n- Un nouvel outil a été déployé en même temps.\n- Il y a eu moins de demandes ce mois-là (saisonnalité).\n- Les participants volontaires étaient déjà les plus motivés (**biais de sélection**).\n- Les personnes les moins performantes ont quitté l'équipe (**biais de survie**).\n- La mesure a changé de définition.\n- Les chiffres reviennent naturellement vers la moyenne après une période exceptionnelle.\n\n## Méthodes pour renforcer la preuve\n\n- **Groupe de comparaison** : comparer des participants à des personnes similaires non formées (ou formées plus tard). Possible parfois avec un déploiement en vagues.\n- **Mesure avant et après** sur les mêmes indicateurs et la même définition.\n- **Plusieurs points de mesure** pour voir la tendance, pas un seul instantané.\n- **Témoignages recoupés** : demander aux participants et à leur responsable ce qui a changé et pourquoi.\n- **Prudence dans les mots** : « est associé à », « semble avoir contribué » plutôt que « a permis ».\n\n```mermaid\nflowchart LR\n  accTitle: Facteurs pouvant expliquer une amélioration après formation\n  accDescr: Une amélioration observée peut venir de la formation, mais aussi d'un nouvel outil, de la saisonnalité, de la sélection des participants ou d'un changement de mesure.\n  F[\"Formation\"] --> R[\"Amélioration observée\"]\n  O[\"Nouvel outil\"] --> R\n  S[\"Saisonnalité\"] --> R\n  B[\"Participants déjà motivés\"] --> R\n  M[\"Changement de mesure\"] --> R\n```\n*Figure 1 : plusieurs causes peuvent produire la même amélioration ; la formation n'en est qu'une candidate.*\n\n## Le rôle de l'IA dans l'analyse\n\nUn assistant peut aider à **lister des explications concurrentes**, à rédiger un rapport clair, à proposer un graphique. Il ne peut pas deviner la cause réelle et peut conclure avec trop d'assurance. Demandez-lui explicitement : « Quelles autres explications possibles ? Quelles données manqueraient pour trancher ? »\n\n## Honnêteté du compte rendu\n\n- Indiquez la **taille** de l'échantillon et les limites.\n- Distinguez ce qui est **mesuré** de ce qui est **interprété**.\n- Ne cachez pas les résultats décevants : ils servent à améliorer.\n- Si un effet est faible ou incertain, décidez quand même : ajuster, tester autrement, arrêter.\n\n## Mise en pratique\n\nPour une formation fictive suivie d'une amélioration, listez trois explications concurrentes et, pour chacune, la donnée qui permettrait de l'écarter."
+        }
+      ]
+    },
+    {
+      "title": "Ateliers no-code et low-code",
+      "lessons": [
+        {
+          "title": "Atelier 1 : cartographier les compétences d'une équipe fictive dans un tableur",
+          "kind": "exercise",
+          "body_md": "## Objectif et durée\n\n**Objectif** : construire un référentiel de compétences et une cartographie pour une équipe fictive, avec vérification de l'assistant. **Durée estimée** : 75 minutes.\n\n## Plateformes\n\n- **Google Sheets** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternatives : **Airtable**, **NocoDB** ou **Notion** (base de données), mêmes principes.\n- **Un assistant conversationnel** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : tout autre assistant autorisé par votre organisation.\n\n## Données fournies (entièrement fictives)\n\nÉquipe « Relation client » de l'Atelier du Littoral. Activités décrites :\n\n- Répondre aux demandes des clients par courriel et par téléphone.\n- Traiter les réclamations et les retours selon la procédure.\n- Alimenter la base de réponses types et la mettre à jour.\n- Produire chaque mois un bilan simple des motifs de contact.\n- Accueillir et accompagner les nouveaux arrivants.\n\nPersonnes fictives et notes de leur responsable (de 1 à 4, 0 si non évalué) : Awa (réclamations 3, bilan 2, accueil 4), Basile (réclamations 2, bilan 0, accueil 1), Chloé (réclamations 4, bilan 3, accueil 3), Dario (réclamations 2, bilan 2, accueil 0).\n\n## Étapes\n\n1. Collez les cinq activités dans l'assistant et demandez **huit compétences maximum**, chacune avec définition et trois indicateurs observables, en vous appuyant uniquement sur le texte, avec « à compléter » autorisé.\n2. Relisez et corrigez la liste : supprimez les compétences vagues, fusionnez les doublons. Gardez cinq à six compétences.\n3. Créez un onglet « Référentiel » : compétence, définition, indicateurs, niveau cible pour le rôle (de 1 à 4).\n4. Créez un onglet « Cartographie » : une ligne par personne, une colonne par compétence, plus des colonnes « source » et « date ». Saisissez les notes fournies et complétez les cellules manquantes avec vos propres valeurs fictives.\n5. Créez un onglet « Écarts » avec une formule de soustraction (cible moins niveau) pour chaque cellule, puis une mise en forme conditionnelle qui colore les écarts positifs.\n6. Demandez à l'assistant de **résumer** les écarts de l'équipe en trois constats, puis **vérifiez-les** vous-même en comptant dans le tableur.\n7. Notez dans une feuille « Limites » trois choses que cette cartographie ne dit pas.\n\n## Résultat attendu\n\nUn classeur de quatre onglets (référentiel, cartographie, écarts, limites) avec un résumé vérifié.\n\n## Critères de réussite\n\n- [ ] Entre cinq et huit compétences, chacune avec indicateurs observables.\n- [ ] Une source et une date pour chaque niveau saisi.\n- [ ] Les écarts sont calculés par le tableur, pas par l'assistant.\n- [ ] Au moins un constat de l'assistant a été corrigé ou nuancé après vérification.\n- [ ] Un écart collectif est distingué d'un écart individuel.\n\n## Pièges\n\nLaisser l'assistant inventer des compétences sans lien avec les activités ; accepter ses calculs sans les vérifier ; mélanger les niveaux cible et actuel. **Données** : uniquement fictives, jamais de données personnelles ni confidentielles de votre employeur.\n\n## Pour aller plus loin\n\nAjoutez une colonne « preuve » (réalisation fictive) et une règle : sans preuve, le niveau est limité à 2."
+        },
+        {
+          "title": "Atelier 2 : construire un parcours d'intégration 30-60-90 jours avec un assistant et un outil de suivi",
+          "kind": "exercise",
+          "body_md": "## Objectif et durée\n\n**Objectif** : produire un plan d'intégration à 30-60-90 jours pour un poste fictif et le suivre dans un outil no-code. **Durée estimée** : 90 minutes.\n\n## Plateformes\n\n- **Airtable** ou **NocoDB** (no-code) pour le suivi : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternatives : **Notion** ou **Google Sheets**.\n- **Un assistant conversationnel** (no-code) pour la rédaction : offre gratuite ou version libre à la date de rédaction, à vérifier.\n- Facultatif : **Make** ou **Zapier** (no-code) pour un rappel automatique, offre gratuite ou version libre à la date de rédaction, à vérifier.\n\n## Données fournies (fictives)\n\nInès rejoint l'équipe Relation client de l'Atelier du Littoral comme conseillère. Contraintes : première semaine à distance, un binôme (Awa), un outil de tickets à découvrir, une base de réponses types, aucun accès à des données clients réelles pendant les deux premières semaines. Objectifs à 90 jours : traiter seule les demandes courantes, participer à une réunion d'équipe, proposer une amélioration de réponse type.\n\n## Étapes\n\n1. Demandez à l'assistant un plan **30-60-90 jours** pour ce poste avec, par période : trois objectifs observables, les activités, les personnes à rencontrer, un point d'étape. Précisez que les procédures ne doivent pas être inventées : « à compléter » est autorisé.\n2. Relisez et corrigez : retirez ce qui est irréaliste, ajoutez ce qui manque.\n3. Créez une base « Tâches d'intégration » avec les champs : tâche, période (30, 60, 90), responsable (Inès, Awa, responsable), échéance, statut (à faire, en cours, fait), preuve.\n4. Importez les tâches dans la base (copier-coller depuis la réponse mise en forme en liste).\n5. Créez trois vues : par période, par responsable, tâches en retard (filtre sur échéance et statut).\n6. Rédigez avec l'assistant le **message d'accueil** et l'ordre du jour de la première semaine ; relisez le ton.\n7. Facultatif : configurez un scénario de rappel (un bloc déclencheur sur une échéance, un bloc d'envoi de message) en utilisant uniquement l'adresse d'un compte de test.\n8. Prévoyez trois questions de point d'étape à 30 jours.\n\n## Résultat attendu\n\nUne base de suivi avec trois vues, un plan relu, un message d'accueil et trois questions de point d'étape.\n\n## Critères de réussite\n\n- [ ] Chaque période a trois objectifs observables.\n- [ ] Chaque tâche a un responsable, une échéance et un statut.\n- [ ] Les trois vues fonctionnent.\n- [ ] Aucune procédure inventée n'est restée dans le plan.\n- [ ] Le rôle du binôme est explicite.\n\n## Pièges\n\nPlan trop chargé la première semaine ; tâches sans responsable ; message d'accueil trop générique ; rappels envoyés à de vraies adresses. **Données** : uniquement fictives, jamais de données personnelles ni confidentielles de votre employeur.\n\n## Pour aller plus loin\n\nAjoutez un formulaire de retour d'expérience de la recrue et une vue qui regroupe les réponses."
+        },
+        {
+          "title": "Atelier 3 : concevoir un module de formation court et son plan de mesure",
+          "kind": "exercise",
+          "body_md": "## Objectif et durée\n\n**Objectif** : concevoir un module de formation de 30 minutes à partir d'un écart, le faire relire selon la grille de qualité et prévoir sa mesure. **Durée estimée** : 90 minutes.\n\n## Plateformes\n\n- **Google Docs** ou **Notion** (no-code) pour le support : offre gratuite ou version libre à la date de rédaction, à vérifier.\n- **Tally** ou **Google Forms** (no-code) pour le questionnaire : offre gratuite ou version libre à la date de rédaction, à vérifier.\n- **Un assistant conversationnel** (no-code) ; alternative : tout assistant autorisé par votre organisation.\n\n## Données fournies (fictives)\n\nÉcart constaté dans l'équipe Relation client : trois personnes sur huit traitent les réclamations au niveau 2 alors que le rôle demande le niveau 3. Cause probable (à confirmer) : peu d'exposition aux cas complexes. Public : huit conseillers déjà expérimentés. Contrainte : 30 minutes, en visioconférence.\n\n## Étapes\n\n1. Rédigez deux objectifs pédagogiques observables avec contexte et critère de réussite.\n2. Demandez à l'assistant un déroulé de 30 minutes avec au moins deux activités où les participants font quelque chose, sans contenu inventé : trois cas fictifs de réclamations complexes à rédiger vous-même ou à faire proposer puis corriger.\n3. Relisez le support avec les cinq contrôles de la leçon sur la qualité : objectifs, exactitude, pertinence, droits, accessibilité. Notez les anomalies trouvées et corrigez-les.\n4. Ajoutez un texte alternatif pour chaque image ou schéma prévu et vérifiez la lisibilité (titres, contrastes).\n5. Construisez un **plan de mesure** : un indicateur par niveau (réaction, apprentissage, comportement, résultat), source, valeur de départ, seuil de décision, date de recueil.\n6. Créez le **questionnaire à chaud** (cinq questions) et le **questionnaire à froid** (cinq questions) dans l'outil de formulaires, puis relisez-les pour supprimer questions suggestives et doubles.\n7. Rédigez deux explications concurrentes à une amélioration éventuelle et la donnée qui permettrait de les écarter.\n\n## Résultat attendu\n\nUn support de 30 minutes, un tableau de relecture, un plan de mesure et deux questionnaires prêts à être testés.\n\n## Critères de réussite\n\n- [ ] Deux objectifs observables, chacun relié à une activité et à une évaluation.\n- [ ] Au moins trois anomalies détectées à la relecture et corrigées.\n- [ ] Un indicateur par niveau, avec seuil de décision fixé à l'avance.\n- [ ] Questionnaires courts, neutres, sans question double.\n- [ ] Deux explications concurrentes identifiées.\n\n## Pièges\n\nContenu généré non relu ; indicateurs de moyens présentés comme des résultats ; seuils fixés après coup. **Données** : uniquement fictives, jamais de données personnelles ni confidentielles de votre employeur.\n\n## Pour aller plus loin\n\nTestez le questionnaire sur deux personnes de votre entourage et reformulez ce qui prête à confusion."
+        }
+      ]
+    }
+  ],
+  "quiz": {
+    "title": "Quiz du module",
+    "pass_percent": 70,
+    "max_attempts": null,
+    "questions": [
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle définition correspond le mieux à une compétence ?",
+        "feedback": "Une compétence se manifeste en situation. Un diplôme, une liste de cours ou un trait de personnalité ne disent pas ce que la personne fait.",
+        "options": [
+          [
+            "La capacité à mobiliser connaissances et savoir-faire dans une situation pour obtenir un résultat observable",
+            true
+          ],
+          [
+            "Un diplôme obtenu à la fin d'un cursus",
+            false
+          ],
+          [
+            "La liste des cours suivis par une personne",
+            false
+          ],
+          [
+            "Un trait de personnalité stable",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel est le rôle le plus adapté de l'IA dans la création d'un référentiel de compétences ?",
+        "feedback": "L'IA accélère la rédaction mais ne connaît pas votre réalité. Des experts valident et le référentiel est daté.",
+        "options": [
+          [
+            "Publier directement le référentiel sans relecture",
+            false
+          ],
+          [
+            "Proposer un brouillon que des experts du métier relisent et valident",
+            true
+          ],
+          [
+            "Évaluer le niveau réel des collaborateurs",
+            false
+          ],
+          [
+            "Remplacer les entretiens avec les responsables",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles consignes réduisent le risque d'invention lors de la rédaction d'un référentiel ?",
+        "feedback": "Texte source, limite de volume et droit de dire que l'information manque protègent contre l'invention. La créativité et l'absence de contexte l'augmentent.",
+        "options": [
+          [
+            "Autoriser la réponse « à compléter »",
+            true
+          ],
+          [
+            "Demander « sois créatif » pour enrichir la liste",
+            false
+          ],
+          [
+            "Ne donner aucun contexte pour éviter les biais",
+            false
+          ],
+          [
+            "Fournir le texte source des activités",
+            true
+          ],
+          [
+            "Limiter le nombre de compétences demandées",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle formulation d'un indicateur de compétence est la plus exploitable ?",
+        "feedback": "Un indicateur doit décrire un comportement observable. Les termes vagues ne permettent pas de distinguer les niveaux.",
+        "options": [
+          [
+            "« Fait preuve de dynamisme »",
+            false
+          ],
+          [
+            "« A un bon état d'esprit »",
+            false
+          ],
+          [
+            "« Est apprécié de ses collègues »",
+            false
+          ],
+          [
+            "« Traite seule une réclamation courante en respectant la procédure »",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi indiquer la source et la date de chaque niveau dans une cartographie ?",
+        "feedback": "Source et date mesurent la fiabilité et la fraîcheur du niveau. Elles ne servent ni à classer publiquement ni à se dispenser de relecture.",
+        "options": [
+          [
+            "Pour savoir à quel point se fier à la cellule et savoir quand la mettre à jour",
+            true
+          ],
+          [
+            "Pour pouvoir classer publiquement les personnes",
+            false
+          ],
+          [
+            "Parce que le droit impose un format précis de tableau",
+            false
+          ],
+          [
+            "Pour éviter d'avoir à relire la cartographie",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles sources sont adaptées pour déterminer un niveau de compétence ?",
+        "feedback": "Les sources doivent être proportionnées et connues de la personne. Deviner un niveau à partir de messages est peu fiable et disproportionné.",
+        "options": [
+          [
+            "L'auto-évaluation de la personne",
+            true
+          ],
+          [
+            "L'avis motivé du responsable",
+            true
+          ],
+          [
+            "Des preuves de réalisations ou certifications",
+            true
+          ],
+          [
+            "Une déduction par l'IA à partir des courriels de la personne",
+            false
+          ],
+          [
+            "Les messages privés échangés avec ses collègues",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Dans le circuit de vérification d'un positionnement, qui doit pouvoir réagir au niveau proposé ?",
+        "feedback": "La transparence envers la personne et la possibilité de contester font partie d'un traitement loyal des données.",
+        "options": [
+          [
+            "Uniquement l'assistant IA",
+            false
+          ],
+          [
+            "Uniquement le service informatique",
+            false
+          ],
+          [
+            "La personne concernée, qui peut commenter ou contester avant l'enregistrement",
+            true
+          ],
+          [
+            "Personne, pour garder l'objectivité",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Dans une équipe de huit personnes, personne n'atteint le niveau cible sur une compétence. Que cela suggère-t-il en priorité ?",
+        "feedback": "Un écart collectif appelle une réponse d'organisation. Conclure à un manque de motivation ou classer les individus est une interprétation hâtive.",
+        "options": [
+          [
+            "Que toutes les personnes manquent de motivation",
+            false
+          ],
+          [
+            "Que la cartographie est forcément fausse",
+            false
+          ],
+          [
+            "Qu'il faut classer les personnes de la moins à la plus bonne",
+            false
+          ],
+          [
+            "Un écart collectif à traiter par l'organisation, le recrutement ou l'outillage, pas seulement par la formation",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels critères aident à prioriser des écarts de compétences ?",
+        "feedback": "On priorise selon l'impact et l'urgence. L'existence d'un contenu ou l'ancienneté ne disent rien de l'importance de l'écart.",
+        "options": [
+          [
+            "La disponibilité d'un contenu généré par l'IA",
+            false
+          ],
+          [
+            "L'ancienneté du collaborateur",
+            false
+          ],
+          [
+            "La criticité pour l'activité",
+            true
+          ],
+          [
+            "L'échéance à laquelle la compétence est nécessaire",
+            true
+          ],
+          [
+            "Le nombre de formations disponibles sur le sujet",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi calculer les écarts avec un tableur plutôt qu'avec un assistant IA ?",
+        "feedback": "Un tableur fait le calcul de façon fiable ; l'assistant sert à interpréter et rédiger, avec vérification.",
+        "options": [
+          [
+            "Parce qu'un assistant refuse de manipuler des nombres",
+            false
+          ],
+          [
+            "Parce que les calculs d'un tableur sont déterministes et vérifiables, alors qu'un assistant peut se tromper en arithmétique",
+            true
+          ],
+          [
+            "Parce que les tableurs sont plus créatifs",
+            false
+          ],
+          [
+            "Parce que la loi interdit à l'IA de calculer",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que dit le repère « 70-20-10 » dans cette formation ?",
+        "feedback": "C'est un repère largement cité pour équilibrer pratique, échange et formation formelle, sans valeur de loi ni de mesure exacte.",
+        "options": [
+          [
+            "Une règle légale de répartition des heures de formation",
+            false
+          ],
+          [
+            "Un résultat de mesure applicable à toutes les organisations",
+            false
+          ],
+          [
+            "Un ordre d'idée selon lequel la pratique pèse le plus dans le développement, à utiliser comme repère et non comme proportions mesurées",
+            true
+          ],
+          [
+            "Une obligation de 10 % de formation en ligne",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi ne pas laisser un assistant citer des formations précises dans un plan de développement ?",
+        "feedback": "Le risque d'invention justifie de croiser les pistes avec un catalogue vérifié.",
+        "options": [
+          [
+            "Parce que les assistants ne connaissent aucune formation",
+            false
+          ],
+          [
+            "Parce que cela coûte plus cher",
+            false
+          ],
+          [
+            "Parce que les formations ne doivent jamais être citées",
+            false
+          ],
+          [
+            "Parce qu'il peut inventer des formations ou organismes ; les ressources doivent venir d'un catalogue vérifié",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels principes s'appliquent à des données de compétences nominatives ?",
+        "feedback": "Finalité, minimisation, transparence, sécurité et conservation limitée sont des principes généraux. À vérifier avec le juridique à la date de lecture. Ce n'est pas un avis juridique.",
+        "options": [
+          [
+            "Une finalité claire et communiquée",
+            true
+          ],
+          [
+            "La minimisation des données collectées",
+            true
+          ],
+          [
+            "Une information des personnes et un droit de correction",
+            true
+          ],
+          [
+            "Une sécurité et une durée de conservation limitée",
+            true
+          ],
+          [
+            "La conservation illimitée au cas où",
+            false
+          ],
+          [
+            "L'utilisation libre pour toute décision RH ultérieure",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Laquelle de ces utilisations est la plus disproportionnée ?",
+        "feedback": "Déduire des compétences à partir de messages est intrusif, peu fiable et sans rapport évident avec la finalité annoncée.",
+        "options": [
+          [
+            "Demander une auto-évaluation sur dix compétences métier",
+            false
+          ],
+          [
+            "Faire analyser les messages internes par une IA pour deviner les compétences de chacun",
+            true
+          ],
+          [
+            "Proposer des formations à partir d'une cartographie annoncée",
+            false
+          ],
+          [
+            "Prévoir un entretien annuel de développement",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi le consentement est-il un fondement délicat dans une relation de travail ?",
+        "feedback": "Le déséquilibre de la relation de travail rend le consentement discutable ; il faut le faire valider par le juridique. La transparence reste exigée.",
+        "options": [
+          [
+            "Parce que les salariés n'ont aucun droit à l'information",
+            false
+          ],
+          [
+            "Parce que le consentement est interdit par principe",
+            false
+          ],
+          [
+            "Parce qu'une personne peut craindre de refuser, ce qui fragilise le caractère libre du consentement",
+            true
+          ],
+          [
+            "Parce que le consentement ne s'applique qu'aux clients",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Qu'est-ce que le plan « 30-60-90 jours » ?",
+        "feedback": "C'est un repère de conception, à adapter. Il n'a pas de valeur juridique.",
+        "options": [
+          [
+            "Une obligation légale de durée d'essai",
+            false
+          ],
+          [
+            "Un contrat de formation en trois modules",
+            false
+          ],
+          [
+            "Un indicateur de performance mesuré au bout de 90 jours",
+            false
+          ],
+          [
+            "Une convention de structuration de l'intégration en trois périodes : découvrir, contribuer avec soutien, travailler en autonomie",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels éléments améliorent un parcours d'intégration ?",
+        "feedback": "L'accompagnement humain, des objectifs lisibles et un suivi régulier comptent plus que la quantité de documents.",
+        "options": [
+          [
+            "Des objectifs clairs à 30, 60 et 90 jours",
+            true
+          ],
+          [
+            "Des points d'étape courts et réguliers",
+            true
+          ],
+          [
+            "Un maximum de documents envoyés dès le premier jour",
+            false
+          ],
+          [
+            "L'absence de contact humain pour gagner du temps",
+            false
+          ],
+          [
+            "Un binôme ou parrain identifié",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle règle de comportement est essentielle pour un assistant interne de questions-réponses ?",
+        "feedback": "Un assistant fiable s'appuie sur des sources validées, les cite et reconnaît ses limites.",
+        "options": [
+          [
+            "Toujours fournir une réponse, quitte à la deviner",
+            false
+          ],
+          [
+            "Répondre uniquement à partir des documents validés, citer la source et dire quand l'information est introuvable",
+            true
+          ],
+          [
+            "Compléter les procédures avec ses connaissances générales",
+            false
+          ],
+          [
+            "Ne jamais citer de documents",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel est le principal risque d'un assistant de questions-réponses interne au fil du temps ?",
+        "feedback": "La qualité dépend de la gouvernance documentaire : propriétaire, date de revue, statut, circuit de mise à jour.",
+        "options": [
+          [
+            "Devenir trop rapide",
+            false
+          ],
+          [
+            "Utiliser trop de mots",
+            false
+          ],
+          [
+            "Diffuser des informations périmées si les documents ne sont pas tenus à jour",
+            true
+          ],
+          [
+            "Ne plus accepter de questions",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles pratiques relèvent de la gouvernance documentaire ?",
+        "feedback": "Une version de référence, un propriétaire, un statut et une boucle de signalement permettent un contenu fiable.",
+        "options": [
+          [
+            "Afficher une date de dernière révision et de prochaine revue",
+            true
+          ],
+          [
+            "N'exposer à l'assistant que les documents en vigueur",
+            true
+          ],
+          [
+            "Prévoir un signalement « réponse fausse ou périmée »",
+            true
+          ],
+          [
+            "Garder plusieurs versions concurrentes pour plus de choix",
+            false
+          ],
+          [
+            "Laisser l'assistant corriger lui-même les documents sources",
+            false
+          ],
+          [
+            "Nommer un propriétaire par document",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi tester un assistant interne avec une vingtaine de questions réelles avant ouverture ?",
+        "feedback": "Un jeu de questions attendues permet d'estimer la fiabilité par sujet. Le seuil acceptable dépend du risque.",
+        "options": [
+          [
+            "Pour mesurer les réponses justes, incomplètes ou fausses et les « je ne sais pas » justifiés",
+            true
+          ],
+          [
+            "Pour prouver que l'assistant ne se trompera jamais",
+            false
+          ],
+          [
+            "Parce que vingt est le nombre légal de tests",
+            false
+          ],
+          [
+            "Pour éviter de définir un périmètre",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel objectif pédagogique est le mieux formulé ?",
+        "feedback": "Un objectif observable commence par un verbe d'action, décrit un contexte et un critère de réussite.",
+        "options": [
+          [
+            "« Comprendre la politique de retour »",
+            false
+          ],
+          [
+            "« Appliquer la politique de retour à trois cas types en choisissant la bonne option et en rédigeant la réponse »",
+            true
+          ],
+          [
+            "« Être sensibilisé aux retours »",
+            false
+          ],
+          [
+            "« Connaître l'importance des retours »",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels défauts guettent un support de formation généré sans relecture ?",
+        "feedback": "Un support généré doit être relu. Aucune garantie d'exactitude n'existe.",
+        "options": [
+          [
+            "Des exemples génériques peu adaptés au métier",
+            true
+          ],
+          [
+            "Un niveau inadapté au public",
+            true
+          ],
+          [
+            "Une exactitude garantie par le modèle",
+            false
+          ],
+          [
+            "Des erreurs factuelles présentées avec assurance",
+            true
+          ],
+          [
+            "Des références ou citations inventées",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que faire d'un texte alternatif d'image proposé par un assistant ?",
+        "feedback": "L'IA propose, la personne vérifie que le texte restitue l'information utile de l'image.",
+        "options": [
+          [
+            "L'utiliser tel quel",
+            false
+          ],
+          [
+            "Le supprimer, car il est toujours faux",
+            false
+          ],
+          [
+            "L'utiliser uniquement si l'image est décorative",
+            false
+          ],
+          [
+            "Le relire et le corriger, car il peut se tromper ou manquer l'essentiel",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel est le bon réflexe sur les droits lorsque l'on utilise l'IA pour produire un support ?",
+        "feedback": "Le statut des contenus générés et les droits sur les contenus fournis dépendent des outils et du droit applicable. Ce n'est pas un avis juridique.",
+        "options": [
+          [
+            "Vérifier les conditions de l'outil, la provenance des contenus et consulter le service juridique, car le cadre évolue",
+            true
+          ],
+          [
+            "Considérer que tout contenu généré est libre de droits",
+            false
+          ],
+          [
+            "Ne jamais vérifier les citations",
+            false
+          ],
+          [
+            "Insérer toute image trouvée en ligne",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Parmi ces indicateurs, lequel mesure le plus directement un changement de comportement ?",
+        "feedback": "Le comportement s'observe au travail après la formation. Inscriptions, heures et satisfaction mesurent la réalisation ou la réaction.",
+        "options": [
+          [
+            "Le nombre de personnes inscrites",
+            false
+          ],
+          [
+            "L'usage du modèle de réponse dans les tickets traités les semaines suivantes",
+            true
+          ],
+          [
+            "La note de satisfaction donnée en fin de séance",
+            false
+          ],
+          [
+            "Le nombre d'heures de formation dispensées",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles formulations de questionnaire sont à éviter ?",
+        "feedback": "La première est suggestive, la seconde est une question double. Les deux autres sont concrètes et neutres.",
+        "options": [
+          [
+            "« Avez-vous utilisé le modèle de réponse cette semaine ? »",
+            false
+          ],
+          [
+            "« Qu'est-ce qui vous aiderait à appliquer cela ? »",
+            false
+          ],
+          [
+            "« Cette excellente formation vous a-t-elle plu ? »",
+            true
+          ],
+          [
+            "« Le support était-il clair et suffisamment détaillé ? »",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Pourquoi une amélioration observée après une formation peut-elle ne pas lui être due ?",
+        "feedback": "Plusieurs causes alternatives peuvent expliquer le résultat : outil, sélection, saisonnalité. Cela ne veut pas dire que la formation est inutile.",
+        "options": [
+          [
+            "La période était moins chargée que d'habitude",
+            true
+          ],
+          [
+            "Une formation ne peut jamais avoir d'effet",
+            false
+          ],
+          [
+            "Les chiffres après formation sont toujours truqués",
+            false
+          ],
+          [
+            "Un nouvel outil a été déployé en même temps",
+            true
+          ],
+          [
+            "Les participants volontaires étaient déjà motivés",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Une responsable RH souhaite utiliser un assistant IA pour proposer un plan de développement à chaque membre de son équipe. Décrivez, en une dizaine de lignes, les garde-fous que vous lui recommanderiez : données utilisées, information des personnes, rôle de l'humain, vérification des ressources proposées. Rappelez que vous ne donnez pas d'avis juridique.",
+        "feedback": "Une bonne réponse mentionne : une finalité annoncée, des données limitées et fournies par les personnes, l'information et le droit de correction, la validation humaine en entretien, un catalogue de formations vérifié, l'absence de déduction de profil, la consultation du juridique et du DPO.",
+        "options": []
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Vous venez de former huit conseillers et le délai de résolution des tickets a baissé de façon visible le mois suivant. Rédigez une analyse prudente : ce que vous pouvez affirmer, trois autres explications possibles, et les données ou méthodes qui renforceraient votre conclusion.",
+        "feedback": "Une bonne réponse distingue l'association de la causalité, cite des explications concurrentes (outil, saisonnalité, sélection, changement de mesure), propose un groupe de comparaison ou des points de mesure multiples, et emploie un vocabulaire prudent.",
+        "options": []
+      }
+    ]
+  },
+  "assignment": {
+    "title": "Livrable pratique : plan de développement des compétences d'une équipe assisté par IA",
+    "instructions_md": "## Objectif\n\nDémontrer que vous savez construire, avec l'aide d'un assistant IA et **sans code**, un **plan de développement des compétences d'une équipe** : cartographie, parcours, intégration, support de formation et mesure. Vous travaillez sur une équipe **fictive** de votre choix (ou l'équipe Relation client de l'Atelier du Littoral du module). Aucune donnée personnelle ni confidentielle n'est nécessaire.\n\n## Consignes\n\nCe livrable se réalise entièrement avec les outils no-code et low-code des trois ateliers du dernier chapitre : tableur ou base (atelier 1), base de suivi et assistant (atelier 2), document, formulaires et assistant (atelier 3). Le rendu peut être un lien, un export PDF ou un document. Ce contenu est pédagogique et ne constitue pas un avis juridique.\n\n1. **Équipe et contexte** : présentation de l'équipe fictive, de sa mission et de la finalité du plan (au moins six lignes).\n2. **Référentiel et cartographie** : cinq à huit compétences avec indicateurs observables, niveaux cible, matrice d'au moins cinq personnes fictives avec source et date de chaque niveau.\n3. **Analyse d'écarts** : écarts calculés par le tableur, distinction écart individuel et écart collectif, priorisation motivée de trois écarts.\n4. **Parcours de développement** : un plan pour deux personnes fictives (compétence visée, actions, temps, échéances, preuves), ressources tirées d'un catalogue fictif que vous fournissez.\n5. **Garde-fous** : finalité, données utilisées, information des personnes, place de la décision humaine, points à soumettre au juridique et au DPO (au moins cinq lignes).\n6. **Intégration** : un plan 30-60-90 jours pour un poste de l'équipe, avec base de suivi, et le périmètre d'un assistant de questions-réponses (sujets couverts, exclus, sources, règles de comportement, gouvernance documentaire).\n7. **Module de formation** : deux objectifs observables, déroulé de 30 minutes, relecture avec les cinq contrôles et anomalies corrigées.\n8. **Plan de mesure** : un indicateur par niveau, valeurs de départ, seuils fixés à l'avance, questionnaires à chaud et à froid, deux explications concurrentes à écarter.\n9. **Limites et suites** : ce que le plan ne permet pas de conclure, risques restants, prochaines étapes.\n\nVariante facultative pour profils techniques : automatiser un rappel ou un export vers un autre outil.\n\n## Grille d'évaluation\n\n- **Référentiel et cartographie (20 points)** : compétences observables, niveaux sourcés et datés, vérification humaine.\n- **Analyse d'écarts et parcours (20 points)** : calculs fiables, écarts bien interprétés, plans réalistes et construits avec les personnes.\n- **Garde-fous et conformité (20 points)** : finalité, minimisation, transparence, décision humaine, renvoi au juridique.\n- **Intégration et assistant (15 points)** : plan clair, périmètre et gouvernance documentaire.\n- **Support de formation (10 points)** : objectifs observables, relecture, accessibilité.\n- **Mesure (15 points)** : indicateurs cohérents, seuils préalables, prudence sur la causalité.\n\nSeuil de réussite indicatif : 70 points sur 100."
+  }
+}

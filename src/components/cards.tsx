@@ -1,16 +1,16 @@
 import Link from "next/link";
 import { Badge, ButtonLink, Card, kickerCls } from "@/components/ui";
-import { coursesOfPath, difficultyLabel, formatEuro, isPathPurchasable, statusLabel, totalHours, type Catalog, type Course, type LearningPath } from "@/lib/catalog";
+import { availability, coursesOfPath, difficultyLabel, formatEuro, isPathPurchasable, totalHours, type Catalog, type Course, type LearningPath } from "@/lib/catalog";
 
 export function CourseCard({ course, catalog }: { course: Course; catalog: Catalog }) {
-  const published = course.status === "published";
+  const avail = availability(course, catalog);
   const phase = catalog.phases.find((p) => p.id === course.phaseId);
   const price = catalog.coursePrices[course.slug];
   return (
     <Card className="relative flex h-full flex-col gap-3 transition-colors hover:border-accent">
       <div className="flex items-center justify-between gap-2">
         <span className={`${kickerCls} text-muted`}>{course.code}</span>
-        <Badge tone={published ? "accent" : "warn"}>{statusLabel[course.status]}</Badge>
+        <Badge tone={avail.tone}>{avail.label}</Badge>
       </div>
       <h3 className="text-xl font-bold leading-tight"><Link href={`/formations/${course.slug}`} className="after:absolute after:inset-0">{course.title}</Link></h3>
       <p className="text-sm text-muted">{course.topics.slice(0, 4).join(", ")}.</p>
@@ -37,7 +37,7 @@ export function PathCard({ path, catalog }: { path: LearningPath; catalog: Catal
       <div className="mt-auto flex flex-col gap-2 pt-2">
         {isPathPurchasable(path, catalog) && offer?.amountCents != null
           ? <ButtonLink href={`/achat/${path.slug}`} variant="primary">Acheter ce parcours</ButtonLink>
-          : <ButtonLink href="/parcours" variant={bundle ? "primary" : "secondary"}>{bundle ? "Découvrir AI Mastery" : "Découvrir le parcours"}</ButtonLink>}
+          : <ButtonLink href={`/parcours/${path.slug}`} variant={bundle ? "primary" : "secondary"}>{bundle ? "Découvrir AI Mastery" : "Découvrir le parcours"}</ButtonLink>}
       </div>
     </div>
   );

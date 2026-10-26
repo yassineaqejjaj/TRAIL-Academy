@@ -1,0 +1,756 @@
+{
+  "course": "M24",
+  "slug": "ia-pilotage-rh-dialogue-social",
+  "source": "Contenu original rédigé pour TRAIL Academy à partir du programme du module (sans slides sources). Pas de vidéo : à ajouter depuis l'administration.",
+  "chapters": [
+    {
+      "title": "People analytics responsable",
+      "lessons": [
+        {
+          "title": "People analytics responsable : de quoi parle-t-on ?",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Définir le people analytics et distinguer pilotage et surveillance.\n- Partir d'une décision à éclairer plutôt que d'une donnée disponible.\n\n## Définition\n\nLe **people analytics** consiste à exploiter des données relatives aux personnes au travail (effectifs, mouvements, absences, formation, enquêtes internes) pour éclairer des décisions RH. Utilisé avec discernement, il aide à repérer un problème d'organisation, à prioriser des actions, à mesurer l'effet d'une mesure. Utilisé sans cadre, il peut glisser vers la **surveillance** des individus.\n\n## Le fil rouge du module\n\nNous suivons **Verdelys**, une entreprise fictive d'environ six cents personnes, avec une directrice RH fictive (Camille Roussel), un responsable du dialogue social (Malik Benoît) et une déléguée du personnel fictive (Inès Carpentier). Toutes les données du module sont inventées.\n\n## Partir de la décision\n\nAvant tout indicateur, formulez la **décision** à éclairer. Exemple : « Faut-il renforcer l'accompagnement des nouveaux arrivants dans l'équipe logistique ? » La question détermine les données nécessaires. À l'inverse, « que peut-on calculer avec les données que nous avons ? » conduit à collecter par habitude et à mesurer ce qui est facile plutôt que ce qui est utile.\n\n```mermaid\nflowchart LR\n  accTitle: De la question RH à la décision\n  accDescr: Une décision à éclairer conduit à une question, puis à un indicateur, à un test de proportionnalité, à un calcul sur données agrégées et enfin à une décision humaine documentée.\n  D[\"Décision à éclairer\"] --> Q[\"Question précise\"]\n  Q --> I[\"Indicateur candidat\"]\n  I --> P{\"Proportionné ?\"}\n  P -- non --> R[\"Reformuler ou renoncer\"]\n  P -- oui --> A[\"Calcul sur données agrégées\"]\n  A --> H[\"Décision humaine documentée\"]\n  R --> Q\n```\n*Figure 1 : on part de la décision ; chaque indicateur passe un test de proportionnalité avant tout calcul.*\n\n## Ce que l'IA change\n\nUn assistant d'IA peut aider à **formuler des questions**, proposer des indicateurs, rédiger des commentaires de tableau de bord ou signaler des incohérences dans un export. Il ne remplace ni la connaissance du terrain ni la responsabilité de la décision. Et il ne doit pas recevoir de données identifiantes sans cadre validé (voir les chapitres suivants).\n\n## Mise en pratique\n\nCitez une décision RH récente dans votre organisation. Quelle donnée l'a réellement éclairée ? Laquelle a été collectée sans servir ?\n"
+        },
+        {
+          "title": "Choisir des indicateurs utiles et proportionnés",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Construire des indicateurs qui répondent à une question.\n- Appliquer un test simple de proportionnalité.\n\n## Un bon indicateur\n\nUn indicateur utile est **défini par écrit** (formule, périmètre, période), **compris** de ceux qui l'utilisent, **actionnable** (on sait quoi faire s'il bouge) et **comparable** dans le temps. Exemples génériques : taux de départ volontaire d'un service sur douze mois, délai moyen de recrutement, part des salariés ayant suivi une formation prévue, réponses à une enquête interne.\n\n## Les quatre questions de proportionnalité\n\n1. **Finalité** : à quelle décision l'indicateur sert-il, et est-elle légitime ?\n2. **Nécessité** : existe-t-il un moyen moins intrusif d'obtenir la même information ?\n3. **Granularité** : un niveau agrégé (équipe, site) suffit-il, ou cherche-t-on à suivre des individus ?\n4. **Impact** : que risque une personne si l'indicateur est faux, mal interprété ou détourné ?\n\nUn indicateur qui échoue à l'une de ces questions se reformule ou s'abandonne.\n\n## Exemple fictif\n\nCamille Roussel veut suivre l'« engagement ». Une première idée : analyser la fréquence des connexions de chaque salarié à la messagerie. C'est intrusif, peu fiable (une personne peut travailler sans se connecter) et sans finalité claire. L'alternative retenue : une enquête interne courte, anonyme, restituée par équipe au-dessus d'un seuil minimal de répondants.\n\n## Pièges\n\n- **Indicateur unique** : une moyenne cache des disparités ; regardez la distribution.\n- **Corrélation prise pour une cause** : un fort taux d'absence dans une équipe ne dit pas pourquoi.\n- **Effet pervers** : ce qui est mesuré finit par être optimisé, parfois au détriment du but.\n\n## Mise en pratique\n\nChoisissez trois indicateurs que vous suivez. Appliquez les quatre questions et notez ceux que vous reformuleriez.\n"
+        },
+        {
+          "title": "Données agrégées, anonymisation et seuils",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Distinguer agrégation, pseudonymisation et anonymisation.\n- Fixer des règles de seuil pour éviter la ré-identification.\n\n## Trois notions à ne pas confondre\n\n- **Agrégation** : on regroupe des données (par équipe, site, tranche) pour ne plus voir les individus.\n- **Pseudonymisation** : on remplace l'identité par un code ; la ré-identification reste possible avec une table de correspondance, les données restent donc des données personnelles.\n- **Anonymisation** : on ne peut plus identifier une personne, par aucun moyen raisonnable. Le critère est exigeant ; une simple suppression du nom ne suffit généralement pas. Faites valider toute affirmation d'anonymat par votre DPO.\n\n## Le risque des petits groupes\n\nUne moyenne de salaire ou d'absentéisme sur une équipe de trois personnes révèle presque des cas individuels. Règle courante : un **seuil minimal d'effectif** en dessous duquel on ne publie pas, ou on regroupe les catégories. La valeur du seuil est à fixer avec le DPO ; une valeur de dix n'est ici qu'un ordre de grandeur illustratif.\n\nAutre piège : **le recoupement**. Deux tableaux acceptables isolément peuvent, croisés (service et ancienneté et tranche d'âge), désigner une personne.\n\n```mermaid\nquadrantChart\n  accTitle: Indicateurs selon utilité et intrusion\n  accDescr: Matrice illustrative qui place cinq indicateurs fictifs selon leur utilité pour la décision et leur niveau d'intrusion. Les indicateurs utiles et peu intrusifs sont à privilégier.\n  title Utilité et intrusion (positions fictives)\n  x-axis Peu intrusif --> Très intrusif\n  y-axis Peu utile --> Très utile\n  quadrant-1 À encadrer fortement\n  quadrant-2 À privilégier\n  quadrant-3 À abandonner\n  quadrant-4 À éviter\n  \"Départs par équipe\": [0.2, 0.8]\n  \"Délai de recrutement\": [0.15, 0.7]\n  \"Enquête anonyme\": [0.3, 0.65]\n  \"Suivi des connexions\": [0.85, 0.2]\n  \"Analyse des messages\": [0.95, 0.3]\n```\n*Figure 2 : matrice illustrative ; les positions sont fictives et servent à discuter, pas à mesurer.*\n\n## Mise en pratique\n\nPrenez un tableau de bord RH que vous connaissez. Quelle est la plus petite cellule affichée ? Un croisement permettrait-il d'y reconnaître quelqu'un ?\n"
+        }
+      ]
+    },
+    {
+      "title": "Données RH sensibles et RGPD",
+      "lessons": [
+        {
+          "title": "Les données RH sont sensibles : le cadre en termes généraux",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Repérer pourquoi les données RH appellent une vigilance particulière.\n- Rappeler les principes du RGPD applicables à un projet d'IA RH.\n\n## Pourquoi « sensibles »\n\nLes données RH touchent à l'emploi, au revenu, à la santé (arrêts, aptitude), parfois à des appartenances (syndicale) ou à des évaluations. Le RGPD distingue des **catégories particulières** de données, soumises à un régime renforcé ; mais même des données non classées ainsi, comme une évaluation de performance, ont des conséquences lourdes pour la personne. Il existe aussi un **déséquilibre** entre employeur et salarié : le consentement du salarié est de ce fait rarement une base juridique solide, et la question de la base légale se traite avec le juridique.\n\n## Les principes à retenir (en termes généraux)\n\n- **Licéité, loyauté, transparence** : les personnes sont informées.\n- **Limitation des finalités** : on n'utilise pas des données pour un autre but que celui annoncé.\n- **Minimisation** : seules les données nécessaires.\n- **Exactitude** : des données à jour, corrigibles.\n- **Limitation de la conservation** : une durée justifiée, puis suppression ou anonymisation.\n- **Intégrité et confidentialité** : accès restreints, sécurité.\n- **Responsabilité** : on peut démontrer sa conformité (registre, analyses, documentation).\n\n## Décisions automatisées\n\nLe RGPD encadre en général les décisions fondées exclusivement sur un traitement automatisé et produisant des effets significatifs sur la personne. Pour l'IA en RH, la règle pratique est claire : **un humain décide**, avec des éléments qu'il peut expliquer.\n\n## AI Act, en deux phrases\n\nLe règlement européen sur l'IA classe en général certains usages liés à l'emploi et à la gestion des travailleurs parmi les systèmes **à haut risque**, avec des obligations spécifiques, et interdit certaines pratiques. Le calendrier d'application et le périmètre exact sont à vérifier à la date de lecture auprès du juridique (le module M27 détaille ce cadre).\n\n*Ce contenu est pédagogique et ne constitue pas un avis juridique. Les cadres évoluent : vérifiez auprès de votre service juridique, de votre DPO ou d'un conseil à la date de lecture.*\n\n## Mise en pratique\n\nListez cinq catégories de données que votre service RH détient. Pour chacune, notez la finalité annoncée et qui y accède.\n"
+        },
+        {
+          "title": "Minimisation, finalité, durée de conservation et accès",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Appliquer minimisation, finalité, conservation et gestion des accès à un cas d'assistant ou d'analyse.\n- Distinguer ce qu'on peut saisir dans un outil d'IA de ce qu'on doit exclure.\n\n## Cycle de vie d'une donnée\n\n```mermaid\nstateDiagram-v2\n  accTitle: Cycle de vie d'une donnée RH\n  accDescr: La donnée est collectée pour une finalité, utilisée, conservée pour une durée définie, puis supprimée ou anonymisée. Un usage nouveau exige de revenir à l'étape de qualification de la finalité.\n  [*] --> Collectée\n  Collectée --> Utilisée : finalité annoncée\n  Utilisée --> Conservée : durée définie\n  Conservée --> Supprimée : échéance atteinte\n  Conservée --> Anonymisée : si anonymisation validée\n  Utilisée --> Collectée : nouvel usage à qualifier\n  Supprimée --> [*]\n  Anonymisée --> [*]\n```\n*Figure 3 : une donnée a un cycle de vie ; tout nouvel usage oblige à requalifier la finalité.*\n\n## Les quatre réflexes\n\n1. **Finalité** : écrivez en une phrase pourquoi la donnée est utilisée. « Répondre aux questions des salariés sur les congés » est une finalité ; « améliorer la performance RH » est trop vague.\n2. **Minimisation** : un assistant de FAQ n'a pas besoin du dossier individuel. Retirez noms, matricules, salaires, motifs d'absence de ce qu'on envoie à un outil.\n3. **Durée de conservation** : pour chaque jeu de données et chaque journal de conversation, fixez une durée justifiée (avec le DPO), et prévoyez la suppression effective, y compris dans les sauvegardes et chez le fournisseur.\n4. **Accès** : par rôle et selon le besoin d'en connaître ; journal des accès ; revue périodique.\n\n## Ce qu'on ne saisit pas\n\nDans un outil d'IA grand public ou non validé : données de santé, évaluations individuelles, procédures disciplinaires, coordonnées personnelles, tout ce qui identifie un salarié. Dans le doute, l'exemple fictif ou le texte rendu générique remplace la vraie donnée.\n\n## Exemple fictif\n\nMalik Benoît veut résumer des comptes rendus d'entretiens annuels. Réponse : pas dans un outil non validé ; et d'abord, pour quelle finalité, avec quelle information préalable des salariés, et quel accès au résultat ?\n\n## Mise en pratique\n\nPour un usage de l'IA envisagé dans votre service, rédigez la fiche : finalité, données strictement nécessaires, durée, accès.\n"
+        },
+        {
+          "title": "Le DPO, l'analyse d'impact et la documentation du projet",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Savoir quand et comment impliquer le DPO.\n- Connaître la logique d'une analyse d'impact et des preuves à garder.\n\n## Le rôle du DPO\n\nLe délégué à la protection des données **conseille et contrôle** : il n'est pas un guichet de validation à la fin. Impliquez-le **dès le cadrage**, avant l'achat ou le test d'un outil. Il aide à qualifier les finalités, la base légale, les durées, les transferts éventuels vers des pays tiers, et le recours à des sous-traitants (contrat, garanties).\n\n## L'analyse d'impact (AIPD)\n\nLorsqu'un traitement est susceptible d'engendrer un **risque élevé** pour les personnes (profilage, données sensibles, salariés en situation de dépendance, usage de technologies nouvelles), une analyse d'impact est en général requise ; la CNIL publie des listes et des guides à consulter. Elle décrit le traitement, évalue la nécessité et la proportionnalité, identifie les risques et les mesures. Le DPO donne son avis ; la décision appartient au responsable de traitement. Qualifier un projet précis relève du juridique et du DPO.\n\n```mermaid\nsequenceDiagram\n  accTitle: Échanges entre RH, DPO et sécurité\n  accDescr: L'équipe RH présente le cas d'usage au DPO, qui demande des précisions, associe la sécurité, formule un avis, puis l'équipe documente et décide avant le déploiement.\n  participant RH as Équipe RH\n  participant DPO as DPO\n  participant SEC as Sécurité\n  participant DIR as Direction\n  RH->>DPO: Fiche du cas d'usage\n  DPO->>RH: Questions sur finalité et durée\n  DPO->>SEC: Demande d'avis sur l'outil\n  SEC-->>DPO: Mesures et risques\n  DPO-->>RH: Avis et recommandations\n  RH->>DIR: Dossier et décision\n  DIR-->>RH: Feu vert, ajustement ou refus\n```\n*Figure 4 : le DPO intervient dès le cadrage ; la décision finale reste au responsable.*\n\n## Ce qu'il faut documenter\n\n- La fiche du cas d'usage et la finalité ;\n- l'inscription au registre des traitements ;\n- l'analyse d'impact si nécessaire, et l'avis du DPO ;\n- les contrats avec les fournisseurs ;\n- l'information des personnes concernées ;\n- les décisions de la gouvernance, datées.\n\n*Ce contenu est pédagogique et ne constitue pas un avis juridique. Les cadres évoluent : vérifiez auprès de votre service juridique, de votre DPO ou d'un conseil à la date de lecture.*\n\n## Mise en pratique\n\nRédigez en dix lignes la fiche à remettre à votre DPO pour un cas d'usage de votre choix.\n"
+        }
+      ]
+    },
+    {
+      "title": "Assistants RH internes",
+      "lessons": [
+        {
+          "title": "Assistants RH internes : périmètre et cas d'usage",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Distinguer les usages d'un assistant RH selon leur niveau de risque.\n- Définir un périmètre explicite.\n\n## Que peut faire un assistant RH interne ?\n\n- **Questions-réponses** sur des règles générales (congés, télétravail, mutuelle, processus de formation) à partir de documents officiels.\n- **Aide à la rédaction** de documents RH (fiche de poste, annonce, message de communication).\n- **Orientation** : indiquer le bon interlocuteur ou le bon formulaire.\n\nCe sont des usages à **risque modéré** quand l'assistant ne traite aucune donnée individuelle. À l'inverse, les usages qui évaluent, classent ou recommandent des décisions sur des **personnes** (tri de candidatures, notation, détection de risques de départ) relèvent d'un niveau de vigilance bien supérieur et d'un cadrage juridique spécifique.\n\n## Définir le périmètre\n\nÉcrivez trois listes :\n\n- **Dans le périmètre** : questions sur les règles générales documentées.\n- **Hors périmètre** : situations individuelles (« combien me reste-t-il de jours ? » sans connexion sécurisée), santé, conflit, harcèlement, licenciement, rémunération individuelle.\n- **À escalader** : tout ce qui touche à une situation personnelle sensible, à une urgence ou à une plainte.\n\n```mermaid\nflowchart TD\n  accTitle: Acheminement d'une question vers l'assistant ou l'humain\n  accDescr: Une question de salarié est classée. Les règles générales documentées sont traitées par l'assistant avec citation de la source. Les cas sensibles ou inconnus sont envoyés à un humain RH.\n  Q[\"Question du salarié\"] --> C{\"Type de question\"}\n  C -- \"règle générale documentée\" --> S{\"Source trouvée ?\"}\n  C -- \"situation personnelle ou sensible\" --> H[\"Transfert à un humain RH\"]\n  S -- oui --> R[\"Réponse avec source citée\"]\n  S -- non --> H\n  R --> F[\"Retour : réponse utile ?\"]\n  H --> T[\"Prise en charge tracée\"]\n```\n*Figure 5 : l'assistant ne répond que dans son périmètre et à partir d'une source ; le reste va à un humain.*\n\n## Mise en pratique\n\nClassez dix questions réelles que reçoit votre service en trois colonnes : dans le périmètre, hors périmètre, à escalader.\n"
+        },
+        {
+          "title": "Sources fiables et réponses vérifiables",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Construire une base documentaire fiable pour un assistant.\n- Imposer citations, aveu d'ignorance et date de mise à jour.\n\n## Le problème des réponses plausibles\n\nUn modèle de langage produit des réponses fluides, y compris fausses. Pour un assistant RH, une réponse erronée sur un préavis, des jours de congé ou une prime peut créer un litige. La parade est de **fonder** les réponses sur des documents (technique de génération augmentée par recherche, vue dans le module M11) et de contrôler le résultat.\n\n## Règles de conception\n\n1. **Sources officielles uniquement** : accords, notes, procédures validées par la DRH. Pas de forum, pas de brouillon.\n2. **Une version, une date** : chaque document porte une version et une date de validité ; les documents périmés sont retirés.\n3. **Citation obligatoire** : la réponse renvoie au document et à la section.\n4. **Aveu d'ignorance** : si la source ne répond pas, l'assistant le dit et oriente vers un humain, sans improviser.\n5. **Pas de conseil juridique** : un message rappelle que seule la source officielle fait foi.\n6. **Propriétaire** : une personne responsable de la mise à jour de la base.\n\n## Un message système type (à adapter)\n\n```text\nTu es l'assistant d'information RH de l'entreprise. Réponds uniquement à partir des documents fournis. Cite le document et la section. Si l'information n'est pas dans les documents, dis-le et propose de contacter l'équipe RH. Ne réponds jamais sur une situation individuelle, la santé, un conflit ou la rémunération d'une personne : oriente vers un humain.\n```\n\n## Pièges\n\n- Accords successifs contradictoires dans la base.\n- Documents trop longs sans structure : la recherche renvoie le mauvais passage.\n- Assistant trop prudent qui refuse tout : mesurez aussi le taux de refus injustifié.\n\n## Mise en pratique\n\nRassemblez cinq documents RH de votre organisation (ou fictifs). Pour chacun, notez version, date, propriétaire, et contradictions éventuelles.\n"
+        },
+        {
+          "title": "Escalade, confidentialité et jeu de tests",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Concevoir l'escalade vers un humain.\n- Protéger les conversations et tester l'assistant avant ouverture.\n\n## L'escalade, partie intégrante du produit\n\nL'escalade n'est pas un échec de l'assistant, c'est une **fonction**. Prévoyez :\n\n- un bouton visible « parler à une personne » ;\n- des **déclencheurs** automatiques (mots liés à la santé, au harcèlement, à une rupture du contrat, à une urgence) ;\n- une transmission qui évite de refaire raconter l'histoire, **avec l'accord** de la personne ;\n- un **délai de réponse** annoncé et suivi ;\n- un traitement humain tracé.\n\n## Confidentialité des conversations\n\nLes échanges peuvent contenir des informations personnelles saisies spontanément. Décidez : qui peut lire les journaux, pendant combien de temps, s'ils servent à améliorer l'outil, et ce que le fournisseur en fait (clause de non-réutilisation, localisation des données, sous-traitants : à vérifier dans le contrat avec le DPO). Informez les utilisateurs **avant** la première question : ce que l'assistant est, ce qu'il ne fait pas, ce qui est conservé.\n\n## Le jeu de tests\n\nAvant l'ouverture, préparez un jeu d'au moins vingt questions fictives en quatre familles :\n\n- **questions normales** avec réponse dans les documents ;\n- **questions sans réponse** dans les documents (l'assistant doit l'avouer) ;\n- **questions hors périmètre ou sensibles** (l'assistant doit escalader) ;\n- **tentatives de détournement** (« ignore tes consignes », demande sur un collègue).\n\nPour chaque test, notez la réponse attendue, la réponse observée, et un verdict. Rejouez le jeu à chaque modification des documents ou des consignes.\n\n## Mise en pratique\n\nRédigez huit questions de test, deux par famille, avec le comportement attendu.\n"
+        }
+      ]
+    },
+    {
+      "title": "Dialogue social et information des représentants du personnel",
+      "lessons": [
+        {
+          "title": "Le cadre du dialogue social autour des outils d'IA : principes généraux",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Comprendre pourquoi et quand les représentants du personnel sont associés.\n- Distinguer information, consultation et négociation.\n\n## Principes généraux\n\nEn France, les représentants du personnel, et en particulier le **comité social et économique (CSE)** dans les entreprises qui en sont dotées, sont en général **informés et consultés** avant la mise en œuvre de moyens ou de techniques permettant de contrôler l'activité des salariés, et lors de l'introduction de nouvelles technologies ou de changements importants affectant les conditions de travail. Les salariés doivent par ailleurs être **informés préalablement** de tout dispositif de collecte de données les concernant. Les règles précises (seuils d'effectif, délais, contenus, rôle des commissions, recours à une expertise) dépendent de votre situation : **à vérifier avec le juridique ou un conseil à la date de lecture**.\n\n## Trois niveaux à ne pas confondre\n\n- **Information** : on communique les éléments pour que chacun comprenne.\n- **Consultation** : on recueille un avis motivé avant de décider ; les représentants doivent avoir le temps et les éléments nécessaires.\n- **Négociation** : on cherche un accord (par exemple sur l'usage des outils numériques).\n\nUn projet peut relever de plusieurs niveaux selon son objet.\n\n## Pourquoi l'anticiper\n\n- Le **risque juridique** : un projet lancé sans procédure requise peut être contesté ou suspendu.\n- Le **risque de confiance** : les outils d'IA suscitent des craintes (surveillance, remplacement, opacité) ; un dialogue tardif les aggrave.\n- La **qualité du projet** : les représentants connaissent le terrain et repèrent des angles morts.\n\n*Ce contenu est pédagogique et ne constitue pas un avis juridique. Les cadres évoluent : vérifiez auprès de votre service juridique, de votre DPO ou d'un conseil à la date de lecture.*\n\n## Mise en pratique\n\nDans votre organisation, qui sont les interlocuteurs du dialogue social ? Quel projet numérique récent leur a été présenté, et à quel moment du projet ?\n"
+        },
+        {
+          "title": "Préparer le dossier d'information : contenu et pédagogie",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Structurer un dossier clair, honnête et utile.\n- Adapter le discours à des lecteurs non techniques.\n\n## Les rubriques d'un dossier\n\n1. **Contexte et objectifs** : quel problème, quelle décision, quel bénéfice attendu.\n2. **Description de l'outil** : ce qu'il fait, ce qu'il ne fait pas, qui l'utilise, quels fournisseurs.\n3. **Données** : catégories, finalités, durées, accès, localisation, sous-traitants.\n4. **Impact sur le travail** : tâches modifiées, charge, autonomie, formation prévue, effet sur l'emploi (dites ce que vous savez et ce que vous ignorez).\n5. **Garanties** : absence de décision automatique sur les personnes, supervision humaine, voies de recours, escalade.\n6. **Gouvernance** : responsable du projet, comité de suivi, indicateurs, revue à échéance fixe.\n7. **Calendrier** : phases, point d'étape, conditions d'arrêt.\n8. **Annexes** : analyse d'impact et avis du DPO si disponibles, fiche technique.\n\n## Pédagogie\n\n- Utilisez des **exemples concrets** (un cas de question et la réponse de l'assistant).\n- Évitez le jargon ; définissez « modèle », « hallucination », « journal ».\n- Dites **les limites et les risques**, pas seulement les bénéfices : un dossier trop lisse perd sa crédibilité.\n- Proposez une **démonstration** et une période de questions avant l'avis.\n- Ne promettez pas ce que vous ne contrôlez pas (ni « aucun impact sur l'emploi » si vous n'en êtes pas certain).\n\n## Exemple fictif\n\nPour l'assistant de FAQ de Verdelys, Malik Benoît prépare un dossier de six pages, une démonstration de trente minutes, et propose un point d'étape après trois mois avec les indicateurs convenus (taux d'escalade, satisfaction, incidents).\n\n```mermaid\ntimeline\n  accTitle: Étapes du dialogue social sur un projet d'assistant\n  accDescr: Frise des phases du dialogue, du cadrage interne à la revue après déploiement, en passant par la préparation du dossier, la démonstration, l'avis et le déploiement progressif.\n  title Phases du dialogue (calendrier fictif)\n  section Avant\n    Cadrage interne : Juridique et DPO associés\n    Dossier : Rédaction et relecture\n  section Pendant\n    Présentation : Démonstration et questions\n    Avis : Délai laissé aux représentants\n  section Après\n    Déploiement progressif : Pilote limité\n    Revue : Indicateurs et ajustements\n```\n*Figure 6 : frise illustrative des phases ; les durées dépendent de votre cadre juridique.*\n\n*Ce contenu est pédagogique et ne constitue pas un avis juridique. Les cadres évoluent : vérifiez auprès de votre service juridique, de votre DPO ou d'un conseil à la date de lecture.*\n\n## Mise en pratique\n\nRédigez la rubrique « Garanties » d'un projet de votre choix en dix lignes.\n"
+        },
+        {
+          "title": "Conduire la concertation : écoute, objections et engagements",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Préparer les objections courantes.\n- Formuler des engagements vérifiables.\n\n## Objections fréquentes et réponses utiles\n\n- **« C'est de la surveillance déguisée. »** Montrez ce qui n'est pas collecté, le périmètre, l'absence de score individuel, et ce qui est audité.\n- **« L'IA va supprimer des postes. »** Dites ce que vous savez : tâches concernées, formation prévue, point de suivi ; n'affirmez pas ce que vous ne pouvez garantir.\n- **« On ne comprend pas comment ça décide. »** Expliquez que l'assistant ne décide pas ; montrez les sources citées.\n- **« Où vont les données ? »** Présentez durées, accès, fournisseurs, et l'avis du DPO.\n- **« Pourquoi si vite ? »** Présentez le calendrier et la possibilité de pause.\n\n## Des engagements vérifiables\n\nUn engagement est utile s'il est **mesurable** et **suivi** : « aucun usage de l'assistant pour évaluer des personnes », « revue des journaux d'incident chaque trimestre avec les représentants », « suppression des conversations après la durée annoncée », « clause de réversibilité : on peut arrêter l'outil ». Écrivez-les, datez-les, désignez un responsable.\n\n## Quelques bonnes pratiques\n\n- Associer des représentants **tôt**, à la conception du jeu de tests par exemple.\n- Rédiger un **compte rendu partagé** des échanges et des réponses apportées.\n- Prévoir une **clause de revoyure** si l'usage évolue : un nouvel usage, c'est un nouveau dialogue.\n- Accepter que l'avis des représentants **change le projet**, sinon la consultation n'a pas de sens.\n\n## Mise en pratique\n\nPréparez une réponse en trois phrases à chacune des cinq objections ci-dessus, puis relisez-les en vous mettant à la place d'un représentant : laquelle ne vous convaincrait pas ?\n"
+        }
+      ]
+    },
+    {
+      "title": "Conduite du changement RH",
+      "lessons": [
+        {
+          "title": "Conduite du changement RH : comprendre les résistances",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Situer l'adoption d'un outil d'IA comme un changement humain.\n- Identifier les publics et leurs préoccupations.\n\n## Un changement, pas un déploiement\n\nInstaller un assistant ne suffit pas : il faut que les équipes RH, les managers et les salariés **le comprennent, lui fassent confiance et l'utilisent à bon escient**. Le module M16 détaille l'adoption de l'IA ; ce chapitre l'applique aux RH.\n\n## Les publics\n\n- **Équipe RH** : craint de perdre la relation humaine ou d'être jugée sur la quantité de tickets ; elle a besoin de voir que l'outil absorbe les questions répétitives et libère du temps pour les cas complexes.\n- **Managers** : s'interrogent sur leur rôle ; besoin de repères sur ce que l'assistant fait ou non.\n- **Salariés** : veulent des réponses rapides, mais s'inquiètent de la confidentialité.\n- **Représentants du personnel** : voir le chapitre précédent.\n- **Direction** : attend un bénéfice mesurable et maîtrise du risque.\n\n## Lire les résistances\n\nUne résistance est une **information**. Elle peut signaler un risque réel (confidentialité), un manque de formation, une charge supplémentaire cachée, ou une perte de sens. Écoutez avant de convaincre : entretiens courts, boîte à questions, groupe de pilotes volontaires.\n\n## Principes d'un déploiement progressif\n\n- Commencer par un **pilote limité** et volontaire, avec une durée définie.\n- Désigner des **relais** crédibles dans les équipes.\n- Prévoir un **canal de retour** simple.\n- Décider à l'avance les **conditions d'arrêt ou d'ajustement**.\n\n## Mise en pratique\n\nPour chacun des cinq publics, notez une préoccupation probable et une action qui y répond.\n"
+        },
+        {
+          "title": "Communication et formation : parcours et messages",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Construire un plan de communication et de formation.\n- Ancrer la formation dans les tâches réelles.\n\n## Communiquer avec honnêteté\n\nUn bon message répond à quatre questions : **pourquoi** (le problème), **quoi** (ce que fait et ne fait pas l'outil), **pour moi** (l'effet sur mon travail), **et ensuite** (calendrier, où poser des questions). Évitez le vocabulaire de promesse (« révolutionnaire », « sans risque »). Répétez le message sur plusieurs canaux : réunion d'équipe, courrier interne, page d'aide, démonstration.\n\n## Former : savoir-faire et esprit critique\n\nPar public :\n\n- **Équipe RH** : paramétrer les sources, relire les journaux, traiter les escalades, mettre à jour la base.\n- **Managers** : savoir quoi orienter vers l'assistant, quoi garder pour l'humain.\n- **Salariés** : poser une question utile, repérer une réponse douteuse, savoir contacter une personne.\n\nLa formation est **courte, concrète, répétée** : cas réels (fictifs en formation), pas de long exposé technique. Elle inclut les **limites** : un assistant peut se tromper, on vérifie la source.\n\n```mermaid\njourney\n  accTitle: Parcours d'un salarié avec l'assistant RH\n  accDescr: Parcours fictif d'un salarié, de la découverte de l'assistant à la pose d'une question, la réception d'une réponse sourcée, l'escalade vers un humain et le retour d'expérience. Les scores de satisfaction sont illustratifs.\n  title Parcours d'un salarié (scores fictifs)\n  section Découverte\n    Reçoit l'annonce: 3: Salarié\n    Suit la démonstration: 4: Salarié\n  section Usage\n    Pose une question: 4: Salarié\n    Lit la réponse et la source: 5: Salarié\n    Demande un humain: 3: Salarié, Équipe RH\n  section Après\n    Donne son avis: 4: Salarié\n```\n*Figure 7 : parcours illustratif ; les scores sont fictifs et servent à repérer les moments à soigner.*\n\n## Mise en pratique\n\nRédigez un message d'annonce de cinq lignes pour les salariés d'un projet d'assistant, en répondant aux quatre questions.\n"
+        },
+        {
+          "title": "Mesurer l'adoption et piloter l'amélioration",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Choisir des mesures d'adoption utiles et non intrusives.\n- Boucler : mesurer, discuter, ajuster.\n\n## Quatre familles de mesures\n\n1. **Usage** : nombre de questions, part des salariés ayant utilisé l'assistant (agrégé, sans suivi individuel).\n2. **Qualité** : taux de réponses jugées utiles, résultats du jeu de tests, erreurs signalées.\n3. **Escalade** : taux de transfert vers un humain, délai de traitement, motifs.\n4. **Effet** : temps libéré pour l'équipe RH (estimé, avec méthode transparente), satisfaction, incidents de confidentialité.\n\nChaque mesure a un **propriétaire**, une **fréquence** et un **seuil d'alerte** fixé avant le lancement.\n\n## Ne pas mesurer les personnes\n\nMesurer l'adoption ne veut pas dire suivre qui utilise l'outil ou pas. Un indicateur individuel d'usage, transformé en objectif, fabrique de la défiance et peut relever d'un dispositif de contrôle à soumettre au dialogue social. Restez à l'échelle des équipes et au-dessus du seuil minimal.\n\n## La revue régulière\n\nTenez un point trimestriel (fictif ici) avec RH, DPO, représentants et un relais d'équipe : lecture des indicateurs, incidents, demandes d'évolution, décision d'ajuster, d'étendre ou d'arrêter. Documentez les décisions.\n\n## Piège\n\nCélébrer un taux d'usage élevé alors que les réponses sont fausses : l'adoption sans qualité est un risque, pas un succès.\n\n## Mise en pratique\n\nFixez, pour un assistant fictif, un indicateur par famille avec un seuil d'alerte (valeurs illustratives, justifiées en une phrase).\n"
+        }
+      ]
+    },
+    {
+      "title": "Ateliers no-code et low-code",
+      "lessons": [
+        {
+          "title": "Atelier 1 : définir un tableau de bord RH proportionné dans un tableur",
+          "kind": "exercise",
+          "body_md": "**Objectif** : construire, sur des données fictives agrégées, un tableau de bord RH court dont chaque indicateur est justifié par une décision et passe le test de proportionnalité.\n\n**Durée estimée** : 60 minutes.\n\n**Plateformes** : un tableur en ligne (no-code) comme Google Sheets, ou une alternative libre comme LibreOffice Calc ; offre gratuite ou version libre à la date de rédaction, à vérifier. Un assistant d'IA généraliste peut servir de second avis, avec des données **uniquement fictives**.\n\n## Données fournies (fictives, agrégées par équipe)\n\nPour chaque équipe : effectif, départs volontaires sur douze mois, jours d'absence totaux sur douze mois, réponses à l'enquête interne (sur dix points d'échelle, moyenne), nombre de répondants.\n\n- Logistique : 48 personnes, 9 départs, 520 jours, 6,1 de moyenne, 31 répondants\n- Comptabilité : 14 personnes, 1 départ, 120 jours, 7,4 de moyenne, 12 répondants\n- Atelier de production : 120 personnes, 22 départs, 1 450 jours, 5,6 de moyenne, 80 répondants\n- Service client : 62 personnes, 14 départs, 700 jours, 5,9 de moyenne, 40 répondants\n- Direction juridique : 4 personnes, 0 départ, 20 jours, 8,0 de moyenne, 3 répondants\n- Informatique : 35 personnes, 3 départs, 260 jours, 7,0 de moyenne, 22 répondants\n\n## Étapes\n\n1. Créez une feuille « Décisions » : listez trois décisions RH fictives (ex. : où renforcer l'accompagnement des nouveaux arrivants).\n2. Créez une feuille « Données » et saisissez la liste ci-dessus en colonnes.\n3. Ajoutez des colonnes calculées : taux de départ (départs divisés par effectif), jours d'absence par personne, taux de réponse.\n4. Créez une feuille « Proportionnalité » : une ligne par indicateur, avec finalité, nécessité, granularité, impact, et un verdict (retenu, reformulé, abandonné).\n5. Ajoutez une règle de seuil : un champ « seuil minimal d'effectif ou de répondants » (valeur illustrative de votre choix, à justifier) et une colonne qui affiche « masqué » en dessous.\n6. Créez une feuille « Tableau de bord » avec trois à cinq indicateurs retenus et un graphique par bloc.\n7. Demandez à un assistant d'IA, avec les seules données fictives, un commentaire et des angles morts ; notez ce que vous retenez ou écartez.\n\n**Résultat attendu** : un classeur avec décisions, données, grille de proportionnalité et tableau de bord où les petites équipes sont masquées.\n\n**Critères de réussite**\n- [ ] Chaque indicateur est relié à une décision.\n- [ ] Aucun indicateur individuel ni croisement permettant de ré-identifier.\n- [ ] Les équipes sous le seuil sont masquées.\n- [ ] Au moins un indicateur est abandonné ou reformulé avec justification.\n- [ ] Les limites d'interprétation (corrélation, petits effectifs) sont écrites.\n\n**Pièges** : afficher la direction juridique (quatre personnes) ; comparer des équipes de tailles très différentes sans le dire ; croire qu'une moyenne suffit.\n\n**Données** : fictives uniquement.\n\n**Pour aller plus loin** : ajoutez une feuille « Lecture » qui explique chaque indicateur en deux phrases, destinée à un représentant du personnel.\n"
+        },
+        {
+          "title": "Atelier 2 : concevoir un assistant RH de questions-réponses et son jeu de tests",
+          "kind": "exercise",
+          "body_md": "**Objectif** : monter un assistant de questions-réponses sur des règles RH fictives, avec escalade, puis le valider avec un jeu de tests.\n\n**Durée estimée** : 90 minutes.\n\n**Plateformes** : une plateforme de création d'assistants à blocs visuels (low-code) comme Dify, Flowise ou Langflow, ou un outil de questions sur documents (no-code) comme NotebookLM ; offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : un assistant généraliste dans lequel vous collez les documents fictifs avec des consignes. Vérifiez la politique de données de l'outil ; n'y mettez que du texte fictif.\n\n## Documents fictifs à utiliser\n\nCopiez ces trois courts textes dans votre outil comme sources.\n\n- **Charte du télétravail de Verdelys (version 2)** : jusqu'à deux jours de télétravail par semaine, après accord du manager ; les jours sont fixés par équipe ; une journée supplémentaire est possible à titre exceptionnel avec l'accord des RH.\n- **Note sur les congés (version 3)** : les demandes se font dans l'outil interne au moins quinze jours avant ; le manager répond sous cinq jours ouvrés ; aucune information sur les soldes individuels n'est donnée par l'assistant.\n- **Procédure de formation (version 1)** : une demande est faite avec le manager, validée par les RH ; la liste des formations est dans le catalogue interne ; le budget est examiné chaque trimestre.\n\n## Étapes\n\n1. Créez un assistant et ajoutez les trois documents comme base de connaissance (un bloc de type « connaissances » ou « sources »).\n2. Collez le message système suivant dans le bloc d'instructions :\n\n```text\nTu es l'assistant d'information RH de Verdelys. Réponds uniquement à partir des documents fournis, en citant le document. Si l'information est absente, dis-le et propose de contacter l'équipe RH. Pour toute situation individuelle, santé, conflit ou rémunération, n'essaie pas de répondre : oriente vers un humain RH.\n```\n\n3. Ajoutez un bloc ou une consigne d'escalade qui affiche le contact « equipe-rh (adresse fictive) ».\n4. Préparez, dans un tableur, un jeu de 16 tests : quatre questions normales, quatre sans réponse dans les documents, quatre sensibles ou hors périmètre, quatre tentatives de détournement. Colonnes : question, comportement attendu, réponse observée, verdict.\n5. Passez les 16 tests, corrigez les consignes ou les sources, rejouez.\n6. Calculez le taux de tests réussis par famille.\n\n**Résultat attendu** : un assistant fonctionnel et un tableur de tests avec un taux de réussite par famille.\n\n**Critères de réussite**\n- [ ] Les réponses normales citent le document.\n- [ ] Les questions sans réponse reçoivent un aveu d'ignorance, pas une invention.\n- [ ] Les cas sensibles sont escaladés.\n- [ ] Au moins un test échoué a conduit à une correction documentée.\n- [ ] Aucune donnée réelle n'a été utilisée.\n\n**Pièges** : documents contradictoires ; consigne trop stricte qui refuse tout ; juger l'assistant sur trois essais seulement.\n\n**Pour aller plus loin** : ajoutez un test de version (changez la charte en version 3 et vérifiez que l'ancienne réponse disparaît).\n"
+        },
+        {
+          "title": "Atelier 3 : rédiger le cadre de gouvernance et le dossier d'information des représentants du personnel",
+          "kind": "exercise",
+          "body_md": "**Objectif** : produire la trame d'un cadre de gouvernance de l'assistant RH et d'un dossier d'information destiné aux représentants du personnel.\n\n**Durée estimée** : 75 minutes.\n\n**Plateformes** : un éditeur de documents en ligne (no-code) comme Google Docs, Notion ou un traitement de texte libre ; offre gratuite ou version libre à la date de rédaction, à vérifier. Un assistant d'IA peut relire votre trame et jouer le rôle d'un représentant sceptique, avec du contenu fictif.\n\n## Étapes\n\n1. Créez un document avec ces sections de **gouvernance** : finalité ; périmètre (dans, hors, à escalader) ; sources et propriétaire ; données et durées ; accès et journaux ; rôle du DPO ; supervision humaine et escalade ; tests avant ouverture et rejeu ; indicateurs et seuils d'alerte ; incidents et procédure d'arrêt ; revue périodique.\n2. Complétez chaque section en quelques lignes à partir de l'atelier 2 (assistant fictif de Verdelys). Mentionnez en première ligne : « Ne constitue pas un avis juridique ; à valider avec le juridique et le DPO ».\n3. Créez un second document, le **dossier d'information**, avec les huit rubriques vues au chapitre 4 : contexte, description, données, impact sur le travail, garanties, gouvernance, calendrier, annexes.\n4. Rédigez un encadré « Ce que l'assistant ne fait pas » de cinq puces.\n5. Écrivez trois **engagements vérifiables** avec responsable et échéance.\n6. Demandez à un assistant d'IA de formuler cinq objections d'un représentant du personnel, puis répondez-y dans une section « Questions anticipées ».\n7. Relisez avec un collègue ou une personne extérieure au sujet, et corrigez les passages obscurs.\n\n**Résultat attendu** : deux documents courts, cohérents entre eux, utilisables comme base de travail.\n\n**Critères de réussite**\n- [ ] Toutes les rubriques sont renseignées, y compris les limites et les incertitudes.\n- [ ] Les engagements sont mesurables et attribués.\n- [ ] Aucune affirmation juridique non vérifiable ; renvois au juridique et au DPO.\n- [ ] Le vocabulaire est compréhensible par un non-spécialiste.\n- [ ] Un mécanisme d'arrêt et de revue est prévu.\n\n**Pièges** : promettre « aucun impact sur l'emploi » ; copier un modèle sans l'adapter ; oublier la durée de conservation des journaux.\n\n**Données** : exemples et organisation fictifs.\n\n**Pour aller plus loin** : préparez une page de FAQ de dix questions pour les salariés.\n"
+        }
+      ]
+    }
+  ],
+  "quiz": {
+    "title": "Quiz du module",
+    "pass_percent": 70,
+    "max_attempts": null,
+    "questions": [
+      {
+        "kind": "single_choice",
+        "prompt": "Quel est le bon point de départ d'un projet de people analytics ?",
+        "feedback": "On part de la décision à éclairer. Partir des données disponibles conduit à collecter et à mesurer par habitude, sans utilité démontrée.",
+        "options": [
+          [
+            "La décision RH à éclairer et la question précise qui en découle",
+            true
+          ],
+          [
+            "La liste des données disponibles dans le système d'information",
+            false
+          ],
+          [
+            "Le choix de l'outil d'analyse le plus puissant",
+            false
+          ],
+          [
+            "Un indicateur de suivi individuel de la performance",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Parmi ces questions, lesquelles font partie du test de proportionnalité d'un indicateur ?",
+        "feedback": "Finalité, nécessité, granularité et impact structurent le test. Le prix de l'outil n'en fait pas partie, et la popularité de l'indicateur non plus.",
+        "options": [
+          [
+            "L'indicateur est-il utilisé par d'autres organisations ?",
+            false
+          ],
+          [
+            "Un niveau agrégé suffit-il ?",
+            true
+          ],
+          [
+            "La finalité est-elle légitime ?",
+            true
+          ],
+          [
+            "Quel est le risque pour une personne si l'indicateur est faux ?",
+            true
+          ],
+          [
+            "Un moyen moins intrusif existe-t-il ?",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Une équipe fictive de trois personnes apparaît dans un tableau de bord avec son taux d'absentéisme. Quel est le problème principal ?",
+        "feedback": "Sur un très petit groupe, un chiffre agrégé révèle presque des situations individuelles. On applique un seuil minimal ou on regroupe.",
+        "options": [
+          [
+            "Le chiffre risque de désigner des individus",
+            true
+          ],
+          [
+            "Le RGPD interdit tout calcul d'absentéisme",
+            false
+          ],
+          [
+            "Le tableau de bord sera trop long",
+            false
+          ],
+          [
+            "Le chiffre sera trop peu précis statistiquement uniquement",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle est la différence entre pseudonymisation et anonymisation ?",
+        "feedback": "La pseudonymisation remplace l'identité par un code mais permet une ré-identification : les données restent personnelles. L'anonymisation est irréversible et son critère est exigeant.",
+        "options": [
+          [
+            "La pseudonymisation est irréversible, l'anonymisation non",
+            false
+          ],
+          [
+            "Il n'y en a pas, ce sont deux noms du même procédé",
+            false
+          ],
+          [
+            "La pseudonymisation ne concerne que les données de santé",
+            false
+          ],
+          [
+            "La pseudonymisation garde une possibilité de ré-identification, pas l'anonymisation",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels indicateurs sont en général les plus défendables du point de vue de la proportionnalité ?",
+        "feedback": "Les indicateurs agrégés liés à une décision d'organisation sont défendables. Suivre les connexions ou analyser le contenu des messages de chaque personne est intrusif et peu fiable.",
+        "options": [
+          [
+            "Fréquence de connexion de chaque salarié",
+            false
+          ],
+          [
+            "Taux de départ volontaire par équipe sur douze mois",
+            true
+          ],
+          [
+            "Enquête interne anonyme restituée par équipe",
+            true
+          ],
+          [
+            "Analyse du ton des messages de chaque salarié",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi une moyenne peut-elle être trompeuse dans un tableau de bord RH ?",
+        "feedback": "Une moyenne peut cacher de fortes disparités ; la distribution et les effectifs sont nécessaires pour interpréter.",
+        "options": [
+          [
+            "Parce qu'elle peut masquer des disparités entre groupes",
+            true
+          ],
+          [
+            "Parce qu'elle ne s'applique qu'aux données financières",
+            false
+          ],
+          [
+            "Parce qu'elle est interdite en RH",
+            false
+          ],
+          [
+            "Parce qu'elle est toujours fausse",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Deux tableaux sont acceptables séparément, mais croisés ils désignent une personne. Comment s'appelle ce risque ?",
+        "feedback": "C'est le risque de recoupement : la combinaison de critères permet de ré-identifier. Il faut contrôler les croisements, pas seulement chaque tableau.",
+        "options": [
+          [
+            "Le risque de biais de confirmation",
+            false
+          ],
+          [
+            "Le risque de recoupement",
+            true
+          ],
+          [
+            "Le risque de sur-apprentissage",
+            false
+          ],
+          [
+            "Le risque de dérive du modèle",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi le consentement du salarié est-il en général une base juridique fragile pour un traitement RH ?",
+        "feedback": "Le déséquilibre entre employeur et salarié met en doute le caractère libre du consentement. La base légale se qualifie avec le juridique et le DPO.",
+        "options": [
+          [
+            "Parce que le consentement ne s'applique qu'aux clients",
+            false
+          ],
+          [
+            "Parce que les salariés refusent toujours",
+            false
+          ],
+          [
+            "Parce que le consentement est interdit en entreprise",
+            false
+          ],
+          [
+            "À cause du déséquilibre entre employeur et salarié",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Parmi ces principes, lesquels figurent parmi les principes généraux de protection des données ?",
+        "feedback": "Limitation des finalités, minimisation et limitation de la conservation en font partie. La collecte maximale « au cas où » et la conservation illimitée vont à leur encontre.",
+        "options": [
+          [
+            "Minimisation des données",
+            true
+          ],
+          [
+            "Limitation des finalités",
+            true
+          ],
+          [
+            "Collecte maximale au cas où",
+            false
+          ],
+          [
+            "Conservation illimitée par précaution",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quand impliquer le DPO sur un projet d'assistant RH ?",
+        "feedback": "Dès le cadrage, avant l'achat ou le test. Le DPO conseille et contrôle ; un avis en fin de projet limite sa portée et coûte cher en corrections.",
+        "options": [
+          [
+            "Jamais, c'est une tâche du service informatique",
+            false
+          ],
+          [
+            "Une fois l'outil déployé, pour valider",
+            false
+          ],
+          [
+            "Dès le cadrage du projet",
+            true
+          ],
+          [
+            "Seulement en cas d'incident",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Que doit-on généralement documenter pour un projet d'IA RH ?",
+        "feedback": "Fiche du cas d'usage, registre, analyse d'impact si nécessaire, contrats et décisions datées font partie des preuves. Les conversations privées des utilisateurs ne sont pas de la documentation.",
+        "options": [
+          [
+            "L'avis du DPO et l'analyse d'impact si requise",
+            true
+          ],
+          [
+            "La finalité et le périmètre",
+            true
+          ],
+          [
+            "Le contenu privé des conversations de chaque salarié",
+            false
+          ],
+          [
+            "Les contrats avec les fournisseurs",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Qui prend la décision finale après l'avis du DPO ?",
+        "feedback": "Le DPO donne un avis ; la décision appartient au responsable de traitement, qui doit pouvoir justifier s'il s'en écarte.",
+        "options": [
+          [
+            "Le DPO",
+            false
+          ],
+          [
+            "Le fournisseur de l'outil",
+            false
+          ],
+          [
+            "Le salarié concerné",
+            false
+          ],
+          [
+            "Le responsable de traitement",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel usage d'un assistant RH est le moins risqué parmi ces propositions ?",
+        "feedback": "Répondre à des questions générales à partir de documents officiels, sans donnée individuelle, est un usage à risque modéré. Les autres évaluent ou classent des personnes.",
+        "options": [
+          [
+            "Répondre à des questions générales à partir de documents officiels",
+            true
+          ],
+          [
+            "Noter la performance de chaque salarié",
+            false
+          ],
+          [
+            "Prédire les départs individuels",
+            false
+          ],
+          [
+            "Classer automatiquement les candidatures",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Que doit-on placer hors du périmètre d'un assistant de FAQ RH ?",
+        "feedback": "Les situations individuelles sensibles sont à escalader vers un humain : santé, conflit, harcèlement, rémunération individuelle. Une question sur la charte du télétravail est en périmètre.",
+        "options": [
+          [
+            "Une question sur la rémunération d'une personne",
+            true
+          ],
+          [
+            "Une question sur un conflit avec un collègue",
+            true
+          ],
+          [
+            "Une question sur la santé d'un salarié",
+            true
+          ],
+          [
+            "Une question sur la procédure de demande de formation",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que doit faire l'assistant quand la réponse n'est pas dans les documents ?",
+        "feedback": "Il doit avouer son ignorance et orienter vers un humain. Improviser une réponse plausible est le principal risque.",
+        "options": [
+          [
+            "Répondre avec ses connaissances générales",
+            false
+          ],
+          [
+            "Dire que l'information est absente et orienter vers l'équipe RH",
+            true
+          ],
+          [
+            "Proposer une réponse approximative en précisant qu'elle peut être fausse",
+            false
+          ],
+          [
+            "Refuser de répondre sans explication",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles règles améliorent la fiabilité d'un assistant fondé sur des documents ?",
+        "feedback": "Sources officielles, versions datées, citations et propriétaire de la base améliorent la fiabilité. Y ajouter des brouillons ou des forums la dégrade.",
+        "options": [
+          [
+            "Versions et dates de validité sur chaque document",
+            true
+          ],
+          [
+            "Ajout de brouillons non validés pour élargir la couverture",
+            false
+          ],
+          [
+            "Sources officielles et validées uniquement",
+            true
+          ],
+          [
+            "Citation obligatoire du document source",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi l'escalade vers un humain est-elle une fonction du produit et non un échec ?",
+        "feedback": "Certaines situations exigent un humain : sensibilité, urgence, jugement. Un parcours d'escalade clair protège les personnes et la confiance.",
+        "options": [
+          [
+            "Parce que certaines situations exigent un humain et qu'un parcours clair protège les personnes",
+            true
+          ],
+          [
+            "Parce qu'elle remplace la formation",
+            false
+          ],
+          [
+            "Parce qu'elle réduit le coût de l'assistant",
+            false
+          ],
+          [
+            "Parce qu'elle évite d'avoir un jeu de tests",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles familles doit contenir un jeu de tests d'assistant RH ?",
+        "feedback": "Questions normales, sans réponse, sensibles et tentatives de détournement couvrent les comportements à valider.",
+        "options": [
+          [
+            "Questions sans réponse dans les documents",
+            true
+          ],
+          [
+            "Mesure du temps passé par chaque salarié sur l'outil",
+            false
+          ],
+          [
+            "Questions normales avec réponse dans les documents",
+            true
+          ],
+          [
+            "Tentatives de détournement des consignes",
+            true
+          ],
+          [
+            "Questions sensibles ou hors périmètre",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quand faut-il rejouer le jeu de tests ?",
+        "feedback": "À chaque modification des documents, des consignes ou de l'outil : une mise à jour peut dégrader des comportements validés.",
+        "options": [
+          [
+            "Une seule fois, avant l'ouverture",
+            false
+          ],
+          [
+            "À chaque modification des sources, des consignes ou de l'outil",
+            true
+          ],
+          [
+            "Uniquement si un salarié se plaint",
+            false
+          ],
+          [
+            "Seulement chaque année",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "En termes généraux, que prévoit la logique d'information-consultation du CSE sur un outil permettant de contrôler l'activité des salariés ?",
+        "feedback": "En général, les représentants sont informés et consultés avant la mise en œuvre de tels moyens ; les règles précises sont à vérifier avec le juridique. Ce n'est pas un avis juridique.",
+        "options": [
+          [
+            "Un accord signé avec chaque salarié individuellement",
+            false
+          ],
+          [
+            "Rien, l'employeur décide seul dans tous les cas",
+            false
+          ],
+          [
+            "Une simple affiche dans les couloirs après le déploiement",
+            false
+          ],
+          [
+            "Une information et une consultation avant la mise en œuvre, selon le cadre applicable à vérifier",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle différence entre information et consultation ?",
+        "feedback": "L'information communique des éléments ; la consultation recueille un avis motivé avant la décision, avec le temps et les éléments nécessaires.",
+        "options": [
+          [
+            "L'information communique, la consultation recueille un avis avant la décision",
+            true
+          ],
+          [
+            "L'information est destinée aux managers, la consultation aux salariés",
+            false
+          ],
+          [
+            "La consultation est facultative, l'information obligatoire",
+            false
+          ],
+          [
+            "Aucune",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Que doit contenir un dossier d'information honnête sur un assistant RH ?",
+        "feedback": "Données, garanties, limites, gouvernance et calendrier sont attendus. Un dossier qui ne présente que des bénéfices perd en crédibilité.",
+        "options": [
+          [
+            "Uniquement les bénéfices attendus",
+            false
+          ],
+          [
+            "Les catégories de données, durées et accès",
+            true
+          ],
+          [
+            "Les garanties et les limites de l'outil",
+            true
+          ],
+          [
+            "La gouvernance et les conditions d'arrêt",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle réponse est la plus crédible à « l'IA va supprimer des postes » ?",
+        "feedback": "Dire ce qu'on sait, ce qu'on ignore, et s'engager sur un suivi mesurable. Promettre ce qu'on ne contrôle pas détruit la confiance.",
+        "options": [
+          [
+            "« Voici les tâches concernées, la formation prévue et un point de suivi avec vous »",
+            true
+          ],
+          [
+            "« Nous ne savons rien, ne posez pas la question »",
+            false
+          ],
+          [
+            "« Aucun impact n'est possible, c'est garanti »",
+            false
+          ],
+          [
+            "« Cela ne concerne pas les représentants »",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi associer des représentants du personnel tôt dans le projet ?",
+        "feedback": "Ils connaissent le terrain, repèrent des angles morts, et un dialogue tardif aggrave les craintes. L'avis doit pouvoir changer le projet.",
+        "options": [
+          [
+            "Pour déléguer la responsabilité à leur place",
+            false
+          ],
+          [
+            "Parce que leur retour améliore le projet et réduit les craintes",
+            true
+          ],
+          [
+            "Pour gagner du temps en évitant les tests",
+            false
+          ],
+          [
+            "Parce que la loi interdit d'associer les managers",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles pratiques favorisent une adoption responsable d'un assistant RH ?",
+        "feedback": "Pilote volontaire, relais, canal de retour et conditions d'arrêt favorisent l'adoption. Suivre individuellement qui utilise l'outil crée de la défiance.",
+        "options": [
+          [
+            "Pilote limité avec des volontaires",
+            true
+          ],
+          [
+            "Suivi nominatif de l'usage de chaque salarié",
+            false
+          ],
+          [
+            "Relais crédibles dans les équipes",
+            true
+          ],
+          [
+            "Canal de retour simple",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel indicateur d'adoption est le plus approprié ?",
+        "feedback": "Un indicateur agrégé au-dessus du seuil, couplé à des mesures de qualité. Les suivis nominatifs sont intrusifs et relèvent peut-être du contrôle.",
+        "options": [
+          [
+            "Liste nominative des salariés n'ayant jamais utilisé l'assistant",
+            false
+          ],
+          [
+            "Temps passé par chaque salarié sur l'outil",
+            false
+          ],
+          [
+            "Nombre de questions par salarié pour classer les plus actifs",
+            false
+          ],
+          [
+            "Part des équipes utilisatrices (agrégée), associée au taux d'escalade et à la qualité des réponses",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Vous devez présenter à votre CSE (fictif) un projet d'assistant de FAQ RH. Listez en quelques lignes les éléments clés de votre dossier d'information et les garanties que vous proposez.",
+        "feedback": "Une bonne réponse mentionne : finalité et périmètre, ce que l'assistant ne fait pas, données et durées, rôle du DPO, supervision humaine et escalade, tests et indicateurs, calendrier avec point d'étape, conditions d'arrêt, et le renvoi au juridique pour la procédure applicable. Elle reste honnête sur les incertitudes.",
+        "options": []
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Décrivez comment vous testeriez un assistant RH avant son ouverture aux salariés, en précisant au moins trois familles de tests et ce que vous feriez en cas d'échec.",
+        "feedback": "Une bonne réponse cite des questions normales, sans réponse, sensibles et des tentatives de détournement, avec comportement attendu, verdict, correction des sources ou consignes et rejeu complet. Elle précise que l'assistant n'est pas ouvert tant que les cas sensibles ne sont pas correctement escaladés.",
+        "options": []
+      }
+    ]
+  },
+  "assignment": {
+    "title": "Livrable pratique : cadre de gouvernance d'un assistant RH et dossier d'information des représentants du personnel",
+    "instructions_md": "## Objectif\n\nDémontrer que vous savez cadrer un assistant RH interne de façon responsable : indicateurs proportionnés, protection des données, tests, dialogue avec les représentants du personnel et accompagnement du changement. Vous travaillez sur un cas **fictif** (Verdelys ou une organisation inventée par vos soins). Aucune donnée personnelle ni confidentielle n'est nécessaire.\n\n*Ce livrable ne constitue pas un avis juridique ; les points juridiques sont à valider auprès du service juridique, du DPO ou d'un conseil à la date de lecture.*\n\n## Consignes\n\nCe livrable se réalise **sans code**, avec les outils no-code et low-code des trois ateliers : tableur (atelier 1), plateforme d'assistant et tableur de tests (atelier 2), éditeur de documents (atelier 3). Le rendu est un document (ou un lien) accompagné du classeur de tests.\n\n1. **Cadre de gouvernance de l'assistant** : finalité, périmètre (dans, hors, à escalader), sources et propriétaire, données et durées, accès et journaux, rôle du DPO, supervision humaine, procédure d'arrêt, revue périodique.\n2. **Tableau de bord RH proportionné** : trois à cinq indicateurs fictifs avec décision éclairée, test de proportionnalité, seuil de masquage justifié.\n3. **Jeu de tests** : au moins 16 tests en quatre familles avec comportements attendus, résultats observés et corrections.\n4. **Dossier d'information des représentants du personnel** (trame complétée) : huit rubriques, limites et incertitudes incluses, trois engagements vérifiables.\n5. **Plan de conduite du changement** : publics, message d'annonce, formation, indicateurs d'adoption (agrégés) avec seuils d'alerte.\n6. **Risques et renvois** : liste des points à faire valider par le juridique ou le DPO.\n\n## Grille d'évaluation\n\n- **Proportionnalité et minimisation (20 %)** : indicateurs reliés à des décisions, agrégation, seuils, absence de suivi individuel.\n- **Gouvernance et protection des données (20 %)** : finalité, durées, accès, DPO, supervision humaine, arrêt.\n- **Qualité de l'assistant et des tests (20 %)** : sources, citations, escalade, jeu de tests complet et rejoué.\n- **Dossier et dialogue social (20 %)** : clarté, honnêteté, garanties, engagements vérifiables, prudence juridique.\n- **Conduite du changement (10 %)** : publics, communication, formation, mesures d'adoption non intrusives.\n- **Fiabilité et présentation (10 %)** : aucune affirmation non étayée, renvois explicites au juridique, document lisible.\n\n**Variante pour profils techniques (facultative)** : automatiser la génération du tableau de bord ou des tests avec un outil de votre choix ; ce n'est pas requis pour valider le module."
+  }
+}

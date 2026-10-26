@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CourseCard } from "@/components/cards";
 import { Button, Chip, Container, EmptyState, kickerCls } from "@/components/ui";
-import { difficultyLabel, filterCourses, statusLabel, type CatalogFilters, type Difficulty } from "@/lib/catalog";
+import { difficultyLabel, filterCourses, type CatalogFilters, type Difficulty } from "@/lib/catalog";
 import { getCatalog } from "@/lib/catalog/load";
 import { JsonLd } from "@/components/json-ld";
 import { breadcrumbLd, itemListLd } from "@/lib/seo";
@@ -64,7 +64,7 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
             <summary className={`${kickerCls} text-muted`}>Plus de filtres</summary>
             <div className="mt-4 flex flex-col gap-6">
               <div><span className={label}>Parcours</span><div className="flex flex-wrap gap-2">{learningPaths.map((p) => <Chip key={p.slug} href={href("path", p.slug)} active={filters.path === p.slug}>{p.title}</Chip>)}</div></div>
-              <div><span className={label}>Disponibilité</span><div className="flex flex-wrap gap-2"><Chip href={href("status", "published")} active={filters.status === "published"}>{statusLabel.published}</Chip><Chip href={href("status", "coming_soon")} active={filters.status === "coming_soon"}>{statusLabel.coming_soon}</Chip></div></div>
+              <div><span className={label}>Disponibilité</span><div className="flex flex-wrap gap-2"><Chip href={href("status", "published")} active={filters.status === "published"}>Aperçu gratuit</Chip><Chip href={href("status", "coming_soon")} active={filters.status === "coming_soon"}>En préparation</Chip></div></div>
               <div><span className={label}>Durée estimée</span><div className="flex flex-wrap gap-2">{[5, 6, 8].map((h) => <Chip key={h} href={href("maxHours", h)} active={filters.maxHours === h}>≤ {h} h</Chip>)}</div></div>
             </div>
           </details>

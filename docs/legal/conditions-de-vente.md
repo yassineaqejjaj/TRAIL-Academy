@@ -18,8 +18,8 @@ Prix en euros, toutes taxes comprises pour les consommateurs ; les taxes applica
 | Offre | Prix | Contenu | Accès |
 |---|---|---|---|
 | Module | 199 € TTC | Un module au choix | 12 mois |
-| Parcours (Product Manager Augmenté ou AI Product Manager) | 990 € TTC | Les modules du parcours, dans l’ordre recommandé | 18 mois |
-| AI Mastery | 1 990 € TTC | L’ensemble des modules et les deux parcours | 18 mois |
+| Parcours (Product Manager Augmenté, AI Product Manager, Marketing & Communication Augmentés, RH Augmentées, Juridique Augmenté, Finance Augmentée) | 990 € TTC | Les modules du parcours, dans l’ordre recommandé | 18 mois |
+| AI Mastery | 1 990 € TTC | L’ensemble des modules et tous les parcours | 18 mois |
 
 - Une offre n’est vendue que lorsque les contenus correspondants sont publiés ; un module annoncé « bientôt disponible » ne peut pas être acheté.
 - Un parcours ou AI Mastery contient les modules déjà détenus : le prix n’est pas réduit à ce titre, mais l’accès à ces modules est prolongé. [À COMPLÉTER : confirmer cette règle ou prévoir un crédit.] Une offre dont tous les modules sont déjà détenus et actifs ne peut pas être rachetée.

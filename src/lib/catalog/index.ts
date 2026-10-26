@@ -40,6 +40,21 @@ export const formatEuro = (cents: number): string =>
 export const difficultyLabel: Record<Difficulty, string> = { beginner: "Débutant", intermediate: "Intermédiaire", advanced: "Avancé" };
 export const statusLabel: Record<Course["status"], string> = { draft: "Brouillon", coming_soon: "Bientôt disponible", published: "Disponible", archived: "Archivé" };
 
+/**
+ * What a visitor can actually do with a module. "Published" only means the written content is ready: the module is
+ * buyable only when its offer is open, so the public label must never say "available" before that.
+ */
+export type Availability = { state: "buy" | "preview" | "soon"; label: string; tone: "accent" | "warn" | "neutral" };
+export function availability(course: Course, c: Catalog = staticCatalog): Availability {
+  if (isPurchasable(course, c)) return { state: "buy", label: "Disponible à l'achat", tone: "accent" };
+  if (course.status === "published") return { state: "preview", label: "Aperçu gratuit · inscriptions bientôt ouvertes", tone: "neutral" };
+  return { state: "soon", label: "En préparation", tone: "warn" };
+}
+
+/** Profession-specific paths (marketing, HR, legal, finance) contain at least one module of the profession phase. */
+export const isProfessionPath = (path: LearningPath, c: Catalog = staticCatalog): boolean =>
+  path.kind === "path" && coursesOfPath(path, c).some((x) => x.phaseId === 5);
+
 export interface CatalogFilters {
   q?: string;
   difficulty?: Difficulty;

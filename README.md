@@ -13,7 +13,7 @@
 
 **T**raining **R**oadmap for **A**pplied **I**ntelligence & **L**eadership — *Learn AI. Apply AI. Lead with AI.*
 
-Une plateforme de formation professionnelle à l'intelligence artificielle, conçue pour qu'**un formateur unique** la fasse vivre sans développeur : catalogue de 18 modules, parcours, lecteur de cours, quiz, livrables relus par un humain, attestations vérifiables, paiement, administration et gestion de contenu.
+Une plateforme de formation professionnelle à l'intelligence artificielle, conçue pour qu'**un formateur unique** la fasse vivre sans développeur : catalogue de 30 modules, parcours, lecteur de cours, quiz, livrables relus par un humain, attestations vérifiables, paiement, administration et gestion de contenu.
 
 ![Accueil de TRAIL Academy](docs/screenshots/01-accueil.png)
 
@@ -46,7 +46,7 @@ Les professionnels qui doivent intégrer l'IA à leur métier trouvent surtout d
 
 TRAIL Academy propose une formation **pratique, progressive et mesurable**, conçue et enseignée par un praticien qui construit réellement des produits IA :
 
-- **18 modules** en 4 phases (Fondations IA · Productivité & Construction · Produit & Leadership · Systèmes & Ingénierie), avec prérequis, ordre recommandé, objectifs mesurables et **livrable concret** pour chaque module ;
+- **30 modules** en 5 phases (Fondations IA · Productivité & Construction · Produit & Leadership · Systèmes & Ingénierie · IA pour les métiers : marketing et communication, RH, juridique, finance), avec prérequis, ordre recommandé, objectifs mesurables et **livrable concret** pour chaque module ;
 - **Une pédagogie par la pratique** : cible de conception de 70 % de pratique, 20 % d'interaction, 10 % de théorie (un objectif de conception, pas une mesure) ;
 - **Une validation honnête** : quiz corrigés automatiquement, livrables relus par le formateur, attestation privée et vérifiable. Jamais présentée comme une certification d'État ou une qualification RNCP ;
 - **Une exploitation par une seule personne** : tout se pilote depuis l'administration, sans toucher au code.
@@ -68,7 +68,7 @@ TRAIL Academy propose une formation **pratique, progressive et mesurable**, con�
 |---|---|---|---|
 | **Module** | 1 module au choix (18 disponibles) | 199 € TTC | 12 mois |
 | **Parcours** | Product Manager Augmenté (9 modules) **ou** AI Product Manager (13 modules), au choix | 990 € TTC | 18 mois |
-| **AI Mastery** | les 18 modules et les deux parcours | 1 990 € TTC | 18 mois |
+| **AI Mastery** | les 30 modules et les 6 parcours | 1 990 € TTC | 18 mois |
 | Entreprises | licences d'équipe, programme sur mesure, ateliers privés : **sur devis** (formulaire), hors grille | — | — |
 
 Trois offres seulement, sans option cachée. Un parcours ou AI Mastery **contient** les modules déjà détenus sans réduction de prix (décision commerciale à confirmer, voir `docs/GO_LIVE.md`) ; une offre dont tous les modules sont déjà détenus ne peut pas être rachetée.
@@ -96,7 +96,7 @@ Aucun avis n'est généré. Le formateur invite une personne réelle par un **li
 
 ### Les règles qui font la confiance
 
-- **Seul un module publié et validé s'achète.** Les 18 modules sont visibles, mais « Bientôt disponible » tant que le contenu authentique n'est pas là ; le paiement est refusé côté base de données, pas seulement masqué.
+- **Seul un module publié et validé s'achète.** Les 30 modules sont visibles, mais « Bientôt disponible » tant que le contenu authentique n'est pas là ; le paiement est refusé côté base de données, pas seulement masqué.
 - **On ne paie jamais deux fois le même contenu** : un parcours qui contient un module déjà détenu prolonge l'accès, sans doublon.
 - **Aucune invention** : pas de témoignage sans consentement vérifiable, pas de vidéo ni de contenu fictif, pas de chiffre non vérifié.
 - **L'accès payant ne s'ouvre que sur un événement de paiement signé et vérifié**, jamais sur une simple redirection du navigateur.

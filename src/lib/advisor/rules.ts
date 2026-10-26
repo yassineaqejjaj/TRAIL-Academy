@@ -11,6 +11,10 @@ export const roles = [
   { value: "transformation", label: "Transformation digitale" },
   { value: "engineering", label: "Ingénierie / Data" },
   { value: "management", label: "Manager / Team leader" },
+  { value: "marketing", label: "Marketing / Communication" },
+  { value: "hr", label: "Ressources humaines" },
+  { value: "legal", label: "Juridique / Conformité" },
+  { value: "finance", label: "Finance / Contrôle de gestion / Audit" },
   { value: "other", label: "Autre" },
 ] as const;
 
@@ -70,6 +74,10 @@ export const rules: Rule[] = [
   { id: "role-analyst", when: { role: "analyst" }, score: { "product-manager-augmente": 2 }, reason: "Les business analysts bénéficient des modules de découverte et de prompting." },
   { id: "role-transformation", when: { role: "transformation" }, score: { "ai-product-manager": 2, "product-manager-augmente": 1 }, reason: "La transformation digitale demande stratégie, gouvernance et adoption." },
   { id: "role-engineering", when: { role: "engineering" }, score: { "ai-product-manager": 3 }, reason: "Le parcours AI Product Manager couvre RAG, agents, sécurité et évaluation." },
+  { id: "role-marketing", when: { role: "marketing" }, score: { "marketing-communication-augmentee": 10 }, reason: "Votre fonction (marketing, communication) correspond au parcours Marketing & Communication Augmentés." },
+  { id: "role-hr", when: { role: "hr" }, score: { "rh-augmentees": 10 }, reason: "Votre fonction (ressources humaines) correspond au parcours RH Augmentées." },
+  { id: "role-legal", when: { role: "legal" }, score: { "juridique-augmente": 10 }, reason: "Votre fonction (juridique, conformité) correspond au parcours Juridique Augmenté." },
+  { id: "role-finance", when: { role: "finance" }, score: { "finance-augmentee": 10 }, reason: "Votre fonction (finance, contrôle de gestion, audit) correspond au parcours Finance Augmentée." },
   { id: "role-management", when: { role: "management" }, score: { "product-manager-augmente": 1, "ai-product-manager": 1 }, reason: "Les managers combinent usage de l'IA et conduite du changement." },
   { id: "obj-use", when: { objective: "use" }, score: { "product-manager-augmente": 3 }, reason: "Votre objectif d'usage quotidien privilégie prompts, contexte et outils de productivité." },
   { id: "obj-product", when: { objective: "product" }, score: { "ai-product-manager": 2, "product-manager-augmente": 1 }, reason: "Intégrer l'IA dans des produits demande stratégie, delivery et évaluation." },

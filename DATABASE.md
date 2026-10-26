@@ -15,6 +15,7 @@ PostgreSQL ≥ 15. Migrations dans `db/migrations/` (rejouables avec `npm run db
 | `0008_video_pipeline.sql` | File d'encodage : `video_assets`, `admin_register_video`, `admin_retry_video`, `claim_video_job` (SKIP LOCKED, reprise après 30 min, 3 essais), `finish_video_job` |
 | `0009_public_syllabus.sql` | `public_syllabus`, `public_preview_lesson` : programme (titres) et leçon d'aperçu d'un module publié, lisibles sans compte |
 | `0010_reviews.sql` | Avis réels : invitations à lien privé (hash), soumissions avec consentement, `admin_approve_review` (vérification consignée), `admin_reject_review` |
+| `0012_business_profiles.sql` | Phase 5 « IA pour les métiers » : modules M19–M30, quatre parcours métiers (fermés à la vente), AI Mastery étendu à 30 modules. Générée par `npm run seed:generate -- --migration`, idempotente. |
 | `0011_live_sessions.sql` | Sessions en visio : `live_sessions` (lien privé non lisible dans la table), `session_bookings`, `book_session` / `cancel_booking` (verrou, liste d'attente), fonctions d'administration, `user_contact` ; export et effacement RGPD étendus |
 
 ## Rôles et identité

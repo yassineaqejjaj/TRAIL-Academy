@@ -1,0 +1,725 @@
+{
+  "course": "M22",
+  "slug": "ia-recrutement",
+  "source": "Contenu original rédigé pour TRAIL Academy à partir du programme du module (sans slides sources). Pas de vidéo : à ajouter depuis l'administration.",
+  "chapters": [
+    {
+      "title": "Offres, scorecards et critères structurés",
+      "lessons": [
+        {
+          "title": "Le recrutement assisté par IA : où l'IA aide, où l'humain décide",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Cartographier les étapes d'un recrutement et repérer où l'IA peut assister.\n- Poser dès le départ les points de décision qui restent humains.\n\n## Un processus, des étapes, des responsabilités\n\nUn recrutement est une suite de décisions qui touchent des personnes : définir le besoin, attirer, trier, évaluer, choisir, proposer. L'IA générative sait surtout **manipuler du texte** : rédiger, reformuler, résumer, comparer, classer. Elle peut donc aider sur beaucoup d'étapes, mais ne porte aucune responsabilité envers les candidats.\n\n```mermaid\nflowchart LR\n  accTitle: Processus de recrutement avec points de contrôle humain\n  accDescr: Du cadrage du besoin à la proposition, le processus passe par l'offre, le sourcing, la présélection, les entretiens et la décision. L'IA assiste certaines étapes, et la décision finale reste humaine.\n  B[\"Cadrage du besoin et scorecard\"] --> O[\"Offre\"]\n  O --> S[\"Sourcing\"]\n  S --> P[\"Présélection\"]\n  P --> E[\"Entretiens structurés\"]\n  E --> D[\"Décision finale humaine\"]\n  D --> R[\"Proposition et retour aux candidats\"]\n  IA[\"Assistance IA\"] -.-> O\n  IA -.-> S\n  IA -.-> P\n  IA -.-> E\n  H[\"Contrôle humain\"] -.-> P\n  H -.-> D\n```\n*Figure 1 : les étapes d'un recrutement ; l'IA peut assister plusieurs d'entre elles, mais la présélection est contrôlée et la décision finale est humaine.*\n\n## Trois principes pour tout le module\n\n- **L'humain décide.** L'IA propose, trie ou résume ; une personne identifiée relit, peut corriger et assume la décision.\n- **Des critères écrits avant de regarder les candidats.** Sans critères explicites, l'IA (comme un recruteur pressé) invente les siens.\n- **Des candidats informés et traités équitablement**, avec des mesures pour vérifier que le processus ne désavantage pas certains groupes.\n\n## Exemple fictif\n\nLa société fictive « Atelier Lumen » recrute une responsable de la relation client. Elle utilise un assistant pour reformuler l'offre et résumer les candidatures, mais ce sont deux recruteuses qui lisent les profils retenus et qui décident, avec une grille identique pour tous.\n\n## Mise en pratique\n\nPrenez un recrutement récent de votre organisation. Listez ses étapes et notez pour chacune : qui décide, sur quels critères, et où une assistance IA serait envisageable. Entourez les décisions qui ne doivent jamais être déléguées."
+        },
+        {
+          "title": "De la fiche de poste à la scorecard : des critères structurés",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Distinguer fiche de poste, offre et scorecard.\n- Écrire des critères observables, pondérés et évaluables.\n\n## Pourquoi une scorecard\n\nLa **scorecard** est la grille d'évaluation du poste : elle décrit la **mission**, les **résultats attendus** et les **critères** sur lesquels on jugera les candidats. Elle se construit **avant** le sourcing et sert à toutes les étapes : présélection, entretiens, débriefing. Elle réduit les jugements au feeling et rend le processus explicable.\n\n## Les composantes\n\n- **Mission** : une phrase sur la raison d'être du poste.\n- **Résultats attendus** à 6 ou 12 mois, concrets.\n- **Critères indispensables** (éliminatoires, peu nombreux) et **critères souhaitables** (pondérés).\n- **Échelle de notation** avec, pour chaque niveau, un exemple de comportement observable.\n\n## Exemple fictif : responsable du service client chez « Atelier Lumen »\n\n- Mission : garantir une relation client claire et réactive sur les commandes.\n- Résultat attendu à 6 mois : un processus de traitement des réclamations documenté et suivi.\n- Critère : « Animation d'équipe », noté de 1 à 4. Niveau 1 : n'a pas encadré. Niveau 4 : a encadré, formé et fait progresser une équipe, avec un exemple précis.\n\n## Critères à surveiller\n\nUn critère doit se rapporter à ce que la personne **fait** dans le poste. Méfiez-vous des critères qui servent de **substitut** à une caractéristique personnelle : « dynamique », « digital native », « disponible tout de suite ». Ils peuvent exclure indirectement des personnes sans lien avec la performance.\n\n## Mise en pratique\n\nPrenez une fiche de poste réelle ou fictive. Retirez tous les adjectifs vagues et remplacez-les par un comportement observable. Limitez-vous à cinq critères au maximum, avec une échelle de 1 à 4."
+        },
+        {
+          "title": "Rédiger l'offre avec l'IA : clarté, inclusion et exactitude",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Utiliser un assistant pour rédiger ou améliorer une offre à partir de la scorecard.\n- Relire le résultat avec une checklist d'exactitude et d'inclusion.\n\n## Partir de la scorecard, pas de la page blanche\n\nDonnez à l'assistant la mission, les résultats attendus, les critères et le contexte, puis demandez un brouillon. Plus la matière est précise, moins l'assistant comble avec des généralités.\n\n```text\nRédige une offre d'emploi pour le poste ci-dessous.\nMission : [mission]\nRésultats attendus : [liste]\nCritères indispensables : [liste]\nCritères souhaitables : [liste]\nContraintes : n'invente ni salaire, ni avantage, ni lieu.\nUtilise un langage clair, sans jargon ni formule excluante.\nIndique entre crochets toute information manquante.\n```\n\n## Ce que l'IA fait bien\n\n- Reformuler un texte lourd en version claire et structurée.\n- Proposer plusieurs versions (courte pour un réseau social, détaillée pour le site carrière).\n- Repérer des formulations potentiellement excluantes : exigences superflues, vocabulaire connoté, anglicismes obscurs.\n\n## Les risques\n\n- **Invention d'avantages ou de conditions** : une offre est un engagement, ne publiez jamais un élément que vous n'avez pas vérifié.\n- **Style générique** : des offres interchangeables n'attirent personne.\n- **Biais reproduits** : un assistant peut produire un langage genré ou des critères d'âge implicites.\n\n## Checklist de relecture\n\n1. Chaque information (rémunération, lieu, contrat) est confirmée par une personne.\n2. Les critères correspondent à la scorecard, pas davantage.\n3. Le texte ne suggère pas de préférence liée à une caractéristique protégée.\n4. Les intitulés sont compréhensibles et le poste est présenté de façon accessible à plusieurs profils.\n5. Une personne autre que l'auteur relit.\n\n## Mise en pratique\n\nFaites rédiger une offre fictive par un assistant avec le gabarit ci-dessus, puis appliquez la checklist et notez les corrections."
+        }
+      ]
+    },
+    {
+      "title": "Sourcing et présélection assistés : ce qu'on peut automatiser, ce qu'on ne doit pas",
+      "lessons": [
+        {
+          "title": "Ce qu'on peut automatiser, ce qu'on ne doit pas",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Classer des usages de l'IA selon le gain de temps et l'effet sur les personnes.\n- Savoir où placer la limite entre assistance et décision automatisée.\n\n## Deux questions pour chaque usage\n\n1. **Quel est le gain ?** Temps, qualité, régularité.\n2. **Quel est l'effet sur un candidat si l'outil se trompe ?** Un brouillon de message se corrige. Un candidat écarté à tort ne le saura jamais.\n\n```mermaid\nquadrantChart\n  accTitle: Usages de l'IA en recrutement selon gain et impact\n  accDescr: Matrice à deux axes, impact sur les candidats en abscisse et gain de temps en ordonnée. Les tâches de rédaction ou de planification sont à faible impact, le tri et le rejet automatiques sont à fort impact.\n  x-axis Faible impact candidat --> Fort impact candidat\n  y-axis Faible gain --> Fort gain\n  quadrant-1 Gain fort, vigilance forte\n  quadrant-2 À automatiser sereinement\n  quadrant-3 Peu utile\n  quadrant-4 À éviter\n  Planifier les entretiens: [0.15, 0.7]\n  Reformuler une offre: [0.2, 0.6]\n  Résumer un CV: [0.5, 0.75]\n  Classer les candidats: [0.8, 0.85]\n  Rejet automatique: [0.95, 0.9]\n```\n*Figure 1 : placement illustratif de quelques usages ; les positions sont indicatives et à adapter à votre contexte.*\n\n## Usages plutôt sûrs, sous relecture\n\n- Rédiger et reformuler : offres, messages, comptes rendus.\n- Planifier : proposer des créneaux, rappeler les rendez-vous.\n- Répondre aux questions pratiques des candidats avec des informations validées.\n\n## Usages sensibles : assistance encadrée\n\n- Résumer des CV ou des profils : à comparer à l'original.\n- Proposer un classement ou un score : seulement avec des critères écrits, une explication et une relecture humaine.\n\n## À ne pas faire\n\n- **Rejeter automatiquement** des candidats sans examen humain.\n- Faire déduire par une IA des **traits de personnalité, émotions ou états de santé** à partir d'une photo, d'une voix ou d'une vidéo : ces usages sont sensibles, scientifiquement discutables et très encadrés par la réglementation.\n- Utiliser des **données qui n'ont rien à voir avec le poste**.\n\nLes règles précises sont à vérifier auprès du service juridique. Elles sont présentées plus loin.\n\n## Mise en pratique\n\nPlacez cinq usages de votre organisation sur la matrice et justifiez la case choisie."
+        },
+        {
+          "title": "Sourcing assisté : trouver des profils sans exclure sans le savoir",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Utiliser l'IA pour élargir le sourcing de façon responsable.\n- Éviter les filtres qui écartent des profils sans lien avec le poste.\n\n## Ce que recouvre le sourcing\n\nChercher des candidats au-delà des candidatures spontanées : réseaux professionnels, viviers internes, cooptation, écoles, associations. L'IA peut aider à **traduire une scorecard en requêtes de recherche**, à proposer des intitulés équivalents et à rédiger des messages d'approche.\n\n## Exemple fictif\n\nLe poste de « gestionnaire de paie » peut aussi s'appeler « technicien paie » ou « spécialiste administration du personnel ». Demandez à l'assistant : « Donne dix intitulés équivalents et les compétences communes. » Vous élargissez le vivier sans multiplier les filtres.\n\n## Risques propres au sourcing\n\n- **Filtres indirects** : exiger un diplôme précis ou une ancienneté fixe alors que des compétences équivalentes existent.\n- **Reproduction du passé** : chercher des profils « qui ressemblent aux équipes actuelles » perpétue la composition existante.\n- **Données personnelles** : des profils publics ne sont pas libres de tout usage. Une information publiée sur un réseau n'autorise pas à la réutiliser pour n'importe quelle finalité. Vérifiez les règles de votre organisation et du RGPD.\n- **Messages d'approche** : informer la personne de qui vous êtes, d'où vous tenez ses coordonnées, et lui permettre de refuser.\n\n## Bonnes pratiques\n\n1. Chercher à partir des **compétences** de la scorecard, non d'un profil type.\n2. Conserver la liste des requêtes utilisées pour pouvoir expliquer le sourcing.\n3. Diversifier les canaux.\n4. Ne pas coller de données personnelles dans un assistant externe sans cadre validé.\n\n## Mise en pratique\n\nRédigez la requête de recherche d'un poste fictif en partant uniquement des compétences, puis demandez à un assistant les intitulés équivalents. Notez les filtres que vous avez volontairement supprimés."
+        },
+        {
+          "title": "Présélection assistée : résumer, comparer, classer sous contrôle",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Définir un protocole de présélection assistée avec contrôle humain.\n- Reconnaître les pièges : classement opaque, résumé infidèle, confiance excessive.\n\n## Le principe : une grille, pas un verdict\n\nL'assistant n'est jamais invité à « choisir les meilleurs candidats ». On lui demande de **remplir une grille de critères** à partir du CV, en citant pour chaque critère l'élément du CV qui l'appuie, ou « non trouvé ». Le recruteur vérifie et décide.\n\n```mermaid\nsequenceDiagram\n  accTitle: Présélection assistée avec relecture humaine\n  accDescr: Le recruteur fournit la scorecard à l'assistant, qui remplit une grille avec preuves. Le recruteur vérifie les preuves, décide de la suite et le candidat reçoit une réponse issue d'une décision humaine.\n  participant R as Recruteur\n  participant A as Assistant IA\n  participant C as Candidat\n  R->>A: Scorecard et candidature anonymisée\n  A->>R: Grille remplie avec preuves\n  R->>R: Vérification des preuves\n  R->>R: Décision humaine\n  R->>C: Réponse et motif\n```\n*Figure 1 : la présélection assistée ; le recruteur vérifie les preuves et décide, le candidat reçoit une réponse issue de cette décision.*\n\n## Consigne type\n\n```text\nVoici une scorecard et une candidature.\nPour chaque critère, indique : niveau de 1 à 4, la citation exacte\nde la candidature qui le justifie, ou « non trouvé ».\nN'utilise aucune autre information. N'évalue ni l'âge, ni le genre,\nni la situation familiale, ni la nationalité, ni les trous de parcours.\nNe propose pas de décision.\n```\n\n## Les pièges\n\n- **Résumé infidèle** : une compétence inventée ou omise. D'où les citations, à retrouver dans l'original.\n- **Biais de position** : l'ordre de présentation peut influencer. Évaluez chaque candidature séparément, avec la même consigne.\n- **Biais d'ancrage sur le CV** : un CV mal rédigé n'est pas un candidat peu compétent. Prévoyez d'autres moyens de montrer ses compétences.\n- **Opacité** : un score sans explication ne permet ni de corriger, ni de répondre à un candidat.\n\n## Contrôles minimaux\n\n1. Relire toutes les candidatures écartées par un score faible, ou un échantillon significatif, pour vérifier qu'aucun bon profil n'est perdu.\n2. Journaliser la consigne, la version de l'outil et la décision humaine.\n3. Utiliser la même consigne pour tous.\n\n## Mise en pratique\n\nRédigez la consigne de présélection pour un poste fictif et listez trois vérifications que vous feriez avant d'écarter un candidat."
+        }
+      ]
+    },
+    {
+      "title": "Biais, équité et mesure",
+      "lessons": [
+        {
+          "title": "D'où viennent les biais : données, critères et proxys",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Identifier les sources de biais d'un processus de recrutement, avec ou sans IA.\n- Comprendre ce qu'est un proxy.\n\n## Un biais, c'est un écart systématique\n\nUn processus est biaisé lorsqu'il désavantage de façon répétée certaines personnes pour des raisons sans lien avec le poste. Les humains ont des biais ; un outil d'IA peut les **reproduire et les amplifier**, parce qu'il apprend de textes ou d'historiques qui les contiennent, et qu'il applique la même logique à grande échelle.\n\n## Sources fréquentes\n\n- **Données d'historique** : si les anciens recrutements favorisaient un profil, un outil entraîné dessus apprendra à les imiter.\n- **Critères mal définis** : « bon feeling » ou « culture fit » laissent la place à l'arbitraire.\n- **Proxys** : un critère apparemment neutre, corrélé à une caractéristique protégée. Exemples fictifs : l'adresse peut renseigner indirectement sur l'origine, une longue interruption de carrière sur la parentalité ou la santé, le prénom sur le genre ou l'origine supposée.\n- **Biais du modèle de langage** : associations de stéréotypes apprises dans les textes.\n- **Biais de conception du processus** : exiger un format de CV, un canal unique, un test inaccessible.\n\n## Un point d'attention\n\nRetirer le nom ou le genre du CV ne suffit pas : d'autres éléments peuvent révéler les mêmes informations. L'anonymisation réduit certains risques, elle ne remplace pas la **mesure**.\n\n## Exemple fictif\n\nLa société fictive « Maison Horizon » constate que son outil de tri favorise les candidats ayant eu un parcours continu. Les personnes revenant d'une interruption de carrière sont moins bien classées, sans que les résultats attendus du poste l'expliquent. Le critère « continuité » est un proxy à retirer ou à justifier.\n\n## Mise en pratique\n\nDressez la liste de cinq informations présentes dans un CV qui peuvent servir de proxy. Pour chacune, demandez : est-elle nécessaire pour évaluer la compétence visée ?"
+        },
+        {
+          "title": "Mesurer l'équité : comparer des résultats entre groupes",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Calculer des taux de sélection par groupe et leur rapport.\n- Interpréter un écart avec prudence.\n\n## Le principe\n\nPour savoir si un processus traite des groupes de façon comparable, on compare leurs **taux de passage** à chaque étape. Taux de sélection = candidats retenus du groupe divisé par candidats du groupe.\n\n```mermaid\nflowchart TD\n  accTitle: Démarche de mesure d'un écart de traitement\n  accDescr: On regroupe les candidats, on calcule le taux de passage de chaque groupe, on compare le rapport à un seuil d'alerte, puis on enquête sur les causes et on corrige si besoin.\n  A[\"Données par candidat et par étape\"] --> B[\"Grouper les candidats\"]\n  B --> C[\"Taux de passage par groupe\"]\n  C --> D[\"Rapport entre taux\"]\n  D --> E{\"Écart notable ?\"}\n  E -- \"Non\" --> F[\"Documenter et continuer le suivi\"]\n  E -- \"Oui\" --> G[\"Chercher les causes : critère, outil, étape\"]\n  G --> H[\"Corriger et remesurer\"]\n```\n*Figure 1 : de la donnée à la décision de corriger ; un écart déclenche une enquête, pas une conclusion automatique.*\n\n## Exemple chiffré fictif\n\nSur 20 candidats du groupe A, 10 sont retenus, soit 50 %. Sur 10 candidats du groupe B, 3 sont retenus, soit 30 %. Le rapport est 30 / 50 = 0,6. Les chiffres sont inventés.\n\n## Un repère, non une norme\n\nCertains pays utilisent comme signal d'alerte un rapport inférieur à environ 0,8 entre le taux du groupe le moins sélectionné et celui du plus sélectionné. C'est un **repère de vigilance** d'origine étrangère, non un seuil légal français. Un rapport inférieur à ce repère appelle une enquête, un rapport supérieur n'est pas un certificat d'équité.\n\n## Précautions\n\n- **Petits effectifs** : avec dix personnes, un candidat de plus change tout. Les écarts ne prouvent rien seuls.\n- **Autres explications** : un écart peut venir de la composition du vivier (expérience, diplômes) ; il faut quand même l'examiner.\n- **Données sensibles** : les groupes sont parfois inconnus ou interdits à collecter. La collecte de caractéristiques personnelles est encadrée par le RGPD et le droit du travail : consultez votre service juridique et le DPO avant toute mesure sur des personnes réelles. Les ateliers du module travaillent sur des **données fictives**.\n\n## Mise en pratique\n\nAvec 12 candidats du groupe X dont 6 retenus et 8 du groupe Y dont 3 retenus, calculez les deux taux et leur rapport. Que feriez-vous ensuite ?"
+        },
+        {
+          "title": "Corriger et surveiller : de la mesure à l'amélioration continue",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Choisir des actions correctives proportionnées.\n- Mettre en place un suivi dans la durée.\n\n## Après l'alerte : chercher la cause\n\nUn écart observé sur le taux de passage doit être décomposé : **à quelle étape** apparaît-il (tri, entretien, offre) ? **Quel critère** pèse le plus ? Cette lecture par étape évite de corriger au hasard.\n\n## Actions possibles\n\n- **Retirer ou redéfinir un critère** devenu proxy.\n- **Réécrire la consigne** de l'assistant et la tester sur des profils fictifs jumeaux : deux profils identiques, sauf un élément personnel ; les résultats doivent être comparables.\n- **Ajouter un contrôle humain** sur les profils écartés.\n- **Changer d'outil ou suspendre l'usage** si l'écart persiste.\n- **Diversifier le sourcing** si le déséquilibre vient du vivier.\n\n## Le test des profils jumeaux\n\nPréparez deux candidatures fictives identiques, sauf le prénom, la durée d'une interruption de carrière ou l'adresse. Soumettez-les séparément à l'assistant avec la même consigne. Si les notes divergent, le critère modifié influence le résultat. Ce test est simple, reproductible et ne demande aucune donnée personnelle.\n\n## Surveiller dans le temps\n\n1. Définir les indicateurs : taux de passage par étape, délais, motifs de refus, retours des candidats.\n2. Fixer la **fréquence** de revue (par exemple à chaque campagne), avec une personne responsable.\n3. **Conserver** les résultats et les décisions de correction.\n4. Rouvrir l'analyse quand l'outil, la consigne ou le vivier change.\n\n## Ce que la mesure ne résout pas\n\nL'équité ne se réduit pas à un indicateur. Un taux équilibré peut cacher un critère injustifié, un écart de ressenti ou des candidats découragés avant de postuler. Complétez les chiffres par les retours des candidats et des recruteurs.\n\n## Mise en pratique\n\nConcevez trois paires de profils jumeaux pour un poste fictif en changeant à chaque fois un seul élément. Écrivez ce que vous conclueriez si les résultats différaient."
+        }
+      ]
+    },
+    {
+      "title": "Entretiens structurés, expérience candidat et marque employeur",
+      "lessons": [
+        {
+          "title": "L'entretien structuré : questions, grille et notation",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Construire un entretien structuré à partir de la scorecard.\n- Utiliser l'IA pour préparer, sans lui déléguer l'évaluation.\n\n## Le principe\n\nUn entretien **structuré** pose à chaque candidat les **mêmes questions**, dans le même ordre, et note les réponses avec une **grille commune** fixée à l'avance. Les approches comparatives de la recherche en psychologie du travail le présentent généralement comme plus fiable qu'un entretien libre, mais l'ampleur de l'avantage dépend du contexte : ne l'affirmez pas sans source.\n\n## Types de questions\n\n- **Situation passée** : « Racontez une situation où vous avez dû gérer une réclamation difficile. Que s'est-il passé ? Qu'avez-vous fait ? Avec quel résultat ? »\n- **Mise en situation** : « Un client reçoit deux fois la même commande. Que faites-vous ? »\n\n## Ce que l'IA peut préparer\n\n- Un brouillon de **questions** pour chaque critère de la scorecard.\n- Des **exemples de réponses** pour chaque niveau de l'échelle, que vous corrigez.\n- Une **liste de relances** neutres.\n\n```text\nPour le critère « traitement des réclamations » (échelle de 1 à 4),\npropose deux questions de situation passée et, pour chaque niveau,\nun exemple de réponse observable. Évite toute question sur la vie privée.\n```\n\n## Questions à ne pas poser\n\nLes questions sans lien avec le poste (situation familiale, projet de grossesse, santé, origine, opinions) sont à éviter ; le droit encadre ce qu'on peut demander à un candidat. Vérifiez auprès du service juridique.\n\n## Après l'entretien\n\nChaque évaluateur note **seul**, avant le débriefing, pour éviter l'influence du plus influent. Puis on compare, on discute des écarts et on décide. Une transcription ou un résumé produit par IA exige un cadre (information, base légale, conservation). Voir le chapitre sur le cadre.\n\n## Mise en pratique\n\nRédigez deux questions et une échelle de 1 à 4 pour un critère de votre scorecard, puis faites-les relire par un collègue."
+        },
+        {
+          "title": "L'expérience candidat : communiquer, informer, répondre",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Cartographier le parcours d'un candidat et ses points de friction.\n- Utiliser l'IA pour la communication, sans tromper le candidat.\n\n## Un parcours à regarder du côté du candidat\n\n```mermaid\njourney\n  accTitle: Parcours d'un candidat fictif\n  accDescr: Le candidat découvre l'offre, postule, attend une réponse, passe un entretien et reçoit une décision. Le silence après la candidature est le moment le plus pénible, et le retour motivé le plus apprécié.\n  title Parcours fictif d'une candidate\n  section Avant\n    Découvrir l'offre: 4: Candidate\n    Remplir le formulaire: 3: Candidate\n  section Pendant\n    Attendre un retour: 1: Candidate\n    Passer l'entretien: 4: Candidate, Recruteur\n  section Après\n    Recevoir la décision: 2: Candidate\n    Recevoir un retour utile: 5: Candidate, Recruteur\n```\n*Figure 1 : parcours fictif ; les notes de satisfaction sont inventées pour illustrer les points de friction.*\n\n## Ce que l'IA peut améliorer\n\n- **Accusés de réception** et messages d'étape clairs.\n- **Réponses aux questions pratiques** (calendrier, documents, accessibilité) à partir d'une base d'informations validées.\n- **Retours personnalisés** : un brouillon de feedback, relu par le recruteur, appuyé sur la grille.\n\n## Transparence envers le candidat\n\n- Si un candidat échange avec un assistant automatique, **dites-le**. Faire croire qu'une personne répond est trompeur.\n- Indiquez clairement où une personne peut être jointe.\n- Si l'IA intervient dans l'évaluation, informez les candidats (voir le chapitre sur le cadre).\n\n## Accessibilité et équité\n\nPrévoyez des **aménagements** (format alternatif, temps supplémentaire) et une voie humaine. Un test en ligne ou un chatbot peut exclure des personnes en situation de handicap ou peu à l'aise avec le numérique.\n\n## Mesurer l'expérience\n\nUn court questionnaire de fin de processus (clarté, délais, respect) donne des signaux. Les résultats restent à interpréter avec prudence si peu de candidats répondent.\n\n## Mise en pratique\n\nDessinez le parcours de votre dernier recrutement et repérez le moment de plus grande incertitude pour le candidat. Écrivez le message qui le réduirait."
+        },
+        {
+          "title": "Marque employeur : contenus authentiques et promesses tenues",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Utiliser l'IA pour produire des contenus de marque employeur sans les rendre génériques.\n- Éviter les promesses non tenues.\n\n## Ce qu'est la marque employeur\n\nC'est la **réputation** d'une organisation comme employeur : ce que les salariés et les candidats en disent, ce que les offres promettent, ce que l'expérience de recrutement confirme ou non. Elle se construit sur la réalité vécue, pas sur le style des publications.\n\n## Où l'IA aide\n\n- **Transformer des témoignages réels** (avec accord de leurs auteurs) en formats variés : article, courte vidéo, publication.\n- **Adapter le ton** à chaque canal.\n- **Traduire** des contenus et vérifier leur lisibilité.\n- **Proposer des idées** de rubriques et de calendrier éditorial.\n\n## Les risques\n\n- **Contenus génériques** : des phrases sur la « passion » ou « l'innovation » sans fait. Imposez des détails concrets.\n- **Promesses non tenues** : si l'offre évoque la flexibilité et que la réalité est différente, le décalage apparaît dès l'entretien ou la période d'essai.\n- **Faux témoignages** : inventer ou « améliorer » une citation de salarié est trompeur et peut engager la responsabilité de l'organisation.\n- **Images et voix générées** : si vous utilisez de faux visages ou de faux salariés, signalez-le ; des règles de transparence existent sur certains contenus générés.\n- **Droit à l'image et données** : l'accord des personnes citées est nécessaire.\n\n## Règle de cohérence\n\nChaque affirmation publique doit pouvoir être **prouvée par un fait interne**. Exemple fictif : « Nous formons chaque nouvel arrivant » doit correspondre à un parcours d'accueil réel.\n\n## Mise en pratique\n\nChoisissez trois promesses d'une page carrière fictive et notez, pour chacune, la preuve interne qui l'appuie. Reformulez celles qui n'en ont pas."
+        }
+      ]
+    },
+    {
+      "title": "Cadre : AI Act, RGPD, information des candidats et registre des risques",
+      "lessons": [
+        {
+          "title": "Le cadre en termes généraux : droit du travail, non-discrimination, RGPD",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Repérer les grandes familles de règles qui s'appliquent au recrutement avec IA.\n- Savoir quand consulter le juridique ou le DPO.\n\n*Ce contenu est pédagogique et ne constitue pas un avis juridique. Les règles applicables évoluent : vérifiez-les auprès de votre service juridique ou d'un conseil à la date de lecture.*\n\n## Plusieurs cadres se cumulent\n\n- **Droit du travail et du recrutement** : les informations demandées à un candidat doivent avoir un lien direct avec le poste ; le candidat est informé des méthodes utilisées. Les représentants du personnel peuvent devoir être informés ou consultés selon les outils déployés.\n- **Non-discrimination** : le droit interdit de désavantager des personnes selon des critères protégés. Un outil qui désavantage un groupe, même sans intention, peut poser problème.\n- **RGPD** : les candidatures contiennent des données personnelles. Il faut une **finalité** précise, une **base légale**, la **minimisation**, une **durée de conservation** limitée, la sécurité et l'information des personnes. Le RGPD encadre aussi les décisions fondées uniquement sur un traitement automatisé qui produisent des effets importants sur une personne.\n- **Autorités** : la CNIL publie des recommandations sur les données de recrutement et sur l'IA.\n\n## Principes pratiques\n\n1. Ne collectez que ce qui sert à évaluer le poste.\n2. Ne placez pas de CV réels dans un assistant grand public sans cadre validé (contrat, localisation des données, absence de réutilisation pour l'entraînement) : vérifiez avec le DPO.\n3. Définissez la durée de conservation des candidatures non retenues.\n4. Documentez qui peut accéder aux données.\n5. Prévoyez comment un candidat exerce ses droits (accès, rectification, opposition selon les cas).\n\n## Analyse d'impact\n\nCertains traitements à risque élevé nécessitent une **analyse d'impact** sur la protection des données. Le DPO vous dira si un outil de présélection assistée y est soumis.\n\n## Mise en pratique\n\nPour un outil de tri fictif, répondez en trois lignes : quelle finalité, quelles données, quelle durée de conservation ? Listez les questions à poser au DPO."
+        },
+        {
+          "title": "AI Act : pourquoi le recrutement est classé à haut risque",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Comprendre le principe de classification par niveaux de risque de l'AI Act.\n- Savoir ce que « haut risque » implique, en termes généraux.\n\n*Ce contenu est pédagogique et ne constitue pas un avis juridique. Les règles applicables évoluent : vérifiez-les auprès de votre service juridique ou d'un conseil à la date de lecture.*\n\n## Le principe\n\nL'AI Act est le règlement européen sur l'intelligence artificielle. Il suit une **approche par les risques** : plus un usage peut affecter les droits des personnes, plus les exigences sont fortes.\n\n```mermaid\nflowchart TD\n  accTitle: Niveaux de risque de l'AI Act en termes généraux\n  accDescr: Les usages sont répartis en usages interdits, usages à haut risque soumis à des exigences, usages avec obligations de transparence et usages à risque minimal. Certains usages en emploi et recrutement figurent parmi les usages à haut risque.\n  R[\"Usage d'un système d'IA\"] --> I[\"Pratiques interdites\"]\n  R --> H[\"Haut risque : exigences renforcées\"]\n  R --> T[\"Transparence : informer les personnes\"]\n  R --> M[\"Risque minimal\"]\n  H --> E[\"Emploi et recrutement : certains usages\"]\n```\n*Figure 1 : les grandes catégories de risque ; le placement exact d'un outil dépend de son usage et doit être vérifié par des juristes.*\n\n## Emploi et recrutement\n\nEn général, le règlement range parmi les systèmes à haut risque certains usages liés à l'emploi, par exemple pour **recruter ou sélectionner** des personnes (publier des offres ciblées, analyser et filtrer des candidatures, évaluer des candidats) ou pour prendre des décisions affectant la relation de travail. Le périmètre exact est défini par le texte et ses précisions : ne le déduisez pas d'un résumé comme celui-ci.\n\n## Ce que le haut risque implique, en général\n\n- Une **gestion des risques** et une documentation technique de la part du fournisseur.\n- Des **données** de qualité et des mesures contre les biais.\n- Une **journalisation** et une traçabilité.\n- De la **transparence** envers ceux qui déploient l'outil : notice d'utilisation.\n- Une **supervision humaine** effective : des personnes compétentes, qui comprennent les limites de l'outil et peuvent ne pas suivre sa sortie.\n- Des obligations de l'**organisation qui l'utilise** (le déployeur) : suivre la notice, assurer la supervision, conserver les journaux, informer les personnes concernées et les représentants du personnel selon les cas.\n\n## Usages interdits à connaître\n\nCertaines pratiques sont interdites en général, par exemple l'inférence d'émotions sur le lieu de travail avec quelques exceptions. Vérifiez la liste à jour avec un conseil.\n\n## Calendrier\n\nLes obligations s'appliquent par étapes. **Vérifiez le calendrier en vigueur à la date de lecture.**\n\n## Mise en pratique\n\nPour un outil fictif « qui classe les CV par score », notez : usage, catégorie probable, ce que le fournisseur doit vous fournir, ce que vous devez faire en tant qu'organisation."
+        },
+        {
+          "title": "Information des candidats, supervision humaine et registre des risques",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Définir une information claire pour les candidats.\n- Organiser la supervision humaine et tenir un registre des risques.\n\n*Ce contenu est pédagogique et ne constitue pas un avis juridique. Les règles applicables évoluent : vérifiez-les auprès de votre service juridique ou d'un conseil à la date de lecture.*\n\n## Informer les candidats\n\nAvant leur candidature, les personnes doivent savoir, en langage clair :\n\n- qu'un outil d'IA intervient, à quelle étape, et pour quoi faire ;\n- quelles données sont utilisées et pendant combien de temps ;\n- **qui décide** et comment obtenir un réexamen humain ;\n- à qui s'adresser pour exercer ses droits.\n\nExemple fictif de mention : « Pour la présélection, un outil nous aide à résumer les candidatures selon les critères de l'offre. Un recruteur examine chaque dossier et prend la décision. Vous pouvez demander un réexamen en écrivant à l'adresse indiquée. »\n\n## Supervision humaine réelle\n\nUne personne qui valide toujours sans lire n'exerce pas une supervision. Pour qu'elle soit effective :\n\n- le superviseur est **formé** et connaît les limites de l'outil ;\n- il a le **temps** et la **liberté** de contredire ;\n- il voit **les raisons** de la sortie, pas seulement un score ;\n- les cas contestés sont **tracés**.\n\n```mermaid\nstateDiagram-v2\n  accTitle: Cycle de vie d'un risque dans le registre\n  accDescr: Un risque est identifié, évalué, traité par une mesure, puis surveillé. Si la mesure échoue, il est réévalué. Un risque résiduel accepté est revu périodiquement.\n  [*] --> Identifié\n  Identifié --> Évalué\n  Évalué --> Traité\n  Traité --> Surveillé\n  Surveillé --> Évalué: Nouvel incident\n  Surveillé --> Accepté: Risque résiduel acceptable\n  Accepté --> Évalué: Revue périodique\n```\n*Figure 1 : cycle de vie d'un risque dans le registre ; un risque n'est jamais clos définitivement.*\n\n## Le registre des risques\n\nUn tableau tenu à jour avec, pour chaque risque : **description**, **cause**, **probabilité** et **gravité** (échelle simple, par exemple faible, moyenne, forte), **mesure**, **responsable**, **échéance**, **indicateur de suivi**, **statut**.\n\nExemples fictifs de risques : « le tri écarte les profils avec interruption de carrière », « un candidat n'est pas informé de l'usage de l'IA », « des CV sont collés dans un outil non validé », « le superviseur valide sans lire ».\n\n## Mise en pratique\n\nRédigez trois lignes de registre pour un outil fictif de présélection, avec mesure et responsable."
+        }
+      ]
+    },
+    {
+      "title": "Ateliers no-code et low-code",
+      "lessons": [
+        {
+          "title": "Atelier 1 : transformer une fiche de poste en scorecard structurée",
+          "kind": "exercise",
+          "body_md": "## Objectif et durée\n\n**Objectif** : transformer une fiche de poste fictive en scorecard structurée dans un tableur ou une base. **Durée estimée** : 60 minutes.\n\n## Plateformes\n\n- **Google Sheets** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternatives : **Notion**, **Airtable** ou **NocoDB** (bases de données), mêmes principes.\n- **Un assistant conversationnel** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : un autre assistant.\n\n## Données fictives fournies\n\nFiche de poste de « Atelier Lumen » : Responsable du service client. « Nous recherchons un(e) responsable dynamique, passionné(e) par la relation client, avec 5 ans d'expérience minimum, maîtrisant un outil de gestion des tickets, capable d'encadrer une équipe de huit personnes, de traiter les réclamations complexes, de produire un bilan mensuel et de travailler en lien avec la logistique. Disponible rapidement. »\n\n## Étapes\n\n1. Créez trois feuilles ou tables : « Mission et résultats », « Critères », « Échelles ».\n2. Dans « Mission et résultats », écrivez la mission en une phrase et trois résultats attendus à 6 mois.\n3. Dans « Critères », créez les colonnes : critère, type (indispensable ou souhaitable), poids, preuve attendue. Retenez cinq critères maximum.\n4. Repérez dans la fiche les mots vagues (« dynamique », « passionné », « disponible rapidement ») et les exigences discutables (« 5 ans minimum »). Notez dans une colonne « Remarque » si vous les supprimez, les reformulez ou les justifiez.\n5. Demandez à l'assistant de proposer, pour chaque critère, une échelle de 1 à 4 avec un comportement observable par niveau et deux questions d'entretien. Collez la fiche et ces consignes : pas d'invention, aucune question sur la vie privée.\n6. Dans « Échelles », relisez et corrigez les propositions, puis ajoutez une colonne « Relu par » avec votre prénom.\n7. Faites relire par une autre personne et notez ses remarques.\n\n## Résultat attendu\n\nUne scorecard de cinq critères maximum, avec poids, preuves attendues, échelles observables et questions.\n\n## Critères de réussite\n\n- [ ] Chaque critère renvoie à un comportement observable.\n- [ ] Les adjectifs vagues sont supprimés ou reformulés.\n- [ ] Les poids sont notés et la somme est cohérente.\n- [ ] Aucune question ne touche à la vie privée.\n- [ ] Les corrections apportées à l'assistant sont visibles.\n\n## Pièges\n\nGarder un critère « culture fit » non défini ; accepter les échelles sans les relire ; coller une vraie fiche interne ou des données réelles.\n\n## Pour aller plus loin\n\nCréez une seconde scorecard pour un poste très différent et comparez les critères communs."
+        },
+        {
+          "title": "Atelier 2 : construire une grille de présélection et mesurer un écart",
+          "kind": "exercise",
+          "body_md": "## Objectif et durée\n\n**Objectif** : construire une grille de présélection, l'appliquer à des données fictives et mesurer un écart de taux de sélection entre deux groupes. **Durée estimée** : 75 minutes.\n\n## Plateformes\n\n- **Google Sheets** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternatives : **Airtable**, **NocoDB**.\n- **Un assistant conversationnel** (no-code), même mention. Facultatif ici.\n\n## Données fictives fournies\n\nVingt-quatre candidats inventés, avec groupe fictif (A ou B) et note de présélection sur 20. Copiez les lignes dans une feuille aux colonnes : id, groupe, note.\n\nGroupe A : C01 16, C02 15, C03 17, C04 11, C05 14, C06 15, C07 10, C08 14, C09 16, C10 12, C11 15, C12 9.\n\nGroupe B : C13 12, C14 14, C15 11, C16 13, C17 15, C18 10, C19 13, C20 14, C21 12, C22 16, C23 9, C24 13.\n\n## Étapes\n\n1. Créez une colonne « Retenu » avec la règle : oui si la note est supérieure ou égale à un seuil placé dans une cellule séparée (démarrez à 14).\n2. Créez un petit tableau récapitulatif : par groupe, nombre de candidats, nombre de retenus, taux de sélection (retenus divisé par candidats).\n3. Calculez le rapport entre le taux du groupe le moins sélectionné et celui du plus sélectionné.\n4. Comparez-le au repère de vigilance de 0,8, en rappelant que c'est un repère et non une norme légale française.\n5. Faites varier le seuil (13, 15, 16) et notez comment taux et rapport évoluent.\n6. Examinez les notes : le groupe B a-t-il des notes globalement plus basses ? Dans la vie réelle, la question serait : le critère noté est-il lié au poste, ou s'agit-il d'un proxy ?\n7. Rédigez dans une feuille « Analyse » : l'écart constaté, deux hypothèses de cause, une action corrective, une limite (par exemple le petit effectif).\n\n## Résultat attendu\n\nUne feuille avec notes, colonne « Retenu » pilotée par le seuil, tableau des taux, rapport calculé et analyse. Avec un seuil de 14, vous devez trouver 8 retenus sur 12 pour A et 4 sur 12 pour B, soit un rapport de 0,5.\n\n## Critères de réussite\n\n- [ ] Les taux et le rapport sont calculés par formule et non à la main.\n- [ ] Le seuil est modifiable depuis une seule cellule.\n- [ ] L'analyse distingue constat, hypothèse et décision.\n- [ ] L'effet des petits effectifs est signalé.\n- [ ] Aucune donnée réelle n'est utilisée.\n\n## Pièges\n\nConclure à de la discrimination à partir de 24 lignes ; oublier que la note elle-même peut être biaisée ; changer le seuil sans noter l'effet.\n\n## Pour aller plus loin\n\nAjoutez une colonne « Profil jumeau » : réécrivez trois candidatures fictives en changeant un seul élément et comparez les notes obtenues avec un assistant."
+        },
+        {
+          "title": "Atelier 3 : documenter le processus et le registre des risques",
+          "kind": "exercise",
+          "body_md": "## Objectif et durée\n\n**Objectif** : documenter un processus de recrutement assisté par IA et son registre des risques, en préparation du livrable. **Durée estimée** : 90 minutes.\n\n## Plateformes\n\n- **Notion** (no-code) ou **Google Docs** et **Google Sheets** : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternatives : **Airtable**, **NocoDB**, **Miro** ou **FigJam** pour le schéma.\n\n## Données fictives\n\nReprenez le poste de l'atelier 1 et les résultats de l'atelier 2. L'organisation fictive utilise un assistant pour résumer les candidatures et rédiger les messages ; elle n'utilise aucun rejet automatique.\n\n## Étapes\n\n1. Dessinez le processus en sept étapes (besoin, offre, sourcing, présélection, entretiens, décision, retour). Utilisez un tableau blanc ou une liste numérotée.\n2. Pour chaque étape, notez : rôle de l'IA (aucun, assistance, proposition), personne responsable, donnée utilisée, point de contrôle humain.\n3. Créez une table « Registre des risques » avec les colonnes : risque, cause, probabilité, gravité, mesure, responsable, échéance, indicateur, statut.\n4. Remplissez au moins huit risques, dont : biais de tri, proxy dans un critère, absence d'information des candidats, données collées dans un outil non validé, supervision de pure forme, durée de conservation, accessibilité, promesse non tenue dans l'offre.\n5. Rédigez un texte d'information candidat de six à huit lignes.\n6. Ajoutez une feuille « À vérifier avec le juridique et le DPO » avec cinq questions (base légale, analyse d'impact, information des représentants du personnel, catégorie de l'outil selon l'AI Act, conservation).\n7. Faites relire le tout par une personne et notez ses remarques.\n\n## Résultat attendu\n\nUn dossier avec le processus annoté, le registre, le texte d'information et la liste de questions juridiques.\n\n## Critères de réussite\n\n- [ ] Chaque étape a un responsable humain nommé et un point de contrôle.\n- [ ] Au moins huit risques, chacun avec mesure, responsable et indicateur.\n- [ ] Le texte d'information dit qui décide et comment obtenir un réexamen.\n- [ ] Les questions juridiques sont clairement posées, sans prétendre y répondre.\n- [ ] La mention « ne constitue pas un avis juridique » figure dans le dossier.\n\n## Pièges\n\nUn registre trop vague (« risque de biais ») ; des mesures sans responsable ; affirmer la conformité alors que le juridique n'a pas validé.\n\n## Pour aller plus loin\n\nAjoutez un plan de revue trimestriel et un indicateur pour chaque risque fort."
+        }
+      ]
+    }
+  ],
+  "quiz": {
+    "title": "Quiz du module",
+    "pass_percent": 70,
+    "max_attempts": null,
+    "questions": [
+      {
+        "kind": "single_choice",
+        "prompt": "Quel est le rôle le plus adapté de l'IA en présélection ?",
+        "feedback": "L'IA assiste en remplissant une grille avec preuves ; la décision finale reste humaine, et un rejet automatique sans examen est à proscrire.",
+        "options": [
+          [
+            "Rejeter automatiquement les candidats sous un score",
+            false
+          ],
+          [
+            "Remplir une grille de critères avec preuves, un humain vérifiant et décidant",
+            true
+          ],
+          [
+            "Choisir seule les meilleurs candidats",
+            false
+          ],
+          [
+            "Déduire la personnalité à partir d'une photo",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quand construit-on la scorecard ?",
+        "feedback": "Elle sert à toutes les étapes : on la construit avant le sourcing et avant de lire les candidatures, pour éviter des critères inventés après coup.",
+        "options": [
+          [
+            "Après les entretiens, pour justifier le choix",
+            false
+          ],
+          [
+            "Avant le sourcing, avant d'examiner les candidats",
+            true
+          ],
+          [
+            "Pendant le débriefing",
+            false
+          ],
+          [
+            "Une fois le candidat retenu",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels éléments composent une bonne scorecard ?",
+        "feedback": "Mission, résultats attendus, critères pondérés et échelles observables. Les traits de caractère vagues et les caractéristiques personnelles n'en font pas partie.",
+        "options": [
+          [
+            "Une mission en une phrase",
+            true
+          ],
+          [
+            "Des résultats attendus concrets",
+            true
+          ],
+          [
+            "Des critères avec échelle observable",
+            true
+          ],
+          [
+            "Le profil personnel du candidat idéal (âge, apparence)",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel critère est le plus observable ?",
+        "feedback": "Le comportement décrit et vérifiable se juge sur des exemples ; les adjectifs vagues laissent place à l'arbitraire et peuvent masquer des proxys.",
+        "options": [
+          [
+            "« Candidat dynamique »",
+            false
+          ],
+          [
+            "« Bonne énergie »",
+            false
+          ],
+          [
+            "« A formé et encadré une équipe, avec un exemple précis »",
+            true
+          ],
+          [
+            "« Digital native »",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Que vérifiez-vous dans une offre rédigée avec l'IA ?",
+        "feedback": "Une offre est un engagement : toute information doit être confirmée, les critères alignés sur la scorecard et le texte relu pour l'inclusion.",
+        "options": [
+          [
+            "L'exactitude des conditions (lieu, contrat, rémunération)",
+            true
+          ],
+          [
+            "L'alignement avec la scorecard",
+            true
+          ],
+          [
+            "L'absence de formulation excluante",
+            true
+          ],
+          [
+            "Que le texte paraisse écrit par un humain, quitte à inventer des avantages",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi placer « rejet automatique » dans la zone à éviter de la matrice ?",
+        "feedback": "L'impact sur le candidat est fort et l'erreur invisible : la personne écartée à tort ne le saura pas. Un contrôle humain est nécessaire.",
+        "options": [
+          [
+            "Le gain de temps est nul",
+            false
+          ],
+          [
+            "L'impact sur le candidat est fort et l'erreur passe inaperçue",
+            true
+          ],
+          [
+            "Les assistants ne savent pas lire un CV",
+            false
+          ],
+          [
+            "C'est interdit pour des raisons d'orthographe",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels usages relèvent d'une assistance à faible impact, sous relecture ?",
+        "feedback": "Rédaction, planification et réponses validées sont peu risquées ; le classement des candidats a un fort impact et réclame un cadre renforcé.",
+        "options": [
+          [
+            "Proposer des créneaux d'entretien",
+            true
+          ],
+          [
+            "Reformuler un message à un candidat",
+            true
+          ],
+          [
+            "Classer automatiquement les candidats et éliminer les derniers",
+            false
+          ],
+          [
+            "Répondre aux questions pratiques à partir d'informations validées",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi demander des citations pour chaque critère lors d'une présélection assistée ?",
+        "feedback": "Les citations permettent de vérifier l'information dans l'original et de détecter une invention ou une omission.",
+        "options": [
+          [
+            "Pour rendre la réponse plus longue",
+            false
+          ],
+          [
+            "Pour pouvoir vérifier chaque critère dans la candidature d'origine",
+            true
+          ],
+          [
+            "Pour que l'IA décide plus vite",
+            false
+          ],
+          [
+            "Parce que le RGPD l'exige mot pour mot",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Qu'est-ce qu'un proxy ?",
+        "feedback": "Un proxy est une information apparemment neutre mais corrélée à une caractéristique protégée ; il peut créer une discrimination indirecte.",
+        "options": [
+          [
+            "Un serveur intermédiaire",
+            false
+          ],
+          [
+            "Un critère neutre en apparence mais corrélé à une caractéristique protégée",
+            true
+          ],
+          [
+            "Un type de contrat",
+            false
+          ],
+          [
+            "Une note moyenne de recruteur",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles sont des sources fréquentes de biais ?",
+        "feedback": "Historiques, critères flous, proxys et biais du modèle sont typiques. Un format de CV standard n'est pas en soi une source si l'on offre des alternatives.",
+        "options": [
+          [
+            "Des données d'historique qui favorisaient un profil",
+            true
+          ],
+          [
+            "Des critères flous comme « bon feeling »",
+            true
+          ],
+          [
+            "Des proxys comme une interruption de carrière",
+            true
+          ],
+          [
+            "Le fait de poser les mêmes questions à tous",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Sur 20 candidats du groupe A, 10 sont retenus ; sur 10 du groupe B, 3 le sont. Quel est le rapport entre les taux ?",
+        "feedback": "50 % pour A et 30 % pour B ; 30 / 50 = 0,6. Les chiffres sont fictifs ; avec de petits effectifs, ce rapport est un signal à investiguer, non une preuve.",
+        "options": [
+          [
+            "0,3",
+            false
+          ],
+          [
+            "0,6",
+            true
+          ],
+          [
+            "0,7",
+            false
+          ],
+          [
+            "1,67",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que signifie un rapport de 0,6 entre taux de sélection ?",
+        "feedback": "C'est un signal d'alerte qui déclenche une enquête sur la cause, pas une preuve de discrimination ni un constat juridique.",
+        "options": [
+          [
+            "Une preuve de discrimination",
+            false
+          ],
+          [
+            "Un signal justifiant une enquête sur la cause",
+            true
+          ],
+          [
+            "Un résultat normal",
+            false
+          ],
+          [
+            "Une obligation de recruter davantage du groupe B",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles précautions prendre avec une mesure d'équité ?",
+        "feedback": "Effectifs, autres explications et cadre juridique sur les données de groupes doivent être pris en compte ; un seul chiffre ne dit pas tout.",
+        "options": [
+          [
+            "Tenir compte des petits effectifs",
+            true
+          ],
+          [
+            "Examiner d'autres explications, comme la composition du vivier",
+            true
+          ],
+          [
+            "Consulter le DPO avant de mesurer sur des personnes réelles",
+            true
+          ],
+          [
+            "Considérer qu'un rapport supérieur au repère prouve l'équité",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "À quoi sert le test des profils jumeaux ?",
+        "feedback": "Deux profils identiques sauf un élément personnel permettent de voir si cet élément influence le résultat, sans aucune donnée réelle.",
+        "options": [
+          [
+            "À tester la vitesse de l'outil",
+            false
+          ],
+          [
+            "À voir si un seul élément personnel modifié change le résultat",
+            true
+          ],
+          [
+            "À doubler les candidatures",
+            false
+          ],
+          [
+            "À remplacer les entretiens",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel principe caractérise l'entretien structuré ?",
+        "feedback": "Mêmes questions, même ordre, même grille, ce qui rend les évaluations comparables.",
+        "options": [
+          [
+            "Des questions libres selon l'humeur",
+            false
+          ],
+          [
+            "Les mêmes questions et une grille commune pour tous",
+            true
+          ],
+          [
+            "Une notation faite après le débriefing",
+            false
+          ],
+          [
+            "Un score calculé par l'IA seule",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Que peut préparer l'IA pour un entretien structuré ?",
+        "feedback": "Elle propose des brouillons à corriger. L'évaluation du candidat et les questions sur la vie privée sont à exclure.",
+        "options": [
+          [
+            "Des questions de situation passée par critère",
+            true
+          ],
+          [
+            "Des exemples de réponses par niveau d'échelle",
+            true
+          ],
+          [
+            "Des relances neutres",
+            true
+          ],
+          [
+            "Des questions sur la situation familiale",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi les évaluateurs notent-ils seuls avant le débriefing ?",
+        "feedback": "Cela évite l'influence de la personne la plus affirmée et préserve la diversité des avis.",
+        "options": [
+          [
+            "Pour gagner du temps",
+            false
+          ],
+          [
+            "Pour éviter que l'avis le plus influent ne s'impose",
+            true
+          ],
+          [
+            "Pour que l'IA décide",
+            false
+          ],
+          [
+            "Parce que c'est une obligation d'affichage",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Un chatbot répond aux candidats. Que faut-il faire ?",
+        "feedback": "La transparence est de mise : il faut indiquer l'automatisation et offrir un contact humain.",
+        "options": [
+          [
+            "Lui donner un prénom humain sans le dire",
+            false
+          ],
+          [
+            "Indiquer qu'il s'agit d'un assistant automatique et proposer un contact humain",
+            true
+          ],
+          [
+            "Le laisser traiter les réclamations sans suivi",
+            false
+          ],
+          [
+            "L'activer sans informer personne",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles pratiques servent la marque employeur ?",
+        "feedback": "L'authenticité et la cohérence entre promesse et réalité comptent ; les faux témoignages sont trompeurs.",
+        "options": [
+          [
+            "Utiliser des témoignages réels avec accord des personnes",
+            true
+          ],
+          [
+            "Vérifier que chaque promesse a une preuve interne",
+            true
+          ],
+          [
+            "Inventer des citations de salariés",
+            false
+          ],
+          [
+            "Imposer des détails concrets plutôt que des généralités",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Comment l'AI Act traite-t-il, en général, certains usages de recrutement ?",
+        "feedback": "Ils sont en général classés à haut risque, avec des exigences de gestion des risques, de transparence et de supervision humaine. Le détail est à vérifier avec un conseil.",
+        "options": [
+          [
+            "Comme un risque minimal sans exigence",
+            false
+          ],
+          [
+            "Comme des usages en général à haut risque, avec des exigences renforcées",
+            true
+          ],
+          [
+            "Comme interdits dans tous les cas",
+            false
+          ],
+          [
+            "Comme hors champ car ils concernent des textes",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles exigences accompagnent, en termes généraux, un système à haut risque ?",
+        "feedback": "Gestion des risques, traçabilité et supervision humaine sont typiques ; la publicité des CV n'en fait pas partie.",
+        "options": [
+          [
+            "Une gestion des risques et une documentation",
+            true
+          ],
+          [
+            "Une journalisation permettant la traçabilité",
+            true
+          ],
+          [
+            "Une supervision humaine effective",
+            true
+          ],
+          [
+            "La publication des CV des candidats",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que veut dire une supervision humaine effective ?",
+        "feedback": "Une personne formée, avec le temps et la liberté de contredire l'outil et accès aux raisons, exerce une vraie supervision ; valider sans lire n'en est pas une.",
+        "options": [
+          [
+            "Cliquer sur « valider » pour chaque dossier",
+            false
+          ],
+          [
+            "Une personne formée, ayant le temps et la liberté de contredire l'outil",
+            true
+          ],
+          [
+            "Un contrôle annuel de l'éditeur",
+            false
+          ],
+          [
+            "Un avertissement affiché une fois",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Que doit contenir l'information donnée aux candidats ?",
+        "feedback": "L'usage de l'IA, les données, la personne qui décide et la voie de réexamen sont les éléments clés.",
+        "options": [
+          [
+            "L'étape où un outil d'IA intervient et sa finalité",
+            true
+          ],
+          [
+            "Les données utilisées et leur durée de conservation",
+            true
+          ],
+          [
+            "Qui décide et comment demander un réexamen humain",
+            true
+          ],
+          [
+            "Les notes internes sur les autres candidats",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi tenir un registre des risques ?",
+        "feedback": "Il structure l'identification, les mesures, les responsables et le suivi, et permet de démontrer la démarche ; il vit dans le temps.",
+        "options": [
+          [
+            "Pour remplacer le DPO",
+            false
+          ],
+          [
+            "Pour suivre les risques, les mesures et les responsables dans le temps",
+            true
+          ],
+          [
+            "Pour classer les candidats",
+            false
+          ],
+          [
+            "Pour cacher les incidents",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que dire de cette formation sur le plan juridique ?",
+        "feedback": "Le contenu est pédagogique : il ne constitue pas un avis juridique et doit être vérifié avec le service juridique ou un conseil à la date de lecture.",
+        "options": [
+          [
+            "Qu'elle remplace un avis juridique",
+            false
+          ],
+          [
+            "Qu'elle ne constitue pas un avis juridique et qu'il faut vérifier la réglementation en vigueur",
+            true
+          ],
+          [
+            "Qu'elle garantit la conformité",
+            false
+          ],
+          [
+            "Qu'elle certifie les outils étudiés",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Vous introduisez un assistant pour résumer les candidatures d'un poste. Décrivez en quelques lignes les points de contrôle humain et les mesures d'équité que vous mettez en place.",
+        "feedback": "Une bonne réponse cite : scorecard écrite avant, grille avec preuves à vérifier, relecture des dossiers écartés, décision finale humaine, information des candidats, mesure des taux de passage par groupe sur données autorisées, test de profils jumeaux, journalisation, revue périodique et échange avec le DPO.",
+        "options": []
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Un tri d'un outil donne un rapport de taux de sélection de 0,6 entre deux groupes. Expliquez ce que vous faites, et ce que vous ne concluez pas.",
+        "feedback": "Une bonne réponse mentionne : vérifier les effectifs, chercher l'étape et le critère à l'origine, vérifier un proxy, tester des profils jumeaux, corriger ou suspendre, impliquer le juridique ; et ne pas conclure à une discrimination prouvée ni, à l'inverse, à l'absence de problème.",
+        "options": []
+      }
+    ]
+  },
+  "assignment": {
+    "title": "Livrable pratique : processus de recrutement assisté par IA avec registre des risques",
+    "instructions_md": "## Objectif\n\nDémontrer que vous savez concevoir un **processus de recrutement assisté par IA avec points de contrôle humain**, mesurer un écart de traitement sur données fictives et tenir un **registre des risques**. Tout est fictif : aucune donnée de candidat réelle ni confidentielle.\n\n*Ce contenu est pédagogique et ne constitue pas un avis juridique. Les règles applicables évoluent : vérifiez-les auprès de votre service juridique ou d'un conseil à la date de lecture.*\n\n## Consignes\n\nLe livrable se réalise **sans code**, avec les outils no-code et low-code des trois ateliers du dernier chapitre (tableur ou base, assistant conversationnel, tableau blanc). Rendu : un lien, un PDF ou un document.\n\n1. **Contexte** : une organisation et un poste fictifs, avec la mission et trois résultats attendus.\n2. **Scorecard** : cinq critères au plus, poids, échelles observables, questions d'entretien (atelier 1).\n3. **Processus** : sept étapes avec, pour chacune, rôle de l'IA, responsable humain, données et point de contrôle (atelier 3).\n4. **Ce qu'on automatise et ce qu'on n'automatise pas** : une courte justification, avec au moins une exclusion explicite (rejet automatique, par exemple).\n5. **Mesure d'équité** : vos données fictives (au moins 24 lignes, deux groupes), les taux, le rapport, l'effet de deux seuils, l'analyse avec limites (atelier 2).\n6. **Test de profils jumeaux** : au moins trois paires et leurs résultats.\n7. **Information des candidats** : un texte de six à huit lignes.\n8. **Registre des risques** : au moins huit risques avec cause, probabilité, gravité, mesure, responsable, échéance, indicateur et statut.\n9. **Cadre** : un paragraphe situant l'outil au regard de l'AI Act (en termes généraux) et du RGPD, une liste de cinq questions à poser au juridique et au DPO, et la mention que le document ne constitue pas un avis juridique.\n10. **Variante pour profils avancés (facultative)** : un second assistant et une comparaison de ses résultats.\n\n## Grille d'évaluation\n\n- Scorecard claire, observable, sans proxy évident (**15 %**).\n- Processus avec décision humaine finale et points de contrôle crédibles (**20 %**).\n- Mesure d'équité correcte, interprétée avec prudence (**20 %**).\n- Registre des risques précis, actionnable et suivi (**20 %**).\n- Information des candidats et respect de la transparence (**10 %**).\n- Cadre juridique présenté en termes généraux, avec prudence et questions adressées au juridique (**10 %**).\n- Qualité de la présentation et usage maîtrisé de l'assistant (**5 %**).\n\n## Rendu\n\nTexte dans le champ de réponse et/ou fichier PDF ou document, avec liens ou captures des outils utilisés."
+  }
+}

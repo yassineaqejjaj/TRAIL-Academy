@@ -52,6 +52,17 @@ insert into learning_path_courses select lp.id, c.id, 6 from learning_paths lp, 
 insert into learning_path_courses select lp.id, c.id, 7 from learning_paths lp, courses c where lp.slug = 'product-manager-augmente' and c.code = 'M14';
 insert into learning_path_courses select lp.id, c.id, 8 from learning_paths lp, courses c where lp.slug = 'product-manager-augmente' and c.code = 'M16';
 insert into learning_path_courses select lp.id, c.id, 9 from learning_paths lp, courses c where lp.slug = 'product-manager-augmente' and c.code = 'M18';
+with p as (insert into products (slug, kind, title, path_id, access_months, note, active) select 'product-manager-augmente', 'path'::product_kind, 'Product Manager Augmenté', id, 18, '9 modules', false from learning_paths where slug = 'product-manager-augmente' returning id)
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 99000, true from p;
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M3';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M4';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M5';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M6';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M7';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M9';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M14';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M16';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M18';
 insert into learning_paths (slug, title, tagline, audience, is_bundle, access_months) values ('ai-product-manager', 'AI Product Manager', 'Concevoir, piloter et faire évoluer des produits fondés sur l''IA.', 'AI Product Managers, responsables produit, leaders de transformation', false, 18);
 insert into learning_path_courses select lp.id, c.id, 1 from learning_paths lp, courses c where lp.slug = 'ai-product-manager' and c.code = 'M1';
 insert into learning_path_courses select lp.id, c.id, 2 from learning_paths lp, courses c where lp.slug = 'ai-product-manager' and c.code = 'M2';
@@ -66,7 +77,22 @@ insert into learning_path_courses select lp.id, c.id, 10 from learning_paths lp,
 insert into learning_path_courses select lp.id, c.id, 11 from learning_paths lp, courses c where lp.slug = 'ai-product-manager' and c.code = 'M16';
 insert into learning_path_courses select lp.id, c.id, 12 from learning_paths lp, courses c where lp.slug = 'ai-product-manager' and c.code = 'M17';
 insert into learning_path_courses select lp.id, c.id, 13 from learning_paths lp, courses c where lp.slug = 'ai-product-manager' and c.code = 'M18';
-insert into learning_paths (slug, title, tagline, audience, is_bundle, access_months) values ('ai-mastery', 'AI Mastery', 'Accès complet aux 18 modules et aux deux parcours.', 'Professionnels souhaitant une maîtrise complète', true, 18);
+with p as (insert into products (slug, kind, title, path_id, access_months, note, active) select 'ai-product-manager', 'path'::product_kind, 'AI Product Manager', id, 18, '13 modules', false from learning_paths where slug = 'ai-product-manager' returning id)
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 99000, true from p;
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M1';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M2';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M3';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M8';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M10';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M11';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M12';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M13';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M14';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M15';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M16';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M17';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M18';
+insert into learning_paths (slug, title, tagline, audience, is_bundle, access_months) values ('ai-mastery', 'AI Mastery', 'Accès complet à tous les modules et à tous les parcours.', 'Professionnels souhaitant une maîtrise complète, métiers et produit', true, 18);
 insert into learning_path_courses select lp.id, c.id, 1 from learning_paths lp, courses c where lp.slug = 'ai-mastery' and c.code = 'M1';
 insert into learning_path_courses select lp.id, c.id, 2 from learning_paths lp, courses c where lp.slug = 'ai-mastery' and c.code = 'M2';
 insert into learning_path_courses select lp.id, c.id, 3 from learning_paths lp, courses c where lp.slug = 'ai-mastery' and c.code = 'M3';
@@ -85,6 +111,50 @@ insert into learning_path_courses select lp.id, c.id, 15 from learning_paths lp,
 insert into learning_path_courses select lp.id, c.id, 16 from learning_paths lp, courses c where lp.slug = 'ai-mastery' and c.code = 'M12';
 insert into learning_path_courses select lp.id, c.id, 17 from learning_paths lp, courses c where lp.slug = 'ai-mastery' and c.code = 'M13';
 insert into learning_path_courses select lp.id, c.id, 18 from learning_paths lp, courses c where lp.slug = 'ai-mastery' and c.code = 'M17';
+insert into learning_path_courses select lp.id, c.id, 19 from learning_paths lp, courses c where lp.slug = 'ai-mastery' and c.code = 'M19';
+insert into learning_path_courses select lp.id, c.id, 20 from learning_paths lp, courses c where lp.slug = 'ai-mastery' and c.code = 'M20';
+insert into learning_path_courses select lp.id, c.id, 21 from learning_paths lp, courses c where lp.slug = 'ai-mastery' and c.code = 'M21';
+insert into learning_path_courses select lp.id, c.id, 22 from learning_paths lp, courses c where lp.slug = 'ai-mastery' and c.code = 'M22';
+insert into learning_path_courses select lp.id, c.id, 23 from learning_paths lp, courses c where lp.slug = 'ai-mastery' and c.code = 'M23';
+insert into learning_path_courses select lp.id, c.id, 24 from learning_paths lp, courses c where lp.slug = 'ai-mastery' and c.code = 'M24';
+insert into learning_path_courses select lp.id, c.id, 25 from learning_paths lp, courses c where lp.slug = 'ai-mastery' and c.code = 'M25';
+insert into learning_path_courses select lp.id, c.id, 26 from learning_paths lp, courses c where lp.slug = 'ai-mastery' and c.code = 'M26';
+insert into learning_path_courses select lp.id, c.id, 27 from learning_paths lp, courses c where lp.slug = 'ai-mastery' and c.code = 'M27';
+insert into learning_path_courses select lp.id, c.id, 28 from learning_paths lp, courses c where lp.slug = 'ai-mastery' and c.code = 'M28';
+insert into learning_path_courses select lp.id, c.id, 29 from learning_paths lp, courses c where lp.slug = 'ai-mastery' and c.code = 'M29';
+insert into learning_path_courses select lp.id, c.id, 30 from learning_paths lp, courses c where lp.slug = 'ai-mastery' and c.code = 'M30';
+with p as (insert into products (slug, kind, title, path_id, access_months, note, active) select 'ai-mastery', 'bundle'::product_kind, 'AI Mastery', id, 18, '30 modules', false from learning_paths where slug = 'ai-mastery' returning id)
+insert into prices (product_id, amount_cents, tax_inclusive) select id, 199000, true from p;
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M1';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M2';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M3';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M4';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M5';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M6';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M7';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M14';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M18';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M8';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M9';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M10';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M15';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M16';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M11';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M12';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M13';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M17';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M19';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M20';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M21';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M22';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M23';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M24';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M25';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M26';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M27';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M28';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M29';
+insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M30';
 
 with p as (insert into products (slug, kind, title, course_id, access_months, active) select 'module-machine-learning', 'course', 'M1 — Machine Learning', id, 12, false from courses where code = 'M1' returning id)
 insert into prices (product_id, amount_cents, tax_inclusive) select id, 19900, true from p;
@@ -140,51 +210,5 @@ insert into product_course_access select p.id, c.id from products p, courses c w
 with p as (insert into products (slug, kind, title, course_id, access_months, active) select 'module-ai-evaluation-observability', 'course', 'M17 — AI Evaluation & Observability', id, 12, false from courses where code = 'M17' returning id)
 insert into prices (product_id, amount_cents, tax_inclusive) select id, 19900, true from p;
 insert into product_course_access select p.id, c.id from products p, courses c where p.slug = 'module-ai-evaluation-observability' and c.code = 'M17';
-with p as (insert into products (slug, kind, title, path_id, access_months, note, active) select 'product-manager-augmente', 'path'::product_kind, 'Product Manager Augmenté', id, 18, '9 modules', false from learning_paths where slug = 'product-manager-augmente' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 99000, true from p;
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M3';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M4';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M5';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M6';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M7';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M9';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M14';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M16';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'product-manager-augmente' and c.code = 'M18';
-with p as (insert into products (slug, kind, title, path_id, access_months, note, active) select 'ai-product-manager', 'path'::product_kind, 'AI Product Manager', id, 18, '13 modules', false from learning_paths where slug = 'ai-product-manager' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 99000, true from p;
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M1';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M2';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M3';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M8';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M10';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M11';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M12';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M13';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M14';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M15';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M16';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M17';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-product-manager' and c.code = 'M18';
-with p as (insert into products (slug, kind, title, path_id, access_months, note, active) select 'ai-mastery', 'bundle'::product_kind, 'AI Mastery', id, 18, '18 modules', false from learning_paths where slug = 'ai-mastery' returning id)
-insert into prices (product_id, amount_cents, tax_inclusive) select id, 199000, true from p;
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M1';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M2';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M3';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M4';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M5';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M6';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M7';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M14';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M18';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M8';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M9';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M10';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M15';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M16';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M11';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M12';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M13';
-insert into product_course_access select pr.id, c.id from products pr, courses c where pr.slug = 'ai-mastery' and c.code = 'M17';
 
 insert into system_settings (key, value) values ('legal_review_completed', 'false'::jsonb), ('live_checkout_enabled', 'false'::jsonb);

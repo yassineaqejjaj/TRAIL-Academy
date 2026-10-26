@@ -55,3 +55,17 @@ describe("free-text advisor", () => {
     expect(JSON.stringify(r)).not.toContain("M99");
   });
 });
+
+describe("profession paths", () => {
+  const cases: [string, string][] = [
+    ["Je suis responsable marketing et communication, je veux utiliser l'IA pour mes contenus et le SEO, 3h par semaine", "marketing-communication-augmentee"],
+    ["Je suis DRH, je gère le recrutement et la formation, je débute avec l'IA", "rh-augmentees"],
+    ["Juriste d'entreprise, je fais des revues de contrats et de la veille réglementaire, je veux utiliser l'IA", "juridique-augmente"],
+    ["Contrôleur de gestion, je prépare le reporting et les prévisions, je veux gagner du temps avec l'IA", "finance-augmentee"],
+  ];
+  for (const [text, slug] of cases) it(`recommends ${slug}`, async () => {
+    const { recommendFromText } = await import("@/lib/advisor/text");
+    const { staticCatalog } = await import("@/lib/catalog");
+    expect(recommendFromText(text, staticCatalog).base.pathSlug).toBe(slug);
+  });
+});

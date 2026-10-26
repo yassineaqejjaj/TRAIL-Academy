@@ -1,0 +1,801 @@
+{
+  "course": "M27",
+  "slug": "droit-de-l-ia",
+  "source": "Contenu original rédigé pour TRAIL Academy à partir du programme du module (sans slides sources). Pas de vidéo : à ajouter depuis l'administration.",
+  "chapters": [
+    {
+      "title": "AI Act : acteurs, risques et obligations",
+      "lessons": [
+        {
+          "title": "Lire l'AI Act en juriste : champ, rôles et méthode",
+          "kind": "reading",
+          "body_md": "> **Repère pédagogique, pas un avis juridique.** Le droit de l'IA évolue vite : vérifiez toujours l'état du droit à la date de lecture sur les sources officielles (EUR-Lex, Légifrance, site de la CNIL, Commission européenne et Bureau de l'IA).\n\n## Objectifs\n\n- Situer le règlement européen sur l'IA dans votre cartographie juridique.\n- Identifier les **rôles** (fournisseur, déployeur, importateur, distributeur…) et en tirer les conséquences.\n- Adopter une méthode d'analyse reproductible, du fait au texte.\n\n## Changer d'angle par rapport au module M10\n\nLe module M10 présente l'AI Act du point de vue du produit : niveaux de risque, principes, bonnes pratiques. Ici, nous prenons l'angle du juriste : **qualifier** une situation, **rattacher** chaque acteur à ses obligations, **documenter** le raisonnement. Le texte de référence est le règlement (UE) 2024/1689, disponible sur EUR-Lex. Les numéros d'articles et les calendriers d'application ne sont volontairement pas détaillés ici : ils sont à relire dans le texte officiel, car l'application est échelonnée et des textes d'application ou de simplification peuvent évoluer.\n\n## Un règlement de sécurité des produits, appliqué à l'IA\n\nDans sa logique, le règlement s'apparente à une réglementation de **mise sur le marché** et de **mise en service** : il organise des obligations autour d'un « système d'IA » et, séparément, des « modèles d'IA à usage général ». Il vise aussi des acteurs situés hors de l'Union dès lors que le système ou ses résultats sont utilisés dans l'Union, en substance. Il prévoit des exclusions (par exemple pour certains usages militaires ou de recherche scientifique pure) : vérifiez leur périmètre exact dans le texte.\n\n## Les rôles : la question qui précède toutes les autres\n\n- **Fournisseur** : celui qui développe un système d'IA (ou le fait développer) et le met sur le marché ou en service sous son nom ou sa marque.\n- **Déployeur** : celui qui utilise un système d'IA sous sa propre autorité, dans un cadre professionnel.\n- **Importateur** et **distributeur** : acteurs de la chaîne qui mettent à disposition un système provenant d'ailleurs.\n- **Mandataire** : représentant dans l'Union d'un fournisseur établi hors de l'Union.\n- **Fabricant de produit** intégrant un système d'IA comme composant de sécurité, dans certains cas.\n\nUn même organisme peut cumuler plusieurs rôles, et un **déployeur peut devenir fournisseur** s'il modifie substantiellement le système, change sa finalité ou le met en service sous son nom, en substance. C'est un point de contentieux contractuel majeur : nous y reviendrons au chapitre 5.\n\n## Méthode en cinq temps\n\n1. **Décrire les faits** : que fait l'outil, pour qui, avec quelles données, avec quel degré d'autonomie ?\n2. **Qualifier l'objet** : est-ce un système d'IA au sens du texte, un modèle à usage général, ou ni l'un ni l'autre ?\n3. **Qualifier le rôle** de chaque organisation impliquée.\n4. **Classer le risque** (leçon suivante).\n5. **Lister les obligations** et les preuves à conserver, puis dater l'analyse et citer la version du texte consultée.\n\n## Mise en pratique\n\nPrenez un outil d'IA utilisé dans votre organisation (ou l'assistant fictif « Atlas » d'une mutuelle imaginaire, la Mutuelle Horizon). Écrivez en trois lignes qui est fournisseur, qui est déployeur, et ce qui changerait si la mutuelle réentraînait le modèle sur ses propres données."
+        },
+        {
+          "title": "Classifier les risques : interdits, haut risque, transparence",
+          "kind": "reading",
+          "body_md": "> **Repère pédagogique, pas un avis juridique.** Le droit de l'IA évolue vite : vérifiez toujours l'état du droit à la date de lecture sur les sources officielles (EUR-Lex, Légifrance, site de la CNIL, Commission européenne et Bureau de l'IA).\n\n## Objectifs\n\n- Raisonner par **catégories** plutôt que par intuition.\n- Distinguer interdictions, haut risque, obligations de transparence et usage libre.\n- Savoir où chercher la réponse dans le texte et quoi documenter.\n\n## Quatre familles, une logique d'escalade\n\n```mermaid\nflowchart TD\n  accTitle: Arbre de classification simplifié d'un cas d'usage\n  accDescr: On vérifie d'abord si le cas d'usage est une pratique interdite, puis s'il relève d'un domaine à haut risque, puis s'il impose une obligation de transparence, sinon il reste soumis aux règles générales.\n  A[\"Cas d'usage décrit\"] --> B{\"Pratique interdite ?\"}\n  B -- \"Oui\" --> X[\"Ne pas déployer\"]\n  B -- \"Non\" --> C{\"Domaine ou produit à haut risque ?\"}\n  C -- \"Oui\" --> H[\"Exigences renforcées\"]\n  C -- \"Non\" --> D{\"Interaction ou contenu à signaler ?\"}\n  D -- \"Oui\" --> T[\"Obligations de transparence\"]\n  D -- \"Non\" --> M[\"Règles générales et bonnes pratiques\"]\n  H --> T\n```\n*Figure 1 : arbre simplifié de classification ; il guide la réflexion mais ne remplace pas la lecture du texte et des annexes.*\n\n## Les pratiques interdites\n\nLe règlement interdit, en substance, certaines pratiques jugées incompatibles avec les droits fondamentaux : manipulation subliminale ou exploitation de vulnérabilités causant un préjudice, notation sociale dans certaines conditions, certains usages de l'identification biométrique, ou encore la reconnaissance des émotions dans des contextes précis comme le travail ou l'éducation. La liste exacte, ses conditions et ses exceptions sont à lire dans le texte : une interdiction mal comprise conduit à de faux positifs comme à de faux négatifs.\n\n## Le haut risque : deux portes d'entrée\n\nEn substance, un système peut être à haut risque (1) parce qu'il est un **composant de sécurité d'un produit** déjà régi par une législation d'harmonisation, ou (2) parce qu'il relève d'un **domaine listé en annexe** : par exemple emploi et gestion des travailleurs, éducation, accès à certains services essentiels, application de la loi, migration, justice. Le texte prévoit des **dérogations** : un système listé peut échapper à la qualification s'il ne présente pas de risque significatif, mais cette conclusion doit être **documentée** et peut être contrôlée.\n\n## La transparence\n\nCertaines situations imposent d'informer : interaction directe avec une IA, contenus synthétiques à marquer, hameçonnage par hypertrucage à signaler. Ces obligations peuvent **s'ajouter** au haut risque.\n\n## Les pièges classiques\n\n- Raisonner sur la **technologie** plutôt que sur l'**usage** : le même modèle peut être anodin pour résumer des comptes rendus et sensible pour trier des candidatures.\n- Oublier que la classification porte sur le **cas d'usage final**, pas sur le fournisseur du modèle.\n- Ne pas conserver la **trace du raisonnement** : en cas de contrôle, la note de qualification est votre première preuve.\n\n## Réflexion\n\nL'assistant Atlas de la Mutuelle Horizon pré-remplit des réponses au service client, puis propose un score de priorité de traitement des dossiers d'indemnisation. Lequel des deux usages vous semble le plus sensible, et pourquoi ?"
+        },
+        {
+          "title": "Obligations par catégorie et rôle : de la conformité à la preuve",
+          "kind": "reading",
+          "body_md": "> **Repère pédagogique, pas un avis juridique.** Le droit de l'IA évolue vite : vérifiez toujours l'état du droit à la date de lecture sur les sources officielles (EUR-Lex, Légifrance, site de la CNIL, Commission européenne et Bureau de l'IA).\n\n## Objectifs\n\n- Relier chaque rôle à ses obligations typiques.\n- Comprendre la différence entre obligations de conception et obligations d'usage.\n- Construire une liste de preuves exploitable.\n\n## Haut risque : ce que l'on attend du fournisseur\n\nEn substance, le fournisseur d'un système à haut risque doit mettre en place : un **système de gestion des risques**, une gouvernance des **données** d'entraînement, de validation et de test, une **documentation technique**, la **journalisation**, des informations claires pour les déployeurs, des dispositions de **supervision humaine**, des niveaux adaptés d'**exactitude, de robustesse et de cybersécurité**, un **système de gestion de la qualité**, et une **évaluation de conformité** préalable à la mise sur le marché, avec marquage et enregistrement dans une base européenne dans les cas prévus.\n\n## Haut risque : ce que l'on attend du déployeur\n\nLe déployeur n'est pas un simple spectateur. En substance, il doit : utiliser le système **conformément à la notice**, confier la supervision à des personnes **compétentes et formées**, veiller à la **qualité des données d'entrée** qu'il maîtrise, **surveiller** le fonctionnement et signaler les incidents graves, **conserver les journaux** qu'il contrôle, et **informer** les personnes concernées ou les représentants du personnel dans certaines situations. Certains déployeurs (organismes publics, ou privés fournissant des services publics, ou encore certains services financiers et d'assurance) doivent en outre réaliser une **analyse d'impact sur les droits fondamentaux** avant le déploiement : vérifiez le périmètre exact.\n\n## La maîtrise de l'IA\n\nLe règlement prévoit aussi une obligation générale, en substance, de veiller à un niveau suffisant de **maîtrise de l'IA** du personnel qui exploite ces systèmes. Ce point concerne presque toutes les organisations et se prouve par un plan de formation (voir le module M16 pour la conduite du changement).\n\n## Du texte à la preuve\n\n```mermaid\nflowchart LR\n  accTitle: De l'obligation à la preuve conservée\n  accDescr: Pour chaque obligation identifiée, on désigne un responsable interne, on définit une preuve attendue, on la conserve dans un dossier de conformité et on la revoit périodiquement.\n  O[\"Obligation identifiée\"] --> R[\"Responsable désigné\"]\n  R --> P[\"Preuve attendue\"]\n  P --> D[\"Dossier de conformité\"]\n  D --> V[\"Revue périodique\"]\n  V --> O\n```\n*Figure 1 : le cycle obligation, responsable, preuve, revue ; un registre vivant vaut mieux qu'une analyse unique.*\n\n## Format conseillé d'un registre\n\nPour chaque système : rôle de l'organisation, catégorie retenue et date de l'analyse, version du texte consultée, obligations applicables, responsable interne, preuves, prochaine revue. Ce registre prépare l'atelier 1 et l'atelier 2.\n\n## Mise en pratique\n\nPour un système fictif de présélection de CV acheté auprès d'un éditeur, listez cinq obligations qui pèsent sur l'entreprise **déployeuse**, et les cinq preuves que vous demanderiez à l'éditeur pour les remplir."
+        },
+        {
+          "title": "Modèles à usage général et chaîne de responsabilités",
+          "kind": "reading",
+          "body_md": "> **Repère pédagogique, pas un avis juridique.** Le droit de l'IA évolue vite : vérifiez toujours l'état du droit à la date de lecture sur les sources officielles (EUR-Lex, Légifrance, site de la CNIL, Commission européenne et Bureau de l'IA).\n\n## Objectifs\n\n- Comprendre pourquoi les modèles à usage général ont un régime à part.\n- Savoir ce que l'on peut attendre d'un fournisseur de modèle et ce qui reste à votre charge.\n- Se repérer dans les codes de bonnes pratiques et la documentation officielle.\n\n## Un modèle n'est pas un système\n\nUn modèle de langage ou d'image peut servir à des centaines de finalités. Le règlement distingue donc le **modèle d'IA à usage général** (obligations propres à son fournisseur) du **système d'IA** qui l'intègre pour une finalité précise (obligations selon la catégorie de risque). Un assistant interne construit sur un modèle tiers est un **système** : il vous revient de le qualifier.\n\n## Obligations du fournisseur de modèle, en substance\n\n- Tenir une **documentation technique** et la mettre à disposition des autorités sur demande.\n- Fournir aux intégrateurs des **informations** leur permettant de respecter leurs propres obligations.\n- Mettre en place une **politique de respect du droit d'auteur de l'Union**, notamment le respect des réserves de droits exprimées contre la fouille de textes et de données.\n- Publier un **résumé suffisamment détaillé des contenus utilisés pour l'entraînement**, selon un modèle fourni par l'autorité.\n\nPour les modèles présentant un **risque systémique**, des obligations supplémentaires existent (évaluation, tests adverses, suivi et signalement d'incidents graves, cybersécurité). Le seuil et les critères de désignation sont à vérifier dans le texte et dans les lignes directrices de la Commission. Certains fournisseurs de modèles publiés sous licence ouverte bénéficient d'allègements, sauf risque systémique : conditions à vérifier.\n\n## Les outils d'accompagnement\n\nLe Bureau de l'IA de la Commission européenne coordonne le suivi des modèles à usage général et a vocation à publier des **lignes directrices** et un **code de bonnes pratiques**. Ces documents évoluent : consultez-les sur le site de la Commission plutôt que de vous fier à une synthèse datée.\n\n```mermaid\nsequenceDiagram\n  accTitle: Chaîne d'information entre fournisseur de modèle et déployeur\n  accDescr: Le fournisseur du modèle transmet de la documentation à l'intégrateur, qui qualifie son système et informe le déployeur final, lequel assure la supervision et remonte les incidents.\n  participant F as Fournisseur du modèle\n  participant I as Intégrateur du système\n  participant D as Déployeur final\n  F->>I: Documentation et limites du modèle\n  I->>I: Qualification du système et conformité\n  I->>D: Notice d'utilisation et mesures de supervision\n  D->>I: Remontée des incidents\n  I->>F: Signalement des défaillances du modèle\n```\n*Figure 1 : l'information circule en cascade ; chaque maillon doit pouvoir démontrer ce qu'il a reçu et transmis.*\n\n## Ce que cela change pour un juriste d'entreprise\n\n- Exigez dans vos contrats l'accès à la documentation du fournisseur de modèle.\n- Distinguez ce que le fournisseur garantit (le modèle) de ce que vous devez prouver (l'usage).\n- Prévoyez une clause de **notification des changements de version** : un modèle mis à jour peut modifier votre analyse.\n\n## Réflexion\n\nVotre direction juridique utilise un assistant fondé sur un modèle tiers pour résumer des contrats. Qui est fournisseur du système, qui est fournisseur du modèle, et quelle information vous manque probablement ?"
+        }
+      ]
+    },
+    {
+      "title": "RGPD appliqué à l'IA",
+      "lessons": [
+        {
+          "title": "Données personnelles dans le cycle de vie d'un système d'IA",
+          "kind": "reading",
+          "body_md": "> **Repère pédagogique, pas un avis juridique.** Le droit de l'IA évolue vite : vérifiez toujours l'état du droit à la date de lecture sur les sources officielles (EUR-Lex, Légifrance, site de la CNIL, Commission européenne et Bureau de l'IA).\n\n## Objectifs\n\n- Repérer à quelles étapes d'un projet d'IA des données personnelles sont traitées.\n- Identifier les rôles RGPD (responsable de traitement, sous-traitant, responsables conjoints).\n- Poser la finalité et la base légale **avant** de choisir l'outil.\n\n## Cinq moments, cinq traitements\n\nUn projet d'IA ne traite pas des données personnelles à un seul endroit.\n\n- **Collecte et constitution du jeu de données** (entraînement, ajustement, évaluation).\n- **Développement et tests** : copies, extraits, annotations par des tiers.\n- **Utilisation** : les saisies des utilisateurs (les « prompts ») peuvent contenir des données personnelles, y compris de tiers.\n- **Sorties** : un résultat généré peut être lui-même une donnée personnelle (un score, un profil, une description d'une personne).\n- **Conservation et journaux** : historiques de conversation, traces d'audit, retours d'évaluation.\n\n```mermaid\nflowchart LR\n  accTitle: Flux de données personnelles dans un projet d'IA\n  accDescr: Des sources de données alimentent l'entraînement et l'évaluation, puis le système en production reçoit des saisies et produit des sorties ; journaux et sous-traitants sont des points de traitement supplémentaires.\n  S[\"Sources de données\"] --> E[\"Entraînement et évaluation\"]\n  E --> M[\"Modèle ou système\"]\n  U[\"Saisies des utilisateurs\"] --> M\n  M --> O[\"Sorties et décisions\"]\n  M --> J[\"Journaux et historiques\"]\n  M -.-> T[\"Sous-traitants et fournisseurs\"]\n```\n*Figure 1 : les points où des données personnelles circulent ; chacun appelle une finalité, une base légale et une durée de conservation.*\n\n## Qui est qui ?\n\nLe **responsable de traitement** détermine finalités et moyens ; le **sous-traitant** agit sur instruction. Un fournisseur d'IA en mode service est souvent sous-traitant pour les saisies de ses clients, mais il peut devenir **responsable de traitement** pour ses propres finalités (amélioration du modèle, par exemple). Cette bascule dépend des termes contractuels et des paramètres : à vérifier explicitement. En cas de décisions conjointes, la qualification de **responsables conjoints** exige un accord transparent.\n\n## Mise en pratique\n\nDessinez, pour un assistant fictif de tri de courriels de réclamations, les cinq moments ci-dessus et notez pour chacun : quelles données personnelles, quel rôle du fournisseur, quelle durée de conservation vous accepteriez."
+        },
+        {
+          "title": "Base légale, finalité, minimisation et exactitude",
+          "kind": "reading",
+          "body_md": "> **Repère pédagogique, pas un avis juridique.** Le droit de l'IA évolue vite : vérifiez toujours l'état du droit à la date de lecture sur les sources officielles (EUR-Lex, Légifrance, site de la CNIL, Commission européenne et Bureau de l'IA).\n\n## Objectifs\n\n- Choisir et justifier une base légale pour un traitement d'IA.\n- Appliquer finalité, minimisation, exactitude et limitation de conservation.\n- Traiter la compatibilité d'une réutilisation de données existantes.\n\n## La base légale, un choix documenté\n\nLe règlement général sur la protection des données (RGPD) prévoit plusieurs bases légales, dont le consentement, l'exécution d'un contrat, l'obligation légale, la mission d'intérêt public et l'intérêt légitime. Aucune n'est « automatique » pour l'IA. En pratique :\n\n- Le **consentement** doit être libre, spécifique, éclairé et univoque : difficile à obtenir dans une relation de subordination (salariés) ou pour des usages vagues.\n- Le **contrat** suppose que le traitement soit objectivement nécessaire à la prestation convenue.\n- L'**intérêt légitime** exige un test en trois temps : intérêt réel et licite, nécessité, puis mise en balance avec les droits et attentes raisonnables des personnes. Les autorités de protection, dont la CNIL, ont publié des recommandations sur l'usage de cette base pour le développement de systèmes d'IA : consultez-les à la date de lecture.\n- Les **catégories particulières de données** (santé, opinions, biométrie à fin d'identification…) imposent une exception supplémentaire.\n\n## Finalité et réutilisation\n\nLes données collectées pour une finalité ne se réutilisent pas librement pour entraîner un modèle. Il faut apprécier la **compatibilité** : lien entre finalités, contexte de collecte, attentes raisonnables, nature des données, conséquences, garanties (pseudonymisation, par exemple). Écrire la finalité en une phrase simple est un bon test : « améliorer nos services » est trop vague pour la plupart des projets.\n\n## Minimisation, exactitude, conservation\n\n- **Minimisation** : ne fournir au système que les champs nécessaires ; masquer ou pseudonymiser avant envoi quand c'est possible.\n- **Exactitude** : un système génératif peut produire des affirmations fausses sur une personne identifiable. Prévoyez contrôle humain et procédure de rectification.\n- **Conservation** : durée définie pour les historiques de conversation, les jeux d'entraînement et les journaux, avec effacement vérifiable.\n- **Anonymisation** : une donnée n'est anonyme que si la réidentification est raisonnablement exclue ; la pseudonymisation reste soumise au RGPD.\n\n## Exemple fictif\n\nLa société Cartonnerie Lumière souhaite entraîner un modèle de prédiction d'absentéisme sur les données RH. Finalité floue, base légale incertaine, données sensibles possibles, relation de subordination : l'analyse doit s'arrêter avant l'outil, sur la **nécessité** même du projet.\n\n## Réflexion\n\nPour un projet de votre organisation, pouvez-vous écrire en une phrase la finalité, la base légale et la donnée la plus sensible ? Si non, qu'est-ce qui bloque ?"
+        },
+        {
+          "title": "Analyse d'impact, décisions automatisées, droits et transferts",
+          "kind": "reading",
+          "body_md": "> **Repère pédagogique, pas un avis juridique.** Le droit de l'IA évolue vite : vérifiez toujours l'état du droit à la date de lecture sur les sources officielles (EUR-Lex, Légifrance, site de la CNIL, Commission européenne et Bureau de l'IA).\n\n## Objectifs\n\n- Savoir quand une analyse d'impact sur la protection des données (AIPD) est attendue.\n- Comprendre l'encadrement des décisions fondées exclusivement sur un traitement automatisé.\n- Organiser l'exercice des droits et encadrer les transferts hors de l'Union.\n\n## L'AIPD\n\nEn substance, une AIPD est requise lorsqu'un traitement est susceptible d'engendrer un **risque élevé** pour les droits et libertés des personnes. Les autorités publient des listes de traitements concernés et des critères (évaluation ou notation, décisions à effet important, surveillance systématique, données sensibles, grande échelle, croisement de jeux de données, usage innovant). Un projet d'IA coche souvent plusieurs critères : l'AIPD devient alors le **document pivot**, à construire avec le DPO. Elle décrit le traitement, apprécie nécessité et proportionnalité, évalue les risques et fixe les mesures. Un risque élevé résiduel peut imposer de consulter l'autorité de contrôle. La CNIL met à disposition une méthode et un outil logiciel gratuit pour mener l'analyse : à retrouver sur son site.\n\n## Les décisions automatisées\n\nLe RGPD reconnaît aux personnes, en substance, le droit de ne pas faire l'objet d'une décision fondée **exclusivement** sur un traitement automatisé, y compris le profilage, produisant des **effets juridiques** ou les affectant de manière **significative**. Des exceptions existent (nécessité contractuelle, autorisation légale, consentement explicite) avec des garanties : possibilité d'obtenir une intervention humaine, d'exprimer son point de vue et de contester. Deux questions à vous poser :\n\n- L'intervention humaine est-elle **réelle** (compétence, temps, pouvoir de changer la décision) ou de pure forme ?\n- Le système est-il une **aide** à la décision ou la décision elle-même ?\n\n```mermaid\nstateDiagram-v2\n  accTitle: Décision assistée par IA avec contrôle humain\n  accDescr: Un dossier est évalué par le système, puis soit validé par un agent compétent, soit modifié, soit contesté par la personne, ce qui déclenche un réexamen humain.\n  [*] --> Dossier\n  Dossier --> Evaluation: Traitement par le système\n  Evaluation --> RevueHumaine: Proposition transmise\n  RevueHumaine --> Decision: Validation ou modification motivée\n  Decision --> Contestation: La personne conteste\n  Contestation --> RevueHumaine: Réexamen par un autre agent\n  Decision --> [*]: Pas de contestation\n```\n*Figure 1 : une décision assistée n'est pas une décision exclusivement automatisée si la revue humaine est réelle et si la contestation est organisée.*\n\n## Droits des personnes\n\nInformation claire (y compris sur la logique sous-jacente dans les cas prévus), accès, rectification, effacement, limitation, opposition, portabilité dans certains cas. Les systèmes d'IA compliquent l'effacement et la rectification (données incorporées à un modèle) : prévoyez en amont **ce que vous pouvez techniquement et contractuellement garantir**, et documentez les limites.\n\n## Transferts hors de l'Union\n\nL'envoi de données personnelles vers un pays tiers (y compris l'accès à distance par un fournisseur) suppose un mécanisme prévu par le RGPD : décision d'adéquation, clauses contractuelles types accompagnées d'une analyse de la situation du pays de destination, règles d'entreprise contraignantes, ou dérogations limitées. Cartographiez où les serveurs, le support et les sous-traitants ultérieurs se trouvent réellement.\n\n## Mise en pratique\n\nPour un outil fictif de présélection d'aides sociales, indiquez : l'AIPD est-elle attendue ? la décision est-elle exclusivement automatisée ? quelles informations donner à la personne ? Notez deux questions à poser au fournisseur sur les transferts."
+        }
+      ]
+    },
+    {
+      "title": "Propriété intellectuelle et contenus générés",
+      "lessons": [
+        {
+          "title": "Titularité des contenus générés : qui est auteur ?",
+          "kind": "reading",
+          "body_md": "> **Repère pédagogique, pas un avis juridique.** Le droit de l'IA évolue vite : vérifiez toujours l'état du droit à la date de lecture sur les sources officielles (EUR-Lex, Légifrance, site de la CNIL, Commission européenne et Bureau de l'IA).\n\n## Objectifs\n\n- Comprendre pourquoi la protection d'un contenu généré est incertaine.\n- Distinguer assistance, co-création et génération autonome.\n- Savoir quoi documenter pour soutenir une revendication de droits.\n\n## Le point de départ : l'auteur est une personne\n\nEn droit français et dans la plupart des systèmes de la famille continentale, le droit d'auteur protège une **œuvre originale**, c'est-à-dire portant l'empreinte de la personnalité d'un **auteur personne physique**. Une machine n'est pas titulaire. Un contenu produit sans choix créatifs humains caractérisables est donc, selon l'analyse dominante à la date de rédaction, **difficile à protéger**. D'autres pays ont des approches différentes ou en évolution (certains exigent expressément une contribution humaine, d'autres envisagent des régimes particuliers) : la dimension internationale est à vérifier pays par pays.\n\n## Un spectre plutôt qu'une alternative\n\n```mermaid\nflowchart LR\n  accTitle: Spectre de contribution humaine et protection\n  accDescr: De l'usage d'un outil comme instrument, à l'édition substantielle d'un résultat, jusqu'à la génération sans choix créatif humain, la probabilité de protection par le droit d'auteur diminue.\n  A[\"IA comme simple outil de correction\"] --> B[\"IA qui propose, l'humain compose et retravaille\"]\n  B --> C[\"Prompt détaillé, résultat brut retenu\"]\n  C --> D[\"Génération en un clic, sans choix humain\"]\n  P1[\"Protection plus plausible\"] -.-> A\n  P2[\"Protection très incertaine\"] -.-> D\n```\n*Figure 1 : plus les choix créatifs humains sont identifiables et documentés, plus la revendication de droits est défendable ; aucune ligne n'est tracée de façon certaine.*\n\n## Les conséquences pratiques\n\n- Un logo, un texte ou une image générés sans retouche substantielle peuvent être **copiés par des tiers sans que vous puissiez agir** sur ce fondement.\n- Les **conditions d'utilisation** de l'outil fixent ce que le fournisseur vous cède ou vous concède (propriété, licence d'usage commercial) : cela n'efface pas la question du droit d'auteur, mais organise vos relations avec lui.\n- Pour les salariés, le régime de **titularité des œuvres créées dans l'entreprise** ne se transpose pas mécaniquement aux contenus assistés par IA : précisez-le dans vos politiques et contrats.\n- D'autres protections peuvent exister hors droit d'auteur : droit des marques (si le signe est utilisé et enregistré), dessins et modèles, concurrence déloyale, contrat.\n\n## Mise en pratique\n\nClassez ces trois productions fictives de l'agence Phare & Cie sur le spectre ci-dessus : un slogan retenu tel quel parmi dix propositions, une illustration générée puis redessinée à la main à moitié, une note de synthèse rédigée par l'humain et corrigée par l'outil."
+        },
+        {
+          "title": "Données d'entraînement, droit d'auteur et sorties contrefaisantes",
+          "kind": "reading",
+          "body_md": "> **Repère pédagogique, pas un avis juridique.** Le droit de l'IA évolue vite : vérifiez toujours l'état du droit à la date de lecture sur les sources officielles (EUR-Lex, Légifrance, site de la CNIL, Commission européenne et Bureau de l'IA).\n\n## Objectifs\n\n- Comprendre les deux terrains de risque : en amont (entraînement) et en aval (sorties).\n- Connaître, en substance, l'exception de fouille de textes et de données et sa réserve de droits.\n- Mesurer le risque que vous portez comme utilisateur ou intégrateur.\n\n## En amont : l'entraînement\n\nL'entraînement d'un modèle sur de grands corpus implique des copies d'œuvres et de bases de données. Le droit de l'Union prévoit, en substance, une **exception de fouille de textes et de données** (text and data mining) : plus large pour la recherche scientifique, plus étroite pour les autres usages, où elle est conditionnée à l'**absence de réserve de droits** exprimée par les titulaires (par un moyen approprié, lisible par machine pour les contenus en ligne). Le règlement sur l'IA renvoie à ce cadre pour les fournisseurs de modèles à usage général. Des litiges sont en cours dans plusieurs pays sur la licéité de ces pratiques ; leur issue et leur portée territoriale évoluent : suivez les décisions récentes dans des sources juridiques fiables plutôt que dans la presse généraliste.\n\n## En aval : les sorties\n\nUn résultat généré peut **ressembler à une œuvre existante**, voire en reproduire des éléments protégés (mémorisation). Le risque de contrefaçon se juge sur la **reproduction ou la représentation d'éléments protégés**, pas sur la manière de fabriquer le contenu. Ce risque est accru quand le prompt vise explicitement un auteur, un personnage ou une œuvre identifiable.\n\n## Où se situe votre risque ?\n\n- **Utilisateur d'un outil** : risque sur ce que vous publiez. La parade passe par des contrôles de similarité, des politiques d'usage, et la **clause d'indemnisation** proposée par certains fournisseurs (sous conditions et plafonds à lire de près).\n- **Intégrateur** : risque sur le produit livré à vos clients, avec garanties contractuelles à aligner « en cascade ».\n- **Entraîneur de modèles** (ajustement sur vos propres données) : traçabilité de l'origine des données, licences, réserves de droits, **droits des tiers** sur les contenus fournis par vos clients.\n\n## Données et bases de données\n\nLes bases de données bénéficient d'une protection propre (droit *sui generis* du producteur) au-delà du droit d'auteur. L'extraction massive d'un site en violation de ses conditions d'utilisation peut aussi engager la responsabilité contractuelle. Une **liste des sources** d'un jeu d'entraînement, avec leur licence ou base de légitimité, est un document de preuve précieux.\n\n## Réflexion\n\nVotre service marketing veut générer des visuels « dans le style » d'un illustrateur connu. Quelles questions juridiques posez-vous avant d'accepter ? Proposez une règle d'usage en trois lignes."
+        },
+        {
+          "title": "Secrets d'affaires, confidentialité et bonnes pratiques de preuve",
+          "kind": "reading",
+          "body_md": "> **Repère pédagogique, pas un avis juridique.** Le droit de l'IA évolue vite : vérifiez toujours l'état du droit à la date de lecture sur les sources officielles (EUR-Lex, Légifrance, site de la CNIL, Commission européenne et Bureau de l'IA).\n\n## Objectifs\n\n- Protéger le secret d'affaires lors de l'usage d'outils d'IA.\n- Mettre en place des règles de saisie (ce qu'on peut ou non coller dans un outil).\n- Construire une preuve de création et de contribution humaine.\n\n## Le secret d'affaires : un droit qui se perd en le divulguant\n\nLa protection du secret d'affaires suppose, en substance, que l'information soit **secrète**, qu'elle ait une **valeur commerciale** du fait de ce caractère, et qu'elle fasse l'objet de **mesures de protection raisonnables**. Saisir une information stratégique dans un outil grand public dont les conditions autorisent la réutilisation des données peut fragiliser ces trois éléments. Distinguez donc, dans votre politique d'usage :\n\n- Les outils **approuvés** (contrat entreprise, garanties sur la non-réutilisation des données, hébergement maîtrisé).\n- Les outils **tolérés** pour des données publiques uniquement.\n- Les outils **interdits**.\n\n## Une charte de saisie simple\n\nClassez vos informations en quelques niveaux (publique, interne, confidentielle, secrète) et indiquez, pour chaque niveau, ce qui est autorisé dans chaque catégorie d'outil. Ajoutez les règles pour les **données personnelles** et pour les contenus de **tiers** soumis à clause de confidentialité (clients, partenaires). Les clauses de confidentialité signées avec des tiers ne prévoient souvent pas l'usage d'un outil d'IA : relisez-les.\n\n## Les bonnes pratiques de preuve\n\n```mermaid\njourney\n  accTitle: Parcours de constitution d'une preuve de création assistée par IA\n  accDescr: Le créateur conserve ses consignes, sauvegarde les versions successives, annote ses choix créatifs, fait horodater le dossier et l'archive avec les conditions d'utilisation de l'outil.\n  title Constituer le dossier de preuve\n  section Pendant la création\n    Conserver les consignes et les résultats: 4: Créateur\n    Sauvegarder chaque version retravaillée: 4: Créateur\n    Annoter les choix créatifs humains: 5: Créateur\n  section À la livraison\n    Horodater le dossier: 4: Créateur, Juriste\n    Archiver les conditions d'utilisation datées: 3: Juriste\n```\n*Figure 1 : parcours de constitution d'un dossier de preuve ; les notes de satisfaction sont illustratives.*\n\nÀ conserver : consignes (prompts) et résultats bruts, versions intermédiaires, note décrivant la contribution humaine, identifiant et version de l'outil, **conditions d'utilisation à la date** de création, et mentions de licences de tout élément tiers. Un **horodatage** fiable (service tiers, dépôt chez un tiers de confiance) renforce la valeur probatoire. Le dossier sert aussi en cas de litige de contrefaçon, pour montrer votre bonne foi et vos contrôles.\n\n## Mise en pratique\n\nRédigez une fiche d'une page « Avant de coller un texte dans un outil d'IA : cinq vérifications », à destination des équipes commerciales d'une entreprise fictive de logiciels."
+        }
+      ]
+    },
+    {
+      "title": "Responsabilité et assurance",
+      "lessons": [
+        {
+          "title": "Qui répond de quoi : fournisseur, intégrateur, utilisateur",
+          "kind": "reading",
+          "body_md": "> **Repère pédagogique, pas un avis juridique.** Le droit de l'IA évolue vite : vérifiez toujours l'état du droit à la date de lecture sur les sources officielles (EUR-Lex, Légifrance, site de la CNIL, Commission européenne et Bureau de l'IA).\n\n## Objectifs\n\n- Cartographier les fondements possibles de responsabilité autour d'un système d'IA.\n- Répartir les rôles et les risques entre fournisseur, intégrateur et utilisateur.\n- Raisonner à partir de la chaîne de causalité.\n\n## Plusieurs fondements, rarement un seul\n\nUn dommage lié à une IA peut être analysé sous plusieurs angles, selon la législation applicable :\n\n- **Responsabilité contractuelle** : manquement à une obligation prévue au contrat (délivrance conforme, conseil, sécurité, confidentialité). Elle dépend des clauses, de leur interprétation et des limitations de responsabilité valables.\n- **Responsabilité extracontractuelle** : faute, dommage, lien de causalité, à l'égard d'un tiers qui n'est pas lié par contrat.\n- **Responsabilité du fait des produits défectueux** (leçon suivante).\n- **Responsabilités réglementaires** : sanctions administratives en cas de non-respect des règles sur les données ou sur l'IA, distinctes de la réparation du dommage.\n- **Responsabilité de l'employeur ou du commettant** du fait de ses préposés qui utilisent l'outil.\n\n## La chaîne de causalité\n\n```mermaid\nflowchart TD\n  accTitle: Chaîne de causalité d'un dommage lié à une IA\n  accDescr: Un défaut du modèle, une mauvaise intégration, des données d'entrée erronées ou un usage hors notice peuvent contribuer à un résultat erroné, lequel cause un dommage ; la contribution de chaque acteur est à établir.\n  M[\"Défaut du modèle (fournisseur)\"] --> R[\"Résultat erroné\"]\n  I[\"Intégration ou paramétrage (intégrateur)\"] --> R\n  D[\"Données d'entrée de mauvaise qualité (client)\"] --> R\n  U[\"Usage hors notice ou absence de contrôle (utilisateur)\"] --> R\n  R --> X[\"Dommage subi par une personne\"]\n  X --> A[\"Analyse des contributions et des recours\"]\n```\n*Figure 1 : plusieurs contributions peuvent se cumuler ; le contrat et la preuve déterminent les recours entre acteurs.*\n\n## Cas fictif\n\nLe cabinet Aurore & Associés déploie un assistant de recherche juridique construit sur un modèle tiers. Une jurisprudence inventée par l'outil figure dans un mémoire non relu. Le client du cabinet subit un préjudice. Questions à ordonner : le cabinet a-t-il manqué à son devoir de diligence et de vérification ? L'éditeur a-t-il informé des limites ? Le paramétrage de l'intégrateur a-t-il aggravé le risque ? Dans la plupart des analyses, l'**obligation de supervision professionnelle** de l'utilisateur ne disparaît pas parce que l'outil est « intelligent ».\n\n## Pour le juriste d'entreprise\n\nDocumentez les **instructions d'usage**, la supervision réellement exercée, la formation des utilisateurs et les contrôles effectués. En cas de litige, ce sont les éléments qui déplacent la charge de la preuve et qui nourrissent les recours contre les fournisseurs.\n\n## Réflexion\n\nDans votre organisation, qui valide les sorties d'IA avant leur usage externe, et en existe-t-il une trace ?"
+        },
+        {
+          "title": "Produits défectueux, logiciels et évolution du cadre européen",
+          "kind": "reading",
+          "body_md": "> **Repère pédagogique, pas un avis juridique.** Le droit de l'IA évolue vite : vérifiez toujours l'état du droit à la date de lecture sur les sources officielles (EUR-Lex, Légifrance, site de la CNIL, Commission européenne et Bureau de l'IA).\n\n## Objectifs\n\n- Comprendre le mécanisme général de la responsabilité du fait des produits défectueux.\n- Situer l'extension de cette logique aux logiciels et à l'IA, en substance.\n- Savoir quelles questions poser pour un produit intégrant de l'IA.\n\n## Le principe\n\nLa responsabilité du fait des produits défectueux est un régime, d'origine européenne, de **responsabilité sans faute** du producteur : la victime doit en principe démontrer le **défaut**, le **dommage** et le **lien de causalité**, mais pas une faute. Un produit est défectueux lorsqu'il n'offre pas la **sécurité à laquelle on peut légitimement s'attendre**, compte tenu de toutes les circonstances.\n\n## Logiciel et IA\n\nLe régime historique a longtemps suscité des débats sur l'application aux logiciels. Le droit de l'Union a adopté une **directive révisée** qui, en substance, étend explicitement la notion de produit aux **logiciels**, y compris ceux qui intègrent de l'IA, et prend en compte des éléments comme la capacité d'apprentissage, les mises à jour et le contrôle exercé par le fabricant, ainsi que des facilités probatoires pour les victimes dans certains cas. Les États membres doivent la transposer selon un calendrier à vérifier, et la loi applicable à un litige donné dépend de la date de mise sur le marché du produit. Des projets de textes complémentaires sur la responsabilité civile liée à l'IA ont été discutés au niveau européen : **vérifiez leur statut actuel** avant tout raisonnement.\n\n## Ce que cela implique en pratique\n\n```mermaid\nquadrantChart\n  accTitle: Matrice d'exposition à la responsabilité d'un produit intégrant de l'IA\n  accDescr: Les produits à fort impact sur la sécurité ou les droits et à forte autonomie se situent en haut à droite et appellent une vigilance renforcée ; les produits à faible impact et à forte supervision humaine sont en bas à gauche.\n  x-axis \"Faible autonomie du système\" --> \"Forte autonomie du système\"\n  y-axis \"Faible impact sur la personne\" --> \"Fort impact sur la personne\"\n  quadrant-1 \"Vigilance maximale\"\n  quadrant-2 \"Impact élevé, contrôle humain\"\n  quadrant-3 \"Risque courant\"\n  quadrant-4 \"Surveiller la dérive\"\n  \"Robot de livraison\": [0.8, 0.8]\n  \"Aide à la rédaction\": [0.3, 0.25]\n  \"Tri de dossiers médicaux\": [0.5, 0.9]\n  \"Chatbot de FAQ\": [0.7, 0.3]\n```\n*Figure 1 : positionnement illustratif de quatre produits fictifs ; il sert à prioriser l'analyse, pas à fixer un régime de responsabilité.*\n\n- Les **mises à jour** et le suivi après mise sur le marché deviennent des éléments de la sécurité attendue.\n- La **documentation** et la **traçabilité** (journaux, versions) servent à la défense comme à l'exercice de recours.\n- La responsabilité du fabricant d'un produit ne se transfère pas par une simple clause à l'utilisateur final, surtout s'il s'agit d'un consommateur : les limitations de responsabilité ont des **bornes légales**.\n\n## Mise en pratique\n\nPour une enceinte connectée fictive dotée d'un assistant vocal, listez trois « attentes légitimes de sécurité » d'un utilisateur et la façon dont une mise à jour logicielle pourrait les modifier."
+        },
+        {
+          "title": "Assurance, gouvernance du risque et plan de réponse aux incidents",
+          "kind": "reading",
+          "body_md": "> **Repère pédagogique, pas un avis juridique.** Le droit de l'IA évolue vite : vérifiez toujours l'état du droit à la date de lecture sur les sources officielles (EUR-Lex, Légifrance, site de la CNIL, Commission européenne et Bureau de l'IA).\n\n## Objectifs\n\n- Examiner les polices d'assurance existantes au regard des risques liés à l'IA.\n- Identifier les exclusions et les zones grises.\n- Préparer un plan de réponse aux incidents d'IA.\n\n## L'assurance : relire avant d'affirmer\n\nLes risques liés à l'IA ne disposent pas, à la date de rédaction, d'un traitement uniforme sur le marché. Selon les polices, ils peuvent être couverts, exclus ou non traités explicitement. Quelques polices à relire :\n\n- **Responsabilité civile professionnelle** : erreur de conseil, d'analyse ou de livrable assistée par IA.\n- **Responsabilité civile générale** : dommages corporels, matériels.\n- **Cyber** : fuite de données, usage malveillant, atteinte à la confidentialité.\n- **Responsabilité des dirigeants** : manquements de gouvernance.\n\nDans chaque police, repérez les définitions (que recouvre « logiciel », « technologie »), les **exclusions**, les **conditions de déclaration** de changement de risque, les plafonds et franchises. Interrogez votre courtier par écrit sur l'IA : les réponses écrites valent mieux qu'une impression générale.\n\n## Gouverner le risque\n\nUn dispositif lisible comprend un **registre des systèmes d'IA**, une classification interne, des **responsables identifiés**, des critères d'arrêt (ce qui impose de suspendre un système), des revues périodiques et un **comité** transversal incluant juridique, DPO, sécurité, métier.\n\n## Plan de réponse aux incidents\n\n```mermaid\nstateDiagram-v2\n  accTitle: Cycle de traitement d'un incident d'IA\n  accDescr: Un incident est détecté, qualifié selon sa gravité, contenu, notifié aux parties concernées si nécessaire, corrigé puis analysé pour en tirer des enseignements.\n  [*] --> Detection\n  Detection --> Qualification\n  Qualification --> Confinement\n  Confinement --> Notification: Obligation ou contrat\n  Confinement --> Correction: Sans notification\n  Notification --> Correction\n  Correction --> Retour_experience\n  Retour_experience --> [*]\n```\n*Figure 1 : cycle simplifié de gestion d'un incident ; les délais et destinataires de notification dépendent des textes applicables (données personnelles, IA, contrats, assureur).*\n\nPréparez à l'avance : qui peut suspendre l'outil, comment contacter le fournisseur, quel modèle de message adresser à l'assureur, comment conserver les journaux, qui parle aux personnes concernées.\n\n## Réflexion\n\nSi votre assistant interne générait par erreur des informations fausses sur un salarié nommément cité, qui suspendrait l'outil dans l'heure, et qui informerait le DPO ?"
+        }
+      ]
+    },
+    {
+      "title": "Contrats avec les fournisseurs d'IA",
+      "lessons": [
+        {
+          "title": "Cartographier le contrat : documents, rôles et cadre de négociation",
+          "kind": "reading",
+          "body_md": "> **Repère pédagogique, pas un avis juridique.** Le droit de l'IA évolue vite : vérifiez toujours l'état du droit à la date de lecture sur les sources officielles (EUR-Lex, Légifrance, site de la CNIL, Commission européenne et Bureau de l'IA).\n\n## Objectifs\n\n- Identifier l'ensemble des documents contractuels d'un fournisseur d'IA.\n- Évaluer le rapport de force et décider quoi négocier.\n- Préparer une grille de revue réutilisable.\n\n## Un contrat, plusieurs documents\n\nUn fournisseur d'IA fournit rarement un contrat unique : conditions générales de service, **politique d'utilisation acceptable**, **accord de traitement des données**, annexes de sécurité, conditions pour sous-traitants ultérieurs, **conditions propres aux modèles** (licences), documentation produit. Ces documents se complètent ou se contredisent, et certains sont **modifiables unilatéralement** par renvoi à une page web. Dressez l'inventaire et fixez l'ordre de priorité entre eux.\n\n## Qualifier le périmètre\n\n- **Service ou licence** : accès en ligne (SaaS), interface de programmation, déploiement sur vos serveurs, modèle ouvert sous licence ?\n- **Fonctions** : générative, prédictive, classification ; avec ou sans ajustement sur vos données.\n- **Finalités** : internes, ou intégrées dans un produit proposé à vos clients.\n- **Qualification AI Act** : fournisseur, déployeur, ou les deux selon vos modifications.\n\n## Le rapport de force\n\nUn grand fournisseur proposera souvent des conditions standardisées, avec une marge de négociation limitée. Cela impose de **prioriser** : distinguer les clauses *bloquantes* (sans elles, le projet ne peut pas se faire), *importantes* (à négocier) et *souhaitables* (à tenter).\n\n```mermaid\nflowchart TD\n  accTitle: Priorisation des clauses selon leur criticité\n  accDescr: On classe chaque clause en bloquante, importante ou souhaitable ; une clause bloquante non obtenue conduit à renoncer ou à changer de fournisseur, une clause importante est négociée, une clause souhaitable est tentée.\n  C[\"Clause analysée\"] --> Q{\"Bloquante ?\"}\n  Q -- \"Oui\" --> N1{\"Obtenue ?\"}\n  N1 -- \"Non\" --> S[\"Renoncer ou changer de fournisseur\"]\n  N1 -- \"Oui\" --> OK[\"Accepter\"]\n  Q -- \"Non\" --> Q2{\"Importante ?\"}\n  Q2 -- \"Oui\" --> NEG[\"Négocier ou compenser\"]\n  Q2 -- \"Non\" --> T[\"Tenter sans bloquer\"]\n```\n*Figure 1 : arbre de décision pour classer les clauses et orienter la négociation.*\n\n## Mise en pratique\n\nPour un fournisseur fictif « Lexiqa » (service de résumé de contrats en ligne), listez les documents contractuels que vous exigeriez de recevoir avant de signer et indiquez, pour deux d'entre eux, ce qu'ils pourraient modifier sans vous prévenir."
+        },
+        {
+          "title": "Clauses clés : données, confidentialité, propriété, garanties",
+          "kind": "reading",
+          "body_md": "> **Repère pédagogique, pas un avis juridique.** Le droit de l'IA évolue vite : vérifiez toujours l'état du droit à la date de lecture sur les sources officielles (EUR-Lex, Légifrance, site de la CNIL, Commission européenne et Bureau de l'IA).\n\n## Objectifs\n\n- Rédiger ou relire les clauses structurantes d'un contrat avec un fournisseur d'IA.\n- Distinguer ce qui relève du RGPD, de la propriété intellectuelle et de la responsabilité.\n- Cibler les formulations à risque.\n\n## Données\n\n- **Traitement de données personnelles** : accord de traitement, instructions documentées, mesures de sécurité, assistance pour les droits des personnes et les incidents, localisation et sous-traitants ultérieurs, sort des données à la fin du contrat.\n- **Utilisation des données pour entraîner ou améliorer les modèles du fournisseur** : par défaut, à exclure, ou à autoriser expressément et par catégorie. Vérifiez ce qui vaut pour les saisies, les sorties, les retours d'évaluation et les métadonnées.\n- **Durée de conservation** des historiques côté fournisseur et possibilité de la réduire.\n\n## Confidentialité\n\nAssurez-vous que les informations échangées sont couvertes par une clause de confidentialité qui vise explicitement les **saisies**, les **sorties** et les **paramètres** du système. Encadrez l'accès du personnel du fournisseur (revue humaine pour détection d'abus, par exemple) et la durée de l'obligation.\n\n## Propriété\n\n- Qui est propriétaire des **sorties** : cession, licence, ou simple droit d'usage ? Avec quelles réserves, compte tenu des incertitudes de titularité ?\n- Qui détient les **améliorations** issues de vos données : ajustements, modèles dérivés, évaluations ?\n- Licences sur les **éléments tiers** et sur les modèles ouverts : conditions d'usage commercial, restrictions éventuelles.\n\n## Garanties et responsabilité\n\n```mermaid\nsequenceDiagram\n  accTitle: Garanties en cascade entre fournisseur, intégrateur et client\n  accDescr: Le fournisseur de modèle garantit l'intégrateur sur les droits et la conformité ; l'intégrateur garantit son client ; une action d'un tiers se répercute en sens inverse par une clause d'indemnisation.\n  participant F as Fournisseur du modèle\n  participant I as Intégrateur\n  participant C as Client final\n  F->>I: Garanties de droits et de conformité\n  I->>C: Garanties alignées sur celles reçues\n  C->>I: Réclamation d'un tiers\n  I->>F: Appel en garantie ou indemnisation\n```\n*Figure 1 : les garanties doivent être alignées de bout en bout, sans quoi l'intégrateur supporte un écart de risque.*\n\nÀ examiner : garanties de **non-contrefaçon**, de **conformité** aux lois applicables (dont le RGPD et l'AI Act), de performance (ou clauses d'exclusion de « garantie sur l'exactitude »), **indemnisation** (périmètre, conditions, plafond, exceptions), limitation de responsabilité (plafonds, exclusions de préjudices, exceptions pour données personnelles et confidentialité).\n\n## Réflexion\n\nUne clause stipule que le fournisseur « ne garantit pas l'exactitude des sorties » mais exclut aussi toute responsabilité en cas d'atteinte aux données. Quelles contre-propositions formuleriez-vous, et lesquelles seraient bloquantes pour vous ?"
+        },
+        {
+          "title": "Audit, réversibilité, sous-traitance et suivi dans la durée",
+          "kind": "reading",
+          "body_md": "> **Repère pédagogique, pas un avis juridique.** Le droit de l'IA évolue vite : vérifiez toujours l'état du droit à la date de lecture sur les sources officielles (EUR-Lex, Légifrance, site de la CNIL, Commission européenne et Bureau de l'IA).\n\n## Objectifs\n\n- Prévoir les droits d'audit et de transparence utiles et réalistes.\n- Garantir la réversibilité et éviter l'enfermement chez un fournisseur.\n- Encadrer la sous-traitance et les changements de version.\n\n## Audit et transparence\n\nL'audit sur site chez un grand fournisseur est rarement accordé tel quel. Alternatives courantes : rapports d'audit indépendants, certifications, questionnaires de sécurité, droit d'audit **limité** en cas d'incident ou d'injonction d'une autorité, accès à la documentation technique requise pour votre propre conformité (AI Act et RGPD). Pour un système à haut risque, prévoyez l'accès aux **journaux**, aux **informations d'utilisation** et à la documentation indispensable à la supervision humaine.\n\n## Réversibilité et portabilité\n\n- **Restitution des données** à la fin du contrat (formats lisibles, délais, assistance).\n- **Effacement** certifié des données chez le fournisseur et ses sous-traitants.\n- **Portabilité des artefacts** : instructions, bases de connaissances, évaluations, paramétrages, pour pouvoir changer de fournisseur.\n- Gestion de la **dépendance** : plan de sortie, options de secours, tests périodiques.\n\n## Sous-traitance et chaîne de fournisseurs\n\nUn fournisseur d'IA s'appuie souvent sur des hébergeurs, des fournisseurs de modèles et d'autres sous-traitants. Exigez la **liste** des sous-traitants ultérieurs, la localisation des traitements, un **préavis** en cas de changement avec droit d'opposition ou de résiliation, et la répétition de vos exigences (sécurité, confidentialité, transferts) dans la chaîne.\n\n## Évolution du service\n\n```mermaid\ntimeline\n  accTitle: Cycle de vie d'un contrat avec un fournisseur d'IA\n  accDescr: Du cadrage à la sortie en passant par la signature, la mise en service, le suivi et les changements de version, chaque phase appelle des contrôles contractuels et documentaires.\n  title Phases de vie du contrat\n  Cadrage : Qualification des rôles : Analyse de risques\n  Signature : Clauses clés : Annexes validées\n  Mise en service : Formation : Preuves de conformité\n  Suivi : Revues périodiques : Gestion des changements de version\n  Sortie : Restitution : Effacement\n```\n*Figure 1 : les phases du contrat ; les obligations de suivi ne s'arrêtent pas à la signature.*\n\nPrévoyez une clause de **notification des changements importants** (modèle, fonctionnalités, sous-traitants, conditions), un droit de **résiliation sans pénalité** en cas de dégradation de la conformité, un **niveau de service** (disponibilité, support) et des règles claires pour la **suspension** du service.\n\n## Mise en pratique\n\nRédigez en cinq lignes un plan de sortie pour un outil fictif de génération de courriers : données à récupérer, délai, effacement, test de reprise.\n\nGardez à l'esprit que cette leçon n'est pas un modèle de contrat : adaptez toujours avec le conseil compétent."
+        }
+      ]
+    },
+    {
+      "title": "Ateliers no-code et low-code",
+      "lessons": [
+        {
+          "title": "Atelier 1 : qualifier trois cas d'usage avec un arbre de décision en tableur",
+          "kind": "exercise",
+          "body_md": "> Contenu pédagogique, pas un avis juridique : vérifiez l'état du droit à la date de lecture.\n\n## Objectif\n\nQualifier trois cas d'usage fictifs (rôle, catégorie de risque, points RGPD) à l'aide d'un arbre de décision construit dans un tableur, sans écrire de code.\n\n**Durée estimée** : 60 à 90 minutes.\n\n## Plateforme\n\n- **Google Sheets** (no-code), offre gratuite ou version libre à la date de rédaction, à vérifier.\n- Alternative : LibreOffice Calc ou Airtable, selon votre préférence.\n\n## Les trois cas fictifs\n\n1. **Cas A** : la mutuelle Horizon utilise un assistant qui rédige des brouillons de réponses au service client, relus par un conseiller.\n2. **Cas B** : l'entreprise Cartonnerie Lumière achète un outil qui classe automatiquement les candidatures et propose un ordre de convocation.\n3. **Cas C** : l'agence Phare & Cie génère des visuels publicitaires et des textes de campagne avec un outil en ligne.\n\n## Étapes\n\n1. Créez un classeur avec trois onglets : « Questions », « Cas » et « Synthèse ».\n2. Dans « Questions », listez dix à douze questions fermées (oui ou non), dans l'ordre logique de la méthode du cours : l'outil est-il un système d'IA ? Quelle est notre position (fournisseur ou déployeur) ? L'usage figure-t-il parmi les pratiques à écarter ? Concerne-t-il un domaine sensible (emploi, accès à un service essentiel…) ? Y a-t-il interaction directe avec des personnes ou contenu généré à signaler ? Des données personnelles sont-elles traitées ? Y a-t-il une décision à effet significatif sur une personne ?\n3. Dans « Cas », créez une ligne par cas et une colonne par question. Remplissez avec une liste déroulante (validation de données) : Oui, Non, À vérifier.\n4. Ajoutez, dans « Synthèse », des formules conditionnelles simples (fonction SI) qui affichent une **catégorie provisoire** à partir de vos réponses. Une réponse « À vérifier » doit déclencher la mention « Escalade vers le juriste ».\n5. Pour chaque cas, rédigez en trois lignes la justification et les **obligations** qui en découlent, en indiquant la source officielle à consulter.\n6. Demandez à un pair ou à un assistant IA de contester vos réponses, puis ajustez et notez les désaccords.\n\n## Résultat attendu\n\nUn classeur partageable avec trois cas qualifiés, un arbre lisible et des justifications écrites.\n\n## Critères de réussite\n\n- [ ] Les questions suivent un ordre logique et sont sans ambiguïté.\n- [ ] Chaque cas a un rôle, une catégorie provisoire et au moins deux obligations identifiées.\n- [ ] Les incertitudes sont signalées et escaladées.\n- [ ] Chaque conclusion cite la source officielle à vérifier et la date de l'analyse.\n\n## Pièges\n\n- Qualifier selon la technologie plutôt que selon l'usage.\n- Conclure par une formule automatique sans justification écrite.\n- Utiliser des données réelles : restez sur les cas fictifs.\n\n## Pour aller plus loin\n\nAjoutez un quatrième cas qui modifie un outil acheté pour un autre usage, et observez si le rôle change."
+        },
+        {
+          "title": "Atelier 2 : construire une grille de revue de conformité RGPD et AI Act",
+          "kind": "exercise",
+          "body_md": "> Contenu pédagogique, pas un avis juridique : vérifiez l'état du droit à la date de lecture.\n\n## Objectif\n\nProduire une grille de revue réutilisable pour évaluer un projet d'IA au regard du RGPD et de l'AI Act, avec statut, preuve et responsable pour chaque point.\n\n**Durée estimée** : 60 à 90 minutes.\n\n## Plateforme\n\n- **Airtable** ou **NocoDB** (no-code), offre gratuite ou version libre à la date de rédaction, à vérifier.\n- Alternative : Google Sheets ou Notion (base de données).\n\n## Projet fictif de référence\n\nLa mutuelle Horizon prévoit un assistant pour pré-qualifier les demandes de remboursement, avec résumé des pièces justificatives (certaines contiennent des données de santé fictives) et proposition de priorisation des dossiers.\n\n## Étapes\n\n1. Créez une table « Points de contrôle » avec les champs : intitulé, domaine (RGPD, AI Act, Contrat, Sécurité), question à poser, statut (Conforme, À corriger, Non applicable, À vérifier), preuve attendue, responsable, échéance, source officielle à consulter.\n2. Saisissez une trentaine de points regroupés par thème : finalité et base légale, minimisation, catégories sensibles, AIPD, décisions automatisées, information et droits des personnes, transferts, sous-traitants, rôle AI Act et classification, supervision humaine, journalisation, transparence, maîtrise de l'IA du personnel, gestion des incidents.\n3. Créez des vues : par domaine, par statut, par responsable. Ajoutez une vue de type tableau de bord ou un regroupement indiquant le nombre de points « À corriger ».\n4. Remplissez la grille pour le projet de référence : un point sans preuve reste « À vérifier ».\n5. Ajoutez un champ « Gravité » (Faible, Moyenne, Élevée) et un plan d'actions pour les trois points les plus critiques.\n6. Exportez la grille en PDF ou partagez-la en lecture seule.\n\n## Résultat attendu\n\nUne base structurée de revue avec au moins trente points, plusieurs vues et un plan d'actions.\n\n## Critères de réussite\n\n- [ ] Chaque point a une preuve attendue et un responsable.\n- [ ] Les deux référentiels (RGPD et AI Act) sont couverts, ainsi que les contrats.\n- [ ] Les statuts reposent sur des éléments vérifiables.\n- [ ] Les trois points critiques ont un plan d'actions daté.\n- [ ] Aucune donnée réelle n'est utilisée.\n\n## Pièges\n\n- Cocher « Conforme » sans preuve.\n- Mélanger obligations et bonnes pratiques sans les distinguer.\n- Oublier la date de mise à jour de la grille : le droit évolue.\n\n## Pour aller plus loin\n\nAjoutez un formulaire (par exemple avec Tally) pour que les équipes métier décrivent leur projet avant la revue."
+        },
+        {
+          "title": "Atelier 3 : rédiger la liste des clauses clés d'un contrat avec un fournisseur d'IA",
+          "kind": "exercise",
+          "body_md": "> Contenu pédagogique, pas un avis juridique : un contrat réel se rédige avec le conseil compétent.\n\n## Objectif\n\nÉtablir une liste hiérarchisée de clauses clés à exiger ou négocier avec un fournisseur d'IA, avec position de repli, et un document de synthèse destiné à la direction.\n\n**Durée estimée** : 60 à 90 minutes.\n\n## Plateforme\n\n- **Notion** ou **Google Docs** associé à **Google Sheets** (no-code), offre gratuite ou version libre à la date de rédaction, à vérifier.\n- Alternative : un traitement de texte libre associé à un tableur libre.\n\n## Fournisseur fictif\n\n« Lexiqa », service en ligne qui résume des contrats et répond à des questions sur un corpus de documents. Il se prétend conforme et propose des conditions standard.\n\n## Étapes\n\n1. Dans un tableur, créez les colonnes : thème, clause attendue, formulation cible en une phrase, position de repli, criticité (Bloquante, Importante, Souhaitable), justification juridique, preuve à demander.\n2. Couvrez au minimum ces thèmes : traitement des données personnelles, utilisation des saisies pour l'entraînement, confidentialité, propriété des sorties, propriété des améliorations, garanties de non-contrefaçon, conformité RGPD et AI Act, indemnisation et limitation de responsabilité, sécurité, localisation et sous-traitants, droit d'audit, journaux, réversibilité et effacement, changements de version, niveaux de service, résiliation.\n3. Classez chaque clause selon l'arbre du cours et retenez trois clauses bloquantes.\n4. Rédigez les formulations cibles dans un style clair, sans copier de modèle protégé : il s'agit d'intentions de clause, pas d'un contrat.\n5. Dans le document, rédigez une note d'une page : contexte, trois points bloquants, trois points de négociation, risques résiduels, avis à valider par le juriste en charge.\n6. Faites relire par un pair en demandant de signaler les formulations ambiguës ; corrigez.\n\n## Résultat attendu\n\nUne liste d'au moins quinze clauses hiérarchisées et une note de synthèse d'une page.\n\n## Critères de réussite\n\n- [ ] Chaque clause a une criticité, une formulation cible et une position de repli.\n- [ ] Les clauses bloquantes sont justifiées.\n- [ ] Les liens avec le RGPD et l'AI Act sont explicites sans citer de numéro non vérifié.\n- [ ] La note de synthèse est compréhensible par un non-juriste.\n\n## Pièges\n\n- Tout classer en « bloquant ».\n- Oublier les documents annexes qui peuvent modifier la portée des clauses.\n- Présenter la liste comme un avis juridique.\n\n## Pour aller plus loin\n\nComparez votre liste à celle d'une collègue pour un second fournisseur fictif, et dégagez un socle commun réutilisable."
+        }
+      ]
+    }
+  ],
+  "quiz": {
+    "title": "Quiz du module",
+    "pass_percent": 70,
+    "max_attempts": null,
+    "questions": [
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle est la première question d'une analyse AI Act selon la méthode du module ?",
+        "feedback": "On part des faits pour qualifier l'objet, puis les rôles, puis le risque. Partir d'une conclusion (sanction, classification du fournisseur) fausse l'analyse.",
+        "options": [
+          [
+            "Décrire les faits (ce que fait l'outil, pour qui, avec quelles données) avant de qualifier",
+            true
+          ],
+          [
+            "Chercher le montant des sanctions applicables",
+            false
+          ],
+          [
+            "Vérifier si le fournisseur est établi dans l'Union",
+            false
+          ],
+          [
+            "Demander au fournisseur sa propre classification",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Une entreprise utilise sous sa propre autorité un système d'IA acheté auprès d'un éditeur, dans un cadre professionnel. Quel est, en substance, son rôle principal ?",
+        "feedback": "Celui qui utilise un système sous sa propre autorité est déployeur ; l'éditeur est fournisseur. Les rôles peuvent évoluer si l'on modifie substantiellement le système.",
+        "options": [
+          [
+            "Fournisseur",
+            false
+          ],
+          [
+            "Déployeur",
+            true
+          ],
+          [
+            "Importateur",
+            false
+          ],
+          [
+            "Mandataire",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Dans quels cas un déployeur peut-il, en substance, être traité comme un fournisseur ?",
+        "feedback": "Marque propre, modification substantielle ou détournement de finalité peuvent faire basculer le rôle. Former le personnel et lire la notice relèvent des obligations normales du déployeur.",
+        "options": [
+          [
+            "Il lit la notice d'utilisation",
+            false
+          ],
+          [
+            "Il met le système en service sous son propre nom ou sa marque",
+            true
+          ],
+          [
+            "Il change la finalité du système vers un usage à haut risque",
+            true
+          ],
+          [
+            "Il forme son personnel à l'usage de l'outil",
+            false
+          ],
+          [
+            "Il modifie substantiellement le système",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi le même modèle de langage peut-il relever de catégories de risque différentes ?",
+        "feedback": "Résumer des comptes rendus et trier des candidatures n'ont pas le même niveau de risque, même avec un modèle identique : on qualifie l'usage.",
+        "options": [
+          [
+            "Parce que la catégorie change à chaque mise à jour",
+            false
+          ],
+          [
+            "Parce que seul le fournisseur du modèle est classé",
+            false
+          ],
+          [
+            "Parce que la classification dépend de la taille du modèle uniquement",
+            false
+          ],
+          [
+            "Parce que la classification porte sur le cas d'usage et non sur la technologie",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles obligations pèsent typiquement, en substance, sur le déployeur d'un système à haut risque ?",
+        "feedback": "La documentation de conception et l'évaluation de conformité incombent au fournisseur ; le déployeur supervise, surveille, conserve les journaux et informe.",
+        "options": [
+          [
+            "Conserver les journaux qu'il maîtrise",
+            true
+          ],
+          [
+            "Obtenir le marquage de conformité à la place du fournisseur",
+            false
+          ],
+          [
+            "Surveiller le fonctionnement et signaler les incidents graves",
+            true
+          ],
+          [
+            "Rédiger seul toute la documentation technique de conception",
+            false
+          ],
+          [
+            "Utiliser le système conformément à la notice",
+            true
+          ],
+          [
+            "Confier la supervision humaine à des personnes compétentes",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel est le statut des modèles d'IA à usage général dans le règlement ?",
+        "feedback": "Le règlement distingue modèle (obligations du fournisseur du modèle) et système (obligations selon le risque de l'usage), avec des obligations renforcées en cas de risque systémique.",
+        "options": [
+          [
+            "Ils sont toujours classés à haut risque",
+            false
+          ],
+          [
+            "Ils ont un régime propre, distinct de celui des systèmes d'IA qui les intègrent",
+            true
+          ],
+          [
+            "Ils sont exclus du champ du règlement",
+            false
+          ],
+          [
+            "Ils relèvent uniquement du RGPD",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Que peut-on attendre, en substance, d'un fournisseur de modèle à usage général ?",
+        "feedback": "Le fournisseur de modèle donne documentation et informations ; la conformité de l'usage final reste à qui qualifie et déploie le système.",
+        "options": [
+          [
+            "Des informations utiles aux intégrateurs",
+            true
+          ],
+          [
+            "Une politique de respect du droit d'auteur de l'Union",
+            true
+          ],
+          [
+            "Un résumé des contenus utilisés pour l'entraînement",
+            true
+          ],
+          [
+            "La prise en charge automatique de l'analyse d'impact de chaque déployeur",
+            false
+          ],
+          [
+            "Une documentation technique mise à disposition des autorités",
+            true
+          ],
+          [
+            "La garantie que tout usage aval sera conforme",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle est la meilleure pratique pour une qualification de cas d'usage ?",
+        "feedback": "Une note datée est la première preuve de diligence ; le droit évolue, il faut donc dater et sourcer.",
+        "options": [
+          [
+            "Attendre un contrôle avant de qualifier",
+            false
+          ],
+          [
+            "Reprendre la classification d'un concurrent",
+            false
+          ],
+          [
+            "Documenter le raisonnement, dater l'analyse et citer la version du texte consultée",
+            true
+          ],
+          [
+            "Se limiter à une réponse orale du service informatique",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi l'intérêt légitime n'est-il pas une base légale « automatique » pour l'IA ?",
+        "feedback": "Le test en trois temps (intérêt, nécessité, mise en balance) doit être documenté ; l'information et l'AIPD restent exigibles.",
+        "options": [
+          [
+            "Il exige un test de nécessité et une mise en balance avec les droits et attentes raisonnables des personnes",
+            true
+          ],
+          [
+            "Il dispense de l'information des personnes",
+            false
+          ],
+          [
+            "Il n'est jamais admis pour des données personnelles",
+            false
+          ],
+          [
+            "Il remplace l'analyse d'impact",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi le consentement est-il fragile dans une relation employeur-salarié ?",
+        "feedback": "Le consentement doit être libre : un déséquilibre de pouvoir en remet en cause la validité. Les salariés bénéficient pleinement du RGPD.",
+        "options": [
+          [
+            "Parce qu'il doit toujours être écrit sur papier",
+            false
+          ],
+          [
+            "Parce que la subordination peut empêcher qu'il soit réellement libre",
+            true
+          ],
+          [
+            "Parce que le consentement est interdit en droit du travail dans tous les cas",
+            false
+          ],
+          [
+            "Parce que les salariés ne sont pas protégés par le RGPD",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels éléments relèvent du principe de minimisation dans un projet d'IA ?",
+        "feedback": "Minimiser, c'est limiter les données et leur durée au nécessaire pour la finalité ; « au cas où » est le contraire.",
+        "options": [
+          [
+            "Pseudonymiser avant l'envoi quand c'est possible",
+            true
+          ],
+          [
+            "Conserver indéfiniment les saisies pour améliorer l'outil",
+            false
+          ],
+          [
+            "Ne transmettre au système que les champs nécessaires",
+            true
+          ],
+          [
+            "Collecter un maximum de données au cas où",
+            false
+          ],
+          [
+            "Définir une durée de conservation des historiques",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quand une analyse d'impact (AIPD) est-elle attendue, en substance ?",
+        "feedback": "Le critère est le risque élevé, apprécié avec les critères publiés par les autorités (notation, décisions à effet important, grande échelle, données sensibles…).",
+        "options": [
+          [
+            "Quand le traitement est susceptible d'engendrer un risque élevé pour les droits et libertés des personnes",
+            true
+          ],
+          [
+            "Pour tout traitement, sans exception",
+            false
+          ],
+          [
+            "Uniquement si le fournisseur est hors de l'Union",
+            false
+          ],
+          [
+            "Seulement lorsque l'outil est gratuit",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Qu'est-ce qui distingue une décision assistée d'une décision exclusivement automatisée ?",
+        "feedback": "Un contrôle de pure forme ne suffit pas : l'humain doit avoir compétence, temps et pouvoir de modifier le résultat.",
+        "options": [
+          [
+            "Le fait qu'un humain clique sur un bouton de validation",
+            false
+          ],
+          [
+            "Une intervention humaine réelle, compétente et capable de changer la décision",
+            true
+          ],
+          [
+            "Le nom du logiciel utilisé",
+            false
+          ],
+          [
+            "Le nombre de dossiers traités par jour",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels éléments un juriste doit-il vérifier avant un transfert de données vers un fournisseur d'IA situé hors de l'Union ?",
+        "feedback": "Les transferts incluent l'accès à distance ; il faut cartographier la chaîne réelle de traitement et pas seulement le siège.",
+        "options": [
+          [
+            "Uniquement l'adresse du siège social du fournisseur",
+            false
+          ],
+          [
+            "La localisation réelle des serveurs, du support et des sous-traitants ultérieurs",
+            true
+          ],
+          [
+            "Le mécanisme de transfert applicable (adéquation, clauses types, etc.)",
+            true
+          ],
+          [
+            "Seulement la langue de l'interface",
+            false
+          ],
+          [
+            "L'accès à distance éventuel depuis un pays tiers",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "À quelle condition un fournisseur d'IA en mode service peut-il devenir responsable de traitement ?",
+        "feedback": "Le rôle suit la détermination des finalités et des moyens : une réutilisation pour ses propres fins peut faire basculer le fournisseur.",
+        "options": [
+          [
+            "Dès qu'il héberge les données",
+            false
+          ],
+          [
+            "Dès qu'il facture le service",
+            false
+          ],
+          [
+            "Jamais, il est toujours sous-traitant",
+            false
+          ],
+          [
+            "Lorsqu'il utilise les données pour ses propres finalités, par exemple améliorer ses modèles",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Selon l'analyse dominante en droit d'auteur continental, quel est le principal obstacle à la protection d'un contenu généré en un clic ?",
+        "feedback": "La protection suppose une œuvre originale portant l'empreinte d'un auteur humain ; le dépôt n'est pas une condition de protection.",
+        "options": [
+          [
+            "L'obligation de déposer l'œuvre pour être protégée",
+            false
+          ],
+          [
+            "L'interdiction d'utiliser des outils numériques",
+            false
+          ],
+          [
+            "L'absence de choix créatifs humains caractérisables, donc d'originalité imputable à un auteur personne physique",
+            true
+          ],
+          [
+            "Le fait que le contenu est gratuit",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles pratiques renforcent la preuve de la contribution humaine à un contenu assisté par IA ?",
+        "feedback": "Un dossier daté et horodaté permet de soutenir une revendication de droits et de montrer sa bonne foi.",
+        "options": [
+          [
+            "Sauvegarder les versions retravaillées",
+            true
+          ],
+          [
+            "Ne rien documenter pour garder de la souplesse",
+            false
+          ],
+          [
+            "Annoter les choix créatifs",
+            true
+          ],
+          [
+            "Supprimer tous les historiques pour limiter les risques",
+            false
+          ],
+          [
+            "Conserver les consignes et les résultats bruts",
+            true
+          ],
+          [
+            "Archiver les conditions d'utilisation à la date de création",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que prévoit, en substance, le droit de l'Union sur la fouille de textes et de données pour les usages non scientifiques ?",
+        "feedback": "L'exception existe mais les titulaires peuvent réserver leurs droits par un moyen approprié ; les litiges évoluent, d'où la veille.",
+        "options": [
+          [
+            "Une obligation de payer systématiquement une redevance",
+            false
+          ],
+          [
+            "Une liberté totale sans condition",
+            false
+          ],
+          [
+            "Une exception conditionnée à l'absence de réserve de droits exprimée par les titulaires",
+            true
+          ],
+          [
+            "Une interdiction absolue",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Qu'est-ce qui conditionne la protection d'une information au titre du secret d'affaires, en substance ?",
+        "feedback": "Coller des informations stratégiques dans un outil qui peut les réutiliser fragilise ces conditions.",
+        "options": [
+          [
+            "Son caractère secret, sa valeur commerciale et des mesures de protection raisonnables",
+            true
+          ],
+          [
+            "Sa publication dans un registre officiel",
+            false
+          ],
+          [
+            "Son dépôt préalable auprès d'une autorité",
+            false
+          ],
+          [
+            "Son partage avec un maximum de partenaires",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel type de responsabilité repose sur le défaut du produit et non sur la faute du producteur ?",
+        "feedback": "Le régime des produits défectueux vise la sécurité légitimement attendue ; la victime prouve défaut, dommage et lien de causalité.",
+        "options": [
+          [
+            "La responsabilité contractuelle",
+            false
+          ],
+          [
+            "La responsabilité pénale du dirigeant",
+            false
+          ],
+          [
+            "La responsabilité du fait des produits défectueux",
+            true
+          ],
+          [
+            "La responsabilité de l'employeur du fait des préposés",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels éléments entrent en compte dans la sécurité attendue d'un produit intégrant de l'IA, en substance ?",
+        "feedback": "Le cadre européen révisé prend en compte ces éléments ; les clauses d'exclusion ont des bornes légales, en particulier envers les consommateurs.",
+        "options": [
+          [
+            "La seule volonté du fabricant d'exclure sa responsabilité par clause",
+            false
+          ],
+          [
+            "La capacité d'apprentissage du système",
+            true
+          ],
+          [
+            "Les mises à jour et le suivi après mise sur le marché",
+            true
+          ],
+          [
+            "Le nombre de pages des conditions d'utilisation",
+            false
+          ],
+          [
+            "Le contrôle que conserve le fabricant",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi la supervision humaine ne dégage-t-elle pas l'utilisateur professionnel de sa responsabilité ?",
+        "feedback": "Un résultat non vérifié peut caractériser un manquement de l'utilisateur, d'où l'importance des consignes et des traces de contrôle.",
+        "options": [
+          [
+            "Parce que l'utilisateur n'est jamais tenu de relire",
+            false
+          ],
+          [
+            "Parce que l'outil est toujours garanti par son fournisseur",
+            false
+          ],
+          [
+            "Parce que l'obligation de diligence et de vérification demeure même si l'outil est sophistiqué",
+            true
+          ],
+          [
+            "Parce que seule la faute du fournisseur est examinée",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle démarche est recommandée pour l'assurance face aux risques d'IA ?",
+        "feedback": "Le traitement de l'IA varie selon les polices ; seule la lecture et des réponses écrites donnent une visibilité.",
+        "options": [
+          [
+            "Supposer que toutes les polices couvrent l'IA",
+            false
+          ],
+          [
+            "Supposer qu'aucune police ne la couvre",
+            false
+          ],
+          [
+            "Attendre un sinistre pour consulter l'assureur",
+            false
+          ],
+          [
+            "Relire les polices (définitions, exclusions, déclarations) et interroger le courtier par écrit",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle clause est la plus utile pour éviter qu'un fournisseur réutilise vos saisies pour entraîner ses modèles ?",
+        "feedback": "Seule une clause visant explicitement l'entraînement protège ; les autres thèmes sont utiles mais ne répondent pas à ce risque.",
+        "options": [
+          [
+            "Une clause de non-concurrence",
+            false
+          ],
+          [
+            "Une clause de juridiction compétente",
+            false
+          ],
+          [
+            "Une clause de langue du contrat",
+            false
+          ],
+          [
+            "Une clause excluant l'usage des saisies, des sorties et des retours pour l'entraînement, sauf accord exprès",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels éléments un contrat de fournisseur d'IA devrait-il couvrir pour garantir la réversibilité ?",
+        "feedback": "La réversibilité couvre données, artefacts, effacement et plan de sortie ; conserver des données sans droit n'est pas une garantie de réversibilité.",
+        "options": [
+          [
+            "Un droit exclusif du fournisseur de conserver les données",
+            false
+          ],
+          [
+            "Restitution des données dans des formats lisibles",
+            true
+          ],
+          [
+            "Portabilité des paramétrages et des bases de connaissances",
+            true
+          ],
+          [
+            "Effacement certifié chez le fournisseur et ses sous-traitants",
+            true
+          ],
+          [
+            "Un préavis de résiliation illimité",
+            false
+          ],
+          [
+            "Un plan de sortie testé",
+            true
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Comment répondre à un fournisseur qui refuse un audit sur site ?",
+        "feedback": "Des alternatives proportionnées donnent des preuves exploitables sans exiger ce que le fournisseur ne peut accorder.",
+        "options": [
+          [
+            "Renoncer à toute vérification",
+            false
+          ],
+          [
+            "Demander des alternatives : rapports indépendants, certifications, audit limité en cas d'incident",
+            true
+          ],
+          [
+            "Signer en l'état",
+            false
+          ],
+          [
+            "Réclamer uniquement une baisse de prix",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "free_text",
+        "prompt": "En quelques lignes, expliquez pourquoi la même solution d'IA peut entraîner des obligations différentes selon le rôle de l'organisation (fournisseur ou déployeur) et selon le cas d'usage. Donnez un exemple fictif.",
+        "feedback": "Une bonne réponse distingue le rôle (qui développe et met sur le marché, qui utilise sous sa propre autorité, bascule possible en cas de modification substantielle ou de marque propre) et le cas d'usage (la catégorie de risque dépend de la finalité). L'exemple doit montrer deux usages d'un même modèle (par exemple résumé interne versus tri de candidatures) ou deux positions (acheteur versus intégrateur).",
+        "options": []
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Décrivez trois clauses que vous exigeriez d'un fournisseur d'IA avant de lui confier des données de clients, en indiquant pourquoi chacune est critique et quelle position de repli vous accepteriez.",
+        "feedback": "Réponses attendues : par exemple exclusion de l'entraînement sur vos données, accord de traitement avec liste des sous-traitants et localisation, réversibilité avec effacement, indemnisation en cas de contrefaçon ou de manquement. Chaque clause doit être reliée à un risque précis (RGPD, confidentialité, propriété, responsabilité), avec une position de repli réaliste.",
+        "options": []
+      }
+    ]
+  },
+  "assignment": {
+    "title": "Livrable pratique : note d'analyse de conformité d'un cas d'usage IA",
+    "instructions_md": "## Objectif\n\nProduire une **note d'analyse de conformité** d'un cas d'usage d'IA **fictif** : qualification, points RGPD, propriété intellectuelle, responsabilité et clauses contractuelles clés. Cette note est un exercice pédagogique : elle **ne constitue pas un avis juridique** et ne doit s'appuyer sur aucune donnée réelle ni confidentielle.\n\n## Consignes\n\nLe livrable se réalise **sans code**, avec les outils no-code et low-code des trois ateliers du dernier chapitre : arbre de décision en tableur (atelier 1), grille de revue (atelier 2) et liste de clauses (atelier 3). Le rendu peut être un document, un PDF ou un lien de partage en lecture seule.\n\nChoisissez un cas fictif (par exemple l'assistant de pré-qualification de remboursements de la mutuelle Horizon, ou un cas de votre invention) et traitez :\n\n1. **Fiche du cas** : description des faits, parties, données, finalité (10 lignes maximum).\n2. **Qualification AI Act** : objet (système ou modèle à usage général), rôle de chaque acteur, catégorie retenue, justification, obligations principales et preuves attendues. Citez la source officielle consultée et la date de consultation.\n3. **Analyse RGPD** : base légale et finalité, minimisation, catégories sensibles, nécessité d'une AIPD, décisions automatisées, droits des personnes, transferts.\n4. **Propriété intellectuelle et confidentialité** : titularité des contenus produits, risques sur les données d'entraînement et les sorties, secrets d'affaires, dossier de preuve à constituer.\n5. **Responsabilité et assurance** : chaîne de causalité possible, acteurs exposés, polices à vérifier, plan d'incident.\n6. **Clauses contractuelles clés** : au moins quinze clauses hiérarchisées (bloquante, importante, souhaitable) avec position de repli.\n7. **Synthèse** : cinq risques majeurs, décisions à prendre, points à escalader à un juriste, et mention explicite des **limites** de l'analyse (état du droit à la date de rédaction, absence d'avis juridique).\n\nVariante facultative pour profils techniques : un script d'export du registre des risques. Elle n'est pas nécessaire pour valider le module.\n\n## Grille d'évaluation\n\n- **Qualification et méthode (25 points)** : faits, rôles, catégorie, justification claire, sources et date.\n- **RGPD (20 points)** : base légale argumentée, minimisation, AIPD, décisions automatisées, droits, transferts.\n- **Propriété intellectuelle et confidentialité (15 points)** : analyse de titularité, risques amont et aval, secret d'affaires, preuve.\n- **Responsabilité et assurance (15 points)** : chaîne de causalité, répartition des risques, incidents.\n- **Clauses contractuelles (15 points)** : exhaustivité, hiérarchisation, replis réalistes.\n- **Rigueur et clarté (10 points)** : absence de numéro d'article ou de chiffre non vérifié, incertitudes signalées, escalade, lisibilité, avertissement juridique présent.\n\nSeuil conseillé : 70 points sur 100."
+  }
+}

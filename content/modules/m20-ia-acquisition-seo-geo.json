@@ -1,0 +1,735 @@
+{
+  "course": "M20",
+  "slug": "ia-acquisition-seo-geo",
+  "source": "Contenu original rédigé pour TRAIL Academy à partir du programme du module (sans slides sources). Pas de vidéo : à ajouter depuis l'administration.",
+  "chapters": [
+    {
+      "title": "Recherche d'audience, personas et angles éditoriaux assistés",
+      "lessons": [
+        {
+          "title": "Comprendre son audience : ce que l'IA peut et ne peut pas faire",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Situer l'IA dans une démarche de recherche d'audience.\n- Distinguer une donnée observée d'une hypothèse générée.\n\n## Le fil rouge du module\n\nNous suivons une organisation **fictive**, « Les Jardins de Marlène », une coopérative de maraîchage qui vend des paniers de légumes par abonnement. Son équipe marketing de trois personnes veut gagner en visibilité sur les moteurs de recherche et dans les assistants IA, et améliorer ses campagnes d'e-mails. Toutes les données du module sont inventées.\n\n## Deux sources de connaissance sur l'audience\n\n- **Des données observées** : questions reçues par le service client, requêtes saisies dans le moteur de recherche du site, réponses à une enquête, résultats de campagnes passées, entretiens avec des abonnés.\n- **Des hypothèses** : ce que l'équipe pense de ses clients, ce qu'un assistant IA « imagine » à partir de ses connaissances générales.\n\nUn assistant IA est très utile pour **organiser, reformuler, résumer et proposer des pistes**. Il ne connaît pas vos clients : sans données fournies, il produit des généralités plausibles. Plausible ne veut pas dire vrai.\n\n```mermaid\nflowchart LR\n  accTitle: De la donnée observée à la décision éditoriale\n  accDescr: Les données observées et les hypothèses de l'IA alimentent une synthèse que l'équipe vérifie avant de décider d'un angle éditorial.\n  D[\"Données observées (questions clients, enquêtes, résultats)\"] --> S[\"Synthèse assistée par l'IA\"]\n  H[\"Hypothèses générées par l'IA\"] --> S\n  S --> V[\"Vérification par l'équipe\"]\n  V --> A[\"Angles éditoriaux retenus\"]\n  A --> T[\"Test sur le terrain\"]\n  T --> D\n```\n*Figure 1 : les hypothèses de l'IA ne deviennent des décisions qu'après vérification, et le terrain alimente à son tour les données.*\n\n## Ce que l'IA fait bien\n\n- Regrouper des centaines de questions clients par thèmes.\n- Proposer des formulations alternatives d'un même besoin.\n- Rédiger un premier guide d'entretien ou un questionnaire.\n\n## Ce qu'elle ne remplace pas\n\n- Une parole client réelle, avec ses surprises.\n- La mesure : combien de personnes sont concernées par tel besoin.\n\n## À retenir\n\nPosez toujours la question : « cette affirmation vient-elle d'une donnée que j'ai, ou d'une supposition ? » Marquez-la dans vos documents.\n\n## Pour réfléchir\n\nListez trois sources de données sur votre audience dont vous disposez déjà et que vous pourriez, sans enfreindre de règle de confidentialité, soumettre à un assistant de façon anonymisée."
+        },
+        {
+          "title": "Personas : des synthèses de données, pas des inventions",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Construire un persona à partir de données réelles.\n- Comprendre pourquoi un persona synthétique ne vaut pas une étude.\n\n## Qu'est-ce qu'un persona ?\n\nUn **persona** est un portrait type, construit pour aider une équipe à se mettre à la place d'un segment d'audience. Il contient des objectifs, des freins, des situations d'usage et des phrases typiques. Il ne décrit pas une personne réelle, mais un regroupement de comportements observés.\n\n## Un persona utile repose sur des faits\n\nExemple fictif : l'équipe des Jardins de Marlène a analysé 40 questions anonymisées reçues par e-mail. Elle en tire un persona « Camille, qui veut manger local mais craint de gaspiller » avec trois freins : peur de recevoir des légumes inconnus, rythme de livraison rigide, incertitude sur la conservation.\n\nPour chaque élément, la fiche indique sa **preuve** : « 9 questions sur 40 évoquent le gaspillage » (chiffre fictif). Sans cette colonne de preuve, le persona est une opinion.\n\n## Le persona synthétique : un outil d'idéation\n\nOn peut demander à un assistant de « jouer » un persona pour tester un message. C'est pratique pour **brainstormer**, repérer un message confus ou préparer des questions d'entretien. Mais :\n\n- le modèle reproduit des stéréotypes présents dans ses données d'entraînement ;\n- il tend à approuver, à être poli et cohérent là où de vraies personnes sont contradictoires ;\n- ses réponses ne sont pas des mesures : dix « réponses » d'un assistant ne sont pas dix répondants.\n\n**Règle** : un persona synthétique peut inspirer une hypothèse, jamais la valider.\n\n## Pratique\n\nRédigez un prompt qui fournit à l'assistant vos 40 questions clients anonymisées et lui demande trois segments, avec pour chacun les numéros des questions qui l'appuient et les points sur lesquels il manque de données."
+        },
+        {
+          "title": "Prompter pour la recherche d'audience : méthode et garde-fous",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Structurer des demandes de synthèse d'audience.\n- Appliquer des garde-fous de confidentialité et de vérification.\n\n## Un modèle de prompt de synthèse\n\nUn bon prompt de recherche d'audience contient :\n\n- le **contexte** (organisation, offre, objectif) ;\n- le **corpus** fourni (questions, avis anonymisés) ;\n- la **tâche** (regrouper en thèmes, citer les identifiants) ;\n- les **contraintes** (n'utiliser que le corpus, écrire « non trouvé » sinon) ;\n- le **format** (liste numérotée, une ligne par thème).\n\nExemple de consigne : « À partir uniquement des 40 lignes ci-dessous, propose quatre thèmes. Pour chacun, cite les identifiants des lignes concernées et une citation exacte. Signale ce qui ne rentre dans aucun thème. N'ajoute aucune information extérieure. »\n\n## Garde-fous de confidentialité\n\n- Supprimez noms, e-mails, numéros de téléphone et tout élément permettant de reconnaître une personne avant d'envoyer des textes à un assistant.\n- Vérifiez les règles de votre organisation sur les outils autorisés et sur le sort des données saisies (conservation, réutilisation éventuelle par le fournisseur).\n- Pour des données sensibles, demandez conseil à votre délégué à la protection des données ou à votre service juridique avant tout usage.\n\n## Garde-fous de qualité\n\n1. Contrôlez chaque citation en la recherchant dans le corpus.\n2. Recomptez les proportions vous-même.\n3. Demandez un contre-argument : « Quelles conclusions ce corpus ne permet-il pas de tirer ? »\n4. Faites relire par un collègue.\n\n## Pour réfléchir\n\nParmi vos demandes habituelles à un assistant, lesquelles pourraient contenir des données personnelles sans que vous y pensiez (signatures, extraits d'e-mails, fichiers exportés) ?"
+        },
+        {
+          "title": "Des insights aux angles éditoriaux : un cadre de décision",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Transformer des thèmes d'audience en angles éditoriaux testables.\n- Prioriser des angles avec des critères explicites.\n\n## Du thème à l'angle\n\nUn **thème** est un sujet (« gaspillage »). Un **angle** est une promesse précise adressée à un public : « Comment conserver un panier de légumes toute la semaine, sans rien jeter ». L'angle porte une **intention** (informer, convaincre, rassurer) et un **format** (guide, vidéo, FAQ).\n\nL'IA aide à produire vingt variantes d'angles en quelques secondes. Le travail de l'équipe est de **choisir**.\n\n## Quatre critères de choix\n\n- **Besoin observé** : un lien avec des données réelles.\n- **Pertinence pour l'offre** : le contenu peut conduire naturellement vers ce que vous proposez.\n- **Capacité à être crédible** : vous avez une expertise ou des données propres à apporter.\n- **Effort** : temps de production.\n\n```mermaid\nquadrantChart\n  accTitle: Matrice de priorisation d'angles éditoriaux\n  accDescr: Quatre angles fictifs sont placés selon l'effort de production et l'intérêt pour l'audience. Les angles à faible effort et fort intérêt sont à produire en premier.\n  title Angles éditoriaux fictifs\n  x-axis \"Effort faible\" --> \"Effort élevé\"\n  y-axis \"Intérêt faible\" --> \"Intérêt élevé\"\n  quadrant-1 \"À planifier\"\n  quadrant-2 \"À produire d'abord\"\n  quadrant-3 \"À écarter\"\n  quadrant-4 \"À revoir\"\n  \"Conserver un panier\": [0.25, 0.8]\n  \"Calendrier des saisons\": [0.4, 0.7]\n  \"Enquête auprès des abonnés\": [0.8, 0.75]\n  \"Histoire de la coopérative\": [0.3, 0.25]\n```\n*Figure 2 : exemple de matrice effort et intérêt ; les positions sont fictives et résultent d'un jugement d'équipe, pas d'une mesure.*\n\n## Travailler avec l'IA\n\nDemandez à l'assistant de générer des angles, puis de les critiquer : « Quels angles sont les plus génériques ? Lesquels un concurrent pourrait-il publier mot pour mot ? » Les angles génériques ne se distinguent pas, que ce soit pour les internautes ou pour les assistants IA qui cherchent des sources.\n\n## Mise en pratique\n\nPrenez trois thèmes de votre activité et écrivez deux angles par thème. Placez-les sur une matrice comme ci-dessus et justifiez la position de chacun en une phrase."
+        }
+      ]
+    },
+    {
+      "title": "SEO sémantique, intentions de recherche et GEO",
+      "lessons": [
+        {
+          "title": "Du mot-clé à l'intention de recherche",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Définir le SEO et l'intention de recherche.\n- Classer des requêtes par intention.\n\n## Le SEO en bref\n\nLe **SEO** (Search Engine Optimization) regroupe les pratiques visant à rendre un site compréhensible et utile pour les moteurs de recherche, afin qu'il apparaisse sur des requêtes pertinentes. Les moteurs ne publient pas leurs règles de classement complètes et les modifient ; aucune méthode ne garantit une position. Ce qu'on peut faire : produire des contenus utiles, un site techniquement sain, et mesurer.\n\n## Des mots-clés aux intentions\n\nHistoriquement, on optimisait autour de mots-clés. Les moteurs cherchent désormais à comprendre le **sens** d'une requête et le besoin derrière elle. On parle d'**intention de recherche**. Une typologie courante :\n\n- **Informationnelle** : l'internaute veut comprendre (« comment conserver des carottes »).\n- **Navigationnelle** : il cherche un site précis (« Les Jardins de Marlène connexion »).\n- **Transactionnelle** : il veut agir ou acheter (« abonnement panier légumes »).\n- **Comparative ou d'évaluation** : il hésite entre options (« panier bio ou AMAP »).\n\nCette typologie est un outil de travail, pas une vérité scientifique : certaines requêtes mêlent plusieurs intentions.\n\n```mermaid\nflowchart TD\n  accTitle: Classer une requête par intention\n  accDescr: Une requête est analysée pour savoir si l'internaute veut comprendre, trouver un site, comparer ou agir. Chaque intention conduit à un type de contenu.\n  R[\"Requête de l'internaute\"] --> Q{\"Que veut-il faire ?\"}\n  Q -->|\"Comprendre\"| I[\"Guide ou article explicatif\"]\n  Q -->|\"Trouver un site\"| N[\"Page d'accueil ou page de marque\"]\n  Q -->|\"Comparer\"| C[\"Page de comparaison honnête\"]\n  Q -->|\"Agir\"| T[\"Page d'offre claire\"]\n```\n*Figure 3 : une intention appelle un type de contenu ; une même page répond rarement bien à toutes les intentions.*\n\n## Avec l'IA\n\nUn assistant peut classer une liste de requêtes par intention. **Vérifiez** : regardez les résultats réels du moteur pour la requête, car ils indiquent le type de contenu que le moteur juge adapté. L'IA propose, la page de résultats renseigne.\n\n## Mise en pratique\n\nClassez dix requêtes de votre secteur par intention, puis comparez votre classement à celui d'un assistant. Notez les désaccords : ils indiquent des requêtes ambiguës."
+        },
+        {
+          "title": "Recherche sémantique : sujets, entités et clusters de contenus",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Comprendre l'organisation d'un site en clusters thématiques.\n- Utiliser l'IA pour cartographier un sujet sans le survendre.\n\n## Penser en sujets\n\nAu lieu d'une page par mot-clé, on organise le contenu autour de **sujets**. Un **cluster** comprend une page centrale (« Bien conserver ses légumes frais ») et plusieurs pages liées qui traitent chacune une question précise (carottes, salades, herbes), reliées par des liens internes. L'hypothèse de travail, largement admise mais dont l'effet exact dépend du site et du moteur, est qu'une couverture cohérente d'un sujet aide les moteurs et les lecteurs à identifier votre expertise.\n\n## Les entités\n\nUne **entité** est une chose identifiable : une organisation, un lieu, un produit, une personne, un concept. Les moteurs et les assistants IA raisonnent en partie sur des entités et leurs relations. Pour vous, cela se traduit par des pratiques simples :\n\n- nommer clairement votre organisation, vos produits et vos auteurs, de façon cohérente partout ;\n- définir les termes importants dans vos pages ;\n- relier votre site à des profils et sources fiables que vous maîtrisez.\n\n## Cartographier avec l'IA\n\nUn assistant peut proposer une arborescence de sujets, des questions fréquentes et des sous-thèmes. Il peut aussi **inventer** des sujets sans demande réelle. Validez chaque sujet avec au moins une source de demande : requêtes du moteur interne du site, questions du service client, outil de statistiques de recherche, ou tendances publiques.\n\n## Mise en pratique\n\nDessinez un cluster autour d'un sujet de votre activité : une page centrale, cinq pages liées, et les liens internes prévus. Pour chaque page, notez la source qui prouve qu'une demande existe."
+        },
+        {
+          "title": "GEO : être cité par les assistants IA, ce qui est établi et ce qui est hypothèse",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Définir le GEO et ses limites.\n- Séparer les pratiques solides des hypothèses.\n\n## Définition\n\nLe **GEO** (Generative Engine Optimization) désigne les pratiques visant à faire apparaître ou citer vos contenus dans les réponses des assistants IA et des moteurs de réponse. Le domaine est récent, les systèmes sont opaques, variables d'un produit à l'autre et changent souvent.\n\n## Honnêteté d'abord\n\n**Aucune méthode ne garantit d'être cité.** Les assistants ne publient pas leurs règles de sélection de sources. Un prestataire qui promet une citation garantie promet ce qu'il ne maîtrise pas. Notez aussi que les réponses d'un assistant peuvent varier d'une demande à l'autre, d'une personne à l'autre et d'un jour à l'autre.\n\n## Ce qui est raisonnablement solide\n\n- Beaucoup d'assistants s'appuient, pour répondre, sur des contenus accessibles du web : un site lisible par des robots, rapide, sans blocage inutile, est une condition préalable. Vérifiez la documentation officielle de chaque outil, qui précise comment ses robots d'exploration agissent.\n- Un contenu clair, factuel, daté, signé, qui répond précisément à une question est plus facile à extraire et à citer, par un humain comme par une machine.\n\n## Ce qui relève de l'hypothèse\n\n- L'effet réel de telle structure (listes, FAQ, résumés en tête) sur la probabilité d'être cité : des travaux de recherche et des observations existent, mais ils sont partiels, portent sur des systèmes précis et peuvent ne pas se généraliser.\n- Le poids d'une mention sur d'autres sites ou forums, ou d'un format donné : plausible, non démontré de façon générale.\n- Les fichiers d'instructions dédiés aux assistants : leur prise en compte varie et n'est pas garantie.\n\n```mermaid\nflowchart LR\n  accTitle: Établi, plausible, non démontré en GEO\n  accDescr: Trois niveaux de confiance pour les pratiques GEO : pratiques de base solides, pratiques plausibles à tester, promesses non démontrées à écarter.\n  A[\"Solide : site accessible, contenus clairs, factuels et signés\"] --> B[\"Plausible : structure en questions et réponses, citations de sources, mentions externes\"]\n  B --> C[\"Non démontré : garantie de citation, recette miracle, effet chiffré promis\"]\n```\n*Figure 4 : trois niveaux de confiance ; plus on avance vers la droite, plus il faut tester soi-même et refuser les promesses.*\n\n## Comment procéder\n\nTraitez le GEO comme un **programme de tests** : posez une liste de questions réelles de votre audience, interrogez régulièrement plusieurs assistants, notez qui est cité, et suivez l'évolution après vos changements. Les observations sont indicatives, pas des mesures de classement.\n\n## Pour réfléchir\n\nQuelle promesse de visibilité IA avez-vous déjà vue dans une offre commerciale ? Qu'est-ce qui, dans cette promesse, était vérifiable ?"
+        },
+        {
+          "title": "Structurer un contenu pour les lecteurs, les moteurs et les assistants",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Appliquer une structure de contenu orientée réponse.\n- Comprendre le rôle des données structurées et des sources citables.\n\n## Un plan de page « réponse d'abord »\n\n1. Un **titre** qui reprend la question ou le sujet.\n2. Une **réponse directe** en deux ou trois phrases, au début.\n3. Des **sous-titres** qui correspondent aux questions secondaires.\n4. Des **listes** pour les étapes ou critères.\n5. Une **date de mise à jour**, un **auteur** identifié et ses qualifications.\n6. Des **sources** citées pour les affirmations factuelles.\n7. Une **FAQ** reprenant des questions réellement posées.\n\nCette structure sert d'abord le lecteur humain. Elle facilite aussi l'extraction par des moteurs et des assistants, sans garantie de résultat.\n\n## Données structurées\n\nLes **données structurées** sont des balises standardisées ajoutées au code d'une page pour décrire son contenu (article, FAQ, produit, organisation, événement). Elles aident les moteurs à comprendre la page ; elles ne garantissent ni classement ni affichage enrichi, et les moteurs précisent dans leur documentation les types qu'ils exploitent. Elles doivent refléter fidèlement le contenu visible de la page, sous peine d'être ignorées ou sanctionnées.\n\nVous n'avez pas à écrire ce code : de nombreux outils de gestion de contenu proposent des extensions ou des champs dédiés. Votre rôle est de fournir le contenu juste (question, réponse, date, auteur) et de demander à l'équipe technique ou à l'outil de produire les balises.\n\n## Sources citables\n\nUn contenu devient une source citable quand il apporte quelque chose de **propre** : une donnée originale que vous avez collectée, une méthode détaillée, un exemple concret, une définition claire. Si votre page ne fait que reformuler les autres, il n'y a pas de raison de la citer.\n\n## Les erreurs à éviter\n\n- Produire des centaines de pages en série avec l'IA sans relecture ni valeur propre : la qualité prime sur le volume.\n- Inventer des chiffres, des citations ou des experts : cela détruit la crédibilité et expose l'organisation.\n- Masquer du texte pour les robots que les humains ne voient pas.\n\n## Mise en pratique\n\nRéécrivez l'introduction d'une page de votre site en commençant par la réponse directe. Ajoutez trois questions de FAQ issues de questions réelles de vos clients."
+        }
+      ]
+    },
+    {
+      "title": "Segmentation, personnalisation et respect des données personnelles",
+      "lessons": [
+        {
+          "title": "Segmenter une audience : de la règle au modèle",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Construire des segments utiles et actionnables.\n- Comparer segmentation par règles et segmentation assistée par IA.\n\n## Pourquoi segmenter\n\nUn **segment** est un groupe de personnes à qui l'on adresse un message adapté. Segmenter permet de gagner en pertinence et d'éviter de sur-solliciter. Un bon segment est **identifiable** (on sait à qui on parle), **différent** (il appelle un message différent) et **actionnable** (on peut le toucher).\n\n## Par règles, ou par modèle\n\n- **Par règles** : « abonnés depuis moins de trois mois », « ont ouvert au moins un e-mail le dernier mois », « ont commandé du pain ». Simple, lisible, explicable.\n- **Par modèle** : un outil regroupe automatiquement les contacts selon leurs comportements (par exemple en classes proches). Plus subtil, mais plus difficile à expliquer et à contrôler.\n\nCommencez par les règles. Passez au modèle si vous pouvez expliquer ce qu'il fait et en mesurer l'apport.\n\n```mermaid\nflowchart TD\n  accTitle: Segmenter des abonnés fictifs par règles\n  accDescr: Les abonnés sont répartis en trois segments selon leur ancienneté et leur activité récente.\n  B[\"Base d'abonnés (fictive)\"] --> Q1{\"Abonné depuis moins de 3 mois ?\"}\n  Q1 -->|\"Oui\"| S1[\"Segment Nouveaux : message d'accueil\"]\n  Q1 -->|\"Non\"| Q2{\"Actif le dernier mois ?\"}\n  Q2 -->|\"Oui\"| S2[\"Segment Réguliers : nouveautés\"]\n  Q2 -->|\"Non\"| S3[\"Segment Endormis : message de réactivation\"]\n```\n*Figure 5 : segmentation par règles ; chaque segment reçoit un message distinct.*\n\n## Le rôle de l'IA\n\nL'IA aide à **proposer des règles**, à **rédiger des variantes de message par segment** et à **repérer des motifs** dans un export anonymisé. Elle n'a pas à décider seule qui reçoit quoi, et on ne lui confie pas des attributs sensibles.\n\n## Piège : segments trop fins\n\nPlus un segment est petit, plus ses résultats sont instables et plus le travail de production augmente. Demandez-vous si la différence de message justifie la séparation.\n\n## Mise en pratique\n\nDéfinissez trois segments pour une base d'abonnés avec seulement trois critères disponibles : ancienneté, dernière activité, type d'offre. Notez le message de chacun."
+        },
+        {
+          "title": "Personnaliser sans devenir intrusif",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Distinguer personnalisation utile et pratiques intrusives.\n- Cadrer la personnalisation par l'IA.\n\n## Les niveaux de personnalisation\n\n- **Contextuelle** : selon la page ou le sujet consulté.\n- **Par segment** : selon le groupe auquel la personne appartient.\n- **Individuelle** : selon son historique propre.\n\nPlus on descend, plus la pertinence peut augmenter et plus le risque (sentiment d'être surveillé, erreur, atteinte à la vie privée) augmente aussi.\n\n## Le test du « comment ils savent ça ? »\n\nSi un destinataire peut se demander légitimement « comment sont-ils au courant ? », la personnalisation est probablement trop intrusive. Les attentes varient selon le contexte et la façon dont les données ont été collectées.\n\n## Les risques propres à l'IA générative\n\n- **Erreur de fond** : un message individualisé qui contient un fait faux (un prénom mal inséré, un produit jamais acheté).\n- **Ton déplacé** : un humour ou une familiarité mal calibrés.\n- **Discrimination** : proposer ou exclure des offres selon des critères qui reviennent à utiliser des caractéristiques protégées. Des règles spécifiques encadrent certains secteurs et certaines pratiques.\n- **Inférences sensibles** : déduire la santé, les convictions ou la situation familiale d'une personne à partir de ses comportements est à éviter et peut être très encadré.\n\n## Bonnes pratiques\n\n1. Personnalisez avec les données que la personne vous a **raisonnablement confiées pour cet usage**.\n2. Préférez la personnalisation par segment pour commencer.\n3. Prévoyez une valeur de repli : si une donnée manque, le message reste cohérent.\n4. Faites relire des échantillons avant l'envoi.\n\n## Pour réfléchir\n\nImaginez trois personnalisations possibles pour les Jardins de Marlène. Pour chacune, quel est le bénéfice pour le destinataire, et que se passe-t-il si la donnée est fausse ?"
+        },
+        {
+          "title": "Données personnelles : repères pratiques pour le marketing assisté par IA",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Poser des repères généraux sur la protection des données en marketing.\n- Savoir quelles questions poser avant d'utiliser un outil d'IA avec des données clients.\n\n*Contenu à visée pédagogique, qui ne constitue pas un avis juridique : les cadres évoluent, vérifiez auprès du service juridique de votre organisation à la date de lecture.*\n\n## Un cadre général\n\nEn Europe, le **RGPD** encadre le traitement des données personnelles. Les notions suivantes sont couramment citées ; leur application précise dépend de votre situation et relève de votre service juridique ou de votre délégué à la protection des données.\n\n- **Finalité** : on collecte des données pour un but précis annoncé.\n- **Minimisation** : on n'utilise que ce qui est nécessaire.\n- **Base légale** : un fondement valide du traitement, par exemple le consentement ou l'intérêt légitime selon les cas.\n- **Information et droits** des personnes : accès, opposition, effacement, entre autres.\n- **Durée de conservation** limitée.\n- **Sécurité** et **sous-traitants** : un outil qui traite des données pour votre compte appelle un encadrement contractuel.\n\nLa prospection électronique, les traceurs et les cookies font l'objet de règles spécifiques, qui diffèrent selon le canal et le type de destinataire. Consultez les recommandations de l'autorité de protection des données de votre pays et votre service juridique.\n\n## Et l'IA ?\n\nEnvoyer des données clients à un assistant ou à un outil d'automatisation, c'est **les transmettre à un tiers**. Questions à poser avant :\n\n1. L'outil est-il autorisé dans mon organisation ?\n2. Quelles données vais-je saisir ? Peut-on les anonymiser ou les retirer ?\n3. Où sont-elles traitées et conservées ? Sont-elles réutilisées pour entraîner des modèles ?\n4. Un contrat ou un engagement de confidentialité encadre-t-il l'usage ?\n5. Est-ce cohérent avec ce qui a été annoncé aux personnes ?\n\nLe règlement européen sur l'IA (AI Act) ajoute des obligations selon le type de système et d'usage, notamment des obligations de transparence dans certains cas, par exemple lorsque des personnes interagissent avec un système d'IA ou lorsque des contenus synthétiques sont diffusés. Vérifiez les obligations applicables à la date de lecture.\n\n## Règle d'or du module\n\nDans les ateliers, utilisez **uniquement des données fictives**. En situation réelle, travaillez sur des données anonymisées ou agrégées chaque fois que possible.\n\n## Mise en pratique\n\nRédigez une checklist de cinq questions à poser avant d'ajouter un nouvel outil dans votre chaîne de campagne."
+        }
+      ]
+    },
+    {
+      "title": "Tests A/B, hypothèses et lecture prudente des résultats",
+      "lessons": [
+        {
+          "title": "Formuler une hypothèse et choisir une métrique",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Écrire une hypothèse de test A/B claire.\n- Choisir une métrique principale et des garde-fous.\n\n## Le principe\n\nUn **test A/B** compare deux versions (A, la version actuelle, et B, la variante) auprès de groupes de personnes tirés au hasard, pour savoir laquelle produit le meilleur résultat sur une métrique choisie à l'avance. Le tirage au sort est essentiel : il rend les groupes comparables.\n\n## Une hypothèse bien formée\n\nModèle : « Nous pensons que **[changement]** auprès de **[population]** fera évoluer **[métrique]** parce que **[raison]**. »\n\nExemple fictif : « Nous pensons qu'un objet d'e-mail qui cite la saison (« Vos premières courges sont là ») auprès des abonnés réguliers augmentera le taux de clic, parce qu'il rend l'e-mail plus concret. »\n\n## Choisir la métrique\n\n- **Métrique principale** : une seule, décidée avant le test, en lien avec l'objectif. Un taux d'ouverture est facile à mesurer mais peut être faussé par des protections de messagerie ; le taux de clic ou la conversion se rapprochent davantage de la valeur.\n- **Garde-fous** : des indicateurs qui ne doivent pas se dégrader (désabonnements, plaintes).\n- **Ne changez qu'une chose à la fois**, sinon vous ne saurez pas laquelle a joué.\n\n## Ce que l'IA apporte\n\nElle aide à produire des variantes d'objet ou de texte et à relire l'hypothèse (« est-elle testable ? »). Elle ne détermine pas à votre place la métrique ni le critère de décision.\n\n## Mise en pratique\n\nRédigez une hypothèse pour un test sur votre prochaine campagne, avec une métrique principale et deux garde-fous."
+        },
+        {
+          "title": "Taille d'échantillon, durée et significativité en termes simples",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Comprendre pourquoi la taille d'échantillon compte.\n- Interpréter la significativité sans la caricaturer.\n\n## Le hasard fait des différences\n\nSi vous lancez une pièce dix fois, vous n'obtiendrez pas toujours cinq piles. De même, deux groupes identiques peuvent avoir des taux de clic différents **par pur hasard**. Plus les groupes sont petits, plus ces écarts de hasard sont grands.\n\n## Taille d'échantillon\n\nPlus l'écart que vous voulez détecter est **petit**, plus il faut de personnes. Des calculateurs de taille d'échantillon existent en ligne et dans les outils de test : ils demandent le taux actuel, l'écart minimal intéressant et le niveau de confiance souhaité. Fixez ces paramètres **avant** de lancer. Si votre base est trop petite pour détecter l'écart espéré, mieux vaut le savoir avant : testez un changement plus ample, ou regroupez des envois.\n\n## Durée\n\n- Laissez le test aller **jusqu'au bout prévu**. Arrêter dès que le résultat semble favorable gonfle les faux positifs : c'est le « peeking ».\n- Couvrez des cycles complets (par exemple des semaines entières), car les comportements varient selon les jours.\n\n## Significativité, en termes simples\n\nUn résultat est dit **statistiquement significatif** lorsque, **si les deux versions étaient en réalité identiques**, un écart aussi grand serait peu probable par hasard (selon un seuil fixé à l'avance, souvent 5 % par convention). Ce n'est pas la probabilité que B soit meilleure. Ce n'est pas non plus une mesure de l'importance de l'écart.\n\n```mermaid\nflowchart TD\n  accTitle: Déroulé d'un test A/B rigoureux\n  accDescr: On fixe l'hypothèse, la métrique et la taille d'échantillon, on répartit au hasard, on laisse tourner la durée prévue, puis on analyse et décide.\n  H[\"Hypothèse et métrique fixées\"] --> N[\"Taille d'échantillon et durée fixées\"]\n  N --> R[\"Répartition au hasard A ou B\"]\n  R --> L[\"Test mené jusqu'au bout prévu\"]\n  L --> A[\"Analyse : écart, incertitude, garde-fous\"]\n  A --> D[\"Décision et enseignements\"]\n```\n*Figure 6 : ce qui est décidé avant le test (en haut) protège la lecture après (en bas).*\n\n## Pour réfléchir\n\nSi votre base compte 600 abonnés et que le taux de clic habituel est faible, que pouvez-vous raisonnablement détecter ? Quelles alternatives avez-vous ?"
+        },
+        {
+          "title": "Lire des résultats avec prudence : pièges et décision",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Repérer les erreurs de lecture les plus fréquentes.\n- Décider sans surinterpréter.\n\n## Les pièges classiques\n\n- **Taille trop petite** : un écart de quelques clics sur de petits groupes n'est pas une preuve.\n- **Arrêt anticipé** : voir « B gagne » au troisième jour et couper.\n- **Multiples comparaisons** : tester dix variantes et retenir la meilleure augmente la chance d'un faux gagnant.\n- **Découpage a posteriori** : fouiller des sous-groupes jusqu'à en trouver un où ça marche.\n- **Confondre significatif et important** : un écart minuscule peut être « significatif » sur de très grands volumes sans intérêt économique.\n- **Ignorer l'incertitude** : un résultat s'accompagne d'un intervalle plausible, pas d'un chiffre exact.\n- **Effet de nouveauté** : une variante surprenante peut gagner au début puis revenir à la normale.\n- **Contexte** : un jour férié, une promotion, une panne de messagerie.\n\n## Que décider ?\n\nTrois issues raisonnables :\n\n1. **Écart net, garde-fous intacts** : adopter B, en documentant.\n2. **Pas d'écart détectable** : ce n'est pas la preuve que A et B sont égaux, seulement que le test n'a pas détecté d'écart. Choisissez selon d'autres critères (coût, cohérence de marque).\n3. **Résultat ambigu** : relancer avec un échantillon plus grand ou une hypothèse affinée.\n\n## Rôle de l'IA\n\nUn assistant peut aider à **expliquer** des résultats ou à vérifier un raisonnement, mais ne lui confiez pas le calcul sans le contrôler : recalculez avec un outil de test ou un tableur, et gardez les données brutes. Demandez-lui plutôt : « Quelles critiques un statisticien ferait-il de cette conclusion ? »\n\n## Mise en pratique\n\nRédigez un compte rendu de test en cinq lignes : hypothèse, population, métrique, résultat avec son incertitude, décision."
+        }
+      ]
+    },
+    {
+      "title": "Automatisation de campagnes avec des outils no-code et pilotage des coûts",
+      "lessons": [
+        {
+          "title": "Anatomie d'une automatisation de campagne no-code",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Décrire une automatisation en déclencheur, actions et conditions.\n- Identifier où placer le contrôle humain.\n\n## Les briques\n\nLes plateformes d'automatisation no-code ou low-code (Make, n8n, Zapier ou équivalents ; offre gratuite ou version libre à la date de rédaction, à vérifier) fonctionnent avec les mêmes rôles de blocs :\n\n- un **déclencheur** : un événement (nouvelle ligne dans un tableur, formulaire rempli, horaire) ;\n- des **actions** : lire des données, appeler un assistant IA, écrire dans un tableur, envoyer un message ;\n- des **conditions** et **filtres** : ne continuer que si une règle est vraie ;\n- une **validation humaine** : une étape où le flux attend une approbation ;\n- une **gestion d'erreur** : que se passe-t-il si une étape échoue.\n\nLes interfaces changent : repérez les rôles plutôt que mémoriser des clics.\n\n```mermaid\nsequenceDiagram\n  accTitle: Flux de campagne avec validation humaine\n  accDescr: Une ligne de tableur déclenche un brouillon par l'assistant IA, qui est soumis à une personne. Seul un brouillon approuvé est envoyé, et le résultat est consigné.\n  participant T as Tableur\n  participant F as Flux d'automatisation\n  participant I as Assistant IA\n  participant H as Relecteur humain\n  participant E as Outil d'envoi\n  T->>F: Nouvelle ligne à traiter\n  F->>I: Demande de brouillon\n  I-->>F: Brouillon\n  F->>H: Brouillon à valider\n  H-->>F: Approuvé ou refusé\n  F->>E: Envoi si approuvé\n  F->>T: Statut consigné\n```\n*Figure 7 : le contrôle humain se place avant tout envoi ; le statut revient dans le tableur pour garder une trace.*\n\n## Quoi automatiser en premier\n\nLes tâches **répétitives, à faible risque et faciles à vérifier** : mise en forme de listes, brouillons de textes internes, tri de réponses reçues, rappels. On évite d'automatiser d'emblée l'envoi massif à des clients.\n\n## Mise en pratique\n\nChoisissez une tâche de votre quotidien et décrivez-la en déclencheur, actions, conditions, validation et gestion d'erreur, sans ouvrir aucun outil."
+        },
+        {
+          "title": "Garde-fous : validation humaine, erreurs, confidentialité et conformité",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Définir des garde-fous pour un flux automatisé.\n- Réduire les risques d'envoi erroné ou de fuite de données.\n\n*Contenu à visée pédagogique, qui ne constitue pas un avis juridique : les cadres évoluent, vérifiez auprès du service juridique de votre organisation à la date de lecture.*\n\n## Les risques propres à l'automatisation\n\n- **Erreur multipliée** : une faute dans un modèle de message est envoyée à toute la liste.\n- **Boucles et doublons** : un flux mal conçu renvoie le même message plusieurs fois.\n- **Fuite de données** : des colonnes inutiles transmises à un assistant ou à un tiers.\n- **Contenu inventé** : l'assistant ajoute une promesse ou un chiffre qui n'existe pas.\n- **Consentement** : envoyer à des personnes qui n'ont pas accepté de recevoir ce type de message. Les règles de prospection varient selon le canal et le destinataire ; vérifiez-les avec votre service juridique.\n\n## Les garde-fous essentiels\n\n1. **Validation humaine avant envoi** pour tout message externe, au moins au début.\n2. **Mode test** : envoi à une adresse interne fictive d'abord.\n3. **Limite de volume** par exécution et **arrêt d'urgence** (désactiver le flux).\n4. **Minimisation** : ne transmettre que les colonnes nécessaires, sans données sensibles.\n5. **Consignation** : statut, date, version du modèle de texte utilisée.\n6. **Désinscription** respectée et facile.\n7. **Transparence** : si le contenu est généré par IA et que des règles de transparence s'appliquent, les respecter ; vérifier à la date de lecture.\n8. **Instructions strictes à l'assistant** : n'utiliser que les champs fournis, ne rien ajouter, signaler un doute.\n\n## Mise en pratique\n\nPour le flux de la leçon précédente, écrivez la liste des cinq erreurs les plus vraisemblables et, pour chacune, le garde-fou qui la détecte."
+        },
+        {
+          "title": "Piloter les coûts : opérations, appels IA et temps gagné",
+          "kind": "reading",
+          "body_md": "## Objectifs\n\n- Identifier les postes de coût d'une automatisation.\n- Mettre en regard coût et valeur sans promesse chiffrée.\n\n## Les postes de coût\n\n- **L'abonnement à la plateforme** d'automatisation, souvent lié à un nombre d'exécutions ou d'opérations ; les offres et limites changent, consultez la page officielle à la date de lecture.\n- **Les appels à l'assistant IA** : facturés selon la quantité de texte traitée. Plus le texte envoyé et produit est long, plus le coût monte.\n- **L'outil d'envoi et les données** (e-mail, SMS, annuaires).\n- **Le temps humain** : conception, relecture, maintenance. C'est souvent le poste le plus sous-estimé.\n\n## Réduire sans dégrader\n\n- N'envoyer à l'assistant que les champs nécessaires.\n- Traiter par lots plutôt que ligne par ligne quand c'est adapté.\n- Réutiliser des modèles de texte et ne personnaliser que les parties utiles.\n- Surveiller les exécutions ratées ou en boucle, qui consomment sans produire.\n- Fixer une **alerte de budget** ou un plafond, quand l'outil le permet.\n\n## Raisonner en valeur\n\nComparez le coût total au **temps humain évité** et à l'effet mesuré sur la campagne, en restant prudent : un temps gagné ne devient une économie que s'il est réaffecté utilement. Les ordres de grandeur dépendent entièrement de votre contexte ; construisez votre propre estimation avec vos données.\n\n```mermaid\npie showData\n  accTitle: Répartition fictive du coût d'une automatisation\n  accDescr: Exemple illustratif de répartition entre abonnement, appels IA, temps de relecture et maintenance. Les chiffres sont inventés.\n  title Coût mensuel fictif en parts\n  \"Temps de relecture\" : 45\n  \"Maintenance et conception\" : 25\n  \"Plateforme\" : 20\n  \"Appels IA\" : 10\n```\n*Figure 8 : répartition purement illustrative ; dans un cas réel, mesurez la vôtre, le temps humain pèse souvent plus qu'on ne le croit.*\n\n## Mise en pratique\n\nListez, pour une automatisation envisagée, ses cinq postes de coût et une façon de suivre chacun chaque mois."
+        }
+      ]
+    },
+    {
+      "title": "Ateliers no-code et low-code",
+      "lessons": [
+        {
+          "title": "Atelier 1 : cartographier intentions de recherche et plan de contenus SEO et GEO",
+          "kind": "exercise",
+          "body_md": "## Objectif et durée\n\n**Objectif** : construire dans un tableur une carte d'intentions de recherche et un plan de contenus SEO et GEO pour une organisation fictive. **Durée estimée** : 75 minutes.\n\n## Plateformes\n\n- **Google Sheets** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternatives : **LibreOffice Calc**, **Airtable**, **NocoDB**.\n- **Un assistant IA conversationnel** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier ; n'importe quel assistant convient.\n\n## Données fournies (fictives)\n\nOrganisation : « Les Jardins de Marlène », coopérative de paniers de légumes. Voici seize requêtes fictives, à copier dans la première colonne :\n\n1. comment conserver des carottes\n2. panier de légumes abonnement\n3. panier bio ou amap\n4. les jardins de marlène avis\n5. que faire avec des courges\n6. légumes de saison octobre\n7. livraison panier légumes sans engagement\n8. combien coûte un panier de légumes\n9. éviter le gaspillage alimentaire légumes\n10. recette soupe de potiron\n11. les jardins de marlène connexion\n12. panier de légumes pour une personne\n13. comment congeler des haricots verts\n14. panier légumes local ou supermarché\n15. suspendre son abonnement panier\n16. légumes oubliés recettes\n\n## Étapes\n\n1. Créez une feuille « Requêtes » avec les colonnes : requête, intention (informationnelle, navigationnelle, transactionnelle, comparative), type de contenu, page existante ou à créer, preuve de demande, priorité.\n2. Collez les seize requêtes et demandez à l'assistant de proposer l'intention de chacune ; relisez et corrigez.\n3. Regroupez les requêtes en **trois clusters** et nommez une page centrale par cluster, dans une feuille « Clusters ».\n4. Pour chaque page à créer, écrivez dans une feuille « Plan » : titre, **réponse directe en deux phrases**, trois questions de FAQ, éléments propres à apporter (donnée originale, exemple, méthode), auteur et date de mise à jour prévus.\n5. Ajoutez une colonne « preuve de demande » : indiquez la source que vous consulteriez en réel (moteur interne du site, service client, outil de statistiques de recherche). N'inventez aucun volume de recherche.\n6. Ajoutez une feuille « Suivi GEO » : dix questions d'audience, une colonne par assistant testé, une colonne « cité ? (oui, non, ne sait pas) » et une colonne « date du test ». Précisez en tête : « Observation indicative, non garantie, variable d'une demande à l'autre ».\n\n## Résultat attendu\n\nUn classeur de quatre feuilles : requêtes, clusters, plan, suivi GEO.\n\n## Critères de réussite\n\n- [ ] Les seize requêtes sont classées avec leur intention, et au moins deux requêtes ambiguës sont signalées.\n- [ ] Trois clusters, chacun avec une page centrale et des pages liées.\n- [ ] Chaque page du plan a une réponse directe, une FAQ et un apport propre.\n- [ ] Aucun volume ni résultat inventé ; la preuve de demande est une source à consulter.\n- [ ] La feuille de suivi GEO ne promet aucun résultat.\n\n## Pièges\n\nFaire confiance à la classification de l'assistant sans la relire ; remplir des volumes de recherche imaginaires ; planifier des pages sans apport propre. **Données** : uniquement fictives, pas de données de votre employeur.\n\n## Pour aller plus loin\n\nAjoutez une colonne « effort » et placez les pages sur une matrice effort et intérêt, puis planifiez les trois premières."
+        },
+        {
+          "title": "Atelier 2 : concevoir un test A/B et lire des résultats fictifs",
+          "kind": "exercise",
+          "body_md": "## Objectif et durée\n\n**Objectif** : concevoir un test A/B complet dans un tableur, puis lire avec prudence deux jeux de résultats fictifs fournis. **Durée estimée** : 60 minutes.\n\n## Plateformes\n\n- **Google Sheets** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternatives : **LibreOffice Calc**, **Airtable**.\n- **Un calculateur de significativité ou de taille d'échantillon en ligne** (no-code), au choix : de nombreux outils gratuits existent, à vérifier à la date de rédaction. À défaut, demandez à un assistant IA d'expliquer le calcul, puis contrôlez avec un second outil.\n- **Un assistant IA** (no-code) pour relire l'hypothèse.\n\n## Partie 1 : concevoir\n\n1. Créez une feuille « Plan de test » avec : hypothèse (modèle : changement, population, métrique, raison), métrique principale, garde-fous, écart minimal intéressant, taille de chaque groupe, durée, règle d'arrêt, décision prévue selon les résultats.\n2. Remplissez-la pour ce cas fictif : l'équipe des Jardins de Marlène veut tester deux objets d'e-mail pour sa lettre hebdomadaire. A : « Votre lettre de la semaine ». B : « Vos premières courges sont là ». Base : 2 400 abonnés réguliers fictifs.\n3. Demandez à l'assistant : « Cette hypothèse est-elle testable ? Qu'est-ce qui pourrait fausser le test ? » Notez les remarques utiles.\n\n## Partie 2 : lire des résultats fictifs\n\n**Test 1** (objet d'e-mail, 1 200 envois par groupe) : A, 54 clics ; B, 66 clics ; désabonnements : A 6, B 9.\n\n**Test 2** (bouton de la page d'accueil, 3 000 visiteurs par groupe) : A, 120 clics ; B, 162 clics.\n\n4. Pour chaque test, calculez les taux dans le tableur.\n5. Passez les chiffres dans le calculateur de significativité. Notez si l'écart est significatif au seuil de 5 %, et l'incertitude donnée par l'outil.\n6. Rédigez, pour chaque test, un compte rendu de cinq lignes : résultat, limites, garde-fous, décision proposée. Attendu à titre de repère : le test 1 ne permet vraisemblablement pas de conclure (écart de 12 clics sur de petits groupes), le test 2 montre un écart plus net ; vérifiez avec votre outil et justifiez sans survendre.\n\n## Résultat attendu\n\nUn plan de test complet et deux comptes rendus prudents.\n\n## Critères de réussite\n\n- [ ] Hypothèse, métrique principale, garde-fous et règle d'arrêt fixés avant les résultats.\n- [ ] Taux calculés correctement dans le tableur.\n- [ ] Significativité lue sans la confondre avec la probabilité que B soit meilleure.\n- [ ] Les désabonnements du test 1 sont discutés comme garde-fou.\n- [ ] La décision reste proportionnée à la preuve.\n\n## Pièges\n\nConclure « B gagne » dès l'écart brut ; ignorer l'incertitude ; changer deux éléments à la fois. **Données** : uniquement les chiffres fictifs ci-dessus.\n\n## Pour aller plus loin\n\nCalculez la taille d'échantillon nécessaire pour détecter un écart d'un point de taux de clic, et dites si votre base réelle le permettrait."
+        },
+        {
+          "title": "Atelier 3 : automatiser un flux de campagne avec contrôle humain avant envoi",
+          "kind": "exercise",
+          "body_md": "## Objectif et durée\n\n**Objectif** : monter un flux no-code qui transforme des lignes d'un tableur en brouillons d'e-mails, soumis à une validation humaine avant tout envoi. **Durée estimée** : 90 minutes.\n\n## Plateformes\n\n- **Make** (no-code) ou **n8n** (low-code, version libre auto-hébergeable ou offre en ligne) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : **Zapier** ou tout outil équivalent.\n- **Google Sheets** (no-code) comme source et journal. Alternative : Airtable ou NocoDB.\n- **Un assistant IA** appelé par un bloc dédié de la plateforme, ou, à défaut, un copier-coller manuel dans l'assistant (étape simulée).\n- **Une boîte e-mail de test** que vous contrôlez, ou un envoi vers vous-même.\n\n## Données fournies (fictives)\n\nCréez une feuille « Contacts » avec les colonnes : prénom, segment (Nouveaux, Réguliers, Endormis), produit_du_moment, statut. Ajoutez cinq lignes inventées, par exemple : Aïcha, Nouveaux, courges ; Marc, Réguliers, panais ; Lina, Endormis, mâche ; Paul, Réguliers, courges ; Sofia, Nouveaux, mâche. Adresses : remplacez-les par votre propre adresse de test, jamais de vraies personnes.\n\n## Étapes\n\n1. Dans la plateforme, créez un scénario avec un **déclencheur** qui lit les lignes dont le statut est « à traiter ».\n2. Ajoutez un **bloc assistant IA** avec cette consigne : « Rédige un e-mail de quatre phrases pour [prénom], du segment [segment], sur le produit [produit_du_moment]. N'utilise que ces champs. N'invente ni prix, ni promesse, ni date. Termine par une phrase de désinscription. »\n3. Ajoutez un **filtre** : ne poursuivre que si le texte produit n'est pas vide et reste sous une longueur raisonnable.\n4. Ajoutez une **étape de validation humaine** : un bloc qui envoie le brouillon à votre adresse de test avec un moyen d'approuver ou de refuser (réponse, lien d'approbation ou colonne « validé » du tableur selon la plateforme).\n5. Ajoutez un **bloc d'envoi** qui n'agit que si le brouillon est approuvé, vers votre adresse de test uniquement.\n6. Ajoutez le **retour dans le tableur** : statut (brouillon, approuvé, refusé, envoyé), date, segment.\n7. Ajoutez une **gestion d'erreur** : en cas d'échec, noter « erreur » dans le tableur et ne rien envoyer.\n8. Lancez en **mode test** sur deux lignes, vérifiez, puis sur cinq. Regardez le nombre d'exécutions consommées.\n\n## Résultat attendu\n\nUn scénario qui produit cinq brouillons, aucun envoi sans approbation, et un journal à jour.\n\n## Critères de réussite\n\n- [ ] Aucun envoi à une personne réelle.\n- [ ] Une validation humaine précède chaque envoi.\n- [ ] Le tableur consigne chaque statut.\n- [ ] Les brouillons n'inventent aucune information ; les erreurs repérées sont notées.\n- [ ] Vous avez estimé le nombre d'exécutions et d'appels IA pour un envoi hebdomadaire de 2 000 contacts fictifs, en tenant compte du temps de relecture.\n\n## Pièges\n\nBoucle qui relance les mêmes lignes (pensez à changer le statut) ; coller de vraies adresses ; supprimer l'étape de validation « pour gagner du temps ». **Données** : uniquement fictives.\n\n## Pour aller plus loin\n\nAjoutez une limite de volume par exécution et une alerte sur les erreurs, puis décrivez comment vous arrêteriez le flux en urgence."
+        }
+      ]
+    }
+  ],
+  "quiz": {
+    "title": "Quiz du module",
+    "pass_percent": 70,
+    "max_attempts": null,
+    "questions": [
+      {
+        "kind": "single_choice",
+        "prompt": "Quel est le bon statut d'un persona généré par un assistant IA sans données fournies ?",
+        "feedback": "Un persona synthétique inspire des hypothèses à tester ; il ne remplace ni des données observées ni des entretiens. Il reproduit des généralités plausibles, pas votre audience réelle.",
+        "options": [
+          [
+            "Une mesure fiable de l'audience",
+            false
+          ],
+          [
+            "Une source d'hypothèses à valider avec des données",
+            true
+          ],
+          [
+            "Une preuve acceptable pour décider d'un budget",
+            false
+          ],
+          [
+            "Un substitut d'enquête quand le temps manque",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi ajouter une colonne « preuve » à une fiche persona ?",
+        "feedback": "La preuve relie chaque élément à une donnée observée. Sans elle, la fiche est une opinion difficile à contester ou à mettre à jour.",
+        "options": [
+          [
+            "Pour allonger le document",
+            false
+          ],
+          [
+            "Pour relier chaque affirmation à une donnée ou signaler qu'il s'agit d'une hypothèse",
+            true
+          ],
+          [
+            "Pour satisfaire un format obligatoire du SEO",
+            false
+          ],
+          [
+            "Pour que l'assistant la remplisse seul",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles précautions appliquer avant de soumettre des retours clients à un assistant IA ?",
+        "feedback": "Il faut retirer ou masquer les données identifiantes, vérifier les outils autorisés et la conservation des données, et contrôler la synthèse. Soumettre le fichier brut est risqué, et la vérification reste nécessaire même avec un outil approuvé.",
+        "options": [
+          [
+            "Retirer noms, e-mails et éléments identifiants",
+            true
+          ],
+          [
+            "Vérifier que l'outil est autorisé dans l'organisation",
+            true
+          ],
+          [
+            "Contrôler les citations et les comptes de la synthèse",
+            true
+          ],
+          [
+            "Envoyer l'export brut pour ne rien perdre",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle formulation d'une consigne limite le mieux les inventions de l'assistant lors d'une synthèse ?",
+        "feedback": "Imposer le corpus comme seule source, exiger des identifiants et autoriser « non trouvé » réduit les inventions, sans les supprimer : la vérification reste nécessaire.",
+        "options": [
+          [
+            "« Sois créatif et complète ce qui manque. »",
+            false
+          ],
+          [
+            "« À partir uniquement de ces lignes, cite les identifiants ; écris non trouvé si absent. »",
+            true
+          ],
+          [
+            "« Résume comme le ferait un expert. »",
+            false
+          ],
+          [
+            "« Donne ton avis général sur ces clients. »",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Qu'est-ce qu'une intention de recherche informationnelle ?",
+        "feedback": "L'intention informationnelle correspond à un internaute qui veut comprendre ou apprendre. Les autres intentions courantes sont navigationnelle, transactionnelle et comparative.",
+        "options": [
+          [
+            "Vouloir acheter immédiatement",
+            false
+          ],
+          [
+            "Chercher un site précis",
+            false
+          ],
+          [
+            "Vouloir comprendre ou apprendre quelque chose",
+            true
+          ],
+          [
+            "Comparer des offres concurrentes",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Comment vérifier qu'une requête correspond à l'intention supposée ?",
+        "feedback": "Les résultats affichés indiquent le type de contenu que le moteur juge adapté. L'avis de l'assistant est une proposition, pas une mesure.",
+        "options": [
+          [
+            "En demandant seulement à un assistant",
+            false
+          ],
+          [
+            "En observant les résultats réellement affichés pour cette requête",
+            true
+          ],
+          [
+            "En comptant les mots de la requête",
+            false
+          ],
+          [
+            "En se fiant à l'ordre alphabétique",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles pratiques relèvent d'un cluster de contenus bien conçu ?",
+        "feedback": "Un cluster relie une page centrale et des pages détaillées par des liens internes, avec des sujets validés par une demande réelle. Multiplier des pages quasi identiques n'apporte pas de valeur.",
+        "options": [
+          [
+            "Une page centrale et des pages liées par des liens internes",
+            true
+          ],
+          [
+            "Valider chaque sujet par une source de demande",
+            true
+          ],
+          [
+            "Chaque page apporte un élément propre",
+            true
+          ],
+          [
+            "Dupliquer la même page avec de légères variantes",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que peut-on affirmer honnêtement du GEO ?",
+        "feedback": "Les systèmes sont opaques et variables : aucune citation n'est garantissable. On peut appliquer de bonnes pratiques et tester.",
+        "options": [
+          [
+            "Une structure précise garantit d'être cité",
+            false
+          ],
+          [
+            "Aucune méthode ne garantit une citation ; on teste et on observe",
+            true
+          ],
+          [
+            "Les assistants publient leurs règles de sélection de sources",
+            false
+          ],
+          [
+            "Le GEO remplace entièrement le SEO",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles pratiques GEO sont raisonnablement solides ?",
+        "feedback": "Un site accessible aux robots autorisés et des contenus clairs, factuels, signés et datés sont des bases saines. Les promesses chiffrées ou garanties ne sont pas démontrées.",
+        "options": [
+          [
+            "Contenus clairs, factuels, datés et signés",
+            true
+          ],
+          [
+            "Site accessible et techniquement sain",
+            true
+          ],
+          [
+            "Promesse d'un effet chiffré sur les citations",
+            false
+          ],
+          [
+            "Texte caché destiné uniquement aux robots",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel statut donner à l'effet précis d'une FAQ sur la probabilité d'être cité ?",
+        "feedback": "C'est une hypothèse plausible, partiellement observée, mais pas démontrée de façon générale. Une FAQ reste utile aux lecteurs.",
+        "options": [
+          [
+            "Établi et garanti",
+            false
+          ],
+          [
+            "Hypothèse à tester, utile aux lecteurs dans tous les cas",
+            true
+          ],
+          [
+            "Interdit par les moteurs",
+            false
+          ],
+          [
+            "Sans aucun intérêt",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "À quoi servent les données structurées ?",
+        "feedback": "Elles décrivent le contenu d'une page de façon standardisée pour aider les moteurs à la comprendre. Elles ne garantissent ni position ni affichage enrichi et doivent refléter le contenu visible.",
+        "options": [
+          [
+            "À garantir un meilleur classement",
+            false
+          ],
+          [
+            "À décrire le contenu pour aider sa compréhension, sans garantie",
+            true
+          ],
+          [
+            "À masquer du contenu aux visiteurs",
+            false
+          ],
+          [
+            "À remplacer le texte de la page",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Qu'est-ce qui rend un contenu plus « citable » ?",
+        "feedback": "Un apport propre (donnée originale, méthode, exemple) donne une raison de citer. Reformuler les autres ne distingue pas.",
+        "options": [
+          [
+            "Sa longueur seule",
+            false
+          ],
+          [
+            "Un apport propre et vérifiable, clairement présenté",
+            true
+          ],
+          [
+            "L'usage répété du mot-clé",
+            false
+          ],
+          [
+            "Un ton enthousiaste",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels sont des risques d'une production de masse de pages avec l'IA ?",
+        "feedback": "Des pages génériques, des erreurs factuelles et un manque de valeur propre menacent la crédibilité. Une relecture et un apport propre réduisent ces risques.",
+        "options": [
+          [
+            "Contenu générique sans valeur propre",
+            true
+          ],
+          [
+            "Erreurs factuelles ou chiffres inventés",
+            true
+          ],
+          [
+            "Atteinte à la crédibilité de l'organisation",
+            true
+          ],
+          [
+            "Garantie de meilleure visibilité",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel est le principal intérêt de commencer la segmentation par des règles ?",
+        "feedback": "Les règles sont lisibles et explicables, ce qui permet de contrôler le résultat avant d'envisager un modèle plus complexe.",
+        "options": [
+          [
+            "Elles sont toujours plus performantes",
+            false
+          ],
+          [
+            "Elles sont lisibles, explicables et contrôlables",
+            true
+          ],
+          [
+            "Elles évitent tout besoin de données",
+            false
+          ],
+          [
+            "Elles dispensent de tester",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle personnalisation est la plus risquée ?",
+        "feedback": "Plus la personnalisation est individuelle et déduit des informations non confiées pour cet usage, plus le risque d'intrusion ou d'erreur augmente.",
+        "options": [
+          [
+            "Un message adapté à la saison",
+            false
+          ],
+          [
+            "Un message qui déduit des informations sensibles à partir des comportements",
+            true
+          ],
+          [
+            "Un message adapté à l'ancienneté",
+            false
+          ],
+          [
+            "Un message adapté au segment",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quelles questions poser avant d'envoyer des données clients à un outil d'IA ?",
+        "feedback": "Autorisation de l'outil, minimisation des données, lieu et conservation, cohérence avec l'information des personnes : autant de questions à poser. La rapidité du service n'est pas un critère de conformité.",
+        "options": [
+          [
+            "L'outil est-il autorisé dans mon organisation ?",
+            true
+          ],
+          [
+            "Quelles données sont nécessaires, peut-on les anonymiser ?",
+            true
+          ],
+          [
+            "Comment les données sont-elles conservées et réutilisées ?",
+            true
+          ],
+          [
+            "L'outil répond-il vite ?",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quelle est la bonne posture sur le cadre juridique (RGPD, AI Act, prospection) ?",
+        "feedback": "Ce contenu donne des repères généraux ; il ne constitue pas un avis juridique. L'application dépend du contexte et se vérifie auprès du service juridique à la date de lecture.",
+        "options": [
+          [
+            "Se fier au contenu du module comme avis juridique",
+            false
+          ],
+          [
+            "Retenir les repères et vérifier auprès du service juridique à la date de lecture",
+            true
+          ],
+          [
+            "Considérer que l'IA est exemptée de ces règles",
+            false
+          ],
+          [
+            "Attendre un contrôle pour agir",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel élément est essentiel dans un test A/B ?",
+        "feedback": "La répartition aléatoire rend les groupes comparables ; sans elle, l'écart peut venir d'autre chose que de la variante.",
+        "options": [
+          [
+            "Choisir à la main les meilleurs contacts pour B",
+            false
+          ],
+          [
+            "Répartir au hasard les personnes entre A et B",
+            true
+          ],
+          [
+            "Tester plusieurs changements à la fois",
+            false
+          ],
+          [
+            "Choisir la métrique après avoir vu les résultats",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Pourquoi fixer la taille d'échantillon avant le test ?",
+        "feedback": "Savoir à l'avance combien de personnes sont nécessaires pour détecter l'écart visé évite de lancer un test incapable de conclure et d'arrêter selon l'humeur.",
+        "options": [
+          [
+            "Pour obtenir un résultat favorable",
+            false
+          ],
+          [
+            "Pour savoir si le test peut détecter l'écart visé",
+            true
+          ],
+          [
+            "Pour éviter de calculer ensuite",
+            false
+          ],
+          [
+            "Parce que les outils l'exigent toujours",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels comportements faussent la lecture d'un test A/B ?",
+        "feedback": "Arrêter dès que le résultat paraît bon, tester de nombreuses variantes sans correction et fouiller les sous-groupes augmentent les faux positifs. Définir la métrique à l'avance les limite.",
+        "options": [
+          [
+            "Arrêter le test dès que B semble gagner",
+            true
+          ],
+          [
+            "Tester dix variantes et retenir la meilleure sans précaution",
+            true
+          ],
+          [
+            "Chercher un sous-groupe où ça marche après coup",
+            true
+          ],
+          [
+            "Définir la métrique principale avant le test",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Que signifie un résultat « statistiquement significatif » ?",
+        "feedback": "Il signifie qu'un écart aussi grand serait peu probable par hasard si les versions étaient identiques, selon un seuil fixé. Ce n'est ni la probabilité que B soit meilleure, ni la mesure de l'importance.",
+        "options": [
+          [
+            "B est meilleure avec certitude",
+            false
+          ],
+          [
+            "L'écart serait peu probable par hasard si A et B étaient identiques",
+            true
+          ],
+          [
+            "L'écart est forcément important économiquement",
+            false
+          ],
+          [
+            "Le test peut être arrêté sans conséquence",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Un test ne montre aucun écart détectable. Que conclure ?",
+        "feedback": "Absence de détection n'est pas preuve d'égalité : le test peut manquer de puissance. On décide selon d'autres critères ou on relance avec plus de données.",
+        "options": [
+          [
+            "Que A et B sont strictement identiques",
+            false
+          ],
+          [
+            "Que le test n'a pas détecté d'écart, sans prouver qu'il n'y en a pas",
+            true
+          ],
+          [
+            "Que la métrique est mauvaise",
+            false
+          ],
+          [
+            "Que l'IA s'est trompée",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Où placer le contrôle humain dans un flux automatisé de campagne ?",
+        "feedback": "Une validation avant tout envoi externe empêche qu'une erreur ou une invention soit multipliée à toute la liste.",
+        "options": [
+          [
+            "Après l'envoi, pour corriger",
+            false
+          ],
+          [
+            "Avant l'envoi, au moins au début",
+            true
+          ],
+          [
+            "Nulle part si le texte vient d'un assistant",
+            false
+          ],
+          [
+            "Uniquement lors de la conception",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "multiple_choice",
+        "prompt": "Quels éléments d'un flux no-code réduisent les risques ?",
+        "feedback": "Mode test, limite de volume, journal et validation avant envoi sont des garde-fous. Envoyer à toute la base dès le premier essai est le contraire.",
+        "options": [
+          [
+            "Mode test avec adresse interne fictive",
+            true
+          ],
+          [
+            "Limite de volume et arrêt d'urgence",
+            true
+          ],
+          [
+            "Journal des statuts",
+            true
+          ],
+          [
+            "Premier essai sur toute la base",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "single_choice",
+        "prompt": "Quel poste de coût est souvent sous-estimé dans une automatisation ?",
+        "feedback": "Le temps humain de conception, relecture et maintenance pèse souvent plus que l'abonnement ou les appels IA, même si cela dépend du contexte.",
+        "options": [
+          [
+            "Le temps humain de relecture et de maintenance",
+            true
+          ],
+          [
+            "Le nom du scénario",
+            false
+          ],
+          [
+            "La couleur de l'interface",
+            false
+          ],
+          [
+            "Le nombre de colonnes du tableur",
+            false
+          ]
+        ]
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Un prestataire vous promet d'être cité par les assistants IA « de façon garantie » grâce à une méthode exclusive. Rédigez votre réponse en quelques lignes en précisant ce que vous accepteriez et ce que vous demanderiez.",
+        "feedback": "Une bonne réponse indique qu'aucune citation ne peut être garantie, que les systèmes sont opaques et variables, et demande ce qui est démontré, les méthodes de mesure, les données de suivi et les engagements réalistes. Elle propose un programme de tests plutôt qu'une promesse.",
+        "options": []
+      },
+      {
+        "kind": "free_text",
+        "prompt": "Vous obtenez 66 clics sur 1 200 envois pour la variante B et 54 sur 1 200 pour A. Expliquez en quelques lignes ce que vous dites à votre direction et quelles étapes vous proposez.",
+        "feedback": "Une bonne réponse calcule les taux, signale que l'écart est faible sur des groupes modestes et peut venir du hasard, mentionne un calculateur de significativité et l'incertitude, regarde les garde-fous, et propose de prolonger ou répéter le test avant de généraliser.",
+        "options": []
+      }
+    ]
+  },
+  "assignment": {
+    "title": "Livrable pratique : plan d'acquisition et de tests pour une campagne",
+    "instructions_md": "## Objectif\n\nDémontrer que vous savez construire un **plan d'acquisition et de tests** pour une campagne, en combinant plan de contenus SEO et GEO, segmentation, test A/B et automatisation prudente. Vous travaillez sur une organisation fictive de votre choix, ou sur « Les Jardins de Marlène » du module. Toutes les données sont inventées ; aucune donnée personnelle ni confidentielle n'est nécessaire.\n\n## Consignes\n\nCe livrable se réalise **sans code**, avec les outils no-code et low-code des trois ateliers (tableur, assistant IA, calculateur de significativité, plateforme d'automatisation). Le rendu peut être un lien, un export PDF ou un document. Ce contenu ne constitue pas un avis juridique : signalez ce qu'il faudrait vérifier avec un service juridique.\n\n1. **Audience et angles** : une synthèse d'audience avec, pour chaque affirmation, sa source ou la mention « hypothèse » ; au moins deux segments ou personas et leurs limites ; trois angles éditoriaux priorisés avec critères.\n2. **Plan SEO et GEO** : au moins douze requêtes classées par intention, trois clusters, un plan de six pages avec réponse directe, FAQ et apport propre ; une feuille de suivi GEO sans aucune promesse de résultat, avec la distinction entre établi, plausible et hypothèse.\n3. **Segmentation et personnalisation** : trois segments avec règles, message par segment, niveau de personnalisation choisi et justifié, et une checklist de cinq questions sur les données personnelles.\n4. **Test A/B** : hypothèse, métrique principale, garde-fous, taille d'échantillon visée, durée, règle d'arrêt, critère de décision, et lecture prudente de résultats fictifs (avec incertitude et limites).\n5. **Automatisation** : schéma ou description du flux (déclencheur, actions, filtres, validation humaine, erreurs, journal) et estimation de ses coûts, y compris le temps humain, avec les hypothèses indiquées.\n6. **Risques et limites** : au moins cinq risques (inventions, fuite de données, consentement, biais, sur-interprétation) avec un garde-fou chacun.\n\n*Variante facultative pour profils techniques : décrire en plus une intégration par interface programmable, sans que cela soit exigé pour valider le livrable.*\n\n## Grille d'évaluation\n\n- **Honnêteté sur le GEO et les preuves (20 %)** : aucune garantie, hypothèses distinguées des faits, aucune statistique inventée.\n- **Plan SEO et GEO (20 %)** : intentions correctes, clusters cohérents, pages avec apport propre.\n- **Segmentation et données personnelles (15 %)** : segments actionnables, repères de conformité, minimisation.\n- **Test A/B (20 %)** : hypothèse testable, métrique, durée, échantillon, lecture prudente.\n- **Automatisation et coûts (15 %)** : validation humaine, garde-fous, coûts incluant le temps humain.\n- **Clarté et exploitabilité (10 %)** : document structuré, utilisable par une équipe."
+  }
+}

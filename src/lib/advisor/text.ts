@@ -32,6 +32,10 @@ function pick<T extends string>(text: string, table: Record<T, RegExp>): Signal<
 
 const ROLE_ORDER: [Role, RegExp][] = [
   ["ai-product", /\b(ai product|pm ia|product manager ia|product owner ia|chef de produit ia)\b/],
+  ["legal", /\b(juriste\w*|juridique|avocat\w*|dpo|compliance|legal ops?|legal|conformite)\b/],
+  ["hr", /\b(rh|ressources humaines|drh|recruteu\w*|recrutement|talent acquisition|hrbp|responsable formation|paie)\b/],
+  ["finance", /\b(finance\w*|daf|controleu\w* de gestion|controle de gestion|comptab\w*|tresori\w*|auditeu\w*|audit|fp ?a|analyste financier)\b/],
+  ["marketing", /\b(marketing|communication|community manager|content manager|seo|brand|responsable com\w*|chargee? de com\w*|social media|relations presse)\b/],
   ["engineering", /\b(developpeu\w*|dev|full ?stack|ingenieu\w*|data scientist|data engineer|devops|machine learning engineer|ml engineer|software engineer|architecte|tech lead|cto)\b/],
   ["analyst", /\b(business analyst|analyste (metier|fonctionnel)?|\bba\b|consultant fonctionnel)\b/],
   ["project", /\b(chef de projet|project manager|pmo|scrum master|delivery manager|responsable de projet)\b/],
@@ -76,6 +80,18 @@ const SYNONYMS: [RegExp, string[], number][] = [
   [/\b(adoption|conduite du changement|resistance|formation des equipes|acculturation)\b/, ["M16"], 0.5],
   [/\b(evaluation|evaluer|qualite|monitoring|observabilite|metriques?|tests? de prompts?)\b/, ["M17"], 0.5],
   [/\b(ux|experience utilisateur|interface|design|ergonomie|interaction)\b/, ["M14"], 0.5],
+  [/\b(contenus?|editorial|redaction|brand voice|ton de marque|reseaux sociaux|newsletter)\b/, ["M19"], 0.5],
+  [/\b(seo|geo|referencement|acquisition|campagnes?|a b test|ab test|personnalisation)\b/, ["M20"], 0.5],
+  [/\b(reputation|veille|crise|communication de crise|deepfakes?|e reputation)\b/, ["M21"], 0.5],
+  [/\b(recrutement|sourcing|candidats?|offres? d emploi|marque employeur|presselection)\b/, ["M22"], 0.5],
+  [/\b(competences|onboarding|integration|plan de formation|parcours de formation|developpement des talents)\b/, ["M23"], 0.5],
+  [/\b(people analytics|dialogue social|cse|donnees rh|assistant rh|paie|conges)\b/, ["M24"], 0.5],
+  [/\b(recherche juridique|jurisprudence|veille reglementaire|notes? juridiques?|doctrine)\b/, ["M25"], 0.5],
+  [/\b(contrats?|clauses?|due diligence|playbook|revue de contrats?|legal ops?)\b/, ["M26"], 0.5],
+  [/\b(ai act|droit de l ia|propriete intellectuelle|droit d auteur|responsabilite)\b/, ["M27"], 0.45],
+  [/\b(reporting|controle de gestion|fp ?a|budget|ecarts?|previsions?|scenarios?|tableaux? de bord)\b/, ["M28"], 0.5],
+  [/\b(comptabilite|tresorerie|factures?|rapprochements?|audit|anomalies)\b/, ["M29"], 0.5],
+  [/\b(risque de modele|fraude|lcb|explicabilite|scoring|gouvernance financiere)\b/, ["M30"], 0.5],
   [/\b(discovery|entretiens utilisateurs|besoins utilisateurs|recherche utilisateur)\b/, ["M18"], 0.5],
   [/\b(machine learning|ml|modele predictif|donnees|data science|classification)\b/, ["M1"], 0.35],
   [/\b(deep learning|reseaux? de neurones|vision|images?|nlp)\b/, ["M2"], 0.4],
@@ -142,7 +158,7 @@ export function rankModules(raw: string, catalog: Catalog): ModuleMatch[] {
   }).sort((a, b) => b.score - a.score || a.course.code.localeCompare(b.course.code, "en", { numeric: true }));
 }
 
-const ROLE_LABEL: Partial<Record<Role, string>> = { product: "product / UX", "ai-product": "AI Product Manager", consulting: "conseil", project: "gestion de projet", analyst: "analyse métier", transformation: "transformation", engineering: "ingénierie / data", management: "management" };
+const ROLE_LABEL: Partial<Record<Role, string>> = { marketing: "marketing et communication", hr: "ressources humaines", legal: "juridique et conformité", finance: "finance et contrôle", product: "product / UX", "ai-product": "AI Product Manager", consulting: "conseil", project: "gestion de projet", analyst: "analyse métier", transformation: "transformation", engineering: "ingénierie / data", management: "management" };
 
 /** Needs at least a few meaningful words; otherwise the caller should ask for more. */
 export function recommendFromText(raw: string, catalog: Catalog): TextRecommendation {

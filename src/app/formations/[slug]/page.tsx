@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { InterestForm } from "@/components/interest-form";
 import { Badge, ButtonLink, Container, kickerCls } from "@/components/ui";
-import { difficultyLabel, formatEuro, getCourse, getCourseByCode, isPurchasable, pathsOfCourse } from "@/lib/catalog";
+import { availability, difficultyLabel, formatEuro, getCourse, getCourseByCode, isPurchasable, pathsOfCourse } from "@/lib/catalog";
 import { getCatalog } from "@/lib/catalog/load";
 import { getPreview, getSyllabus } from "@/lib/catalog/syllabus";
 import { JsonLd } from "@/components/json-ld";
@@ -37,6 +37,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
   const paths = pathsOfCourse(course, catalog);
   const purchasable = isPurchasable(course, catalog);
   const published = course.status === "published";
+  const avail = availability(course, catalog);
   const [syllabus, preview] = await Promise.all([getSyllabus(course.slug), getPreview(course.slug)]);
   const prereqs = course.prerequisites.map((c) => getCourseByCode(c, catalog)).filter(Boolean);
 
@@ -58,7 +59,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
             <p className={`${kickerCls} mb-4 text-muted`}>{course.code} · Phase {course.phaseId} · {phase?.title}</p>
             <h1 className="mb-4 text-4xl font-bold sm:text-5xl">{course.title}</h1>
             <p className="mb-6 text-[19px] text-muted [text-wrap:pretty]">{course.summary}</p>
-            <div className="mb-4 flex flex-wrap gap-2"><Badge tone={purchasable ? "accent" : "warn"}>{purchasable ? "Disponible" : published ? "Achat bientôt ouvert" : "Bientôt disponible"}</Badge>{priceCents != null && <span className="rounded-full border border-border px-3 py-1 text-[13px] font-semibold">{formatEuro(priceCents)} TTC</span>}</div>
+            <div className="mb-4 flex flex-wrap gap-2"><Badge tone={avail.tone}>{avail.label}</Badge>{priceCents != null && <span className="rounded-full border border-border px-3 py-1 text-[13px] font-semibold">{formatEuro(priceCents)} TTC</span>}</div>
             <div className="flex flex-wrap gap-6 text-sm text-muted"><span><strong className="font-semibold text-fg">Accès :</strong> 12 mois</span><span><strong className="font-semibold text-fg">Durée estimée :</strong> ~{course.durationHours} h</span><span><strong className="font-semibold text-fg">Niveau :</strong> {difficultyLabel[course.difficulty]}</span></div>
           </section>
 
@@ -121,8 +122,9 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
               </>
             ) : (
               <>
-                <Badge tone="warn">{published ? "Achat bientôt ouvert" : "Bientôt disponible"}</Badge>
-                <p className="text-[15px] text-muted">{published ? "Le contenu de ce module est publié, mais l'achat n'est pas encore ouvert." : "Ce module n'est pas encore publié : il ne peut pas être acheté."} Indiquez votre e-mail pour être prévenu.</p>
+                <Badge tone={avail.tone}>{avail.label}</Badge>
+                <p className="text-[15px] text-muted">{published ? "Le contenu est rédigé et une leçon est lisible gratuitement ; l'achat n'est pas encore ouvert." : "Ce module est en préparation : il ne peut pas encore être acheté."} Indiquez votre e-mail pour être prévenu de l'ouverture.</p>
+                {preview && <ButtonLink href={`/formations/${course.slug}/apercu`} className="min-h-[52px]">Lire une leçon gratuite</ButtonLink>}
                 <InterestForm kind="course_launch" courseSlug={course.slug} label="Adresse e-mail (sans paiement)" submitLabel="Me prévenir" />
                 {priceCents != null && <p className="text-sm text-muted">Prix prévu : {formatEuro(priceCents)} TTC, accès 12 mois.</p>}
               </>

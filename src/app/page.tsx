@@ -4,6 +4,7 @@ import { CourseCard, PathCard } from "@/components/cards";
 import { OfferCards } from "@/components/offers";
 import { ExpertiseTags, InstructorPhoto, instructor } from "@/components/instructor";
 import { ButtonLink, Card, Container, Faq, Section, kickerCls } from "@/components/ui";
+import { isProfessionPath } from "@/lib/catalog";
 import { getCatalog } from "@/lib/catalog/load";
 import { getFaq, getSection, getTestimonials } from "@/lib/cms";
 import { MIN_PUBLISHED_REVIEWS } from "@/lib/reviews";
@@ -14,7 +15,7 @@ export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: { absolute: "TRAIL Academy — Formation IA pour Product Managers et professionnels de la tech" },
-  description: "18 modules et 2 parcours pour apprendre, appliquer et piloter l'IA : IA générative, agents, RAG, AI Product Management. Ateliers no-code, livrables relus par le formateur.",
+  description: "30 modules et 6 parcours pour apprendre, appliquer et piloter l'IA, du produit à la tech, au marketing, aux RH, au juridique et à la finance. Ateliers no-code, livrables relus par le formateur.",
   alternates: { canonical: "/" },
 };
 
@@ -55,6 +56,8 @@ export default async function Home() {
   const [catalog, hero, customFaq, testimonials] = await Promise.all([getCatalog(), getSection("accueil", "hero"), getFaq(), getTestimonials()]);
   const { courses, learningPaths, phases } = catalog;
   const featured = courses.filter((c) => c.mvpSlot);
+  const freeLesson = courses.find((c) => c.status === "published");
+  const professionPaths = learningPaths.filter((p) => isProfessionPath(p, catalog));
   const faqItems = customFaq.length ? customFaq.map((f) => ({ q: f.question, a: f.answer })) : defaultFaq;
 
   return (
@@ -65,13 +68,14 @@ export default async function Home() {
         <Container className="flex flex-wrap items-center gap-14 py-20 sm:py-24">
           <div className="min-w-0 flex-[1_1_520px]">
             <p className={`${kickerCls} mb-6 text-accent`}>Learn AI. Apply AI. Lead with AI.</p>
-            <h1 className="mb-6 text-4xl font-bold leading-[1.08] sm:text-6xl">{hero?.title ?? "Maîtrisez l'IA. Appliquez-la à votre métier."}</h1>
-            <p className="mb-8 max-w-xl text-xl text-muted [text-wrap:pretty]">{hero?.subtitle ?? "Des formations concrètes pour comprendre, utiliser et piloter l'intelligence artificielle dans votre environnement professionnel."}</p>
+            <h1 className="mb-6 text-4xl font-bold leading-[1.08] sm:text-6xl">{hero?.title ?? "Apprenez l'IA auprès de ceux qui la mettent en production."}</h1>
+            <p className="mb-6 max-w-xl text-xl text-muted [text-wrap:pretty]">{hero?.subtitle ?? "Des formations conçues par un Head of AI, à partir de projets réels. Apprenez à construire, tester et piloter des solutions IA, ou à l'appliquer à votre fonction (marketing, RH, juridique, finance), avec des exercices pratiques et un livrable relu par le formateur."}</p>
+            <ul className="mb-8 flex flex-wrap gap-x-5 gap-y-1 text-[15px] font-medium"><li>{courses.length} modules</li><li>Exercices pratiques no-code</li><li>Livrables relus par le formateur</li></ul>
             <div className="mb-6 flex flex-wrap gap-4">
-              <ButtonLink href="/formations">Découvrir les formations</ButtonLink>
-              <ButtonLink href="/conseiller" variant="secondary">Trouver mon parcours</ButtonLink>
+              <ButtonLink href={freeLesson ? `/formations/${freeLesson.slug}/apercu` : "/formations"}>Lire une leçon gratuite</ButtonLink>
+              <ButtonLink href="/conseiller" variant="secondary">Trouver ma formation</ButtonLink>
             </div>
-            <p className="text-[15px] text-muted">Des compétences concrètes. Des projets pratiques. Une progression à votre rythme.</p>
+            <p className="text-[15px] text-muted">Par {instructor.name}, Head of AI · plus de 10 ans d'expérience · plus de 1 500 professionnels formés · formé à Stanford (machine learning) et à Duke University (AI product management).</p>
           </div>
           <div className="min-w-0 flex-[1_1_400px] rounded-2xl border border-border bg-surface p-8">
             <p className={`${kickerCls} mb-6 text-muted`}>{courses.length} modules · {phases.length} phases · {learningPaths.filter((p) => p.kind === "path").length} parcours</p>
@@ -86,6 +90,24 @@ export default async function Home() {
           </div>
         </Container>
       </section>
+
+      <Section kicker="Pourquoi TRAIL ?" title="Apprendre en construisant, avec quelqu'un qui le fait" intro="Un formateur unique, des projets réels, des livrables concrets : pas un catalogue de vidéos génériques.">
+        <div className="flex flex-wrap items-center gap-10">
+          <InstructorPhoto size={200} />
+          <ul className="grid min-w-0 flex-1 gap-4 text-[17px] sm:grid-cols-3">
+            <li className="rounded-xl border border-border bg-surface p-5"><strong className="block">Expérience de terrain</strong><span className="text-[15px] text-muted">Plus de 10 ans à concevoir, développer et déployer des solutions d'IA pour de grandes organisations.</span></li>
+            <li className="rounded-xl border border-border bg-surface p-5"><strong className="block">Pratique d'abord</strong><span className="text-[15px] text-muted">Chaque module se termine par trois ateliers sur des outils no-code et un livrable relu par le formateur.</span></li>
+            <li className="rounded-xl border border-border bg-surface p-5"><strong className="block">Plus de 1 500 professionnels formés</strong><span className="text-[15px] text-muted">Une pédagogie éprouvée, du débutant au profil technique.</span></li>
+          </ul>
+        </div>
+        <p className="mt-6"><Link href="/formateur" className="font-semibold text-accent hover:underline">Découvrir le parcours du formateur</Link></p>
+      </Section>
+
+      <Section tone="surface" kicker="Par métier" title="L'IA appliquée à votre fonction" intro="Les fondations, puis trois modules écrits pour votre métier : marketing et communication, RH, juridique, finance.">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {professionPaths.map((p) => <div key={p.slug} className="flex flex-col gap-3 rounded-xl border border-border bg-bg p-6"><h3 className="text-lg font-semibold"><Link href={`/parcours/${p.slug}`} className="hover:underline">{p.title}</Link></h3><p className="text-[15px] text-muted">{p.tagline}</p><p className="mt-auto text-sm text-muted">Pour : {p.audience}</p></div>)}
+        </div>
+      </Section>
 
       {testimonials.length >= MIN_PUBLISHED_REVIEWS && (
         <Section kicker="Témoignages" title="Ce qu'en disent les apprenants">

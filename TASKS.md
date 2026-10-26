@@ -3,7 +3,7 @@
 Légende : ✅ fait et testé · 🟡 construit, **non exécuté contre le service réel** · ⬜ à faire.
 
 ## Fondations (phase A) ✅
-Design system, catalogue (18 modules, 4 phases, parcours, offres), site public, conseiller déterministe, formulaire de devis, pages légales (modèles), sitemap/robots, CI.
+Design system, catalogue (30 modules, 5 phases, 6 parcours dont 4 métiers, offres), site public, conseiller déterministe, formulaire de devis, pages légales (modèles), sitemap/robots, CI.
 
 ## Apprentissage (phase B)
 - ✅ Progression, reprise, notes, signets, plan du cours, quiz (correction en base), livrables, règles de complétion, attestation + vérification publique (testé en base et en navigateur)
