@@ -48,7 +48,7 @@ Contenu de chaque atelier (900 à 2 800 caractères, plus si besoin) :
 - **Résultat attendu** et **critères de réussite** (liste à cocher) ;
 - **Pièges** fréquents, **données** : uniquement des données fictives ou publiques, jamais de données personnelles ni confidentielles de son employeur ;
 - **Pour aller plus loin** (une variante).
-Les ateliers s'appuient sur les notions du module et préparent le livrable. Aucun prix, aucune limite chiffrée d'offre gratuite, aucun lien d'affiliation, aucune promesse de fonctionnalité non vérifiable.
+Les ateliers s'appuient sur les notions du module et préparent le livrable. Aucun prix, aucune limite chiffrée d'offre gratuite, aucun lien d'affiliation ou de parrainage **sauf à la demande expresse du formateur**, et alors toujours **signalé comme tel** (mention de transparence, lien non obligatoire), aucune promesse de fonctionnalité non vérifiable.
 
 Autres adaptations du module :
 - Les leçons du module qui demandent d'écrire ou d'exécuter du code (atelier Python, script…) restent mais reçoivent en **première ligne** la mention en italique : `*Exercice facultatif, destiné aux profils techniques. Les ateliers no-code et low-code du dernier chapitre suffisent pour valider le module.*`
