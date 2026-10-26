@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 
 const links = [
   ["/admin", "Tableau de bord"], ["/admin/cours", "Cours"], ["/admin/parcours", "Parcours"], ["/admin/produits", "Produits et prix"],
-  ["/admin/coupons", "Coupons"], ["/admin/commandes", "Commandes"], ["/admin/apprenants", "Apprenants"], ["/admin/devoirs", "Relecture"], ["/admin/avis", "Avis"], ["/admin/sessions", "Sessions en visio"],
+  ["/admin/coupons", "Coupons"], ["/admin/commandes", "Commandes"], ["/admin/apprenants", "Apprenants"], ["/admin/devoirs", "Relecture"], ["/admin/avis", "Avis"], ["/admin/sessions", "Sessions en visio"], ["/admin/entreprises", "Entreprises"],
   ["/admin/cms", "Contenu du site"], ["/admin/journal", "Journal d'audit"], ["/admin/production", "Mise en production"],
 ] as const;
 

@@ -11,7 +11,7 @@ export function Footer() {
           <p className="mt-2">{site.tagline}</p>
           <p className="mt-4 text-xs">Les attestations délivrées sont privées et ne constituent ni une certification d'État ni une qualification RNCP.</p>
         </div>
-        <nav aria-label="Informations légales"><ul className="flex flex-wrap gap-x-5 gap-y-2"><li><Link href="/faq" className="hover:text-fg">Questions fréquentes</Link></li><li><Link href="/ressources/feed.xml" className="hover:text-fg">Flux RSS</Link></li>{legalPages.map((l) => <li key={l.slug}><Link href={`/legal/${l.slug}`} className="hover:text-fg">{l.title}</Link></li>)}</ul></nav>
+        <nav aria-label="Informations légales"><ul className="flex flex-wrap gap-x-5 gap-y-2"><li><Link href="/evaluation" className="hover:text-fg">Évaluer mon niveau</Link></li><li><Link href="/exemples-livrables" className="hover:text-fg">Exemples de livrables</Link></li><li><Link href="/apercu-plateforme" className="hover:text-fg">Aperçu de la plateforme</Link></li><li><Link href="/faq" className="hover:text-fg">Questions fréquentes</Link></li><li><Link href="/ressources/feed.xml" className="hover:text-fg">Flux RSS</Link></li>{legalPages.map((l) => <li key={l.slug}><Link href={`/legal/${l.slug}`} className="hover:text-fg">{l.title}</Link></li>)}</ul></nav>
       </Container>
     </footer>
   );

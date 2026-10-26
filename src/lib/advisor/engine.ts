@@ -15,7 +15,9 @@ export interface Recommendation {
 const PATHS = ["product-manager-augmente", "ai-product-manager", "marketing-communication-augmentee", "rh-augmentees", "juridique-augmente", "finance-augmentee"] as const;
 
 export function recommend(input: AdvisorInput, catalog: Catalog = staticCatalog): Recommendation {
-  const scores: Record<string, number> = Object.fromEntries(PATHS.map((s) => [s, 0]));
+  // Only paths present in this catalogue can be recommended (a database may predate the profession paths).
+  const paths = PATHS.filter((s) => getPath(s, catalog));
+  const scores: Record<string, number> = Object.fromEntries(paths.map((s) => [s, 0]));
   const reasons: string[] = [];
 
   for (const rule of rules) {
@@ -26,7 +28,7 @@ export function recommend(input: AdvisorInput, catalog: Catalog = staticCatalog)
   }
 
   // Deterministic tie-break: Product Manager Augmenté is the more accessible path.
-  const sorted = [...PATHS].sort((a, b) => scores[b] - scores[a] || PATHS.indexOf(a) - PATHS.indexOf(b));
+  const sorted = [...paths].sort((a, b) => (scores[b] ?? 0) - (scores[a] ?? 0) || PATHS.indexOf(a) - PATHS.indexOf(b));
   const [top, second] = sorted;
   const gap = scores[top] - scores[second];
 

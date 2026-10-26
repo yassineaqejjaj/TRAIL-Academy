@@ -19,7 +19,7 @@ async function audit(page: Page, path: string, scheme: "light" | "dark") {
   return violations.map((v) => `${scheme} ${path} — ${v.id} (${v.impact}): ${v.nodes.length} élément(s), ex. ${v.nodes[0]?.target.join(" ")}`);
 }
 
-const PUBLIC = ["/", "/formations", "/formations/prompt-engineering", "/parcours", "/tarifs", "/entreprise", "/formateur", "/conseiller", "/sessions", "/ressources", "/connexion", "/inscription", "/legal/mentions-legales", "/legal/confidentialite"];
+const PUBLIC = ["/", "/formations", "/formations/prompt-engineering", "/parcours", "/tarifs", "/entreprise", "/formateur", "/conseiller", "/sessions", "/evaluation", "/apercu-plateforme", "/exemples-livrables", "/faq", "/parcours/rh-augmentees", "/ressources", "/connexion", "/inscription", "/legal/mentions-legales", "/legal/confidentialite"];
 
 test.describe("accessibility (axe, WCAG 2.2 AA) and CSP on public pages", () => {
   for (const scheme of ["light", "dark"] as const) {
@@ -228,4 +228,88 @@ test("live sessions: the instructor schedules, people book, the waiting list wor
   await expect(p2.getByText("Vous êtes inscrit(e) à cette session.")).toBeVisible();
   await p2.goto("/compte/sessions");
   await expect(p2.getByRole("link", { name: /Atelier e2e/ })).toBeVisible();
+});
+
+test("AI Skills Assessment: a visitor answers, sees the explanation, then a level and a recommended start", async ({ page }) => {
+  await page.goto("/evaluation");
+  await page.getByLabel(/Votre fonction/).selectOption("hr");
+  await page.getByRole("button", { name: "Commencer" }).click();
+  for (let i = 0; i < 15; i++) {
+    await page.getByRole("radio").first().check();
+    await page.getByRole("button", { name: "Valider" }).click();
+    await expect(page.getByRole("status")).toBeVisible();
+    await page.getByRole("button", { name: i === 14 ? "Voir mon résultat" : "Question suivante" }).click();
+  }
+  await expect(page.getByText("Votre niveau estimé")).toBeVisible();
+  await expect(page.getByRole("link", { name: "RH Augmentées" })).toBeVisible();
+  await expect(page.getByText(/ni envoyées ni enregistrées|pas une certification/).first()).toBeVisible();
+});
+
+test("platform preview: the walkthrough completes with fictional content", async ({ page }) => {
+  await page.goto("/apercu-plateforme");
+  await page.getByRole("button", { name: /Leçon terminée/ }).click();
+  await page.getByRole("button", { name: /Il retient tout/ }).click(); // wrong answer: explained, then locked
+  await expect(page.getByText(/À revoir/)).toBeVisible();
+  await page.getByRole("button", { name: /Chaque affirmation du résumé/ }).click();
+  await page.getByRole("button", { name: "Terminer le quiz" }).click();
+  await page.getByLabel("Votre prompt").fill("Tu es un assistant. Résume ce compte rendu pour la direction.");
+  for (const box of await page.getByRole("checkbox").all()) await box.check();
+  await page.getByRole("button", { name: "Valider l'atelier" }).click();
+  await page.getByRole("button", { name: "Simuler le dépôt du livrable" }).click();
+  await expect(page.getByText(/Parcours de démonstration terminé/)).toBeVisible();
+});
+
+test("enterprise: the admin creates an organisation, the manager and a learner accept with consent, seats and progress follow", async ({ page, browser }) => {
+  const admin = uniqueEmail("entadmin"), mgr = uniqueEmail("entmgr"), lea = uniqueEmail("entlea");
+  await signUp(page, "Admin Entreprise", admin); await verifyEmail(admin);
+  await sql("insert into user_roles (user_id, role) values ($1, 'admin')", [await userId(admin)]);
+  await signIn(page, admin);
+  await page.goto("/admin/entreprises");
+  await page.getByLabel("Nom", { exact: true }).fill("Atelier E2E");
+  await page.getByRole("button", { name: "Créer", exact: true }).first().click();
+  await expect(page.getByText(/Organisation « Atelier E2E » créée/)).toBeVisible();
+  await page.getByLabel(/Qui invitez-vous/).first().fill("Responsable E2E");
+  await page.getByRole("button", { name: "Créer le lien" }).click();
+  const link = /(\/equipe\/invitation\/[0-9a-f]{36})/.exec(await page.getByText(/Lien responsable créé/).innerText())![1];
+  await page.getByLabel("Valable jusqu'au").fill(new Date(Date.now() + 90 * 864e5).toISOString().slice(0, 10));
+  await page.getByLabel("Parcours du pack").selectOption({ label: "RH Augmentées" });
+  await page.getByRole("button", { name: "Créer", exact: true }).last().click();
+  await expect(page.getByText("Pack de licences créé.")).toBeVisible();
+
+  const mctx = await browser.newContext(); const m = await mctx.newPage();
+  await signUp(m, "Manon Responsable", mgr); await verifyEmail(mgr); await signIn(m, mgr);
+  await m.goto(link);
+  await m.getByRole("button", { name: "Accepter l'invitation" }).click(); // consent box unchecked: blocked by the browser
+  await expect(m.getByText("Invitation acceptée.")).toHaveCount(0);
+  await m.getByLabel(/J'accepte de partager/).check();
+  await m.getByRole("button", { name: "Accepter l'invitation" }).click();
+  await expect(m).toHaveURL(/compte\/organisation/);
+
+  await m.goto("/equipe");
+  await m.getByLabel(/Qui invitez-vous/).fill("Léa E2E");
+  await m.getByRole("button", { name: "Créer le lien" }).click();
+  const leaLink = /(\/equipe\/invitation\/[0-9a-f]{36})/.exec(await m.getByText(/Lien créé pour/).innerText())![1];
+
+  const lctx = await browser.newContext(); const l = await lctx.newPage();
+  await signUp(l, "Léa Apprenante", lea); await verifyEmail(lea); await signIn(l, lea);
+  await l.goto(leaLink);
+  await l.getByLabel(/J'accepte de partager/).check();
+  await l.getByRole("button", { name: "Accepter l'invitation" }).click();
+  await expect(l).toHaveURL(/compte\/organisation/);
+
+  await m.goto("/equipe");
+  await m.getByLabel("Membre").selectOption({ label: "Léa Apprenante" });
+  await m.getByRole("button", { name: "Attribuer" }).click();
+  await expect(m.getByText(/Licence attribuée/)).toBeVisible();
+  expect((await sql("select 1 from entitlements where user_id = $1 and status = 'active'", [await userId(lea)])).length).toBeGreaterThan(0);
+  await expect(m.getByRole("cell", { name: /Léa Apprenante/ })).toBeVisible();
+  const csv = await m.request.get("/equipe/export.csv?org=" + new URL(m.url()).searchParams.get("org"));
+  expect(csv.status()).toBe(200);
+  expect(await csv.text()).toContain("Léa Apprenante");
+
+  await l.goto("/compte/organisation");
+  await l.getByRole("button", { name: "Arrêter le partage et quitter" }).click();
+  await expect(l.getByText(/Partage arrêté/)).toBeVisible();
+  expect((await sql("select 1 from entitlements where user_id = $1 and status = 'active'", [await userId(lea)])).length).toBe(0);
+  await mctx.close(); await lctx.close();
 });

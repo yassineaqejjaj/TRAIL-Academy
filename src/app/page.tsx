@@ -103,6 +103,14 @@ export default async function Home() {
         <p className="mt-6"><Link href="/formateur" className="font-semibold text-accent hover:underline">Découvrir le parcours du formateur</Link></p>
       </Section>
 
+      <Section kicker="Avant d'acheter" title="Essayez, comparez, jugez sur pièces" intro="Trois façons de vous faire une idée sans vous inscrire.">
+        <div className="grid gap-6 md:grid-cols-3">
+          <div className="flex flex-col gap-3 rounded-xl border border-border bg-surface p-6"><h3 className="text-lg font-semibold"><Link href="/evaluation" className="hover:underline">Évaluer mon niveau</Link></h3><p className="text-[15px] text-muted">15 questions en 5 minutes : votre niveau estimé, vos points à travailler et le parcours qui vous correspond.</p></div>
+          <div className="flex flex-col gap-3 rounded-xl border border-border bg-surface p-6"><h3 className="text-lg font-semibold"><Link href="/apercu-plateforme" className="hover:underline">Parcourir la plateforme</Link></h3><p className="text-[15px] text-muted">Un module de démonstration : leçon, quiz corrigé, atelier no-code et livrable.</p></div>
+          <div className="flex flex-col gap-3 rounded-xl border border-border bg-surface p-6"><h3 className="text-lg font-semibold"><Link href="/exemples-livrables" className="hover:underline">Voir des livrables</Link></h3><p className="text-[15px] text-muted">Six exemples de ce que vous remettez, avec les critères de relecture du formateur.</p></div>
+        </div>
+      </Section>
+
       <Section tone="surface" kicker="Par métier" title="L'IA appliquée à votre fonction" intro="Les fondations, puis trois modules écrits pour votre métier : marketing et communication, RH, juridique, finance.">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {professionPaths.map((p) => <div key={p.slug} className="flex flex-col gap-3 rounded-xl border border-border bg-bg p-6"><h3 className="text-lg font-semibold"><Link href={`/parcours/${p.slug}`} className="hover:underline">{p.title}</Link></h3><p className="text-[15px] text-muted">{p.tagline}</p><p className="mt-auto text-sm text-muted">Pour : {p.audience}</p></div>)}

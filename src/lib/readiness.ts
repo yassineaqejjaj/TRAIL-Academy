@@ -6,7 +6,7 @@ export interface Check { id: string; group: string; label: string; status: Statu
 type Env = Record<string, string | undefined>;
 
 /** Latest migration the code expects; tests keep it equal to the newest file in db/migrations. */
-export const EXPECTED_MIGRATION = "0012_business_profiles.sql";
+export const EXPECTED_MIGRATION = "0013_organizations.sql";
 
 const set = (v: string | undefined) => Boolean(v && v.trim());
 const weak = /^(change|changeme|secret|ci-only|test|dev|example|placeholder)/i;

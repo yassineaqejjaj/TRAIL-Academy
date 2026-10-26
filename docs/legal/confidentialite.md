@@ -18,13 +18,17 @@ Cette politique explique quelles données TRAIL Academy collecte, pourquoi, avec
 | Progression, réponses aux quiz, livrables déposés, notes, favoris, attestations | Fournir la formation, évaluer, délivrer l’attestation | Exécution du contrat | Jusqu’à suppression du compte (attestations : [À COMPLÉTER]) |
 | Réservations de sessions en direct, liste d’attente, adresse e-mail transmise à l’animateur | Organiser les visioconférences, envoyer l’invitation | Exécution du contrat | [À COMPLÉTER] |
 | Avis déposés (note, texte, nom affiché) | Publier un avis après votre accord exprès | Consentement (retirable) | Jusqu’au retrait ou à la suppression du compte |
+| Appartenance à une organisation cliente : progression par module, quiz réussis, dernière activité (jamais les réponses, notes ni livrables) | Permettre au responsable de votre organisation de suivre la formation | Consentement exprès à l’acceptation de l’invitation (retirable à tout moment depuis « Mon organisation ») | Jusqu’à la sortie de l’organisation ou la suppression du compte |
 | Messages des formulaires de contact et de devis | Répondre à votre demande | Intérêt légitime ; mesures précontractuelles | [À COMPLÉTER : par exemple 3 ans après le dernier échange] |
 | Adresse e-mail pour être prévenu(e) d’une ouverture ou recevoir la lettre | Information demandée | Consentement (retirable à tout moment) | Jusqu’au retrait |
 | Adresse IP, navigateur, compteurs de limitation de débit, journaux techniques | Sécurité, prévention des abus et de la fraude | Intérêt légitime | [À COMPLÉTER : durée des journaux] |
 
 Les données de carte bancaire sont traitées exclusivement par Stripe ; elles ne transitent pas par nos serveurs et ne sont pas stockées par TRAIL Academy.
 
-## 3. Conseiller de parcours
+## 3. Organisations clientes
+Si votre employeur ou une organisation cliente vous invite, il vous est demandé d’accepter, avant tout partage, que son responsable voie votre progression par module, la réussite de vos quiz et votre date de dernière activité. Il ne voit jamais vos réponses, notes, livrables ni les retours du formateur. Vous pouvez arrêter ce partage à tout moment depuis **Mon espace → Mon organisation** ; les licences attribuées par l’organisation sont alors retirées. [À VALIDER : rôle de responsable de traitement ou de sous-traitant de l’organisation cliente, information des salariés, contrat de sous-traitance si nécessaire.]
+
+## 3 bis. Conseiller de parcours
 Le conseiller qui vous propose un parcours à partir de la description de votre métier et de votre objectif fonctionne **dans votre navigateur** : le texte saisi n’est pas enregistré. [À VALIDER : si une synthèse par un modèle de langage externe est activée un jour, cette page devra citer le fournisseur, les données transmises et la base légale avant activation ; elle est désactivée par défaut.] Évitez d’y saisir des informations confidentielles ou le nom de votre employeur.
 
 ## 4. Destinataires et sous-traitants

@@ -484,3 +484,7 @@ Ce dépôt est un socle technique. **Il n'est ni certifié ni déclaré conforme
 ## Référencement (SEO et GEO)
 
 Données structurées, `llms.txt`, robots IA, FAQ, flux RSS, images de partage : voir [docs/SEO.md](docs/SEO.md) (avec ce que vous devez faire : domaine, Search Console, Bing).
+
+## Évaluation, aperçu, livrables, entreprises
+
+`/evaluation` (15 questions, résultat local), `/apercu-plateforme` (démonstration interactive), `/exemples-livrables` (exemples fictifs), « Mon équipe » pour les responsables d'organisation : voir [docs/ENTREPRISE.md](docs/ENTREPRISE.md).

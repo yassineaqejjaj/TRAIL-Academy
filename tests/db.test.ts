@@ -127,7 +127,7 @@ describe("enterprise scoping", () => {
   it("lets a manager see progress only of their own organization's learners", async () => {
     const m4 = (await db.query<{ id: string }>(`select id from courses where code = 'M4'`)).rows[0].id;
     const org = (await db.query<{ id: string }>(`insert into organizations (name) values ('Acme') returning id`)).rows[0].id;
-    await db.exec(`insert into organization_members values ('${org}', '${MGR}', 'manager'), ('${org}', '${U1}', 'learner');
+    await db.exec(`insert into organization_members (organization_id, user_id, role, accepted_at) values ('${org}', '${MGR}', 'manager', now()), ('${org}', '${U1}', 'learner', now());
       insert into learner_progress (user_id, course_id, percent) values ('${U1}', '${m4}', 40), ('${U2}', '${m4}', 80);`);
     expect(await as(MGR, () => count("select 1 from learner_progress"))).toBe(1);
     expect(await as(MGR, () => count(`select 1 from profiles where id = '${U2}'`))).toBe(0);

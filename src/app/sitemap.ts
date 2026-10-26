@@ -9,7 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [{ courses, learningPaths }, posts] = await Promise.all([getCatalog(), getPosts()]);
   const pages: [string, number, Entry["changeFrequency"]][] = [
     ["", 1, "weekly"], ["/formations", 0.9, "weekly"], ["/parcours", 0.9, "weekly"], ["/tarifs", 0.8, "monthly"], ["/faq", 0.7, "monthly"], ["/conseiller", 0.7, "monthly"],
-    ["/formateur", 0.6, "monthly"], ["/entreprise", 0.6, "monthly"], ["/sessions", 0.6, "weekly"], ["/ressources", 0.8, "weekly"],
+    ["/evaluation", 0.7, "monthly"], ["/apercu-plateforme", 0.6, "monthly"], ["/exemples-livrables", 0.6, "monthly"], ["/formateur", 0.6, "monthly"], ["/entreprise", 0.6, "monthly"], ["/sessions", 0.6, "weekly"], ["/ressources", 0.8, "weekly"],
   ];
   return [
     ...pages.map(([p, priority, changeFrequency]) => ({ url: abs(p), priority, changeFrequency })),

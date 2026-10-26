@@ -45,7 +45,15 @@ export default function EnterprisePage() {
             </Card>
           ))}
         </div>
-        <p className="mt-6 max-w-2xl text-sm text-muted">Les parcours métier (marketing et communication, RH, juridique, finance) peuvent remplacer ou compléter ces programmes pour une équipe d'une même fonction. Le suivi de progression par organisation (invitations, sièges, rapports) est en préparation : il sera confirmé dans la proposition.</p>
+        <p className="mt-6 max-w-2xl text-sm text-muted">Les parcours métier (marketing et communication, RH, juridique, finance) peuvent remplacer ou compléter ces programmes pour une équipe d'une même fonction.</p>
+        <h2 className="mt-14 text-2xl font-bold">Suivre la progression de votre équipe</h2>
+        <p className="mt-2 max-w-2xl text-muted">Une fois la proposition signée, un responsable de votre organisation dispose d'un espace « Mon équipe » :</p>
+        <ul className="mt-3 max-w-2xl list-disc pl-6 text-muted">
+          <li>invitation des collaborateurs par un lien privé à usage unique ;</li>
+          <li>attribution et retrait des licences, dans la limite du pack acheté et jusqu'à sa date de fin ;</li>
+          <li>progression de chaque membre par module, quiz réussis et dernière activité, avec export CSV.</li>
+        </ul>
+        <p className="mt-3 max-w-2xl text-sm text-muted">Respect de la vie privée : chaque membre accepte explicitement le partage de sa progression et peut l'arrêter à tout moment. Le responsable ne voit jamais les réponses, les notes, les livrables ni les retours du formateur.</p>
       </Container>
       <Section title="Demande de devis" intro="Décrivez votre besoin. Nous vous répondons par e-mail.">
         <ContactForm />
