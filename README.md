@@ -480,3 +480,7 @@ docs/screenshots/   captures réelles utilisées ci-dessus
 ## 12. Avertissement légal
 
 Ce dépôt est un socle technique. **Il n'est ni certifié ni déclaré conforme** au droit français de la formation professionnelle, à la protection des consommateurs, au RGPD ou à l'accessibilité, et n'est pas éligible à un financement public sans vérification indépendante. Les pages légales sont des **modèles à faire valider par un professionnel du droit**. Le droit de rétractation pour contenus numériques, les conditions générales de vente, la fiscalité et les obligations de la formation professionnelle restent à traiter avant toute ouverture des paiements réels. Aucune vidéo, aucun témoignage et aucune biographie n'ont été inventés : les contenus doivent être fournis et validés par le formateur.
+
+## Référencement (SEO et GEO)
+
+Données structurées, `llms.txt`, robots IA, FAQ, flux RSS, images de partage : voir [docs/SEO.md](docs/SEO.md) (avec ce que vous devez faire : domaine, Search Console, Bing).

@@ -4,6 +4,8 @@ import { CourseCard } from "@/components/cards";
 import { Button, Chip, Container, EmptyState, kickerCls } from "@/components/ui";
 import { difficultyLabel, filterCourses, statusLabel, type CatalogFilters, type Difficulty } from "@/lib/catalog";
 import { getCatalog } from "@/lib/catalog/load";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbLd, itemListLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Catalogue des formations IA",
@@ -41,6 +43,8 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
 
   return (
     <>
+      <JsonLd data={itemListLd("Catalogue des formations IA", courses.map((c) => ({ name: `${c.code} ${c.title}`, path: `/formations/${c.slug}` })))} />
+      <JsonLd data={breadcrumbLd([{ name: "Accueil", path: "/" }, { name: "Formations", path: "/formations" }])} />
       <Container className="pb-6 pt-14">
         <nav aria-label="Fil d'Ariane" className="mb-4 text-sm text-muted"><Link href="/" className="hover:text-fg">Accueil</Link> / Formations</nav>
         <h1 className="mb-3 text-4xl font-bold sm:text-5xl">Les {courses.length} modules TRAIL</h1>

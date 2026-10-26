@@ -3,6 +3,8 @@ import { PathCard } from "@/components/cards";
 import { Badge, Container, Notice } from "@/components/ui";
 import { coursesOfPath, statusLabel } from "@/lib/catalog";
 import { getCatalog } from "@/lib/catalog/load";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbLd, itemListLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Parcours de formation IA",
@@ -17,6 +19,8 @@ export default async function PathsPage() {
   const { courses, learningPaths } = catalog;
   return (
     <Container className="py-12">
+      <JsonLd data={itemListLd("Parcours de formation IA", learningPaths.map((p) => ({ name: p.title, path: "/parcours" })))} />
+      <JsonLd data={breadcrumbLd([{ name: "Accueil", path: "/" }, { name: "Parcours", path: "/parcours" }])} />
       <h1 className="text-4xl font-semibold tracking-tight">Parcours de formation</h1>
       <p className="mt-3 max-w-2xl text-muted">Deux parcours professionnels et un accès complet. Un module déjà inclus dans un pack acheté n'est jamais à repayer pendant la durée d'accès.</p>
       <div className="mt-10 grid gap-6 lg:grid-cols-3">{learningPaths.map((p) => <PathCard key={p.slug} path={p} catalog={catalog} />)}</div>

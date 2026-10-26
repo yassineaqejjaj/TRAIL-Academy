@@ -3,8 +3,10 @@ import Link from "next/link";
 import { Badge, Card, Container, EmptyState } from "@/components/ui";
 import { InterestForm } from "@/components/interest-form";
 import { getPosts } from "@/lib/cms";
+import { JsonLd } from "@/components/json-ld";
+import { abs, breadcrumbLd } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Ressources", description: "Articles et guides pratiques sur l'IA au travail.", alternates: { canonical: "/ressources" } };
+export const metadata: Metadata = { title: "Ressources", description: "Articles et guides pratiques sur l'IA au travail.", alternates: { canonical: "/ressources", types: { "application/rss+xml": "/ressources/feed.xml" } } };
 export const revalidate = 60;
 
 export default async function ResourcesPage({ searchParams }: { searchParams: Promise<{ categorie?: string }> }) {
@@ -14,6 +16,8 @@ export default async function ResourcesPage({ searchParams }: { searchParams: Pr
   const posts = categorie ? all.filter((p) => p.category === categorie) : all;
   return (
     <Container className="py-12">
+      <JsonLd data={{ "@context": "https://schema.org", "@type": "Blog", name: "TRAIL Academy — Ressources", url: abs("/ressources"), inLanguage: "fr", blogPost: all.slice(0, 20).map((p) => ({ "@type": "BlogPosting", headline: p.title, url: abs(`/ressources/${p.slug}`), datePublished: p.published_at ?? undefined })) }} />
+      <JsonLd data={breadcrumbLd([{ name: "Accueil", path: "/" }, { name: "Ressources", path: "/ressources" }])} />
       <h1 className="text-4xl font-semibold tracking-tight">Ressources</h1>
       <p className="mt-3 max-w-2xl text-muted">Articles et guides pratiques, rédigés par le formateur.</p>
       {categories.length > 0 && (

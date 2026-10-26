@@ -3,6 +3,8 @@ import { ExpertiseTags, InstructorPhoto, instructor } from "@/components/instruc
 import { Markdown } from "@/components/markdown";
 import { ButtonLink, Container } from "@/components/ui";
 import { getSection } from "@/lib/cms";
+import { JsonLd } from "@/components/json-ld";
+import { abs, breadcrumbLd, personLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Le formateur",
@@ -15,6 +17,8 @@ export default async function InstructorPage() {
   const profile = await getSection("formateur", "profil");
   return (
     <Container className="py-12">
+      <JsonLd data={{ "@context": "https://schema.org", "@type": "ProfilePage", mainEntity: personLd(abs("/formateur/yassine-aqejjaj.webp")) }} />
+      <JsonLd data={breadcrumbLd([{ name: "Accueil", path: "/" }, { name: "Le formateur", path: "/formateur" }])} />
       <div className="flex flex-col gap-10 md:flex-row md:items-start">
         <InstructorPhoto size={320} priority />
         <div className="max-w-2xl">

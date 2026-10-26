@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { CourseCard, PathCard } from "@/components/cards";
 import { OfferCards } from "@/components/offers";
@@ -6,8 +7,16 @@ import { ButtonLink, Card, Container, Faq, Section, kickerCls } from "@/componen
 import { getCatalog } from "@/lib/catalog/load";
 import { getFaq, getSection, getTestimonials } from "@/lib/cms";
 import { MIN_PUBLISHED_REVIEWS } from "@/lib/reviews";
+import { JsonLd } from "@/components/json-ld";
+import { faqLd, itemListLd } from "@/lib/seo";
 
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: { absolute: "TRAIL Academy — Formation IA pour Product Managers et professionnels de la tech" },
+  description: "18 modules et 2 parcours pour apprendre, appliquer et piloter l'IA : IA générative, agents, RAG, AI Product Management. Ateliers no-code, livrables relus par le formateur.",
+  alternates: { canonical: "/" },
+};
 
 const audiences = [
   { t: "Product Managers et Product Owners", d: "Intégrez l'IA à votre pratique produit, de la discovery à la mise en production." },
@@ -50,6 +59,8 @@ export default async function Home() {
 
   return (
     <>
+      <JsonLd data={faqLd(faqItems)} />
+      <JsonLd data={itemListLd("Modules de formation IA", courses.map((c) => ({ name: `${c.code} ${c.title}`, path: `/formations/${c.slug}` })))} />
       <section>
         <Container className="flex flex-wrap items-center gap-14 py-20 sm:py-24">
           <div className="min-w-0 flex-[1_1_520px]">

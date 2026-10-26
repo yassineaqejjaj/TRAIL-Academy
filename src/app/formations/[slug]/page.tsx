@@ -6,7 +6,8 @@ import { Badge, ButtonLink, Container, kickerCls } from "@/components/ui";
 import { difficultyLabel, formatEuro, getCourse, getCourseByCode, isPurchasable, pathsOfCourse } from "@/lib/catalog";
 import { getCatalog } from "@/lib/catalog/load";
 import { getPreview, getSyllabus } from "@/lib/catalog/syllabus";
-import { site } from "@/lib/site";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbLd, courseLd, faqLd } from "@/lib/seo";
 
 export const revalidate = 60;
 
@@ -39,12 +40,15 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
   const [syllabus, preview] = await Promise.all([getSyllabus(course.slug), getPreview(course.slug)]);
   const prereqs = course.prerequisites.map((c) => getCourseByCode(c, catalog)).filter(Boolean);
 
-  const jsonLd = { "@context": "https://schema.org", "@type": "Course", name: course.title, description: course.summary, inLanguage: "fr", educationalLevel: difficultyLabel[course.difficulty], timeRequired: `PT${Math.round(course.durationHours)}H`, provider: { "@type": "Organization", name: site.name, url: site.url }, ...(purchasable && priceCents != null ? { offers: { "@type": "Offer", price: (priceCents / 100).toFixed(2), priceCurrency: "EUR", availability: "https://schema.org/InStock", url: `${site.url}/formations/${course.slug}` } } : {}) };
+  const ld = courseLd({ slug: course.slug, code: course.code, title: course.title, summary: course.summary, level: difficultyLabel[course.difficulty], hours: course.durationHours, outcomes: course.outcomes, topics: course.topics,
+    prerequisites: prereqs.map((c) => c!.title), priceCents: purchasable ? priceCents : null, accessMonths: 12 });
   const box = "rounded-xl border border-border bg-surface p-6";
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
+      <JsonLd data={ld} />
+      <JsonLd data={faqLd(faq.map((f) => ({ q: f.q, a: f.a })))} />
+      <JsonLd data={breadcrumbLd([{ name: "Accueil", path: "/" }, { name: "Formations", path: "/formations" }, { name: course.title, path: `/formations/${course.slug}` }])} />
       <Container className="pt-10">
         <nav aria-label="Fil d'Ariane" className="text-sm text-muted"><Link href="/" className="hover:text-fg">Accueil</Link> / <Link href="/formations" className="hover:text-fg">Formations</Link> / <span aria-current="page">{course.title}</span></nav>
       </Container>

@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Container, Notice } from "@/components/ui";
 import { OfferCards } from "@/components/offers";
 import { getCatalog } from "@/lib/catalog/load";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbLd, faqLd } from "@/lib/seo";
 
 export const metadata: Metadata = { title: "Tarifs", description: "Trois offres : un module, un parcours, ou l'accès complet AI Mastery.", alternates: { canonical: "/tarifs" } };
 export const revalidate = 60;
@@ -19,6 +21,8 @@ export default async function PricingPage() {
   const anyOpen = catalog.openCourses.length > 0;
   return (
     <Container className="py-12">
+      <JsonLd data={faqLd(faq.map(([q, a]) => ({ q, a })))} />
+      <JsonLd data={breadcrumbLd([{ name: "Accueil", path: "/" }, { name: "Tarifs", path: "/tarifs" }])} />
       <h1 className="text-4xl font-bold sm:text-5xl">Tarifs</h1>
       <p className="mt-3 max-w-2xl text-muted">Trois offres, sans option cachée. Les prix sont TTC ; les taxes applicables sont calculées au paiement.</p>
       <div className="mt-10"><OfferCards catalog={catalog} /></div>
