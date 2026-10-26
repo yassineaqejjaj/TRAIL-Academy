@@ -45,7 +45,7 @@ Chargement **en brouillon** (rien n'est visible tant que vous ne publiez pas) :
 DATABASE_URL=… DATABASE_SSL=require npm run content:load -- --all --blog
 ```
 
-Un module qui a déjà des chapitres est ignoré (`--replace` le recrée, sauf si des apprenants ont de l'activité). Chaque texte est un **complément** à vos vidéos, réécrit à partir de vos slides : relisez-le, ajoutez vos vidéos, puis publiez leçon par leçon (Administration → Cours) et les articles (Contenu du site). Le module M18 (AI-Powered Discovery) n'a pas encore de contenu : les slides sont attendus. M3 et M9 ont été conçus à partir du programme du catalogue, sans slides : relisez-les avec une attention particulière.
+Un module qui a déjà des chapitres est ignoré (`--replace` le recrée, sauf si des apprenants ont de l'activité). Chaque texte est un **complément** à vos vidéos, réécrit à partir de vos slides : relisez-le, ajoutez vos vidéos, puis publiez leçon par leçon (Administration → Cours) et les articles (Contenu du site). Le module M18 (AI-Powered Discovery) est rédigé **sans vos slides** (ils n'étaient pas encore disponibles) : relisez-le et alignez-le avec votre support avant de le publier. M3 et M9 ont été conçus à partir du programme du catalogue, sans slides : relisez-les avec une attention particulière.
 
 ## Schémas, lecture audio, aperçu gratuit
 
@@ -58,7 +58,7 @@ Un module qui a déjà des chapitres est ignoré (`--replace` le recrée, sauf s
 
 ## Ateliers no-code et low-code
 
-Chaque module (M1 à M17) se termine par le chapitre **« Ateliers no-code et low-code »** : 3 exercices pratiques réalisables **sans écrire ni lancer de code**, sur des plateformes no-code ou low-code, de préférence libres ou gratuites (Orange Data Mining, Teachable Machine, TensorFlow Playground, n8n, Flowise/Langflow/Dify, NotebookLM, Google Sheets, Airtable/NocoDB/Notion, Figma/Penpot, Miro, Tally, Looker Studio, Lovable/Bolt…). Les livrables peuvent tous être produits sans code ; les anciens exercices en Python restent, marqués **facultatifs pour profils techniques**. Règles et vérifications automatiques : `content/FORMAT.md` et `tests/content.test.ts`.
+Chaque module (M1 à M18) se termine par le chapitre **« Ateliers no-code et low-code »** : 3 exercices pratiques réalisables **sans écrire ni lancer de code**, sur des plateformes no-code ou low-code, de préférence libres ou gratuites (Orange Data Mining, Teachable Machine, TensorFlow Playground, n8n, Flowise/Langflow/Dify, NotebookLM, Google Sheets, Airtable/NocoDB/Notion, Figma/Penpot, Miro, Tally, Looker Studio, Lovable/Bolt…). Les livrables peuvent tous être produits sans code ; les anciens exercices en Python restent, marqués **facultatifs pour profils techniques**. Règles et vérifications automatiques : `content/FORMAT.md` et `tests/content.test.ts`.
 
 **À vérifier avant de promouvoir un atelier** : les interfaces et les offres gratuites changent vite. Les ateliers décrivent des blocs génériques (« un bloc de type… ») et disent « offre gratuite ou version libre à la date de rédaction, à vérifier » ; refaites chaque atelier une fois vous-même pour confirmer qu'il est faisable gratuitement et ajustez les noms. M18 n'a pas encore de contenu.
 

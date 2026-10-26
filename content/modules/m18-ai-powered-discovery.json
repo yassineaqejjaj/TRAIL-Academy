@@ -1,0 +1,828 @@
+{
+ "course": "M18",
+ "slug": "ai-powered-discovery",
+ "source": "Contenu conçu à partir du programme du module 18 (découverte produit assistée par l'IA), sans slides sources. Pas de vidéo : à ajouter depuis l'administration.",
+ "chapters": [
+  {
+   "title": "Recherche utilisateur assistée par IA",
+   "lessons": [
+    {
+     "title": "Découvrir avant de construire : ce que l'IA change",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Situer la découverte produit dans le cycle de décision d'une équipe.\n- Distinguer ce que l'IA peut assister et ce qui reste de la responsabilité de l'équipe.\n\n## La découverte, en une phrase\n\nLa **découverte produit** est l'ensemble des activités qui permettent de savoir **quoi construire** avant de le construire : comprendre des personnes réelles, formuler des hypothèses sur leurs besoins, puis tester ces hypothèses à moindre coût. Elle se distingue de la livraison (voir le module M9), qui répond à la question « comment le construire et le mettre en service ». Pour la découverte propre aux produits fondés sur l'IA, le module M8 pose le cadre ; ce module-ci se concentre sur l'**usage de l'IA comme outil de découverte**.\n\n## Le fil rouge du module\n\nNous suivons une équipe fictive qui imagine une application de **dépenses partagées entre colocataires**. Elle dispose de quelques entretiens, de retours écrits et d'idées de fonctionnalités. Toutes les données du module sont inventées pour les besoins de l'exercice.\n\n## Une boucle, pas une phase\n\n```mermaid\nflowchart LR\n  accTitle: Boucle de découverte assistée par l'IA\n  accDescr: Une question de découverte mène à la recherche, à la synthèse par thèmes, aux hypothèses, au test rapide puis à une décision, qui relance la boucle. L'IA assiste les étapes mais l'équipe décide.\n  Q[\"Question de découverte\"] --> R[\"Recherche (entretiens, observation, données)\"]\n  R --> S[\"Synthèse par thèmes\"]\n  S --> H[\"Hypothèses priorisées\"]\n  H --> T[\"Test rapide\"]\n  T --> D[\"Décision : poursuivre, ajuster, arrêter\"]\n  D --> Q\n  IA[\"L'IA assiste, l'équipe décide\"] -.-> R\n  IA -.-> S\n  IA -.-> H\n  IA -.-> T\n```\n*Figure 1 : la boucle de découverte parcourue dans ce module ; l'IA peut assister chaque étape, la décision reste à l'équipe.*\n\n## Ce que l'IA apporte\n\n- **De la vitesse** sur les tâches de préparation et de mise en forme : brouillon de guide d'entretien, nettoyage de transcriptions, premières étiquettes, reformulations.\n- **De la couverture** : relire cent retours écrits est possible, à condition de contrôler le résultat.\n- **Un regard supplémentaire** : proposer des angles auxquels l'équipe n'a pas pensé.\n\n## Ce que l'IA ne remplace pas\n\n- **La parole des utilisateurs** : un modèle ne rencontre personne. Il manipule du texte, y compris celui que vous lui donnez.\n- **Le jugement sur ce qui compte** : choisir quel problème mérite l'effort est une décision de produit.\n- **La responsabilité** envers les personnes interrogées (consentement, confidentialité).\n\n## Piège fréquent\n\nGagner du temps sur la synthèse et en perdre sur la **confiance** : une synthèse fluide, mais invérifiable, donne une fausse assurance. Tout le module insiste sur la traçabilité.\n\n## Mise en pratique\n\nListez les cinq dernières décisions de produit de votre équipe. Pour chacune, notez sur quelle observation d'utilisateurs réels elle reposait. Combien reposent sur une intuition ou une opinion interne ?"
+    },
+    {
+     "title": "Préparer la recherche : questions, échantillon et guide d'entretien",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Passer d'une question de recherche à un guide d'entretien non biaisé.\n- Raisonner sur la composition de l'échantillon et ses biais.\n\n## Partir d'une question de recherche\n\nAvant de rédiger des questions, formulez ce que vous voulez **apprendre**. Exemple fictif : « Comment les colocataires suivent-ils aujourd'hui qui doit quoi à qui, et qu'est-ce qui leur pose problème dans ce suivi ? » Cette **question de recherche** s'adresse à l'équipe. Les **questions d'entretien**, elles, s'adressent aux participants et sont plus concrètes.\n\n## Des questions qui font raconter\n\nLes entretiens de découverte cherchent des **faits et des récits** plutôt que des opinions ou des prédictions.\n\n- Préférez : « Racontez-moi la dernière fois que vous avez partagé une dépense avec vos colocataires. »\n- Évitez : « Aimeriez-vous une application qui calcule tout automatiquement ? » (question fermée, suggestive, portant sur un futur hypothétique).\n- Relancez par : « Et ensuite ? », « Comment avez-vous fait ? », « Qu'est-ce qui vous a gêné ? »\n- Ne prononcez pas le nom de votre solution : demander « voulez-vous de l'IA ? » provoque des réponses sur la technologie, pas sur le problème.\n\n## Ce que l'IA peut faire ici\n\n- Proposer un **premier brouillon** de guide à partir de votre question de recherche.\n- **Repérer les questions suggestives ou doubles** dans votre propre liste et les reformuler.\n- Suggérer des **relances** et un ordre logique.\n\nVous restez l'auteur du guide : relisez-le, supprimez ce qui oriente les réponses, adaptez-le à votre contexte.\n\n## L'échantillon et ses biais\n\nInterroger les personnes les plus faciles à joindre produit un **biais d'échantillon** : vous entendrez surtout des enthousiastes, des proches ou des utilisateurs actuels. Pour le réduire :\n\n- Variez les profils (situation, ancienneté, usages actuels) et incluez des **non-utilisateurs** et des utilisateurs mécontents.\n- Notez **comment** chaque personne a été recrutée.\n- Restez prudent sur les généralisations : il n'existe pas de nombre magique de participants. En pratique, on s'arrête quand les nouveaux entretiens n'apportent plus de thèmes nouveaux, et on dit clairement ce que l'échantillon ne couvre pas.\n\nL'IA ne choisit pas qui interroger : elle ne connaît ni votre marché ni vos canaux de recrutement.\n\n## Mise en pratique\n\nRédigez cinq questions d'entretien sur un sujet que vous connaissez, puis repérez celles qui sont fermées ou suggestives. Reformulez-les en demandes de récit sur un épisode récent."
+    },
+    {
+     "title": "Mener les entretiens : consentement, confidentialité et RGPD",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Informer les participants et recueillir leur accord avant tout enregistrement ou traitement.\n- Limiter les données personnelles confiées à un assistant IA.\n\n*Cette leçon présente des principes généraux, pas un avis juridique. Pour votre organisation, appuyez-vous sur votre délégué à la protection des données ou votre service juridique.*\n\n## Pourquoi c'est un sujet central\n\nUne voix, un enregistrement, une transcription contenant des noms ou des détails de vie sont en général des **données personnelles**. Le RGPD s'applique en principe dès qu'on en traite. Ajouter un assistant IA à la chaîne ajoute une question : **où partent ces données** et qu'en fait le service ?\n\n## Avant l'entretien\n\nInformez la personne, simplement et par écrit, de :\n\n- l'**objectif** de l'étude et l'organisme qui la conduit ;\n- ce qui sera **enregistré ou noté**, et si une transcription automatique est utilisée ;\n- le fait que des **outils d'IA** peuvent servir à traiter les contenus ;\n- la **durée de conservation** et les personnes qui y auront accès ;\n- sa liberté de **refuser, d'interrompre ou de retirer** ses propos.\n\nDemandez son accord avant d'enregistrer, et conservez la preuve de cet accord.\n\n## Collecter et traiter peu\n\n- **Minimisation** : ne collectez que ce qui sert la question de recherche.\n- **Pseudonymisation** : remplacez noms, employeurs, adresses et détails identifiants par un code (E01, E02…). Conservez la table de correspondance séparément et avec un accès restreint.\n- **Outil IA** : avant d'y envoyer une transcription, vérifiez le cadre d'usage de votre organisation, les conditions du service (conservation, réutilisation éventuelle des contenus pour améliorer le service, lieu d'hébergement). En cas de doute, ne l'envoyez pas, ou envoyez uniquement du texte pseudonymisé.\n\n```mermaid\nstateDiagram-v2\n  accTitle: Cycle de vie d'une donnée d'entretien\n  accDescr: Une donnée est recueillie avec consentement, pseudonymisée, analysée puis supprimée ou archivée selon la durée prévue. Un retrait du participant déclenche la suppression.\n  [*] --> Recueillie: \"Consentement obtenu\"\n  Recueillie --> Pseudonymisee: \"Retrait des identifiants\"\n  Pseudonymisee --> Analysee: \"Traitement, y compris par IA si autorisé\"\n  Analysee --> Supprimee: \"Durée prévue écoulée\"\n  Recueillie --> Supprimee: \"Retrait du participant\"\n  Pseudonymisee --> Supprimee: \"Retrait du participant\"\n  Analysee --> Supprimee: \"Retrait du participant\"\n  Supprimee --> [*]\n```\n*Figure 1 : cycle de vie d'une donnée d'entretien, du consentement à la suppression.*\n\n## Point d'attention\n\nUne pseudonymisation n'est pas une garantie d'anonymat : un récit très précis peut identifier quelqu'un. Relisez avant de partager.\n\n## Mise en pratique\n\nRédigez en cinq lignes le message d'information que vous enverriez à un participant fictif, en précisant explicitement le rôle d'un assistant IA dans le traitement."
+    },
+    {
+     "title": "Personas synthétiques et simulation d'utilisateurs : prudence",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Définir ce qu'est un persona ou un utilisateur « synthétique ».\n- Savoir à quoi ils peuvent servir, et à quoi ils ne doivent jamais servir.\n\n## De quoi parle-t-on ?\n\nOn demande à un modèle de langage de **jouer le rôle** d'un utilisateur (« Tu es Camille, 27 ans, en colocation… ») ou de produire des personas et des réponses à un questionnaire. Les sorties sont fluides, détaillées et semblent réalistes. C'est précisément ce qui les rend trompeuses.\n\n## Pourquoi ce n'est pas une donnée d'utilisateur\n\n- Le modèle produit un texte **plausible** à partir de régularités apprises (voir les notions de génération et d'hallucination dans le module M3), pas le récit d'une expérience vécue.\n- Il tend à produire des réponses **moyennes, cohérentes et coopératives** : les contradictions, les contournements bizarres et les surprises, qui font la valeur d'un entretien, disparaissent.\n- Il peut être **complaisant** : si vous suggérez votre idée, il a tendance à la trouver bonne.\n- Il reflète les biais de ses données d'entraînement et ignore votre marché réel.\n- Rien ne permet de **vérifier** la sortie : aucune personne ne la confirmera.\n\n## Usages raisonnables\n\n- **S'entraîner** à conduire un entretien, tester la clarté d'une question, repérer une relance maladroite.\n- **Explorer des angles** à vérifier ensuite auprès de personnes réelles (« quels contextes pourrais-je avoir oubliés ? »).\n- Préparer des cas de test pour un prototype, en les étiquetant comme synthétiques.\n\n## Usages à proscrire\n\n- Remplacer des entretiens ou des enquêtes par des réponses simulées.\n- Estimer une demande, une intention d'achat ou un prix à partir d'un persona généré.\n- Mêler des citations synthétiques aux verbatims réels dans une synthèse.\n- Présenter un persona généré comme « notre utilisateur » sans mention de son origine.\n\n## Règles de sécurité\n\n1. Étiquetez toute production synthétique : **« synthétique, non vérifié »**.\n2. Ne l'incluez jamais dans le décompte de participants.\n3. Traitez ce qu'elle suggère comme une **hypothèse**, à confronter à des personnes réelles.\n\n## Mise en pratique\n\nDemandez à un assistant de simuler un colocataire et posez-lui votre question « Aimeriez-vous une application qui calcule tout automatiquement ? ». Observez la réponse : qu'a-t-elle d'utile pour l'équipe, et qu'a-t-elle de trompeur ?"
+    }
+   ]
+  },
+  {
+   "title": "Analyse de feedbacks clients",
+   "lessons": [
+    {
+     "title": "Du verbatim au thème : synthèse par thèmes et traçabilité",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Décrire les étapes d'une synthèse qualitative par thèmes (affinité).\n- Mettre en place une chaîne de traçabilité de la citation à l'hypothèse.\n\n## Les étapes de la synthèse\n\n1. **Préparer le corpus** : transcriptions ou notes pseudonymisées, avec un identifiant par entretien (E01, E02…).\n2. **Extraire des observations** : une idée par ligne, à l'aide d'une citation exacte ou d'un fait observé. Chaque ligne reçoit un identifiant stable, par exemple **E03-L12** (entretien 3, ligne 12).\n3. **Coder** : attacher une courte étiquette à chaque observation (« relances gênantes », « oubli de saisie »).\n4. **Regrouper par affinité** : rapprocher les étiquettes proches en **thèmes** et sous-thèmes. Vous pouvez travailler sur un tableau blanc avec des notes adhésives.\n5. **Formuler** chaque thème en une phrase d'enseignement (« les colocataires évitent de relancer parce que la dette devient personnelle »).\n6. **Déduire des hypothèses** à tester, sans oublier les observations qui les contredisent.\n\n## La chaîne de traçabilité\n\nUne synthèse utile est une synthèse que l'on peut **remonter**. Chaque hypothèse renvoie à un thème, chaque thème à des observations, chaque observation à un entretien. Si quelqu'un doute d'une affirmation, vous pouvez retrouver les mots exacts du participant.\n\n```mermaid\nflowchart LR\n  accTitle: Chaîne de traçabilité de la citation à l'hypothèse\n  accDescr: Une citation identifiée est codée, regroupée en thème, puis donne une hypothèse testée. Chaque maillon renvoie à ses sources.\n  C[\"Citation (E03-L12)\"] --> K[\"Code : relances gênantes\"]\n  K --> T[\"Thème : la dette devient personnelle\"]\n  T --> H[\"Hypothèse à tester\"]\n  H --> X[\"Test rapide\"]\n  H -. \"retrouver les sources\" .-> T\n  T -. \"retrouver les sources\" .-> C\n```\n*Figure 1 : chaîne de traçabilité ; chaque maillon doit permettre de remonter jusqu'aux mots exacts d'un participant.*\n\n## Compter honnêtement\n\nPour chaque thème, notez **combien de participants** distincts l'évoquent, pas combien de fois il est cité. Un seul participant très bavard peut produire dix lignes.\n\n## Piège fréquent\n\nLes thèmes sont tentés de refléter vos **hypothèses de départ**. Gardez une catégorie « inattendu » et relisez les observations qui ne rentrent nulle part : elles sont souvent les plus instructives.\n\n## Mise en pratique\n\nPrenez deux entretiens ou des notes que vous avez déjà. Extrayez dix observations avec un identifiant, codez-les et proposez deux thèmes en précisant le nombre de participants concernés."
+    },
+    {
+     "title": "Synthétiser avec l'IA en gardant la traçabilité",
+     "kind": "exercise",
+     "body_md": "## Objectifs\n\n- Rédiger une consigne qui oblige l'assistant à citer ses sources.\n- Contrôler une synthèse produite à partir d'un petit corpus fictif.\n\n## Le principe de la consigne\n\nL'assistant doit travailler **uniquement sur le texte fourni**, citer **mot pour mot** avec l'identifiant de la ligne, et avoir le droit de dire « non trouvé ». Séparez toujours ce qui est **dit** (observation) de ce qui est **déduit** (interprétation).\n\n```text\nContexte : étude fictive sur le partage de dépenses entre colocataires.\nCorpus : les lignes ci-dessous, chacune avec un identifiant.\nTâche : propose des thèmes qui regroupent ces lignes.\nRègles :\n- N'utilise que le corpus. Si une information n'y figure pas, écris « non trouvé ».\n- Pour chaque thème : un titre, une phrase d'enseignement, les identifiants des lignes concernées et une citation exacte mot pour mot.\n- Indique le nombre de participants distincts concernés.\n- Sépare « ce qui est dit » et « ce que j'interprète ».\n- Signale les lignes qui contredisent un thème ou qui ne rentrent dans aucun thème.\n```\n\n## Corpus fictif pour l'exercice\n\n- E01-1 : « Le plus pénible, c'est de relancer ceux qui ne remboursent pas, je déteste faire ça. »\n- E01-2 : « Je note les dépenses dans une note sur mon téléphone, et j'oublie la moitié. »\n- E02-1 : « On a un tableur, mais personne ne le met à jour. »\n- E02-2 : « Je ne veux pas que ça ressemble à une dette, ça met mal à l'aise. »\n- E03-1 : « Je paie souvent les courses, et à la fin du mois je ne sais plus qui me doit quoi. »\n- E03-2 : « Une application de plus, non merci, si ça demande de créer un compte. »\n\n## À faire\n\n1. Collez la consigne et le corpus dans un assistant conversationnel (données fictives uniquement).\n2. Pour chaque citation renvoyée, **retrouvez-la dans le corpus** : est-elle mot pour mot exacte ?\n3. Vérifiez les comptes : le nombre de participants annoncé par thème correspond-il aux identifiants cités ?\n4. Cherchez une généralisation abusive (« tous les colocataires… ») et une contradiction passée sous silence.\n5. Relancez avec la consigne : « Liste les lignes qui ne sont citées dans aucun thème, et ce qu'on ne peut pas conclure avec ce corpus. »\n\n## Ce qu'il faut observer\n\nAvec seulement trois participants, aucune conclusion chiffrée n'est possible : l'assistant doit le dire, ou vous devez le dire à sa place. Si une citation a été légèrement reformulée, traitez-la comme une erreur : une citation approximative n'est plus une preuve.\n\n## Mise en pratique complémentaire\n\nAjoutez une septième ligne contradictoire (par exemple : « Pour moi, relancer ne pose aucun problème ») et vérifiez si la synthèse la prend en compte."
+    },
+    {
+     "title": "Vérifier une synthèse : hallucinations, lissage et sur-généralisation",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Reconnaître les erreurs typiques d'une synthèse produite par un modèle.\n- Appliquer une procédure de contrôle proportionnée.\n\n## Les erreurs à chercher\n\n- **Citation inventée ou reformulée** : le modèle produit une phrase qui sonne juste mais ne figure pas dans le corpus. C'est une forme d'hallucination (voir le module M3).\n- **Sur-généralisation** : « les utilisateurs veulent… » à partir d'un ou deux participants.\n- **Lissage** : les avis contradictoires sont fondus dans une conclusion consensuelle, alors que le désaccord est lui-même un enseignement.\n- **Thème plausible mais absent** : un thème courant dans ce domaine est ajouté parce qu'il est vraisemblable.\n- **Comptes faux** : « la plupart », « cinq participants » sans vérification possible.\n- **Interprétation présentée comme fait**, avec un ton assuré.\n- **Oublis** : sur un long corpus, certaines parties sont moins bien prises en compte (voir la notion de fenêtre de contexte, module M3).\n\n## Une procédure de contrôle\n\n1. **Chaque citation** est recherchée dans le corpus par recherche de texte exact. Une citation non retrouvée est supprimée.\n2. **Relisez vous-même** au moins deux ou trois entretiens complets et comparez avec les thèmes : qu'est-ce qui manque ?\n3. **Recomptez** les participants par thème.\n4. Demandez une **contre-lecture** : « Trouve les passages qui contredisent chaque thème. » Vérifiez ensuite ces passages.\n5. Faites relire par **un collègue** qui a participé aux entretiens.\n\n```mermaid\nsequenceDiagram\n  accTitle: Boucle de vérification d'une synthèse\n  accDescr: Le chercheur envoie le corpus numéroté à l'assistant, reçoit une synthèse avec citations, les confronte au corpus, signale les écarts, puis valide la version corrigée.\n  participant R as Chercheur\n  participant A as Assistant IA\n  participant C as Corpus numéroté\n  R->>A: \"Corpus numéroté et consigne de citation exacte\"\n  A-->>R: \"Thèmes avec citations et identifiants\"\n  R->>C: \"Recherche exacte de chaque citation\"\n  C-->>R: \"Citations retrouvées ou absentes\"\n  R->>A: \"Écarts signalés : demande de correction\"\n  A-->>R: \"Synthèse corrigée\"\n  R->>R: \"Validation et relecture humaine\"\n```\n*Figure 1 : boucle de vérification ; la confrontation au corpus est faite par une personne, pas par l'assistant.*\n\n## Point d'attention\n\nDemander à l'assistant « es-tu sûr ? » ne constitue pas un contrôle : il peut confirmer une erreur avec le même aplomb. La vérification se fait **contre la source**.\n\n## Proportionner l'effort\n\nPlus la décision en jeu est coûteuse, plus le contrôle doit être serré. Une synthèse qui motive une décision d'investissement mérite une vérification de 100 % des citations ; une exploration rapide peut se contenter d'un échantillon.\n\n## Mise en pratique\n\nReprenez la synthèse de la leçon précédente et notez, pour chaque erreur trouvée, la catégorie à laquelle elle appartient."
+    },
+    {
+     "title": "Feedbacks à grande échelle : tickets, avis et enquêtes",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Utiliser l'IA pour trier un grand volume de retours écrits.\n- Raisonner sur les biais de source et sur la qualité du classement automatique.\n\n## Les sources de retours\n\n- **Tickets** de support et messages de contact.\n- **Avis en ligne** et notes laissées par les utilisateurs.\n- **Réponses ouvertes** d'enquêtes.\n- **Entretiens** et notes de terrain, moins nombreux mais bien plus riches.\n\nChacune a son profil de biais. Une personne qui écrit un avis ou un ticket est en général **plus motivée** (colère ou enthousiasme) que l'utilisateur moyen, et ceux qui n'écrivent jamais n'apparaissent nulle part.\n\n```mermaid\npie showData\n  accTitle: Répartition fictive de 200 retours par source\n  accDescr: Sur 200 retours fictifs analysés, 90 viennent de tickets de support, 60 d'avis en ligne, 40 de réponses d'enquête et 10 d'entretiens. Données inventées pour illustrer le poids de chaque canal.\n  \"Tickets de support\" : 90\n  \"Avis en ligne\" : 60\n  \"Réponses d'enquête\" : 40\n  \"Entretiens\" : 10\n```\n*Figure 1 : répartition fictive de 200 retours par source ; le volume d'un canal ne dit rien de sa représentativité ni de sa profondeur.*\n\n## Ce que l'IA fait bien et moins bien\n\nL'IA peut **classer** des retours (thème, sentiment, urgence), **dédoublonner**, résumer par groupe et détecter des sujets émergents. Elle peut aussi mal classer des retours ironiques, courts ou très spécifiques à votre produit.\n\n## Mesurer la qualité du classement\n\nN'acceptez pas un étiquetage automatique sans l'évaluer :\n\n1. Tirez au hasard un échantillon de retours (par exemple quelques dizaines).\n2. **Étiquetez-les à la main**, sans regarder la réponse du modèle.\n3. Comparez : quelle part concorde ? Où se trompe-t-il ?\n4. Ajustez les définitions de thèmes et recommencez.\n\nCe principe d'évaluation sur échantillon étiqueté est détaillé dans le module M17.\n\n## Lire un pourcentage correctement\n\nExemple fictif : sur 200 retours, 45 évoquent les relances. Cela représente **22,5 % des retours analysés**. Ce n'est ni 22,5 % des utilisateurs, ni la preuve qu'il s'agit du problème principal : le **dénominateur** est l'ensemble des retours collectés, issus de canaux inégaux. Nommez toujours le dénominateur.\n\n## Piège fréquent\n\nConfondre volume et importance : un sujet cité cinq fois par des utilisateurs qui paient ou qui quittent le produit peut peser davantage qu'un sujet cité cinquante fois par des utilisateurs occasionnels. Cherchez à qui appartient chaque voix.\n\n## Mise en pratique\n\nPour un canal de retours que vous utilisez, notez qui s'exprime, qui ne s'exprime jamais, et ce que cela change à la lecture des chiffres."
+    }
+   ]
+  },
+  {
+   "title": "Découverte d'opportunités",
+   "lessons": [
+    {
+     "title": "Des thèmes aux besoins : problèmes et jobs-to-be-done",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Distinguer un besoin sous-jacent d'une solution demandée.\n- Formuler un besoin selon la logique des « jobs-to-be-done », en termes généraux.\n\n## Besoin, solution, symptôme\n\nLes participants parlent souvent en **solutions** (« il me faudrait un export tableur ») ou en **symptômes** (« c'est pénible »). Votre travail est de remonter au **besoin** : qu'essaient-ils d'accomplir, dans quelle situation, et qu'est-ce qui les en empêche ?\n\n## Jobs-to-be-done, sans jargon\n\nL'approche « jobs-to-be-done » considère qu'une personne « embauche » un produit pour **accomplir une tâche** dans une situation donnée. Une formulation courante :\n\n**Quand** [situation], **je veux** [motivation], **afin de** [résultat attendu].\n\nExemple fictif : « Quand je viens de payer les courses pour tout l'appartement, je veux enregistrer la dépense sans y penser, afin de ne pas devoir reconstituer les comptes à la fin du mois. »\n\nLa formulation décrit une **situation** et un **résultat**, pas une fonctionnalité. Elle laisse ouvertes plusieurs solutions.\n\n```mermaid\nflowchart LR\n  accTitle: Ce que contient la description d'un besoin\n  accDescr: Un besoin décrit une situation, une motivation, un résultat attendu, un contournement actuel et des contraintes.\n  B((\"Besoin\"))\n  S[\"Situation\"] --> B\n  M[\"Motivation\"] --> B\n  R[\"Résultat attendu\"] --> B\n  C[\"Contournement actuel\"] --> B\n  K[\"Contraintes\"] --> B\n```\n*Figure 1 : les éléments à documenter pour décrire un besoin, indépendamment de toute solution.*\n\n## Le contournement, un signal fort\n\nCe que les personnes font **déjà** pour y répondre (une note de téléphone, un tableur abandonné) est une information précieuse : elles dépensent déjà de l'énergie pour ce problème. Notez-le systématiquement.\n\n## Le rôle de l'IA\n\nL'assistant peut proposer, à partir de thèmes **déjà étayés par des citations**, des formulations de besoins et des variantes à comparer. Exigez qu'il cite les identifiants à l'appui. Il ne doit pas inventer de besoins : un besoin plausible mais non observé reste une hypothèse (voir la leçon suivante).\n\n## Piège fréquent\n\nTraduire trop vite un besoin en fonctionnalité, ou formuler des besoins si larges qu'ils ne guident plus aucun choix (« gagner du temps »).\n\n## Mise en pratique\n\nPrenez trois remarques de la leçon de synthèse (par exemple « Une application de plus, non merci, si ça demande de créer un compte ») et écrivez pour chacune une phrase « Quand… je veux… afin de… », en précisant s'il s'agit d'un besoin, d'une solution ou d'une contrainte."
+    },
+    {
+     "title": "Cartographier les opportunités : l'arbre opportunité-solution",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Structurer une découverte avec un arbre opportunité-solution.\n- Utiliser l'IA pour élargir les options sans lui laisser définir les problèmes.\n\n## L'arbre en quatre niveaux\n\nUn **arbre opportunité-solution** relie ce que l'on veut atteindre aux moyens de l'atteindre, en passant par les besoins observés :\n\n1. **Résultat visé** : ce que l'entreprise cherche à faire évoluer (par exemple « davantage de groupes qui gardent leurs comptes à jour »).\n2. **Opportunités** : besoins, difficultés et désirs non satisfaits, issus de la recherche.\n3. **Solutions** : idées pour répondre à une opportunité, plusieurs par opportunité.\n4. **Tests** : expériences rapides qui vérifient les hypothèses derrière chaque solution.\n\n```mermaid\nflowchart TD\n  accTitle: Arbre opportunité-solution fictif\n  accDescr: Un résultat visé se décline en deux opportunités issues de la recherche. Chacune propose plusieurs solutions, chacune associée à un test rapide. Exemple fictif.\n  O[\"Résultat visé : des comptes tenus à jour\"]\n  O --> A[\"Opportunité 1 : relancer sans gêne\"]\n  O --> B[\"Opportunité 2 : saisir sans effort\"]\n  A --> A1[\"Solution : rappel neutre automatique\"]\n  A --> A2[\"Solution : résumé mensuel partagé\"]\n  B --> B1[\"Solution : saisie en une action\"]\n  B --> B2[\"Solution : photo du ticket de caisse\"]\n  A1 --> T1[\"Test : message de concept\"]\n  A2 --> T2[\"Test : entretien de problème\"]\n  B1 --> T3[\"Test : prototype cliquable\"]\n  B2 --> T4[\"Test : prototype fonctionnel limité\"]\n```\n*Figure 1 : arbre opportunité-solution fictif ; chaque solution est reliée à un test, et chaque opportunité à des citations de la recherche.*\n\n## Pourquoi cette structure aide\n\n- Elle **évite de sauter** du problème à la première solution venue.\n- Elle montre les **alternatives** : si une solution échoue au test, l'opportunité reste valable.\n- Elle donne un **fil de lecture** aux parties prenantes, qui voient pourquoi une idée est retenue.\n\n## Ce que l'IA peut faire\n\n- **Élargir** : « Propose dix solutions très différentes pour cette opportunité, y compris sans écran et sans IA. »\n- **Questionner** : « Quelles opportunités voisines pourrait-on avoir manquées dans ces thèmes ? » (à vérifier ensuite auprès de personnes réelles).\n- **Reformuler** pour plus de clarté.\n\n## Ce qu'elle ne doit pas faire\n\nDéfinir les opportunités à partir de ses seules connaissances générales. Une opportunité sans citation d'appui est une idée, pas un constat. Pour ouvrir ensuite la question « l'IA est-elle la bonne réponse ? », reportez-vous au cadre d'identification des opportunités IA du module M8.\n\n## Mise en pratique\n\nDessinez un arbre pour un résultat de votre produit : deux opportunités, deux solutions chacune, et pour chaque solution le plus petit test imaginable."
+    },
+    {
+     "title": "Formuler des hypothèses testables : désirabilité, faisabilité, viabilité",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Transformer une idée ou une conviction en hypothèse falsifiable.\n- Classer les hypothèses selon désirabilité, faisabilité et viabilité.\n\n## Trois lentilles classiques\n\nUne idée de produit repose sur plusieurs paris :\n\n- **Désirabilité** : des personnes en ont-elles besoin, le veulent-elles, l'utiliseront-elles ?\n- **Faisabilité** : peut-on le réaliser avec nos moyens, nos données, notre technologie ? Pour un produit à base d'IA, c'est aussi : le modèle est-il assez fiable sur **nos** cas, à un coût acceptable ? (Voir les modules M8, M9 et M17.)\n- **Viabilité** : cela fonctionne-t-il pour l'organisation (modèle économique, cadre réglementaire, capacité d'exploitation) ?\n\nCertaines équipes ajoutent l'**utilisabilité** (les gens y arrivent-ils ?). Ces catégories aident à vérifier que l'on teste aussi les paris qui font peur, pas seulement ceux qui rassurent.\n\n## Une bonne hypothèse\n\nUne hypothèse est un énoncé **falsifiable** : on doit pouvoir constater qu'elle est fausse. Un format utile :\n\n**Nous croyons que** [population] [comportement ou besoin]. **Nous le saurons si** [observation mesurable] **atteint** [seuil fixé à l'avance].\n\nExemple fictif : « Nous croyons que les colocataires saisissent une dépense en moins de trente secondes avec un formulaire court. Nous le saurons si au moins huit participants sur dix y parviennent lors d'un test sur prototype. » Le seuil est fictif : il se fixe selon la décision qu'il doit éclairer.\n\n## Les hypothèses qui font tomber le projet\n\nParmi toutes les hypothèses, repérez celles qui, **si elles sont fausses, rendent l'idée caduque** : on les appelle parfois les paris décisifs. Ce sont elles qu'il faut tester en premier (leçons suivantes).\n\n## Où l'IA aide\n\n- **Lister les hypothèses implicites** d'une idée (« Quelles croyances doivent être vraies pour que cette solution fonctionne ? »).\n- Rédiger des **formulations testables** et proposer des seuils à discuter.\n- Chercher des hypothèses de **faisabilité IA** oubliées : données disponibles, cas limites, coût.\n\nL'équipe tranche : une liste générée par l'IA est un point de départ, pas un inventaire exhaustif.\n\n## Piège fréquent\n\nÉcrire des hypothèses qu'on ne peut pas infirmer (« les utilisateurs apprécieront l'expérience ») ou fixer le seuil **après** avoir vu les résultats.\n\n## Mise en pratique\n\nChoisissez une solution de votre arbre. Écrivez une hypothèse pour chacune des trois lentilles, avec la formule « Nous croyons que… Nous le saurons si… ». Marquez celle dont la fausseté coûterait le plus."
+    }
+   ]
+  },
+  {
+   "title": "Priorisation d'hypothèses",
+   "lessons": [
+    {
+     "title": "Des critères explicites pour prioriser : impact, confiance, effort",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Définir des critères et des échelles de notation explicites.\n- Distinguer prioriser des solutions et prioriser des hypothèses à tester.\n\n## Pourquoi expliciter\n\nSans critères, la priorisation suit l'ancienneté, l'enthousiasme ou la voix la plus forte. Des critères **écrits** rendent la discussion possible : on peut contester une note, pas une intuition.\n\n## La famille impact, confiance, effort\n\nUne grille courante note chaque élément selon :\n\n- **Impact** : l'effet attendu sur le résultat visé s'il réussit.\n- **Confiance** : le niveau de **preuves** qui soutient l'estimation d'impact (verbatims, données, test), pas l'optimisme de celui qui note.\n- **Effort** : le coût de réalisation (temps, personnes, complexité).\n\nLes variantes (par exemple en ajoutant la portée, c'est-à-dire le nombre de personnes touchées) sont multiples ; aucune n'est une norme. L'important est de **choisir, d'écrire et de s'y tenir**.\n\n## Définir les échelles\n\nPour chaque critère, écrivez ce que signifie 1, 3 et 5 avec des exemples. Exemple fictif pour la confiance : 1 = intuition de l'équipe ; 3 = deux ou trois citations concordantes ; 5 = plusieurs sources concordantes et un test réussi. Sans ancres, deux personnes n'attribuent pas la même note.\n\n## Deux questions différentes\n\n- **Quelle solution construire d'abord ?** On arbitre entre impact, confiance et effort de réalisation.\n- **Quelle hypothèse tester d'abord ?** On teste en priorité ce qui est **important si c'est faux** et **peu prouvé**, en tenant compte du **coût du test**.\n\nLa leçon suivante déroule la seconde, la plus utile en découverte.\n\n## Les limites des scores\n\n- Un score multiplié ou additionné donne une **fausse précision** : 12 n'est pas « mieux » que 11 de façon fiable.\n- Les notes sont **subjectives** et sensibles à l'ancrage : la première note énoncée influence les suivantes.\n- Une grille ne remplace pas la discussion : elle sert à **faire apparaître les désaccords**.\n- Les critères omis (risque réglementaire, dépendance technique, valeur stratégique) doivent être ajoutés si la décision les concerne.\n\n## Mise en pratique\n\nÉcrivez des ancres pour 1, 3 et 5 sur chacun de vos trois critères. Demandez à un collègue de noter indépendamment deux éléments avec votre grille : ses notes sont-elles proches des vôtres ? Sinon, quelle ancre est ambiguë ?"
+    },
+    {
+     "title": "Exercice : prioriser six hypothèses avec une grille",
+     "kind": "exercise",
+     "body_md": "## Objectifs\n\n- Calculer un score de priorité de test à partir de critères notés.\n- Interpréter le résultat avec une règle de garde-fou.\n\n## La grille\n\nTrois critères, notés de 1 à 5 :\n\n- **Importance** : si l'hypothèse est fausse, l'idée perd son sens (5 = elle tombe).\n- **Niveau de preuve** : ce que nous savons déjà (1 = aucune preuve, 5 = preuves solides).\n- **Coût du test** : effort pour tester (1 = quelques heures, 5 = plusieurs semaines).\n\n**Score de priorité de test = importance × (6 − preuve) ÷ coût.** On retranche la preuve de 6 pour que **peu de preuves** donne un **score plus élevé**. Un score élevé signale : à tester d'abord.\n\n## Données fictives\n\n- **H1** (désirabilité) : « Les colocataires veulent éviter de relancer eux-mêmes un autre colocataire. » Importance 5, preuve 2, coût 2.\n- **H2** (utilisabilité) : « Ils saisissent une dépense en moins de trente secondes. » Importance 4, preuve 4, coût 1.\n- **H3** (faisabilité IA) : « Une catégorisation automatique de tickets de caisse photographiés est assez fiable sur nos cas. » Importance 5, preuve 1, coût 4.\n- **H4** (désirabilité) : « Un résumé mensuel envoyé au groupe est apprécié. » Importance 3, preuve 2, coût 1.\n- **H5** (viabilité) : « Il existe assez de groupes de plus de six personnes. » Importance 2, preuve 1, coût 2.\n- **H6** (viabilité) : « De petits groupes accepteraient un abonnement léger. » Importance 4, preuve 3, coût 3.\n\n## À faire\n\n1. Calculez le score de chaque hypothèse puis classez-les, avant de lire la suite.\n2. Comparez à la solution ci-dessous.\n\n## Corrigé\n\n- H1 : 5 × 4 ÷ 2 = **10**\n- H2 : 4 × 2 ÷ 1 = **8**\n- H3 : 5 × 5 ÷ 4 = **6,25**\n- H4 : 3 × 4 ÷ 1 = **12**\n- H5 : 2 × 5 ÷ 2 = **5**\n- H6 : 4 × 3 ÷ 3 = **4**\n\nOrdre : H4 (12), H1 (10), H2 (8), H3 (6,25), H5 (5), H6 (4).\n\n## Lecture critique\n\nH4 passe en tête parce qu'elle est peu coûteuse à tester, malgré une importance moyenne. À l'inverse, H3 est **décisive** (importance 5) et très mal étayée (preuve 1) : son coût de test élevé la place quatrième, alors qu'une réponse négative ferait tomber une partie de l'idée. D'où un **garde-fou** : toute hypothèse d'importance 5 avec une preuve de 1 ou 2 ne peut pas être écartée ; on cherche un **test moins coûteux** (par exemple, essayer quelques tickets de caisse réels avec un assistant avant de construire quoi que ce soit).\n\n```mermaid\nquadrantChart\n  accTitle: Importance et niveau de preuve de six hypothèses fictives\n  accDescr: Les hypothèses importantes et peu prouvées, en haut à gauche, sont à tester d'abord. H1 et H3 s'y trouvent ; H2 et H6 sont plus étayées ; H4 et H5 sont moins importantes. Données fictives.\n  x-axis \"Peu de preuves\" --> \"Beaucoup de preuves\"\n  y-axis \"Importance faible\" --> \"Importance forte\"\n  quadrant-1 \"Solide, à surveiller\"\n  quadrant-2 \"À tester d'abord\"\n  quadrant-3 \"À garder en réserve\"\n  quadrant-4 \"Inutile de tester maintenant\"\n  \"H1\": [0.33, 0.83]\n  \"H2\": [0.67, 0.67]\n  \"H3\": [0.17, 0.92]\n  \"H4\": [0.33, 0.50]\n  \"H5\": [0.17, 0.33]\n  \"H6\": [0.50, 0.67]\n```\n*Figure 1 : positions des six hypothèses fictives selon leur importance et leur niveau de preuve ; les notes sont inventées.*\n\n## Test de sensibilité\n\nModifiez une note de 1 point (par exemple le coût de H1 passe de 2 à 3). L'ordre change-t-il ? Si oui, la grille ne permet pas de départager ces deux hypothèses : discutez-en au lieu de vous fier au score."
+    },
+    {
+     "title": "L'IA comme second avis sur la priorisation, sans lui déléguer la décision",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Utiliser l'IA pour challenger une priorisation sans se laisser ancrer.\n- Tracer les raisons d'une décision.\n\n## Le risque d'ancrage\n\nSi vous demandez d'emblée à un assistant « donne une note à chaque hypothèse », sa réponse deviendra le point de départ de la discussion, et les participants s'y aligneront. De plus, l'assistant ne connaît ni votre marché, ni vos contraintes, ni vos entretiens, sauf ce que vous lui avez fourni. Il peut aussi trouver votre liste raisonnable simplement parce que vous la lui présentez.\n\n## Une méthode en cinq temps\n\n1. **Notez d'abord, seuls.** Chaque membre de l'équipe attribue ses notes sans voir celles des autres ni celles de l'IA.\n2. **Justifiez chaque note** par une référence : identifiant de citation, donnée, test déjà réalisé. « Je le sens » est une réponse, mais elle compte comme confiance de 1.\n3. **Demandez à l'IA un regard critique**, pas des notes : « Voici nos hypothèses, nos notes et nos preuves. Quelles notes te semblent les moins justifiées ? Quelles hypothèses manquent ? Quels biais peux-tu repérer ? »\n4. **Comparez les écarts** entre membres, et avec l'IA. Les écarts importants sont les sujets de discussion les plus utiles.\n5. **Décidez en équipe**, puis consignez : hypothèse retenue, raison, preuves, ce qui ferait changer d'avis.\n\n## Tester la solidité du classement\n\n- **Sensibilité** : si une note varie de 1 point, le classement change-t-il ? Si oui, les éléments proches sont ex æquo.\n- **Retrait d'un critère** : le classement reste-t-il cohérent si l'on retire l'effort, ou si l'on pondère la preuve plus fortement ?\n- **Garde-fou** : les hypothèses décisives et peu prouvées sont-elles toutes traitées ?\n\n## Ce que la décision doit rester\n\nUne responsabilité humaine : l'IA peut faire apparaître des angles morts, elle ne porte pas les conséquences. Si une partie prenante demande « pourquoi cette hypothèse d'abord ? », la réponse doit s'appuyer sur vos critères et vos preuves, pas sur « l'IA l'a proposé ».\n\n## Piège fréquent\n\nUtiliser le score comme **justification a posteriori** d'une décision déjà prise, en ajustant les notes jusqu'à obtenir le résultat voulu. Les notes se fixent avant le calcul.\n\n## Mise en pratique\n\nReprenez votre classement de l'exercice précédent. Écrivez trois questions critiques que vous poseriez à un assistant, et deux informations de contexte que vous devriez lui fournir pour que ses remarques soient pertinentes."
+    }
+   ]
+  },
+  {
+   "title": "Tests de concept rapides",
+   "lessons": [
+    {
+     "title": "Choisir le test le plus petit qui répond à l'hypothèse",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Associer un type d'hypothèse à un test adapté.\n- Préférer les comportements observés aux opinions déclarées.\n\n## Principe : le plus petit test suffisant\n\nUn test de concept est un moyen **rapide et peu coûteux** d'obtenir une preuve. Si une page d'une heure répond à la question, ne construisez pas un prototype d'une semaine. Plus le test est proche du réel, plus la preuve est solide, mais plus il coûte.\n\n## Quelques formes de test\n\n- **Entretien centré sur un problème** : vérifier que la difficulté existe et comment elle est gérée aujourd'hui.\n- **Test de fumée** : présenter une promesse (page de présentation, message, annonce) pour un produit qui n'existe pas encore, avec un appel à l'action (s'inscrire, répondre, demander un accès), et observer ce que font les gens.\n- **Prototype cliquable ou maquette** : simuler un parcours pour observer l'utilisabilité.\n- **Service « concierge » ou « magicien d'Oz »** : un humain réalise manuellement ou simule ce que le produit ferait (voir aussi le module M8).\n- **Prototype fonctionnel limité** : une version minimale, souvent jetable (voir le module M9), pour mesurer la qualité d'un modèle sur de vrais cas ou l'usage réel.\n\n## Dire ou faire ?\n\nCe que les personnes **font** (s'inscrire, cliquer, revenir, donner du temps) est généralement un signal plus fiable que ce qu'elles **déclarent** vouloir. Un engagement plus coûteux pour elles (laisser un moyen de contact, planifier une séance) est un signal plus fort qu'un simple clic, mais réduit aussi le nombre de réponses.\n\n```mermaid\nflowchart TD\n  accTitle: Choisir un test selon le type d'hypothèse\n  accDescr: Une hypothèse de désirabilité mène à un entretien ou un test de fumée, d'utilisabilité à un prototype cliquable, de faisabilité IA à un prototype fonctionnel limité ou un spike, de viabilité à un test de fumée avec offre ou des entretiens.\n  H[\"Hypothèse à tester\"] --> D{\"Type d'hypothèse\"}\n  D --> A[\"Désirabilité\"]\n  D --> U[\"Utilisabilité\"]\n  D --> F[\"Faisabilité IA\"]\n  D --> V[\"Viabilité\"]\n  A --> A1[\"Entretien de problème ou test de fumée\"]\n  U --> U1[\"Prototype cliquable\"]\n  F --> F1[\"Prototype fonctionnel limité ou spike\"]\n  V --> V1[\"Test de fumée avec offre ou entretiens\"]\n```\n*Figure 1 : association entre le type d'hypothèse et la forme de test la plus légère ; ce n'est pas une règle absolue.*\n\n## Attention aux simulations\n\nUn « magicien d'Oz » teste la **valeur perçue** d'une fonction, pas la **faisabilité technique** : si un humain joue le modèle, vous ignorez encore si le modèle fera aussi bien. Pour une hypothèse de qualité d'un modèle, il faut le mettre à l'épreuve sur des cas réels ou réalistes (voir le module M17).\n\n## Mise en pratique\n\nPrenez les trois premières hypothèses de votre classement et choisissez pour chacune le test le plus petit possible, en précisant combien de temps il demande et ce qu'il ne prouvera pas."
+    },
+    {
+     "title": "Monter un test de concept rapide avec l'IA",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Préparer un test rapide : hypothèse, critère de succès, matériel, recrutement.\n- Utiliser l'IA pour fabriquer le matériel sans fausser le test.\n\n## Avant de produire quoi que ce soit\n\n1. **Hypothèse** : une seule, formulée avec « Nous le saurons si… ».\n2. **Critère de succès fixé à l'avance** : par exemple « au moins 6 participants sur 15 laissent leur adresse pour être prévenus » (seuil fictif).\n3. **Critère d'arrêt** : à partir de quel résultat on abandonne ou on modifie la piste.\n4. **Participants** : qui, combien, comment, et quel biais de recrutement.\n5. **Données collectées** : le strict minimum, de préférence aucune donnée personnelle directe.\n\n## Fabriquer le matériel\n\nL'IA peut accélérer :\n\n- la **rédaction** de la page de présentation, de variantes de promesse et d'un scénario de test ;\n- la **génération d'une maquette ou d'une page** via des outils de création assistée de pages ou d'interfaces (voir le module M6 sur la création assistée) ;\n- la **préparation d'un questionnaire court** pour recueillir les réactions.\n\nRelisez tout. Un texte produit par un modèle peut promettre une fonction que vous ne comptez pas construire, ou utiliser des chiffres inventés.\n\n## Honnêteté envers les participants\n\nUn test de fumée présente un produit qui n'existe pas encore. Précisez clairement qu'il s'agit d'un **concept en cours d'exploration**, ne collectez que ce qui est nécessaire, n'encaissez rien et ne promettez ni disponibilité ni caractéristique que vous ne pouvez pas tenir. Appliquez les mêmes principes de consentement que pour un entretien.\n\n## Un parcours de test type\n\n```mermaid\njourney\n  accTitle: Parcours d'un participant à un test de concept\n  accDescr: Un participant découvre une page de concept, lit la promesse, décide de cliquer sur l'appel à l'action, répond à trois questions puis explique ce qu'il attendait. Les scores sont fictifs et indiquent l'intérêt ressenti.\n  title Participant à un test de concept (scores fictifs)\n  section Découverte\n    Arrive sur la page de concept: 3: Participant\n    Lit la promesse: 4: Participant\n  section Engagement\n    Clique sur l'appel à l'action: 3: Participant\n    Répond à trois questions: 3: Participant\n  section Retour\n    Explique ce qu'il attendait: 5: Participant\n```\n*Figure 1 : parcours d'un participant à un test de concept ; les scores d'intérêt sont fictifs, le test doit observer chaque étape.*\n\n## Piège fréquent\n\nSoigner le matériel jusqu'à oublier la question : si le test échoue, saurez-vous si c'est le concept ou la qualité de la page ? Gardez la mise en forme **simple et identique** pour tous les participants.\n\n## Mise en pratique\n\nRédigez la fiche de votre test en six lignes : hypothèse, critère de succès, critère d'arrêt, participants, matériel, données collectées. Vérifiez qu'aucun seuil n'a été fixé après coup."
+    },
+    {
+     "title": "Interpréter les résultats et décider : poursuivre, ajuster, arrêter",
+     "kind": "reading",
+     "body_md": "## Objectifs\n\n- Lire des résultats de petit échantillon avec prudence.\n- Décider et consigner la décision dans la synthèse de découverte.\n\n## Comparer au critère défini avant\n\nCommencez par la comparaison au seuil fixé à l'avance. Exemple fictif : « au moins 6 participants sur 15 » ; résultat observé : 5. Ne déplacez pas le seuil pour qu'il soit atteint. Si vous pensez que le seuil était mal fixé, dites-le et préparez un nouveau test plutôt que de réinterpréter celui-ci.\n\n## Les petits échantillons\n\nAvec quelques dizaines de participants au mieux, des **écarts de quelques personnes** peuvent relever du hasard. Ces tests sont **indicatifs** : ils servent à repérer un signal fort ou à éliminer une piste évidente, pas à prouver un pourcentage. Présentez toujours le nombre de participants (« 5 sur 15 », pas « 33 % »).\n\n## Croiser les signaux\n\n- **Quantitatif** : combien ont cliqué, terminé, répondu.\n- **Qualitatif** : pourquoi, d'après leurs mots. Les raisons indiquent comment ajuster.\n- **Contradictions** : si les comportements et les déclarations divergent, donnez plus de poids à ce qui a été fait, et cherchez l'explication.\n\nSi vous utilisez l'IA pour résumer les commentaires ouverts, les mêmes règles de vérification s'appliquent (citations exactes, comptes recalculés).\n\n## Quatre biais courants\n\n- **Biais de confirmation** : ne retenir que ce qui valide l'idée.\n- **Biais de recrutement** : participants plus enthousiastes que la population visée.\n- **Effet de nouveauté** : un clic de curiosité n'est pas un besoin durable.\n- **Complaisance** : certains participants disent ce qui fait plaisir.\n\n## Décider\n\n```mermaid\nstateDiagram-v2\n  accTitle: États d'une hypothèse au fil des tests\n  accDescr: Une hypothèse priorisée est mise en test, puis confirmée, infirmée ou non concluante. Une hypothèse confirmée conduit à poursuivre, une infirmée à ajuster ou arrêter, une non concluante à un autre test.\n  [*] --> Priorisee\n  Priorisee --> EnTest: \"Test rapide lancé\"\n  EnTest --> Confirmee: \"Seuil atteint\"\n  EnTest --> Infirmee: \"Seuil non atteint\"\n  EnTest --> NonConcluante: \"Signal ambigu\"\n  Confirmee --> Poursuivre\n  Infirmee --> Ajuster: \"Piste voisine\"\n  Infirmee --> Arreter: \"Piste abandonnée\"\n  NonConcluante --> EnTest: \"Autre test, plus adapté\"\n  Poursuivre --> [*]\n  Ajuster --> [*]\n  Arreter --> [*]\n```\n*Figure 1 : états possibles d'une hypothèse ; un test non concluant n'est ni une réussite ni un échec, il appelle un test mieux conçu.*\n\n## Consigner\n\nLa **synthèse de découverte** (le livrable du module) rassemble : les questions de recherche, les thèmes avec leur traçabilité, les opportunités, les hypothèses priorisées avec leur grille, les tests menés, leurs résultats et la décision, ainsi que les **limites** (échantillon, biais, sources).\n\n## Mise en pratique\n\nRédigez la décision d'un test fictif (« 5 participants sur 15 ont laissé leur adresse, seuil de 6 ») en trois phrases : ce que vous constatez, ce que vous ne pouvez pas conclure, ce que vous faites ensuite."
+    }
+   ]
+  },
+  {
+   "title": "Ateliers no-code et low-code",
+   "lessons": [
+    {
+     "title": "Atelier 1 : transformer des verbatims fictifs en synthèse traçable",
+     "kind": "exercise",
+     "body_md": "## Objectif et durée\n\n**Objectif** : construire une table de verbatims fictifs, la faire synthétiser par un assistant, puis vérifier chaque citation. **Durée estimée** : 75 minutes.\n\n## Plateformes\n\n- **Un assistant conversationnel** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier.\n- **Google Sheets** (no-code) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternatives : **Airtable**, **NocoDB** ou **Notion** (base de données), mêmes principes.\n\n## Étapes\n\n1. Créez une table « Verbatims » avec les colonnes : identifiant, participant, source, verbatim, code.\n2. Saisissez les six lignes fictives de la leçon d'exercice sur la synthèse traçable, puis écrivez-en 14 autres de votre invention sur le même thème (partage de dépenses entre colocataires), issues de six à huit participants fictifs. Variez les avis, ajoutez au moins deux contradictions et deux remarques « hors sujet ».\n3. Copiez la table dans l'assistant avec la consigne de la leçon : corpus uniquement, citation exacte avec identifiant, « non trouvé » autorisé, séparation observation et interprétation, nombre de participants distincts.\n4. Créez une seconde table « Thèmes » : thème, phrase d'enseignement, identifiants cités, participants distincts annoncés, **participants distincts recomptés**, citations vérifiées (oui ou non).\n5. Pour chaque thème proposé, recherchez chaque citation dans votre table à l'aide de la fonction de recherche de l'outil. Cochez « oui » seulement si elle est exacte mot pour mot.\n6. Recalculez le nombre de participants distincts par thème (un filtre ou un tri suffit) et notez les écarts avec ceux annoncés.\n7. Demandez à l'assistant : « Quelles lignes ne sont dans aucun thème ? Quelles conclusions ce corpus ne permet-il pas de tirer ? » Ajoutez la réponse corrigée dans une feuille « Limites ».\n\n## Résultat attendu\n\nDeux tables reliées (verbatims, thèmes) avec une colonne de vérification, et une liste de limites.\n\n## Critères de réussite\n\n- [ ] 20 verbatims fictifs avec identifiants uniques.\n- [ ] Au moins 3 thèmes, chacun relié à des identifiants.\n- [ ] Toutes les citations vérifiées ; les citations inexactes sont corrigées ou supprimées.\n- [ ] Les comptes de participants sont recalculés et les écarts notés.\n- [ ] Au moins deux contradictions ou lignes hors thèmes sont traitées, pas lissées.\n\n## Pièges\n\nColler de vrais messages ou de vrais noms ; accepter une citation « presque » exacte ; compter des lignes au lieu de participants. **Données** : uniquement fictives, jamais de données personnelles ni confidentielles de votre employeur.\n\n## Pour aller plus loin\n\nAjoutez une colonne « interprétation ou observation » et faites relire votre table par une autre personne, qui cherche une généralisation abusive."
+    },
+    {
+     "title": "Atelier 2 : de l'affinité aux hypothèses priorisées dans une base",
+     "kind": "exercise",
+     "body_md": "## Objectif et durée\n\n**Objectif** : regrouper des thèmes sur un tableau blanc, dessiner un arbre opportunité-solution, puis prioriser les hypothèses dans une base avec une grille explicite. **Durée estimée** : 90 minutes.\n\n## Plateformes\n\n- **Miro** (no-code, tableau blanc) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative : **FigJam**.\n- **Google Sheets**, **Airtable**, **NocoDB** ou **Notion** (no-code, base ou tableur) : offre gratuite ou version libre à la date de rédaction, à vérifier.\n- **Un assistant conversationnel** (no-code) pour le second avis.\n\n## Étapes\n\n1. Sur le tableau blanc, créez une note par observation de l'atelier 1 (avec son identifiant) et regroupez-les par affinité en thèmes, avec une couleur par thème.\n2. Dessinez un arbre : un résultat visé en haut, deux ou trois opportunités, deux solutions par opportunité, un test par solution. Reliez chaque opportunité à des identifiants de citations.\n3. Dans une base, créez la table « Hypothèses » : énoncé, type (désirabilité, utilisabilité, faisabilité, viabilité), importance (1 à 5), preuve (1 à 5), coût du test (1 à 5), justification (identifiants), score.\n4. Rédigez au moins six hypothèses avec « Nous croyons que… Nous le saurons si… » et un seuil fixé à l'avance.\n5. Notez **seul** les trois critères, avec des ancres écrites dans une feuille « Échelles ». Ajoutez une colonne calculée pour le score : importance × (6 − preuve) ÷ coût, en utilisant la fonction de formule de l'outil.\n6. Demandez à l'assistant (sans lui demander de notes) : « Voici mes hypothèses, mes notes et mes justifications. Quelles notes te semblent peu justifiées ? Quelles hypothèses manquent ? » Notez ses remarques, puis décidez ce que vous retenez.\n7. Modifiez une note d'un point et observez l'ordre. Appliquez le garde-fou : toute hypothèse d'importance 5 et de preuve 1 ou 2 reste dans la liste de test.\n\n## Résultat attendu\n\nUn tableau d'affinité, un arbre opportunité-solution et une base d'hypothèses classées, avec justification et remarques critiques.\n\n## Critères de réussite\n\n- [ ] Les thèmes du tableau renvoient à des identifiants de l'atelier 1.\n- [ ] Au moins six hypothèses falsifiables avec seuil fixé avant test.\n- [ ] Des échelles écrites et des justifications par preuve.\n- [ ] Le test de sensibilité est documenté.\n- [ ] Les remarques de l'assistant sont triées (retenues ou écartées, avec raison).\n\n## Pièges\n\nDemander les notes à l'assistant avant les vôtres ; ajuster les notes pour obtenir l'ordre voulu ; produire des hypothèses sans critère de succès. **Données** : fictives ou publiques uniquement.\n\n## Pour aller plus loin\n\nAjoutez une colonne « hypothèse contradictoire » : pour chaque hypothèse, ce qui, dans le corpus, pourrait la contredire."
+    },
+    {
+     "title": "Atelier 3 : monter un test de concept rapide et décider",
+     "kind": "exercise",
+     "body_md": "## Objectif et durée\n\n**Objectif** : créer une page de concept fictive, y recueillir des réactions avec un formulaire, puis décider à partir d'un seuil fixé à l'avance. **Durée estimée** : 90 minutes.\n\n## Plateformes\n\n- **Lovable** ou **Bolt** (low-code, création assistée de pages par description) : offre gratuite ou version libre à la date de rédaction, à vérifier. Alternative sans génération : une page de présentation dans **Notion** ou une maquette sur **Miro** ou **FigJam**.\n- **Tally** ou **Google Forms** (no-code, formulaire) : offre gratuite ou version libre à la date de rédaction, à vérifier.\n- **Google Sheets** ou **Airtable** (no-code) pour consolider les réponses.\n\n## Étapes\n\n1. Choisissez dans l'atelier 2 **une** hypothèse de désirabilité et écrivez la fiche de test : hypothèse, critère de succès (par exemple « au moins 6 réponses positives sur 15 », seuil fictif), critère d'arrêt, participants visés, données collectées.\n2. Demandez à l'outil de création assistée une page courte : titre, promesse en une phrase, trois bénéfices, un bouton d'appel à l'action et la mention bien visible « Concept en exploration, rien n'est encore en vente ».\n3. Relisez la page : supprimez toute promesse que vous ne tiendrez pas, tout chiffre inventé et toute demande de données superflue.\n4. Créez un formulaire de trois questions maximum (intérêt déclaré, ce qu'ils font aujourd'hui, ce qui les freinerait) sans nom, ni adresse de contact obligatoire. Reliez-le à l'appel à l'action ou intégrez-le sous la page.\n5. Faites tester la page par quelques personnes volontaires et informées, ou, à défaut, saisissez 15 réponses **fictives** que vous écrivez vous-même et marquez comme telles. N'envoyez la page à personne sans consentement.\n6. Consolidez les réponses dans un tableur : compteurs par réponse, raisons principales. Comparez au seuil fixé à l'étape 1.\n7. Rédigez la décision en trois phrases : poursuivre, ajuster ou arrêter, ce que le test ne permet pas de conclure, prochain test.\n\n## Résultat attendu\n\nUne fiche de test, une page de concept, un formulaire, un tableau de résultats et une décision argumentée.\n\n## Critères de réussite\n\n- [ ] Le seuil est écrit avant les réponses.\n- [ ] La page signale clairement qu'il s'agit d'un concept fictif.\n- [ ] Aucune donnée personnelle superflue n'est collectée.\n- [ ] La décision cite le nombre de participants et pas seulement un pourcentage.\n- [ ] Les limites (échantillon, recrutement, nouveauté) sont notées.\n\n## Pièges\n\nLaisser la page publique sous un vrai nom de marque ou avec une promesse tenue pour acquise ; changer le seuil après coup ; confondre curiosité et besoin. **Données** : fictives, jamais de données personnelles ni confidentielles de votre employeur.\n\n## Pour aller plus loin\n\nCréez une seconde version de la promesse et comparez les deux sur de petits groupes en notant pourquoi l'écart observé n'est pas une preuve statistique."
+    }
+   ]
+  }
+ ],
+ "quiz": {
+  "title": "Quiz du module",
+  "pass_percent": 70,
+  "max_attempts": null,
+  "questions": [
+   {
+    "kind": "single_choice",
+    "prompt": "Quel est le rôle le plus adapté de l'IA dans une démarche de découverte produit ?",
+    "feedback": "L'IA accélère des tâches de préparation et de mise en forme. L'interprétation, la décision et la responsabilité envers les participants restent à l'équipe, et la parole des utilisateurs réels ne se remplace pas.",
+    "options": [
+     [
+      "Décider seule des problèmes à résoudre en priorité",
+      false
+     ],
+     [
+      "Garantir que les synthèses sont exemptes d'erreurs",
+      false
+     ],
+     [
+      "Assister la préparation, la synthèse et la mise en forme, l'équipe interprétant et décidant",
+      true
+     ],
+     [
+      "Remplacer les entretiens par des réponses générées",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle question d'entretien est la mieux formulée pour comprendre un comportement ?",
+    "feedback": "Un récit d'un épisode récent apporte des faits. Les autres questions sont fermées, suggestives ou portent sur un futur hypothétique, ce qui produit des réponses de politesse.",
+    "options": [
+     [
+      "« Aimeriez-vous une application qui calcule tout automatiquement ? »",
+      false
+     ],
+     [
+      "« Ne trouvez-vous pas que les relances sont pénibles ? »",
+      false
+     ],
+     [
+      "« Racontez-moi la dernière fois que vous avez partagé une dépense avec vos colocataires. »",
+      true
+     ],
+     [
+      "« Utiliseriez-vous une fonction d'IA pour vos comptes ? »",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles pratiques réduisent le biais d'échantillon dans une recherche utilisateur ?",
+    "feedback": "Diversifier, inclure des voix critiques et documenter le recrutement permet de dire ce que l'échantillon couvre. Se limiter aux enthousiastes ou inventer des profils renforce le biais.",
+    "options": [
+     [
+      "Noter comment chaque participant a été recruté",
+      true
+     ],
+     [
+      "Inclure des non-utilisateurs et des utilisateurs mécontents",
+      true
+     ],
+     [
+      "Varier les profils interrogés",
+      true
+     ],
+     [
+      "Laisser un assistant IA inventer les profils manquants",
+      false
+     ],
+     [
+      "Interroger seulement les personnes les plus enthousiastes",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Avant d'envoyer une transcription d'entretien à un assistant IA, quelle précaution est la plus appropriée ?",
+    "feedback": "Les transcriptions contiennent souvent des données personnelles. On minimise, on pseudonymise et on vérifie les règles internes et les conditions du service. En cas de doute, on s'adresse au délégué à la protection des données ou au service juridique.",
+    "options": [
+     [
+      "Pseudonymiser le texte et vérifier le cadre d'usage de l'organisation et les conditions du service",
+      true
+     ],
+     [
+      "Envoyer le texte complet pour que l'analyse soit plus précise",
+      false
+     ],
+     [
+      "Considérer que l'accord oral du participant couvre tout traitement futur",
+      false
+     ],
+     [
+      "Supprimer seulement le nom du fichier",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles informations donner aux participants avant un entretien enregistré ?",
+    "feedback": "L'information porte sur la finalité, les traitements (y compris par IA), la conservation et le droit de se retirer. Orienter les réponses ou diffuser l'identité sans accord est contraire aux bonnes pratiques.",
+    "options": [
+     [
+      "Un engagement que leurs propos seront cités avec leur nom complet sans leur accord",
+      false
+     ],
+     [
+      "L'objectif de l'étude",
+      true
+     ],
+     [
+      "La réponse que l'équipe espère entendre",
+      false
+     ],
+     [
+      "La durée de conservation et leur liberté de se retirer",
+      true
+     ],
+     [
+      "Ce qui est enregistré et si des outils d'IA servent au traitement",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pour quel usage un persona synthétique généré par un modèle est-il acceptable ?",
+    "feedback": "Un persona synthétique est un texte plausible, non une expérience vécue. Il peut servir d'entraînement ou d'inspiration, jamais de preuve de désirabilité ou de demande.",
+    "options": [
+     [
+      "Estimer la demande réelle pour un produit",
+      false
+     ],
+     [
+      "S'entraîner à mener un entretien ou repérer des angles à vérifier ensuite auprès de personnes réelles",
+      true
+     ],
+     [
+      "Valider qu'un prix sera accepté",
+      false
+     ],
+     [
+      "Compter comme un participant d'un test",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi les réponses d'un utilisateur simulé par un modèle sont-elles peu fiables ?",
+    "feedback": "Le modèle produit du texte plausible, souvent cohérent et coopératif, qui efface contradictions et surprises. Les réponses n'ont aucune valeur de mesure de la demande.",
+    "options": [
+     [
+      "Les réponses générées sont toujours identiques d'un essai à l'autre",
+      false
+     ],
+     [
+      "Le modèle ne génère que des réponses négatives",
+      false
+     ],
+     [
+      "Elles reflètent des régularités moyennes et une tendance à la complaisance, sans expérience vécue ni vérification possible",
+      true
+     ],
+     [
+      "Le modèle refuse toujours de répondre à des questions sur des produits",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Que signifie la traçabilité dans une synthèse de découverte ?",
+    "feedback": "La traçabilité permet de remonter d'une affirmation aux mots exacts d'un participant. Sans elle, une synthèse fluide reste invérifiable.",
+    "options": [
+     [
+      "Chaque hypothèse renvoie à un thème, chaque thème à des citations identifiées dans des entretiens",
+      true
+     ],
+     [
+      "Chaque thème est classé par ordre d'importance",
+      false
+     ],
+     [
+      "La synthèse indique l'outil d'IA utilisé et sa version",
+      false
+     ],
+     [
+      "La synthèse est rédigée dans un format standard partagé par l'équipe",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels éléments d'une consigne de synthèse renforcent la fiabilité du résultat ?",
+    "feedback": "Citations exactes, identifiants et droit de dire « non trouvé » limitent les inventions. Demander de combler les trous ou de masquer les sources favorise les hallucinations.",
+    "options": [
+     [
+      "Un corpus numéroté avec identifiants de lignes",
+      true
+     ],
+     [
+      "Demander de compléter de façon plausible les informations manquantes",
+      false
+     ],
+     [
+      "L'autorisation de répondre « non trouvé »",
+      true
+     ],
+     [
+      "L'obligation de citer mot pour mot avec l'identifiant",
+      true
+     ],
+     [
+      "Demander une synthèse la plus courte possible sans indiquer les sources",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Une citation fournie par l'assistant est introuvable dans le corpus. Que faites-vous ?",
+    "feedback": "Une citation non retrouvée est une erreur, même plausible. Elle n'a plus de valeur de preuve, et sa présence invite à contrôler le reste de la synthèse.",
+    "options": [
+     [
+      "La supprimer ou la remplacer par une citation vérifiée, et rechercher d'autres erreurs du même type",
+      true
+     ],
+     [
+      "La signaler comme « citation approximative » et la garder",
+      false
+     ],
+     [
+      "La reformuler pour qu'elle ressemble au style des participants",
+      false
+     ],
+     [
+      "La conserver si le sens est cohérent avec le thème",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un seul participant sur cinq évoque un sujet, mais la synthèse écrit « les utilisateurs veulent… ». De quelle erreur s'agit-il ?",
+    "feedback": "Généraliser à partir d'un cas isolé fausse la lecture. On précise « 1 participant sur 5 » et on garde le sujet comme piste à explorer.",
+    "options": [
+     [
+      "Un biais de nouveauté",
+      false
+     ],
+     [
+      "Un lissage, qui supprime les avis contradictoires",
+      false
+     ],
+     [
+      "Une sur-généralisation, qui doit être corrigée en indiquant le nombre de participants concernés",
+      true
+     ],
+     [
+      "Une pseudonymisation insuffisante",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels contrôles font partie d'une vérification sérieuse d'une synthèse produite par IA ?",
+    "feedback": "La vérification se fait contre la source : citations, relecture, recomptage, contre-lecture. Une auto-évaluation de l'assistant n'est pas un contrôle.",
+    "options": [
+     [
+      "Rechercher chaque citation dans le corpus par texte exact",
+      true
+     ],
+     [
+      "Demander à l'assistant s'il est sûr de lui et s'en contenter",
+      false
+     ],
+     [
+      "Recompter les participants par thème",
+      true
+     ],
+     [
+      "Relire soi-même quelques entretiens complets",
+      true
+     ],
+     [
+      "Demander une contre-lecture cherchant les passages qui contredisent chaque thème",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi les avis en ligne et les tickets de support ne représentent-ils pas l'ensemble des utilisateurs ?",
+    "feedback": "Chaque canal a ses biais. Il faut dire qui s'exprime et qui ne s'exprime pas avant d'interpréter des volumes.",
+    "options": [
+     [
+      "Les personnes qui écrivent sont en général plus motivées que la moyenne, et celles qui n'écrivent jamais n'apparaissent pas",
+      true
+     ],
+     [
+      "Ils sont toujours rédigés par des utilisateurs de longue date",
+      false
+     ],
+     [
+      "Ils contiennent forcément des données personnelles sensibles",
+      false
+     ],
+     [
+      "Les assistants IA ne savent pas les lire",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Sur 200 retours analysés, 45 évoquent les relances. Comment présenter ce résultat ?",
+    "feedback": "45 sur 200 donne 22,5 % des retours analysés. Le dénominateur est le corpus, pas la population, et la fréquence de citation ne mesure pas l'importance.",
+    "options": [
+     [
+      "22,5 % des retours analysés, issus de canaux inégaux, sans extrapoler à tous les utilisateurs",
+      true
+     ],
+     [
+      "22,5 % de tous les utilisateurs du produit",
+      false
+     ],
+     [
+      "Un résultat sans valeur car l'échantillon est trop petit",
+      false
+     ],
+     [
+      "Le problème prioritaire, puisqu'il est le plus cité",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Comment évaluer la qualité d'un classement automatique de retours par un modèle ?",
+    "feedback": "Un échantillon étiqueté par des humains sert de référence, comme dans le module M17. L'auto-évaluation du modèle ne mesure pas ses erreurs réelles.",
+    "options": [
+     [
+      "Se fier à sa description de son niveau de confiance",
+      false
+     ],
+     [
+      "Vérifier uniquement les retours qu'il juge ambigus",
+      false
+     ],
+     [
+      "Demander au modèle de réévaluer son propre classement",
+      false
+     ],
+     [
+      "Étiqueter à la main un échantillon tiré au hasard et comparer avec les étiquettes du modèle",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quelle formulation correspond à un besoin selon la logique des jobs-to-be-done ?",
+    "feedback": "Un besoin décrit une situation, une motivation et un résultat, sans imposer de solution. Les autres formulations sont une solution, une opinion vague ou un objectif trop large.",
+    "options": [
+     [
+      "« Les utilisateurs aiment les applications modernes. »",
+      false
+     ],
+     [
+      "« Quand je viens de payer les courses, je veux enregistrer la dépense sans y penser, afin de ne pas reconstituer les comptes plus tard. »",
+      true
+     ],
+     [
+      "« Améliorer l'expérience globale de l'application. »",
+      false
+     ],
+     [
+      "« Ajouter un bouton d'export au format tableur. »",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un participant dit « il me faudrait un export tableur ». Que faites-vous ?",
+    "feedback": "Les participants parlent souvent en solutions. Remonter au besoin permet d'envisager d'autres réponses.",
+    "options": [
+     [
+      "L'ignorer car les participants ne savent pas ce dont ils ont besoin",
+      false
+     ],
+     [
+      "Demander à l'IA d'ajouter dix fonctionnalités voisines",
+      false
+     ],
+     [
+      "Le noter comme solution proposée et chercher le besoin sous-jacent : que veut-il accomplir avec cet export ?",
+      true
+     ],
+     [
+      "L'inscrire directement au backlog comme besoin prioritaire",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quels niveaux composent un arbre opportunité-solution ?",
+    "feedback": "L'arbre relie un résultat visé à des opportunités, des solutions et des tests. Les versions de modèle relèvent de la livraison.",
+    "options": [
+     [
+      "Le résultat visé",
+      true
+     ],
+     [
+      "Les versions de modèle en production",
+      false
+     ],
+     [
+      "Les solutions candidates",
+      true
+     ],
+     [
+      "Les tests associés aux solutions",
+      true
+     ],
+     [
+      "Les opportunités issues de la recherche",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel énoncé est une hypothèse de viabilité ?",
+    "feedback": "La viabilité concerne la pérennité pour l'organisation (modèle économique, capacité). Les autres énoncés concernent l'utilisabilité, la faisabilité et la désirabilité.",
+    "options": [
+     [
+      "« Les colocataires saisissent une dépense en moins de trente secondes. »",
+      false
+     ],
+     [
+      "« Les colocataires veulent éviter de relancer eux-mêmes. »",
+      false
+     ],
+     [
+      "« Le modèle lit correctement 90 % de nos tickets de caisse. »",
+      false
+     ],
+     [
+      "« Assez de groupes accepteraient un abonnement léger pour justifier l'effort de développement. »",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'est-ce qui rend une hypothèse testable ?",
+    "feedback": "Une hypothèse falsifiable comprend une observation mesurable et un seuil décidé à l'avance. Sans cela, tout résultat peut être interprété comme une réussite.",
+    "options": [
+     [
+      "Elle peut être démentie par une observation précise, avec un seuil fixé avant le test",
+      true
+     ],
+     [
+      "Elle est rédigée avec des termes positifs",
+      false
+     ],
+     [
+      "Elle porte sur l'ensemble de l'expérience utilisateur",
+      false
+     ],
+     [
+      "Elle est validée par la direction",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Avec le score importance × (6 − preuve) ÷ coût, quelle valeur obtient une hypothèse d'importance 4, de preuve 2 et de coût 2 ?",
+    "feedback": "4 × (6 − 2) ÷ 2 = 4 × 4 ÷ 2 = 8. Plus la preuve est faible, plus le score monte ; plus le test est coûteux, plus il baisse.",
+    "options": [
+     [
+      "16",
+      false
+     ],
+     [
+      "4",
+      false
+     ],
+     [
+      "8",
+      true
+     ],
+     [
+      "2",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Pourquoi ajouter un garde-fou pour les hypothèses d'importance 5 et de preuve faible ?",
+    "feedback": "Un score peut masquer un pari décisif. Le garde-fou impose de le traiter, en cherchant une manière plus économique de le tester.",
+    "options": [
+     [
+      "Parce que les hypothèses importantes sont toujours vraies",
+      false
+     ],
+     [
+      "Leur coût de test élevé peut les faire descendre dans le classement alors qu'elles sont décisives : on cherche un test moins coûteux plutôt que de les écarter",
+      true
+     ],
+     [
+      "Parce que le score ne s'applique qu'aux hypothèses d'importance moyenne",
+      false
+     ],
+     [
+      "Pour éviter de calculer leur score",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles pratiques limitent l'ancrage quand on utilise l'IA comme second avis sur une priorisation ?",
+    "feedback": "L'IA est utile pour challenger, pas pour décider. La décision et ses raisons restent à l'équipe, avec des notes justifiées et testées.",
+    "options": [
+     [
+      "Justifier chaque note par une preuve identifiée",
+      true
+     ],
+     [
+      "Lui demander de critiquer les notes et de signaler des hypothèses manquantes",
+      true
+     ],
+     [
+      "Appliquer les notes proposées par l'assistant pour gagner du temps",
+      false
+     ],
+     [
+      "Noter seul avant de consulter l'assistant",
+      true
+     ],
+     [
+      "Tester si le classement change quand une note varie d'un point",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Qu'est-ce qu'un test de fumée en découverte produit ?",
+    "feedback": "Le test de fumée mesure des actions (inscriptions, demandes) en réponse à une promesse, ce qui est généralement plus fiable que des opinions déclarées.",
+    "options": [
+     [
+      "Un sondage demandant si les gens aimeraient le produit",
+      false
+     ],
+     [
+      "Un test de charge sur un prototype",
+      false
+     ],
+     [
+      "Présenter la promesse d'un produit qui n'existe pas encore avec un appel à l'action et observer le comportement des personnes",
+      true
+     ],
+     [
+      "Un test interne des fonctions déjà développées",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quel test est le plus adapté à une hypothèse de faisabilité sur la qualité d'un modèle pour vos tickets de caisse ?",
+    "feedback": "La faisabilité se vérifie en mettant le modèle à l'épreuve. Un humain qui simule le modèle teste la valeur perçue, pas la capacité réelle du modèle.",
+    "options": [
+     [
+      "Un test de fumée avec une page de présentation",
+      false
+     ],
+     [
+      "Un entretien demandant aux utilisateurs si le modèle sera fiable",
+      false
+     ],
+     [
+      "Un « magicien d'Oz » où un humain simule la lecture",
+      false
+     ],
+     [
+      "Un prototype fonctionnel limité ou un spike évalué sur des cas réalistes",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Quand faut-il fixer le critère de succès d'un test de concept ?",
+    "feedback": "Fixer le seuil après coup permet de justifier n'importe quel résultat. Le critère décidé à l'avance protège contre le biais de confirmation.",
+    "options": [
+     [
+      "Avant de lancer le test et de voir les résultats",
+      true
+     ],
+     [
+      "À la fin, selon l'impression générale",
+      false
+     ],
+     [
+      "Après avoir observé les premières réponses",
+      false
+     ],
+     [
+      "Uniquement si le résultat est mitigé",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "multiple_choice",
+    "prompt": "Quelles précautions s'imposent pour un test de fumée sur un produit qui n'existe pas encore ?",
+    "feedback": "Honnêteté, minimisation des données et absence de fausses promesses protègent les participants et la crédibilité du test.",
+    "options": [
+     [
+      "Indiquer qu'il s'agit d'un concept en exploration",
+      true
+     ],
+     [
+      "Ne rien promettre que l'équipe ne peut pas tenir",
+      true
+     ],
+     [
+      "Laisser croire que le produit est disponible pour obtenir plus de réponses",
+      false
+     ],
+     [
+      "Ne collecter que les données strictement nécessaires",
+      true
+     ]
+    ]
+   },
+   {
+    "kind": "single_choice",
+    "prompt": "Un test sur 15 participants atteint 5 réponses positives pour un seuil fixé à 6. Quelle lecture est la plus rigoureuse ?",
+    "feedback": "Le seuil ne se déplace pas après coup. Sur peu de participants, un écart d'une personne ne permet ni conclusion ferme ni déclaration de réussite : on ajuste ou on conçoit un test plus adapté.",
+    "options": [
+     [
+      "Le seuil n'est pas atteint ; avec un si petit échantillon, le résultat est indicatif et appelle un ajustement ou un test mieux conçu",
+      true
+     ],
+     [
+      "Le seuil était trop sévère et peut être abaissé à 5",
+      false
+     ],
+     [
+      "Le résultat est équivalent à un succès car l'écart est faible",
+      false
+     ],
+     [
+      "Le résultat prouve que l'idée est fausse",
+      false
+     ]
+    ]
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Vous disposez d'une synthèse de huit entretiens produite par un assistant IA, avec des citations. Décrivez en quelques lignes comment vous la vérifiez avant de la présenter à votre équipe.",
+    "feedback": "Une bonne réponse mentionne la recherche exacte de chaque citation dans le corpus, la relecture de quelques entretiens complets, le recomptage des participants par thème, la recherche de contradictions et de généralisations, ainsi que la relecture par un collègue.",
+    "options": []
+   },
+   {
+    "kind": "free_text",
+    "prompt": "Choisissez une hypothèse de désirabilité de votre contexte et décrivez le test de concept rapide que vous monteriez : hypothèse, critère de succès fixé à l'avance, matériel, participants et décision selon les résultats.",
+    "feedback": "Une bonne réponse comprend une hypothèse falsifiable, un seuil chiffré fixé avant le test, un matériel minimal clairement présenté comme un concept, un recrutement et des limites explicitées, ainsi que les décisions prévues pour chaque issue (poursuivre, ajuster, arrêter).",
+    "options": []
+   }
+  ]
+ },
+ "assignment": {
+  "title": "Livrable pratique : synthèse de découverte avec hypothèses priorisées",
+  "instructions_md": "## Objectif\n\nDémontrer que vous savez synthétiser des retours utilisateurs **avec traçabilité**, formuler et **prioriser des hypothèses selon des critères explicites**, puis **monter un test de concept rapide** et décider. Vous travaillez sur un cas fictif de votre choix (ou l'application de dépenses partagées entre colocataires du module). Toutes les données sont inventées : aucune donnée personnelle ni confidentielle n'est nécessaire.\n\n## Consignes\n\nCe livrable se réalise **sans code**, avec les outils no-code et low-code des trois ateliers du dernier chapitre : table de verbatims et assistant (atelier 1), tableau blanc et base d'hypothèses (atelier 2), page de concept, formulaire et tableur (atelier 3). Le rendu peut être un lien, un export PDF ou un document.\n\n1. **Cadrage** : question de recherche, population visée, limites de l'échantillon et notes sur le recrutement (au moins quatre lignes).\n2. **Corpus et synthèse traçable** : au moins **20 verbatims fictifs** de six participants ou plus, identifiés. Présentez au moins **trois thèmes**, chacun avec phrase d'enseignement, identifiants, citation exacte et nombre de participants recompté. Indiquez les contradictions et les lignes hors thème.\n3. **Vérification** : un paragraphe décrivant les contrôles effectués sur la synthèse produite par l'assistant (citations retrouvées, comptes recalculés) et les erreurs repérées.\n4. **Besoins et opportunités** : trois besoins formulés « Quand… je veux… afin de… », un arbre opportunité-solution (une opportunité au moins avec deux solutions et un test chacune).\n5. **Hypothèses et priorisation** : au moins **six hypothèses** couvrant au moins deux types (désirabilité, utilisabilité, faisabilité, viabilité), chacune avec seuil fixé à l'avance, notes sur les trois critères avec échelles écrites et justification par preuve, **grille d'évaluation** et classement. Ajoutez un test de sensibilité et l'application du garde-fou.\n6. **Second avis de l'IA** : les remarques d'un assistant (sans lui laisser noter), et ce que vous avez retenu ou écarté, avec raison.\n7. **Test de concept rapide** : fiche de test (hypothèse, critère de succès, critère d'arrêt, participants, données collectées), capture de la page de concept et du formulaire, résultats sur données fictives ou volontaires informés.\n8. **Décision et limites** : décision argumentée (poursuivre, ajuster, arrêter) et ce que les résultats ne démontrent pas.\n9. **Précautions** : un paragraphe sur le consentement, la pseudonymisation et l'usage de l'IA dans le traitement des données.\n10. **Variante pour profils avancés (facultative)** : ajoutez une seconde synthèse faite par un autre assistant et comparez les écarts.\n\n## Grille d'évaluation\n\n- Traçabilité et qualité de la synthèse : thèmes étayés, comptes corrects, contradictions traitées (**25 %**).\n- Vérification de la production de l'IA et lucidité sur ses erreurs (**15 %**).\n- Qualité des hypothèses : falsifiables, typées, seuils fixés avant test (**15 %**).\n- Priorisation : critères explicites, échelles, justification, sensibilité et garde-fou (**20 %**).\n- Test de concept : proportionné, honnête, critère fixé à l'avance, données minimales (**15 %**).\n- Décision, limites et précautions de confidentialité (**10 %**).\n\n## Rendu\n\nTexte dans le champ de réponse et/ou fichier PDF ou document, avec liens ou captures des outils utilisés."
+ }
+}
