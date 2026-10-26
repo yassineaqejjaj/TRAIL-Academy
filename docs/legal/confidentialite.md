@@ -1,36 +1,60 @@
 # Politique de confidentialité
 
-> **BROUILLON — À COMPLÉTER ET À FAIRE VALIDER PAR UN JURISTE avant publication.** Ce texte décrit ce que la plateforme fait réellement ; il ne constitue pas un avis juridique. Chaque mention `[À COMPLÉTER : …]` est une information que seul l’éditeur peut fournir.
+> **BROUILLON — À COMPLÉTER ET À FAIRE VALIDER PAR UN JURISTE avant publication.** Ce texte décrit ce que la plateforme fait réellement ; il ne constitue pas un avis juridique. Chaque mention `[À COMPLÉTER : …]` est une information que seul l’éditeur peut fournir ; chaque `[À VALIDER : …]` est un choix juridique à arrêter avec un juriste.
 
-## Responsable de traitement
-[À COMPLÉTER : identité de l’éditeur, adresse, contact pour l’exercice des droits]. Délégué à la protection des données : [À COMPLÉTER ou « non désigné »].
+*Dernière mise à jour : [À COMPLÉTER].*
 
-## Données traitées, finalités et bases légales
-| Données | Finalité | Base légale (à valider) |
+Cette politique explique quelles données TRAIL Academy collecte, pourquoi, avec qui elles sont partagées et comment exercer vos droits (RGPD et loi Informatique et Libertés).
+
+## 1. Responsable de traitement
+[À COMPLÉTER : identité de l’éditeur, adresse], joignable à [À COMPLÉTER : adresse e-mail dédiée aux demandes de données]. Délégué à la protection des données : [À COMPLÉTER ou « non désigné »].
+
+## 2. Données traitées, finalités et bases légales
+| Données | Finalité | Base légale [À VALIDER] | Conservation [À VALIDER] |
+|---|---|---|---|
+| Nom, adresse e-mail, mot de passe (haché avec Argon2id, jamais stocké en clair) | Créer et sécuriser le compte, donner accès aux formations | Exécution du contrat | Jusqu’à suppression du compte |
+| Connexion avec Google (si vous la choisissez) : identifiant et e-mail fournis par Google | Authentification | Exécution du contrat | Jusqu’à suppression du compte |
+| Commandes, montants, statut, identifiants Stripe | Accès aux contenus achetés, facturation, comptabilité | Exécution du contrat ; obligation légale | [À COMPLÉTER : durée comptable, généralement 10 ans], détachées de votre identité après suppression du compte |
+| Progression, réponses aux quiz, livrables déposés, notes, favoris, attestations | Fournir la formation, évaluer, délivrer l’attestation | Exécution du contrat | Jusqu’à suppression du compte (attestations : [À COMPLÉTER]) |
+| Réservations de sessions en direct, liste d’attente, adresse e-mail transmise à l’animateur | Organiser les visioconférences, envoyer l’invitation | Exécution du contrat | [À COMPLÉTER] |
+| Avis déposés (note, texte, nom affiché) | Publier un avis après votre accord exprès | Consentement (retirable) | Jusqu’au retrait ou à la suppression du compte |
+| Messages des formulaires de contact et de devis | Répondre à votre demande | Intérêt légitime ; mesures précontractuelles | [À COMPLÉTER : par exemple 3 ans après le dernier échange] |
+| Adresse e-mail pour être prévenu(e) d’une ouverture ou recevoir la lettre | Information demandée | Consentement (retirable à tout moment) | Jusqu’au retrait |
+| Adresse IP, navigateur, compteurs de limitation de débit, journaux techniques | Sécurité, prévention des abus et de la fraude | Intérêt légitime | [À COMPLÉTER : durée des journaux] |
+
+Les données de carte bancaire sont traitées exclusivement par Stripe ; elles ne transitent pas par nos serveurs et ne sont pas stockées par TRAIL Academy.
+
+## 3. Conseiller de parcours
+Le conseiller qui vous propose un parcours à partir de la description de votre métier et de votre objectif fonctionne **dans votre navigateur** : le texte saisi n’est pas enregistré. [À VALIDER : si une synthèse par un modèle de langage externe est activée un jour, cette page devra citer le fournisseur, les données transmises et la base légale avant activation ; elle est désactivée par défaut.] Évitez d’y saisir des informations confidentielles ou le nom de votre employeur.
+
+## 4. Destinataires et sous-traitants
+| Sous-traitant | Rôle | Localisation / garanties [À COMPLÉTER ET VALIDER] |
 |---|---|---|
-| Nom, adresse e-mail, mot de passe (stocké haché, jamais en clair) | Créer et sécuriser votre compte, vous donner accès aux formations | Exécution du contrat |
-| Commandes, montants, statut de paiement, identifiant client Stripe | Facturation, accès aux contenus achetés, obligations comptables | Exécution du contrat ; obligation légale |
-| Progression, réponses aux quiz, livrables déposés, notes personnelles, favoris | Fournir la formation, corriger les évaluations, délivrer l’attestation | Exécution du contrat |
-| Messages envoyés via les formulaires de contact et de devis | Répondre à votre demande | Intérêt légitime ou mesures précontractuelles |
-| Adresse e-mail pour être prévenu(e) de l’ouverture d’une formation ou recevoir la lettre | Information demandée par vous | Consentement (retirable à tout moment) |
-| Adresse IP et navigateur lors des connexions ; journaux techniques | Sécurité, prévention des abus (limitation de débit) | Intérêt légitime |
+| Vercel | Hébergement de l’application | États-Unis possible ; clauses contractuelles types / Data Privacy Framework |
+| Railway | Base de données, stockage de fichiers, diffusion vidéo | Région choisie : [À COMPLÉTER] |
+| Stripe | Paiement, facturation, taxes ; agit aussi comme vendeur officiel dans Managed Payments | [À COMPLÉTER] ; Stripe est responsable de traitement pour ses propres obligations |
+| [À COMPLÉTER : prestataire d’e-mails, par exemple Brevo] | Envoi des e-mails transactionnels | [À COMPLÉTER] |
+| Jitsi Meet (ou autre outil de visio configuré) | Sessions de formation en direct | Selon le serveur configuré : [À COMPLÉTER] |
+| Google | Uniquement si vous choisissez la connexion avec Google | États-Unis possible |
 
-Les données de carte bancaire sont traitées exclusivement par Stripe : elles ne transitent pas par nos serveurs et ne sont pas stockées par TRAIL Academy.
+Aucune donnée n’est vendue. Aucune donnée n’est transmise à des régies publicitaires.
 
-## Destinataires et sous-traitants
-- Vercel (hébergement de l’application) — [À COMPLÉTER : localisation, garanties de transfert hors UE]
-- Railway (base de données, stockage de fichiers, diffusion vidéo) — [À COMPLÉTER : région choisie]
-- Stripe (paiement) — [À COMPLÉTER : garanties de transfert]
-- Fournisseur d’envoi d’e-mails : [À COMPLÉTER : nom, région]
-- Google (uniquement si vous choisissez la connexion avec Google)
+## 5. Transferts hors Union européenne
+Certains prestataires peuvent traiter des données aux États-Unis. Les transferts reposent sur [À COMPLÉTER : décision d’adéquation / Data Privacy Framework / clauses contractuelles types, selon chaque prestataire].
 
-## Durées de conservation (à valider)
-- Compte et données d’apprentissage : jusqu’à la suppression du compte par vous.
-- Commandes et pièces comptables : [À COMPLÉTER : durée légale applicable, généralement 10 ans], conservées sans lien avec votre identité après suppression du compte.
-- Demandes de contact et de devis : [À COMPLÉTER].
-- Preuves de consentement : conservées, détachées de votre identité après suppression du compte.
+## 6. Sécurité
+Mots de passe hachés, connexions chiffrées (HTTPS), accès aux données cloisonné par utilisateur au niveau de la base, limitation du nombre de tentatives, vidéos diffusées par liens signés temporaires, journalisation des actions d’administration. Aucune mesure ne garantit un risque nul ; en cas de violation de données susceptible de vous porter préjudice, nous vous en informons et prévenons la CNIL dans les délais légaux.
 
-## Vos droits
-Accès, rectification, effacement, limitation, opposition, portabilité. Depuis votre espace : **Mon espace → Mes données** pour télécharger vos données (JSON) et supprimer votre compte. Pour toute autre demande : [À COMPLÉTER : adresse e-mail]. Vous pouvez saisir la CNIL (cnil.fr).
+## 7. Vos droits
+Accès, rectification, effacement, limitation, opposition, portabilité, retrait du consentement, directives sur le sort de vos données après décès.
+- Depuis **Mon espace → Mes données** : téléchargement de vos données (JSON) et suppression du compte.
+- Pour toute autre demande : [À COMPLÉTER : adresse e-mail]. Réponse sous un mois.
+- Réclamation possible auprès de la CNIL (cnil.fr).
 
-Lors de la suppression, vos fichiers déposés sont effacés ; les commandes déjà payées sont conservées de manière anonymisée. Le compte client Stripe n’est pas supprimé automatiquement : [À COMPLÉTER : procédure interne de suppression chez Stripe sur demande].
+À la suppression du compte, vos fichiers déposés sont effacés ; les commandes déjà payées sont conservées sous forme anonymisée. Le compte client Stripe n’est pas supprimé automatiquement : [À COMPLÉTER : procédure de suppression chez Stripe sur demande].
+
+## 8. Mineurs
+Le site s’adresse à des professionnels majeurs. [À VALIDER : âge minimal.]
+
+## 9. Modification
+Toute modification importante est signalée sur cette page avec la nouvelle date de mise à jour.
