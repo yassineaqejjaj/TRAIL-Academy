@@ -1,10 +1,20 @@
 /** General questions people (and AI assistants) ask before buying. Every answer states a fact the platform really implements. */
+/** What AI Mastery adds to a path, stated without promising anything that is not implemented. */
+export const masteryBenefits = (modules: number, paths: number) => [
+  `Les ${modules} modules d'un seul achat, sans avoir à choisir : du socle (ML, IA générative) aux modules produit, ingénierie et métiers.`,
+  `Les ${paths} parcours inclus : vous pouvez changer de fonction ou de trajectoire sans racheter quoi que ce soit.`,
+  "Une seule échéance : 18 mois d'accès pour l'ensemble du catalogue.",
+  "Même pédagogie que les parcours : quiz, ateliers no-code et livrable relu par le formateur à chaque module.",
+];
+export const masteryNote = "AI Mastery n'ajoute pas de service individuel (pas de coaching ni de session privée incluse) : c'est tout le catalogue, au prix de deux parcours.";
+
 export const generalFaq: { q: string; a: string }[] = [
   { q: "Qu'est-ce que TRAIL Academy ?", a: "TRAIL Academy est une plateforme française de formation en ligne à l'intelligence artificielle pour les professionnels du produit et de la tech. Elle propose 30 modules en 5 phases (fondations, productivité et construction, produit et leadership, systèmes et ingénierie, IA pour les métiers), tous conçus et animés par Yassine Aqejjaj." },
   { q: "À qui s'adressent les formations ?", a: "Aux Product Managers et Product Owners, consultants, chefs de projet, business analysts, profils tech et data, managers, et aux fonctions marketing et communication, RH, juridique et finance. Les prérequis recommandés sont indiqués module par module." },
   { q: "Faut-il savoir coder ?", a: "Non. Chaque module se termine par trois ateliers pratiques sur des plateformes no-code et low-code, et le livrable peut se faire sans écrire de code. Les parties techniques restent optionnelles." },
   { q: "Combien coûtent les formations ?", a: "Trois offres, prix TTC : un module à 199 €, un parcours à 990 € (l'un des six parcours) et AI Mastery à 1 990 € pour l'ensemble des modules et de tous les parcours. Les entreprises obtiennent un devis." },
   { q: "Combien de temps dure l'accès ?", a: "12 mois pour un module, 18 mois pour un parcours ou AI Mastery, à compter de l'achat. La progression et les attestations restent consultables ensuite." },
+  { q: "Quelle différence entre un parcours et AI Mastery ?", a: "Un parcours (990 €) réunit environ huit modules pour un métier. AI Mastery (1 990 €) donne accès à tous les modules et à tous les parcours, pendant 18 mois : vous pouvez suivre plusieurs métiers sans payer deux fois. Il n'inclut pas de service individuel en plus : c'est le même contenu et les mêmes livrables, pour tout le catalogue." },
   { q: "Quels sont les parcours disponibles ?", a: "Six parcours au même prix : Product Manager Augmenté, AI Product Manager, Marketing & Communication Augmentés, RH Augmentées, Juridique Augmenté et Finance Augmentée. AI Mastery donne accès à tous les modules et à tous les parcours." },
   { q: "Quels sujets sont couverts ?", a: "Machine learning, deep learning, IA générative, et pour chaque métier (marketing, RH, juridique, finance) des modules dédiés : contenu et réputation, recrutement et compétences, recherche et contrats, contrôle de gestion et audit. Côté socle : prompt engineering, contexte et mémoire, prototypage avec des outils d'IA, spécifications produit, stratégie IA, IA agentique, éthique et AI Act, RAG, systèmes agentiques, sécurité des LLM, UX de l'IA, coûts, conduite du changement, évaluation et discovery assistée par l'IA." },
   { q: "Comment suis-je évalué ?", a: "Des quiz corrigés automatiquement, puis un livrable pratique relu par le formateur. Le formateur et non une IA valide le livrable." },

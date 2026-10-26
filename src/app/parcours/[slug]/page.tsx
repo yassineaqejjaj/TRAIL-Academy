@@ -6,6 +6,7 @@ import { JsonLd } from "@/components/json-ld";
 import { Badge, ButtonLink, Container, Faq, kickerCls } from "@/components/ui";
 import { availability, coursesOfPath, difficultyLabel, formatEuro, getPath, isPathPurchasable, totalHours } from "@/lib/catalog";
 import { getCatalog } from "@/lib/catalog/load";
+import { masteryBenefits, masteryNote } from "@/lib/faq-data";
 import { abs, breadcrumbLd, faqLd, itemListLd } from "@/lib/seo";
 
 export const revalidate = 60;
@@ -29,6 +30,7 @@ export default async function PathPage({ params }: { params: Promise<{ slug: str
   const list = coursesOfPath(path, catalog);
   const offer = catalog.offers.find((o) => o.slug === path.slug);
   const purchasable = isPathPurchasable(path, catalog) && offer?.amountCents != null;
+  const pathsTotal = catalog.offers.filter((o) => o.kind === "path").reduce((s, o) => s + (o.amountCents ?? 0), 0);
   const unit = list.reduce((s, c) => s + (catalog.coursePrices[c.slug] ?? 0), 0);
   const faq = [
     { q: `À qui s'adresse le parcours ${path.title} ?`, a: `${path.audience}. ${path.tagline}` },
@@ -50,6 +52,14 @@ export default async function PathPage({ params }: { params: Promise<{ slug: str
           <h1 className="text-4xl font-bold sm:text-5xl">{path.title}</h1>
           <p className="mt-4 max-w-2xl text-xl text-muted [text-wrap:pretty]">{path.tagline}</p>
           <p className="mt-4 max-w-2xl text-muted"><strong className="text-fg">Pour qui :</strong> {path.audience}.</p>
+          {path.kind === "bundle" && (
+            <section className="mt-10 rounded-2xl border-2 border-accent bg-surface p-6" aria-label="Ce qu'AI Mastery apporte">
+              <h2 className="text-2xl font-semibold">Ce qu'AI Mastery apporte en plus d'un parcours</h2>
+              <ul className="mt-3 flex flex-col gap-2 text-[17px]">{masteryBenefits(list.length, catalog.learningPaths.filter((p) => p.kind === "path").length).map((b) => <li key={b}>✓ {b}</li>)}</ul>
+              <p className="mt-4 text-sm text-muted">{masteryNote}</p>
+              {offer?.amountCents != null && <p className="mt-2 text-sm text-muted">Pour comparaison : les parcours achetés séparément coûteraient {formatEuro(pathsTotal)}, et les {list.length} modules à l'unité {formatEuro(unit)}.</p>}
+            </section>
+          )}
           <h2 className="mt-12 text-2xl font-semibold">Les modules, dans l'ordre recommandé</h2>
           <ol className="mt-4 flex flex-col gap-3">
             {list.map((c, i) => {

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { masteryBenefits } from "@/lib/faq-data";
 import { Badge, ButtonLink, kickerCls } from "@/components/ui";
 import { coursesOfPath, formatEuro, isPathPurchasable, type Catalog, type LearningPath } from "@/lib/catalog";
 
@@ -78,6 +79,7 @@ export function OfferCards({ catalog }: { catalog: Catalog }) {
           {price(masteryOffer.amountCents)}
           <p className="-mt-2 text-sm text-muted">Accès {mastery.accessMonths} mois · au lieu de {formatEuro(catalog.courses.reduce((s, c) => s + (catalog.coursePrices[c.slug] ?? 0), 0))} à l'unité</p>
           <Includes extra={`${catalog.courses.length} modules et les ${paths.length} parcours`} />
+          <ul className="flex flex-col gap-1.5 text-sm text-muted">{masteryBenefits(catalog.courses.length, paths.length).slice(0, 2).map((b) => <li key={b}>• {b}</li>)}</ul>
           <div className="mt-auto pt-2">
             {isPathPurchasable(mastery, catalog) ? <ButtonLink href={`/achat/${mastery.slug}`} className="w-full">Acheter AI Mastery</ButtonLink>
               : <><Badge tone="warn">Bientôt disponible</Badge><p className="mt-2 text-sm text-muted">L'achat s'ouvre quand les modules sont publiés et validés.</p></>}

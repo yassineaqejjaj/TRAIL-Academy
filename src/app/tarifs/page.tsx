@@ -12,6 +12,7 @@ export const revalidate = 60;
 const faq = [
   ["Que veut dire « accès 12 ou 18 mois » ?", "Vous suivez les contenus quand vous voulez pendant cette durée. Votre progression et vos attestations sont conservées ensuite."],
   ["Puis-je passer d'un module à un parcours ?", "Oui, mais le prix d'un parcours n'est pas réduit des modules déjà achetés : il les contient et prolonge leur accès. Si vous visez plusieurs modules, comparez avec le parcours ou AI Mastery avant d'acheter."],
+  ["Que m'apporte AI Mastery de plus qu'un parcours ?", "Tous les modules et tous les parcours en un seul achat, avec 18 mois d'accès : vous pouvez suivre plusieurs métiers sans payer deux fois. Il n'ajoute pas de service individuel : c'est le même contenu et les mêmes livrables, pour tout le catalogue."],
   ["Les taxes sont-elles incluses ?", "Les prix affichés sont TTC. Le calcul des taxes applicables est effectué au paiement."],
   ["Et pour mon équipe ?", "Pour plusieurs personnes, une formation sur mesure ou un atelier, demandez un devis : la page Entreprises vous répond sous quelques jours."],
 ] as const;

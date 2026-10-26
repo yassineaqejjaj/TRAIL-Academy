@@ -23,6 +23,7 @@ Prix en euros, toutes taxes comprises pour les consommateurs ; les taxes applica
 
 - Une offre n’est vendue que lorsque les contenus correspondants sont publiés ; un module annoncé « bientôt disponible » ne peut pas être acheté.
 - Un parcours ou AI Mastery contient les modules déjà détenus : le prix n’est pas réduit à ce titre, mais l’accès à ces modules est prolongé. [À COMPLÉTER : confirmer cette règle ou prévoir un crédit.] Une offre dont tous les modules sont déjà détenus et actifs ne peut pas être rachetée.
+- AI Mastery donne accès à tous les modules et à tous les parcours pour une seule durée ; il n'inclut pas de prestation individuelle supplémentaire.
 - Les entreprises peuvent demander un devis ; des conditions particulières s’appliquent alors.
 - Les prix peuvent évoluer ; le prix applicable est celui affiché au moment de la commande.
 
