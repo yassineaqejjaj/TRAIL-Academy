@@ -55,3 +55,11 @@ Un module qui a déjà des chapitres est ignoré (`--replace` le recrée, sauf s
 - **Programme public** : la page d'un module liste ses chapitres et leçons (titres uniquement, jamais le texte).
 - **Avec vos vidéos** : quand une leçon a une vidéo, son texte reste disponible dans l'onglet « Texte » sous le lecteur.
 - Mise à jour des textes en ligne sans toucher aux ids, statuts ni progressions : `npm run content:load -- --all --blog --sync`.
+
+## Ateliers no-code et low-code
+
+Chaque module (M1 à M17) se termine par le chapitre **« Ateliers no-code et low-code »** : 3 exercices pratiques réalisables **sans écrire ni lancer de code**, sur des plateformes no-code ou low-code, de préférence libres ou gratuites (Orange Data Mining, Teachable Machine, TensorFlow Playground, n8n, Flowise/Langflow/Dify, NotebookLM, Google Sheets, Airtable/NocoDB/Notion, Figma/Penpot, Miro, Tally, Looker Studio, Lovable/Bolt…). Les livrables peuvent tous être produits sans code ; les anciens exercices en Python restent, marqués **facultatifs pour profils techniques**. Règles et vérifications automatiques : `content/FORMAT.md` et `tests/content.test.ts`.
+
+**À vérifier avant de promouvoir un atelier** : les interfaces et les offres gratuites changent vite. Les ateliers décrivent des blocs génériques (« un bloc de type… ») et disent « offre gratuite ou version libre à la date de rédaction, à vérifier » ; refaites chaque atelier une fois vous-même pour confirmer qu'il est faisable gratuitement et ajustez les noms. M18 n'a pas encore de contenu.
+
+Mise à jour en ligne sans toucher aux progressions : `npm run content:load -- --all --sync` (ajoute aussi les nouveaux chapitres et leçons, publiés si le module l'est).

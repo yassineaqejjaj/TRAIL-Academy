@@ -32,22 +32,38 @@ const client = new pg.Client({ connectionString: url, ssl });
 await client.connect();
 await client.query("set search_path = public");
 
-/** Updates the text of existing lessons (same course, same title) and the assignment instructions without touching ids, status or progress. */
+/**
+ * Updates the text of existing lessons (same course, same title) and the assignment instructions, and ADDS chapters and lessons
+ * that are new in the file (appended at the end, published when the module is already published, draft otherwise).
+ * Ids, status and learner progress of existing lessons are never touched.
+ */
 async function syncModule(m: Module) {
-  const course = (await client.query<{ id: string }>("select id from courses where code = $1", [m.course])).rows[0];
+  const course = (await client.query<{ id: string; status: string }>("select id, status from courses where code = $1", [m.course])).rows[0];
   if (!course) throw new Error(`unknown course ${m.course}`);
-  let updated = 0; const missing: string[] = [];
+  const status = course.status === "published" ? "published" : "draft";
+  let updated = 0, added = 0; const missing: string[] = [];
   await client.query("begin");
   try {
-    for (const l of m.chapters.flatMap((c) => c.lessons)) {
-      const r = await client.query("update lessons set body_md = $3 where course_id = $1 and title = $2 and body_md is distinct from $3", [course.id, l.title, l.body_md]);
-      const exists = r.rowCount ? true : (await client.query("select 1 from lessons where course_id = $1 and title = $2", [course.id, l.title])).rowCount;
-      if (!exists) missing.push(l.title);
-      updated += r.rowCount ?? 0;
+    for (const c of m.chapters) {
+      let ch = (await client.query<{ id: string }>("select id from chapters where course_id = $1 and title = $2", [course.id, c.title])).rows[0];
+      if (!ch) {
+        const pos = (await client.query<{ n: number }>("select coalesce(max(position), 0)::int + 1 n from chapters where course_id = $1", [course.id])).rows[0].n;
+        ch = (await client.query<{ id: string }>("insert into chapters (course_id, title, position) values ($1, $2, $3) returning id", [course.id, c.title, pos])).rows[0];
+      }
+      for (const l of c.lessons) {
+        const r = await client.query("update lessons set body_md = $3 where course_id = $1 and title = $2 and body_md is distinct from $3", [course.id, l.title, l.body_md]);
+        const exists = r.rowCount ? true : (await client.query("select 1 from lessons where course_id = $1 and title = $2", [course.id, l.title])).rowCount;
+        if (!exists) {
+          const pos = (await client.query<{ n: number }>("select coalesce(max(position), 0)::int + 1 n from lessons where chapter_id = $1", [ch.id])).rows[0].n;
+          await client.query("insert into lessons (chapter_id, course_id, title, kind, position, content_status, body_md, required) values ($1, $2, $3, $4, $5, $6, $7, true)", [ch.id, course.id, l.title, l.kind, pos, status, l.body_md]);
+          added++;
+        }
+        updated += r.rowCount ?? 0;
+      }
     }
     await client.query("update assignments set instructions_md = $2 where course_id = $1 and title = $3", [course.id, m.assignment.instructions_md, m.assignment.title]);
     await client.query("commit");
-    console.info(`${m.course}: ${updated} lesson text(s) updated${missing.length ? `, ${missing.length} not found: ${missing.join(" | ")}` : ""}`);
+    console.info(`${m.course}: ${updated} lesson text(s) updated, ${added} lesson(s) added (${status})${missing.length ? `, not found: ${missing.join(" | ")}` : ""}`);
   } catch (e) { await client.query("rollback"); throw e; }
 }
 

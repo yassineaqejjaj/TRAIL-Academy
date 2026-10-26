@@ -36,3 +36,20 @@ Règles :
 - **Légende obligatoire** sur la ligne qui suit immédiatement la clôture du bloc (sans ligne vide) : `*Figure N : légende.*` (numérotation par leçon).
 - Un schéma doit **expliquer** (relations, flux, comparaison), pas décorer. Les chiffres sont fictifs et le disent.
 - Les schémas s'insèrent dans les leçons existantes, à l'endroit où ils éclairent le texte ; ne changer ni les titres de leçons, ni le reste du texte.
+
+## Ateliers no-code / low-code (obligatoires)
+
+Chaque module se termine par un dernier chapitre intitulé exactement **« Ateliers no-code et low-code »** (à ajouter **en dernière position**, après les chapitres existants), contenant **3 leçons de type `exercise`**, intitulées « Atelier 1 : … », « Atelier 2 : … », « Atelier 3 : … ». Tous les exercices de ces ateliers se font **uniquement sur des plateformes no-code ou low-code** : aucune ligne de code à écrire ni à lancer, aucun terminal, aucun IDE (ni bloc de code Python, JavaScript, SQL ou shell). Les blocs de texte à copier (prompts, modèles de tableau, JSON de configuration collé dans un champ) sont permis s'ils sont courts.
+
+Contenu de chaque atelier (900 à 2 800 caractères, plus si besoin) :
+- **Objectif** (une phrase) et **durée estimée** (30 à 90 min) ;
+- **Plateforme(s)** : nom(s) + type (no-code ou low-code) + « offre gratuite ou version libre à la date de rédaction, à vérifier » ; proposer **une alternative** quand c'est possible. Privilégier les outils **libres ou gratuits** (n8n, Flowise, Langflow, Dify, Orange Data Mining, Penpot, NocoDB, Google Sheets, Airtable, Notion, Make, Zapier, Teachable Machine, NotebookLM, Figma/FigJam, Miro, Tally, Looker Studio, Lovable/Bolt/Replit pour le vibe coding…) ;
+- **Étapes numérotées** : ce qu'on crée, dans quel ordre, avec les noms génériques des écrans et blocs (les interfaces changent : dire « un bloc de type… », « le menu de partage… » plutôt qu'un chemin de clics exact) ;
+- **Résultat attendu** et **critères de réussite** (liste à cocher) ;
+- **Pièges** fréquents, **données** : uniquement des données fictives ou publiques, jamais de données personnelles ni confidentielles de son employeur ;
+- **Pour aller plus loin** (une variante).
+Les ateliers s'appuient sur les notions du module et préparent le livrable. Aucun prix, aucune limite chiffrée d'offre gratuite, aucun lien d'affiliation, aucune promesse de fonctionnalité non vérifiable.
+
+Autres adaptations du module :
+- Les leçons du module qui demandent d'écrire ou d'exécuter du code (atelier Python, script…) restent mais reçoivent en **première ligne** la mention en italique : `*Exercice facultatif, destiné aux profils techniques. Les ateliers no-code et low-code du dernier chapitre suffisent pour valider le module.*`
+- Le **livrable** (`assignment.instructions_md`) doit pouvoir être réalisé **entièrement** avec les ateliers no-code/low-code : si ses consignes imposent du code, réécrivez-les pour une version sans code (on peut garder une variante « profils techniques » facultative). Conservez la grille d'évaluation.

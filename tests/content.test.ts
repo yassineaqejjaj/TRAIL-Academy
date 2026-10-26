@@ -51,6 +51,24 @@ describe.each(files)("content/modules/%s", (file) => {
       expect(b.after, `caption after diagram in ${b.lesson}`).toMatch(/\*Figure/);
     }
   });
+  it("ends with a no-code / low-code workshop chapter without any code", () => {
+    const last = m.chapters.at(-1)!;
+    expect(last.title).toBe("Ateliers no-code et low-code");
+    expect(last.lessons.length).toBeGreaterThanOrEqual(3);
+    for (const [i, l] of last.lessons.entries()) {
+      expect(l.kind, l.title).toBe("exercise");
+      expect(l.title, l.title).toMatch(new RegExp(`^Atelier ${i + 1} : `));
+      expect(l.body_md.length, l.title).toBeGreaterThanOrEqual(900);
+      expect(l.body_md, l.title).toMatch(/no-code|low-code/i);
+      expect(l.body_md, l.title).toMatch(/Objectif/);
+      expect(l.body_md, l.title).toMatch(/crit[eè]res? de r[eé]ussite|réussite/i);
+      expect(l.body_md, l.title).not.toMatch(/```\s*(python|py|js|javascript|ts|typescript|sql|bash|sh|shell|java|c\+\+|ruby|go|rust|php)\b/i);
+      expect(l.body_md, l.title).not.toMatch(/\b(pip install|npm (i|install|run)|git clone|docker (run|compose)|conda )/i);
+    }
+    const codeLessons = m.chapters.slice(0, -1).flatMap((c) => c.lessons).filter((l) => /```\s*(python|py|js|javascript|ts|typescript|sql|bash|sh|shell)\b/i.test(l.body_md));
+    for (const l of codeLessons) expect(l.body_md.trimStart(), `${l.title}: optional-code notice`).toMatch(/^\*Exercice facultatif, destiné aux profils techniques/);
+    expect(m.assignment.instructions_md, "assignment doable without code").toMatch(/no-code|low-code|sans code/i);
+  });
   it("contains no employer, client or colleague references and no unsupported markup", () => {
     const text = JSON.stringify(m);
     expect(text).not.toMatch(FORBIDDEN);

@@ -81,6 +81,10 @@ Les prix sont des **données** modifiables dans l'administration (historique con
 - **Lecture audio** des textes (synthèse vocale du navigateur, vitesse et voix au choix, bloc lu surligné).
 - **Aperçu gratuit sans compte** d'une vraie leçon par module, **programme détaillé** public (titres des leçons), **suggestions de modules suivants** après achat, partage LinkedIn de l'attestation, lettre d'information sous les articles.
 
+### Ateliers pratiques no-code et low-code
+
+Chaque module se termine par **3 ateliers sans code** (51 au total) sur des plateformes no-code ou low-code, de préférence libres ou gratuites ; les livrables se font sans code, les exercices Python historiques sont facultatifs. Voir [`CONTENT_GUIDE.md`](CONTENT_GUIDE.md).
+
 ### Conseiller et sessions en visio
 
 - **Conseiller en texte libre** : la personne décrit son métier et son objectif avec ses mots ; le conseiller en déduit son profil, classe les modules les plus proches (similarité de texte avec le catalogue, synonymes), propose un parcours, un premier module et des compléments, et **explique pourquoi** en citant ses propres mots. Calculé dans le navigateur, rien n'est envoyé. Une **synthèse rédigée par un modèle de langage** est possible en option (n'importe quel modèle compatible OpenAI, y compris libre et auto-hébergé : `ADVISOR_LLM_*`) ; elle est désactivée par défaut, ne choisit jamais les modules, et son résultat est assaini. Non testée contre un vrai modèle (testée avec un faux).
