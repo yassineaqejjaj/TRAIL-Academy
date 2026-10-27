@@ -11,7 +11,7 @@ export default function OpengraphImage() {
       <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", padding: 80, background: "#0b1f3a", color: "#faf8f4" }}>
         <div style={{ fontSize: 40, color: "#5fd0d8", fontWeight: 700, letterSpacing: 2 }}>TRAIL ACADEMY</div>
         <div style={{ fontSize: 76, fontWeight: 700, marginTop: 24, lineHeight: 1.1 }}>Apprendre l'IA. Appliquer l'IA. Piloter avec l'IA.</div>
-        <div style={{ fontSize: 30, marginTop: 36, color: "#b8c4d4" }}>30 modules et 6 parcours : produit, tech, marketing, RH, juridique, finance</div>
+        <div style={{ fontSize: 30, marginTop: 36, color: "#b8c4d4" }}>Des parcours pour le produit, la tech, le marketing, les RH, le juridique et la finance</div>
       </div>
     ),
     size,

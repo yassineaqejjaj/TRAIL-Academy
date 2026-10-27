@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Chrome } from "@/components/layout/chrome";
 import { Footer } from "@/components/layout/footer";
+import { LaunchBanner } from "@/components/layout/launch-banner";
 import { JsonLd } from "@/components/json-ld";
 import { siteGraph } from "@/lib/seo";
 import { site } from "@/lib/site";
@@ -40,7 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="flex min-h-screen flex-col">
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-surface focus:p-3">Aller au contenu</a>
-        <Chrome hideOn={["/apprendre", "/admin", "/compte"]}><Header /></Chrome>
+        <Chrome hideOn={["/apprendre", "/admin", "/compte"]}><LaunchBanner /><Header /></Chrome>
         <main id="main" className="flex-1">{children}</main>
         <Chrome hideOn={["/apprendre", "/admin", "/compte"]}><Footer /></Chrome>
       </body>

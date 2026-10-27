@@ -5,15 +5,15 @@ import { ContactForm } from "./contact-form";
 export const metadata: Metadata = { title: "Formation IA pour les entreprises", description: "Formations sur mesure, licences pour vos équipes et ateliers privés : demandez un devis.", alternates: { canonical: "/entreprise" } };
 
 const programmes = [
-  { name: "AI Foundations", target: "Équipes métier", promise: "Comprendre et utiliser les outils IA sur des tâches réelles, en sécurité.",
-    modules: "IA générative, Prompt Engineering, Context Engineering, Responsible AI, puis les modules de la fonction (marketing, RH, juridique ou finance).", duration: "Environ 30 à 40 h de travail par personne.",
-    prereq: "Aucun prérequis technique.", deliverables: "Un guide d'usage de l'IA pour l'équipe et un livrable par module, relu par le formateur.", example: "Une équipe RH qui structure son processus de recrutement assisté, avec registre des risques." },
-  { name: "AI Builders", target: "Produit, tech et data", promise: "Concevoir, prototyper et évaluer des solutions IA fiables.",
-    modules: "Context Engineering, RAG, Agentic AI, LLM Safety & Security, AI Evaluation & Observability, Vibe Coding.", duration: "Environ 40 à 50 h de travail par personne.",
-    prereq: "Aisance technique ; Prompt Engineering recommandé.", deliverables: "Un prototype RAG évalué, un agent outillé, un rapport de red teaming, une suite d'évaluation.", example: "Une équipe produit qui bâtit un assistant sur sa base documentaire avec jeu d'évaluation." },
-  { name: "AI Leaders", target: "Managers et responsables", promise: "Définir les priorités IA, mesurer la valeur et piloter l'adoption.",
-    modules: "AI Product Strategy, AI Economics & FinOps, AI Adoption & Change Management, Responsible AI, AI Product Delivery.", duration: "Environ 25 à 30 h de travail par personne.",
-    prereq: "Aucun prérequis technique.", deliverables: "Une stratégie IA d'une page, un modèle de coûts, un plan d'adoption, une analyse de risques.", example: "Un comité de direction qui arbitre ses cas d'usage IA avec un business case chiffré." },
+  { name: "AI Discovery Workshop", target: "Une équipe qui veut savoir par où commencer", promise: "Identifier et prioriser les cas d'usage IA de l'équipe en une journée de travail.",
+    modules: "Une journée d'atelier : cartographie des tâches, repérage des cas d'usage, critères de choix, premiers garde-fous. S'appuie sur les modules AI Product Strategy et Responsible AI.", duration: "1 journée.",
+    prereq: "Aucun prérequis technique ; 6 à 15 personnes de préférence.", deliverables: "Liste priorisée de cas d'usage, estimation de valeur, plan d'action.", example: "Un service client qui classe six cas d'usage selon la valeur, le risque et l'effort." },
+  { name: "AI Skills Accelerator", target: "Une équipe à faire monter en compétence", promise: "Un parcours de 4 à 8 semaines, avec diagnostic initial, ateliers et réalisation de projets.",
+    modules: "Parcours choisi avec vous (produit, marketing, RH, juridique, finance ou technique), évaluation de niveau au départ et à la fin.", duration: "4 à 8 semaines, rythme défini avec vous.",
+    prereq: "Un référent côté client ; temps libéré chaque semaine.", deliverables: "Évaluation avant/après, projets réalisés, bilan des compétences.", example: "Une équipe RH qui structure un recrutement assisté, avec registre des risques." },
+  { name: "Enterprise AI Academy", target: "Une organisation avec plusieurs métiers et niveaux", promise: "Un programme structuré, avec sessions, suivi pédagogique et reporting.",
+    modules: "Plusieurs parcours en parallèle, sessions en direct, licences et suivi dans l'espace « Mon équipe ».", duration: "Plusieurs mois, selon le périmètre.",
+    prereq: "Cadrage préalable avec les responsables des équipes.", deliverables: "Plan de formation, suivi des apprenants, indicateurs d'adoption.", example: "Une direction qui forme marketing, finance et juridique sur des parcours distincts avec un tableau de bord commun." },
 ];
 
 export default function EnterprisePage() {
@@ -27,8 +27,8 @@ export default function EnterprisePage() {
           <Card><h2 className="font-semibold">Programme sur mesure</h2><p className="mt-1 text-sm text-muted">Un parcours composé pour vos cas d'usage et votre niveau de maturité.</p></Card>
           <Card><h2 className="font-semibold">Ateliers privés</h2><p className="mt-1 text-sm text-muted">Une journée de travail pratique avec votre équipe, sur vos propres sujets.</p></Card>
         </div>
-        <h2 className="mt-14 text-2xl font-bold">Trois programmes types pour vos équipes</h2>
-        <p className="mt-2 max-w-2xl text-muted">Des points de départ, adaptés après un échange sur votre contexte. Les durées sont indicatives et s'appuient sur les durées estimées des modules ; elles sont confirmées dans la proposition.</p>
+        <h2 className="mt-14 text-2xl font-bold">Trois offres pour vos équipes</h2>
+        <p className="mt-2 max-w-2xl text-muted">Trois formats, définis et chiffrés sur devis après un échange sur votre contexte. Les durées sont indicatives et confirmées dans la proposition.</p>
         <div className="mt-6 grid gap-4 lg:grid-cols-3">
           {programmes.map((g) => (
             <Card key={g.name}>

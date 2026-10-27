@@ -14,7 +14,9 @@ export const revalidate = 60;
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const course = getCourse((await params).slug, await getCatalog());
   if (!course) return {};
-  return { title: `${course.title} — formation`, description: course.summary, alternates: { canonical: `/formations/${course.slug}` }, openGraph: { title: course.title, description: course.summary, url: `/formations/${course.slug}` } };
+  const title = `Formation ${course.title} en ligne : programme, exercices et tarif`;
+  const description = `${course.summary} ${Math.round(course.durationHours)} h, ateliers no-code, quiz et livrable relu par le formateur. Programme détaillé et leçon gratuite.`;
+  return { title, description, alternates: { canonical: `/formations/${course.slug}` }, openGraph: { title, description, url: `/formations/${course.slug}` } };
 }
 
 const included = ["Formation vidéo à la demande", "Exercices pratiques", "Ressources à télécharger", "Quiz et évaluations", "Suivi de progression", "Attestation de réussite privée"];
@@ -125,6 +127,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
                 <Badge tone={avail.tone}>{avail.label}</Badge>
                 <p className="text-[15px] text-muted">{published ? "Le contenu est rédigé et une leçon est lisible gratuitement ; l'achat n'est pas encore ouvert." : "Ce module est en préparation : il ne peut pas encore être acheté."} Indiquez votre e-mail pour être prévenu de l'ouverture.</p>
                 {preview && <ButtonLink href={`/formations/${course.slug}/apercu`} className="min-h-[52px]">Lire une leçon gratuite</ButtonLink>}
+                <p className="text-sm"><Link href="/apercu-plateforme" className="font-semibold text-accent hover:underline">Essayer la démonstration de la plateforme</Link> · <Link href={`/ouverture?formation=${course.slug}`} className="font-semibold text-accent hover:underline">Choisir un autre module</Link></p>
                 <InterestForm kind="course_launch" courseSlug={course.slug} label="Adresse e-mail (sans paiement)" submitLabel="Me prévenir" />
                 {priceCents != null && <p className="text-sm text-muted">Prix prévu : {formatEuro(priceCents)} TTC, accès 12 mois.</p>}
               </>

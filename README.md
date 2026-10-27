@@ -61,7 +61,7 @@ TRAIL Academy propose une formation **pratique, progressive et mesurable**, con�
 | **Profils tech et data** | RAG, agents, sécurité des LLM, évaluation et observabilité |
 | **Professionnels en montée en compétence** | Un parcours des fondations aux usages avancés, à leur rythme |
 | **Marketing et communication, RH, juridique, finance** | Trois modules écrits pour leur fonction, après les fondations : contenu et réputation, recrutement et compétences, recherche et contrats, contrôle de gestion et audit |
-| **Entreprises** | Programmes types (AI Foundations, AI Builders, AI Leaders), licences d'équipe, suivi de progression par organisation ; **sur devis** |
+| **Entreprises** | Trois offres sur devis (AI Discovery Workshop, AI Skills Accelerator, Enterprise AI Academy), licences d'équipe, suivi de progression par organisation ; **sur devis** |
 
 ### L'offre
 
