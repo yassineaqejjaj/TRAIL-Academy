@@ -2,16 +2,16 @@
 
 ## Ce qui tourne
 
-La CI GitHub Actions (`.github/workflows/ci.yml`) exécute types, lint, les 378 tests, l'audit des dépendances, le build, puis les 20 parcours Playwright sur Chromium (base embarquée, build de production) : **succès constaté sur GitHub** pour le commit `6ac17d7`.
+La CI GitHub Actions (`.github/workflows/ci.yml`) exécute types, lint, les 514 tests, l'audit des dépendances, le build, puis les 20 parcours Playwright sur Chromium (base embarquée, build de production) : **succès constaté sur GitHub** pour le commit `6ac17d7`.
 
 | Niveau | Commande | Contenu |
 |---|---|---|
 | Types, lint | `npm run typecheck` / `npm run lint` | propres |
-| Unitaires, base, intégration | `npm test` | **378 tests, 17 fichiers** |
+| Unitaires, base, intégration | `npm test` | **514 tests, 37 fichiers** |
 | Bout en bout | `npx playwright test` | **9 parcours** dans Chrome, sur un build de production |
 | Audit | `npm audit --omit=dev` | 0 vulnérabilité |
 
-### Détail des 378 tests
+### Détail des tests (répartition d'origine, antérieure aux phases suivantes)
 
 - **Base de données (PGlite, vraies migrations)** : `db`, `learning`, `commerce`, `admin`, `dev-fixture` — accès par entitlement, expiration, correction des quiz (ensemble exact, réponse libre exclue, limite de tentatives), complétion configurable, attestation unique, achat (offre fermée, déjà détenu, session falsifiée, devise, rejeu, retry après échec), remboursements et litiges, publication conditionnée, historique de prix, ordre, cycles de prérequis, accès manuels motivés, métriques, audit en écriture seule, inscriptions d'intérêt.
 - **Couche d'accès sur TCP réel** (`db-layer`) : lecture publique, isolation par utilisateur, aucune fuite de rôle ni d'identité sur connexion réutilisée, rôle de confiance, tables d'auth inaccessibles, annulation sur erreur, paramètres liés, dates en ISO, mode connexion unique.
@@ -22,7 +22,7 @@ La CI GitHub Actions (`.github/workflows/ci.yml`) exécute types, lint, les 378 
 
 **Tests par mutation (manuels)** : pour les règles critiques (correction des quiz, garde administrateur, vérification de session Stripe, révocation au remboursement, historique des prix, complétion, préparation à la publication), la règle a été volontairement cassée et la suite a bien échoué, puis a été restaurée.
 
-### Les 20 parcours Playwright
+### Les parcours Playwright (23 aujourd'hui ; liste d'origine ci-dessous)
 
 visiteur (catalogue, module non achetable) · conseiller · inscription d'intérêt avec consentement · inscription, refus avant vérification, connexion · lecteur fermé sans accès · parcours apprenant complet (leçons, notes, progression persistante après reconnexion, quiz, livrable) · administrateur (10 écrans, relecture, attestation vérifiable publiquement, journal) · création et publication d'un module avec contrôle de complétude · contrôles d'accès (apprenant refusé en admin, leçon d'autrui, API sans session).
 

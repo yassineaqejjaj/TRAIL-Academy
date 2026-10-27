@@ -4,7 +4,7 @@
 
 ![Project overview](docs/assets/github-cover.svg)
 
-> **Professional AI learning platform** | **Status:** En développement : intégrations externes et paiements réels non validés.
+> **Plateforme de formation professionnelle à l'IA** | **Statut :** en ligne en mode test (paiements réels non ouverts) · [site](https://trail-academy.vercel.app)
 >
 > [Architecture](ARCHITECTURE.md) · [Demo / verification](TESTING.md) · [Source code](https://github.com/yassineaqejjaj/TRAIL-Academy)
 
@@ -13,11 +13,11 @@
 
 **T**raining **R**oadmap for **A**pplied **I**ntelligence & **L**eadership — *Learn AI. Apply AI. Lead with AI.*
 
-Une plateforme de formation professionnelle à l'intelligence artificielle, conçue pour qu'**un formateur unique** la fasse vivre sans développeur : catalogue de 30 modules, parcours, lecteur de cours, quiz, livrables relus par un humain, attestations vérifiables, paiement, administration et gestion de contenu.
+Une plateforme de formation professionnelle à l'intelligence artificielle, conçue pour qu'**un formateur unique** la fasse vivre sans développeur : catalogue de 30 modules et 6 parcours (produit, tech, marketing, RH, juridique, finance), lecteur de cours, quiz, livrables relus par un humain, attestations vérifiables, paiement, sessions en visio, offre entreprise, administration et gestion de contenu.
 
 ![Accueil de TRAIL Academy](docs/screenshots/01-accueil.png)
 
-> **État honnête du projet.** Les phases A à D (fondations, apprentissage, commerce, administration) sont construites et testées : 378 tests automatisés et 20 parcours de bout en bout dans un vrai navigateur, contre PostgreSQL, sur un build de production, le tout vérifié aussi par la CI GitHub. Les phases E (entreprises) et F (durcissement) ne sont pas commencées. **Rien n'a encore tourné contre Stripe, un stockage S3, un serveur SMTP ou un déploiement Vercel/Railway réels** : voir [ce qui est vérifié et ce qui ne l'est pas](#9-ce-qui-est-vérifié-et-ce-qui-ne-lest-pas). Les paiements réels sont bloqués par conception tant qu'une revue juridique n'a pas eu lieu.
+> **État honnête du projet** (octobre 2026). Le site tourne sur **Vercel** (base PostgreSQL, MinIO et services vidéo sur **Railway**) : <https://trail-academy.vercel.app>. Les 30 modules sont rédigés (631 leçons, 856 questions de quiz, plus de 220 schémas, 90 ateliers no-code) et publiés, mais **aucune offre n'est ouverte à la vente** et **aucune vidéo n'est encore téléversée**. Le paiement a été validé de bout en bout **en mode test Stripe** (achat et remboursement) ; les paiements réels restent bloqués par conception tant que la revue juridique n'a pas eu lieu. **514 tests unitaires et 23 parcours de bout en bout** (Playwright, avec contrôle d'accessibilité et de CSP). Ce qui n'a jamais tourné : [voir la section 9](#9-ce-qui-est-vérifié-et-ce-qui-ne-lest-pas).
 
 ## Sommaire
 
@@ -60,18 +60,19 @@ TRAIL Academy propose une formation **pratique, progressive et mesurable**, con�
 | **Transformation digitale, managers** | Gouvernance, AI Act, économie de l'IA, conduite du changement |
 | **Profils tech et data** | RAG, agents, sécurité des LLM, évaluation et observabilité |
 | **Professionnels en montée en compétence** | Un parcours des fondations aux usages avancés, à leur rythme |
-| **Entreprises (secondaire)** | Licences d'équipe, formations sur mesure, ateliers privés *(interface de gestion : phase E)* |
+| **Marketing et communication, RH, juridique, finance** | Trois modules écrits pour leur fonction, après les fondations : contenu et réputation, recrutement et compétences, recherche et contrats, contrôle de gestion et audit |
+| **Entreprises** | Programmes types (AI Foundations, AI Builders, AI Leaders), licences d'équipe, suivi de progression par organisation ; **sur devis** |
 
 ### L'offre
 
 | Offre | Contenu | Prix | Accès |
 |---|---|---|---|
-| **Module** | 1 module au choix (18 disponibles) | 199 € TTC | 12 mois |
-| **Parcours** | Product Manager Augmenté (9 modules) **ou** AI Product Manager (13 modules), au choix | 990 € TTC | 18 mois |
-| **AI Mastery** | les 30 modules et les 6 parcours | 1 990 € TTC | 18 mois |
-| Entreprises | licences d'équipe, programme sur mesure, ateliers privés : **sur devis** (formulaire), hors grille | — | — |
+| **Module** | 1 module au choix (30 modules) | 199 € TTC | 12 mois |
+| **Parcours** | un parcours au choix parmi six : Product Manager Augmenté (9 modules), AI Product Manager (13), Marketing & Communication Augmentés, RH Augmentées, Juridique Augmenté, Finance Augmentée (8 modules chacun) | 990 € TTC | 18 mois |
+| **AI Mastery** | les 30 modules et les 6 parcours, un seul achat (pas de service individuel en plus) | 1 990 € TTC | 18 mois |
+| Entreprises | licences d'équipe, programme sur mesure, ateliers privés : **sur devis** (formulaire), hors grille ; suivi dans « Mon équipe » ([`docs/ENTREPRISE.md`](docs/ENTREPRISE.md)) | — | — |
 
-Trois offres seulement, sans option cachée. Un parcours ou AI Mastery **contient** les modules déjà détenus sans réduction de prix (décision commerciale à confirmer, voir `docs/GO_LIVE.md`) ; une offre dont tous les modules sont déjà détenus ne peut pas être rachetée.
+Trois offres seulement, sans option cachée. Les paiements passent par **Stripe Managed Payments** (Stripe vendeur officiel : taxes, facturation, litiges) : voir [`docs/STRIPE.md`](docs/STRIPE.md). Un parcours ou AI Mastery **contient** les modules déjà détenus sans réduction de prix (décision commerciale à confirmer, voir `docs/GO_LIVE.md`) ; une offre dont tous les modules sont déjà détenus ne peut pas être rachetée.
 
 Les prix sont des **données** modifiables dans l'administration (historique conservé, commandes passées inchangées).
 
@@ -79,11 +80,12 @@ Les prix sont des **données** modifiables dans l'administration (historique con
 
 - **Schémas intégrés** aux leçons (Mermaid : processus, séquences, matrices, chronologies), accessibles et adaptés au mode sombre.
 - **Lecture audio** des textes (synthèse vocale du navigateur, vitesse et voix au choix, bloc lu surligné).
+- **Évaluation de niveau gratuite** (`/evaluation`, 15 questions, calculée dans le navigateur), **démonstration interactive** de la plateforme (`/apercu-plateforme`) et **exemples de livrables** fictifs (`/exemples-livrables`).
 - **Aperçu gratuit sans compte** d'une vraie leçon par module, **programme détaillé** public (titres des leçons), **suggestions de modules suivants** après achat, partage LinkedIn de l'attestation, lettre d'information sous les articles.
 
 ### Ateliers pratiques no-code et low-code
 
-Chaque module se termine par **3 ateliers sans code** (51 au total) sur des plateformes no-code ou low-code, de préférence libres ou gratuites ; les livrables se font sans code, les exercices Python historiques sont facultatifs. Voir [`CONTENT_GUIDE.md`](CONTENT_GUIDE.md).
+Chaque module se termine par **3 ateliers sans code** (90 au total) sur des plateformes no-code ou low-code, de préférence libres ou gratuites ; les livrables se font sans code, les exercices Python historiques sont facultatifs. Voir [`CONTENT_GUIDE.md`](CONTENT_GUIDE.md).
 
 ### Conseiller et sessions en visio
 
@@ -96,9 +98,9 @@ Aucun avis n'est généré. Le formateur invite une personne réelle par un **li
 
 ### Les règles qui font la confiance
 
-- **Seul un module publié et validé s'achète.** Les 30 modules sont visibles, mais « Bientôt disponible » tant que le contenu authentique n'est pas là ; le paiement est refusé côté base de données, pas seulement masqué.
+- **Seul un module publié dont l'offre est ouverte s'achète.** Les libellés publics distinguent « Disponible à l'achat », « Aperçu gratuit · inscriptions bientôt ouvertes » et « En préparation » ; le paiement est refusé côté base de données, pas seulement masqué.
 - **On ne paie jamais deux fois le même contenu** : un parcours qui contient un module déjà détenu prolonge l'accès, sans doublon.
-- **Aucune invention** : pas de témoignage sans consentement vérifiable, pas de vidéo ni de contenu fictif, pas de chiffre non vérifié.
+- **Aucune invention** : pas de témoignage sans consentement vérifiable, pas de vidéo ni de contenu fictif présenté comme réel, pas de chiffre non vérifié. Les exemples pédagogiques sont toujours signalés comme fictifs.
 - **L'accès payant ne s'ouvre que sur un événement de paiement signé et vérifié**, jamais sur une simple redirection du navigateur.
 
 ---
@@ -122,8 +124,8 @@ flowchart LR
   K --> L[Attestation privée<br/>vérifiable par code]
 ```
 
-1. **Découvrir** : catalogue filtrable, parcours comparés, et un **conseiller déterministe** (6 questions, règles visibles, aucune IA) qui explique pourquoi il recommande un parcours.
-2. **Acheter** : Stripe Checkout (mode test tant que le juridique n'est pas validé). Une commande « en attente » est créée ; l'accès n'est accordé que par le webhook vérifié, de façon idempotente.
+1. **Découvrir** : catalogue filtrable, parcours comparés, un **conseiller** (questionnaire ou texte libre) et l'**évaluation de niveau**.
+2. **Acheter** : Stripe Checkout avec Managed Payments (mode test tant que le juridique n'est pas validé). Une commande « en attente » est créée ; l'accès n'est accordé que par le webhook vérifié, de façon idempotente.
 3. **Apprendre** : tableau de bord « reprendre où vous en étiez », lecteur avec plan du cours, notes, signets, ressources, transcription, vitesse et sous-titres pour la vidéo.
 4. **Être évalué** : quiz (choix unique, multiple, réponse libre), seuil et nombre de tentatives configurables ; livrables texte ou fichier, relus par un humain avec retour.
 5. **Valider** : quand toutes les règles du module sont remplies (leçons, quiz, livrables), une **attestation** est émise une seule fois, avec un code de vérification public.
@@ -219,12 +221,12 @@ Le **journal d'audit** (écriture seule) enregistre qui a changé quoi sur le co
 | Authentification | **Better Auth** : e-mail + mot de passe (Argon2id), vérification d'e-mail, réinitialisation, Google en option | MIT |
 | Stockage de fichiers | **MinIO** (API S3) via AWS SDK v3, envoi direct navigateur → bucket | AGPL-3.0 / Apache-2.0 |
 | Vidéo | **HLS auto-hébergé** : `ffmpeg` pour l'encodage, **passerelle de streaming** maison (jetons signés `jose`), `hls.js` côté client | LGPL / MIT |
-| E-mail | **SMTP** via `nodemailer` (n'importe quel relais ; **Mailpit** en local) | MIT-0 / MIT |
+| E-mail | **SMTP** via `nodemailer` (relais Brevo en production ; **Mailpit** en local) | MIT-0 / MIT |
 | Validation, contenu | Zod, `react-markdown` (HTML brut jamais rendu) | MIT |
 | Tests | Vitest, React Testing Library, PGlite (PostgreSQL embarqué), Playwright | MIT / Apache-2.0 |
 | CI | GitHub Actions | — |
 
-**Hébergement** : l'application sur **Vercel** ; PostgreSQL, MinIO et la passerelle de streaming sur **Railway**.
+**Hébergement** : l'application sur **Vercel** ; PostgreSQL 18, MinIO, la passerelle de streaming et le worker d'encodage vidéo sur **Railway**.
 
 **Seule exception assumée : Stripe.** Il n'existe pas d'équivalent open source d'un processeur de paiement (agrément bancaire, conformité PCI). Stripe est isolé derrière un adaptateur (`src/lib/stripe/`), et sa logique métier côté base est indépendante du fournisseur. Vercel est lui-même un service propriétaire, retenu à la demande du propriétaire du projet.
 
@@ -267,9 +269,9 @@ await asService((q) => q("select process_stripe_event($1,$2,$3)", [...])); // co
 
 ### Modèle de données (extrait)
 
-`users` *(auth)* → `profiles`, `user_roles` · `courses`, `learning_phases`, `learning_paths`, `chapters`, `lessons`, `lesson_resources` · `quizzes`, `quiz_questions`, `quiz_options`, `quiz_attempts`, `assignments`, `assignment_submissions`, `attestations` · `products`, `prices` *(historique)*, `coupons`, `orders`, `order_items` *(instantané prix/durée)*, `payments`, `entitlements`, `processed_webhook_events` · `organizations`, `license_packs`, `license_allocations` *(phase E)* · `pages`, `page_sections`, `blog_posts`, `testimonials`, `faq_items`, `audit_logs` *(écriture seule)*, `email_events`, `consent_records`, `interest_signups`.
+`users` *(auth)* → `profiles`, `user_roles` · `courses`, `learning_phases`, `learning_paths`, `chapters`, `lessons`, `lesson_resources` · `quizzes`, `quiz_questions`, `quiz_options`, `quiz_attempts`, `assignments`, `assignment_submissions`, `attestations` · `products`, `prices` *(historique)*, `coupons`, `orders`, `order_items` *(instantané prix/durée)*, `payments`, `entitlements`, `processed_webhook_events` · `organizations`, `organization_members`, `organization_invitations`, `license_packs`, `license_allocations` · `live_sessions` et réservations · `review_invitations`, `review_submissions` · `video_assets` · `pages`, `page_sections`, `blog_posts`, `testimonials`, `faq_items`, `audit_logs` *(écriture seule)*, `email_events`, `consent_records`, `interest_signups`.
 
-Fonctions clés : `record_lesson_progress`, `submit_quiz`, `try_complete_course`, `create_checkout_order`, `process_stripe_event` (atomique et idempotente), `provision_order`, `publish_course`, `set_product_price`, `admin_grant_access`, `review_submission`, `admin_metrics`. Détail : [`DATABASE.md`](DATABASE.md).
+Fonctions clés : `record_lesson_progress`, `submit_quiz`, `try_complete_course`, `create_checkout_order`, `process_stripe_event` (atomique et idempotente), `provision_order`, `publish_course`, `set_product_price`, `admin_grant_access`, `review_submission`, `admin_metrics`. Plus `org_progress_report`, `allocate_license_seat`, `accept_org_invitation`, `book_live_session`, `user_contact`. Détail : [`DATABASE.md`](DATABASE.md).
 
 ### Le paiement, sans jamais faire confiance au navigateur
 
@@ -305,11 +307,14 @@ Doublons, rejeux, sessions falsifiées, mauvaise devise, paiements différés ou
 | **Défaut sûr** | Offre fermée tant que non explicitement ouverte ; clés Stripe *live* refusées sans deux drapeaux explicites ; absence de configuration = message clair, jamais une fausse réussite |
 | **Validation aux frontières** | Zod sur chaque formulaire et route ; types MIME **et** extensions vérifiés ; taille plafonnée par le bucket lui-même (POST pré-signé) |
 | **Traçabilité** | Journal d'audit en écriture seule (acteur, avant/après) sur contenu, prix, commandes, paiements, accès ; toute action manuelle sensible exige un motif |
-| **Tests proportionnés au risque** | 378 tests dont migrations + RLS sur PostgreSQL ; **tests par mutation manuelle** des règles critiques (casser la règle doit faire échouer un test) ; 20 parcours de bout en bout |
+| **Tests proportionnés au risque** | 514 tests dont migrations + RLS sur PostgreSQL ; **tests par mutation manuelle** des règles critiques (casser la règle doit faire échouer un test) ; 23 parcours de bout en bout, dont contrôle axe (WCAG 2.2 AA) et CSP sur les pages publiques |
 | **Environnements reproductibles** | Migrations versionnées et rejouables (`npm run db:migrate`), seed généré depuis le code, base locale sans Docker (`npm run db:dev`), `docker-compose.yml` production-like |
 | **CI** | `.github/workflows/ci.yml` : types, lint, tests, audit des dépendances, build, puis e2e Playwright sur le build de production |
 | **Dépendances** | 0 vulnérabilité sur les dépendances de production (`npm audit --omit=dev`) ; bibliothèques établies pour l'authentification et le chiffrement, rien de fait maison côté cryptographie |
-| **Accessibilité** | Cible WCAG 2.2 AA : sémantique native, focus visibles, cibles ≥ 44 px, contrastes, lien d'évitement, thèmes clair/sombre, `prefers-reduced-motion` *(audit automatisé à faire)* |
+| **Accessibilité** | Cible WCAG 2.2 AA : sémantique native, focus visibles, cibles ≥ 44 px, contrastes, lien d'évitement, thèmes clair/sombre, `prefers-reduced-motion` (contrôle automatisé axe à chaque livraison ; **audit manuel non réalisé**) |
+| **Limitation de débit et en-têtes** | Compteurs en base partagés entre instances (formulaires, authentification, paiement) ; CSP et HSTS pilotés par l'environnement |
+| **Données personnelles** | Export JSON et suppression de compte, consentements journalisés, partage de progression avec une organisation soumis à consentement explicite |
+| **Visibilité** | Données structurées schema.org, `llms.txt`, robots d'IA autorisés sur les pages publiques, FAQ, flux RSS ([`docs/SEO.md`](docs/SEO.md)) |
 | **Observabilité honnête** | Erreurs applicatives sans fuite d'informations ; journal d'audit ; supervision externe à brancher (voir feuille de route) |
 | **Documentation vivante** | Un document par sujet, chiffres issus du code, limites écrites noir sur blanc |
 
@@ -322,15 +327,15 @@ Conventions : aucune concaténation SQL (requêtes paramétrées uniquement, `Q`
 | Pratique | Application |
 |---|---|
 | **Promesses vérifiables** | Aucun témoignage, avis, chiffre ou logo inventé ; la répartition 70/20/10 est présentée comme un objectif de conception ; durées et niveaux signalés comme indicatifs |
-| **Honnêteté sur la disponibilité** | « Bientôt disponible » et « Achat bientôt ouvert » distingués ; l'utilisateur laisse son e-mail avec consentement explicite plutôt que d'acheter du vide |
+| **Honnêteté sur la disponibilité** | « Disponible à l'achat », « Aperçu gratuit · inscriptions bientôt ouvertes » et « En préparation » distingués ; l'utilisateur laisse son e-mail avec consentement explicite plutôt que d'acheter du vide |
 | **Prix comme donnée, pas comme code** | Prix et offres modifiables en admin, historique conservé ; expérimentation de prix de lancement possible sans déploiement |
 | **Jamais deux fois le même contenu** | Règle commerciale imposée par la base, pas par l'interface |
 | **Évaluation humaine pour ce qui engage** | Le quiz est automatique, mais le livrable et l'attestation relèvent du formateur ; aucune IA n'est l'autorité finale |
 | **Un produit pour une seule personne** | Contrôle de complétude avant publication, relecture centralisée, tableau de bord, CMS : le formateur n'a besoin ni de développeur ni d'administrateur |
 | **Mesurer ce qui est mesurable** | Entonnoir de commande côté serveur ; les vues de pages ne sont pas suivies tant qu'une mesure respectueuse de la vie privée et le consentement ne sont pas en place |
 | **Vie privée par défaut** | Données minimales (la vérification d'attestation n'expose que titre, date et nom), consentements enregistrés, désinscription possible, durées de conservation à définir |
-| **Conformité en amont** | Pages légales fournies en modèles *signalés comme à valider* ; blocage technique des paiements réels avant revue juridique |
-| **Extensibilité sans complexité prématurée** | Données prêtes pour entreprises, cohortes et nouvelles langues, sans interface spéculative |
+| **Conformité en amont** | Sept textes légaux rédigés ([`docs/legal/`](docs/legal/)), *signalés comme à valider par un juriste* ; blocage technique des paiements réels avant revue juridique |
+| **Extensibilité sans complexité prématurée** | Cohortes et nouvelles langues prévues dans les données, sans interface spéculative ; l'offre entreprise a son interface de suivi |
 
 ---
 
@@ -376,16 +381,18 @@ docker compose up -d     # PostgreSQL 17, MinIO (S3), Mailpit (boîte mail sur :
 | Commande | Rôle |
 |---|---|
 | `npm run dev` / `build` / `start` | Next.js |
-| `npm test` | 378 tests (unitaires, base de données, intégration) |
+| `npm test` | 514 tests (unitaires, base de données, intégration) |
 | `npm run typecheck` / `lint` | TypeScript / ESLint |
 | `npm run db:dev` | PostgreSQL local embarqué |
 | `npm run db:migrate [-- --seed] [-- --fixture]` | Applique les migrations (rejouable) |
 | `npm run admin:create -- <email>` | Donne le rôle administrateur |
-| `npm run seed:generate` | Régénère `db/seed.sql` depuis `src/lib/catalog/data.ts` |
+| `npm run seed:generate` | Régénère `db/seed.sql` depuis `src/lib/catalog/data.ts` (option `-- --migration` pour la migration des modules métier) |
+| `npm run content:load -- --module M4` | Charge le contenu rédigé d'un module en brouillon (`--sync` met à jour les textes ; `--blog` pour les articles) |
 | `npx playwright test` | Parcours de bout en bout (`E2E_CHANNEL=chrome` réutilise Chrome installé) |
 | `npm run screenshots` | Régénère `docs/screenshots` depuis l'application qui tourne |
 | `scripts/encode-hls.sh` | Encode une vidéo en HLS adaptatif et l'envoie dans le bucket (manuel ; l'admin passe par `services/video-worker`) |
 | `npm run stripe:setup` | Enregistre le webhook Stripe et le portail client (clé de test d'abord) : voir [`docs/STRIPE.md`](docs/STRIPE.md) |
+| `npx tsx scripts/verify-stripe-local.mts` | Rejoue localement des événements Stripe signés pour vérifier l'achat sans carte |
 | `npm run check:env -- --env-file=<fichier>` | Vérifie la configuration de production (0 = aucun point bloquant) |
 | `scripts/backup.sh` | Sauvegarde logique `pg_dump` (+ copie S3 facultative) |
 
@@ -399,13 +406,15 @@ Toutes les variables sont dans [`.env.example`](.env.example), regroupées par s
 
 | Service | Où | Rôle |
 |---|---|---|
-| Application Next.js | **Vercel** | pages, actions serveur, API, tâche planifiée d'expiration des accès (`vercel.json`) |
-| PostgreSQL | **Railway** (plugin) | base unique, RLS |
-| MinIO | **Railway** (image `minio/minio`, volume) | fichiers privés + vidéos HLS |
-| Passerelle de streaming | **Railway** (`services/stream-gateway`, Dockerfile) | sert les segments sur jeton signé |
-| SMTP | au choix (relais transactionnel ou Postal auto-hébergé) | e-mails de confirmation et de réinitialisation |
+| Application Next.js | **Vercel** (déploiement automatique à chaque push) | pages, actions serveur, API, tâche planifiée d'expiration des accès (`vercel.json`) |
+| PostgreSQL 18 | **Railway** | base unique, RLS ; accessible depuis Vercel par le proxy TCP de Railway |
+| MinIO | **Railway** (`services/storage`, construit depuis les sources) | fichiers privés + vidéos HLS |
+| Passerelle de streaming | **Railway** (`services/stream-gateway`) | sert les segments sur jeton signé |
+| Worker vidéo | **Railway** (`services/video-worker`, `ffmpeg`) | encode les vidéos téléversées en HLS |
+| SMTP | **Brevo** | e-mails de confirmation et de réinitialisation (un message de test est arrivé en boîte de réception) |
+| Paiement | **Stripe** (mode test, Managed Payments) | Checkout, webhook signé, portail client |
 
-Étapes principales : créer le projet Railway (PostgreSQL, MinIO, passerelle) ; appliquer les migrations avec le workflow **Apply database migrations** ou `npm run db:migrate` ; importer le dépôt dans Vercel et renseigner les variables ; configurer le webhook Stripe en mode test ; créer l'administrateur. Pas à pas, réglages réseau (SSL, pool de connexions, régions) et vérifications : [`DEPLOYMENT.md`](DEPLOYMENT.md). **Aucun déploiement n'a été effectué.**
+Les services Railway se déploient avec `railway up services/<nom> --path-as-root -s <nom>`. Les migrations s'appliquent avec `npm run db:migrate` (ou le workflow **Apply database migrations**) **avant** de pousser le code qui en dépend. Pas à pas, réglages réseau et vérifications : [`DEPLOYMENT.md`](DEPLOYMENT.md), [`docs/GO_LIVE.md`](docs/GO_LIVE.md) (liste de mise en production) et [`docs/STRIPE.md`](docs/STRIPE.md).
 
 ---
 
@@ -413,20 +422,19 @@ Toutes les variables sont dans [`.env.example`](.env.example), regroupées par s
 
 | Élément | État |
 |---|---|
-| Schéma, migrations, RLS, règles d'apprentissage, de commerce et d'administration | ✅ 378 tests sur PostgreSQL embarqué ; migrations rejouées de bout en bout sur une base en TCP |
-| Couche d'accès (rôle par transaction, aucune fuite de privilèges entre requêtes, tables d'auth fermées) | ✅ testée sur une vraie connexion TCP |
-| Authentification : inscription, vérification obligatoire, session HttpOnly, réinitialisation qui révoque les sessions, Argon2id | ✅ testée de bout en bout (bibliothèque + base) |
-| Application complète en navigateur : visiteur, inscription, progression persistante, quiz, livrable, relecture, attestation, publication d'un module, contrôles d'accès | ✅ 20 parcours Playwright dans Chrome, sur build de production |
-| Les 27 routes publiques, apprenant et admin | ✅ HTTP 200 sans erreur ni avertissement de console (relevé en mode développement) |
-| Vérification de signature Stripe, normalisation, traitement des événements | ✅ testés avec de vraies signatures générées localement |
-| Passerelle de streaming (jetons, traversée de chemins, plages d'octets, réécriture des playlists) | ✅ testée avec un faux stockage |
-| Signature des URL S3 (taille, type, durée) | ✅ testée hors ligne |
-| **PostgreSQL serveur réel** (Railway, Docker) | ⚠️ non exécuté (PGlite est un vrai PostgreSQL compilé en WASM, mais ce n'est pas un serveur de production) |
-| **Stripe** (Checkout, portail, factures, taxes, codes promo, remboursements, litiges de bout en bout) | ⚠️ jamais exécuté |
-| **MinIO/S3 réel** (envoi, téléchargement, CORS) et **lecture vidéo HLS** par `hls.js` via la passerelle | ⚠️ jamais exécuté |
-| **SMTP réel**, **Google OAuth**, **déploiement Vercel/Railway**, **`docker-compose.yml`** | ⚠️ jamais exécutés |
-| **CI GitHub Actions** (types, lint, 378 tests, audit, build, puis 20 parcours Playwright sur Chromium/Ubuntu) | ✅ exécutée avec succès sur GitHub (commit `6ac17d7`) |
-| Accessibilité (audit automatisé), Lighthouse, Core Web Vitals | ❌ non mesurés |
+| Schéma, migrations (0000 à 0013), RLS, règles d'apprentissage, de commerce, d'administration, d'entreprise | ✅ 514 tests sur PostgreSQL embarqué ; migrations appliquées en production |
+| Couche d'accès (rôle par transaction, aucune fuite de privilèges entre requêtes) | ✅ testée sur une vraie connexion TCP |
+| Authentification : inscription, vérification obligatoire, session HttpOnly, réinitialisation, Argon2id | ✅ testée de bout en bout |
+| Application complète en navigateur (visiteur, inscription, quiz, livrable, relecture, attestation, publication, avis, sessions en visio, évaluation de niveau, démonstration, parcours entreprise) | ✅ 23 parcours Playwright sur build de production ; 3 d'entre eux dépendent de données et peuvent échouer sur une base locale non neuve (la CI repart d'une base propre) |
+| Accessibilité automatisée (axe, WCAG 2.2 AA) et CSP sur les pages publiques, thèmes clair et sombre | ✅ à chaque livraison |
+| **Stripe en mode test** : achat, webhook signé, accès, remboursement, portail client | ✅ validé de bout en bout par le propriétaire ; événements signés rejoués en local |
+| **SMTP Brevo** | ✅ un e-mail réel reçu ; délivrabilité sous un domaine propre (SPF, DKIM, DMARC) non vérifiée |
+| **Déploiement Vercel + Railway**, migrations en production, 30 modules chargés | ✅ en ligne |
+| **Stripe en mode réel**, éligibilité à Managed Payments, frais | ❌ non validés |
+| **MinIO en production, encodage et lecture vidéo HLS** | ⚠️ jamais exécutés avec une vraie vidéo |
+| **`docker-compose.yml`**, **restauration d'une sauvegarde**, **Google OAuth**, synthèse par modèle de langage du conseiller | ⚠️ jamais exécutés |
+| Textes légaux, rôle de l'organisation cliente (RGPD), relecture des modules juridique, RH et finance par un professionnel | ❌ à faire par un juriste ou un professionnel du domaine |
+| Audit d'accessibilité manuel, Lighthouse, Core Web Vitals, positionnement dans les moteurs et les assistants IA | ❌ non mesurés |
 
 Détails et protocole : [`TESTING.md`](TESTING.md).
 
@@ -438,13 +446,14 @@ Détails et protocole : [`TESTING.md`](TESTING.md).
 |---|---|---|
 | A | Fondations, design system, schéma, catalogue, site public | ✅ |
 | B | Lecteur, progression, quiz, livrables, complétion, attestations | ✅ |
-| C | Stripe (mode test), commandes, webhooks, accès, expiration, e-mails | ✅ *(non exécuté contre Stripe)* |
+| C | Stripe (Managed Payments), commandes, webhooks, accès, expiration, e-mails | ✅ validé en mode test |
 | D | Administration, CMS, journal d'audit, catalogue piloté par la base | ✅ |
-| — | Migration vers une pile 100 % open source (PostgreSQL, Better Auth, S3, HLS, SMTP) | ✅ |
-| E | Entreprises : organisations, licences, sièges, rapports | ⬜ |
-| F | Durcissement : accessibilité, performance, supervision, sauvegardes, CSP | ⬜ |
+| — | Pile 100 % open source (PostgreSQL, Better Auth, S3, HLS, SMTP) et déploiement Vercel + Railway | ✅ |
+| E | Entreprises : organisations, invitations avec consentement, licences, rapport de progression | ✅ *(non rejoué en production)* |
+| F | Durcissement : limitation de débit, CSP, export et suppression RGPD, sauvegardes, accessibilité automatisée | ◐ fait ; audit manuel, supervision et restauration testée restent à faire |
+| G | Contenu : 30 modules rédigés, 12 articles, scripts de 266 vidéos | ✅ rédaction ; **vidéos à enregistrer** |
 
-Prochaines étapes prioritaires : exécuter la chaîne complète contre Railway et Stripe en mode test ; interface entreprise ; éditeur des règles du conseiller ; file de relecture des réponses libres ; consentement cookies et mesure d'audience respectueuse (Plausible/Umami) ; export et suppression de compte ; supervision (GlitchTip/OpenTelemetry) ; dates de début et de fin pour les prix de lancement. Liste complète : [`TASKS.md`](TASKS.md).
+**Avant d'ouvrir à la vente** (liste complète dans [`docs/GO_LIVE.md`](docs/GO_LIVE.md)) : faire valider les textes légaux et les modules sensibles ; confirmer Managed Payments ; enregistrer et téléverser les vidéos ; activer les offres ; passer Stripe en mode réel avec les deux garde-fous ; nom de domaine, SPF/DKIM/DMARC ; révoquer les clés échangées en clair pendant le développement. Idées ensuite : éditeur des règles du conseiller, mesure d'audience respectueuse de la vie privée, supervision, e-mails d'invitation et de rappel. Liste complète : [`TASKS.md`](TASKS.md).
 
 ---
 
@@ -453,12 +462,13 @@ Prochaines étapes prioritaires : exécuter la chaîne complète contre Railway 
 ```
 src/app/            routes : site public, compte, apprendre, admin, achat, API (auth, progress, stripe…)
 src/components/     système de design et composants
-src/lib/            db (pool, rôles), auth, catalogue, conseiller, apprentissage, stripe, stockage, vidéo, e-mail, CMS
-db/                 migrations/ (0000 plateforme … 0005 admin), seed.sql (généré), dev-fixture.sql (démo)
-services/           stream-gateway/ (service Railway)
-scripts/            migrate, dev-db, create-admin, check-env, backup.sh, encode-hls.sh, generate-seed, capture-screenshots
+src/lib/            db (pool, rôles), auth, catalogue, conseiller, évaluation, apprentissage, stripe, stockage, vidéo, e-mail, CMS, SEO, organisations
+db/                 migrations/ (0000 plateforme … 0013 organisations), seed.sql (généré), dev-fixture.sql (démo)
+content/            modules/ (30 modules rédigés, JSON), blog/ (12 articles), FORMAT.md (règles de rédaction)
+services/           storage/ (MinIO), stream-gateway/, video-worker/ (services Railway)
+scripts/            migrate, dev-db, create-admin, check-env, backup.sh, encode-hls.sh, generate-seed, load-content, stripe-setup, capture-screenshots
 tests/ e2e/         Vitest (unitaires, base, intégration) et Playwright
-docs/screenshots/   captures réelles utilisées ci-dessus
+docs/                guides (Stripe, sessions, entreprise, SEO, mise en production, avis), textes légaux (legal/), captures (screenshots/ : antérieures au nouveau logo)
 .github/workflows/  CI, migrations manuelles
 ```
 
@@ -472,6 +482,13 @@ docs/screenshots/   captures réelles utilisées ci-dessus
 | [`TESTING.md`](TESTING.md) | stratégie, couverture, ce qui n'est pas testé |
 | [`CONTENT_GUIDE.md`](CONTENT_GUIDE.md) | publier du contenu authentique, encoder la vidéo |
 | [`TASKS.md`](TASKS.md) | tâches et dépendances externes |
+| [`docs/GO_LIVE.md`](docs/GO_LIVE.md) | liste de mise en production (ce qui reste à faire par le propriétaire) |
+| [`docs/STRIPE.md`](docs/STRIPE.md) | configuration Stripe, Managed Payments, tests, remboursements |
+| [`docs/SESSIONS.md`](docs/SESSIONS.md) | sessions en visio, calendrier, liste d'attente |
+| [`docs/ENTREPRISE.md`](docs/ENTREPRISE.md) | organisations, licences, suivi de progression et confidentialité |
+| [`docs/SEO.md`](docs/SEO.md) | référencement et visibilité dans les assistants IA |
+| [`docs/BETA_TESTERS.md`](docs/BETA_TESTERS.md) | recueillir de vrais avis |
+| [`docs/legal/`](docs/legal/) | textes légaux (brouillons à faire valider) |
 
 **Licence** : aucune n'est encore définie dans ce dépôt public ; en l'absence de licence, tous droits sont réservés. À choisir par le propriétaire.
 
@@ -479,12 +496,4 @@ docs/screenshots/   captures réelles utilisées ci-dessus
 
 ## 12. Avertissement légal
 
-Ce dépôt est un socle technique. **Il n'est ni certifié ni déclaré conforme** au droit français de la formation professionnelle, à la protection des consommateurs, au RGPD ou à l'accessibilité, et n'est pas éligible à un financement public sans vérification indépendante. Les pages légales sont des **modèles à faire valider par un professionnel du droit**. Le droit de rétractation pour contenus numériques, les conditions générales de vente, la fiscalité et les obligations de la formation professionnelle restent à traiter avant toute ouverture des paiements réels. Aucune vidéo, aucun témoignage et aucune biographie n'ont été inventés : les contenus doivent être fournis et validés par le formateur.
-
-## Référencement (SEO et GEO)
-
-Données structurées, `llms.txt`, robots IA, FAQ, flux RSS, images de partage : voir [docs/SEO.md](docs/SEO.md) (avec ce que vous devez faire : domaine, Search Console, Bing).
-
-## Évaluation, aperçu, livrables, entreprises
-
-`/evaluation` (15 questions, résultat local), `/apercu-plateforme` (démonstration interactive), `/exemples-livrables` (exemples fictifs), « Mon équipe » pour les responsables d'organisation : voir [docs/ENTREPRISE.md](docs/ENTREPRISE.md).
+Ce dépôt est un socle technique. **Il n'est ni certifié ni déclaré conforme** au droit français de la formation professionnelle, à la protection des consommateurs, au RGPD ou à l'accessibilité, et n'est pas éligible à un financement public sans vérification indépendante. Les pages légales sont des **brouillons détaillés à faire valider par un professionnel du droit**, comme les modules juridique, RH et finance (pédagogiques, sans valeur d'avis juridique). Le droit de rétractation pour contenus numériques, les conditions générales de vente, la fiscalité et les obligations de la formation professionnelle restent à traiter avant toute ouverture des paiements réels. Aucun témoignage n'a été inventé et aucune vidéo n'existe encore : les vidéos et les avis doivent être fournis par le formateur ; la biographie provient du formateur.
