@@ -20,7 +20,7 @@ Chaque offre démarre **fermée** : elle s'ouvre explicitement, et seulement si 
 - Complétion d'un module : leçons obligatoires + quiz réussis + devoirs acceptés (configurable par module). L'attestation est émise **une seule fois**, privée, vérifiable par code, jamais présentée comme une certification d'État ni une qualification RNCP.
 - Correction automatique pour les questions objectives uniquement ; réponses libres et livrables relus par le formateur. **Aucune IA n'est l'autorité finale.**
 - Jamais de témoignage, avis, chiffre ou logo inventé ; un témoignage ne se publie qu'avec une référence de consentement. Les durées et niveaux sont des estimations à confirmer.
-- La répartition pédagogique 70 % pratique / 20 % interaction / 10 % théorie est une **cible de conception**, pas une mesure.
+- La pédagogie suit un cycle en quatre temps, **Comprendre, Essayer, Vérifier, Livrer** (leçon courte, atelier no-code, quiz et grille de critères, livrable relu). Aucun pourcentage de répartition n'est annoncé : il ne serait pas mesurable.
 
 ## Conseiller de parcours
 

@@ -8,7 +8,7 @@ L'écran **Administration → Mise en production** (et `npm run check:env`) lit 
 
 | Élément | État |
 |---|---|
-| Vercel — site | En ligne : https://trail-academy.vercel.app (projet `trail-academy`, relié au dépôt GitHub : chaque push sur `main` redéploie) |
+| Vercel — site | En ligne : https://trailacademy.fr (projet `trail-academy`, relié au dépôt GitHub : chaque push sur `main` redéploie) |
 | Railway — projet `trail-academy` | PostgreSQL 18, `storage` (MinIO construit depuis les sources, volume `/data`), `stream-gateway`, `video-worker` : en ligne |
 | Migrations 0000→0008 + catalogue | Appliquées sur le vrai PostgreSQL de Railway |
 | Bucket `trail` | Créé |
@@ -77,11 +77,11 @@ Stripe (test ou live) · PostgreSQL « serveur » (les tests utilisent PGlite) �
 
 ## Suite de l'audit du 27 octobre 2026
 
-**Déjà traité dans le code** : chiffres du catalogue calculés depuis une source unique (plus de « 18 » ou « 4 phases » en dur), trois états de disponibilité (« Disponible à l'achat », « Aperçu gratuit · inscriptions bientôt ouvertes », « En préparation »), liste d'attente visible partout (bandeau, accueil, page `/ouverture`, fiches modules) avec choix de la formation, accueil refondu autour des résultats et de trois formations phares (Prompt Engineering, Vibe Coding, Agentic AI), répartition 70/20/10 précisée (le « 20 % » désigne des exercices guidés et des quiz, pas des échanges entre apprenants), trois offres entreprise (AI Discovery Workshop, AI Skills Accelerator, Enterprise AI Academy), titres des fiches plus explicites pour le référencement, trame de trois e-mails ([`EMAILS_LANCEMENT.md`](EMAILS_LANCEMENT.md)).
+**Déjà traité dans le code** : chiffres du catalogue calculés depuis une source unique (plus de « 18 » ou « 4 phases » en dur), trois états de disponibilité (« Disponible à l'achat », « Aperçu gratuit · inscriptions bientôt ouvertes », « En préparation »), liste d'attente visible partout (bandeau, accueil, page `/ouverture`, fiches modules) avec choix de la formation, accueil refondu autour des résultats et de trois formations phares (Prompt Engineering, Vibe Coding, Agentic AI), méthode 70/20/10 remplacée par le cycle Comprendre, Essayer, Vérifier, Livrer (concret et vérifiable), trois offres entreprise (AI Discovery Workshop, AI Skills Accelerator, Enterprise AI Academy), titres des fiches plus explicites pour le référencement, trame de trois e-mails ([`EMAILS_LANCEMENT.md`](EMAILS_LANCEMENT.md)).
 
 **Reste à faire par vous (le code ne peut pas le décider)** :
 
-1. **Nom de domaine.** Le rapport d'audit parle de `trailacademy.fr`, alors que le site déployé est `trail-academy.vercel.app`. Si `trailacademy.fr` est bien votre domaine : l'ajouter dans Vercel, puis mettre `NEXT_PUBLIC_SITE_URL=https://trailacademy.fr` et redéployer (URL canoniques, sitemap, données structurées en dépendent).
+1. **Nom de domaine : fait** (`trailacademy.fr`, acheté chez OVH et relié à Vercel ; `NEXT_PUBLIC_SITE_URL` et `BETTER_AUTH_URL` pointent dessus). Reste : mettre à jour l'URL du webhook Stripe avec `npm run stripe:setup` (ou dans le tableau de bord Stripe) vers `https://trailacademy.fr/api/stripe/webhook`, ajouter le domaine dans Search Console, et configurer SPF, DKIM et DMARC chez OVH pour l'envoi d'e-mails depuis ce domaine.
 2. **Pages légales.** Compléter les champs `[À COMPLÉTER]` de `docs/legal/` (identité, SIREN, adresse, TVA, médiateur, hébergement), les faire valider, puis les publier dans l'administration. Vérifier avec un professionnel la **déclaration d'activité** de prestataire de formation (délai à respecter après la première convention ou le premier contrat) et la nécessité de **Qualiopi** si vous visez des financements publics ou mutualisés (OPCO).
 3. **Service de relecture des livrables.** Décider et afficher : nombre de soumissions incluses, délai de réponse visé, critères d'acceptation. Aujourd'hui rien n'est promis publiquement ; à fixer avant les ventes pour tenir la promesse quand le volume augmente.
 4. **Crédit lors du passage d'un module à un parcours.** Décider si le prix d'un module déjà acheté est déduit du parcours. Ce n'est pas implémenté : il faut une règle commerciale puis un code promo ou un calcul dans la commande.

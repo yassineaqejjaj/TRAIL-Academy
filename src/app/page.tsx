@@ -40,9 +40,10 @@ const outcomes = [
 const FLAGSHIP = ["M4", "M6", "M12"];
 
 const method = [
-  ["70 %", "Pratique", "Ateliers, prototypes, études de cas et livrable du module."],
-  ["20 %", "Exercices guidés et quiz", "Corrigés automatiquement ou relus par le formateur. Ce ne sont pas des échanges entre apprenants : le direct avec le formateur passe par les sessions en visio."],
-  ["10 %", "Théorie", "Les concepts utiles pour prendre les bonnes décisions."],
+  ["1", "Comprendre", "Une leçon courte, un schéma, une vidéo : l'idée-clé et l'exemple d'un cas métier, pas un cours magistral."],
+  ["2", "Essayer", "Un atelier sur des outils no-code, avec des données fictives fournies. Vous manipulez avant de théoriser."],
+  ["3", "Vérifier", "Un quiz corrigé tout de suite et une grille de critères écrite à l'avance : vous savez où vous en êtes."],
+  ["4", "Livrer", "Un livrable professionnel que le formateur relit personnellement. Il débouche sur une attestation vérifiable."],
 ];
 
 const defaultFaq = [
@@ -78,7 +79,7 @@ export default async function Home() {
             </div>
             <dl className="grid max-w-xl gap-4 sm:grid-cols-3">
               <div><dt className="text-sm text-muted">Expérience du formateur</dt><dd className="font-display text-2xl font-bold">1 500+ <span className="text-sm font-normal text-muted">professionnels formés</span></dd></div>
-              <div><dt className="text-sm text-muted">Objectif de pratique</dt><dd className="font-display text-2xl font-bold">70 %</dd></div>
+              <div><dt className="text-sm text-muted">Ateliers no-code</dt><dd className="font-display text-2xl font-bold">{courses.length * 3} <span className="text-sm font-normal text-muted">dans les modules</span></dd></div>
               <div><dt className="text-sm text-muted">À chaque module</dt><dd className="font-display text-2xl font-bold">1 <span className="text-sm font-normal text-muted">livrable relu</span></dd></div>
             </dl>
             <p className="mt-4 text-sm text-muted">Les 1 500 professionnels formés relèvent de l'expérience personnelle du formateur, avant TRAIL Academy. {summary.buyable === 0 ? `Aujourd'hui, ${summary.preview} modules sont lisibles en aperçu gratuit et aucun n'est encore ouvert à l'achat.` : `${summary.buyable} modules sont ouverts à l'achat.`}</p>
@@ -139,19 +140,9 @@ export default async function Home() {
         </Section>
       )}
 
-      <Section tone="surface">
-        <div className="flex flex-wrap gap-14">
-          <div className="min-w-0 flex-[1_1_380px]">
-            <h2 className="mb-4 text-3xl font-bold sm:text-4xl">Apprendre autrement</h2>
-            <p className="text-muted [text-wrap:pretty]">Chaque module est conçu autour de la pratique : démonstrations, exercices guidés, ateliers autonomes, puis un livrable concret. Cette répartition est une cible de conception pédagogique, pas une mesure.</p>
-          </div>
-          <div className="flex min-w-0 flex-[1_1_480px] flex-col gap-6">
-            <div className="flex h-4 overflow-hidden rounded-lg" role="img" aria-label="Objectif de conception : 70 % pratique, 20 % exercices guidés et quiz, 10 % théorie">
-              <div className="bg-accent" style={{ flex: 70 }} /><div className="bg-band" style={{ flex: 20 }} /><div className="bg-border" style={{ flex: 10 }} />
-            </div>
-            <div className="grid gap-6 sm:grid-cols-3">{method.map(([pct, t, d]) => <div key={t}><div className="font-display text-3xl font-bold">{pct}</div><div className="font-semibold">{t}</div><div className="text-sm text-muted">{d}</div></div>)}</div>
-          </div>
-        </div>
+      <Section tone="surface" kicker="La méthode TRAIL" title="Comprendre, essayer, vérifier, livrer" intro="Chaque module suit le même cycle. Vous repartez avec un travail réel, pas seulement des notions.">
+        <ol className="grid gap-4 md:grid-cols-4">{method.map(([n, t, d]) => <li key={t} className="rounded-xl border border-border bg-bg p-6"><div className="font-display text-3xl font-bold text-accent">{n}</div><div className="mt-1 text-lg font-semibold">{t}</div><div className="mt-1 text-[15px] text-muted">{d}</div></li>)}</ol>
+        <p className="mt-6 max-w-3xl text-sm text-muted">Pour échanger en direct avec le formateur, des <Link href="/sessions" className="font-semibold text-accent hover:underline">sessions en visio</Link> sont proposées séparément (calendrier, réservation, liste d'attente).</p>
       </Section>
 
       <Section title="Trois offres" intro="Un module, un parcours, ou l'accès complet. Les prix sont TTC, sans abonnement.">

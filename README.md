@@ -4,7 +4,7 @@
 
 ![Project overview](docs/assets/github-cover.svg)
 
-> **Plateforme de formation professionnelle à l'IA** | **Statut :** en ligne en mode test (paiements réels non ouverts) · [site](https://trail-academy.vercel.app)
+> **Plateforme de formation professionnelle à l'IA** | **Statut :** en ligne en mode test (paiements réels non ouverts) · [site](https://trailacademy.fr)
 >
 > [Architecture](ARCHITECTURE.md) · [Demo / verification](TESTING.md) · [Source code](https://github.com/yassineaqejjaj/TRAIL-Academy)
 
@@ -17,7 +17,7 @@ Une plateforme de formation professionnelle à l'intelligence artificielle, con�
 
 ![Accueil de TRAIL Academy](docs/screenshots/01-accueil.png)
 
-> **État honnête du projet** (octobre 2026). Le site tourne sur **Vercel** (base PostgreSQL, MinIO et services vidéo sur **Railway**) : <https://trail-academy.vercel.app>. Les 30 modules sont rédigés (631 leçons, 856 questions de quiz, plus de 220 schémas, 90 ateliers no-code) et publiés, mais **aucune offre n'est ouverte à la vente** et **aucune vidéo n'est encore téléversée**. Le paiement a été validé de bout en bout **en mode test Stripe** (achat et remboursement) ; les paiements réels restent bloqués par conception tant que la revue juridique n'a pas eu lieu. **514 tests unitaires et 23 parcours de bout en bout** (Playwright, avec contrôle d'accessibilité et de CSP). Ce qui n'a jamais tourné : [voir la section 9](#9-ce-qui-est-vérifié-et-ce-qui-ne-lest-pas).
+> **État honnête du projet** (octobre 2026). Le site tourne sur **Vercel** (base PostgreSQL, MinIO et services vidéo sur **Railway**) : <https://trailacademy.fr>. Les 30 modules sont rédigés (631 leçons, 856 questions de quiz, plus de 220 schémas, 90 ateliers no-code) et publiés, mais **aucune offre n'est ouverte à la vente** et **aucune vidéo n'est encore téléversée**. Le paiement a été validé de bout en bout **en mode test Stripe** (achat et remboursement) ; les paiements réels restent bloqués par conception tant que la revue juridique n'a pas eu lieu. **514 tests unitaires et 23 parcours de bout en bout** (Playwright, avec contrôle d'accessibilité et de CSP). Ce qui n'a jamais tourné : [voir la section 9](#9-ce-qui-est-vérifié-et-ce-qui-ne-lest-pas).
 
 ## Sommaire
 
@@ -47,7 +47,7 @@ Les professionnels qui doivent intégrer l'IA à leur métier trouvent surtout d
 TRAIL Academy propose une formation **pratique, progressive et mesurable**, conçue et enseignée par un praticien qui construit réellement des produits IA :
 
 - **30 modules** en 5 phases (Fondations IA · Productivité & Construction · Produit & Leadership · Systèmes & Ingénierie · IA pour les métiers : marketing et communication, RH, juridique, finance), avec prérequis, ordre recommandé, objectifs mesurables et **livrable concret** pour chaque module ;
-- **Une pédagogie par la pratique** : cible de conception de 70 % de pratique, 20 % d'interaction, 10 % de théorie (un objectif de conception, pas une mesure) ;
+- **Une pédagogie par la pratique** : un cycle en quatre temps, **Comprendre, Essayer, Vérifier, Livrer** (leçon courte, atelier no-code, quiz et grille de critères, livrable relu par le formateur), sans pourcentage de répartition annoncé ;
 - **Une validation honnête** : quiz corrigés automatiquement, livrables relus par le formateur, attestation privée et vérifiable. Jamais présentée comme une certification d'État ou une qualification RNCP ;
 - **Une exploitation par une seule personne** : tout se pilote depuis l'administration, sans toucher au code.
 
@@ -326,7 +326,7 @@ Conventions : aucune concaténation SQL (requêtes paramétrées uniquement, `Q`
 
 | Pratique | Application |
 |---|---|
-| **Promesses vérifiables** | Aucun témoignage, avis, chiffre ou logo inventé ; la répartition 70/20/10 est présentée comme un objectif de conception ; durées et niveaux signalés comme indicatifs |
+| **Promesses vérifiables** | Aucun témoignage, avis, chiffre ou logo inventé ; aucune répartition pédagogique chiffrée n'est annoncée ; durées et niveaux signalés comme indicatifs |
 | **Honnêteté sur la disponibilité** | « Disponible à l'achat », « Aperçu gratuit · inscriptions bientôt ouvertes » et « En préparation » distingués ; l'utilisateur laisse son e-mail avec consentement explicite plutôt que d'acheter du vide |
 | **Prix comme donnée, pas comme code** | Prix et offres modifiables en admin, historique conservé ; expérimentation de prix de lancement possible sans déploiement |
 | **Jamais deux fois le même contenu** | Règle commerciale imposée par la base, pas par l'interface |

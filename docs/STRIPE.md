@@ -29,7 +29,7 @@ Pour vendre en votre nom propre plutôt que via Managed Payments : `STRIPE_MANAG
 3. Dans **Vercel → Settings → Environment Variables** (Production), ajoutez `STRIPE_SECRET_KEY` = cette clé. Ne la communiquez à personne et ne la mettez jamais dans le dépôt.
 4. **Enregistrez le webhook et le portail** depuis votre poste, une seule commande :
    ```bash
-   STRIPE_SECRET_KEY=sk_test_… NEXT_PUBLIC_SITE_URL=https://trail-academy.vercel.app npm run stripe:setup
+   STRIPE_SECRET_KEY=sk_test_… NEXT_PUBLIC_SITE_URL=https://trailacademy.fr npm run stripe:setup
    ```
    Elle crée l'endpoint `…/api/stripe/webhook` avec les huit événements utiles et la configuration du portail client, puis affiche le **secret de signature** (`whsec_…`) **une seule fois**.
 5. Ajoutez ce secret dans Vercel : `STRIPE_WEBHOOK_SECRET`. **Redéployez** (Deployments → Redeploy) pour que les variables soient prises en compte.
