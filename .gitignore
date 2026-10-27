@@ -52,3 +52,4 @@ next-env.d.ts
 # local database dumps (contain personal data)
 /backups/
 *.dump
+video-scripts/
