@@ -6,11 +6,15 @@ import { InterestForm } from "@/components/interest-form";
 import { ReadAloud } from "@/components/read-aloud";
 import { Badge, Card, Container } from "@/components/ui";
 import { getCatalog } from "@/lib/catalog/load";
-import { getPost } from "@/lib/cms";
+import { getPost, getPosts } from "@/lib/cms";
 import { JsonLd } from "@/components/json-ld";
 import { articleLd, breadcrumbLd } from "@/lib/seo";
 
 export const revalidate = 60;
+
+export async function generateStaticParams() {
+  return (await getPosts()).map((p) => ({ slug: p.slug }));
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const post = await getPost((await params).slug);

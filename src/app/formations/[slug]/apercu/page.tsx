@@ -10,6 +10,10 @@ import { getPreview } from "@/lib/catalog/syllabus";
 
 export const revalidate = 60;
 
+export async function generateStaticParams() {
+  return (await getCatalog()).courses.map((c) => ({ slug: c.slug }));
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const slug = (await params).slug;
   const course = getCourse(slug, await getCatalog());

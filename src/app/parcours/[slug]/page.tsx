@@ -11,6 +11,10 @@ import { abs, breadcrumbLd, faqLd, itemListLd } from "@/lib/seo";
 
 export const revalidate = 60;
 
+export async function generateStaticParams() {
+  return (await getCatalog()).learningPaths.map((p) => ({ slug: p.slug }));
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const catalog = await getCatalog();
   const path = getPath((await params).slug, catalog);

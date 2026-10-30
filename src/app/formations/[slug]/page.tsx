@@ -11,6 +11,11 @@ import { breadcrumbLd, courseLd, faqLd } from "@/lib/seo";
 
 export const revalidate = 60;
 
+/** Pre-rendered at build and refreshed every minute: course pages are served from the cache, not from the database. */
+export async function generateStaticParams() {
+  return (await getCatalog()).courses.map((c) => ({ slug: c.slug }));
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const course = getCourse((await params).slug, await getCatalog());
   if (!course) return {};

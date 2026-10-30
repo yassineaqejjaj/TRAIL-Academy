@@ -9,7 +9,19 @@ import type { Catalog } from "./types";
  * Loads the public catalogue from PostgreSQL as the `anon` role (Row Level Security exposes only public data).
  * Falls back to the static seed data when no database is configured, it is empty, or it is unreachable.
  */
+const TTL_MS = 30_000;
+let memo: { at: number; value: Catalog } | null = null;
+
+/** The catalogue changes rarely and costs about ten database round trips: reuse it for 30 s per warm instance (production only). */
 export async function getCatalog(): Promise<Catalog> {
+  if (process.env.NODE_ENV !== "production") return loadCatalog();
+  if (memo && Date.now() - memo.at < TTL_MS) return memo.value;
+  const value = await loadCatalog();
+  memo = { at: Date.now(), value };
+  return value;
+}
+
+async function loadCatalog(): Promise<Catalog> {
   if (!dbConfigured()) return staticCatalog;
   try {
     const rows = await asAnon(async (q) => ({
