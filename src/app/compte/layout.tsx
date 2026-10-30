@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Container } from "@/components/ui";
+import { Logo } from "@/components/brand/logo";
 import { requireUser } from "@/lib/auth";
 import { asUser } from "@/lib/db";
 import { signOut } from "../connexion/actions";
@@ -11,16 +11,17 @@ export default async function AccountLayout({ children }: { children: React.Reac
   const user = await requireUser();
   const isAdmin = Boolean(await asUser(user.id, (q) => q.one("select 1 as ok from user_roles where user_id = $1 and role = 'admin'", [user.id])).catch(() => null));
   const orgRole = await asUser(user.id, (q) => q.one<{ is_manager: boolean; n: number }>("select coalesce(bool_or(role = 'manager'), false) as is_manager, count(*)::int as n from organization_members where user_id = $1 and accepted_at is not null", [user.id])).catch(() => null);
+  const links: [string, string][] = [["/compte", "Mon espace"], ["/formations", "Catalogue"], ["/compte/sessions", "Sessions en visio"], ["/compte/commandes", "Commandes"], ["/compte/donnees", "Mes données"]];
+  if (orgRole && orgRole.n > 0) links.splice(3, 0, ["/compte/organisation", "Mon organisation"]);
+  if (orgRole?.is_manager || isAdmin) links.splice(3, 0, ["/equipe", "Mon équipe"]);
   return (
-    <div className="min-h-screen">
-      <header className="border-b border-border bg-surface">
-        <Container className="flex flex-wrap items-center justify-between gap-4 py-4">
-          <Link href="/" className="flex items-baseline gap-2"><span className="font-display text-2xl font-bold tracking-[0.04em]">TRAIL</span><span className="text-sm font-medium text-muted">Academy</span></Link>
-          <nav aria-label="Espace apprenant" className="flex flex-wrap gap-6"><AccountNav />{(orgRole?.is_manager || isAdmin) && <Link href="/equipe" className="py-2.5 text-[15px] font-medium">Mon équipe</Link>}{orgRole && orgRole.n > 0 && <Link href="/compte/organisation" className="py-2.5 text-[15px] font-medium">Mon organisation</Link>}{isAdmin && <Link href="/admin" className="py-2.5 text-[15px] font-semibold text-accent">Administration</Link>}</nav>
-          <form action={signOut}><button type="submit" className="min-h-11 px-2 text-[15px] font-medium text-muted hover:text-fg">Se déconnecter</button></form>
-        </Container>
-      </header>
-      {children}
+    <div className="relative z-10 mx-auto flex min-h-screen max-w-[1440px] flex-wrap gap-6 p-4 sm:p-6">
+      <aside aria-label="Navigation de l'espace" className="glass flex w-full flex-none flex-col gap-1 rounded-[28px] p-3.5 lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)] lg:w-[250px]">
+        <Link href="/" aria-label="TRAIL Academy, accueil" className="flex px-2.5 pb-4 pt-3"><Logo height={44} /></Link>
+        <nav aria-label="Espace apprenant" className="flex gap-1 overflow-x-auto lg:flex-col lg:overflow-visible"><AccountNav links={links} />{isAdmin && <Link href="/admin" className="shrink-0 rounded-2xl px-3.5 py-3 text-sm font-semibold text-accent hover:bg-white/10">Administration</Link>}</nav>
+        <form action={signOut} className="mt-2 lg:mt-auto"><button type="submit" className="min-h-11 w-full rounded-2xl px-3.5 py-3 text-left text-sm font-medium text-muted hover:bg-white/10 hover:text-fg">Se déconnecter</button></form>
+      </aside>
+      <div className="min-w-0 flex-[999_1_560px]">{children}</div>
     </div>
   );
 }

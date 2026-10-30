@@ -90,7 +90,7 @@ await learner.getByLabel("Réponse écrite").fill("Mon prompt : « Tu es analyst
 await learner.getByRole("button", { name: "Envoyer mon livrable" }).click();
 await learner.getByText("Livrable envoyé").waitFor();
 await shot(learner, "11-livrable");
-await learner.goto("/compte"); await learner.getByText("Reprendre où vous en étiez").waitFor(); await shot(learner, "08-tableau-de-bord");
+await learner.goto("/compte"); await learner.getByText(/reprenons où vous en étiez/).waitFor(); await shot(learner, "08-tableau-de-bord");
 await learner.goto("/compte/donnees"); await shot(learner, "25-compte-donnees");
 // A live session for the demo (the app itself only creates sessions through the administration).
 const sessionId = (await db.query("insert into live_sessions (title, description, course_id, starts_at, duration_minutes, capacity, audience, meeting_url, status) select 'Atelier : écrire un prompt de référence', 'Atelier pratique en direct : nous construisons ensemble un prompt structuré, nous le testons sur vos cas et nous en discutons les limites. Prérequis : avoir parcouru les deux premières leçons du module.', id, date_trunc('day', now() + interval '5 days') + interval '17 hours', 90, 12, 'learners', 'https://meet.jit.si/TRAIL-demo-room', 'published' from courses where code = 'M4' returning id")).rows[0].id;
@@ -99,11 +99,8 @@ await learner.goto(`/sessions/${sessionId}`);
 await learner.getByRole("button", { name: "Réserver ma place" }).click();
 await learner.getByText("Place réservée").waitFor();
 await shot(learner, "28-session-reservee");
-// dark theme and a phone-sized view of the same screens
+// a phone-sized view of the same screens (the site is dark only)
 {
-  const dark = await ctx({ colorScheme: "dark" }); const p = await dark.newPage();
-  await p.context().addCookies(await learnerCtx.cookies());
-  await p.goto("/compte"); await shot(p, "17-mode-sombre"); await dark.close();
   const phone = await ctx({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true }); const m = await phone.newPage();
   await m.context().addCookies(await learnerCtx.cookies());
   await m.goto("/apprendre/prompt-engineering"); await m.waitForURL(/apprendre\/prompt-engineering\/.+/); await shot(m, "18-mobile-lecteur");

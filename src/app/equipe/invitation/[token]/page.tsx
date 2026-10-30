@@ -27,7 +27,7 @@ export default async function InvitationPage({ params, searchParams }: { params:
             <div className="mt-6 flex flex-col gap-3"><Notice tone="info" title="Connexion requise">Connectez-vous ou créez votre compte avec votre adresse professionnelle, puis revenez sur ce lien.</Notice>
               <div className="flex gap-3"><Link href="/connexion" className="font-semibold text-accent underline">Se connecter</Link><Link href="/inscription" className="font-semibold text-accent underline">Créer un compte</Link></div></div>
           ) : (
-            <form action={acceptInvitation} className="mt-6 flex flex-col gap-4 rounded-xl border border-border bg-surface p-6">
+            <form action={acceptInvitation} className="mt-6 flex flex-col gap-4 glass rounded-2xl p-6">
               <input type="hidden" name="token" value={token} />
               <p className="text-[15px]">Ce que votre organisation pourra voir : votre <strong>progression par module</strong> (pourcentage), si vous avez <strong>réussi les quiz</strong> et votre <strong>date de dernière activité</strong>. Elle ne verra jamais vos réponses, vos notes, vos livrables ni les retours du formateur.</p>
               <label className="flex items-start gap-3 text-[15px]"><input type="checkbox" name="consent" className="mt-1 h-5 w-5" required />J'accepte de partager ces informations avec {info.organization_name}. Je peux arrêter ce partage à tout moment depuis mon espace.</label>

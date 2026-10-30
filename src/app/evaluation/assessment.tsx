@@ -22,7 +22,7 @@ export function Assessment({ roles, modules }: { roles: RoleOption[]; modules: M
 
   if (step === "intro") {
     return (
-      <div className="rounded-2xl border border-border bg-surface p-8">
+      <div className="glass rounded-3xl p-8">
         <h2 ref={heading} tabIndex={-1} className="text-2xl font-bold outline-none">Évaluez votre niveau en 5 minutes</h2>
         <p className="mt-3 text-muted">15 questions courtes sur cinq compétences : comprendre l'IA, l'utiliser, vérifier ses résultats, maîtriser les risques, construire avec. Vous obtenez un niveau estimé, vos points forts, vos points à travailler et un parcours recommandé. Vos réponses ne sont ni envoyées ni enregistrées.</p>
         <label htmlFor="role" className="mt-6 block text-sm font-semibold">Votre fonction (facultatif, pour recommander le bon parcours)</label>
@@ -39,7 +39,7 @@ export function Assessment({ roles, modules }: { roles: RoleOption[]; modules: M
     const chosen = answers[q.id];
     const last = step === questions.length - 1;
     return (
-      <div className="rounded-2xl border border-border bg-surface p-8">
+      <div className="glass rounded-3xl p-8">
         <p className="text-sm text-muted" aria-live="polite">Question {step + 1} sur {questions.length}</p>
         <div className="mt-2"><ProgressBar value={Math.round((step / questions.length) * 100)} label="Avancement de l'évaluation" /></div>
         <fieldset className="mt-6">
@@ -77,7 +77,7 @@ export function Assessment({ roles, modules }: { roles: RoleOption[]; modules: M
         <p className="mt-2 text-muted">{r.level === "advanced" ? "Vous maîtrisez les bases et une bonne partie des sujets avancés." : r.level === "intermediate" ? "Vous avez de bonnes bases : quelques sujets précis vous feront gagner en fiabilité." : "Vous débutez : une montée en compétence progressive, en commençant par les fondations, est la plus efficace."} Cette estimation est indicative : ce n'est pas une certification.</p>
       </div>
 
-      <div className="rounded-2xl border border-border bg-surface p-8">
+      <div className="glass rounded-3xl p-8">
         <h3 className="text-xl font-semibold">Vos résultats par compétence</h3>
         <ul className="mt-4 flex flex-col gap-4">{r.dimensions.map((d) => (
           <li key={d.id}><div className="mb-1 flex justify-between text-sm"><span className="font-medium">{d.label}</span><span className="text-muted">{d.correct}/{d.total}</span></div><ProgressBar value={d.percent} label={d.label} /></li>
@@ -86,7 +86,7 @@ export function Assessment({ roles, modules }: { roles: RoleOption[]; modules: M
         {r.weakest.length > 0 && <p className="mt-1 text-sm"><strong>À travailler en priorité :</strong> {r.weakest.map((d) => d.label).join(", ")}.</p>}
       </div>
 
-      <div className="rounded-2xl border border-border bg-surface p-8">
+      <div className="glass rounded-3xl p-8">
         <h3 className="text-xl font-semibold">Par où commencer</h3>
         {recommended.length > 0 ? <ul className="mt-3 flex flex-col gap-2">{recommended.map((m) => <li key={m.code}><Link href={`/formations/${m.slug}`} className="font-semibold text-accent hover:underline">{m.code} · {m.title}</Link></li>)}</ul> : <p className="mt-3 text-muted">Aucun point faible détecté : visez un parcours avancé.</p>}
         {picked && <p className="mt-4">Pour votre fonction : <Link href={`/parcours/${picked.pathSlug}`} className="font-semibold text-accent hover:underline">{picked.pathTitle}</Link>.</p>}
@@ -94,7 +94,7 @@ export function Assessment({ roles, modules }: { roles: RoleOption[]; modules: M
       </div>
 
       {r.wrong.length > 0 && (
-        <details className="rounded-2xl border border-border bg-surface p-6">
+        <details className="glass rounded-3xl p-6">
           <summary className="cursor-pointer font-semibold">Revoir les {r.wrong.length} questions manquées</summary>
           <ul className="mt-4 flex flex-col gap-4">{r.wrong.map((w) => <li key={w.id}><p className="font-medium">{w.prompt}</p><p className="mt-1 text-sm"><Badge tone="accent">Bonne réponse</Badge> {w.options[w.answer]}</p><p className="mt-1 text-sm text-muted">{w.explanation}</p></li>)}</ul>
         </details>

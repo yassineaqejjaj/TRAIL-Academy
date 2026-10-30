@@ -38,7 +38,7 @@ export default async function AdminReviews({ searchParams }: { searchParams: Pro
       <Panel title={`Avis à relire (${pending.length})`}>
         {pending.length === 0 ? <p className="text-sm text-muted">Aucun avis en attente.</p> : (
           <ul className="space-y-6">{pending.map((s) => (
-            <li key={s.id} className="rounded-xl border border-border bg-surface p-4">
+            <li key={s.id} className="glass rounded-2xl p-4">
               <p className="font-semibold">{s.author_name}{s.author_role ? <span className="font-normal text-muted"> · {s.author_role}</span> : null}</p>
               {s.linkedin_url && <p className="text-sm"><a className="text-accent underline" href={s.linkedin_url} target="_blank" rel="noopener noreferrer nofollow">Profil LinkedIn</a></p>}
               <blockquote className="mt-3 whitespace-pre-wrap border-l-4 border-border pl-4 text-[15px]">{s.quote}</blockquote>

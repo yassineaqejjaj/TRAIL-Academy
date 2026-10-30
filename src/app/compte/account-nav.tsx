@@ -2,12 +2,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const items = [["/compte", "Mon espace"], ["/formations", "Catalogue"], ["/compte/commandes", "Mes commandes"], ["/compte/sessions", "Mes sessions"], ["/compte/donnees", "Mes données"]] as const;
-
-export function AccountNav() {
+export function AccountNav({ links }: { links: [string, string][] }) {
   const pathname = usePathname();
-  return <>{items.map(([href, label]) => {
+  return <>{links.map(([href, label]) => {
     const active = pathname === href;
-    return <Link key={href} href={href} aria-current={active ? "page" : undefined} className={`py-2.5 text-[15px] ${active ? "font-semibold text-accent" : "font-medium"}`}>{label}</Link>;
+    return <Link key={href} href={href} aria-current={active ? "page" : undefined} className={`shrink-0 whitespace-nowrap rounded-2xl px-3.5 py-3 text-sm ${active ? "bg-white/10 font-semibold text-fg" : "text-muted hover:bg-white/[0.06] hover:text-fg"}`}>{label}</Link>;
   })}</>;
 }

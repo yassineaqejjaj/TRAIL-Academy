@@ -32,8 +32,8 @@ export default async function PreviewPage({ params }: { params: Promise<{ slug: 
       <div className="mt-6 flex flex-wrap items-center gap-2"><Badge tone="accent">Aperçu gratuit</Badge><span className="text-sm text-muted">{course.code} · {preview.chapter}</span></div>
       <h1 className="mt-3 text-4xl font-bold">{preview.title}</h1>
       <div className="mt-6"><ReadAloud targetId="preview-text" /></div>
-      <article id="preview-text" className="mt-6 rounded-xl border border-border bg-surface p-6 sm:p-8"><Markdown>{preview.body_md}</Markdown></article>
-      <div className="mt-8 flex flex-col gap-3 rounded-2xl border border-border bg-surface-2 p-6 sm:flex-row sm:items-center sm:justify-between">
+      <article id="preview-text" className="mt-6 glass rounded-2xl p-6 sm:p-8"><Markdown>{preview.body_md}</Markdown></article>
+      <div className="mt-8 flex flex-col gap-3 glass rounded-3xl-2 p-6 sm:flex-row sm:items-center sm:justify-between">
         <div><p className="font-semibold">Cette leçon est l'une des leçons du module {course.title}.</p><p className="text-sm text-muted">Le module complet comprend vidéos, exercices, quiz et un livrable relu par le formateur.</p></div>
         <ButtonLink href={purchasable ? `/achat/${slug}` : `/formations/${slug}`}>{purchasable ? "Acheter ce module" : "Voir le module"}</ButtonLink>
       </div>

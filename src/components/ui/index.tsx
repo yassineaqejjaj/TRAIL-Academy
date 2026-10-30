@@ -11,12 +11,12 @@ export const kickerCls = "text-[13px] font-semibold uppercase tracking-[0.08em]"
 /** Page section. `tone="surface"` gives the white, ruled band used to separate content blocks. */
 export function Section({ title, kicker, intro, children, className, id, tone }: { title?: string; kicker?: string; intro?: string; children: ReactNode; className?: string; id?: string; tone?: "surface" }) {
   return (
-    <section id={id} className={clsx(tone === "surface" && "border-y border-border bg-surface")}>
+    <section id={id} className={clsx(tone === "surface" && "border-y border-border bg-white/[0.025]")}>
       <Container className={clsx("py-16 sm:py-20", className)}>
         {(title || kicker) && (
           <header className="mb-10 max-w-3xl">
-            {kicker && <p className={clsx(kickerCls, "mb-2 text-accent")}>{kicker}</p>}
-            {title && <h2 className="text-3xl font-bold sm:text-4xl">{title}</h2>}
+            {kicker && <p className={clsx(kickerCls, "mb-3 text-kicker")}>{kicker}</p>}
+            {title && <h2 className="display-light text-3xl sm:text-5xl">{title}</h2>}
             {intro && <p className="mt-3 text-muted">{intro}</p>}
           </header>
         )}
@@ -26,11 +26,11 @@ export function Section({ title, kicker, intro, children, className, id, tone }:
   );
 }
 
-const btn = "inline-flex min-h-12 items-center justify-center gap-2 rounded-lg px-6 py-3 text-[15px] font-semibold transition-colors disabled:opacity-50 disabled:pointer-events-none";
+const btn = "inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 py-3 text-[15px] font-semibold transition-[background-color,box-shadow,transform,opacity] duration-200 disabled:opacity-50 disabled:pointer-events-none";
 const variants = {
-  primary: "bg-primary text-primary-fg hover:opacity-90",
-  accent: "bg-accent text-white hover:opacity-90 dark:text-[#06201f]",
-  secondary: "border border-fg bg-transparent text-fg hover:bg-surface-2",
+  primary: "cta-glow bg-primary text-primary-fg",
+  accent: "bg-accent text-on-accent hover:opacity-90",
+  secondary: "border border-border bg-surface text-fg backdrop-blur hover:bg-surface-2",
   ghost: "text-fg hover:bg-surface-2",
 };
 
@@ -48,7 +48,7 @@ export function Badge({ tone = "neutral", children }: { tone?: "neutral" | "acce
 }
 
 export function Card({ className, ...p }: ComponentProps<"div">) {
-  return <div className={clsx("rounded-2xl border border-border bg-surface p-6", className)} {...p} />;
+  return <div className={clsx("glass rounded-3xl p-6", className)} {...p} />;
 }
 
 /** Pill filter / toggle (min 44px touch target). */
@@ -67,7 +67,7 @@ export function Notice({ tone = "warn", title, children }: { tone?: "warn" | "in
 
 export function EmptyState({ title, children }: { title: string; children?: ReactNode }) {
   return (
-    <div className="rounded-2xl border border-dashed border-muted p-10 text-center">
+    <div className="rounded-3xl border border-dashed border-border p-10 text-center">
       <p className="text-lg font-semibold">{title}</p>
       {children && <div className="mx-auto mt-2 max-w-md text-muted">{children}</div>}
     </div>
@@ -76,22 +76,22 @@ export function EmptyState({ title, children }: { title: string; children?: Reac
 
 export function ProgressBar({ value, label }: { value: number; label: string }) {
   return (
-    <div role="progressbar" aria-label={label} aria-valuenow={value} aria-valuemin={0} aria-valuemax={100} className="h-2 w-full overflow-hidden rounded bg-border">
-      <div className="h-full rounded bg-accent" style={{ width: `${value}%` }} />
+    <div role="progressbar" aria-label={label} aria-valuenow={value} aria-valuemin={0} aria-valuemax={100} className="h-2 w-full overflow-hidden rounded-full bg-white/10">
+      <div className="h-full rounded-full bg-accent shadow-[0_0_12px_rgba(60,207,192,0.5)]" style={{ width: `${value}%` }} />
     </div>
   );
 }
 
 export function Faq({ items }: { items: { q: string; a: string }[] }) {
   return (
-    <div className="border-b border-border">
+    <div className="flex flex-col gap-3">
       {items.map((i) => (
-        <details key={i.q} className="group border-t border-border py-5">
-          <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 text-[17px] font-semibold">
+        <details key={i.q} className="glass group rounded-[22px]">
+          <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-6 py-4 font-display text-[17px] font-medium">
             {i.q}
-            <span aria-hidden className="text-muted transition-transform group-open:rotate-45">+</span>
+            <span aria-hidden className="flex size-8 flex-none items-center justify-center rounded-full bg-white/10 text-lg text-muted transition-transform group-open:rotate-45">+</span>
           </summary>
-          <p className="mt-2 text-muted">{i.a}</p>
+          <p className="max-w-[720px] px-6 pb-6 leading-[1.65] text-muted">{i.a}</p>
         </details>
       ))}
     </div>

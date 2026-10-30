@@ -28,7 +28,7 @@ export default async function ProductionPage() {
       {groups.map((g) => (
         <section key={g} className="mt-8" aria-label={g}>
           <h2 className="mb-3 text-xl font-semibold">{g}</h2>
-          <ul className="divide-y divide-border rounded-xl border border-border bg-surface">
+          <ul className="divide-y divide-border glass rounded-2xl">
             {checks.filter((c) => c.group === g).map((c) => (
               <li key={c.id} className="flex flex-wrap items-start gap-3 p-4">
                 <span className="w-24 shrink-0"><Badge tone={tone[c.status]}><span aria-hidden="true">{mark[c.status]} </span>{label[c.status]}</Badge></span>

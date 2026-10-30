@@ -20,7 +20,7 @@ export function Demo() {
   const percent = Math.round((done.filter(Boolean).length / steps.length) * 100);
 
   return (
-    <div className="rounded-2xl border border-border bg-surface">
+    <div className="glass rounded-3xl">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border p-4">
         <div><Badge tone="warn">Démonstration</Badge> <span className="ml-2 text-sm text-muted">Module fictif « Résumer sans inventer »</span></div>
         <div className="w-48"><ProgressBar value={percent} label="Progression dans la démonstration" /><span className="text-xs text-muted">{percent} % terminé</span></div>

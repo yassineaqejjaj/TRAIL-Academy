@@ -45,7 +45,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
 
   const ld = courseLd({ slug: course.slug, code: course.code, title: course.title, summary: course.summary, level: difficultyLabel[course.difficulty], hours: course.durationHours, outcomes: course.outcomes, topics: course.topics,
     prerequisites: prereqs.map((c) => c!.title), priceCents: purchasable ? priceCents : null, accessMonths: 12 });
-  const box = "rounded-xl border border-border bg-surface p-6";
+  const box = "glass rounded-2xl p-6";
 
   return (
     <>
@@ -59,14 +59,14 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
         <div className="flex min-w-0 flex-[999_1_600px] flex-col gap-14">
           <section>
             <p className={`${kickerCls} mb-4 text-muted`}>{course.code} · Phase {course.phaseId} · {phase?.title}</p>
-            <h1 className="mb-4 text-4xl font-bold sm:text-5xl">{course.title}</h1>
+            <h1 className="display-light mb-4 text-4xl leading-[1.08] sm:text-6xl"><b className="text-accent">{course.code}</b> {course.title}</h1>
             <p className="mb-6 text-[19px] text-muted [text-wrap:pretty]">{course.summary}</p>
             <div className="mb-4 flex flex-wrap gap-2"><Badge tone={avail.tone}>{avail.label}</Badge>{priceCents != null && <span className="rounded-full border border-border px-3 py-1 text-[13px] font-semibold">{formatEuro(priceCents)} TTC</span>}</div>
             <div className="flex flex-wrap gap-6 text-sm text-muted"><span><strong className="font-semibold text-fg">Accès :</strong> 12 mois</span><span><strong className="font-semibold text-fg">Durée estimée :</strong> ~{course.durationHours} h</span><span><strong className="font-semibold text-fg">Niveau :</strong> {difficultyLabel[course.difficulty]}</span></div>
           </section>
 
           {preview ? (
-            <section aria-label="Aperçu gratuit" className="rounded-2xl border border-border bg-surface-2 p-6 sm:p-8">
+            <section aria-label="Aperçu gratuit" className="glass rounded-3xl-2 p-6 sm:p-8">
               <Badge tone="accent">Aperçu gratuit, sans compte</Badge>
               <h2 className="mt-3 text-2xl font-bold">Lisez une vraie leçon avant de décider</h2>
               <p className="mt-2 text-muted">« {preview.title} » : le même format que dans le module, avec ses schémas et la lecture audio.</p>
@@ -115,7 +115,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
         </div>
 
         <aside aria-label="Achat" className="flex min-w-0 max-w-[420px] flex-[1_1_340px] flex-col gap-6 lg:sticky lg:top-6">
-          <div className="flex flex-col gap-4 rounded-2xl border border-border bg-surface p-8">
+          <div className="glass-strong flex flex-col gap-4 rounded-[30px] p-7 sm:p-8">
             {purchasable ? (
               <>
                 <div><div className="flex items-baseline gap-2"><span className="font-display text-4xl font-bold">{priceCents != null ? formatEuro(priceCents) : "—"}</span><span className="text-sm text-muted">TTC</span></div><div className="text-sm text-muted">Paiement unique · accès 12 mois</div></div>
@@ -135,7 +135,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
             <div className="border-t border-border pt-4"><div className="mb-2 font-semibold">Inclus dans le module</div><ul className="flex flex-col gap-1.5 text-[15px] text-muted">{included.map((i) => <li key={i}>{i}</li>)}<li>Accès pendant 12 mois</li></ul></div>
           </div>
           {paths.length > 0 && (
-            <div className="rounded-2xl border border-border bg-surface p-6">
+            <div className="glass rounded-3xl p-6">
               <div className="mb-2 font-semibold">Aussi inclus dans</div>
               <ul className="mb-4 flex flex-col gap-1.5 text-[15px] text-muted">{paths.map((p) => { const o = catalog.offers.find((x) => x.slug === p.slug); return <li key={p.slug}>{p.title}{o?.amountCents != null ? ` · ${formatEuro(o.amountCents)} TTC` : ""}</li>; })}</ul>
               <Link href="/tarifs" className="text-[15px] font-semibold text-accent hover:underline">Comparer les offres</Link>

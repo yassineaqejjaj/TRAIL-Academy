@@ -23,7 +23,7 @@ export function QuizForm({ quizId, slug, questions, attemptsLeft }: { quizId: st
       {questions.map((q, i) => {
         const res = r?.results.find((x) => x.question_id === q.id);
         return (
-          <fieldset key={q.id} className="rounded-xl border border-border bg-surface p-5">
+          <fieldset key={q.id} className="glass rounded-2xl p-5">
             <legend className="px-1 font-medium">{i + 1}. {q.prompt}</legend>
             {q.kind === "free_text" ? (
               <textarea aria-label={`Réponse à la question ${i + 1}`} rows={4} maxLength={5000} className="mt-2 w-full rounded-lg border border-border bg-bg px-3 py-2 text-sm" onChange={(e) => setAnswers((a) => ({ ...a, [q.id]: e.target.value }))} />

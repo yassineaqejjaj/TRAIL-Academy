@@ -4,10 +4,9 @@ import Link from "next/link";
 export function LaunchBanner() {
   if (process.env.NEXT_PUBLIC_SALES_OPEN === "true") return null;
   return (
-    <div className="bg-band text-band-fg">
-      <p className="mx-auto max-w-[1200px] px-4 py-2 text-center text-sm sm:px-6">
-        Les inscriptions ouvrent bientôt. <Link href="/ouverture" className="font-semibold underline underline-offset-2">Être informé de l'ouverture</Link>
-      </p>
-    </div>
+    <Link href="/ouverture" className="relative z-30 block border-b border-accent/25 bg-accent-soft px-4 py-2.5 text-center text-sm text-fg">
+      <span aria-hidden className="pulse-dot mr-2.5 inline-block size-2 rounded-full bg-accent shadow-[0_0_10px_var(--accent)]" />
+      Les inscriptions ouvrent bientôt. <strong className="text-accent">Être informé de l'ouverture →</strong>
+    </Link>
   );
 }

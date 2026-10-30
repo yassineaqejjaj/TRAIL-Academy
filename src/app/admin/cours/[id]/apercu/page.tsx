@@ -35,7 +35,7 @@ export default async function AdminPreview({ params }: { params: Promise<{ id: s
           {lessons.filter((l) => l.chapter_id === ch.id).map((l) => {
             const playback = playbacks.get(l.id)!;
             return (
-              <article key={l.id} className="mt-4 rounded-xl border border-border bg-surface p-5">
+              <article key={l.id} className="mt-4 glass rounded-2xl p-5">
                 <div className="flex items-center gap-2"><h3 className="font-medium">{l.title}</h3>{l.content_status === "draft" && <Badge tone="warn">Brouillon — invisible pour les apprenants</Badge>}</div>
                 {playback.kind === "hls" ? <p className="mt-2 text-sm text-muted">Vidéo : lecture signée disponible.</p>
                   : l.video_asset_id ? <p className="mt-2 text-sm text-muted">Vidéo associée, mais la passerelle vidéo n&apos;est pas configurée dans cet environnement.</p>

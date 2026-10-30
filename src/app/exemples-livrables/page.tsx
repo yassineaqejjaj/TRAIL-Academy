@@ -20,12 +20,12 @@ export default async function DeliverableExamplesPage() {
     <Container className="max-w-4xl py-12">
       <JsonLd data={breadcrumbLd([{ name: "Accueil", path: "/" }, { name: "Exemples de livrables", path: "/exemples-livrables" }])} />
       <JsonLd data={itemListLd("Exemples de livrables", deliverableExamples.map((d) => ({ name: d.title, path: `/exemples-livrables#${d.code}` })))} />
-      <h1 className="text-4xl font-bold sm:text-5xl">À quoi ressemble un livrable ?</h1>
+      <h1 className="display-light text-4xl sm:text-5xl">À quoi ressemble un livrable ?</h1>
       <p className="mt-3 max-w-2xl text-muted">À la fin de chaque module, vous remettez un livrable que le formateur relit avec une grille de critères. Voici six exemples de ce qui est attendu : un extrait et les critères de relecture.</p>
       <div className="mt-6"><Notice tone="info" title="Exemples fictifs">Les organisations, les chiffres et les cas sont inventés pour illustrer la forme attendue. Ce ne sont pas des résultats réels ni des modèles à recopier.</Notice></div>
       <div className="mt-10 flex flex-col gap-10">
         {deliverableExamples.map((d) => (
-          <article key={d.code} id={d.code} className="rounded-2xl border border-border bg-surface p-6 sm:p-8">
+          <article key={d.code} id={d.code} className="glass rounded-3xl p-6 sm:p-8">
             <div className="flex flex-wrap items-center gap-3"><Badge tone="accent">{d.code}</Badge>{slug(d.code) && <Link href={`/formations/${slug(d.code)}`} className="text-sm font-semibold text-accent hover:underline">Voir le module</Link>}</div>
             <h2 className="mt-2 text-2xl font-semibold">{d.title}</h2>
             <p className="mt-1 text-muted">{d.context}</p>

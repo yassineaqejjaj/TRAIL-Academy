@@ -23,7 +23,7 @@ export default async function VerifyPage({ params }: { params: Promise<{ code: s
     <Container className="max-w-2xl py-16">
       <h1 className="text-3xl font-semibold tracking-tight">Attestation de réalisation</h1>
       {row ? (
-        <div className="mt-6 rounded-xl border border-border bg-surface p-8">
+        <div className="mt-6 glass rounded-2xl p-8">
           <p className="text-sm text-muted">Décernée à</p>
           <p className="text-2xl font-semibold">{row.holder_name ?? "Apprenant·e"}</p>
           <p className="mt-4 text-sm text-muted">pour avoir validé le module</p>

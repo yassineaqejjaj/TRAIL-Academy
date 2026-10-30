@@ -28,7 +28,7 @@ export function PathCard({ path, catalog }: { path: LearningPath; catalog: Catal
   const bundle = path.kind === "bundle";
   return (
     <div className={`flex h-full flex-col gap-3 rounded-2xl bg-surface p-8 ${bundle ? "border-2 border-accent" : "border border-border"}`}>
-      {bundle && <span className="self-start rounded-full bg-accent px-3 py-1 text-[13px] font-semibold text-white dark:text-[#06201f]">Le programme complet</span>}
+      {bundle && <span className="self-start rounded-full bg-accent px-3 py-1 text-[13px] font-semibold text-on-accent">Le programme complet</span>}
       <span className={`${kickerCls} text-muted`}>{list.length} modules · accès {path.accessMonths} mois · ~{totalHours(list)} h</span>
       <h3 className="text-2xl font-bold leading-tight">{path.title}</h3>
       <p className="text-muted"><strong className="text-fg">Pour qui :</strong> {path.audience}</p>

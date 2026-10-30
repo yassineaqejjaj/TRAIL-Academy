@@ -15,7 +15,7 @@ export default function FaqPage() {
     <Container className="max-w-3xl py-12">
       <JsonLd data={faqLd(generalFaq)} />
       <JsonLd data={breadcrumbLd([{ name: "Accueil", path: "/" }, { name: "Questions fréquentes", path: "/faq" }])} />
-      <h1 className="text-4xl font-bold sm:text-5xl">Questions fréquentes</h1>
+      <h1 className="display-light text-4xl sm:text-5xl">Questions fréquentes</h1>
       <p className="mt-3 text-muted">Les réponses courtes aux questions posées avant de s'inscrire. Une autre question ? Passez par la page Entreprises ou le conseiller de parcours.</p>
       <div className="mt-8"><Faq items={generalFaq} /></div>
       <div className="mt-10 flex flex-wrap gap-3"><ButtonLink href="/conseiller">Trouver mon parcours</ButtonLink><ButtonLink href="/formations" variant="secondary">Voir les formations</ButtonLink></div>

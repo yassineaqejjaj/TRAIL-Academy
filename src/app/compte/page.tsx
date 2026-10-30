@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ButtonLink, Card, Container, EmptyState, ProgressBar, kickerCls } from "@/components/ui";
+import { ButtonLink, Card, EmptyState, ProgressBar, kickerCls } from "@/components/ui";
 import { requireUser } from "@/lib/auth";
 import { getCatalog } from "@/lib/catalog/load";
 import { asUser } from "@/lib/db";
@@ -35,21 +35,29 @@ export default async function AccountPage() {
   const nextCourse = catalog.courses.find((c) => c.code === nextCode);
 
   return (
-    <Container className="flex flex-col gap-12 pb-24 pt-12">
-      <div><h1 className="mb-2 text-4xl font-bold">Bonjour {name}</h1><p className="text-sm text-muted">{user.email}</p></div>
+    <div className="flex flex-col gap-8 px-1 pb-16 pt-2 sm:px-3">
+      <div className="flex flex-col gap-1"><span className="text-sm text-muted">{path ? `Parcours ${path.title}` : user.email}</span><h1 className="display-light text-3xl sm:text-4xl">Bonjour <b>{name}</b>{resume ? ", reprenons où vous en étiez." : "."}</h1></div>
 
       {summaries.length === 0 && (
         <EmptyState title="Aucune formation pour le moment">Vos formations apparaîtront ici après votre achat ou votre invitation par un responsable d'équipe.<div className="mt-4"><ButtonLink href="/formations">Découvrir les formations</ButtonLink></div></EmptyState>
       )}
 
       {resume && (
-        <section aria-label="Reprendre" className="flex flex-wrap items-center justify-between gap-6 rounded-2xl bg-band p-8 text-band-fg">
-          <div className="min-w-0 flex-[1_1_360px]">
-            <div className={`${kickerCls} mb-2 text-band-muted`}>Reprendre où vous en étiez</div>
-            <div className="font-display text-2xl font-bold">{resume.course.code} · {resumeTitle ?? resume.course.title}</div>
-            <div className="text-band-muted">{resume.course.title} · {resume.percent} % terminé</div>
+        <section aria-label="Reprendre" className="glass-strong relative flex flex-wrap items-center gap-7 overflow-hidden rounded-[30px] p-7 sm:p-8">
+          <svg aria-hidden viewBox="0 0 700 260" preserveAspectRatio="none" className="pointer-events-none absolute inset-0 size-full opacity-70"><defs><filter id="rs-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10" /></filter></defs><path d="M-20 230 C 160 210, 260 90, 420 120 S 620 220, 720 40" fill="none" stroke="#3ccfc0" strokeWidth="8" filter="url(#rs-blur)" opacity=".5" /></svg>
+          <div className="relative size-[120px] flex-none">
+            <svg viewBox="0 0 110 110" role="img" aria-label={`Module ${resume.course.code} terminé à ${resume.percent} %`} className="size-[120px] -rotate-90">
+              <circle cx="55" cy="55" r="48" fill="none" stroke="rgba(255,255,255,.12)" strokeWidth="8" />
+              <circle cx="55" cy="55" r="48" fill="none" stroke="#3ccfc0" strokeWidth="8" strokeLinecap="round" strokeDasharray="302" strokeDashoffset={Math.round(302 * (1 - resume.percent / 100))} />
+            </svg>
+            <span className="absolute inset-0 flex items-center justify-center font-display text-[26px] font-bold">{resume.percent} %</span>
           </div>
-          <Link href={`/apprendre/${resume.course.slug}/${resume.resumeLessonId}`} className="inline-flex min-h-12 items-center rounded-lg bg-white px-7 py-3 font-semibold text-[#0b1f3a]">Reprendre la leçon</Link>
+          <div className="relative flex min-w-[220px] flex-1 flex-col gap-2.5">
+            <span className="text-xs font-semibold uppercase tracking-[0.1em] text-accent">Reprendre</span>
+            <span className="font-display text-2xl font-semibold leading-tight">{resumeTitle ?? resume.course.title}</span>
+            <span className="text-sm text-muted">{resume.course.code} · {resume.course.title}</span>
+            <Link href={`/apprendre/${resume.course.slug}/${resume.resumeLessonId}`} className="cta-glow mt-1 inline-flex min-h-12 items-center gap-2.5 self-start rounded-full bg-primary px-6 text-[15px] font-semibold text-primary-fg"><svg aria-hidden width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 21 12 6 21" /></svg>Continuer la leçon</Link>
+          </div>
         </section>
       )}
 
@@ -71,15 +79,27 @@ export default async function AccountPage() {
       {(path || pending.length > 0 || attestations.length > 0) && (
         <div className="flex flex-wrap gap-6">
           {path && (
-            <section aria-label="Parcours actif" className="min-w-0 flex-[1_1_420px] rounded-2xl border border-border bg-surface p-7">
-              <h2 className="mb-1 text-xl font-bold">Parcours actif</h2>
-              <div className="mb-4 text-muted">{path.title} · {pathDone} module{pathDone > 1 ? "s" : ""} sur {path.courseCodes.length} terminé{pathDone > 1 ? "s" : ""}</div>
-              <ProgressBar value={Math.round((100 * pathDone) / path.courseCodes.length)} label="Progression du parcours" />
-              {nextCourse && <div className="mt-4 text-sm text-muted">Prochain module recommandé : {nextCourse.code} · {nextCourse.title}</div>}
+            <section aria-label="Parcours actif" className="glass min-w-0 flex-[1_1_420px] rounded-3xl p-7">
+              <h2 className="mb-1 font-display text-xl font-semibold">Mon parcours</h2>
+              <div className="mb-5 text-sm text-muted">{path.title} · {pathDone} module{pathDone > 1 ? "s" : ""} sur {path.courseCodes.length} terminé{pathDone > 1 ? "s" : ""}</div>
+              <ol className="flex flex-wrap gap-x-5 gap-y-4">
+                {path.courseCodes.map((code) => {
+                  const done = doneCodes.has(code), open = owned.has(code);
+                  const c = catalog.courses.find((x) => x.code === code);
+                  return (
+                    <li key={code} className="flex w-[84px] flex-col items-center gap-1.5 text-center">
+                      <span aria-hidden className={`flex size-11 items-center justify-center rounded-full text-sm font-bold ${done ? "bg-blue text-on-accent" : open ? "bg-accent text-on-accent shadow-[0_0_0_5px_rgba(60,207,192,0.18)]" : "border-2 border-white/25 bg-[#0a1a33]"}`}>{done ? "✓" : ""}</span>
+                      <span className="font-display text-[13px] font-bold">{code}</span>
+                      <span className="text-[11px] leading-tight text-muted">{c?.title}<span className="sr-only"> : {done ? "terminé" : open ? "accessible" : "à venir"}</span></span>
+                    </li>
+                  );
+                })}
+              </ol>
+              {nextCourse && <div className="mt-5 text-sm text-muted">Prochain module recommandé : {nextCourse.code} · {nextCourse.title}</div>}
             </section>
           )}
           {(pending.length > 0 || attestations.length > 0) && (
-            <section aria-label="Livrables et attestations" className="min-w-0 flex-[1_1_420px] rounded-2xl border border-border bg-surface p-7">
+            <section aria-label="Livrables et attestations" className="min-w-0 flex-[1_1_420px] glass rounded-3xl p-7">
               <h2 className="mb-4 text-xl font-bold">Livrables et attestations</h2>
               <ul className="flex flex-col gap-3 text-[15px]">
                 {pending.map(({ assignment, state }) => { const c = summaries.find((s) => s.course.id === assignment.course_id)!.course; return (
@@ -95,6 +115,6 @@ export default async function AccountPage() {
         <section><h2 className="mb-4 text-xl font-bold">Accès expirés</h2>
           <ul className="space-y-2 text-sm text-muted">{expired.map((s) => <li key={s.course.id}>{s.course.title} — expiré le {date(s.expiresAt)}. Votre progression et vos attestations sont conservées.</li>)}</ul></section>
       )}
-    </Container>
+    </div>
   );
 }

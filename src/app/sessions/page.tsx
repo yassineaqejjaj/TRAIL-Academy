@@ -12,7 +12,7 @@ const DAYS = ["lun.", "mar.", "mer.", "jeu.", "ven.", "sam.", "dim."];
 function SessionCard({ s }: { s: LiveSession }) {
   const left = seatsLeft(s);
   return (
-    <li className="rounded-xl border border-border bg-surface p-5">
+    <li className="glass rounded-2xl p-5">
       <div className="flex flex-wrap items-center gap-2">
         {s.status === "canceled" ? <Badge tone="warn">Annulée</Badge> : left === 0 ? <Badge tone="warn">Complet · liste d'attente</Badge> : <Badge tone="accent">{left} place{left > 1 ? "s" : ""}</Badge>}
         <Badge>{s.audience === "open" ? "Ouvert à tous les comptes" : s.course_code ? `Apprenants du module ${s.course_code}` : "Apprenants"}</Badge>
@@ -37,7 +37,7 @@ export default async function SessionsPage({ searchParams }: { searchParams: Pro
 
   return (
     <Container className="py-12">
-      <h1 className="text-4xl font-bold sm:text-5xl">Sessions en visio</h1>
+      <h1 className="display-light text-4xl sm:text-5xl">Sessions en visio</h1>
       <p className="mt-3 max-w-2xl text-muted">Ateliers pratiques et questions-réponses en direct avec le formateur. Réservez votre place, ajoutez la session à votre agenda, rejoignez-la depuis votre compte. Les sessions « apprenants » sont réservées aux détenteurs du module concerné.</p>
       <p className="mt-2 text-sm"><a className="font-semibold text-accent hover:underline" href="/sessions/calendar.ics">S'abonner au calendrier (ICS)</a><span className="text-muted"> : titres et horaires seulement.</span></p>
 
@@ -47,7 +47,7 @@ export default async function SessionsPage({ searchParams }: { searchParams: Pro
           <h2 className="text-xl font-semibold capitalize">{grid.label}</h2>
           <Link href={`/sessions?mois=${shiftMonth(ym, 1)}`} className="inline-flex min-h-11 items-center rounded-lg border border-border px-3 text-sm font-semibold" aria-label="Mois suivant">→</Link>
         </div>
-        <div role="grid" aria-label={`Calendrier de ${grid.label}`} className="overflow-hidden rounded-xl border border-border bg-surface text-sm">
+        <div role="grid" aria-label={`Calendrier de ${grid.label}`} className="overflow-hidden glass rounded-2xl text-sm">
           <div role="row" className="grid grid-cols-7 border-b border-border bg-surface-2 text-center font-medium">{DAYS.map((d) => <div role="columnheader" key={d} className="py-2">{d}</div>)}</div>
           {grid.weeks.map((week, wi) => (
             <div role="row" key={wi} className="grid grid-cols-7 border-b border-border last:border-b-0">

@@ -18,7 +18,7 @@ export default async function ResourcesPage({ searchParams }: { searchParams: Pr
     <Container className="py-12">
       <JsonLd data={{ "@context": "https://schema.org", "@type": "Blog", name: "TRAIL Academy — Ressources", url: abs("/ressources"), inLanguage: "fr", blogPost: all.slice(0, 20).map((p) => ({ "@type": "BlogPosting", headline: p.title, url: abs(`/ressources/${p.slug}`), datePublished: p.published_at ?? undefined })) }} />
       <JsonLd data={breadcrumbLd([{ name: "Accueil", path: "/" }, { name: "Ressources", path: "/ressources" }])} />
-      <h1 className="text-4xl font-semibold tracking-tight">Ressources</h1>
+      <h1 className="display-light text-4xl sm:text-5xl">Ressources</h1>
       <p className="mt-3 max-w-2xl text-muted">Articles et guides pratiques, rédigés par le formateur.</p>
       {categories.length > 0 && (
         <nav aria-label="Catégories" className="mt-6 flex flex-wrap gap-2 text-sm">
@@ -35,7 +35,7 @@ export default async function ResourcesPage({ searchParams }: { searchParams: Pr
             {p.published_at && <p className="mt-3 text-xs text-muted">{new Date(p.published_at).toLocaleDateString("fr-FR")}</p>}
           </Card>))}</div>
       )}
-      <div className="mt-16 max-w-md rounded-2xl border border-border bg-surface p-8"><h2 className="mb-4 text-xl font-bold">Newsletter</h2><InterestForm kind="newsletter" label="Recevoir les nouveaux articles" submitLabel="Je m'abonne" /></div>
+      <div className="mt-16 max-w-md glass rounded-3xl p-8"><h2 className="mb-4 text-xl font-bold">Newsletter</h2><InterestForm kind="newsletter" label="Recevoir les nouveaux articles" submitLabel="Je m'abonne" /></div>
     </Container>
   );
 }

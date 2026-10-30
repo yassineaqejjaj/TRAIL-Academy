@@ -26,7 +26,7 @@ export default async function AssessmentPage() {
   return (
     <Container className="max-w-3xl py-12">
       <JsonLd data={breadcrumbLd([{ name: "Accueil", path: "/" }, { name: "Évaluation de niveau", path: "/evaluation" }])} />
-      <h1 className="text-4xl font-bold sm:text-5xl">AI Skills Assessment</h1>
+      <h1 className="display-light text-4xl sm:text-5xl">AI Skills Assessment</h1>
       <p className="mt-3 text-muted">Un test gratuit pour situer votre niveau et choisir par où commencer. Sans inscription, sans e-mail.</p>
       <div className="mt-8"><Assessment roles={options} modules={modules} /></div>
     </Container>

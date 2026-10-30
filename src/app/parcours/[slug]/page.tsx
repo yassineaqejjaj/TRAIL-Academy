@@ -49,7 +49,7 @@ export default async function PathPage({ params }: { params: Promise<{ slug: str
       <div className="mt-8 flex flex-wrap items-start gap-12">
         <div className="min-w-0 flex-[999_1_560px]">
           <p className={`${kickerCls} mb-3 text-accent`}>{list.length} modules · ~{totalHours(list)} h · accès {path.accessMonths} mois</p>
-          <h1 className="text-4xl font-bold sm:text-5xl">{path.title}</h1>
+          <h1 className="display-light text-4xl sm:text-5xl">{path.title}</h1>
           <p className="mt-4 max-w-2xl text-xl text-muted [text-wrap:pretty]">{path.tagline}</p>
           <p className="mt-4 max-w-2xl text-muted"><strong className="text-fg">Pour qui :</strong> {path.audience}.</p>
           {path.kind === "bundle" && (
@@ -65,7 +65,7 @@ export default async function PathPage({ params }: { params: Promise<{ slug: str
             {list.map((c, i) => {
               const a = availability(c, catalog);
               return (
-                <li key={c.code} className="rounded-xl border border-border bg-surface p-5">
+                <li key={c.code} className="glass rounded-2xl p-5">
                   <div className="flex flex-wrap items-center justify-between gap-2"><span className="text-sm text-muted">{i + 1}. {c.code} · {difficultyLabel[c.difficulty]} · {c.durationHours} h</span><Badge tone={a.tone}>{a.label}</Badge></div>
                   <h3 className="mt-1 text-lg font-semibold"><Link href={`/formations/${c.slug}`} className="hover:underline">{c.title}</Link></h3>
                   <p className="mt-1 text-[15px] text-muted">{c.summary}</p>
@@ -77,7 +77,7 @@ export default async function PathPage({ params }: { params: Promise<{ slug: str
           <h2 className="mt-12 text-2xl font-semibold">Questions fréquentes</h2>
           <div className="mt-4"><Faq items={faq} /></div>
         </div>
-        <aside aria-label="Offre" className="flex min-w-0 max-w-[420px] flex-[1_1_340px] flex-col gap-4 rounded-2xl border border-border bg-surface p-8 lg:sticky lg:top-6">
+        <aside aria-label="Offre" className="flex min-w-0 max-w-[420px] flex-[1_1_340px] flex-col gap-4 glass rounded-3xl p-8 lg:sticky lg:top-6">
           {offer?.amountCents != null && <div><div className="flex items-baseline gap-2"><span className="font-display text-4xl font-bold">{formatEuro(offer.amountCents)}</span><span className="text-sm text-muted">TTC</span></div>{unit > 0 && unit > offer.amountCents && <div className="text-sm text-muted">au lieu de {formatEuro(unit)} à l'unité</div>}</div>}
           {purchasable ? <ButtonLink href={`/achat/${path.slug}`} className="min-h-[52px]">Acheter ce parcours</ButtonLink> : (
             <>

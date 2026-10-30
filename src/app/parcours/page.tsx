@@ -24,7 +24,7 @@ export default async function PathsPage() {
     <Container className="py-12">
       <JsonLd data={itemListLd("Parcours de formation IA", learningPaths.map((p) => ({ name: p.title, path: "/parcours" })))} />
       <JsonLd data={breadcrumbLd([{ name: "Accueil", path: "/" }, { name: "Parcours", path: "/parcours" }])} />
-      <h1 className="text-4xl font-semibold tracking-tight">Parcours de formation</h1>
+      <h1 className="display-light text-4xl sm:text-5xl">Parcours de formation</h1>
       <p className="mt-3 max-w-2xl text-muted">Des parcours pour les métiers du produit et de l'IA, des parcours pour les fonctions marketing, RH, juridique et finance, et un accès complet. Chaque parcours est vendu au même prix ; vous choisissez selon votre métier.</p>
       <h2 className="mt-10 text-2xl font-semibold">Produit et IA</h2>
       <div className="mt-4 grid gap-6 lg:grid-cols-2">{productPaths.map((p) => <PathCard key={p.slug} path={p} catalog={catalog} />)}</div>
@@ -35,7 +35,7 @@ export default async function PathsPage() {
       <div className="mt-4 grid gap-6">{bundles.map((p) => <PathCard key={p.slug} path={p} catalog={catalog} />)}</div>
 
       <h2 className="mt-16 text-2xl font-semibold">Comparaison des modules inclus</h2>
-      <div className="mt-4 overflow-x-auto rounded-xl border border-border bg-surface">
+      <div className="mt-4 overflow-x-auto glass rounded-2xl">
         <table className="w-full min-w-[640px] text-sm">
           <caption className="sr-only">Modules inclus dans chaque parcours</caption>
           <thead className="bg-surface-2 text-left"><tr>

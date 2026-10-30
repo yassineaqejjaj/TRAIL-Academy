@@ -28,7 +28,7 @@ export function OfferCards({ catalog }: { catalog: Catalog }) {
   const pathPrice = pathOffers.length ? Math.min(...pathOffers.map((x) => x.offer!.amountCents!)) : null;
   const pathFrom = pathOffers.length > 1 && new Set(pathOffers.map((x) => x.offer!.amountCents)).size > 1;
 
-  const card = "flex h-full flex-col gap-4 rounded-2xl bg-surface p-8";
+  const card = "glass relative flex h-full flex-col gap-4 rounded-[26px] p-8";
   const price = (cents: number | null | undefined, from?: boolean) => cents == null ? null : (
     <p className="flex items-baseline gap-2">{from && <span className="text-sm text-muted">dès</span>}<span className="font-display text-4xl font-bold">{formatEuro(cents)}</span><span className="text-sm text-muted">TTC</span></p>
   );
@@ -36,7 +36,7 @@ export function OfferCards({ catalog }: { catalog: Catalog }) {
   return (
     <div className="grid gap-6 lg:grid-cols-3">
       {moduleOffer?.amountCents != null && (
-        <section className={`${card} border border-border`} aria-label="Module">
+        <section className={card} aria-label="Module">
           <p className={`${kickerCls} text-muted`}>À la carte</p>
           <h3 className="text-2xl font-bold">Un module</h3>
           <p className="text-muted">Un sujet précis, à votre rythme : de Prompt Engineering à la sécurité des LLM.</p>
@@ -48,13 +48,14 @@ export function OfferCards({ catalog }: { catalog: Catalog }) {
       )}
 
       {pathPrice != null && (
-        <section className={`${card} border border-border`} aria-label="Parcours">
+        <section className={`${card} !border-accent/50 !bg-accent-soft shadow-[0_30px_80px_rgba(11,122,131,0.3)]`} aria-label="Parcours">
+          <span className="absolute -top-3.5 left-8 rounded-full bg-accent px-3.5 py-1.5 text-xs font-bold text-on-accent">Le plus adapté pour un métier</span>
           <p className={`${kickerCls} text-muted`}>Une trajectoire métier</p>
           <h3 className="text-2xl font-bold">Un parcours</h3>
           <p className="text-muted">Les modules dans l'ordre recommandé pour votre métier. {paths.length} parcours au choix, au même prix : produit et IA, marketing et communication, RH, juridique, finance.</p>
           {price(pathPrice, pathFrom)}
           <p className="-mt-2 text-sm text-muted">Accès {paths[0]?.accessMonths ?? 18} mois</p>
-          <ul className="flex flex-col gap-3 rounded-xl bg-bg p-4 text-[15px]">
+          <ul className="flex flex-col gap-3 rounded-2xl bg-black/25 p-4 text-[15px]">
             {pathOffers.map(({ path }) => {
               const n = coursesOfPath(path, catalog).length, total = unitTotal(path, catalog);
               return (
@@ -72,8 +73,8 @@ export function OfferCards({ catalog }: { catalog: Catalog }) {
       )}
 
       {mastery && masteryOffer?.amountCents != null && (
-        <section className={`${card} border-2 border-accent`} aria-label="AI Mastery">
-          <span className="self-start rounded-full bg-accent px-3 py-1 text-[13px] font-semibold text-white dark:text-[#06201f]">L'accès complet</span>
+        <section className={card} aria-label="AI Mastery">
+          <span className="self-start rounded-full border border-accent/35 bg-accent-soft px-3 py-1 text-[13px] font-semibold text-accent">L'accès complet</span>
           <h3 className="text-2xl font-bold">AI Mastery</h3>
           <p className="text-muted">Les {catalog.courses.length} modules et les {paths.length} parcours : de la stratégie aux systèmes en production, et toutes les fonctions métier.</p>
           {price(masteryOffer.amountCents)}

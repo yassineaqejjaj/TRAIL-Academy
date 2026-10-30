@@ -34,7 +34,7 @@ export default async function LegalPage({ params }: { params: Promise<{ slug: st
   const custom = await getSection(`legal-${slug}`, "corps");
   return (
     <Container className="max-w-3xl py-12">
-      <h1 className="text-4xl font-semibold tracking-tight">{page.title}</h1>
+      <h1 className="display-light text-4xl sm:text-5xl">{page.title}</h1>
       <div className="mt-6"><Notice title="Modèle — validation juridique requise avant lancement">Cette page est un squelette à compléter. Son contenu doit être rédigé et validé par un professionnel du droit avant toute ouverture à la vente.</Notice></div>
       {custom?.body_md ? <div className="mt-8"><Markdown>{custom.body_md}</Markdown></div> : (
         <ol className="mt-8 list-decimal space-y-3 pl-5">

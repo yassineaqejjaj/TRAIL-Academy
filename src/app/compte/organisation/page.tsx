@@ -19,7 +19,7 @@ export default async function MyOrganizations({ searchParams }: { searchParams: 
       <div className="mt-4"><Flash ok={sp.ok} error={sp.error} /></div>
       {rows.length === 0 ? <div className="mt-6"><EmptyState title="Aucune organisation">Vous n'êtes rattaché(e) à aucune organisation : personne ne voit votre progression.</EmptyState></div> : (
         <ul className="mt-6 flex flex-col gap-4">{rows.map((r) => (
-          <li key={r.organization_id} className="rounded-xl border border-border bg-surface p-5">
+          <li key={r.organization_id} className="glass rounded-2xl p-5">
             <p className="font-semibold">{r.name}</p>
             <p className="text-sm text-muted">{r.role === "manager" ? "Responsable du suivi" : "Apprenant"} depuis le {new Date(r.accepted_at).toLocaleDateString("fr-FR")}. Cette organisation voit votre progression par module, vos quiz réussis et votre dernière activité, jamais vos réponses ni vos livrables.</p>
             <form action={leaveOrganization} className="mt-4"><input type="hidden" name="org" value={r.organization_id} /><Button type="submit" variant="secondary">Arrêter le partage et quitter</Button></form>

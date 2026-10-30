@@ -40,9 +40,9 @@ export default async function TeamPage({ searchParams }: { searchParams: Promise
       <Notice tone="info" title="Confidentialité">{PRIVACY_NOTICE}</Notice>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-3">
-        <div className="rounded-xl border border-border bg-surface p-5"><div className="text-3xl font-bold">{learners.length}</div><div className="text-sm text-muted">membres actifs</div></div>
-        <div className="rounded-xl border border-border bg-surface p-5"><div className="text-3xl font-bold">{usedSeats} / {totalSeats}</div><div className="text-sm text-muted">licences attribuées</div></div>
-        <div className="rounded-xl border border-border bg-surface p-5"><div className="text-3xl font-bold">{average(learners.filter((m) => m.courses.length).map(memberAverage))} %</div><div className="text-sm text-muted">progression moyenne</div></div>
+        <div className="glass rounded-2xl p-5"><div className="text-3xl font-bold">{learners.length}</div><div className="text-sm text-muted">membres actifs</div></div>
+        <div className="glass rounded-2xl p-5"><div className="text-3xl font-bold">{usedSeats} / {totalSeats}</div><div className="text-sm text-muted">licences attribuées</div></div>
+        <div className="glass rounded-2xl p-5"><div className="text-3xl font-bold">{average(learners.filter((m) => m.courses.length).map(memberAverage))} %</div><div className="text-sm text-muted">progression moyenne</div></div>
       </div>
 
       <Panel title="Progression par membre" actions={<a href={`/equipe/export.csv?org=${orgId}`} className="text-sm font-semibold text-accent hover:underline">Exporter en CSV</a>}>

@@ -47,7 +47,7 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
       <JsonLd data={breadcrumbLd([{ name: "Accueil", path: "/" }, { name: "Formations", path: "/formations" }])} />
       <Container className="pb-6 pt-14">
         <nav aria-label="Fil d'Ariane" className="mb-4 text-sm text-muted"><Link href="/" className="hover:text-fg">Accueil</Link> / Formations</nav>
-        <h1 className="mb-3 text-4xl font-bold sm:text-5xl">Les {courses.length} modules TRAIL</h1>
+        <h1 className="mb-3 display-light text-4xl sm:text-5xl">Les {courses.length} modules TRAIL</h1>
         <p className="max-w-2xl text-muted">{phases.length} phases, du socle théorique aux systèmes en production, puis les modules par métier. Seules les formations publiées sont achetables.</p>
       </Container>
       <Container className="flex flex-wrap items-start gap-10 pb-24 pt-6">

@@ -86,7 +86,7 @@ export function ReadAloud({ targetId, label = "Écouter cette leçon" }: { targe
   if (!canSpeak) return null;
 
   return (
-    <div role="group" aria-label="Lecture audio du texte" className="flex flex-wrap items-center gap-2 rounded-xl border border-border bg-surface-2 px-3 py-2 text-sm">
+    <div role="group" aria-label="Lecture audio du texte" className="flex flex-wrap items-center gap-2 glass rounded-2xl-2 px-3 py-2 text-sm">
       {status === "idle" && <button type="button" onClick={() => start(0)} className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-primary px-4 font-semibold text-primary-fg"><Play size={16} aria-hidden="true" />{label}</button>}
       {status === "playing" && <button type="button" onClick={() => { window.speechSynthesis.pause(); setStatus("paused"); }} className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-primary px-4 font-semibold text-primary-fg"><Pause size={16} aria-hidden="true" />Pause</button>}
       {status === "paused" && <button type="button" onClick={() => { window.speechSynthesis.resume(); setStatus("playing"); }} className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-primary px-4 font-semibold text-primary-fg"><Play size={16} aria-hidden="true" />Reprendre</button>}

@@ -44,7 +44,7 @@ export default async function AdminDashboard({ searchParams }: { searchParams: P
               <p className="mt-3 text-xs text-muted">Seules les étapes mesurées côté serveur sont affichées ; les vues de pages ne sont pas suivies (analytics non activé).</p></Card>
             <Card><h2 className="font-semibold">Produits les plus achetés</h2>{m.top_products.length === 0 ? <p className="mt-2 text-sm text-muted">Aucun achat sur la période.</p> : <ol className="mt-2 space-y-1 text-sm">{m.top_products.map((p) => <li key={p.title} className="flex justify-between"><span>{p.title}</span><span className="text-muted">{p.purchases}</span></li>)}</ol>}</Card>
           </div>
-          <Link href="/admin/devoirs" className="mt-6 block rounded-xl border border-border bg-surface p-5 hover:border-accent"><span className="text-sm text-muted">Devoirs à relire</span><span className="ml-3 text-2xl font-semibold">{m.pending_reviews}</span></Link>
+          <Link href="/admin/devoirs" className="mt-6 block glass rounded-2xl p-5 hover:border-accent"><span className="text-sm text-muted">Devoirs à relire</span><span className="ml-3 text-2xl font-semibold">{m.pending_reviews}</span></Link>
         </>
       )}
     </>

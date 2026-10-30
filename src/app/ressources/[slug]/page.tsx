@@ -36,7 +36,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
       {post.excerpt && <p className="mt-4 rounded-xl border-l-4 border-accent bg-surface-2 p-4 text-[17px]"><strong>En bref :</strong> {post.excerpt}</p>}
       <div className="mt-6"><ReadAloud targetId="article-text" label="Écouter cet article" /></div>
       <div id="article-text" className="mt-6"><Markdown>{post.body_md}</Markdown></div>
-      <section className="mt-12 rounded-2xl border border-border bg-surface-2 p-6" aria-label="Lettre d'information"><h2 className="text-lg font-semibold">Recevoir les prochains articles</h2><p className="mb-4 mt-1 text-sm text-muted">Un message quand un nouvel article ou un nouveau module est publié. Désinscription à tout moment.</p><InterestForm kind="newsletter" label="Adresse e-mail" submitLabel="Je m'abonne" /></section>
+      <section className="mt-12 glass rounded-3xl-2 p-6" aria-label="Lettre d'information"><h2 className="text-lg font-semibold">Recevoir les prochains articles</h2><p className="mb-4 mt-1 text-sm text-muted">Un message quand un nouvel article ou un nouveau module est publié. Désinscription à tout moment.</p><InterestForm kind="newsletter" label="Adresse e-mail" submitLabel="Je m'abonne" /></section>
       {related.length > 0 && (
         <section className="mt-12" aria-label="Formations liées"><h2 className="text-xl font-semibold">Formations liées</h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">{related.map((c) => <Card key={c.code}><Link className="font-semibold hover:underline" href={`/formations/${c.slug}`}>{c.code} · {c.title}</Link></Card>)}</div></section>

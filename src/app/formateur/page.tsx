@@ -23,7 +23,7 @@ export default async function InstructorPage() {
         <InstructorPhoto size={320} priority />
         <div className="max-w-2xl">
           <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-accent">Votre formateur</p>
-          <h1 className="text-4xl font-bold sm:text-5xl">{profile?.title ?? instructor.name}</h1>
+          <h1 className="display-light text-4xl sm:text-5xl">{profile?.title ?? instructor.name}</h1>
           <p className="mt-4 text-muted [text-wrap:pretty]">{profile?.subtitle ?? "Head of AI | Expert en IA générative & Agentic AI | Formateur"}</p>
           <h2 className="mb-3 mt-8 text-lg font-semibold">Domaines d'expertise</h2>
           <ExpertiseTags />

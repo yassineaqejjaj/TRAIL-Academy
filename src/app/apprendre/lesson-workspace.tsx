@@ -99,7 +99,7 @@ export function LessonWorkspace(p: WorkspaceProps) {
           </div>
         </div>
       ) : p.bodyText ? (
-        <div className="space-y-4"><ReadAloud targetId="lesson-text" /><article id="lesson-text" className="rounded-xl border border-border bg-surface p-6 sm:p-8"><Markdown>{p.bodyText}</Markdown></article></div>
+        <div className="space-y-4"><ReadAloud targetId="lesson-text" /><article id="lesson-text" className="glass rounded-2xl p-6 sm:p-8"><Markdown>{p.bodyText}</Markdown></article></div>
       ) : (
         <Notice title="Contenu vidéo indisponible">{"unavailable" in p.playback && p.playback.unavailable === "provider_not_configured" ? "Le fournisseur vidéo n'est pas configuré dans cet environnement." : "Aucune vidéo n'a encore été ajoutée à cette leçon."}</Notice>
       )}
@@ -125,7 +125,7 @@ export function LessonWorkspace(p: WorkspaceProps) {
         </div>
         <div role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`} className="py-6">
           {tab === "Texte" && p.bodyText && (
-            <div className="space-y-4"><ReadAloud targetId="lesson-text" /><article id="lesson-text" className="rounded-xl border border-border bg-surface p-6 sm:p-8"><Markdown>{p.bodyText}</Markdown></article></div>
+            <div className="space-y-4"><ReadAloud targetId="lesson-text" /><article id="lesson-text" className="glass rounded-2xl p-6 sm:p-8"><Markdown>{p.bodyText}</Markdown></article></div>
           )}
           {tab === "Notes" && (
             <div>
@@ -138,7 +138,7 @@ export function LessonWorkspace(p: WorkspaceProps) {
                 </div>
               </form>
               <ul className="mt-6 space-y-3">{p.notes.map((n) => (
-                <li key={n.id} className="rounded-xl border border-border bg-surface p-4 text-[15px]"><p className="whitespace-pre-wrap">{n.body}</p>
+                <li key={n.id} className="glass rounded-2xl p-4 text-[15px]"><p className="whitespace-pre-wrap">{n.body}</p>
                   <div className="mt-2 flex items-center gap-3 text-sm text-muted">{n.position_seconds != null && url && <button type="button" onClick={() => seek(n.position_seconds!)} className="font-semibold text-accent hover:underline">à {fmt(n.position_seconds)}</button>}
                     <button type="button" onClick={() => run(() => deleteNote(n.id))} className="ml-auto hover:text-danger">Supprimer</button></div></li>))}</ul>
               {p.bookmarks.length > 0 && <div className="mt-6"><h3 className="mb-2 font-semibold">Signets</h3>

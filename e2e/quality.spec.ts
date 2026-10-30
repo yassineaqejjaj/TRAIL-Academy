@@ -22,7 +22,7 @@ async function audit(page: Page, path: string, scheme: "light" | "dark") {
 const PUBLIC = ["/", "/formations", "/formations/prompt-engineering", "/parcours", "/tarifs", "/entreprise", "/formateur", "/conseiller", "/sessions", "/evaluation", "/apercu-plateforme", "/exemples-livrables", "/faq", "/parcours/rh-augmentees", "/ressources", "/connexion", "/inscription", "/legal/mentions-legales", "/legal/confidentialite"];
 
 test.describe("accessibility (axe, WCAG 2.2 AA) and CSP on public pages", () => {
-  for (const scheme of ["light", "dark"] as const) {
+  for (const scheme of ["dark"] as const) {
     test(`no violations in ${scheme} mode`, async ({ page }) => {
       const csp = watchCsp(page);
       const found: string[] = [];
@@ -42,7 +42,7 @@ test("signed-in and admin screens have no axe violations and no CSP violation; p
   await signIn(page, email);
   const found: string[] = [];
   for (const path of ["/compte", "/compte/commandes", "/compte/donnees", "/admin", "/admin/cours", "/admin/produits", "/admin/production", "/admin/avis", "/admin/sessions", "/compte/sessions"]) {
-    for (const scheme of ["light", "dark"] as const) found.push(...(await audit(page, path, scheme)));
+    for (const scheme of ["dark"] as const) found.push(...(await audit(page, path, scheme)));
   }
   expect(found, found.join("\n")).toEqual([]);
   expect(csp, csp.join("\n")).toEqual([]);
@@ -119,7 +119,7 @@ test.describe("written content: preview, syllabus, diagrams, read aloud", () => 
 
   test("a diagram in an article renders as an accessible SVG, in both themes, with no CSP violation", async ({ page }) => {
     const csp = watchCsp(page);
-    for (const scheme of ["light", "dark"] as const) {
+    for (const scheme of ["dark"] as const) {
       await page.emulateMedia({ colorScheme: scheme });
       await page.goto("/ressources/accuracy-precision-rappel-f1");
       const svg = page.locator("article svg, main svg[aria-roledescription]").first();

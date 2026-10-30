@@ -23,7 +23,7 @@ export function MermaidDiagram({ chart }: { chart: string }) {
   const id = "mmd" + useId().replace(/[^a-zA-Z0-9]/g, "");
   const [svg, setSvg] = useState<string | null>(null);
   const [failed, setFailed] = useState(false);
-  const dark = useSyncExternalStore(subscribeTheme, isDark, () => false);
+  const dark = useSyncExternalStore(subscribeTheme, isDark, () => true);
 
   useEffect(() => {
     let cancelled = false;
@@ -45,5 +45,5 @@ export function MermaidDiagram({ chart }: { chart: string }) {
 
   if (failed) return <pre className="overflow-x-auto rounded-lg bg-surface-2 p-4 text-sm"><code>{chart}</code></pre>;
   if (!svg) return <div className="h-40 animate-pulse rounded-xl bg-surface-2" role="status" aria-label="Chargement du schéma" />;
-  return <div className="overflow-x-auto rounded-xl border border-border bg-surface p-4 [&_svg]:mx-auto [&_svg]:h-auto [&_svg]:max-w-full" dangerouslySetInnerHTML={{ __html: svg }} />;
+  return <div className="overflow-x-auto glass rounded-2xl p-4 [&_svg]:mx-auto [&_svg]:h-auto [&_svg]:max-w-full" dangerouslySetInnerHTML={{ __html: svg }} />;
 }

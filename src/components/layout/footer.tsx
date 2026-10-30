@@ -1,13 +1,15 @@
 import Link from "next/link";
 import { legalPages, site } from "@/lib/site";
+import { Logo } from "@/components/brand/logo";
 import { Container } from "@/components/ui";
 
 export function Footer() {
   return (
-    <footer className="mt-16 border-t border-border bg-bg">
+    <footer className="relative z-10 mt-16 border-t border-border">
       <Container className="flex flex-wrap justify-between gap-6 py-12 text-sm text-muted">
         <div className="max-w-md">
-          <p className="font-semibold text-fg">{site.name} : {site.fullName}</p>
+          <Logo height={44} />
+          <p className="mt-4 font-semibold text-fg">{site.name} : {site.fullName}</p>
           <p className="mt-2">{site.tagline}</p>
           <p className="mt-4 text-xs">Les attestations délivrées sont privées et ne constituent ni une certification d'État ni une qualification RNCP.</p>
         </div>

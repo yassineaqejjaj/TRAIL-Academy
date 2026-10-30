@@ -60,7 +60,7 @@ export default async function SessionPage({ params, searchParams }: { params: Pr
 
       {s.description && <div className="mt-8 whitespace-pre-wrap text-[17px] leading-7 text-muted">{s.description}</div>}
 
-      <section className="mt-10 rounded-2xl border border-border bg-surface p-6" aria-label="Réservation">
+      <section className="mt-10 glass rounded-3xl p-6" aria-label="Réservation">
         {canceled || past ? <p className="text-muted">Les inscriptions sont closes.</p>
           : !user ? <><p className="mb-4 text-muted">Connectez-vous pour réserver votre place.</p><ButtonLink href="/connexion">Se connecter</ButtonLink></>
           : booked ? (

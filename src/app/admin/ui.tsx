@@ -21,7 +21,7 @@ export function Check({ label, ...p }: { label: string } & ComponentProps<"input
 
 export function Panel({ title, children, actions }: { title: string; children: ReactNode; actions?: ReactNode }) {
   return (
-    <section className="mt-8 rounded-xl border border-border bg-surface p-6">
+    <section className="mt-8 glass rounded-2xl p-6">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3"><h2 className="text-lg font-semibold">{title}</h2>{actions}</div>
       {children}
     </section>
@@ -30,7 +30,7 @@ export function Panel({ title, children, actions }: { title: string; children: R
 
 export function Table({ head, children }: { head: string[]; children: ReactNode }) {
   return (
-    <div className="overflow-x-auto rounded-xl border border-border bg-surface">
+    <div className="overflow-x-auto glass rounded-2xl">
       <table className="w-full min-w-[640px] text-sm"><thead className="bg-surface-2 text-left"><tr>{head.map((h) => <th key={h} scope="col" className="p-3 font-medium">{h}</th>)}</tr></thead>
         <tbody className="divide-y divide-border">{children}</tbody></table>
     </div>

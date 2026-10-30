@@ -10,7 +10,7 @@ import { siteGraph } from "@/lib/seo";
 import { site } from "@/lib/site";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
-const sora = Sora({ variable: "--font-sora", subsets: ["latin"], weight: ["600", "700"] });
+const sora = Sora({ variable: "--font-sora", subsets: ["latin"], weight: ["300", "400", "600", "700"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -29,20 +29,17 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
 };
 
-// Applies the saved theme before first paint to avoid a flash. Static string, no user input.
-const themeInit = `try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={`${inter.variable} ${sora.variable} antialiased`} suppressHydrationWarning>
+    <html lang="fr" data-theme="dark" className={`${inter.variable} ${sora.variable} antialiased`} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
         <JsonLd data={siteGraph()} />
       </head>
       <body className="flex min-h-screen flex-col">
+        <div className="ambient" aria-hidden><i /><i /><i /></div>
         <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-surface focus:p-3">Aller au contenu</a>
         <Chrome hideOn={["/apprendre", "/admin", "/compte"]}><LaunchBanner /><Header /></Chrome>
-        <main id="main" className="flex-1">{children}</main>
+        <main id="main" className="relative z-10 flex-1">{children}</main>
         <Chrome hideOn={["/apprendre", "/admin", "/compte"]}><Footer /></Chrome>
       </body>
     </html>
