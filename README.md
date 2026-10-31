@@ -502,3 +502,11 @@ docs/                guides (Stripe, sessions, entreprise, SEO, mise en producti
 ## 12. Avertissement légal
 
 Ce dépôt est un socle technique. **Il n'est ni certifié ni déclaré conforme** au droit français de la formation professionnelle, à la protection des consommateurs, au RGPD ou à l'accessibilité, et n'est pas éligible à un financement public sans vérification indépendante. Les pages légales sont des **brouillons détaillés à faire valider par un professionnel du droit**, comme les modules juridique, RH et finance (pédagogiques, sans valeur d'avis juridique). Le droit de rétractation pour contenus numériques, les conditions générales de vente, la fiscalité et les obligations de la formation professionnelle restent à traiter avant toute ouverture des paiements réels. Aucun témoignage n'a été inventé et aucune vidéo n'existe encore : les vidéos et les avis doivent être fournis par le formateur ; la biographie provient du formateur.
+
+---
+
+## Part of an engineering approach
+
+Built with the [Agentic SDLC framework](https://github.com/yassineaqejjaj/agentic-sdlc) (earned autonomy). Read how this project was built and what its checks caught in the [case study](https://github.com/yassineaqejjaj/agentic-sdlc/blob/main/docs/case-studies/trail-academy.md).
+
+Companion to the book [Leading with AI: Embracing the Future of Education](https://www.amazon.fr/dp/B0CN5PG7LT).
