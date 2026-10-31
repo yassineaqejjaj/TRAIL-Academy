@@ -6,10 +6,12 @@ import { Trash2 } from "lucide-react";
 import { ReadAloud } from "@/components/read-aloud";
 import { Markdown } from "@/components/markdown";
 import { Button, Notice } from "@/components/ui";
+import { TutorPanel } from "./tutor-panel";
 import { addBookmark, addNote, deleteBookmark, deleteNote } from "./actions";
 
 export interface WorkspaceProps {
   lessonId: string;
+  kind: string;
   playback: { url: string } | { unavailable: "no_video" | "provider_not_configured" | "provider_unsupported" };
   tracks: { lang: string; label: string; url: string }[];
   chapters: { title: string; start_seconds: number }[];
@@ -85,6 +87,7 @@ export function LessonWorkspace(p: WorkspaceProps) {
   const tabs: Tab[] = [...(hasVideo && p.bodyText ? (["Texte"] as Tab[]) : []), "Notes", "Ressources", "Transcription"];
   return (
     <div className="flex flex-col gap-6">
+      <TutorPanel lessonId={p.lessonId} kind={p.kind} />
       {url ? (
         <div className="overflow-hidden rounded-xl bg-[#0b1f3a] text-white">
           <video ref={videoRef} controls playsInline preload="metadata" className="aspect-video w-full bg-black"

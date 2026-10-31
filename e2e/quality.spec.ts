@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
-import { signIn, signUp, sql, uniqueEmail, userId, verifyEmail } from "./helpers";
+import { grantCourse, signIn, signUp, sql, uniqueEmail, userId, verifyEmail } from "./helpers";
 
 const WCAG = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
 
@@ -312,4 +312,40 @@ test("enterprise: the admin creates an organisation, the manager and a learner a
   await expect(l.getByText(/Partage arrêté/)).toBeVisible();
   expect((await sql("select 1 from entitlements where user_id = $1 and status = 'active'", [await userId(lea)])).length).toBe(0);
   await mctx.close(); await lctx.close();
+});
+
+test("AI tutor: a learner asks about a lesson and gets cited extracts (no model configured: extracts only)", async ({ page }) => {
+  const email = uniqueEmail("tuteur");
+  await signUp(page, "Apprenante Tuteur", email); await verifyEmail(email); await signIn(page, email);
+  await grantCourse(email, "M4");
+  const [lesson] = await sql<{ id: string; title: string }>("select l.id, l.title from lessons l join courses c on c.id = l.course_id where c.code = 'M4' and l.content_status = 'published' order by l.position limit 1");
+  const chunks = [{ position: 1, heading: "Le framework CARE", anchor: "le-framework-care", body: "CARE signifie contexte, action, résultat, exemple. Il structure un prompt en quatre lignes simples et réutilisables par toute une équipe.", search_text: "framework care contexte action resultat exemple structure prompt quatre lignes simples reutilisables equipe" }];
+  await sql("select replace_lesson_chunks($1, $2::jsonb)", [lesson.id, JSON.stringify(chunks)]);
+
+  await page.goto(`/apprendre/prompt-engineering/${lesson.id}`);
+  await page.getByRole("button", { name: "Poser une question" }).click();
+  const dialog = page.getByRole("dialog", { name: "Tuteur" });
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByText(/jamais la solution/)).toBeVisible();
+  await dialog.getByLabel("Votre question").fill("Comment fonctionne le framework CARE ?");
+  await dialog.getByRole("button", { name: "Envoyer" }).click();
+  await expect(dialog.getByText("Passages du cours, sans reformulation.")).toBeVisible();
+  await expect(dialog.getByRole("link", { name: /Le framework CARE/ })).toHaveAttribute("href", new RegExp(`/apprendre/prompt-engineering/${lesson.id}#le-framework-care$`));
+  await expect(dialog.getByText(/quatre lignes simples/)).toBeVisible();
+  const { violations } = await new AxeBuilder({ page }).include("#tutor-panel").withTags(WCAG).analyze();
+  expect(violations.map((v) => `${v.id}: ${v.nodes[0]?.target.join(" ")}`)).toEqual([]);
+  await page.keyboard.press("Escape");
+  await expect(dialog).toBeHidden();
+});
+
+test("AI tutor: a visitor without an account cannot use it, and an account without access gets nothing", async ({ request, page }) => {
+  const anon = await request.post("/api/tutor", { data: { lessonId: "00000000-0000-0000-0000-000000000001", mode: "ask", question: "bonjour" } });
+  expect(anon.status()).toBe(401);
+  const email = uniqueEmail("tuteur2");
+  await signUp(page, "Sans accès", email); await verifyEmail(email); await signIn(page, email);
+  const [lesson] = await sql<{ id: string }>("select l.id from lessons l join courses c on c.id = l.course_id where c.code = 'M7' and l.content_status = 'published' and not l.is_free_preview limit 1");
+  if (lesson) {
+    const res = await page.request.post("/api/tutor", { data: { lessonId: lesson.id, mode: "ask", question: "framework" } });
+    expect(res.status()).toBe(404);
+  }
 });

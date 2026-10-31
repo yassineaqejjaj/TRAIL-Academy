@@ -90,6 +90,7 @@ Chaque module se termine par **3 ateliers sans code** (90 au total) sur des plat
 ### Conseiller et sessions en visio
 
 - **Conseiller en texte libre** : la personne décrit son métier et son objectif avec ses mots ; le conseiller en déduit son profil, classe les modules les plus proches (similarité de texte avec le catalogue, synonymes), propose un parcours, un premier module et des compléments, et **explique pourquoi** en citant ses propres mots. Calculé dans le navigateur, rien n'est envoyé. Une **synthèse rédigée par un modèle de langage** est possible en option (n'importe quel modèle compatible OpenAI, y compris libre et auto-hébergé : `ADVISOR_LLM_*`) ; elle est désactivée par défaut, ne choisit jamais les modules, et son résultat est assaini. Non testée contre un vrai modèle (testée avec un faux).
+- **Tuteur dans les leçons** (construit, **non déployé**) : un panneau « Poser une question » qui répond **uniquement à partir du texte du cours, avec citations** vers la section exacte, explique plus simplement, donne un exemple, reformule, et sur les exercices donne des indices sans jamais la solution. Recherche plein texte en base avec les droits de la personne ; sans modèle de langage configuré, il affiche les passages du cours les plus proches. Voir [`docs/TUTEUR_IA.md`](docs/TUTEUR_IA.md).
 - **Sessions en visio** : calendrier, réservation avec liste d'attente, lien privé réservé aux inscrits, fichier .ics, flux d'abonnement public, gestion complète côté formateur. Voir [`docs/SESSIONS.md`](docs/SESSIONS.md).
 
 ### De vrais avis, uniquement
@@ -388,6 +389,7 @@ docker compose up -d     # PostgreSQL 17, MinIO (S3), Mailpit (boîte mail sur :
 | `npm run db:migrate [-- --seed] [-- --fixture]` | Applique les migrations (rejouable) |
 | `npm run admin:create -- <email>` | Donne le rôle administrateur |
 | `npm run seed:generate` | Régénère `db/seed.sql` depuis `src/lib/catalog/data.ts` (option `-- --migration` pour la migration des modules métier) |
+| `npm run tutor:index [-- --course M4]` | Découpe les leçons en extraits pour la recherche du tuteur (à relancer après un chargement de contenu) |
 | `npm run content:load -- --module M4` | Charge le contenu rédigé d'un module en brouillon (`--sync` met à jour les textes ; `--blog` pour les articles) |
 | `npx playwright test` | Parcours de bout en bout (`E2E_CHANNEL=chrome` réutilise Chrome installé) |
 | `npm run screenshots` | Régénère `docs/screenshots` depuis l'application qui tourne |
@@ -487,6 +489,7 @@ docs/                guides (Stripe, sessions, entreprise, SEO, mise en producti
 | [`docs/STRIPE.md`](docs/STRIPE.md) | configuration Stripe, Managed Payments, tests, remboursements |
 | [`docs/SESSIONS.md`](docs/SESSIONS.md) | sessions en visio, calendrier, liste d'attente |
 | [`docs/DESIGN.md`](docs/DESIGN.md) | jetons, principes et écarts avec la maquette du design |
+| [`docs/TUTEUR_IA.md`](docs/TUTEUR_IA.md) | tuteur IA : conception, ce qui est construit, mise en service |
 | [`docs/ENTREPRISE.md`](docs/ENTREPRISE.md) | organisations, licences, suivi de progression et confidentialité |
 | [`docs/SEO.md`](docs/SEO.md) | référencement et visibilité dans les assistants IA |
 | [`docs/BETA_TESTERS.md`](docs/BETA_TESTERS.md) | recueillir de vrais avis |

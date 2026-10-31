@@ -31,6 +31,9 @@ Si votre employeur ou une organisation cliente vous invite, il vous est demandé
 ## 3 bis. Conseiller de parcours
 Le conseiller qui vous propose un parcours à partir de la description de votre métier et de votre objectif fonctionne **dans votre navigateur** : le texte saisi n’est pas enregistré. [À VALIDER : si une synthèse par un modèle de langage externe est activée un jour, cette page devra citer le fournisseur, les données transmises et la base légale avant activation ; elle est désactivée par défaut.] Évitez d’y saisir des informations confidentielles ou le nom de votre employeur.
 
+## 3 ter. Tuteur dans les leçons
+Si le tuteur est activé, la question que vous posez dans une leçon (et, si vous l'avez sélectionné, le passage concerné) est envoyée, avec des extraits du cours, à un service de modèle de langage pour rédiger la réponse : [À COMPLÉTER : nom du fournisseur, localisation, garanties de transfert]. Aucune conversation n'est conservée par TRAIL Academy. Ne saisissez pas de données personnelles ni confidentielles. Chaque réponse est signalée comme générée par une IA et cite les passages du cours utilisés. [À VALIDER : base légale, durée de conservation côté fournisseur, information des personnes, contrat de sous-traitance.]
+
 ## 4. Destinataires et sous-traitants
 | Sous-traitant | Rôle | Localisation / garanties [À COMPLÉTER ET VALIDER] |
 |---|---|---|

@@ -61,7 +61,7 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
             <h1 className="mt-1 text-3xl font-bold">{lesson.title}</h1>
           </div>
           <LessonWorkspace
-            key={lesson.id} lessonId={lesson.id}
+            key={lesson.id} lessonId={lesson.id} kind={lesson.kind}
             playback={playback.kind === "hls" ? { url: playback.url } : { unavailable: playback.reason }}
             tracks={tracks} chapters={lesson.video_chapters} startAt={data.progress?.position_seconds ?? 0}
             completed={completed.has(lesson.id)} transcript={lesson.transcript} bodyText={lesson.body_md}

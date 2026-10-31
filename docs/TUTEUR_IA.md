@@ -1,6 +1,6 @@
 # Conseiller et tuteur IA : investigation (octobre 2026)
 
-**Statut : étude, rien n'est construit.** Objectif demandé : un assistant qui s'appuie sur le contenu des formations par une recherche documentaire avec **citations** (RAG), qui aide à **comprendre plus simplement** et à **reformuler**, et qui **assiste sur les exercices** quand c'est utile.
+**Statut : le tuteur dans le lecteur est construit et testé en local ; rien n'est déployé, et il n'a jamais tourné avec un vrai modèle de langage.** Le conseiller de parcours public avec citations reste à faire (§3). Objectif demandé : un assistant qui s'appuie sur le contenu des formations par une recherche documentaire avec **citations** (RAG), qui aide à **comprendre plus simplement** et à **reformuler**, et qui **assiste sur les exercices** quand c'est utile.
 
 ## 1. Ce que la maquette dit, et ce qu'elle ne dit pas
 
@@ -86,3 +86,17 @@ Moteur commun : recherche → sélection d'extraits → génération contrainte 
 3. **Historique des conversations** : aucun (recommandé au départ) ou conservé avec consentement.
 4. **Accès** : tuteur réservé aux apprenants payants (recommandé) ou aussi dans les aperçus gratuits.
 5. **Exercices** : confirmer la règle « indices, jamais de solution de livrable » et le nombre de questions par jour.
+
+## 11. Ce qui a été construit (tuteur dans le lecteur)
+
+- **Migration 0014** : table `content_chunks`, recherche plein texte français, sécurité par ligne via `can_view_lesson()`, `replace_lesson_chunks()` (réservée au serveur) et `search_content_chunks()` (avec les droits de l'appelant).
+- **Découpage** (`src/lib/tutor/chunk.ts`) : une section `##` = un extrait ; schémas et liens nettoyés ; ancres identiques à celles que le rendu Markdown pose maintenant sur les titres, pour que chaque citation mène à la bonne section.
+- **Indexation** : `npm run tutor:index` (toutes les leçons, ou `-- --course M4`), et automatique à chaque enregistrement d'une leçon dans l'administration. **À relancer après un `content:load`.**
+- **Moteur** (`src/lib/tutor/`) : recherche, assemblage, consigne stricte, vérification des citations (numéros valides, aucun lien, aucun HTML), repli « passages du cours » si le modèle est absent, en échec ou ne cite rien.
+- **API** `POST /api/tutor` : connexion obligatoire, quotas (6 par minute, 40 par jour et par personne, en base), lecture avec les droits de la personne (404 si la leçon ne lui est pas accessible), aucune conversation conservée.
+- **Interface** : bouton « Poser une question » et panneau en verre dans le lecteur ; « Explique plus simplement », « Donne un exemple », « Résume la leçon », « Reformuler avec mes mots », « Expliquer le passage sélectionné », et sur les exercices « Un indice » (trois niveaux, jamais la solution). Escape ferme le panneau ; contrôle axe sans violation.
+- **Mesures** : accès (un non-inscrit ne reçoit aucun extrait payant, un visiteur est refusé) testés sur PostgreSQL ; **sur le texte réel des 30 modules, 76 % des sections sont retrouvées dans les 3 premiers résultats** quand la question reprend les 16 premiers mots de la section (mesure honnête mais optimiste : de vraies questions de personnes peuvent faire moins bien).
+
+Variables : `TUTOR_LLM_URL`, `TUTOR_LLM_MODEL`, `TUTOR_LLM_KEY` (repli sur `ADVISOR_LLM_*`). Sans elles, le tuteur fonctionne en mode « passages du cours uniquement ».
+
+**Pour l'activer en production** : appliquer la migration 0014, lancer `npm run tutor:index` sur la base de production, choisir le fournisseur du modèle et renseigner les variables, compléter la politique de confidentialité (§3 bis du brouillon), puis faire un essai de 30 questions par module avec relecture humaine.

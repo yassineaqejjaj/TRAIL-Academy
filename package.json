@@ -21,7 +21,8 @@
     "content:load": "tsx scripts/load-content.mts",
     "stripe:setup": "tsx scripts/stripe-setup.mts",
     "check:env": "tsx scripts/check-env.mts",
-    "demo": "tsx --env-file-if-exists=.env.local scripts/demo.mts"
+    "demo": "tsx --env-file-if-exists=.env.local scripts/demo.mts",
+    "tutor:index": "tsx --env-file-if-exists=.env.local scripts/index-chunks.mts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1156.0",

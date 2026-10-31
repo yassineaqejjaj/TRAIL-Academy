@@ -5,6 +5,7 @@ import { requireAdmin } from "@/lib/auth";
 import { flash, formData, revalidatePublic, UserFacingError, withAdmin } from "@/lib/admin/ctx";
 import { assignmentSchema, courseDetailsSchema, courseSchema, lessonSchema, optionSchema, parseChapterLines, questionSchema, quizSchema } from "@/lib/admin/schemas";
 import { asUser, type Q } from "@/lib/db";
+import { reindexLesson } from "@/lib/tutor/index-lesson";
 import { deleteObject, objectInfo, presignUpload, storageConfigured } from "@/lib/storage";
 import { isResourceKeyFor, resourceKey, subtitleKey, validateResource, validateSubtitle } from "@/lib/uploads";
 
@@ -179,6 +180,7 @@ export async function updateLesson(courseId: string, lessonId: string, fd: FormD
   await withAdmin(admin, path, (q) => q(
     `update lessons set title = $1, kind = $2, required = $3, is_free_preview = $4, content_status = $5, video_provider = $6, video_asset_id = $7,
        duration_seconds = $8, body_md = $9, transcript = $10, video_chapters = $11::jsonb where id = $12`, [...values, lessonId]));
+  await reindexLesson(lessonId); // keeps the tutor's search in step with the text
   flash(path, "ok", "Leçon enregistrée.");
 }
 
