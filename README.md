@@ -18,7 +18,7 @@
 |---|---|
 | **Description** | Plateforme de formation professionnelle à l'IA (modules, parcours, quiz, livrables relus, attestations vérifiables, paiement, sessions en visio, offre entreprise) pilotable par un formateur unique. |
 | **Problème** | Contenus IA génériques ou trop techniques, sans progression ni livrable ; côté formateur, un assemblage fragile d'outils ([détail](#le-problème)). |
-| **Statut** | **Beta** : en ligne en mode test, aucune offre ouverte à la vente, paiements réels bloqués par conception (voir [section 9](#9-ce-qui-est-vérifié-et-ce-qui-ne-lest-pas)). |
+| **Statut** | **Prototype** : en ligne en mode test, aucune offre ouverte à la vente, paiements réels bloqués par conception (voir [section 9](#9-ce-qui-est-vérifié-et-ce-qui-ne-lest-pas)). |
 | **Site** | <https://trailacademy.fr> |
 | **Architecture** | [`ARCHITECTURE.md`](ARCHITECTURE.md) et [section 4](#4-architecture-technique) |
 | **Tests et vérification** | [`TESTING.md`](TESTING.md) (les chiffres de tests y sont détaillés, à lire à la source) |
