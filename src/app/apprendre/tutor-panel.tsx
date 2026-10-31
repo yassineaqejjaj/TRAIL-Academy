@@ -6,7 +6,7 @@ interface Source { n: number; lessonTitle: string; heading: string; href: string
 interface Msg { role: "user" | "assistant"; text: string; sources?: Source[]; extractsOnly?: boolean; error?: boolean }
 type Mode = "ask" | "simplify" | "example" | "summarize" | "reformulate" | "hint";
 
-const chip = "min-h-11 rounded-full border border-white/15 bg-white/[0.06] px-3.5 text-[13px] font-medium transition-colors hover:bg-white/10 disabled:opacity-50";
+const chip = "min-h-11 rounded-full border border-hairline bg-tint-weak px-3.5 text-[13px] font-medium transition-colors hover:bg-tint disabled:opacity-50";
 
 /** Text with [n] markers turned into links to the cited sections. */
 function Cited({ text, sources }: { text: string; sources: Source[] }) {
@@ -77,9 +77,9 @@ export function TutorPanel({ lessonId, kind }: { lessonId: string; kind: string 
       {open && (
         <section id="tutor-panel" role="dialog" aria-label="Tuteur"
           className="glass-strong fixed inset-x-3 bottom-20 z-40 flex h-[min(620px,calc(100vh-7rem))] flex-col overflow-hidden rounded-[28px] sm:inset-x-auto sm:right-5 sm:w-[420px]">
-          <header className="flex items-start justify-between gap-3 border-b border-white/10 px-5 py-4">
+          <header className="flex items-start justify-between gap-3 border-b border-hairline px-5 py-4">
             <div><h2 className="font-display text-lg font-semibold">Tuteur</h2><p className="text-xs text-muted">Réponses tirées de ce cours, avec leurs sources</p></div>
-            <button type="button" onClick={() => setOpen(false)} aria-label="Fermer le tuteur" className="inline-flex size-11 items-center justify-center rounded-full text-muted hover:bg-white/10 hover:text-fg">✕</button>
+            <button type="button" onClick={() => setOpen(false)} aria-label="Fermer le tuteur" className="inline-flex size-11 items-center justify-center rounded-full text-muted hover:bg-tint hover:text-fg">✕</button>
           </header>
 
           <div className="flex-1 overflow-y-auto px-5 py-4" aria-live="polite" aria-relevant="additions">
@@ -91,10 +91,10 @@ export function TutorPanel({ lessonId, kind }: { lessonId: string; kind: string 
             )}
             <ul className="flex flex-col gap-3">
               {msgs.map((m, i) => (
-                <li key={i} className={m.role === "user" ? "self-end max-w-[85%] rounded-[18px_18px_4px_18px] bg-white/10 px-4 py-3 text-sm" : `max-w-[95%] rounded-[18px_18px_18px_4px] border px-4 py-3 text-sm leading-[1.6] ${m.error ? "border-danger/40 bg-white/5" : "border-accent/30 bg-accent-soft"}`}>
+                <li key={i} className={m.role === "user" ? "self-end max-w-[85%] rounded-[18px_18px_4px_18px] bg-tint px-4 py-3 text-sm" : `max-w-[95%] rounded-[18px_18px_18px_4px] border px-4 py-3 text-sm leading-[1.6] ${m.error ? "border-danger/40 bg-tint-weak" : "border-accent/30 bg-accent-soft"}`}>
                   <p className="whitespace-pre-wrap"><Cited text={m.text} sources={m.sources ?? []} /></p>
                   {m.sources && m.sources.length > 0 && (
-                    <ul className="mt-3 flex flex-col gap-2 border-t border-white/10 pt-3 text-xs">
+                    <ul className="mt-3 flex flex-col gap-2 border-t border-hairline pt-3 text-xs">
                       {m.sources.map((s) => (
                         <li key={s.n}>
                           <Link href={s.href} className="font-semibold text-accent hover:underline">[{s.n}] {s.lessonTitle} › {s.heading}</Link>
@@ -111,7 +111,7 @@ export function TutorPanel({ lessonId, kind }: { lessonId: string; kind: string 
             <div ref={end} />
           </div>
 
-          <div className="flex flex-col gap-3 border-t border-white/10 px-4 py-3">
+          <div className="flex flex-col gap-3 border-t border-hairline px-4 py-3">
             <div className="flex flex-wrap gap-2">
               <button type="button" className={chip} disabled={busy} onClick={() => void send("simplify", undefined, { selection: selection || undefined })}>Explique plus simplement</button>
               <button type="button" className={chip} disabled={busy} onClick={() => void send("example", undefined, { selection: selection || undefined })}>Donne un exemple</button>
@@ -125,7 +125,7 @@ export function TutorPanel({ lessonId, kind }: { lessonId: string; kind: string 
               <textarea id="tutor-input" ref={input} value={text} onChange={(e) => setText(e.target.value)} rows={2} maxLength={600}
                 onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); e.currentTarget.form?.requestSubmit(); } }}
                 placeholder={rewrite ? "Écrivez la leçon avec vos propres mots…" : "Votre question sur la leçon…"}
-                className="min-h-12 flex-1 resize-none rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-sm text-fg placeholder:text-muted" />
+                className="min-h-12 flex-1 resize-none rounded-2xl border border-hairline bg-inset px-4 py-3 text-sm text-fg placeholder:text-muted" />
               <button type="submit" disabled={busy || !text.trim()} className="cta-glow min-h-12 rounded-full bg-primary px-5 text-sm font-semibold text-primary-fg disabled:opacity-50">Envoyer</button>
             </form>
             <p className="text-[11px] leading-snug text-muted">Ne saisissez pas de données personnelles ni confidentielles. Votre question est envoyée à un service d'IA pour rédiger la réponse.</p>

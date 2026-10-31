@@ -11,7 +11,7 @@ export const kickerCls = "text-[13px] font-semibold uppercase tracking-[0.08em]"
 /** Page section. `tone="surface"` gives the white, ruled band used to separate content blocks. */
 export function Section({ title, kicker, intro, children, className, id, tone }: { title?: string; kicker?: string; intro?: string; children: ReactNode; className?: string; id?: string; tone?: "surface" }) {
   return (
-    <section id={id} className={clsx(tone === "surface" && "border-y border-border bg-white/[0.025]")}>
+    <section id={id} className={clsx(tone === "surface" && "border-y border-border bg-band-soft")}>
       <Container className={clsx("py-16 sm:py-20", className)}>
         {(title || kicker) && (
           <header className="mb-10 max-w-3xl">
@@ -76,7 +76,7 @@ export function EmptyState({ title, children }: { title: string; children?: Reac
 
 export function ProgressBar({ value, label }: { value: number; label: string }) {
   return (
-    <div role="progressbar" aria-label={label} aria-valuenow={value} aria-valuemin={0} aria-valuemax={100} className="h-2 w-full overflow-hidden rounded-full bg-white/10">
+    <div role="progressbar" aria-label={label} aria-valuenow={value} aria-valuemin={0} aria-valuemax={100} className="h-2 w-full overflow-hidden rounded-full bg-tint">
       <div className="h-full rounded-full bg-accent shadow-[0_0_12px_rgba(60,207,192,0.5)]" style={{ width: `${value}%` }} />
     </div>
   );
@@ -89,7 +89,7 @@ export function Faq({ items }: { items: { q: string; a: string }[] }) {
         <details key={i.q} className="glass group rounded-[22px]">
           <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-6 py-4 font-display text-[17px] font-medium">
             {i.q}
-            <span aria-hidden className="flex size-8 flex-none items-center justify-center rounded-full bg-white/10 text-lg text-muted transition-transform group-open:rotate-45">+</span>
+            <span aria-hidden className="flex size-8 flex-none items-center justify-center rounded-full bg-tint text-lg text-muted transition-transform group-open:rotate-45">+</span>
           </summary>
           <p className="max-w-[720px] px-6 pb-6 leading-[1.65] text-muted">{i.a}</p>
         </details>

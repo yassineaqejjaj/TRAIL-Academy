@@ -89,18 +89,18 @@ export default async function Home() {
             <p className="max-w-[560px] text-[19px] leading-[1.6] text-muted">{hero?.subtitle ?? "Des formations conçues par un Head of AI. Des cas réels, des ateliers pratiques sans code et un livrable relu personnellement par le formateur. Pour le produit et la tech, mais aussi le marketing, les RH, le juridique et la finance."}</p>
             <div className="flex flex-wrap items-center gap-3">
               <Link href="/conseiller" className="cta-glow inline-flex min-h-14 items-center gap-2.5 rounded-full bg-primary px-8 text-base font-semibold text-primary-fg shadow-[0_12px_40px_rgba(60,207,192,0.3)]">Trouver mon parcours en 2 min <span aria-hidden>→</span></Link>
-              <Link href={freeLesson ? `/formations/${freeLesson.slug}/apercu` : "/formations"} className="glass inline-flex min-h-14 items-center rounded-full px-7 text-base font-medium transition-colors hover:bg-white/10">Lire une leçon gratuite</Link>
+              <Link href={freeLesson ? `/formations/${freeLesson.slug}/apercu` : "/formations"} className="glass inline-flex min-h-14 items-center rounded-full px-7 text-base font-medium transition-colors hover:bg-tint">Lire une leçon gratuite</Link>
             </div>
             <dl className="mt-1 grid max-w-[580px] grid-cols-3 gap-4">
               <div className="flex flex-col-reverse"><dt className="text-[13px] text-muted">professionnels formés*</dt><dd className="font-display text-[28px] font-bold sm:text-3xl">1 500+</dd></div>
               <div className="flex flex-col-reverse"><dt className="text-[13px] text-muted">ateliers no-code</dt><dd className="font-display text-[28px] font-bold sm:text-3xl">{courses.length * 3}</dd></div>
               <div className="flex flex-col-reverse"><dt className="text-[13px] text-muted">livrable relu par module</dt><dd className="font-display text-[28px] font-bold text-accent sm:text-3xl">1</dd></div>
             </dl>
-            <p className="max-w-[560px] text-xs leading-normal text-muted/80">* Expérience personnelle du formateur, avant TRAIL Academy. {summary.buyable === 0 ? `Aujourd'hui, ${summary.preview} modules sont lisibles en aperçu gratuit ; aucun n'est encore ouvert à l'achat.` : `${summary.buyable} modules sont ouverts à l'achat.`}</p>
+            <p className="max-w-[560px] text-xs leading-normal text-muted">* Expérience personnelle du formateur, avant TRAIL Academy. {summary.buyable === 0 ? `Aujourd'hui, ${summary.preview} modules sont lisibles en aperçu gratuit ; aucun n'est encore ouvert à l'achat.` : `${summary.buyable} modules sont ouverts à l'achat.`}</p>
           </div>
           <HeroPathCard paths={heroPaths} />
         </div>
-        <div aria-hidden className="relative overflow-hidden border-y border-white/[0.08] bg-white/[0.02] py-5">
+        <div aria-hidden className="relative overflow-hidden border-y border-hairline bg-band-soft py-5">
           <div className="marquee flex w-max gap-12 whitespace-nowrap font-display text-base text-muted">
             {[0, 1].map((k) => <div key={k} className="flex gap-12">{marquee.map((m) => <span key={`${k}-${m}`} className="flex gap-12"><span>{m}</span><span className="text-accent">/</span></span>)}</div>)}
           </div>
@@ -139,12 +139,12 @@ export default async function Home() {
         <div className="grid gap-4 lg:grid-cols-4">
           {mastery && (
             <Link href="/parcours/ai-mastery" className="glass-strong lift relative flex min-h-[320px] flex-col justify-between overflow-hidden rounded-[30px] p-8 sm:p-9 lg:col-span-2 lg:row-span-2">
-              <div aria-hidden className="absolute -right-24 -top-24 size-[440px]"><div className="absolute inset-[70px] rounded-full bg-[#1d4ed8] opacity-50 blur-[60px]" /><svg viewBox="0 0 440 440" className="absolute inset-0 size-full"><circle cx="220" cy="220" r="170" fill="none" stroke="rgba(255,255,255,.18)" strokeDasharray="2 8" /><circle cx="220" cy="50" r="7" fill="#3ccfc0" /><circle cx="220" cy="220" r="115" fill="none" stroke="rgba(255,255,255,.12)" /></svg></div>
+              <div aria-hidden className="absolute -right-24 -top-24 size-[440px]"><div className="absolute inset-[70px] rounded-full bg-blue opacity-[var(--orb-card)] blur-[60px]" /><svg viewBox="0 0 440 440" className="absolute inset-0 size-full"><circle cx="220" cy="220" r="170" fill="none" stroke="rgba(255,255,255,.18)" strokeDasharray="2 8" /><circle cx="220" cy="50" r="7" fill="#3ccfc0" /><circle cx="220" cy="220" r="115" fill="none" stroke="rgba(255,255,255,.12)" /></svg></div>
               <span className="relative self-start rounded-full border border-accent/35 bg-accent-soft px-3 py-1.5 text-xs font-semibold text-accent">Accès complet</span>
               <div className="relative flex max-w-[460px] flex-col gap-3.5">
                 <h3 className="font-display text-4xl font-bold leading-[1.1] tracking-tight sm:text-[40px]">AI Mastery</h3>
                 <p className="text-base leading-[1.6] text-muted">Les {courses.length} modules et les {paths.length} parcours, en un seul achat. Des fondations du machine learning aux agents, à la sécurité des LLM et à l'IA appliquée à chaque métier.</p>
-                <div className="flex flex-wrap gap-2 text-[13px]"><span className="rounded-full bg-white/10 px-3 py-1.5">{courses.length} modules</span><span className="rounded-full bg-white/10 px-3 py-1.5">{mastery.accessMonths} mois d'accès</span><span className="rounded-full bg-white/10 px-3 py-1.5">{priceOf(mastery.slug)} TTC</span></div>
+                <div className="flex flex-wrap gap-2 text-[13px]"><span className="rounded-full bg-tint px-3 py-1.5">{courses.length} modules</span><span className="rounded-full bg-tint px-3 py-1.5">{mastery.accessMonths} mois d'accès</span><span className="rounded-full bg-tint px-3 py-1.5">{priceOf(mastery.slug)} TTC</span></div>
               </div>
             </Link>
           )}
@@ -182,8 +182,8 @@ export default async function Home() {
         <div className="grid gap-4 lg:grid-cols-3">
           <div className="glass-strong flex flex-col gap-6 rounded-[30px] p-7 sm:p-9 lg:col-span-2">
             <div className="flex flex-col gap-2.5"><span className="text-xs font-semibold uppercase tracking-[0.1em] text-accent">Conseiller en texte libre</span><h3 className="font-display text-2xl font-semibold leading-[1.3] sm:text-[28px]">Décrivez votre métier avec vos mots. Il vous répond en citant les vôtres.</h3></div>
-            <div className="flex flex-col gap-3 rounded-[20px] border border-white/[0.08] bg-black/25 p-5 text-sm leading-[1.6]">
-              <div className="max-w-[80%] self-end rounded-[18px_18px_4px_18px] bg-white/10 px-4 py-3">Je suis contrôleuse de gestion, je veux automatiser mon reporting mensuel sans coder.</div>
+            <div className="flex flex-col gap-3 rounded-[20px] border border-hairline bg-inset p-5 text-sm leading-[1.6]">
+              <div className="max-w-[80%] self-end rounded-[18px_18px_4px_18px] bg-tint px-4 py-3">Je suis contrôleuse de gestion, je veux automatiser mon reporting mensuel sans coder.</div>
               <div className="flex max-w-[88%] flex-col gap-2 rounded-[18px_18px_18px_4px] border border-accent/30 bg-accent-soft px-4 py-3.5">
                 <span>Vous parlez de <strong className="text-accent">« reporting mensuel »</strong> et de <strong className="text-accent">« sans coder »</strong> : le parcours <strong>Finance Augmentée</strong> vous correspond.</span>
                 <span className="text-muted">Premier module conseillé : <strong className="text-fg">M28 · IA pour le contrôle de gestion et le FP&amp;A</strong>, livrable : un pack de reporting mensuel avec explication d'écarts.</span>
@@ -197,13 +197,13 @@ export default async function Home() {
             { href: "/apercu-plateforme", t: "Parcourir la plateforme", d: "Un module de démonstration : leçon, quiz corrigé, atelier no-code et livrable.", icon: <><rect x="3" y="4" width="18" height="14" rx="3" /><path d="M8 21h8M12 18v3" /></> },
           ].map((c, k) => (
             <Link key={c.t} href={c.href} className="glass lift flex flex-col justify-between gap-4 rounded-[30px] p-7 sm:p-8">
-              <svg aria-hidden width="34" height="34" viewBox="0 0 24 24" fill="none" stroke={k === 1 ? "#8fb4ff" : "#3ccfc0"} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">{c.icon}</svg>
+              <svg aria-hidden width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" className={k === 1 ? "text-kicker" : "text-accent"} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">{c.icon}</svg>
               <div className="flex flex-col gap-2"><h3 className="font-display text-[22px] font-semibold">{c.t}</h3><p className={experience}>{c.d}</p>{c.extra && <span className="text-sm font-semibold text-accent">{c.extra}</span>}</div>
             </Link>
           ))}
           <div className="glass flex flex-wrap items-center justify-between gap-7 rounded-[30px] p-7 sm:p-8 lg:col-span-2">
             <div className="flex max-w-[440px] flex-col gap-2.5"><span className="text-xs font-semibold uppercase tracking-[0.1em] text-kicker">Attestation vérifiable</span><h3 className="font-display text-2xl font-semibold leading-[1.3]">Un code public, partageable sur LinkedIn. Jamais présentée comme une certification d'État.</h3></div>
-            <div aria-hidden className="flex min-w-60 flex-col gap-1.5 rounded-[18px] border border-white/20 bg-white/10 px-5 py-4"><span className="text-[11px] uppercase tracking-[0.1em] text-muted">Code de vérification</span><span className="font-mono text-xl tracking-[0.08em] text-accent">TRL-XXXX-XXXX</span><span className="text-xs text-muted">Exemple de format</span></div>
+            <div aria-hidden className="flex min-w-60 flex-col gap-1.5 rounded-[18px] border border-hairline bg-tint px-5 py-4"><span className="text-[11px] uppercase tracking-[0.1em] text-muted">Code de vérification</span><span className="font-mono text-xl tracking-[0.08em] text-accent">TRL-XXXX-XXXX</span><span className="text-xs text-muted">Exemple de format</span></div>
           </div>
         </div>
       </section>
@@ -211,12 +211,12 @@ export default async function Home() {
       {/* FORMATEUR */}
       <section id="formateur" className={`${wrap} py-16 sm:py-24`}>
         <div className="glass mx-auto grid max-w-[1180px] items-center gap-10 rounded-[36px] p-6 sm:p-10 lg:grid-cols-[360px_1fr] lg:gap-14">
-          <div className="relative"><div aria-hidden className="absolute inset-5 rounded-[28px] bg-[#0b7a83] opacity-70 blur-[50px]" /><div className="relative [&_img]:!size-full [&_img]:!rounded-[28px] [&_img]:!border-white/20"><InstructorPhoto size={360} /></div></div>
+          <div className="relative"><div aria-hidden className="absolute inset-5 rounded-[28px] bg-accent opacity-[var(--orb-card)] blur-[50px]" /><div className="relative [&_img]:!size-full [&_img]:!rounded-[28px] [&_img]:!border-hairline"><InstructorPhoto size={360} /></div></div>
           <div className="flex flex-col gap-5">
             <span className={label}>Pourquoi TRAIL ?</span>
             <h2 className="display-light text-4xl leading-[1.12] sm:text-[44px]">Apprendre en construisant, <b>avec quelqu'un qui le fait</b>.</h2>
             <p className="text-[17px] leading-[1.6] text-muted"><strong className="text-fg">{instructor.name}</strong>, Head of AI, formé à Stanford (machine learning) et à Duke University (AI product management). Plus de 10 ans à concevoir, développer et déployer des solutions d'IA pour de grandes organisations.</p>
-            <ul className="flex flex-wrap gap-2">{instructor.expertise.map((t) => <li key={t} className="rounded-full border border-white/20 px-3.5 py-2 text-[13px]">{t}</li>)}</ul>
+            <ul className="flex flex-wrap gap-2">{instructor.expertise.map((t) => <li key={t} className="rounded-full border border-hairline px-3.5 py-2 text-[13px]">{t}</li>)}</ul>
             <div className="flex flex-wrap items-center gap-5"><Link href="/formateur" className="font-semibold text-accent hover:underline">Découvrir le parcours du formateur →</Link><Link href="/sessions" className="font-semibold text-muted hover:text-fg">Sessions en visio</Link></div>
           </div>
         </div>
@@ -238,10 +238,10 @@ export default async function Home() {
           <div><ButtonLink href="/entreprise">Demander un devis</ButtonLink></div>
         </div>
         <div className="glass-strong flex flex-col gap-4 rounded-[30px] p-6 sm:p-7">
-          <div className="flex items-center justify-between"><span className="font-display text-base font-semibold">Mon équipe</span><span className="rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold">Licences d'équipe</span></div>
-          <div className="grid grid-cols-3 gap-3">{[["Sièges actifs", "12 / 15", ""], ["Modules validés", "27", "text-accent"], ["Livrables relus", "31", ""]].map(([k, v, c]) => <div key={k} className="flex flex-col gap-1 rounded-[18px] bg-black/25 p-4"><span className="text-xs text-muted">{k}</span><span className={`font-display text-2xl font-bold ${c}`}>{v}</span></div>)}</div>
-          <div className="flex flex-col gap-3 rounded-[18px] bg-black/25 p-[18px]"><span className="text-[13px] font-semibold">Progression par module</span>
-            {[["M4 Prompt Engineering", 82], ["M5 Context Eng.", 57], ["M10 Responsible AI", 34]].map(([k, v]) => <div key={k} className="grid grid-cols-[130px_1fr_40px] items-center gap-3 text-[13px] sm:grid-cols-[150px_1fr_40px]"><span className="truncate">{k}</span><span className="h-2 overflow-hidden rounded-full bg-white/10"><span className="block h-full bg-blue" style={{ width: `${v}%` }} /></span><span>{v} %</span></div>)}
+          <div className="flex items-center justify-between"><span className="font-display text-base font-semibold">Mon équipe</span><span className="rounded-full bg-tint px-3 py-1.5 text-xs font-semibold">Licences d'équipe</span></div>
+          <div className="grid grid-cols-3 gap-3">{[["Sièges actifs", "12 / 15", ""], ["Modules validés", "27", "text-accent"], ["Livrables relus", "31", ""]].map(([k, v, c]) => <div key={k} className="flex flex-col gap-1 rounded-[18px] bg-inset p-4"><span className="text-xs text-muted">{k}</span><span className={`font-display text-2xl font-bold ${c}`}>{v}</span></div>)}</div>
+          <div className="flex flex-col gap-3 rounded-[18px] bg-inset p-[18px]"><span className="text-[13px] font-semibold">Progression par module</span>
+            {[["M4 Prompt Engineering", 82], ["M5 Context Eng.", 57], ["M10 Responsible AI", 34]].map(([k, v]) => <div key={k} className="grid grid-cols-[130px_1fr_40px] items-center gap-3 text-[13px] sm:grid-cols-[150px_1fr_40px]"><span className="truncate">{k}</span><span className="h-2 overflow-hidden rounded-full bg-tint"><span className="block h-full bg-blue" style={{ width: `${v}%` }} /></span><span>{v} %</span></div>)}
           </div>
           <span className="text-xs text-muted">Données fictives d'illustration</span>
         </div>
@@ -270,7 +270,7 @@ export default async function Home() {
             <p className="text-[17px] leading-[1.6] text-muted">Choisissez ce qui vous intéresse. Vous recevrez un seul e-mail à l'ouverture, sans engagement.</p>
             <Link href="/conseiller" className="font-semibold text-accent hover:underline">Pas sûr de votre choix ? Le conseiller vous recommande un parcours →</Link>
           </div>
-          <div className="relative rounded-[26px] border border-white/[0.14] bg-[rgba(4,12,26,0.6)] p-6 sm:p-7"><WaitlistForm options={options} /></div>
+          <div className="relative rounded-[26px] border border-hairline bg-inset p-6 sm:p-7"><WaitlistForm options={options} /></div>
         </div>
       </section>
     </>

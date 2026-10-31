@@ -47,8 +47,8 @@ export default async function AccountPage() {
           <svg aria-hidden viewBox="0 0 700 260" preserveAspectRatio="none" className="pointer-events-none absolute inset-0 size-full opacity-70"><defs><filter id="rs-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10" /></filter></defs><path d="M-20 230 C 160 210, 260 90, 420 120 S 620 220, 720 40" fill="none" stroke="#3ccfc0" strokeWidth="8" filter="url(#rs-blur)" opacity=".5" /></svg>
           <div className="relative size-[120px] flex-none">
             <svg viewBox="0 0 110 110" role="img" aria-label={`Module ${resume.course.code} terminé à ${resume.percent} %`} className="size-[120px] -rotate-90">
-              <circle cx="55" cy="55" r="48" fill="none" stroke="rgba(255,255,255,.12)" strokeWidth="8" />
-              <circle cx="55" cy="55" r="48" fill="none" stroke="#3ccfc0" strokeWidth="8" strokeLinecap="round" strokeDasharray="302" strokeDashoffset={Math.round(302 * (1 - resume.percent / 100))} />
+              <circle cx="55" cy="55" r="48" fill="none" className="stroke-hairline" strokeWidth="8" />
+              <circle cx="55" cy="55" r="48" fill="none" className="stroke-accent" strokeWidth="8" strokeLinecap="round" strokeDasharray="302" strokeDashoffset={Math.round(302 * (1 - resume.percent / 100))} />
             </svg>
             <span className="absolute inset-0 flex items-center justify-center font-display text-[26px] font-bold">{resume.percent} %</span>
           </div>
@@ -88,7 +88,7 @@ export default async function AccountPage() {
                   const c = catalog.courses.find((x) => x.code === code);
                   return (
                     <li key={code} className="flex w-[84px] flex-col items-center gap-1.5 text-center">
-                      <span aria-hidden className={`flex size-11 items-center justify-center rounded-full text-sm font-bold ${done ? "bg-blue text-on-accent" : open ? "bg-accent text-on-accent shadow-[0_0_0_5px_rgba(60,207,192,0.18)]" : "border-2 border-white/25 bg-[#0a1a33]"}`}>{done ? "✓" : ""}</span>
+                      <span aria-hidden className={`flex size-11 items-center justify-center rounded-full text-sm font-bold ${done ? "bg-blue text-on-accent" : open ? "bg-accent text-on-accent shadow-[0_0_0_5px_rgba(60,207,192,0.18)]" : "border-2 border-border bg-surface-solid"}`}>{done ? "✓" : ""}</span>
                       <span className="font-display text-[13px] font-bold">{code}</span>
                       <span className="text-[11px] leading-tight text-muted">{c?.title}<span className="sr-only"> : {done ? "terminé" : open ? "accessible" : "à venir"}</span></span>
                     </li>

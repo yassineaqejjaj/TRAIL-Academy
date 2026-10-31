@@ -3,6 +3,7 @@ import { Logo } from "@/components/brand/logo";
 import { requireUser } from "@/lib/auth";
 import { asUser } from "@/lib/db";
 import { signOut } from "../connexion/actions";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { AccountNav } from "./account-nav";
 
 export const dynamic = "force-dynamic";
@@ -18,8 +19,9 @@ export default async function AccountLayout({ children }: { children: React.Reac
     <div className="relative z-10 mx-auto flex min-h-screen max-w-[1440px] flex-wrap gap-6 p-4 sm:p-6">
       <aside aria-label="Navigation de l'espace" className="glass flex w-full flex-none flex-col gap-1 rounded-[28px] p-3.5 lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)] lg:w-[250px]">
         <Link href="/" aria-label="TRAIL Academy, accueil" className="flex px-2.5 pb-4 pt-3"><Logo height={44} /></Link>
-        <nav aria-label="Espace apprenant" className="flex gap-1 overflow-x-auto lg:flex-col lg:overflow-visible"><AccountNav links={links} />{isAdmin && <Link href="/admin" className="shrink-0 rounded-2xl px-3.5 py-3 text-sm font-semibold text-accent hover:bg-white/10">Administration</Link>}</nav>
-        <form action={signOut} className="mt-2 lg:mt-auto"><button type="submit" className="min-h-11 w-full rounded-2xl px-3.5 py-3 text-left text-sm font-medium text-muted hover:bg-white/10 hover:text-fg">Se déconnecter</button></form>
+        <nav aria-label="Espace apprenant" className="flex gap-1 overflow-x-auto lg:flex-col lg:overflow-visible"><AccountNav links={links} />{isAdmin && <Link href="/admin" className="shrink-0 rounded-2xl px-3.5 py-3 text-sm font-semibold text-accent hover:bg-tint">Administration</Link>}</nav>
+        <div className="mt-2 flex items-center gap-1 lg:mt-auto"><ThemeToggle /><span className="text-sm text-muted">Thème</span></div>
+        <form action={signOut}><button type="submit" className="min-h-11 w-full rounded-2xl px-3.5 py-3 text-left text-sm font-medium text-muted hover:bg-tint hover:text-fg">Se déconnecter</button></form>
       </aside>
       <div className="min-w-0 flex-[999_1_560px]">{children}</div>
     </div>

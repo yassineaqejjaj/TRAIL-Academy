@@ -78,7 +78,7 @@ Les prix sont des **données** modifiables dans l'administration (historique con
 
 ### Pour apprendre, et pour décider d'acheter
 
-- **Schémas intégrés** aux leçons (Mermaid : processus, séquences, matrices, chronologies), accessibles et adaptés au thème sombre.
+- **Schémas intégrés** aux leçons (Mermaid : processus, séquences, matrices, chronologies), accessibles et adaptés aux thèmes clair et sombre.
 - **Lecture audio** des textes (synthèse vocale du navigateur, vitesse et voix au choix, bloc lu surligné).
 - **Évaluation de niveau gratuite** (`/evaluation`, 15 questions, calculée dans le navigateur), **démonstration interactive** de la plateforme (`/apercu-plateforme`) et **exemples de livrables** fictifs (`/exemples-livrables`).
 - **Aperçu gratuit sans compte** d'une vraie leçon par module, **programme détaillé** public (titres des leçons), **suggestions de modules suivants** après achat, partage LinkedIn de l'attestation, lettre d'information sous les articles.
@@ -153,7 +153,7 @@ Les règles qui comptent (accès, correction, complétion, paiement, rembourseme
 
 ## 3. Fonctionnalités en images
 
-*Captures réelles de l'application avec le design d'octobre 2026 (build de production, base PostgreSQL locale, thème sombre unique ; voir [`docs/DESIGN.md`](docs/DESIGN.md)). Les comptes sont fictifs ; les contenus de leçon sont des textes de remplacement sans vidéo, fournis par `db/dev-fixture.sql`.*
+*Captures réelles de l'application avec le design d'octobre 2026 (build de production, base PostgreSQL locale, thème sombre par défaut ; thème clair disponible via le bouton soleil/lune ; voir [`docs/DESIGN.md`](docs/DESIGN.md)). Les comptes sont fictifs ; les contenus de leçon sont des textes de remplacement sans vidéo, fournis par `db/dev-fixture.sql`.*
 
 ### Site public
 
@@ -312,7 +312,7 @@ Doublons, rejeux, sessions falsifiées, mauvaise devise, paiements différés ou
 | **Environnements reproductibles** | Migrations versionnées et rejouables (`npm run db:migrate`), seed généré depuis le code, base locale sans Docker (`npm run db:dev`), `docker-compose.yml` production-like |
 | **CI** | `.github/workflows/ci.yml` : types, lint, tests, audit des dépendances, build, puis e2e Playwright sur le build de production |
 | **Dépendances** | 0 vulnérabilité sur les dépendances de production (`npm audit --omit=dev`) ; bibliothèques établies pour l'authentification et le chiffrement, rien de fait maison côté cryptographie |
-| **Accessibilité** | Cible WCAG 2.2 AA : sémantique native, focus visibles, cibles ≥ 44 px, contrastes, lien d'évitement, thème sombre unique à contrastes vérifiés, `prefers-reduced-motion` (contrôle automatisé axe à chaque livraison ; **audit manuel non réalisé**) |
+| **Accessibilité** | Cible WCAG 2.2 AA : sémantique native, focus visibles, cibles ≥ 44 px, contrastes, lien d'évitement, thèmes clair et sombre à contrastes vérifiés, `prefers-reduced-motion` (contrôle automatisé axe à chaque livraison ; **audit manuel non réalisé**) |
 | **Limitation de débit et en-têtes** | Compteurs en base partagés entre instances (formulaires, authentification, paiement) ; CSP et HSTS pilotés par l'environnement |
 | **Données personnelles** | Export JSON et suppression de compte, consentements journalisés, partage de progression avec une organisation soumis à consentement explicite |
 | **Visibilité** | Données structurées schema.org, `llms.txt`, robots d'IA autorisés sur les pages publiques, FAQ, flux RSS ([`docs/SEO.md`](docs/SEO.md)) |
@@ -336,7 +336,7 @@ Conventions : aucune concaténation SQL (requêtes paramétrées uniquement, `Q`
 | **Mesurer ce qui est mesurable** | Entonnoir de commande côté serveur ; les vues de pages ne sont pas suivies tant qu'une mesure respectueuse de la vie privée et le consentement ne sont pas en place |
 | **Vie privée par défaut** | Données minimales (la vérification d'attestation n'expose que titre, date et nom), consentements enregistrés, désinscription possible, durées de conservation à définir |
 | **Conformité en amont** | Sept textes légaux rédigés ([`docs/legal/`](docs/legal/)), *signalés comme à valider par un juriste* ; blocage technique des paiements réels avant revue juridique |
-| **Un design par jetons** | Un thème sombre « verre » défini une fois dans `globals.css` (couleurs, flou, halos) et appliqué à tout le site ; contrastes vérifiés automatiquement ; mouvements coupés avec `prefers-reduced-motion` ([`docs/DESIGN.md`](docs/DESIGN.md)) |
+| **Un design par jetons** | Deux thèmes (sombre « verre » par défaut, clair sobre) définis par jetons dans `globals.css`, avec un bouton soleil/lune, préférence mémorisée dans le navigateur et sans flash au chargement ; contrastes vérifiés automatiquement ; mouvements coupés avec `prefers-reduced-motion` ([`docs/DESIGN.md`](docs/DESIGN.md)) |
 | **Extensibilité sans complexité prématurée** | Cohortes et nouvelles langues prévues dans les données, sans interface spéculative ; l'offre entreprise a son interface de suivi |
 
 ---
@@ -429,7 +429,7 @@ Les services Railway se déploient avec `railway up services/<nom> --path-as-roo
 | Couche d'accès (rôle par transaction, aucune fuite de privilèges entre requêtes) | ✅ testée sur une vraie connexion TCP |
 | Authentification : inscription, vérification obligatoire, session HttpOnly, réinitialisation, Argon2id | ✅ testée de bout en bout |
 | Application complète en navigateur (visiteur, inscription, quiz, livrable, relecture, attestation, publication, avis, sessions en visio, évaluation de niveau, démonstration, parcours entreprise) | ✅ 23 parcours Playwright sur build de production ; 3 d'entre eux dépendent de données et peuvent échouer sur une base locale non neuve (la CI repart d'une base propre) |
-| Accessibilité automatisée (axe, WCAG 2.2 AA) et CSP sur les pages publiques (thème sombre, le seul du site) | ✅ à chaque livraison |
+| Accessibilité automatisée (axe, WCAG 2.2 AA) et CSP sur les pages publiques (thèmes clair et sombre) | ✅ à chaque livraison |
 | **Stripe en mode test** : achat, webhook signé, accès, remboursement, portail client | ✅ validé de bout en bout par le propriétaire ; événements signés rejoués en local |
 | **SMTP Brevo** | ✅ un e-mail réel reçu ; délivrabilité sous un domaine propre (SPF, DKIM, DMARC) non vérifiée |
 | **Déploiement Vercel + Railway**, migrations en production, 30 modules chargés | ✅ en ligne |
@@ -488,7 +488,7 @@ docs/                guides (Stripe, sessions, entreprise, SEO, mise en producti
 | [`docs/GO_LIVE.md`](docs/GO_LIVE.md) | liste de mise en production (ce qui reste à faire par le propriétaire) |
 | [`docs/STRIPE.md`](docs/STRIPE.md) | configuration Stripe, Managed Payments, tests, remboursements |
 | [`docs/SESSIONS.md`](docs/SESSIONS.md) | sessions en visio, calendrier, liste d'attente |
-| [`docs/DESIGN.md`](docs/DESIGN.md) | jetons, principes et écarts avec la maquette du design |
+| [`docs/DESIGN.md`](docs/DESIGN.md) | jetons des deux thèmes, ThemeToggle, règles pour les nouveaux composants et écarts avec la maquette |
 | [`docs/TUTEUR_IA.md`](docs/TUTEUR_IA.md) | tuteur IA : conception, ce qui est construit, mise en service |
 | [`docs/ENTREPRISE.md`](docs/ENTREPRISE.md) | organisations, licences, suivi de progression et confidentialité |
 | [`docs/SEO.md`](docs/SEO.md) | référencement et visibilité dans les assistants IA |

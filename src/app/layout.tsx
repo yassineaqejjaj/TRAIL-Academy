@@ -29,10 +29,14 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
 };
 
+// Applies the saved theme before first paint (no flash of the wrong theme). Static string, no user input. Dark is the default.
+const themeInit = `try{var t=localStorage.getItem("theme");document.documentElement.dataset.theme=t==="light"?"light":"dark"}catch(e){}`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" data-theme="dark" className={`${inter.variable} ${sora.variable} antialiased`} suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
         <JsonLd data={siteGraph()} />
       </head>
       <body className="flex min-h-screen flex-col">

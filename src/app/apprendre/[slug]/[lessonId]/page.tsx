@@ -9,6 +9,7 @@ import { getAssignments, getCompletedLessonIds, getOutline, getQuizzes } from "@
 import { adjacentLessons, flattenLessons } from "@/lib/learning/types";
 import { presignDownload, storageConfigured } from "@/lib/storage";
 import { getPlayback } from "@/lib/video";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { LessonWorkspace } from "../../lesson-workspace";
 import { Outline } from "../../outline";
 
@@ -51,7 +52,7 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
       <header className="border-b border-border bg-surface">
         <div className="flex flex-wrap items-center justify-between gap-4 px-6 py-3">
           <div className="flex flex-wrap items-center gap-4"><Link href="/compte" className="py-2.5 text-[15px] font-medium text-accent hover:underline">Retour à mon espace</Link><span className="font-semibold">{course.code} · {course.title}</span></div>
-          <div className="flex items-center gap-3 text-sm text-muted"><span>Progression {percent} %</span><div className="w-40"><ProgressBar value={percent} label="Progression du module" /></div></div>
+          <div className="flex items-center gap-3 text-sm text-muted"><ThemeToggle /><span>Progression {percent} %</span><div className="w-40"><ProgressBar value={percent} label="Progression du module" /></div></div>
         </div>
       </header>
       <div className="flex flex-wrap items-start">

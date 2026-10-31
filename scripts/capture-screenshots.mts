@@ -8,7 +8,8 @@ import { chromium, type Browser, type Page } from "@playwright/test";
 import pg from "pg";
 
 const base = process.env.E2E_BASE_URL ?? "http://localhost:3105";
-const out = "docs/screenshots";
+const out = process.env.SHOTS_DIR ?? "docs/screenshots";
+const theme = process.env.THEME === "light" ? "light" : "dark"; // THEME=light captures the light theme
 const PASSWORD = "demo passphrase 2026";
 const stamp = Date.now().toString(36);
 const emails = { learner: `camille.${stamp}@example.test`, finisher: `karim.${stamp}@example.test`, admin: `formateur.${stamp}@example.test` };
@@ -18,7 +19,11 @@ const db = new pg.Client({ connectionString: process.env.DATABASE_URL ?? "postgr
 await db.connect();
 const browser: Browser = await chromium.launch({ channel: process.env.E2E_CHANNEL || undefined });
 
-const ctx = (opts: Parameters<Browser["newContext"]>[0] = {}) => browser.newContext({ baseURL: base, viewport: { width: 1280, height: 800 }, locale: "fr-FR", ...opts });
+const ctx = async (opts: Parameters<Browser["newContext"]>[0] = {}) => {
+  const c = await browser.newContext({ baseURL: base, viewport: { width: 1280, height: 800 }, locale: "fr-FR", ...opts });
+  await c.addInitScript((t) => { try { localStorage.setItem("theme", t); } catch { /* storage unavailable */ } }, theme);
+  return c;
+};
 const shot = (page: Page, name: string, opts: { full?: boolean } = {}) =>
   page.screenshot({ path: `${out}/${name}.${opts.full ? "jpg" : "png"}`, fullPage: opts.full, type: opts.full ? "jpeg" : "png", quality: opts.full ? 80 : undefined });
 

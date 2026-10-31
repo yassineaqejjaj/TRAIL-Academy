@@ -48,14 +48,14 @@ export function OfferCards({ catalog }: { catalog: Catalog }) {
       )}
 
       {pathPrice != null && (
-        <section className={`${card} !border-accent/50 !bg-accent-soft shadow-[0_30px_80px_rgba(11,122,131,0.3)]`} aria-label="Parcours">
+        <section className={`${card} !border-accent/50 !bg-accent-soft shadow-[0_20px_50px_rgba(11,122,131,0.2)]`} aria-label="Parcours">
           <span className="absolute -top-3.5 left-8 rounded-full bg-accent px-3.5 py-1.5 text-xs font-bold text-on-accent">Le plus adapté pour un métier</span>
           <p className={`${kickerCls} text-muted`}>Une trajectoire métier</p>
           <h3 className="text-2xl font-bold">Un parcours</h3>
           <p className="text-muted">Les modules dans l'ordre recommandé pour votre métier. {paths.length} parcours au choix, au même prix : produit et IA, marketing et communication, RH, juridique, finance.</p>
           {price(pathPrice, pathFrom)}
           <p className="-mt-2 text-sm text-muted">Accès {paths[0]?.accessMonths ?? 18} mois</p>
-          <ul className="flex flex-col gap-3 rounded-2xl bg-black/25 p-4 text-[15px]">
+          <ul className="flex flex-col gap-3 rounded-2xl bg-inset p-4 text-[15px]">
             {pathOffers.map(({ path }) => {
               const n = coursesOfPath(path, catalog).length, total = unitTotal(path, catalog);
               return (

@@ -2,8 +2,10 @@
 
 /* TRAIL Academy design tokens — 8-point spacing is Tailwind's default 4px scale used in multiples of 2. */
 /*
- * TRAIL Academy design tokens (refonte d'octobre 2026). The design is a dark "glass" theme; there is no light theme.
- * Surfaces are translucent on purpose: they sit on the ambient background (see .ambient) and use backdrop blur.
+ * TRAIL Academy design tokens. Two themes share the same token names; components only use tokens, never a theme condition:
+ *   - dark (default): "glass" surfaces over a night-blue background with soft luminous orbs (see .ambient);
+ *   - light: cream background, white cards with discreet borders and soft shadows, deeper teal for text and actions.
+ * The theme is the data-theme attribute on <html>, set before first paint (layout.tsx) and changed by ThemeToggle.
  */
 :root {
   --bg: #050d1c;
@@ -34,7 +36,56 @@
   --orb-1: #1d4ed8;
   --orb-2: #0b7a83;
   --orb-opacity: 0.4;
+  --orb-card: 0.5;                 /* decorative glow inside some cards */
+  --tint: rgba(255, 255, 255, 0.1);        /* hover and inactive pills */
+  --tint-weak: rgba(255, 255, 255, 0.05);
+  --inset: rgba(0, 0, 0, 0.28);            /* recessed areas: tab strips, chat transcript, inputs */
+  --hairline: rgba(255, 255, 255, 0.12);   /* separators inside cards */
+  --band-soft: rgba(255, 255, 255, 0.025); /* alternating section bands */
+  --disabled: rgba(255, 255, 255, 0.4);
+  --selected: rgba(60, 207, 192, 0.16);
+  --field-border: rgba(255, 255, 255, 0.4); /* boundary of form controls: at least 3:1 against the page */
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
   color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --bg: #faf8f4;
+  --surface: #ffffff;
+  --surface-2: #f2f5f5;
+  --surface-solid: #ffffff;
+  --fg: #0b1f3a;
+  --fg-muted: #526174;
+  --border: #e2e7ea;
+  --primary: #0b7a83;
+  --primary-fg: #ffffff;
+  --accent: #0b7a83;
+  --accent-soft: #e7f4f1;
+  --accent-ink: #075f67;
+  --on-accent: #ffffff;
+  --blue: #2563eb;
+  --kicker: #1d4ed8;
+  --warn: #7a4e00;
+  --warn-soft: #fff1d6;
+  --danger: #b42318;
+  --success: #067647;
+  --ring: #0b7a83;
+  --band: #0b1f3a;
+  --band-fg: #ffffff;
+  --band-muted: #c3cfdf;
+  --glass-blur: none;
+  --glass-edge: 0 1px 2px rgba(11, 31, 58, 0.05), 0 8px 24px rgba(11, 31, 58, 0.05);
+  --orb-opacity: 0;
+  --orb-card: 0.14;
+  --tint: rgba(11, 31, 58, 0.06);
+  --tint-weak: rgba(11, 31, 58, 0.03);
+  --inset: #f2f5f5;
+  --hairline: #e2e7ea;
+  --band-soft: rgba(11, 31, 58, 0.025);
+  --disabled: #8a97a8;
+  --selected: #e7f4f1;
+  --field-border: #7b8aa0;
+  --shadow-card: 0 1px 2px rgba(11, 31, 58, 0.05);
+  color-scheme: light;
 }
 @theme inline {
   --color-bg: var(--bg);
@@ -52,6 +103,12 @@
   --color-blue: var(--blue);
   --color-kicker: var(--kicker);
   --color-surface-solid: var(--surface-solid);
+  --color-tint: var(--tint);
+  --color-tint-weak: var(--tint-weak);
+  --color-inset: var(--inset);
+  --color-hairline: var(--hairline);
+  --color-band-soft: var(--band-soft);
+  --color-selected: var(--selected);
   --color-warn: var(--warn);
   --color-warn-soft: var(--warn-soft);
   --color-danger: var(--danger);
@@ -71,6 +128,10 @@ h1 { letter-spacing: -0.03em; }
 .display-light { font-weight: 300; }
 .display-light b, .display-light strong { font-weight: 700; }
 summary { cursor: pointer; }
+/* Form controls keep a visible boundary in both themes (WCAG 1.4.11), whatever border class a component sets. */
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="hidden"]), textarea, select { border-color: var(--field-border); }
+input[type="checkbox"], input[type="radio"] { accent-color: var(--accent); }
+::placeholder { color: var(--fg-muted); opacity: 1; }
 button { font-family: inherit; }
 body { background: var(--bg); color: var(--fg); font-family: var(--font-sans); line-height: 1.6; position: relative; }
 :focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; border-radius: 4px; }
@@ -84,16 +145,23 @@ body { background: var(--bg); color: var(--fg); font-family: var(--font-sans); l
 .read-aloud-current { background: var(--accent-soft); outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
-/* The design is dark only: the site uses the dark logo (see components/brand/logo.tsx). */
+/* Brand logo: the variant made for the active theme is shown (see components/brand/logo.tsx). */
+.logo-light { display: none; }
+:root[data-theme="light"] .logo-light { display: block; }
+:root[data-theme="light"] .logo-dark { display: none; }
 
 /* Glass surfaces */
 .glass { background: var(--surface); border: 1px solid var(--border); box-shadow: var(--glass-edge); } /* no backdrop blur on plain cards: costly when dozens are on screen, and invisible on this background */
 .glass-blur { backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); }
 .glass-strong { background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.16); backdrop-filter: blur(28px) saturate(160%); -webkit-backdrop-filter: blur(28px) saturate(160%); box-shadow: var(--glass-edge), 0 30px 80px rgba(0, 0, 0, 0.4); }
+:root[data-theme="light"] .glass-strong { background: var(--surface); border-color: var(--border); backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: 0 1px 2px rgba(11, 31, 58, 0.06), 0 16px 40px rgba(11, 31, 58, 0.08); }
+:root[data-theme="light"] .glass-blur { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 .lift { transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s, background-color 0.3s; }
-.lift:hover { transform: translateY(-5px); border-color: rgba(255, 255, 255, 0.3); background-color: var(--surface-2); }
+.lift:hover { transform: translateY(-4px); border-color: rgba(255, 255, 255, 0.3); background-color: var(--surface-2); }
+:root[data-theme="light"] .lift:hover { border-color: var(--accent); background-color: var(--surface); box-shadow: 0 1px 2px rgba(11, 31, 58, 0.06), 0 14px 32px rgba(11, 31, 58, 0.1); }
 .cta-glow { transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease-out; }
 .cta-glow:hover { transform: translateY(-2px); box-shadow: 0 0 0 6px rgba(60, 207, 192, 0.18), 0 18px 50px rgba(60, 207, 192, 0.4); }
+:root[data-theme="light"] .cta-glow:hover { box-shadow: 0 0 0 4px rgba(11, 122, 131, 0.16), 0 10px 24px rgba(11, 122, 131, 0.25); }
 .cta-glow:active { transform: scale(0.97); }
 
 /* Ambient background: two blurred orbs drifting slowly behind the page. */
@@ -112,3 +180,11 @@ body { background: var(--bg); color: var(--fg); font-family: var(--font-sans); l
 .trail-line { stroke-dasharray: 1800; animation: draw 3.5s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
 @media (prefers-reduced-motion: reduce) { .ambient i, .pulse-dot, .marquee, .trail-line { animation: none !important; stroke-dashoffset: 0; } }
 @media print { .ambient { display: none; } }
+:root[data-theme="light"] .ambient { display: none; }
+:root[data-theme="light"] .trail-line { opacity: 0.55; }
+
+.elevated { box-shadow: var(--glass-edge), 0 10px 40px rgba(0, 0, 0, 0.25); }
+:root[data-theme="light"] .elevated { box-shadow: 0 1px 2px rgba(11, 31, 58, 0.06), 0 8px 24px rgba(11, 31, 58, 0.08); }
+
+/* Smooth theme switch: ThemeToggle adds .theme-switching for a moment so colors fade; nothing moves or resizes. */
+.theme-switching, .theme-switching *, .theme-switching *::before, .theme-switching *::after { transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, fill 0.2s ease, stroke 0.2s ease !important; }
