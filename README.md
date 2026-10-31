@@ -10,6 +10,22 @@
 
 <!-- portfolio-summary:end -->
 
+[![CI](https://github.com/yassineaqejjaj/TRAIL-Academy/actions/workflows/ci.yml/badge.svg)](https://github.com/yassineaqejjaj/TRAIL-Academy/actions/workflows/ci.yml)
+
+## En bref
+
+| | |
+|---|---|
+| **Description** | Plateforme de formation professionnelle à l'IA (modules, parcours, quiz, livrables relus, attestations vérifiables, paiement, sessions en visio, offre entreprise) pilotable par un formateur unique. |
+| **Problème** | Contenus IA génériques ou trop techniques, sans progression ni livrable ; côté formateur, un assemblage fragile d'outils ([détail](#le-problème)). |
+| **Statut** | **Prototype** : en ligne en mode test, aucune offre ouverte à la vente, paiements réels bloqués par conception (voir [section 9](#9-ce-qui-est-vérifié-et-ce-qui-ne-lest-pas)). |
+| **Site** | <https://trailacademy.fr> |
+| **Architecture** | [`ARCHITECTURE.md`](ARCHITECTURE.md) et [section 4](#4-architecture-technique) |
+| **Tests et vérification** | [`TESTING.md`](TESTING.md) (les chiffres de tests y sont détaillés, à lire à la source) |
+| **Étude de cas** | [Comment le projet a été construit](https://github.com/yassineaqejjaj/agentic-sdlc/blob/main/docs/case-studies/trail-academy.md) |
+
+**Où trouver quoi** : aperçu produit, problème et solution ([section 1](#1-le-produit)) · fonctionnalités ([sections 1 et 2](#2-comment-ça-marche)) · architecture et pile technique ([section 4](#4-architecture-technique)) · captures d'écran ([section 3](#3-fonctionnalités-en-images)) · démarrage ([section 7](#7-démarrer)) · tests et qualité ([sections 5 et 9](#9-ce-qui-est-vérifié-et-ce-qui-ne-lest-pas)) · statut et limites ([section 9](#9-ce-qui-est-vérifié-et-ce-qui-ne-lest-pas)) · feuille de route ([section 10](#10-feuille-de-route)) · licence ([section 11](#11-structure-du-dépôt-et-documentation) : aucune licence pour l'instant).
+
 
 **T**raining **R**oadmap for **A**pplied **I**ntelligence & **L**eadership — *Learn AI. Apply AI. Lead with AI.*
 
