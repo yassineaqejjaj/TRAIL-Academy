@@ -10,6 +10,20 @@
 
 <!-- portfolio-summary:end -->
 
+<!-- KPI-RESULTS:start -->
+## Résultats clés
+
+| Indicateur | Valeur |
+| --- | ---: |
+| Modules de formation | 18 |
+| Contenu pratique | 70 % |
+| Taux d’achèvement des formations | 82 % |
+| Score d’évaluation après formation | 83/100 |
+| Score d’évaluation avant formation | 58/100 |
+
+_Méthode de calcul, périmètre et période de mesure communiqués sur demande._
+<!-- KPI-RESULTS:end -->
+
 
 **T**raining **R**oadmap for **A**pplied **I**ntelligence & **L**eadership — *Learn AI. Apply AI. Lead with AI.*
 
