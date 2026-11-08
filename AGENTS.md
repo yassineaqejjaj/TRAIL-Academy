@@ -7,3 +7,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+## Architecture diagrams
+
+Author architecture, component, deployment, sequence, data-flow and state diagrams in Mermaid. Embed them in Markdown using fenced `mermaid` blocks, or keep Mermaid source for rendered application pages. Keep Mermaid as the editable source of truth; screenshots, brand artwork and directory listings are separate documentation assets.

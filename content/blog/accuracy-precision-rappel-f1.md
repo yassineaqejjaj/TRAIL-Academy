@@ -26,16 +26,16 @@ quadrantChart
   accTitle: Les quatre cas d'une matrice de confusion
   accDescr: Selon que le cas est réellement positif ou négatif et que le modèle l'a détecté ou non, on obtient vrai positif, faux négatif, faux positif ou vrai négatif.
   title Prédiction du modèle contre réalité
-  x-axis Cas réellement négatif --> Cas réellement positif
-  y-axis Modèle dit négatif --> Modèle dit positif
-  quadrant-1 Vrais positifs
-  quadrant-2 Faux positifs
-  quadrant-3 Vrais négatifs
-  quadrant-4 Faux négatifs
-  Alerte justifiée: [0.8, 0.8]
-  Fausse alerte: [0.2, 0.8]
-  Cas manqué: [0.8, 0.2]
-  Écarté à raison: [0.2, 0.2]
+  x-axis "Cas réellement négatif" --> "Cas réellement positif"
+  y-axis "Modèle dit négatif" --> "Modèle dit positif"
+  quadrant-1 "Vrais positifs"
+  quadrant-2 "Faux positifs"
+  quadrant-3 "Vrais négatifs"
+  quadrant-4 "Faux négatifs"
+  "Alerte justifiée": [0.8, 0.8]
+  "Fausse alerte": [0.2, 0.8]
+  "Cas manqué": [0.8, 0.2]
+  "Écarté à raison": [0.2, 0.2]
 ```
 *Figure 1 : les quatre cas de la matrice de confusion (positions purement illustratives).*
 
@@ -111,3 +111,4 @@ Posez-vous une question simple : **quelle erreur est la plus coûteuse ?**
 - La bonne métrique découle de l'impact métier, pas de l'habitude.
 
 Ces notions sont travaillées avec des exercices de calcul dans le module M1 de la formation.
+
