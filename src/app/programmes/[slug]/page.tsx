@@ -18,8 +18,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const p = getProgramme((await params).slug);
   if (!p) return {};
   return {
-    title: `${p.title} – ${p.subtitle} : formation en ${p.durationWeeks} semaines`,
-    description: `${p.tagline} ${p.onSiteDays.min} à ${p.onSiteDays.max} jours sur site chez un client PME par semaine. Places limitées.`,
+    title: `${p.title} – ${p.subtitle} : formation en ${p.durationWeeks} semaines (${p.trainingWeeks} de formation, ${p.missionWeeks} en entreprise)`,
+    description: `${p.tagline} ${p.onSiteDays.min} à ${p.onSiteDays.max} jours sur site chez un client PME ou ETI par semaine de mission. Places limitées.`,
     alternates: { canonical: `/programmes/${p.slug}` },
   };
 }
@@ -32,7 +32,7 @@ export default async function ProgrammePage({ params }: { params: Promise<{ slug
   const onSite = `${p.onSiteDays.min} à ${p.onSiteDays.max} jours par semaine`;
   const faq = [
     { q: "À qui s'adresse cette formation ?", a: `${p.audience}.` },
-    { q: "Que signifie « contribution en PME » ?", a: `Pendant les ${p.durationWeeks} semaines, vous travaillez sur un besoin réel d'une PME, ${onSite} sur site chez le client. Vous livrez une solution IA utile à l'entreprise, et c'est ce travail qui sert de projet de formation.` },
+    { q: "Que signifie « mission en PME ou ETI » ?", a: `Après ${p.trainingWeeks} semaines de formation, vous passez ${p.missionWeeks} semaines au sein d'une PME ou d'une ETI sur un besoin réel, avec ${onSite} sur site chez le client. Vous livrez une solution IA utile à l'entreprise, et c'est ce travail qui sert de projet de formation.` },
     { q: "Quels sont les prérequis ?", a: `${p.prerequisites.join(" ; ")}. Ils ne sont pas enseignés dans le programme.` },
     { q: "Pourquoi les places sont-elles limitées ?", a: p.seatsNote },
     { q: "Combien ça coûte et quand démarre la prochaine promotion ?", a: `Le tarif est de ${p.priceNote}. La prochaine promotion démarre ${p.datesNote.charAt(0).toLowerCase() + p.datesNote.slice(1)}. Laissez votre e-mail pour être prévenu dès l'ouverture des inscriptions, sans engagement.` },
@@ -50,8 +50,8 @@ export default async function ProgrammePage({ params }: { params: Promise<{ slug
           <h1 className="display-light text-4xl sm:text-5xl">{p.title}<span className="block text-accent">{p.subtitle}</span></h1>
           <p className="mt-4 max-w-2xl text-xl text-muted [text-wrap:pretty]">{p.tagline}</p>
           <ul className="mt-6 flex flex-wrap gap-2" aria-label="Points clés">
-            <li><Badge tone="accent">{p.durationWeeks} semaines</Badge></li>
-            <li><Badge tone="accent">{onSite} sur site</Badge></li>
+            <li><Badge tone="accent">{p.durationWeeks} semaines : {p.trainingWeeks} de formation + {p.missionWeeks} en entreprise</Badge></li>
+            <li><Badge tone="accent">{onSite} sur site pendant la mission</Badge></li>
             <li><Badge tone="accent">Mission réelle en {p.clientType}</Badge></li>
             {p.limitedSeats && <li><Badge tone="warn">Places limitées</Badge></li>}
           </ul>
@@ -65,12 +65,12 @@ export default async function ProgrammePage({ params }: { params: Promise<{ slug
 
           <h2 className="mt-12 text-2xl font-semibold">Les {p.durationWeeks} semaines</h2>
           <ol className="mt-4 flex flex-col gap-3">
-            {p.weeks.map((w) => (
-              <li key={w.week} className="glass rounded-2xl p-5">
-                <span className="text-sm text-muted">Semaine {w.week}</span>
+            {p.steps.map((w) => (
+              <li key={w.from} className="glass rounded-2xl p-5">
+                <div className="flex flex-wrap items-center gap-2 text-sm text-muted"><span>{w.from === w.to ? `Semaine ${w.from}` : `Semaines ${w.from} à ${w.to}`}</span><Badge tone={w.phase === "formation" ? "accent" : "warn"}>{w.phase === "formation" ? "Formation" : `Mission en ${p.clientType}`}</Badge></div>
                 <h3 className="mt-1 text-lg font-semibold">{w.title}</h3>
                 <p className="mt-1 text-[15px] text-muted">{w.focus}</p>
-                <p className="mt-2 text-sm"><strong>Sur site :</strong> {w.onSite}</p>
+                {w.onSite && <p className="mt-2 text-sm"><strong>Sur site :</strong> {w.onSite}</p>}
                 <p className="mt-1 text-sm"><strong>Livrable :</strong> {w.deliverable}</p>
               </li>
             ))}
@@ -91,8 +91,8 @@ export default async function ProgrammePage({ params }: { params: Promise<{ slug
           <Badge tone="warn">Places limitées</Badge>
           <p className="text-[15px] text-muted">{p.seatsNote}</p>
           <dl className="text-[15px]">
-            <div className="flex justify-between gap-4 border-b border-border py-2"><dt className="text-muted">Durée</dt><dd className="font-semibold">{p.durationWeeks} semaines</dd></div>
-            <div className="flex justify-between gap-4 border-b border-border py-2"><dt className="text-muted">Sur site</dt><dd className="font-semibold">{onSite}</dd></div>
+            <div className="flex justify-between gap-4 border-b border-border py-2"><dt className="text-muted">Durée</dt><dd className="text-right font-semibold">{p.durationWeeks} semaines ({p.trainingWeeks} + {p.missionWeeks} en entreprise)</dd></div>
+            <div className="flex justify-between gap-4 border-b border-border py-2"><dt className="text-muted">Sur site (mission)</dt><dd className="font-semibold">{onSite}</dd></div>
             <div className="flex justify-between gap-4 border-b border-border py-2"><dt className="text-muted">Tarif</dt><dd className="font-semibold">{p.priceNote}</dd></div>
             <div className="flex justify-between gap-4 py-2"><dt className="text-muted">Prochaine promotion</dt><dd className="text-right font-semibold">{p.datesNote}</dd></div>
           </dl>
