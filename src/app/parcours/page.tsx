@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { PathCard } from "@/components/cards";
-import { Badge, Container, Notice } from "@/components/ui";
+import { Badge, ButtonLink, Container, Notice } from "@/components/ui";
 import { availability, coursesOfPath, isProfessionPath } from "@/lib/catalog";
 import { getCatalog } from "@/lib/catalog/load";
 import { JsonLd } from "@/components/json-ld";
 import { breadcrumbLd, itemListLd } from "@/lib/seo";
+import { programmes } from "@/lib/programmes";
 
 export const metadata: Metadata = {
   title: "Parcours de formation IA",
@@ -31,6 +32,20 @@ export default async function PathsPage() {
       <h2 className="mt-14 text-2xl font-semibold">Par métier : marketing, RH, juridique, finance</h2>
       <p className="mt-2 max-w-2xl text-muted">Les fondations de l'IA, puis trois modules écrits pour votre fonction, avec des ateliers no-code et un livrable relu par le formateur.</p>
       <div className="mt-4 grid gap-6 lg:grid-cols-2">{professionPaths.map((p) => <PathCard key={p.slug} path={p} catalog={catalog} />)}</div>
+      <h2 className="mt-14 text-2xl font-semibold">Programmes en cohorte</h2>
+      <p className="mt-2 max-w-2xl text-muted">Des formations packagées à places limitées, avec une mission réelle sur site chez un client.</p>
+      <div className="mt-4 grid gap-6 lg:grid-cols-2">
+        {programmes.map((g) => (
+          <div key={g.slug} className="flex h-full flex-col gap-3 rounded-2xl border border-border bg-surface p-8">
+            <span className="self-start"><Badge tone="warn">Places limitées</Badge></span>
+            <span className="text-sm text-muted">{g.durationWeeks} semaines · {g.onSiteDays.min} à {g.onSiteDays.max} jours sur site par semaine</span>
+            <h3 className="text-2xl font-bold leading-tight">{g.title} – {g.subtitle}</h3>
+            <p className="text-muted"><strong className="text-fg">Pour qui :</strong> {g.audience}</p>
+            <p className="text-muted">{g.tagline}</p>
+            <div className="mt-auto pt-2"><ButtonLink href={`/programmes/${g.slug}`} variant="primary">Découvrir le programme</ButtonLink></div>
+          </div>
+        ))}
+      </div>
       <h2 className="mt-14 text-2xl font-semibold">L'accès complet</h2>
       <div className="mt-4 grid gap-6">{bundles.map((p) => <PathCard key={p.slug} path={p} catalog={catalog} />)}</div>
 

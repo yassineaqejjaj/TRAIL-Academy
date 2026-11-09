@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { getCatalog } from "@/lib/catalog/load";
 import { getPosts } from "@/lib/cms";
 import { abs } from "@/lib/seo";
+import { programmes } from "@/lib/programmes";
 
 type Entry = MetadataRoute.Sitemap[number];
 
@@ -14,6 +15,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     ...pages.map(([p, priority, changeFrequency]) => ({ url: abs(p), priority, changeFrequency })),
     ...learningPaths.map((p) => ({ url: abs(`/parcours/${p.slug}`), priority: 0.8, changeFrequency: "monthly" as const })),
+    ...programmes.map((p) => ({ url: abs(`/programmes/${p.slug}`), priority: 0.8, changeFrequency: "monthly" as const })),
     ...courses.map((c) => ({ url: abs(`/formations/${c.slug}`), priority: c.status === "published" ? 0.8 : 0.6, changeFrequency: "monthly" as const })),
     ...posts.map((p) => ({ url: abs(`/ressources/${p.slug}`), lastModified: p.published_at ?? undefined, priority: 0.7, changeFrequency: "monthly" as const })),
   ];
