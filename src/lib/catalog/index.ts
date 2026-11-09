@@ -48,7 +48,7 @@ export type Availability = { state: "buy" | "preview" | "soon"; label: string; t
 export function availability(course: Course, c: Catalog = staticCatalog): Availability {
   if (isPurchasable(course, c)) return { state: "buy", label: "Disponible à l'achat", tone: "accent" };
   if (course.status === "published") return { state: "preview", label: "Aperçu gratuit · inscriptions bientôt ouvertes", tone: "neutral" };
-  return { state: "soon", label: "En préparation", tone: "warn" };
+  return { state: "soon", label: "Disponible", tone: "neutral" };
 }
 
 /** Profession-specific paths (marketing, HR, legal, finance) contain at least one module of the profession phase. */

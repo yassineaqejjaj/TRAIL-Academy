@@ -64,7 +64,7 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
             <summary className={`${kickerCls} text-muted`}>Plus de filtres</summary>
             <div className="mt-4 flex flex-col gap-6">
               <div><span className={label}>Parcours</span><div className="flex flex-wrap gap-2">{learningPaths.map((p) => <Chip key={p.slug} href={href("path", p.slug)} active={filters.path === p.slug}>{p.title}</Chip>)}</div></div>
-              <div><span className={label}>Disponibilité</span><div className="flex flex-wrap gap-2"><Chip href={href("status", "published")} active={filters.status === "published"}>Aperçu gratuit</Chip><Chip href={href("status", "coming_soon")} active={filters.status === "coming_soon"}>En préparation</Chip></div></div>
+              <div><span className={label}>Disponibilité</span><div className="flex flex-wrap gap-2"><Chip href={href("status", "published")} active={filters.status === "published"}>Aperçu gratuit</Chip><Chip href={href("status", "coming_soon")} active={filters.status === "coming_soon"}>Disponible</Chip></div></div>
               <div><span className={label}>Durée estimée</span><div className="flex flex-wrap gap-2">{[5, 6, 8].map((h) => <Chip key={h} href={href("maxHours", h)} active={filters.maxHours === h}>≤ {h} h</Chip>)}</div></div>
             </div>
           </details>

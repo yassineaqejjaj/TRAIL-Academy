@@ -130,7 +130,7 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
             ) : (
               <>
                 <Badge tone={avail.tone}>{avail.label}</Badge>
-                <p className="text-[15px] text-muted">{published ? "Le contenu est rédigé et une leçon est lisible gratuitement ; l'achat n'est pas encore ouvert." : "Ce module est en préparation : il ne peut pas encore être acheté."} Indiquez votre e-mail pour être prévenu de l'ouverture.</p>
+                <p className="text-[15px] text-muted">{published ? "Le contenu est rédigé et une leçon est lisible gratuitement ; l'achat n'est pas encore ouvert." : "L'achat de ce module n'est pas encore ouvert."} Indiquez votre e-mail pour être prévenu de l'ouverture.</p>
                 {preview && <ButtonLink href={`/formations/${course.slug}/apercu`} className="min-h-[52px]">Lire une leçon gratuite</ButtonLink>}
                 <p className="text-sm"><Link href="/apercu-plateforme" className="font-semibold text-accent hover:underline">Essayer la démonstration de la plateforme</Link> · <Link href={`/ouverture?formation=${course.slug}`} className="font-semibold text-accent hover:underline">Choisir un autre module</Link></p>
                 <InterestForm kind="course_launch" courseSlug={course.slug} label="Adresse e-mail (sans paiement)" submitLabel="Me prévenir" />
