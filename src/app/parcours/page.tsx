@@ -38,7 +38,7 @@ export default async function PathsPage() {
         {programmes.map((g) => (
           <div key={g.slug} className="flex h-full flex-col gap-3 rounded-2xl border border-border bg-surface p-8">
             <span className="self-start"><Badge tone="warn">Places limitées</Badge></span>
-            <span className="text-sm text-muted">{g.durationWeeks} semaines · {g.onSiteDays.min} à {g.onSiteDays.max} jours sur site par semaine</span>
+            <span className="text-sm text-muted">{g.durationWeeks} semaines : {g.trainingWeeks} de formation + {g.missionWeeks} en entreprise · {g.onSiteDays.min} à {g.onSiteDays.max} jours sur site par semaine de mission</span>
             <h3 className="text-2xl font-bold leading-tight">{g.title} – {g.subtitle}</h3>
             <p className="text-muted"><strong className="text-fg">Pour qui :</strong> {g.audience}</p>
             <p className="text-muted">{g.tagline}</p>
