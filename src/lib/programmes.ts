@@ -24,6 +24,9 @@ export interface Programme {
   /** true = promotion à effectif réduit. Le nombre exact de places n'est pas publié tant qu'il n'est pas fixé. */
   limitedSeats: boolean;
   seatsNote: string;
+  /** Prix en centimes d'euro. */
+  priceCents: number;
+  taxMode: "ht" | "ttc";
   priceNote: string;
   datesNote: string;
 }
@@ -60,7 +63,9 @@ export const programmes: Programme[] = [
     referenceCourseCodes: ["M18", "M5", "M11", "M12", "M13", "M17", "M15", "M16"],
     limitedSeats: true,
     seatsNote: "Places limitées : la promotion est volontairement de petite taille pour que chaque participant soit accompagné.",
-    priceNote: "Tarif à confirmer",
+    priceCents: 600000,
+    taxMode: "ht",
+    priceNote: "6 000 € HT",
     datesNote: "Dates de la prochaine promotion à confirmer",
   },
 ];

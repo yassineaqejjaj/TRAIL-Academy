@@ -35,14 +35,14 @@ export default async function ProgrammePage({ params }: { params: Promise<{ slug
     { q: "Que signifie « contribution en PME » ?", a: `Pendant les ${p.durationWeeks} semaines, vous travaillez sur un besoin réel d'une PME, ${onSite} sur site chez le client. Vous livrez une solution IA utile à l'entreprise, et c'est ce travail qui sert de projet de formation.` },
     { q: "Quels sont les prérequis ?", a: `${p.prerequisites.join(" ; ")}. Ils ne sont pas enseignés dans le programme.` },
     { q: "Pourquoi les places sont-elles limitées ?", a: p.seatsNote },
-    { q: "Combien ça coûte et quand démarre la prochaine promotion ?", a: `${p.priceNote} et ${p.datesNote.toLowerCase()}. Laissez votre e-mail pour être prévenu dès l'ouverture des inscriptions, sans engagement.` },
+    { q: "Combien ça coûte et quand démarre la prochaine promotion ?", a: `Le tarif est de ${p.priceNote}. ${p.datesNote}. Laissez votre e-mail pour être prévenu dès l'ouverture des inscriptions, sans engagement.` },
     { q: "Obtient-on une certification ?", a: "Non : il ne s'agit pas d'une certification officielle. Les livrables sont relus par le formateur." },
   ];
   return (
     <Container className="py-12">
       <JsonLd data={breadcrumbLd([{ name: "Accueil", path: "/" }, { name: "Parcours", path: "/parcours" }, { name: p.title, path: `/programmes/${p.slug}` }])} />
       <JsonLd data={faqLd(faq)} />
-      <JsonLd data={{ "@context": "https://schema.org", "@type": "Course", "@id": `${abs(`/programmes/${p.slug}`)}#course`, name: `${p.title} – ${p.subtitle}`, description: p.tagline, url: abs(`/programmes/${p.slug}`), inLanguage: "fr", provider: { "@id": abs("/#organization") }, isAccessibleForFree: false, timeRequired: `P${p.durationWeeks}W`, coursePrerequisites: p.prerequisites }} />
+      <JsonLd data={{ "@context": "https://schema.org", "@type": "Course", "@id": `${abs(`/programmes/${p.slug}`)}#course`, name: `${p.title} – ${p.subtitle}`, description: p.tagline, url: abs(`/programmes/${p.slug}`), inLanguage: "fr", provider: { "@id": abs("/#organization") }, isAccessibleForFree: false, offers: { "@type": "Offer", price: (p.priceCents / 100).toFixed(2), priceCurrency: "EUR", url: abs(`/programmes/${p.slug}`) }, timeRequired: `P${p.durationWeeks}W`, coursePrerequisites: p.prerequisites }} />
       <nav aria-label="Fil d'Ariane" className="text-sm text-muted"><Link href="/" className="hover:text-fg">Accueil</Link> / <Link href="/parcours" className="hover:text-fg">Parcours</Link> / <span aria-current="page">{p.title}</span></nav>
       <div className="mt-8 flex flex-wrap items-start gap-12">
         <div className="min-w-0 flex-[999_1_560px]">
