@@ -35,7 +35,7 @@ export default async function ProgrammePage({ params }: { params: Promise<{ slug
     { q: "Que signifie « contribution en PME » ?", a: `Pendant les ${p.durationWeeks} semaines, vous travaillez sur un besoin réel d'une PME, ${onSite} sur site chez le client. Vous livrez une solution IA utile à l'entreprise, et c'est ce travail qui sert de projet de formation.` },
     { q: "Quels sont les prérequis ?", a: `${p.prerequisites.join(" ; ")}. Ils ne sont pas enseignés dans le programme.` },
     { q: "Pourquoi les places sont-elles limitées ?", a: p.seatsNote },
-    { q: "Combien ça coûte et quand démarre la prochaine promotion ?", a: `Le tarif est de ${p.priceNote}. ${p.datesNote}. Laissez votre e-mail pour être prévenu dès l'ouverture des inscriptions, sans engagement.` },
+    { q: "Combien ça coûte et quand démarre la prochaine promotion ?", a: `Le tarif est de ${p.priceNote}. La prochaine promotion démarre ${p.datesNote.charAt(0).toLowerCase() + p.datesNote.slice(1)}. Laissez votre e-mail pour être prévenu dès l'ouverture des inscriptions, sans engagement.` },
     { q: "Obtient-on une certification ?", a: "Non : il ne s'agit pas d'une certification officielle. Les livrables sont relus par le formateur." },
   ];
   return (

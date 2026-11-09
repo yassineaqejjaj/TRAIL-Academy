@@ -66,7 +66,7 @@ export const programmes: Programme[] = [
     priceCents: 600000,
     taxMode: "ht",
     priceNote: "6 000 € HT",
-    datesNote: "Prochaine promotion : à partir du 19 novembre 2026",
+    datesNote: "À partir du 19 novembre 2026",
   },
 ];
 
