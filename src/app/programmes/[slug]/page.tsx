@@ -18,8 +18,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const p = getProgramme((await params).slug);
   if (!p) return {};
   return {
-    title: `${p.title} – ${p.subtitle} : formation en ${p.durationWeeks} semaines (${p.trainingWeeks} de formation, ${p.missionWeeks} en entreprise)`,
-    description: `${p.tagline} ${p.onSiteDays.min} à ${p.onSiteDays.max} jours sur site chez un client PME ou ETI par semaine de mission. Places limitées.`,
+    title: `${p.title} – ${p.subtitle} : formation en ${p.durationWeeks} semaines (${p.trainingWeeks} de formation, ${p.missionWeeks} ${p.format === "mission" ? "en entreprise" : "de projets"})`,
+    description: p.onSiteDays ? `${p.tagline} ${p.onSiteDays.min} à ${p.onSiteDays.max} jours sur site chez un client ${p.clientType} par semaine de mission. Places limitées.` : `${p.tagline} Places limitées.`,
     alternates: { canonical: `/programmes/${p.slug}` },
   };
 }
@@ -29,30 +29,34 @@ export default async function ProgrammePage({ params }: { params: Promise<{ slug
   if (!p) notFound();
   const catalog = await getCatalog();
   const refs = p.referenceCourseCodes.map((code) => catalog.courses.find((c) => c.code === code)).filter((c) => c != null);
-  const onSite = `${p.onSiteDays.min} à ${p.onSiteDays.max} jours par semaine`;
+  const isMission = p.format === "mission";
+  const practice = isMission ? "en entreprise" : "de projets";
+  const onSite = p.onSiteDays ? `${p.onSiteDays.min} à ${p.onSiteDays.max} jours par semaine` : null;
   const faq = [
     { q: "À qui s'adresse cette formation ?", a: `${p.audience}.` },
-    { q: "Que signifie « mission en PME ou ETI » ?", a: `Après ${p.trainingWeeks} semaines de formation, vous passez ${p.missionWeeks} semaines au sein d'une PME ou d'une ETI sur un besoin réel, avec ${onSite} sur site chez le client. Vous livrez une solution IA utile à l'entreprise, et c'est ce travail qui sert de projet de formation.` },
+    isMission
+      ? { q: "Que signifie « mission en PME ou ETI » ?", a: `Après ${p.trainingWeeks} semaines de formation, vous passez ${p.missionWeeks} semaines au sein d'une PME ou d'une ETI sur un besoin réel, avec ${onSite} sur site chez le client. Vous livrez une solution IA utile à l'entreprise, et c'est ce travail qui sert de projet de formation.` }
+      : { q: "Comment se passent les 6 semaines de projets ?", a: `Après ${p.trainingWeeks} semaines de formation, vous construisez et livrez un projet réel, de l'idée à la mise en ligne. Chaque semaine a un livrable relu par le formateur. Il n'y a pas de placement en entreprise : vous travaillez sur un cas que vous choisissez avec le formateur, y compris un cas de votre employeur.` },
     { q: "Quels sont les prérequis ?", a: `${p.prerequisites.join(" ; ")}. Ils ne sont pas enseignés dans le programme.` },
     { q: "Pourquoi les places sont-elles limitées ?", a: p.seatsNote },
-    { q: "Combien ça coûte et quand démarre la prochaine promotion ?", a: `Le tarif est de ${p.priceNote}. La prochaine promotion démarre ${p.datesNote.charAt(0).toLowerCase() + p.datesNote.slice(1)}. Laissez votre e-mail pour être prévenu dès l'ouverture des inscriptions, sans engagement.` },
+    { q: "Combien ça coûte et quand démarre la prochaine promotion ?", a: `${p.priceCents != null ? `Le tarif est de ${p.priceNote}. La prochaine promotion démarre ${p.datesNote.charAt(0).toLowerCase() + p.datesNote.slice(1)}.` : "Le tarif et les dates de la prochaine promotion ne sont pas encore fixés."} Laissez votre e-mail pour être prévenu dès l'ouverture des inscriptions, sans engagement.` },
     { q: "Obtient-on une certification ?", a: "Non : il ne s'agit pas d'une certification officielle. Les livrables sont relus par le formateur." },
   ];
   return (
     <Container className="py-12">
       <JsonLd data={breadcrumbLd([{ name: "Accueil", path: "/" }, { name: "Parcours", path: "/parcours" }, { name: p.title, path: `/programmes/${p.slug}` }])} />
       <JsonLd data={faqLd(faq)} />
-      <JsonLd data={{ "@context": "https://schema.org", "@type": "Course", "@id": `${abs(`/programmes/${p.slug}`)}#course`, name: `${p.title} – ${p.subtitle}`, description: p.tagline, url: abs(`/programmes/${p.slug}`), inLanguage: "fr", provider: { "@id": abs("/#organization") }, isAccessibleForFree: false, offers: { "@type": "Offer", price: (p.priceCents / 100).toFixed(2), priceCurrency: "EUR", url: abs(`/programmes/${p.slug}`) }, timeRequired: `P${p.durationWeeks}W`, coursePrerequisites: p.prerequisites }} />
+      <JsonLd data={{ "@context": "https://schema.org", "@type": "Course", "@id": `${abs(`/programmes/${p.slug}`)}#course`, name: `${p.title} – ${p.subtitle}`, description: p.tagline, url: abs(`/programmes/${p.slug}`), inLanguage: "fr", provider: { "@id": abs("/#organization") }, isAccessibleForFree: false, ...(p.priceCents != null && { offers: { "@type": "Offer", price: (p.priceCents / 100).toFixed(2), priceCurrency: "EUR", url: abs(`/programmes/${p.slug}`) } }), timeRequired: `P${p.durationWeeks}W`, coursePrerequisites: p.prerequisites }} />
       <nav aria-label="Fil d'Ariane" className="text-sm text-muted"><Link href="/" className="hover:text-fg">Accueil</Link> / <Link href="/parcours" className="hover:text-fg">Parcours</Link> / <span aria-current="page">{p.title}</span></nav>
       <div className="mt-8 flex flex-wrap items-start gap-12">
         <div className="min-w-0 flex-[999_1_560px]">
-          <p className={`${kickerCls} mb-3 text-accent`}>Programme en cohorte · {p.durationWeeks} semaines · mission en {p.clientType}</p>
+          <p className={`${kickerCls} mb-3 text-accent`}>Programme en cohorte · {p.durationWeeks} semaines · {isMission ? `mission en ${p.clientType}` : "projets livrés"}</p>
           <h1 className="display-light text-4xl sm:text-5xl">{p.title}<span className="block text-accent">{p.subtitle}</span></h1>
           <p className="mt-4 max-w-2xl text-xl text-muted [text-wrap:pretty]">{p.tagline}</p>
           <ul className="mt-6 flex flex-wrap gap-2" aria-label="Points clés">
-            <li><Badge tone="accent">{p.durationWeeks} semaines : {p.trainingWeeks} de formation + {p.missionWeeks} en entreprise</Badge></li>
-            <li><Badge tone="accent">{onSite} sur site pendant la mission</Badge></li>
-            <li><Badge tone="accent">Mission réelle en {p.clientType}</Badge></li>
+            <li><Badge tone="accent">{p.durationWeeks} semaines : {p.trainingWeeks} de formation + {p.missionWeeks} {practice}</Badge></li>
+            {isMission ? <li><Badge tone="accent">{onSite} sur site pendant la mission</Badge></li> : <li><Badge tone="accent">Un livrable relu chaque semaine</Badge></li>}
+            {isMission ? <li><Badge tone="accent">Mission réelle en {p.clientType}</Badge></li> : <li><Badge tone="accent">Projet réel mis en ligne</Badge></li>}
             {p.limitedSeats && <li><Badge tone="warn">Places limitées</Badge></li>}
           </ul>
           <p className="mt-6 max-w-2xl text-muted"><strong className="text-fg">Pour qui :</strong> {p.audience}.</p>
@@ -67,7 +71,7 @@ export default async function ProgrammePage({ params }: { params: Promise<{ slug
           <ol className="mt-4 flex flex-col gap-3">
             {p.steps.map((w) => (
               <li key={w.from} className="glass rounded-2xl p-5">
-                <div className="flex flex-wrap items-center gap-2 text-sm text-muted"><span>{w.from === w.to ? `Semaine ${w.from}` : `Semaines ${w.from} à ${w.to}`}</span><Badge tone={w.phase === "formation" ? "accent" : "warn"}>{w.phase === "formation" ? "Formation" : `Mission en ${p.clientType}`}</Badge></div>
+                <div className="flex flex-wrap items-center gap-2 text-sm text-muted"><span>{w.from === w.to ? `Semaine ${w.from}` : `Semaines ${w.from} à ${w.to}`}</span><Badge tone={w.phase === "formation" ? "accent" : "warn"}>{w.phase === "formation" ? "Formation" : w.phase === "projet" ? "Projet" : `Mission en ${p.clientType}`}</Badge></div>
                 <h3 className="mt-1 text-lg font-semibold">{w.title}</h3>
                 <p className="mt-1 text-[15px] text-muted">{w.focus}</p>
                 {w.onSite && <p className="mt-2 text-sm"><strong>Sur site :</strong> {w.onSite}</p>}
@@ -91,8 +95,8 @@ export default async function ProgrammePage({ params }: { params: Promise<{ slug
           <Badge tone="warn">Places limitées</Badge>
           <p className="text-[15px] text-muted">{p.seatsNote}</p>
           <dl className="text-[15px]">
-            <div className="flex justify-between gap-4 border-b border-border py-2"><dt className="text-muted">Durée</dt><dd className="text-right font-semibold">{p.durationWeeks} semaines ({p.trainingWeeks} + {p.missionWeeks} en entreprise)</dd></div>
-            <div className="flex justify-between gap-4 border-b border-border py-2"><dt className="text-muted">Sur site (mission)</dt><dd className="font-semibold">{onSite}</dd></div>
+            <div className="flex justify-between gap-4 border-b border-border py-2"><dt className="text-muted">Durée</dt><dd className="text-right font-semibold">{p.durationWeeks} semaines ({p.trainingWeeks} + {p.missionWeeks} {practice})</dd></div>
+            {onSite && <div className="flex justify-between gap-4 border-b border-border py-2"><dt className="text-muted">Sur site (mission)</dt><dd className="font-semibold">{onSite}</dd></div>}
             <div className="flex justify-between gap-4 border-b border-border py-2"><dt className="text-muted">Tarif</dt><dd className="font-semibold">{p.priceNote}</dd></div>
             <div className="flex justify-between gap-4 py-2"><dt className="text-muted">Prochaine promotion</dt><dd className="text-right font-semibold">{p.datesNote}</dd></div>
           </dl>

@@ -33,12 +33,12 @@ export default async function PathsPage() {
       <p className="mt-2 max-w-2xl text-muted">Les fondations de l'IA, puis trois modules écrits pour votre fonction, avec des ateliers no-code et un livrable relu par le formateur.</p>
       <div className="mt-4 grid gap-6 lg:grid-cols-2">{professionPaths.map((p) => <PathCard key={p.slug} path={p} catalog={catalog} />)}</div>
       <h2 className="mt-14 text-2xl font-semibold">Programmes en cohorte</h2>
-      <p className="mt-2 max-w-2xl text-muted">Des formations packagées à places limitées, avec une mission réelle sur site chez un client.</p>
+      <p className="mt-2 max-w-2xl text-muted">Des formations packagées à places limitées : une mission réelle chez un client, ou des projets livrés relus par le formateur.</p>
       <div className="mt-4 grid gap-6 lg:grid-cols-2">
         {programmes.map((g) => (
           <div key={g.slug} className="flex h-full flex-col gap-3 rounded-2xl border border-border bg-surface p-8">
             <span className="self-start"><Badge tone="warn">Places limitées</Badge></span>
-            <span className="text-sm text-muted">{g.durationWeeks} semaines : {g.trainingWeeks} de formation + {g.missionWeeks} en entreprise · {g.onSiteDays.min} à {g.onSiteDays.max} jours sur site par semaine de mission</span>
+            <span className="text-sm text-muted">{g.durationWeeks} semaines : {g.trainingWeeks} de formation + {g.missionWeeks} {g.format === "mission" ? "en entreprise" : "de projets"}{g.onSiteDays ? ` · ${g.onSiteDays.min} à ${g.onSiteDays.max} jours sur site par semaine de mission` : ""}</span>
             <h3 className="text-2xl font-bold leading-tight">{g.title} – {g.subtitle}</h3>
             <p className="text-muted"><strong className="text-fg">Pour qui :</strong> {g.audience}</p>
             <p className="text-muted">{g.tagline}</p>
